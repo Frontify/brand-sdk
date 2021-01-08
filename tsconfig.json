@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": true,
+        "outDir": "./dist/server",
+        "sourceMap": true,
+        "strict": true,
+        "target": "ES2020"
+    },
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}

@@ -1,0 +1,5 @@
+{
+    "watch": ["src", ".env"],
+    "exec": "npm start",
+    "ext": "ts"
+}
