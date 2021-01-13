@@ -1,4 +1,6 @@
-export enum SocketMessage {
-    BlockUpdated = "block-updated",
-    SettingsUpdated = "settings-updated",
+import { SocketMessageType } from "./SocketMessageType";
+
+export interface SocketMessage {
+    message: SocketMessageType;
+    data: unknown;
 }
