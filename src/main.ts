@@ -3,7 +3,7 @@
 import minimist from "minimist";
 import { exit } from "process";
 import { createNewProject } from "./commands/create";
-import { DevelopmentServer } from "./commands/serve";
+import { createDevelopmentServer } from "./commands/serve";
 import Logger from "./utils/logger";
 import { printLogo } from "./utils/logo";
 
@@ -19,14 +19,15 @@ switch (parseArgs._[0]) {
         const customBlockPath = parseArgs.dir || process.cwd();
         const port = parseArgs.port || 5600;
 
-        const developmentServer = new DevelopmentServer(entryFileName, customBlockPath, port);
-        developmentServer.watchForFileChangesAndCompile();
-        developmentServer.serve();
+        createDevelopmentServer(entryFileName, customBlockPath, port);
 
         Logger.info(`Development server listen on port ${port}!`);
         break;
     case "create":
+        Logger.info("Creating a new project...");
+
         const projectName = parseArgs._[1] || "";
+
         createNewProject(projectName);
 
         break;

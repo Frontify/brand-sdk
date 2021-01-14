@@ -31,7 +31,7 @@ class CreateProject {
 
     async cloneBoilerplate(): Promise<void> {
         const projectPath = `./${this.projectName}`;
-        Logger.info(`Creating a new project in ${chalk.blue(projectPath)}.`);
+        Logger.info(`Cloning boilerplate to ${chalk.blue(projectPath)}.`);
 
         await promiseExec(`git clone ${this.boilerplateGitUrl} ${this.projectName}`).catch((error) => {
             Logger.error("Error while cloning the boilerplate:", error.message);
