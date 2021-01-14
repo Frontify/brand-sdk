@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { getCurrentTime } from "./date";
 
 export default class Logger {
@@ -6,6 +7,6 @@ export default class Logger {
     }
 
     static error(...messages: string[]): void {
-        console.error(`[${getCurrentTime()}] ${messages.join(" ")}`);
+        console.error(chalk.red(`[${getCurrentTime()}] ${messages.join(" ")}`));
     }
 }
