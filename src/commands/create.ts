@@ -1,8 +1,9 @@
 import chalk from "chalk";
 import Logger from "../utils/logger";
-import { join } from "path";
+import { join, resolve } from "path";
 import { readdirSync } from "fs";
 import { promiseExec } from "../utils/promiseExec";
+import { ReactiveJson } from "../utils/reactiveJson";
 
 class CreateProject {
     private readonly boilerplateGitUrl = "git@github.com:Frontify/frontify-block-boilerplate.git";
@@ -47,11 +48,19 @@ class CreateProject {
     }
 
     async installDeps(): Promise<void> {
-        Logger.info("Installing dependencies:", chalk.bold("npm install"));
+        Logger.info(`Installing dependencies with ${chalk.bold("npm install")}.`);
 
         await promiseExec("npm install", { cwd: this.projectPath }).catch((error) => {
             Logger.error(`Could not install dependencies:`, error.message);
         });
+    }
+
+    updatePackageJsonProjectName(): void {
+        Logger.info(`Renaming boilerplate to ${chalk.bold(this.projectName)}.`);
+
+        const packageJsonPath = resolve(this.projectPath, "package.json");
+        const packageJson = ReactiveJson(packageJsonPath);
+        packageJson.name = this.projectName;
     }
 }
 
@@ -59,6 +68,7 @@ export const createNewProject = async (projectName: string): Promise<void> => {
     const createNewProject = new CreateProject(projectName);
     if (createNewProject.validProjectName()) {
         await createNewProject.cloneBoilerplate();
+        createNewProject.updatePackageJsonProjectName();
         await createNewProject.installDeps();
     }
 };
