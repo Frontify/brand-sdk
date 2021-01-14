@@ -1,12 +1,16 @@
 {
-  "name": "local-block-dev",
+  "name": "frontify-block-cli",
   "version": "1.0.0",
-  "main": "./src/main.js",
+  "main": "./dist/main.js",
+  "bin": {
+    "frontify-block-cli": "./dist/main.js"
+  },
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
-    "build": "esbuild src/main.ts --platform=node --bundle --outfile=dist/main.js",
-    "serve": "node -r ts-node/register ./src/main.ts",
+    "build": "esbuild src/main.ts --platform=node --bundle --external:esbuild --external:fsevents --outfile=dist/main.js",
     "start": "node -r ts-node/register ./src/main.ts",
-    "start:watch": "nodemon",
     "lint": "eslint '*/**/*.ts' --quiet --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -37,7 +41,6 @@
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
     "minimist": "^1.2.5",
-    "nodemon": "^2.0.6",
     "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"

@@ -3,6 +3,7 @@
     "source.fixAll.eslint": true
   },
   "conventionalCommits.scopes": [
-    "socket"
+    "socket",
+    "deps"
   ],
 }
