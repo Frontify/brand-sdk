@@ -14,7 +14,6 @@ import { FSWatcher } from "chokidar";
 class DevelopmentServer {
     private readonly customBlockPath: string;
     private readonly customBlockEntryFile: string;
-    private readonly customBlockEntryFilePath: string;
     private readonly customBlockDistPath: string;
 
     private readonly port: number;
@@ -24,7 +23,6 @@ class DevelopmentServer {
     constructor(entryFileName = "src/index.tsx", customBlockPath = process.cwd(), port = 5600) {
         this.customBlockPath = customBlockPath;
         this.customBlockEntryFile = entryFileName;
-        this.customBlockEntryFilePath = path.join(this.customBlockPath, this.customBlockEntryFile);
         this.customBlockDistPath = path.join(this.customBlockPath, "dist");
 
         this.port = port;
@@ -45,7 +43,7 @@ class DevelopmentServer {
         return watch(
             this.customBlockPath,
             () => {
-                compile(this.customBlockEntryFilePath, this.customBlockDistPath);
+                compile(this.customBlockEntryFile, this.customBlockPath, this.customBlockDistPath);
             },
             filesToIgnore,
         );
@@ -71,13 +69,15 @@ class DevelopmentServer {
 
     registerWebsockets(): void {
         this.fastifyServer.get("/websocket", { websocket: true }, (connection) => {
+            // Send blocks on first connection
+            // TODO: Add settings with them
             connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
 
-            const blocksUpdateWatcher = watch(`${this.customBlockDistPath}/**.js`, (event: string, path: string) => {
+            const blocksUpdateWatcher = watch(`${this.customBlockDistPath}/**.js`, (event: string) => {
                 if (event === "change") {
-                    Logger.info("Notify browser of updated block", path);
+                    Logger.info("Notify browser of updated block");
                     connection.socket.send(
-                        JSON.stringify({ message: SocketMessageType.BlockUpdated, data: "blockname" }),
+                        JSON.stringify({ message: SocketMessageType.BlockUpdated }),
                     );
                 }
             });
