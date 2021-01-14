@@ -61,10 +61,6 @@ class DevelopmentServer {
         this.fastifyServer.get("/", (_req, res) => {
             res.send({ status: "OK" });
         });
-
-        this.fastifyServer.get("/{blockId}", (_req, res) => {
-            res.send({ settings: "OK" });
-        });
     }
 
     registerWebsockets(): void {
@@ -76,9 +72,7 @@ class DevelopmentServer {
             const blocksUpdateWatcher = watch(`${this.customBlockDistPath}/**.js`, (event: string) => {
                 if (event === "change") {
                     Logger.info("Notify browser of updated block");
-                    connection.socket.send(
-                        JSON.stringify({ message: SocketMessageType.BlockUpdated }),
-                    );
+                    connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
                 }
             });
 
