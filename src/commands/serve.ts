@@ -21,7 +21,7 @@ export class DevelopmentServer {
 
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(entryFileName = "src/index.tsx", customBlockPath: string, port = 5600) {
+    constructor(entryFileName = "src/index.tsx", customBlockPath = process.cwd(), port = 5600) {
         this.customBlockPath = customBlockPath;
         this.customBlockEntryFile = entryFileName;
         this.customBlockEntryFilePath = path.join(this.customBlockPath, this.customBlockEntryFile);
@@ -33,12 +33,21 @@ export class DevelopmentServer {
     }
 
     watchForFileChangesAndCompile(): FSWatcher {
+        const filesToIgnore = [
+            "node_modules",
+            "package*.json",
+            ".git",
+            ".gitignore",
+            "dist",
+            `${this.customBlockPath}/**/settings.json`,
+        ];
+
         return watch(
             this.customBlockPath,
             () => {
                 compile(this.customBlockEntryFilePath, this.customBlockDistPath);
             },
-            ["node_modules", ".git", "dist", `${this.customBlockPath}/**/settings.json`],
+            filesToIgnore,
         );
     }
 

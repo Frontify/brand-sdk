@@ -1,5 +1,10 @@
-import dayjs from "dayjs";
-
 export const getCurrentTime = (): string => {
-    return dayjs().format("HH:mm:ss");
+    const now = new Date();
+    return (
+        String(now.getHours()).padStart(2, "0") +
+        ":" +
+        String(now.getMinutes()).padStart(2, "0") +
+        ":" +
+        String(now.getSeconds()).padStart(2, "0")
+    );
 };

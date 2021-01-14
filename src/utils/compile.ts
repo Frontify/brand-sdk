@@ -2,11 +2,11 @@ import { startService } from "esbuild";
 import Logger from "./logger";
 
 export const compile = async (entryFilePath: string, distPath: string): Promise<void> => {
+    Logger.info("Compiling...");
+
     const service = await startService();
 
     try {
-        const timerStart = Date.now();
-
         await service.build({
             color: true,
             entryPoints: [entryFilePath],
@@ -25,8 +25,7 @@ export const compile = async (entryFilePath: string, distPath: string): Promise<
             globalName: "DevCustomBlock",
         });
 
-        const timerEnd = Date.now();
-        Logger.info(`Custom block built in ${timerEnd - timerStart}ms`);
+        Logger.info("Compiled successfully!");
     } catch (e) {
         Logger.error("An error occured", e);
     } finally {
