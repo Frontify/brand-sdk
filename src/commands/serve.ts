@@ -10,6 +10,7 @@ import { SocketMessage } from "../SocketMessage";
 import { SocketMessageType } from "../SocketMessageType";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
+import { JsonParseError } from "../errors/JsonParseError";
 
 export class DevelopmentServer {
     private readonly customBlockPath: string;
@@ -83,22 +84,40 @@ export class DevelopmentServer {
             });
 
             const settingsUpdateWatcher = watch(
-                `${this.customBlockPath}/**/settings.json`,
+                `${this.customBlockPath}/src/**/settings.json`,
                 async (event: string, eventPath: string) => {
                     if (event === "change") {
-                        const settingsRaw = readFileSync(eventPath, "utf8");
-                        const settingsJson = JSON.parse(settingsRaw);
-                        const eventPathArray = eventPath.split("/");
-                        const blockName = eventPathArray[eventPathArray.length - 2];
+                        try {
+                            const settingsRaw = readFileSync(eventPath, "utf8");
 
-                        Logger.info("Notify browser of updated settings");
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            let settingsJson: any;
+                            try {
+                                settingsJson = JSON.parse(settingsRaw);
+                            } catch {
+                                throw new JsonParseError(
+                                    `An error occured while parsing \`settings.json\` in ${eventPath}`,
+                                );
+                            }
 
-                        connection.socket.send(
-                            JSON.stringify({
-                                message: SocketMessageType.SettingsStructureUpdated,
-                                data: { blockName, blockSettings: settingsJson },
-                            }),
-                        );
+                            const eventPathArray = eventPath.split("/");
+                            const blockName = eventPathArray[eventPathArray.length - 2];
+
+                            Logger.info("Notify browser of updated settings");
+
+                            connection.socket.send(
+                                JSON.stringify({
+                                    message: SocketMessageType.SettingsStructureUpdated,
+                                    data: { blockName, blockSettings: settingsJson },
+                                }),
+                            );
+                        } catch (error) {
+                            if (error instanceof JsonParseError) {
+                                Logger.error(error.message);
+                            } else {
+                                Logger.error("An unknown error occured", error);
+                            }
+                        }
                     }
                 },
             );
