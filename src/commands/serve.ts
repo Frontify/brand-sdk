@@ -9,96 +9,121 @@ import { compile } from "../utils/compile";
 import { SocketMessage } from "../SocketMessage";
 import { SocketMessageType } from "../SocketMessageType";
 import { watch } from "../utils/watch";
+import { FSWatcher } from "chokidar";
 
-const port = Number(process.env.WS_SERVER_PORT) || 5600;
-const customBlockPath = process.env.WATCH_PATH || path.join(__dirname, "blocks");
-const customBlockDistPath = path.join(customBlockPath, "dist");
-const customBlockEntryFile = process.env.ENTRY_FILE || "index.tsx";
-const customBlockEntryFilePath = path.join(customBlockPath, customBlockEntryFile);
+export class DevelopmentServer {
+    private readonly customBlockPath: string;
+    private readonly customBlockEntryFile: string;
+    private readonly customBlockEntryFilePath: string;
+    private readonly customBlockDistPath: string;
 
-// Watch block update and compile
-watch(
-    customBlockPath,
-    () => {
-        compile(customBlockEntryFilePath, customBlockDistPath);
-    },
-    ["node_modules", ".git", "dist", `${customBlockPath}/**/settings.json`],
-);
+    private readonly port: number;
 
-const fastify: FastifyInstance = Fastify();
+    private readonly fastifyServer: FastifyInstance;
 
-fastify.register(FastifyCors);
+    constructor(entryFileName = "src/index.tsx", customBlockPath: string, port = 5600) {
+        this.customBlockPath = customBlockPath;
+        this.customBlockEntryFile = entryFileName;
+        this.customBlockEntryFilePath = path.join(this.customBlockPath, this.customBlockEntryFile);
+        this.customBlockDistPath = path.join(this.customBlockPath, "dist");
 
-fastify.register(FastifyWebSocket);
+        this.port = port;
 
-fastify.register(FastifyStatic, {
-    root: customBlockDistPath,
-});
+        this.fastifyServer = Fastify();
+    }
 
-fastify.ready((err) => {
-    if (err) throw err;
-    Logger.info(`🚀  Server started on port ${port}!`);
-});
+    watchForFileChangesAndCompile(): FSWatcher {
+        return watch(
+            this.customBlockPath,
+            () => {
+                compile(this.customBlockEntryFilePath, this.customBlockDistPath);
+            },
+            ["node_modules", ".git", "dist", `${this.customBlockPath}/**/settings.json`],
+        );
+    }
 
-fastify.get("/", (_req, res) => {
-    res.send({ status: "OK" });
-});
+    serve(): void {
+        this.registerPlugins();
+        this.registerRoutes();
+        this.registerWebsockets();
 
-fastify.get("/{blockId}", (_req, res) => {
-    res.send({ settings: "OK" });
-});
+        this.fastifyServer.listen(this.port);
+    }
 
-fastify.get("/websocket", { websocket: true }, (connection) => {
-    connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
+    registerRoutes(): void {
+        this.fastifyServer.get("/", (_req, res) => {
+            res.send({ status: "OK" });
+        });
 
-    const blocksUpdateWatcher = watch(`${customBlockDistPath}/**.js`, (event: string, path: string) => {
-        if (event === "change") {
-            Logger.info("Notify browser of updated block", path);
-            connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated, data: "blockname" }));
-        }
-    });
+        this.fastifyServer.get("/{blockId}", (_req, res) => {
+            res.send({ settings: "OK" });
+        });
+    }
 
-    const settingsUpdateWatcher = watch(
-        `${customBlockPath}/**/settings.json`,
-        async (event: string, eventPath: string) => {
-            if (event === "change") {
-                const settingsRaw = readFileSync(eventPath, "utf8");
-                const settingsJson = JSON.parse(settingsRaw);
-                const eventPathArray = eventPath.split("/");
-                const blockName = eventPathArray[eventPathArray.length - 2];
+    registerWebsockets(): void {
+        this.fastifyServer.get("/websocket", { websocket: true }, (connection) => {
+            connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
 
-                Logger.info("Notify browser of updated settings");
+            const blocksUpdateWatcher = watch(`${this.customBlockDistPath}/**.js`, (event: string, path: string) => {
+                if (event === "change") {
+                    Logger.info("Notify browser of updated block", path);
+                    connection.socket.send(
+                        JSON.stringify({ message: SocketMessageType.BlockUpdated, data: "blockname" }),
+                    );
+                }
+            });
 
-                connection.socket.send(
-                    JSON.stringify({
-                        message: SocketMessageType.SettingsStructureUpdated,
-                        data: { blockName, blockSettings: settingsJson },
-                    }),
-                );
-            }
-        },
-    );
+            const settingsUpdateWatcher = watch(
+                `${this.customBlockPath}/**/settings.json`,
+                async (event: string, eventPath: string) => {
+                    if (event === "change") {
+                        const settingsRaw = readFileSync(eventPath, "utf8");
+                        const settingsJson = JSON.parse(settingsRaw);
+                        const eventPathArray = eventPath.split("/");
+                        const blockName = eventPathArray[eventPathArray.length - 2];
 
-    connection.socket.on("message", (socketMessage: string) => {
-        const parsedEvent: SocketMessage = JSON.parse(socketMessage);
-        const message = parsedEvent.message;
-        const data = parsedEvent.data;
+                        Logger.info("Notify browser of updated settings");
 
-        Logger.info(`Message received: ${message}${data && ` with data: ${data}`}`);
+                        connection.socket.send(
+                            JSON.stringify({
+                                message: SocketMessageType.SettingsStructureUpdated,
+                                data: { blockName, blockSettings: settingsJson },
+                            }),
+                        );
+                    }
+                },
+            );
 
-        switch (message) {
-            default: {
-                Logger.error("Bad message received");
-                break;
-            }
-        }
-    });
+            connection.socket.on("message", (socketMessage: string) => {
+                const parsedEvent: SocketMessage = JSON.parse(socketMessage);
+                const message = parsedEvent.message;
+                const data = parsedEvent.data;
 
-    connection.socket.on("close", () => {
-        connection.socket.close();
-        blocksUpdateWatcher.close();
-        settingsUpdateWatcher.close();
-    });
-});
+                Logger.info(`Message received: ${message}${data && ` with data: ${data}`}`);
 
-fastify.listen(port);
+                switch (message) {
+                    default: {
+                        Logger.error("Bad message received");
+                        break;
+                    }
+                }
+            });
+
+            connection.socket.on("close", () => {
+                connection.socket.close();
+                blocksUpdateWatcher.close();
+                settingsUpdateWatcher.close();
+            });
+        });
+    }
+
+    registerPlugins(): void {
+        this.fastifyServer.register(FastifyCors);
+
+        this.fastifyServer.register(FastifyWebSocket);
+
+        this.fastifyServer.register(FastifyStatic, {
+            root: this.customBlockDistPath,
+        });
+    }
+}
