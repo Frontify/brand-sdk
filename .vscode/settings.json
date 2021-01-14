@@ -6,6 +6,7 @@
     "socket",
     "deps",
     "compilation",
-    "create-project"
+    "create-project",
+    "dev-server"
   ],
 }

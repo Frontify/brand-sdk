@@ -11,7 +11,7 @@ import { SocketMessageType } from "../SocketMessageType";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
 
-export class DevelopmentServer {
+class DevelopmentServer {
     private readonly customBlockPath: string;
     private readonly customBlockEntryFile: string;
     private readonly customBlockEntryFilePath: string;
@@ -145,3 +145,9 @@ export class DevelopmentServer {
         });
     }
 }
+
+export const createDevelopmentServer = (entryFileName: string, customBlockPath: string, port: number): void => {
+    const developmentServer = new DevelopmentServer(entryFileName, customBlockPath, port);
+    developmentServer.watchForFileChangesAndCompile();
+    developmentServer.serve();
+};
