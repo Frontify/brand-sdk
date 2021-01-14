@@ -19,7 +19,6 @@
   "author": "Samuel Alev <samuel.alev@frontify.com>",
   "dependencies": {
     "chokidar": "^3.5.0",
-    "dotenv": "^8.2.0",
     "esbuild": "^0.8.32",
     "fastify": "^3.9.2",
     "fastify-cors": "^5.1.0",
