@@ -23,7 +23,7 @@ class CreateProject {
             Logger.error('The project name needs to be "a-z" separated by "_".');
             return false;
         } else if (!this.isDirectoryEmpty(this.projectPath)) {
-            Logger.error(`The directory "./${this.projectName}" already exist.`);
+            Logger.error(`The directory ./${this.projectName} already exist.`);
             return false;
         } else {
             return true;
@@ -70,5 +70,10 @@ export const createNewProject = async (projectName: string): Promise<void> => {
         await createNewProject.cloneBoilerplate();
         createNewProject.updatePackageJsonProjectName();
         await createNewProject.installDeps();
+
+        const projectPath = `./${projectName}`;
+        Logger.defaultInfo(`\n${Logger.spacer(12)}Project ready!`);
+        Logger.defaultInfo(`${Logger.spacer(12)}You can now "cd ${chalk.blue(projectPath)}" to access the project.`);
+        Logger.defaultInfo(`${Logger.spacer(12)}Happy hacking!`);
     }
 };
