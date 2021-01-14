@@ -2,6 +2,7 @@
 
 import minimist from "minimist";
 import { exit } from "process";
+import { createNewProject } from "./commands/create";
 import { DevelopmentServer } from "./commands/serve";
 import Logger from "./utils/logger";
 import { printLogo } from "./utils/logo";
@@ -23,6 +24,11 @@ switch (parseArgs._[0]) {
         developmentServer.serve();
 
         Logger.info(`Development server listen on port ${port}!`);
+        break;
+    case "create":
+        const projectName = parseArgs._[1] || "";
+        createNewProject(projectName);
+
         break;
     case "deploy":
     default:

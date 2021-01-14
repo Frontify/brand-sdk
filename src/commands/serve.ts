@@ -10,7 +10,6 @@ import { SocketMessage } from "../SocketMessage";
 import { SocketMessageType } from "../SocketMessageType";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
-import { JsonParseError } from "../errors/JsonParseError";
 
 export class DevelopmentServer {
     private readonly customBlockPath: string;
@@ -89,16 +88,7 @@ export class DevelopmentServer {
                     if (event === "change") {
                         try {
                             const settingsRaw = readFileSync(eventPath, "utf8");
-
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            let settingsJson: any;
-                            try {
-                                settingsJson = JSON.parse(settingsRaw);
-                            } catch {
-                                throw new JsonParseError(
-                                    `An error occured while parsing \`settings.json\` in ${eventPath}`,
-                                );
-                            }
+                            const settingsJson = JSON.parse(settingsRaw);
 
                             const eventPathArray = eventPath.split("/");
                             const blockName = eventPathArray[eventPathArray.length - 2];
@@ -112,10 +102,10 @@ export class DevelopmentServer {
                                 }),
                             );
                         } catch (error) {
-                            if (error instanceof JsonParseError) {
-                                Logger.error(error.message);
+                            if (error instanceof SyntaxError) {
+                                Logger.error(`An error occured while parsing \`settings.json\` in ${eventPath}`);
                             } else {
-                                Logger.error("An unknown error occured", error);
+                                Logger.error("An unknown error occured:", error);
                             }
                         }
                     }

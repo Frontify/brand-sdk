@@ -5,6 +5,7 @@
   "conventionalCommits.scopes": [
     "socket",
     "deps",
-    "compilation"
+    "compilation",
+    "create-project"
   ],
 }
