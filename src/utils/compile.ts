@@ -1,6 +1,6 @@
 import { startService } from "esbuild";
 import Logger from "./logger";
-import { join } from 'path'
+import { join } from "path";
 
 export const compile = async (entryFileName: string, projectPath: string, distPath: string): Promise<void> => {
     Logger.info("Compiling...");
@@ -14,7 +14,7 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
             outfile: `${distPath}/index.js`,
             //minify: true,
             bundle: true,
-            sourcemap: false,
+            sourcemap: true,
             define: {
                 "process.env.NODE_ENV": "development",
             },
