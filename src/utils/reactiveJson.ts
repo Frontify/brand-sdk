@@ -10,7 +10,7 @@ export const ReactiveJson = (path: string): Record<string, unknown> => {
             set: (obj, prop, valeur) => {
                 obj[prop] = valeur;
 
-                const jsonString = JSON.stringify(obj, null, 2);
+                const jsonString = JSON.stringify(obj, null, "\t");
 
                 writeFile(path, jsonString, function (err) {
                     if (err) return Logger.error(`An error occured while writing the file.`);
