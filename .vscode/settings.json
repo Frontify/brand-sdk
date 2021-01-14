@@ -4,6 +4,7 @@
   },
   "conventionalCommits.scopes": [
     "socket",
-    "deps"
+    "deps",
+    "compilation"
   ],
 }
