@@ -18,8 +18,8 @@ class CreateProject {
         if (!this.projectName) {
             Logger.error("The project name could not be empty.");
             return false;
-        } else if (!/[a-z_]+/.test(this.projectName)) {
-            Logger.error('The project name needs to be "a-z" separated by "-".');
+        } else if (!/^[a-z_]+$/.test(this.projectName)) {
+            Logger.error('The project name needs to be "a-z" separated by "_".');
             return false;
         } else if (!this.isDirectoryEmpty(this.projectPath)) {
             Logger.error(`The directory "./${this.projectName}" already exist.`);
