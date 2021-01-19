@@ -7,6 +7,7 @@
     "deps",
     "compilation",
     "create-project",
-    "dev-server"
+    "dev-server",
+    "deploy"
   ],
 }

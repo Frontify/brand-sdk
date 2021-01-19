@@ -1,7 +1,7 @@
 import { startService } from "esbuild";
 import Logger from "./logger";
 import { join } from "path";
-import chalk from "chalk";
+import { bold } from "chalk";
 
 export const compile = async (
     blockName: string,
@@ -9,7 +9,7 @@ export const compile = async (
     projectPath: string,
     distPath: string,
 ): Promise<void> => {
-    Logger.info(`Compiling ${chalk.bold(blockName)}...`);
+    Logger.info(`Compiling ${bold(blockName)}...`);
 
     const service = await startService();
 

@@ -158,7 +158,11 @@ export const createDevelopmentServer = (
     customBlockPath: string,
     port: number,
 ): void => {
+    Logger.info("Starting the development server...");
+
     const developmentServer = new DevelopmentServer(customBlockName, entryFileName, customBlockPath, port);
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
+
+    Logger.info(`Development server listen on port ${port}!`);
 };
