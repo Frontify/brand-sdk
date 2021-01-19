@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import { bold, blue } from "chalk";
 import Logger from "../utils/logger";
 import { join, resolve } from "path";
 import { readdirSync } from "fs";
@@ -32,7 +32,7 @@ class CreateProject {
 
     async cloneBoilerplate(): Promise<void> {
         const projectPath = `./${this.projectName}`;
-        Logger.info(`Cloning boilerplate to ${chalk.blue(projectPath)}.`);
+        Logger.info(`Cloning boilerplate to ${blue(projectPath)}.`);
 
         await promiseExec(`git clone ${this.boilerplateGitUrl} ${this.projectName}`).catch((error) => {
             Logger.error("Error while cloning the boilerplate:", error.message);
@@ -48,7 +48,7 @@ class CreateProject {
     }
 
     async installDeps(): Promise<void> {
-        Logger.info(`Installing dependencies with ${chalk.bold("npm install")}.`);
+        Logger.info(`Installing dependencies with ${bold("npm install")}.`);
 
         await promiseExec("npm install", { cwd: this.projectPath }).catch((error) => {
             Logger.error(`Could not install dependencies:`, error.message);
@@ -56,7 +56,7 @@ class CreateProject {
     }
 
     updatePackageJsonProjectName(): void {
-        Logger.info(`Renaming boilerplate to ${chalk.bold(this.projectName)}.`);
+        Logger.info(`Renaming boilerplate to ${bold(this.projectName)}.`);
 
         const packageJsonPath = resolve(this.projectPath, "package.json");
         const packageJson = ReactiveJson(packageJsonPath);
@@ -65,6 +65,8 @@ class CreateProject {
 }
 
 export const createNewProject = async (projectName: string): Promise<void> => {
+    Logger.info("Creating a new block...");
+
     const createNewProject = new CreateProject(projectName);
     if (createNewProject.validProjectName()) {
         await createNewProject.cloneBoilerplate();
@@ -72,8 +74,9 @@ export const createNewProject = async (projectName: string): Promise<void> => {
         await createNewProject.installDeps();
 
         const projectPath = `./${projectName}`;
+
         Logger.defaultInfo(`\n${Logger.spacer(12)}Project ready!`);
-        Logger.defaultInfo(`${Logger.spacer(12)}You can now "cd ${chalk.blue(projectPath)}" to access the project.`);
+        Logger.defaultInfo(`${Logger.spacer(12)}You can now "cd ${blue(projectPath)}" to access the project.`);
         Logger.defaultInfo(`${Logger.spacer(12)}Happy hacking!`);
     }
 };
