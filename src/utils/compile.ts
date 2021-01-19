@@ -1,9 +1,15 @@
 import { startService } from "esbuild";
 import Logger from "./logger";
 import { join } from "path";
+import chalk from "chalk";
 
-export const compile = async (entryFileName: string, projectPath: string, distPath: string): Promise<void> => {
-    Logger.info("Compiling...");
+export const compile = async (
+    blockName: string,
+    entryFileName: string,
+    projectPath: string,
+    distPath: string,
+): Promise<void> => {
+    Logger.info(`Compiling ${chalk.bold(blockName)}...`);
 
     const service = await startService();
 
@@ -11,7 +17,7 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
         await service.build({
             color: true,
             entryPoints: [join(projectPath, entryFileName)],
-            outfile: `${distPath}/index.js`,
+            outfile: `${distPath}/${blockName}.js`,
             //minify: true,
             bundle: true,
             sourcemap: true,
@@ -19,11 +25,9 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
                 "process.env.NODE_ENV": "development",
             },
             tsconfig: join(projectPath, "tsconfig.json"), // Use tsconfig from the project
-            platform: "node",
             logLevel: "error",
             target: ["chrome58", "firefox57", "safari11", "edge16"],
-            format: "iife",
-            globalName: "DevCustomBlock",
+            globalName: `DevCustomBlock["${blockName}"]`,
         });
 
         Logger.info("Compiled successfully!");
