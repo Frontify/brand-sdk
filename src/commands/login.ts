@@ -11,6 +11,7 @@ import {
 import open from "open";
 import { Configuration } from "../utils/store";
 import { exit } from "process";
+import { bold } from "chalk";
 
 interface Query {
     code: string;
@@ -44,6 +45,14 @@ class AuthenticatorServer {
             const tokens = await getOauthCredentialDetails(this.randomChallenge.secret, req.query.code);
             Logger.info("Tokens received, storing tokens...");
             Configuration.set("tokens", tokens);
+
+            const user = await getUser().catch(() => {
+                Logger.error("An error occured while fetching user data.");
+            });
+
+            if (user) {
+                Logger.info(`${bold(`Welcome back ${user.name}!`)}`);
+            }
 
             exit(0);
         });

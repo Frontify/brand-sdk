@@ -11,6 +11,7 @@ import { printLogo } from "./utils/logo";
 import { logUser } from "./commands/login";
 import { getUser } from "./utils/oauth";
 import { bold } from "chalk";
+import { logoutUser } from "./commands/logout";
 
 const parseArgs = minimist(process.argv.slice(2));
 
@@ -46,6 +47,9 @@ printLogo();
             break;
         case "login":
             await logUser(port);
+            break;
+        case "logout":
+            logoutUser();
             break;
         default:
             Logger.error("This command is not yet handled");
