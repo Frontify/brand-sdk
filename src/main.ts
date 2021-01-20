@@ -9,6 +9,8 @@ import { createDeployment } from "./commands/deploy";
 import { createDevelopmentServer } from "./commands/serve";
 import { printLogo } from "./utils/logo";
 import { logUser } from "./commands/login";
+import { getUser } from "./utils/oauth";
+import { bold } from "chalk";
 
 const parseArgs = minimist(process.argv.slice(2));
 
@@ -21,6 +23,16 @@ printLogo();
     const entryFileName = parseArgs.entry || customBlockPackageJson.main || "src/index.tsx";
     const port = parseArgs.port || 5600;
     const projectName = parseArgs._[1] || "";
+
+    const user = await getUser().catch(() => {
+        console.log(
+            `${Logger.spacer(12)}You are not logged in, you can use the command ${bold("frontify-block-cli login")}.`,
+        );
+    });
+
+    if (user) {
+        console.log(`${Logger.spacer(12)}${bold(`Welcome back ${user.name}!`)}`);
+    }
 
     switch (parseArgs._[0]) {
         case "serve":

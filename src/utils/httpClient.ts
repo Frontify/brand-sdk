@@ -8,7 +8,7 @@ interface RequestOptions {
 interface FetchParameters {
     method: "GET" | "POST" | "PUT" | "DELETE";
     url: string;
-    body?: Record<string, unknown> | string;
+    body?: Record<string, unknown>;
     options?: RequestOptions;
 }
 
@@ -20,13 +20,27 @@ export class HttpClient {
             rejectUnauthorized: process.env.NODE_ENV !== "development",
         });
 
+        const headers = new Headers({
+            ...(body && {
+                "Content-Type": "application/json",
+            }),
+        });
+
+        if (options?.headers) {
+            for (const header of options.headers.entries()) {
+                headers.append(header[0], header[1]);
+            }
+        }
+
+
         const response: Response = await fetch(this.getAbsoluteUrl(url), {
             method,
-            ...options,
             ...(body && {
-                body: typeof body === "string" ? body : JSON.stringify(body),
+                body: JSON.stringify(body),
             }),
             agent,
+            ...options,
+            headers,
         });
 
         try {

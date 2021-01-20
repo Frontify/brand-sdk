@@ -14,6 +14,11 @@ export interface OauthAccessTokenApiResponse {
     token_type: string;
 }
 
+export interface UserInfo {
+    name: string;
+    email: string;
+}
+
 //TODO: better handling of baseUrl
 const baseUrl = process.env.NODE_ENV === "development" ? "https://dev.frontify.test" : "https://dev.frontify.test";
 const httpClient = new HttpClient(baseUrl);
@@ -27,7 +32,7 @@ export const getLoginUrl = (codeChallenge: OauthRandomCodeChallenge): string => 
         "response_type=code",
         "client_id=block-cli",
         "redirect_uri=http://localhost:5600/oauth",
-        "scope=blocks:read%2Bblocks:write",
+        "scope=basic:read%2Bblocks:read%2Bblocks:write",
         `code_challenge=${codeChallenge.sha256}`,
         "code_challenge_method=S256",
     ].join("&");
@@ -49,7 +54,7 @@ export const getOauthCredentialDetails = async (
             grant_type: "authorization_code",
             client_id: "block-cli",
             redirect_uri: "http://localhost:5600/oauth",
-            scope: "blocks:read%2Bblocks:write",
+            scope: "basic:read%2Bblocks:read%2Bblocks:write",
             code_verifier: randomChallengeSecret,
             code: authorizationCode,
         },
@@ -59,7 +64,14 @@ export const getOauthCredentialDetails = async (
     );
 };
 
-export const getUser = async (): Promise<string> => {
+export const getUser = async (): Promise<UserInfo> => {
     const accessToken = Configuration.get("tokens.access_token");
-    const user = await httpClient.post("/graphql", "{currentUser { email name } }");
+    const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
+    const user = await httpClient.post<{ data: { current_user: UserInfo } }>(
+        "/graphql",
+        { query: "{\n  current_user {\n    email\n    avatar\n    name\n  }\n}\n" },
+        { headers },
+    );
+
+    return user.data.current_user;
 };
