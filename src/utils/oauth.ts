@@ -1,0 +1,65 @@
+import { Headers } from "node-fetch";
+import { HttpClient } from "./httpClient";
+import { Configuration } from "./store";
+
+export interface OauthRandomCodeChallenge {
+    secret: string;
+    sha256: string;
+}
+
+export interface OauthAccessTokenApiResponse {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    token_type: string;
+}
+
+//TODO: better handling of baseUrl
+const baseUrl = process.env.NODE_ENV === "development" ? "https://dev.frontify.test" : "https://dev.frontify.test";
+const httpClient = new HttpClient(baseUrl);
+
+export const getRandomCodeChallenge = async (): Promise<{ data: OauthRandomCodeChallenge }> => {
+    return httpClient.get<{ data: OauthRandomCodeChallenge }>("/api/oauth/random");
+};
+
+export const getLoginUrl = (codeChallenge: OauthRandomCodeChallenge): string => {
+    const queryParams = [
+        "response_type=code",
+        "client_id=block-cli",
+        "redirect_uri=http://localhost:5600/oauth",
+        "scope=blocks:read%2Bblocks:write",
+        `code_challenge=${codeChallenge.sha256}`,
+        "code_challenge_method=S256",
+    ].join("&");
+
+    return `${baseUrl}/api/oauth/authorize?${queryParams}`;
+};
+
+export const getOauthCredentialDetails = async (
+    randomChallengeSecret: string,
+    authorizationCode: string,
+): Promise<OauthAccessTokenApiResponse> => {
+    const headers = new Headers({
+        "Content-Type": "application/json",
+    });
+
+    return httpClient.post<OauthAccessTokenApiResponse>(
+        "/api/oauth/accesstoken",
+        {
+            grant_type: "authorization_code",
+            client_id: "block-cli",
+            redirect_uri: "http://localhost:5600/oauth",
+            scope: "blocks:read%2Bblocks:write",
+            code_verifier: randomChallengeSecret,
+            code: authorizationCode,
+        },
+        {
+            headers,
+        },
+    );
+};
+
+export const getUser = async (): Promise<string> => {
+    const accessToken = Configuration.get("tokens.access_token");
+    const user = await httpClient.post("/graphql", "{currentUser { email name } }");
+};
