@@ -3,6 +3,8 @@ import { join } from "path";
 import Logger from "../utils/logger";
 import { createZip } from "../utils/zip";
 import { getFileHash } from "../utils/hash";
+import { getUser } from "../utils/oauth";
+import { mkdir } from "fs";
 
 class CreateDeployment {
     private readonly customBlockName: string;
@@ -16,9 +18,16 @@ class CreateDeployment {
     }
 
     async createZipBundle(): Promise<void> {
-        const ignoredDirectories = [".git", ".frontify"];
+        const ignoredDirectories = [".git/**", ".frontify/**", "node_modules/**", "dist/**"];
 
-        createZip(
+        await new Promise((resolve, reject) => {
+            mkdir(this.customBlockOutDir, { recursive: true }, (error) => {
+                if (error) return reject(error);
+                resolve(this.customBlockOutDir);
+            });
+        });
+
+        await createZip(
             this.customBlockPath,
             join(this.customBlockOutDir, `${this.customBlockName}.zip`),
             ignoredDirectories,
@@ -30,7 +39,7 @@ class CreateDeployment {
     }
 
     sendBundle(hash: string): void {
-        Logger.info(`Sending ${bold(this.customBlockName)} with hash ${hash}.`);
+        //
     }
 }
 
@@ -38,15 +47,18 @@ export const createDeployment = async (customBlockName: string, customBlockPath:
     Logger.info(`Deploying ${bold(customBlockName)}...`);
 
     const deployment = new CreateDeployment(customBlockName, customBlockPath);
-    // if (Authenticator.isAuthenticated()) {
-    if (true) {
+
+    const user = await getUser().catch(() => {
+        Logger.error(`You are not logged in, you can use the command ${bold("frontify-block-cli login")}.`);
+    });
+
+    if (user) {
+        Logger.info(`You are logged in as ${user.name}.`);
         Logger.info("Creating a zip bundle...");
         await deployment.createZipBundle();
         Logger.info("Generating a hash...");
         const hash = await deployment.getZipBundleHash();
-        Logger.info(`Sending ${bold(customBlockName)} to Frontify...`);
+        Logger.info(`Sending ${bold(customBlockName)} with hash ${hash} to Frontify...`);
         deployment.sendBundle(hash);
-    } else {
-        Logger.error(`You are not connected, please connect using: ${bold("frontify-block-cli login")}.`);
     }
 };
