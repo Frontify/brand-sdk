@@ -60,13 +60,12 @@ class AuthenticatorServer {
 }
 
 export const logUser = async (port: number): Promise<void> => {
-    const randomChallengeResponse = await getRandomCodeChallenge();
-    const randomChallenge = randomChallengeResponse.data;
+    const randomChallenge = await getRandomCodeChallenge();
 
     const developmentServer = new AuthenticatorServer(randomChallenge, port);
     developmentServer.serve();
 
-    const loginUrl = getLoginUrl(randomChallenge);
+    const loginUrl = getLoginUrl(randomChallenge.sha256);
 
     Logger.info("Opening OAuth login page...");
     await open(loginUrl);
