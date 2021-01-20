@@ -8,6 +8,7 @@
     "compilation",
     "create-project",
     "dev-server",
-    "deploy"
+    "deploy",
+    "test"
   ],
 }

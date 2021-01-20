@@ -46,11 +46,11 @@ export class HttpClient {
             if (response.status === 200) {
                 return await response.json();
             } else {
-                const errorData = await response.json();
-                throw errorData;
+                const errorData = await response.text();
+                throw new Error(errorData);
             }
         } catch (error) {
-            throw error;
+            throw new Error(error);
         }
     }
 
