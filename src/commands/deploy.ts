@@ -1,6 +1,5 @@
 import { bold } from "chalk";
 import { join } from "path";
-import { Authenticator } from "../utils/authentication";
 import Logger from "../utils/logger";
 import { createZip } from "../utils/zip";
 import { getFileHash } from "../utils/hash";
@@ -39,7 +38,8 @@ export const createDeployment = async (customBlockName: string, customBlockPath:
     Logger.info(`Deploying ${bold(customBlockName)}...`);
 
     const deployment = new CreateDeployment(customBlockName, customBlockPath);
-    if (Authenticator.isAuthenticated()) {
+    // if (Authenticator.isAuthenticated()) {
+    if (true) {
         Logger.info("Creating a zip bundle...");
         await deployment.createZipBundle();
         Logger.info("Generating a hash...");

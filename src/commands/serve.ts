@@ -6,11 +6,26 @@ import Logger from "../utils/logger";
 import { join } from "path";
 import { readFileSync } from "fs";
 import { compile } from "../utils/compile";
-import { SocketMessage } from "../SocketMessage";
-import { SocketMessageType } from "../SocketMessageType";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
-import { Settings } from "http2";
+
+export interface SocketMessage {
+    message: SocketMessageType;
+    data: unknown;
+}
+
+export enum SocketMessageType {
+    BlockUpdated = "block-updated",
+    SettingsStructureUpdated = "settings-structure-updated",
+}
+
+export type Setting = {
+    id: string;
+    label: string;
+    type: string;
+    placeholder?: string;
+    value?: string;
+};
 
 class DevelopmentServer {
     private readonly customBlockName: string;
@@ -146,7 +161,7 @@ class DevelopmentServer {
         });
     }
 
-    getSettings(): Record<string, Settings> {
+    getSettings(): Setting[] {
         const settingsRaw = readFileSync(join(this.customBlockPath, "src/settings.json"), "utf8");
         return JSON.parse(settingsRaw);
     }

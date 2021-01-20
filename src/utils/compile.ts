@@ -17,7 +17,7 @@ export const compile = async (
         await service.build({
             color: true,
             entryPoints: [join(projectPath, entryFileName)],
-            outfile: `${distPath}/${blockName}.js`,
+            outfile: `${distPath}/index.js`,
             //minify: true,
             bundle: true,
             sourcemap: true,
@@ -27,7 +27,7 @@ export const compile = async (
             tsconfig: join(projectPath, "tsconfig.json"), // Use tsconfig from the project
             logLevel: "error",
             target: ["chrome58", "firefox57", "safari11", "edge16"],
-            globalName: `DevCustomBlock["${blockName}"]`,
+            globalName: `DevCustomBlock`,
         });
 
         Logger.info("Compiled successfully!");
