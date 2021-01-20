@@ -25,15 +25,9 @@ printLogo();
     const port = parseArgs.port || 5600;
     const projectName = parseArgs._[1] || "";
 
-    const user = await getUser().catch(() => {
-        console.log(
-            `${Logger.spacer(12)}You are not logged in, you can use the command ${bold("frontify-block-cli login")}.`,
-        );
-    });
+    const user = await getUser();
 
-    if (user) {
-        console.log(`${Logger.spacer(12)}${bold(`Welcome back ${user.name}!`)}`);
-    }
+    user && console.log(`${Logger.spacer(12)}${bold(`Welcome back ${user.name}!`)}`);
 
     switch (parseArgs._[0]) {
         case "serve":

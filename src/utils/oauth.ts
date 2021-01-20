@@ -1,5 +1,7 @@
+import { bold } from "chalk";
 import { Headers } from "node-fetch";
 import { HttpClient } from "./httpClient";
+import Logger from "./logger";
 import { Configuration } from "./store";
 
 export interface OauthRandomCodeChallenge {
@@ -64,14 +66,18 @@ export const getOauthCredentialDetails = async (
     );
 };
 
-export const getUser = async (): Promise<UserInfo> => {
+export const getUser = async (): Promise<UserInfo | undefined> => {
     const accessToken = Configuration.get("tokens.access_token");
     const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
-    const user = await httpClient.post<{ data: { current_user: UserInfo } }>(
-        "/graphql",
-        { query: "{\n  current_user {\n    email\n    avatar\n    name\n  }\n}\n" },
-        { headers },
-    );
-
-    return user.data.current_user;
+    try {
+        const user = await httpClient.post<{ data: { current_user: UserInfo } }>(
+            "/graphql",
+            { query: "{\n  current_user {\n    email\n    avatar\n    name\n  }\n}\n" },
+            { headers },
+        );
+        return user.data.current_user;
+    } catch {
+        Logger.error(`You are not logged in, you can use the command ${bold("frontify-block-cli login")}.`);
+        return undefined;
+    }
 };

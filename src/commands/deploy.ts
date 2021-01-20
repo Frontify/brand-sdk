@@ -48,9 +48,7 @@ export const createDeployment = async (customBlockName: string, customBlockPath:
 
     const deployment = new CreateDeployment(customBlockName, customBlockPath);
 
-    const user = await getUser().catch(() => {
-        Logger.error(`You are not logged in, you can use the command ${bold("frontify-block-cli login")}.`);
-    });
+    const user = await getUser();
 
     if (user) {
         Logger.info(`You are logged in as ${user.name}.`);

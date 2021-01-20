@@ -32,7 +32,6 @@ export class HttpClient {
             }
         }
 
-
         const response: Response = await fetch(this.getAbsoluteUrl(url), {
             method,
             ...(body && {

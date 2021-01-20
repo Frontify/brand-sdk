@@ -46,13 +46,9 @@ class AuthenticatorServer {
             Logger.info("Tokens received, storing tokens...");
             Configuration.set("tokens", tokens);
 
-            const user = await getUser().catch(() => {
-                Logger.error("An error occured while fetching user data.");
-            });
+            const user = await getUser();
 
-            if (user) {
-                Logger.info(`${bold(`Welcome back ${user.name}!`)}`);
-            }
+            user && Logger.info(`${bold(`Welcome back ${user.name}!`)}`);
 
             exit(0);
         });
