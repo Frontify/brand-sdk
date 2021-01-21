@@ -1,7 +1,8 @@
 {
   "name": "frontify-block-cli",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "./dist/main.js",
+  "private": false,
   "bin": {
     "frontify-block-cli": "dist/main.js"
   },
