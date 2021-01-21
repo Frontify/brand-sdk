@@ -1,9 +1,9 @@
 {
   "name": "frontify-block-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/main.js",
   "bin": {
-    "frontify-block-cli": "./dist/main.js"
+    "frontify-block-cli": "dist/main.js"
   },
   "engines": {
     "node": ">=15"
