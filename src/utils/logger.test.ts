@@ -25,6 +25,7 @@ describe("Logger utils", () => {
         it("should give a string with X spaces", () => {
             expect(Logger.spacer(5)).toEqual("     ");
             expect(Logger.spacer(3)).toEqual("   ");
+            expect(Logger.spacer()).toEqual(" ");
         });
     });
 });

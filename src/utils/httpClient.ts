@@ -13,7 +13,11 @@ interface FetchParameters {
 }
 
 export class HttpClient {
-    constructor(private readonly baseUrl: string = "") {}
+    private readonly baseUrl: string;
+
+    constructor(baseUrl = "") {
+        this.baseUrl = baseUrl.replace(/^https?:\/\//, "");
+    }
 
     private async fetchExtended({ method, url, body, options }: FetchParameters) {
         const agent = new https.Agent({
@@ -79,6 +83,6 @@ export class HttpClient {
     }
 
     private getAbsoluteUrl(relativeUrl = "/"): string {
-        return `${this.baseUrl}${relativeUrl}`;
+        return `https://${this.baseUrl}${relativeUrl}`;
     }
 }

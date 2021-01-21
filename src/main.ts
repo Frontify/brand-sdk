@@ -9,8 +9,6 @@ import { createDeployment } from "./commands/deploy";
 import { createDevelopmentServer } from "./commands/serve";
 import { printLogo } from "./utils/logo";
 import { logUser } from "./commands/login";
-import { getUser } from "./utils/oauth";
-import { bold } from "chalk";
 import { logoutUser } from "./commands/logout";
 
 const parseArgs = minimist(process.argv.slice(2));
@@ -24,10 +22,7 @@ printLogo();
     const entryFileName = parseArgs.entry || customBlockPackageJson.main || "src/index.tsx";
     const port = parseArgs.port || 5600;
     const projectName = parseArgs._[1] || "";
-
-    const user = await getUser();
-
-    user && Logger.defaultInfo(`${bold(`Welcome back ${user.name}!`)}`);
+    const instanceUrl = parseArgs._[1] || process.env.INSTANCE_URL || "";
 
     switch (parseArgs._[0]) {
         case "serve":
@@ -37,10 +32,10 @@ printLogo();
             createNewProject(projectName);
             break;
         case "deploy":
-            createDeployment(customBlockName, customBlockPath);
+            createDeployment(instanceUrl, customBlockName, customBlockPath);
             break;
         case "login":
-            await logUser(port);
+            await logUser(instanceUrl, port);
             break;
         case "logout":
             logoutUser();

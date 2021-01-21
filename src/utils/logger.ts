@@ -14,7 +14,7 @@ export default class Logger {
         console.error(red(`[${getCurrentTime()}] ${messages.join(" ")}`));
     }
 
-    static spacer(width: number): string {
+    static spacer(width = 1): string {
         return Array(width + 1).join(" ");
     }
 }
