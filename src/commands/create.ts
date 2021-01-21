@@ -3,7 +3,7 @@ import Logger from "../utils/logger";
 import { join, resolve } from "path";
 import { readdirSync } from "fs";
 import { promiseExec } from "../utils/promiseExec";
-import { ReactiveJson } from "../utils/reactiveJson";
+import { reactiveJson } from "../utils/reactiveJson";
 
 class CreateProject {
     private readonly boilerplateGitUrl = "git@github.com:Frontify/frontify-block-boilerplate.git";
@@ -59,7 +59,7 @@ class CreateProject {
         Logger.info(`Renaming boilerplate to ${bold(this.projectName)}.`);
 
         const packageJsonPath = resolve(this.projectPath, "package.json");
-        const packageJson = ReactiveJson(packageJsonPath);
+        const packageJson = reactiveJson(packageJsonPath);
         packageJson.name = this.projectName;
     }
 }
@@ -75,8 +75,8 @@ export const createNewProject = async (projectName: string): Promise<void> => {
 
         const projectPath = `./${projectName}`;
 
-        Logger.defaultInfo(`\n${Logger.spacer(12)}Project ready!`);
-        Logger.defaultInfo(`${Logger.spacer(12)}You can now "cd ${blue(projectPath)}" to access the project.`);
-        Logger.defaultInfo(`${Logger.spacer(12)}Happy hacking!`);
+        Logger.defaultInfo(`\n${Logger.spacer(11)}Project ready!`);
+        Logger.defaultInfo(`${Logger.spacer(11)}You can now "cd ${blue(projectPath)}" to access the project.`);
+        Logger.defaultInfo(`${Logger.spacer(11)}Happy hacking!`);
     }
 };

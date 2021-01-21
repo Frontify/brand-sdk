@@ -44,7 +44,15 @@ export class HttpClient {
 
         try {
             if (response.status === 200) {
-                return await response.json();
+                const contentType = response.headers.get("Content-Type");
+
+                switch (contentType) {
+                    case "application/json":
+                        return await response.json();
+                    default:
+                        const responseText = await response.text();
+                        return responseText || undefined;
+                }
             } else {
                 const errorData = await response.text();
                 throw new Error(errorData);
@@ -62,7 +70,7 @@ export class HttpClient {
         return this.fetchExtended({ url, method: "POST", body, options });
     }
 
-    public put<T>(url: string, body: Record<string, unknown>, options?: RequestOptions): Promise<T> {
+    public put<T>(url: string, body?: Record<string, unknown>, options?: RequestOptions): Promise<T> {
         return this.fetchExtended({ url, method: "PUT", body, options });
     }
 
@@ -70,7 +78,7 @@ export class HttpClient {
         return this.fetchExtended({ url, method: "DELETE", options });
     }
 
-    public getAbsoluteUrl(relativeUrl = "/"): string {
+    private getAbsoluteUrl(relativeUrl = "/"): string {
         return `${this.baseUrl}${relativeUrl}`;
     }
 }
