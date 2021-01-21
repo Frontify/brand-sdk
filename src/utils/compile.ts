@@ -1,15 +1,9 @@
 import { startService } from "esbuild";
 import Logger from "./logger";
 import { join } from "path";
-import { bold } from "chalk";
 
-export const compile = async (
-    blockName: string,
-    entryFileName: string,
-    projectPath: string,
-    distPath: string,
-): Promise<void> => {
-    Logger.info(`Compiling ${bold(blockName)}...`);
+export const compile = async (entryFileName: string, projectPath: string, distPath: string): Promise<void> => {
+    Logger.info(`Compiling...`);
 
     const service = await startService();
 

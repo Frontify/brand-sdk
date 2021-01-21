@@ -28,7 +28,6 @@ export type Setting = {
 };
 
 class DevelopmentServer {
-    private readonly customBlockName: string;
     private readonly customBlockPath: string;
     private readonly customBlockEntryFile: string;
     private readonly customBlockDistPath: string;
@@ -37,13 +36,7 @@ class DevelopmentServer {
 
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(
-        customBlockName = "default",
-        entryFileName = "src/index.tsx",
-        customBlockPath = process.cwd(),
-        port = 5600,
-    ) {
-        this.customBlockName = customBlockName;
+    constructor(entryFileName = "src/index.tsx", customBlockPath = process.cwd(), port = 5600) {
         this.customBlockPath = customBlockPath;
         this.customBlockEntryFile = entryFileName;
         this.customBlockDistPath = join(this.customBlockPath, "dist");
@@ -59,12 +52,7 @@ class DevelopmentServer {
         return watch(
             this.customBlockPath,
             () => {
-                compile(
-                    this.customBlockName,
-                    this.customBlockEntryFile,
-                    this.customBlockPath,
-                    this.customBlockDistPath,
-                );
+                compile(this.customBlockEntryFile, this.customBlockPath, this.customBlockDistPath);
             },
             filesToIgnore,
         );
@@ -167,15 +155,10 @@ class DevelopmentServer {
     }
 }
 
-export const createDevelopmentServer = (
-    customBlockName: string,
-    entryFileName: string,
-    customBlockPath: string,
-    port: number,
-): void => {
+export const createDevelopmentServer = (entryFileName: string, customBlockPath: string, port: number): void => {
     Logger.info("Starting the development server...");
 
-    const developmentServer = new DevelopmentServer(customBlockName, entryFileName, customBlockPath, port);
+    const developmentServer = new DevelopmentServer(entryFileName, customBlockPath, port);
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 

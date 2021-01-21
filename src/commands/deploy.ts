@@ -1,4 +1,3 @@
-import { bold } from "chalk";
 import { join } from "path";
 import Logger from "../utils/logger";
 import { createZip } from "../utils/zip";
@@ -9,13 +8,11 @@ import { getValidInstanceUrl } from "../utils/url";
 
 class CreateDeployment {
     private readonly instanceUrl: string;
-    private readonly customBlockName: string;
     private readonly customBlockPath: string;
     private readonly customBlockOutDir: string;
 
-    constructor(instanceUrl: string, customBlockName = "default", customBlockPath = process.cwd()) {
+    constructor(instanceUrl: string, customBlockPath = process.cwd()) {
         this.instanceUrl = instanceUrl;
-        this.customBlockName = customBlockName;
         this.customBlockPath = customBlockPath;
         this.customBlockOutDir = join(this.customBlockPath, ".frontify", "deploy");
     }
@@ -30,28 +27,20 @@ class CreateDeployment {
             });
         });
 
-        await createZip(
-            this.customBlockPath,
-            join(this.customBlockOutDir, `${this.customBlockName}.zip`),
-            ignoredDirectories,
-        );
+        await createZip(this.customBlockPath, join(this.customBlockOutDir, "custom_block.zip"), ignoredDirectories);
     }
 
     getZipBundleHash(): Promise<string> {
-        return getFileHash(join(this.customBlockOutDir, `${this.customBlockName}.zip`));
+        return getFileHash(join(this.customBlockOutDir, "custom_block.zip"));
     }
 }
 
-export const createDeployment = async (
-    instanceUrl: string,
-    customBlockName: string,
-    customBlockPath: string,
-): Promise<void> => {
-    Logger.info(`Deploying ${bold(customBlockName)}...`);
+export const createDeployment = async (instanceUrl: string, customBlockPath: string): Promise<void> => {
+    Logger.info(`Deploying the custom block...`);
 
     const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
 
-    const deployment = new CreateDeployment(cleanedInstanceUrl, customBlockName, customBlockPath);
+    const deployment = new CreateDeployment(cleanedInstanceUrl, customBlockPath);
 
     const user = await getUser(cleanedInstanceUrl);
 
@@ -61,7 +50,7 @@ export const createDeployment = async (
         await deployment.createZipBundle();
         Logger.info("Generating a hash...");
         const hash = await deployment.getZipBundleHash();
-        Logger.info(`Sending ${bold(customBlockName)} with hash ${hash} to your Frontify instance...`);
+        Logger.info(`Sending custom block with hash ${hash} to your Frontify instance...`);
         //deployment.sendBundle(hash);
     }
 };

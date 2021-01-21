@@ -26,6 +26,13 @@ Example: `my_custom_block`
 frontify-block-cli serve
 ```
 
+Params:
+| Parameters | Description | Type | Default Value |
+| ---------- | ----------- | ---- | ------------- |
+| dir | Directory of the block | string | Current dir |
+| entry | Path to the entry file | string | Entry `main` in package.json |
+| port | Port for the local web server | string | 5600 |
+
 ### Deploy a block
 
 ```bash
