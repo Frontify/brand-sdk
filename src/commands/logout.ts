@@ -1,5 +1,5 @@
 import Logger from "../utils/logger";
-import { Configuration } from "../utils/store";
+import { Configuration } from "../utils/configuration";
 
 export const logoutUser = (): void => {
     Configuration.set("tokens", null);

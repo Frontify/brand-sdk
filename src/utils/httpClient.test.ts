@@ -1,13 +1,13 @@
 import nock from "nock";
 import { HttpClient } from "./httpClient";
 
-const testBaseUrl = "https://test.frontify.com";
+const testBaseUrl = "test.frontify.com";
 
 const bodyObject = { some: "body", told: "me" };
 
 describe("HttpClient utils", () => {
     beforeAll(() => {
-        const testMockApi = nock(testBaseUrl);
+        const testMockApi = nock(`https://${testBaseUrl}`);
         testMockApi.get("/api/get-test").reply(200);
         testMockApi.post("/api/post-test-without-body").reply(200, bodyObject);
         testMockApi.post("/api/post-test-with-body", bodyObject).reply(200, bodyObject);

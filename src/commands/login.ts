@@ -1,36 +1,49 @@
 import Logger from "../utils/logger";
 import Fastify, { FastifyInstance } from "fastify";
 import FastifyCors from "fastify-cors";
-import {
-    getLoginUrl,
-    getOauthCredentialDetails,
-    getRandomCodeChallenge,
-    getUser,
-    OauthRandomCodeChallenge,
-} from "../utils/oauth";
 import open from "open";
-import { Configuration } from "../utils/store";
+import { Configuration } from "../utils/configuration";
 import { exit } from "process";
 import { bold } from "chalk";
+import { getValidInstanceUrl } from "../utils/url";
+import { HttpClient } from "../utils/httpClient";
+import { Headers } from "node-fetch";
+import { getUser } from "../utils/user";
 
 interface Query {
     code: string;
 }
 
-class AuthenticatorServer {
-    private readonly fastifyServer: FastifyInstance;
+export interface OauthRandomCodeChallenge {
+    secret: string;
+    sha256: string;
+}
 
-    private readonly randomChallenge: OauthRandomCodeChallenge;
+export interface OauthAccessTokenApiResponse {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    token_type: string;
+}
+
+export class Authenticator {
+    private readonly instanceUrl: string;
     private readonly port: number;
 
-    constructor(randomChallenge: OauthRandomCodeChallenge, port = 5601) {
-        this.randomChallenge = randomChallenge;
+    private readonly httpClient: HttpClient;
+    private readonly fastifyServer: FastifyInstance;
+
+    private randomChallenge: OauthRandomCodeChallenge | undefined;
+
+    constructor(instanceUrl: string, port = 5601) {
+        this.instanceUrl = instanceUrl;
         this.port = port;
 
+        this.httpClient = new HttpClient(instanceUrl);
         this.fastifyServer = Fastify();
     }
 
-    serve(): void {
+    serveCallbackServer(): void {
         this.registerPlugins();
         this.registerRoutes();
 
@@ -42,13 +55,12 @@ class AuthenticatorServer {
             Logger.info("Access granted, getting access token...");
             res.send("You can close this window.");
 
-            const tokens = await getOauthCredentialDetails(this.randomChallenge.secret, req.query.code);
+            const tokens = await this.getOauthCredentialDetails(req.query.code);
             Logger.info("Tokens received, storing tokens...");
             Configuration.set("tokens", tokens);
 
-            const user = await getUser();
-
-            user && Logger.info(`${bold(`Welcome back ${user.name}!`)}`);
+            const user = await getUser(this.instanceUrl);
+            user && Logger.info(`${bold(`Welcome back ${user.name} (${this.instanceUrl})!`)}`);
 
             exit(0);
         });
@@ -57,15 +69,75 @@ class AuthenticatorServer {
     registerPlugins(): void {
         this.fastifyServer.register(FastifyCors);
     }
+
+    async storeRandomCodeChallenge(): Promise<void> {
+        try {
+            const randomCodeChallenge = await this.httpClient.get<{ data: OauthRandomCodeChallenge }>(
+                "/api/oauth/random",
+            );
+            this.randomChallenge = randomCodeChallenge.data;
+        } catch {
+            throw new Error("An error occured while getting the random challenge.");
+        }
+    }
+
+    getLoginUrl(): string {
+        if (!this.randomChallenge) {
+            throw new Error("Random challenge needs to be defined");
+        }
+
+        const queryParams = [
+            "response_type=code",
+            "client_id=block-cli",
+            "redirect_uri=http://localhost:5600/oauth",
+            "scope=basic:read%2Bblocks:read%2Bblocks:write",
+            `code_challenge=${this.randomChallenge.sha256}`,
+            "code_challenge_method=S256",
+        ].join("&");
+
+        return `https://${this.instanceUrl}/api/oauth/authorize?${queryParams}`;
+    }
+
+    async getOauthCredentialDetails(authorizationCode: string): Promise<OauthAccessTokenApiResponse> {
+        if (!this.randomChallenge) {
+            throw new Error("Random challenge needs to be defined");
+        }
+
+        const headers = new Headers({
+            "Content-Type": "application/json",
+        });
+
+        try {
+            const tokens = await this.httpClient.post<OauthAccessTokenApiResponse>(
+                "/api/oauth/accesstoken",
+                {
+                    grant_type: "authorization_code",
+                    client_id: "block-cli",
+                    redirect_uri: "http://localhost:5600/oauth",
+                    scope: "basic:read%2Bblocks:read%2Bblocks:write",
+                    code_verifier: this.randomChallenge.secret,
+                    code: authorizationCode,
+                },
+                {
+                    headers,
+                },
+            );
+
+            return tokens;
+        } catch (error) {
+            throw new Error(`An error occured while getting tokens: ${error.message}`);
+        }
+    }
 }
 
-export const logUser = async (port: number): Promise<void> => {
-    const randomChallenge = await getRandomCodeChallenge();
+export const logUser = async (instanceUrl: string, port: number): Promise<void> => {
+    const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
 
-    const developmentServer = new AuthenticatorServer(randomChallenge, port);
-    developmentServer.serve();
+    const authenticator = new Authenticator(cleanedInstanceUrl, port);
+    authenticator.serveCallbackServer();
+    await authenticator.storeRandomCodeChallenge();
 
-    const loginUrl = getLoginUrl(randomChallenge.sha256);
+    const loginUrl = authenticator.getLoginUrl();
 
     Logger.info("Opening OAuth login page...");
     await open(loginUrl);
