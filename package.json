@@ -1,6 +1,6 @@
 {
   "name": "frontify-block-cli",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "./dist/main.js",
   "bin": {
     "frontify-block-cli": "dist/main.js"
@@ -17,7 +17,8 @@
     "lint": "eslint 'src/**/*.ts' --quiet --fix",
     "lint:no-fix": "eslint '*/**/*.ts'",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
+    "prepublishOnly": "pinst --disable && npm test && npm run lint",
+    "postpublish": "pinst --enable",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
     "postinstall": "husky install"
