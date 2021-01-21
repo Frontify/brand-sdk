@@ -12,4 +12,8 @@ export class Configuration {
     static get(key: string): unknown {
         return this.conf.get(key);
     }
+
+    static delete(key: string): unknown {
+        return this.conf.delete(key);
+    }
 }

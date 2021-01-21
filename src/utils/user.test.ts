@@ -4,7 +4,7 @@ import { getUser } from "./user";
 
 const testBaseUrl = "test.frontify.com";
 
-const storedTokens = {
+const dummyTokens = {
     tokens: {
         token_type: "Bearer",
         expires_in: 2592000,
@@ -15,7 +15,7 @@ const storedTokens = {
 
 const getUserApiResponse = {
     data: {
-        current_user: storedTokens,
+        current_user: dummyTokens,
     },
 };
 
@@ -31,8 +31,8 @@ describe("User utils", () => {
         it("should get user object", async () => {
             //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
             const oldTokens = Configuration.get("tokens") || {};
-            Configuration.set("tokens", storedTokens.tokens);
-            expect(await getUser(testBaseUrl)).toEqual(storedTokens);
+            Configuration.set("tokens", dummyTokens.tokens);
+            expect(await getUser(testBaseUrl)).toEqual(dummyTokens);
             Configuration.set("tokens", oldTokens);
         });
     });
