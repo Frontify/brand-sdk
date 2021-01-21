@@ -131,7 +131,12 @@ export class Authenticator {
 }
 
 export const logUser = async (instanceUrl: string, port: number): Promise<void> => {
-    const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+    let cleanedInstanceUrl: string;
+    try {
+        cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+    } catch {
+        throw new Error("You need to give a Frontify instance URL");
+    }
 
     const authenticator = new Authenticator(cleanedInstanceUrl, port);
     authenticator.serveCallbackServer();

@@ -38,7 +38,12 @@ class CreateDeployment {
 export const createDeployment = async (instanceUrl: string, customBlockPath: string): Promise<void> => {
     Logger.info(`Deploying the custom block...`);
 
-    const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+    let cleanedInstanceUrl: string;
+    try {
+        cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+    } catch {
+        throw new Error("You need to give a Frontify instance URL");
+    }
 
     const deployment = new CreateDeployment(cleanedInstanceUrl, customBlockPath);
 
