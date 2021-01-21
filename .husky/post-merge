@@ -1,2 +1,0 @@
-echo "\\x1b[32mBuilding package\\x1b[0m"
-npm run build
