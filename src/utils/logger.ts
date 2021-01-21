@@ -3,7 +3,7 @@ import { getCurrentTime } from "./date";
 
 export default class Logger {
     static defaultInfo(...messages: string[]): void {
-        console.log(...messages);
+        console.log(Logger.spacer(11), ...messages);
     }
 
     static info(...messages: string[]): void {
@@ -15,6 +15,6 @@ export default class Logger {
     }
 
     static spacer(width: number): string {
-        return Array(width).join(" ");
+        return Array(width + 1).join(" ");
     }
 }

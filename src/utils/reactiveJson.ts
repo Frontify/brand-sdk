@@ -1,7 +1,7 @@
 import Logger from "./logger";
-import { writeFile, readFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 
-export const ReactiveJson = (path: string): Record<string, unknown> => {
+export const reactiveJson = (path: string): Record<string, unknown> => {
     try {
         const jsonRaw = readFileSync(path, "utf8");
         const jsonParsed = JSON.parse(jsonRaw);
@@ -12,9 +12,7 @@ export const ReactiveJson = (path: string): Record<string, unknown> => {
 
                 const jsonString = JSON.stringify(obj, null, "\t");
 
-                writeFile(path, jsonString, function (err) {
-                    if (err) return Logger.error(`An error occured while writing the file.`);
-                });
+                writeFileSync(path, jsonString);
 
                 return true;
             },

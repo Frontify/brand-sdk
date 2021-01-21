@@ -27,7 +27,7 @@ printLogo();
 
     const user = await getUser();
 
-    user && console.log(`${Logger.spacer(12)}${bold(`Welcome back ${user.name}!`)}`);
+    user && Logger.defaultInfo(`${bold(`Welcome back ${user.name}!`)}`);
 
     switch (parseArgs._[0]) {
         case "serve":
