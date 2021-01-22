@@ -11,7 +11,7 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
         await service.build({
             color: true,
             entryPoints: [join(projectPath, entryFileName)],
-            outfile: `${distPath}/index.js`,
+            outfile: join(distPath, "index.js"),
             //minify: true,
             bundle: true,
             sourcemap: true,
