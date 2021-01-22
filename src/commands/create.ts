@@ -56,7 +56,7 @@ class CreateProject {
     }
 
     updatePackageJsonProjectName(): void {
-        Logger.info(`Renaming boilerplate to ${bold(this.projectName)}.`);
+        Logger.info(`Renaming boilerplate package to ${bold(this.projectName)}.`);
 
         const packageJsonPath = resolve(this.projectPath, "package.json");
         const packageJson = reactiveJson(packageJsonPath);
@@ -76,7 +76,7 @@ export const createNewProject = async (projectName: string): Promise<void> => {
         const projectPath = `./${projectName}`;
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}Project ready!`);
-        Logger.defaultInfo(`${Logger.spacer(11)}You can now "cd ${blue(projectPath)}" to access the project.`);
-        Logger.defaultInfo(`${Logger.spacer(11)}Happy hacking!`);
+        Logger.defaultInfo(`You can now "cd ${blue(projectPath)}" to access the project.`);
+        Logger.defaultInfo("Happy hacking!");
     }
 };
