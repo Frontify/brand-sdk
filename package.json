@@ -19,10 +19,9 @@
     "lint:no-fix": "eslint '*/**/*.ts'",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "preversion": "npm run lint",
     "version": "npm run format && git add -A src"
   },
-  "author": "Frontify <support@frontify.com>",
+  "author": "Frontify Developers <developers@frontify.com>",
   "dependencies": {
     "archiver": "^5.2.0",
     "chalk": "^4.1.0",
