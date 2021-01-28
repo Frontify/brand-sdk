@@ -15,8 +15,8 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
             //minify: true,
             bundle: true,
             sourcemap: true,
-            inject: [join("node_modules", "frontify-block-cli", "src", "shims", "react.js")],
-            external: ["react"],
+            inject: [join("node_modules", "frontify-block-cli", "src", "shims.js")],
+            external: ["react", "quill"],
             define: {
                 "process.env.NODE_ENV": "development",
             },
