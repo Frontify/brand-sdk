@@ -12,7 +12,6 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
             color: true,
             entryPoints: [join(projectPath, entryFileName)],
             outfile: join(distPath, "index.js"),
-            //minify: true,
             bundle: true,
             sourcemap: true,
             inject: [join("node_modules", "frontify-block-cli", "src", "shims.js")],
@@ -20,7 +19,7 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
             define: {
                 "process.env.NODE_ENV": "development",
             },
-            tsconfig: join(projectPath, "tsconfig.json"), // Use tsconfig from the project
+            tsconfig: join(projectPath, "tsconfig.json"),
             logLevel: "error",
             target: ["chrome58", "firefox57", "safari11", "edge16"],
             globalName: `DevCustomBlock`,

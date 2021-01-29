@@ -2,10 +2,12 @@ import archiver from "archiver";
 import { createWriteStream } from "fs";
 
 export const createZip = (path: string, pathOut: string, ignored: string[] = []): Promise<void> => {
-    const archive = archiver("zip", { zlib: { level: 9 } });
-    const stream = createWriteStream(pathOut);
-
     return new Promise((resolve, reject): void => {
+        const archive = archiver("zip", { zlib: { level: 9 } });
+
+        const stream = createWriteStream(pathOut);
+        stream.on("close", () => resolve());
+
         archive
             .glob("**", {
                 cwd: path,
@@ -14,7 +16,6 @@ export const createZip = (path: string, pathOut: string, ignored: string[] = [])
             .on("error", (error) => reject(error))
             .pipe(stream);
 
-        stream.on("close", () => resolve());
         archive.finalize();
     });
 };

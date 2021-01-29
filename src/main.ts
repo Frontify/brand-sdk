@@ -8,7 +8,7 @@ import { createNewProject } from "./commands/create";
 import { createDeployment } from "./commands/deploy";
 import { createDevelopmentServer } from "./commands/serve";
 import { printLogo } from "./utils/logo";
-import { logUser } from "./commands/login";
+import { loginUser } from "./commands/login";
 import { logoutUser } from "./commands/logout";
 
 const parseArgs = minimist(process.argv.slice(2));
@@ -34,13 +34,13 @@ printLogo();
             createDeployment(instanceUrl, customBlockPath);
             break;
         case "login":
-            await logUser(instanceUrl, port);
+            await loginUser(instanceUrl, port);
             break;
         case "logout":
             logoutUser();
             break;
         default:
             Logger.error("This command is not yet handled");
-            exit(0);
+            exit(1);
     }
 })();
