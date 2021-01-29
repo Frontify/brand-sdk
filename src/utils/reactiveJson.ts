@@ -7,8 +7,8 @@ export const reactiveJson = (path: string): Record<string, unknown> => {
         const jsonParsed = JSON.parse(jsonRaw);
 
         return new Proxy(jsonParsed, {
-            set: (obj, prop, valeur) => {
-                obj[prop] = valeur;
+            set: (obj, prop, value) => {
+                obj[prop] = value;
 
                 const jsonString = JSON.stringify(obj, null, "\t");
 

@@ -97,7 +97,7 @@ class DevelopmentServer {
                         try {
                             const settingsJson = this.getSettings();
 
-                            Logger.info("Notify browser of updated settings");
+                            Logger.info("Notifying browser of updated settings");
 
                             connection.socket.send(
                                 JSON.stringify({
@@ -162,5 +162,5 @@ export const createDevelopmentServer = (entryFileName: string, customBlockPath: 
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 
-    Logger.info(`Development server listen on port ${port}!`);
+    Logger.info(`Development server is listening on port ${port}!`);
 };

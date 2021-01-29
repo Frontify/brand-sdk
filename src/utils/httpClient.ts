@@ -15,7 +15,7 @@ interface FetchParameters {
 export class HttpClient {
     private readonly baseUrl: string;
 
-    constructor(baseUrl = "") {
+    constructor(baseUrl: string) {
         this.baseUrl = baseUrl.replace(/^https?:\/\//, "");
     }
 
@@ -82,7 +82,7 @@ export class HttpClient {
         return this.fetchExtended({ url, method: "DELETE", options });
     }
 
-    private getAbsoluteUrl(relativeUrl = "/"): string {
+    private getAbsoluteUrl(relativeUrl: string): string {
         return `https://${this.baseUrl}${relativeUrl}`;
     }
 }

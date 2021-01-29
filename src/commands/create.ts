@@ -47,7 +47,7 @@ class CreateProject {
         }
     }
 
-    async installDeps(): Promise<void> {
+    async installDependencies(): Promise<void> {
         Logger.info(`Installing dependencies with ${bold("npm install")}.`);
 
         await promiseExec("npm install", { cwd: this.projectPath }).catch((error) => {
@@ -71,7 +71,7 @@ export const createNewProject = async (projectName: string): Promise<void> => {
     if (createNewProject.validProjectName()) {
         await createNewProject.cloneBoilerplate();
         createNewProject.updatePackageJsonProjectName();
-        await createNewProject.installDeps();
+        await createNewProject.installDependencies();
 
         const projectPath = `./${projectName}`;
 
