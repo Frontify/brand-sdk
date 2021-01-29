@@ -38,24 +38,23 @@ class CreateDeployment {
 export const createDeployment = async (instanceUrl: string, customBlockPath: string): Promise<void> => {
     Logger.info(`Deploying the custom block...`);
 
-    let cleanedInstanceUrl: string;
     try {
-        cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+        const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+        const deployment = new CreateDeployment(cleanedInstanceUrl, customBlockPath);
+
+        const user = await getUser(cleanedInstanceUrl);
+
+        if (user) {
+            Logger.info(`You are logged in as ${user.name} (${cleanedInstanceUrl}).`);
+            Logger.info("Creating a zip bundle...");
+            await deployment.createZipBundle();
+            Logger.info("Generating a hash...");
+            const hash = await deployment.getZipBundleHash();
+            Logger.info(`Sending custom block with hash ${hash} to your Frontify instance...`);
+            //TODO: this will come in the future with the build server
+            //deployment.sendBundle(hash);
+        }
     } catch {
         throw new Error("You need to give a Frontify instance URL");
-    }
-
-    const deployment = new CreateDeployment(cleanedInstanceUrl, customBlockPath);
-
-    const user = await getUser(cleanedInstanceUrl);
-
-    if (user) {
-        Logger.info(`You are logged in as ${user.name} (${cleanedInstanceUrl}).`);
-        Logger.info("Creating a zip bundle...");
-        await deployment.createZipBundle();
-        Logger.info("Generating a hash...");
-        const hash = await deployment.getZipBundleHash();
-        Logger.info(`Sending custom block with hash ${hash} to your Frontify instance...`);
-        //deployment.sendBundle(hash);
     }
 };
