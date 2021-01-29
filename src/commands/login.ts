@@ -35,7 +35,7 @@ export class Authenticator {
 
     private randomChallenge: OauthRandomCodeChallenge | undefined;
 
-    constructor(instanceUrl: string, port = 5601) {
+    constructor(instanceUrl: string, port = 5600) {
         this.instanceUrl = instanceUrl;
         this.port = port;
 
@@ -50,7 +50,7 @@ export class Authenticator {
         this.fastifyServer.listen(this.port);
     }
 
-    registerRoutes(): void {
+    private registerRoutes(): void {
         this.fastifyServer.get<{ Querystring: Query }>("/oauth", async (req, res) => {
             Logger.info("Access granted, getting access token...");
             res.send("You can close this window.");
@@ -66,7 +66,7 @@ export class Authenticator {
         });
     }
 
-    registerPlugins(): void {
+    private registerPlugins(): void {
         this.fastifyServer.register(FastifyCors);
     }
 
@@ -113,7 +113,7 @@ export class Authenticator {
                 {
                     grant_type: "authorization_code",
                     client_id: "block-cli",
-                    redirect_uri: "http://localhost:5600/oauth",
+                    redirect_uri: `http://localhost:5600/oauth`,
                     scope: "basic:read%2Bblocks:read%2Bblocks:write",
                     code_verifier: this.randomChallenge.secret,
                     code: authorizationCode,
@@ -130,20 +130,18 @@ export class Authenticator {
     }
 }
 
-export const logUser = async (instanceUrl: string, port: number): Promise<void> => {
-    let cleanedInstanceUrl: string;
+export const loginUser = async (instanceUrl: string, port: number): Promise<void> => {
     try {
-        cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+        const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
+        const authenticator = new Authenticator(cleanedInstanceUrl, port);
+        authenticator.serveCallbackServer();
+        await authenticator.storeRandomCodeChallenge();
+
+        const loginUrl = authenticator.getLoginUrl();
+
+        Logger.info("Opening OAuth login page...");
+        await open(loginUrl);
     } catch {
         throw new Error("You need to give a Frontify instance URL");
     }
-
-    const authenticator = new Authenticator(cleanedInstanceUrl, port);
-    authenticator.serveCallbackServer();
-    await authenticator.storeRandomCodeChallenge();
-
-    const loginUrl = authenticator.getLoginUrl();
-
-    Logger.info("Opening OAuth login page...");
-    await open(loginUrl);
 };
