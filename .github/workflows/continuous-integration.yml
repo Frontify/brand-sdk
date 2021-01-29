@@ -6,7 +6,7 @@ on:
             - main
 
 jobs:
-    cypress-test:
+    continuous-integration:
         runs-on: ubuntu-latest
 
         steps:
