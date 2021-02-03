@@ -1,10 +1,3 @@
 module.exports = {
-    parser: "@typescript-eslint/parser",
-
-    parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: "module",
-    },
-
-    extends: ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
+    extends: ["@frontify/eslint-config-typescript", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
 };
