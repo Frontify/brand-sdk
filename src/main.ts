@@ -17,14 +17,14 @@ printLogo();
 
 (async () => {
     const customBlockPath = parseArgs.dir || process.cwd();
-    const customBlockPackageJson = await import(path.join(customBlockPath, "package.json"));
-    const entryFileName = parseArgs.entry || customBlockPackageJson.main || "src/index.tsx";
     const port = parseArgs.port || 5600;
     const projectName = parseArgs._[1] || "";
     const instanceUrl = parseArgs._[1] || process.env.INSTANCE_URL || "";
 
     switch (parseArgs._[0]) {
         case "serve":
+            const customBlockPackageJson = await import(path.join(customBlockPath, "package.json"));
+            const entryFileName = parseArgs.entry || customBlockPackageJson.main || "src/index.tsx";
             createDevelopmentServer(entryFileName, customBlockPath, port);
             break;
         case "create":
