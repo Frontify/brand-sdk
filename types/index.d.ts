@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export interface FrontifyAsset {
+export interface Asset {
     download_url: string;
     generic_url: string;
     id: number;
@@ -21,11 +21,11 @@ export interface AssetChooserOptions {
 export interface AssetChooserResult {
     collectionData: any[];
     externalData: { id: number; action: { id: string; data?: any } };
-    screenData: FrontifyAsset[];
+    screenData: Asset[];
     screenIds: number[];
 }
 
-export interface FrontifyAssetChooser {
+export interface AssetChooser {
     open: (assetChooserOptions: AssetChooserOptions, action: { id: string; data?: any }) => void;
     chosen: (data: AssetChooserResult) => void;
 }
