@@ -44,5 +44,5 @@ export interface Editor {
 }
 
 export interface HttpClient {
-    get: (url: string, options?: any) => Promise<any>;
+    get: <T>(url: string, options?: Record<string, unknown>) => Promise<T>;
 }
