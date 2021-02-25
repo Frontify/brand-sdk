@@ -26,7 +26,7 @@ export interface AssetChooserResult {
 }
 
 export interface AssetChooser {
-    open: (assetChooserOptions: AssetChooserOptions, action: { id: string; data?: any }) => void;
+    open: (assetChooserOptions?: AssetChooserOptions, action?: { id: string; data?: any }) => void;
     chosen: (data: AssetChooserResult) => void;
 }
 
