@@ -15,7 +15,7 @@ export interface AssetChooserFilter {
 
 export interface AssetChooserOptions {
     filters: AssetChooserFilter[];
-    multiSelectionAllowed: boolean;
+    multiSelectionAllowed?: boolean;
 }
 
 export interface AssetChooserResult {
