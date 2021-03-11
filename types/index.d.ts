@@ -46,3 +46,13 @@ export interface Editor {
 export interface HttpClient {
     get: <T>(url: string, options?: Record<string, unknown>) => Promise<T>;
 }
+
+export interface FrontifyProps {
+    blockId: number;
+    blockSettings: Record<string, unknown>;
+    assetChooser: AssetChooser;
+    updateSettings: (updatedCustomBlockSettings: Record<string, unknown>) => void;
+    editor: Editor;
+    httpClient: HttpClient;
+    context: Context;
+}
