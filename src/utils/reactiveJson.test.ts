@@ -8,12 +8,12 @@ const testObject = JSON.parse(testString);
 const expectedString = '{\n\t"some": "one",\n\t"told": "me"\n}';
 const expectedObject = JSON.parse(expectedString);
 
-const fileTestPath = "./frontify-block-cli/someObject.json";
+const fileTestPath = "./frontify-cli/someObject.json";
 
 describe("Reactive JSON utils", () => {
     beforeEach(() => {
         mockFs({
-            "frontify-block-cli": {
+            "frontify-cli": {
                 "someObject.json": testString,
             },
         });

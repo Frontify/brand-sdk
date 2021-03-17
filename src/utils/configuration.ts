@@ -2,7 +2,7 @@ import Conf from "conf";
 
 export class Configuration {
     private static readonly conf = new Conf({
-        projectName: "frontify-block-cli",
+        projectName: "frontify-cli",
     });
 
     static set(key: string, value: unknown): void {
