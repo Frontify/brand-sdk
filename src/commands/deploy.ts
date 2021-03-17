@@ -55,6 +55,6 @@ export const createDeployment = async (instanceUrl: string, customBlockPath: str
             //deployment.sendBundle(hash);
         }
     } catch {
-        throw new Error("You need to give a Frontify instance URL");
+        Logger.error("You need to give a Frontify instance URL");
     }
 };

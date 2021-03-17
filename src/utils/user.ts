@@ -23,7 +23,7 @@ export const getUser = async (instanceUrl: string): Promise<UserInfo | undefined
         );
         return user.data.current_user;
     } catch {
-        Logger.error(`You are not logged in, you can use the command ${bold("frontify-block-cli login")}.`);
+        Logger.error(`You are not logged in, you can use the command ${bold("frontify-cli login")}.`);
         return undefined;
     }
 };

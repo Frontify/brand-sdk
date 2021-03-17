@@ -21,7 +21,7 @@ export class HttpClient {
 
     private async fetchExtended({ method, url, body, options }: FetchParameters) {
         const agent = new https.Agent({
-            rejectUnauthorized: process.env.NODE_ENV !== "development",
+            rejectUnauthorized: false,
         });
 
         const headers = new Headers({

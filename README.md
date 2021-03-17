@@ -1,29 +1,29 @@
-# Frontify Block CLI
+# Frontify CLI
 
 ## Installation
 
 ```bash
-npm install -g Frontify/frontify-block-cli
+npm install -g @frontify/frontify-cli
 # Or
-yarn global add Frontify/frontify-block-cli
+yarn global add @frontify/frontify-cli
 ```
 
-## Commands
+## Blocks
 
-### Create a block
+### Create
 
 ```bash
-frontify-block-cli create <block name>
+frontify-cli block create <block name>
 ```
 
 The block name needs to be lowercase, spaces are not allowed but you can use an underscore instead.
 
 Example: `my_custom_block`
 
-### Serve the block
+### Serve
 
 ```bash
-frontify-block-cli serve
+frontify-cli block serve
 ```
 
 Params:
@@ -33,10 +33,10 @@ Params:
 | entry | Path to the entry file | string | Entry `main` in package.json |
 | port | Port for the local web server | string | 5600 |
 
-### Deploy a block
+### Deploy
 
 ```bash
-frontify-block-cli deploy <Frontify URL>
+frontify-cli block deploy --instance=<Frontify URL>
 ```
 
 The Frontify URL represent your instance URL.
@@ -48,7 +48,7 @@ Example: `weare.frontify.com` or `https://weare.frontify.com`
 ### Login
 
 ```bash
-frontify-block-cli login <Frontify URL>
+frontify-cli login --instance=<Frontify URL>
 ```
 
 The Frontify URL represent your instance URL.
@@ -58,9 +58,9 @@ Example: `weare.frontify.com` or `https://weare.frontify.com`
 ### Logout
 
 ```bash
-frontify-block-cli logout
+frontify-cli logout
 ```
 
 ## Configuration
 
-macOS: `~/Library/Preferences/frontify-block-cli-nodejs`
+macOS: `~/Library/Preferences/frontify-cli-nodejs`
