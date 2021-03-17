@@ -17,7 +17,7 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
             inject: [join("node_modules", "frontify-cli", "src", "shims.js")],
             external: ["react", "quill"],
             define: {
-                "process.env.NODE_ENV": "development",
+                "process.env.NODE_ENV": '"development"',
             },
             tsconfig: join(projectPath, "tsconfig.json"),
             logLevel: "error",
