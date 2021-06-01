@@ -41,10 +41,12 @@ printLogo();
 
         case "login":
             await loginUser(instanceUrl, port);
-            break;
+            exit(1);
+
         case "logout":
             logoutUser();
-            break;
+            exit(1);
+
         default:
             Logger.error("This command is not yet handled");
             exit(1);
