@@ -6,3 +6,9 @@ export const cloneTo = async (gitUrl: string, folderName: string): Promise<void>
         Logger.error("Error while cloning the boilerplate:", error.message);
     });
 };
+
+export const initRepository = async (): Promise<void> => {
+    await promiseExec(`git init && git add .`).catch((error) => {
+        Logger.error("Error while initializing the repository:", error.message);
+    });
+};
