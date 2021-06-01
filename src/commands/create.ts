@@ -1,82 +1,41 @@
-import { bold, blue } from "chalk";
+import { blue, bold } from "chalk";
 import Logger from "../utils/logger";
-import { join, resolve } from "path";
-import { readdirSync } from "fs";
-import { promiseExec } from "../utils/promiseExec";
-import { reactiveJson } from "../utils/reactiveJson";
+import { isDirectoryEmpty } from "../utils/file";
+import { cloneTo } from "../utils/git";
+import { installDependencies, updatePackageJsonProjectName } from "../utils/npm";
 
-class CreateProject {
-    private readonly boilerplateGitUrl = "git@github.com:Frontify/frontify-block-boilerplate.git";
-    private readonly projectName: string;
-    private readonly projectPath: string;
+const CUSTOM_BLOCK_BOILERPLATE_GIT_URL = "git@github.com:Frontify/frontify-block-boilerplate.git";
 
-    constructor(projectName: string) {
-        this.projectName = projectName;
-        this.projectPath = join(process.cwd(), this.projectName);
+const isValidProjectName = (folderName: string): boolean => {
+    if (!folderName) {
+        Logger.error("The project name could not be empty.");
+        return false;
+    } else if (!/^[a-z_]+$/.test(folderName)) {
+        Logger.error('The project name needs to be "a-z" separated by "_".');
+        return false;
+    } else if (!isDirectoryEmpty(folderName)) {
+        Logger.error(`The directory ./${folderName} already exist.`);
+        return false;
+    } else {
+        return true;
     }
-
-    validProjectName(): boolean {
-        if (!this.projectName) {
-            Logger.error("The project name could not be empty.");
-            return false;
-        } else if (!/^[a-z_]+$/.test(this.projectName)) {
-            Logger.error('The project name needs to be "a-z" separated by "_".');
-            return false;
-        } else if (!this.isDirectoryEmpty(this.projectPath)) {
-            Logger.error(`The directory ./${this.projectName} already exist.`);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    async cloneBoilerplate(): Promise<void> {
-        const projectPath = `./${this.projectName}`;
-        Logger.info(`Cloning boilerplate to ${blue(projectPath)}.`);
-
-        await promiseExec(`git clone ${this.boilerplateGitUrl} ${this.projectName}`).catch((error) => {
-            Logger.error("Error while cloning the boilerplate:", error.message);
-        });
-    }
-
-    isDirectoryEmpty(path: string): boolean {
-        try {
-            return readdirSync(path).length === 0;
-        } catch {
-            return true;
-        }
-    }
-
-    async installDependencies(): Promise<void> {
-        Logger.info(`Installing dependencies with ${bold("npm install")}.`);
-
-        await promiseExec("npm install", { cwd: this.projectPath }).catch((error) => {
-            Logger.error(`Could not install dependencies:`, error.message);
-        });
-    }
-
-    updatePackageJsonProjectName(): void {
-        Logger.info(`Renaming boilerplate package to ${bold(this.projectName)}.`);
-
-        const packageJsonPath = resolve(this.projectPath, "package.json");
-        const packageJson = reactiveJson(packageJsonPath);
-        packageJson.name = this.projectName;
-    }
-}
+};
 
 export const createNewProject = async (projectName: string): Promise<void> => {
     Logger.info("Creating a new block...");
 
-    const createNewProject = new CreateProject(projectName);
-    if (createNewProject.validProjectName()) {
-        await createNewProject.cloneBoilerplate();
-        createNewProject.updatePackageJsonProjectName();
-        await createNewProject.installDependencies();
+    if (isValidProjectName(projectName)) {
+        Logger.info(`Cloning boilerplate to ${blue(`./${projectName}`)}.`);
+        await cloneTo(CUSTOM_BLOCK_BOILERPLATE_GIT_URL, projectName);
 
-        const projectPath = `./${projectName}`;
+        Logger.info(`Renaming boilerplate package to ${bold(projectName)}.`);
+        updatePackageJsonProjectName(projectName);
+
+        Logger.info(`Installing dependencies with ${bold("npm install")}.`);
+        await installDependencies(projectName);
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}Project ready!`);
-        Logger.defaultInfo(`You can now "cd ${blue(projectPath)}" to access the project.`);
+        Logger.defaultInfo(`You can now run "cd ${blue(`./${projectName}`)}" to access the project.`);
         Logger.defaultInfo("Happy hacking!");
     }
 };
