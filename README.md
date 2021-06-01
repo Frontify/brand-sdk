@@ -1,5 +1,9 @@
 # Frontify CLI
 
+## Prerequisite
+
+- Node >=14
+
 ## Installation
 
 ```bash
