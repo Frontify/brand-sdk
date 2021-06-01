@@ -22,9 +22,9 @@ const isValidProjectName = (folderName: string): boolean => {
 };
 
 export const createNewProject = async (projectName: string): Promise<void> => {
-    Logger.info("Creating a new block...");
-
     if (isValidProjectName(projectName)) {
+        Logger.info("Creating a new block...");
+
         Logger.info(`Cloning boilerplate to ${blue(`./${projectName}`)}.`);
         await cloneTo(CUSTOM_BLOCK_BOILERPLATE_GIT_URL, projectName);
 
