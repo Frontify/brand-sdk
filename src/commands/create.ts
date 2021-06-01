@@ -1,6 +1,6 @@
 import { blue, bold } from "chalk";
 import Logger from "../utils/logger";
-import { isDirectoryEmpty } from "../utils/file";
+import { deleteDirectory, isDirectoryEmpty } from "../utils/file";
 import { cloneTo } from "../utils/git";
 import { installDependencies, updatePackageJsonProjectName } from "../utils/npm";
 
@@ -27,6 +27,8 @@ export const createNewProject = async (projectName: string): Promise<void> => {
     if (isValidProjectName(projectName)) {
         Logger.info(`Cloning boilerplate to ${blue(`./${projectName}`)}.`);
         await cloneTo(CUSTOM_BLOCK_BOILERPLATE_GIT_URL, projectName);
+
+        deleteDirectory(`./${projectName}/.git`);
 
         Logger.info(`Renaming boilerplate package to ${bold(projectName)}.`);
         updatePackageJsonProjectName(projectName);
