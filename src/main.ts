@@ -10,7 +10,6 @@ import { createDevelopmentServer } from "./commands/serve";
 import { printLogo } from "./utils/logo";
 import { loginUser } from "./commands/login";
 import { logoutUser } from "./commands/logout";
-import { Configuration } from "./utils/configuration";
 
 const parseArgs = minimist(process.argv.slice(2));
 
