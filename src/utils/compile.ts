@@ -1,6 +1,7 @@
 import { startService } from "esbuild";
 import Logger from "./logger";
 import { join } from "path";
+import CompilationFailedError from "../errors/CompilationFailedError";
 
 interface Options {
     distPath?: string;
@@ -39,8 +40,8 @@ export const compile = async (
         });
 
         Logger.info("Compiled successfully!");
-    } catch (e) {
-        Logger.error("An error occured", e);
+    } catch (error) {
+        throw new CompilationFailedError(error);
     } finally {
         service.stop();
     }
