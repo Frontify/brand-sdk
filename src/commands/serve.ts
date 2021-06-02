@@ -52,7 +52,9 @@ class DevelopmentServer {
         return watch(
             this.customBlockPath,
             () => {
-                compile(this.customBlockEntryFile, this.customBlockPath, this.customBlockDistPath);
+                compile(this.customBlockPath, this.customBlockEntryFile, "DevCustomBlock", {
+                    distPath: this.customBlockDistPath,
+                });
             },
             filesToIgnore,
         );
