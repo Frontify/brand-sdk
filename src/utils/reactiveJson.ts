@@ -1,5 +1,6 @@
-import Logger from "./logger";
 import { writeFileSync, readFileSync } from "fs";
+import ParseJsonError from "../errors/ParseJsonError";
+import FileNotFoundError from "../errors/FileNotFoundError";
 
 export const reactiveJson = <T>(path: string): T => {
     try {
@@ -19,9 +20,9 @@ export const reactiveJson = <T>(path: string): T => {
         });
     } catch (error) {
         if (error instanceof SyntaxError) {
-            Logger.error(`An error occured while parsing the file.`);
-        } else {
-            Logger.error("An unknown error occured:", error);
+            throw new ParseJsonError(path);
+        } else if (error.code === "ENOENT") {
+            throw new FileNotFoundError(path);
         }
 
         throw new Error(error);
