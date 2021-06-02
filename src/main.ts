@@ -10,6 +10,7 @@ import { createDevelopmentServer } from "./commands/serve";
 import { printLogo } from "./utils/logo";
 import { loginUser } from "./commands/login";
 import { logoutUser } from "./commands/logout";
+import { Configuration } from "./utils/configuration";
 
 const parseArgs = minimist(process.argv.slice(2));
 
@@ -17,7 +18,7 @@ printLogo();
 
 (async () => {
     const port = parseArgs.port || 5600;
-    const instanceUrl = parseArgs.instance || process.env.INSTANCE_URL || "";
+    const instanceUrl = parseArgs.instance || process.env.INSTANCE_URL;
 
     switch (parseArgs._[0]) {
         case "block":
@@ -34,14 +35,14 @@ printLogo();
                     createNewProject(projectName);
                     break;
                 case "deploy":
-                    createDeployment(instanceUrl, customBlockPath);
+                    createDeployment(instanceUrl, "block", "custom_block", "src/index.tsx", "dist");
                     break;
             }
             break;
 
         case "login":
             await loginUser(instanceUrl, port);
-            exit(1);
+            break;
 
         case "logout":
             logoutUser();
