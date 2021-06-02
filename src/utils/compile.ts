@@ -1,5 +1,4 @@
 import { startService } from "esbuild";
-import Logger from "./logger";
 import { join } from "path";
 import CompilationFailedError from "../errors/CompilationFailedError";
 
@@ -15,8 +14,6 @@ export const compile = async (
     globalName: string,
     { distPath = "dist", env = {}, minify = false }: Options,
 ): Promise<void> => {
-    Logger.info(`Compiling...`);
-
     const service = await startService();
 
     try {
@@ -38,8 +35,6 @@ export const compile = async (
             minify,
             globalName,
         });
-
-        Logger.info("Compiled successfully!");
     } catch (error) {
         throw new CompilationFailedError(error);
     } finally {
