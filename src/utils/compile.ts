@@ -2,7 +2,18 @@ import { startService } from "esbuild";
 import Logger from "./logger";
 import { join } from "path";
 
-export const compile = async (entryFileName: string, projectPath: string, distPath: string): Promise<void> => {
+interface Options {
+    distPath?: string;
+    env?: Record<string, string>;
+    minify?: boolean;
+}
+
+export const compile = async (
+    projectPath: string,
+    entryFileName: string,
+    globalName: string,
+    { distPath = "dist", env = {}, minify = false }: Options,
+): Promise<void> => {
     Logger.info(`Compiling...`);
 
     const service = await startService();
@@ -16,13 +27,15 @@ export const compile = async (entryFileName: string, projectPath: string, distPa
             sourcemap: true,
             inject: [join("node_modules", "frontify-cli", "src", "shims.js")],
             external: ["react", "quill"],
-            define: {
-                "process.env.NODE_ENV": '"development"',
-            },
+            define: Object.keys(env).reduce((stack, key) => {
+                stack[`process.env.${key}`] = `"${env[key]}"`;
+                return stack;
+            }, {}),
             tsconfig: join(projectPath, "tsconfig.json"),
             logLevel: "error",
             target: ["chrome58", "firefox57", "safari11", "edge16"],
-            globalName: `DevCustomBlock`,
+            minify,
+            globalName,
         });
 
         Logger.info("Compiled successfully!");
