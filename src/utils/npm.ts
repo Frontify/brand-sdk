@@ -11,6 +11,6 @@ export const installDependencies = async (folderPath: string): Promise<void> => 
 
 export const updatePackageJsonProjectName = (folderPath: string): void => {
     const packageJsonPath = resolve(folderPath, "package.json");
-    const packageJson = reactiveJson(packageJsonPath);
+    const packageJson = reactiveJson<PackageJson>(packageJsonPath);
     packageJson.name = folderPath;
 };

@@ -10,6 +10,11 @@ const expectedObject = JSON.parse(expectedString);
 
 const fileTestPath = "./frontify-cli/someObject.json";
 
+interface JsonFile {
+    some: string;
+    told: string;
+}
+
 describe("Reactive JSON utils", () => {
     beforeEach(() => {
         mockFs({
@@ -30,7 +35,7 @@ describe("Reactive JSON utils", () => {
         });
 
         it("should read json and write changes to the file", () => {
-            const reactiveObject = reactiveJson(fileTestPath);
+            const reactiveObject = reactiveJson<JsonFile>(fileTestPath);
             reactiveObject.some = "one";
             reactiveObject.told = "me";
             expect(reactiveObject).toEqual(expectedObject);
