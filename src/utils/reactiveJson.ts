@@ -1,7 +1,7 @@
 import Logger from "./logger";
 import { writeFileSync, readFileSync } from "fs";
 
-export const reactiveJson = (path: string): Record<string, unknown> => {
+export const reactiveJson = <T>(path: string): T => {
     try {
         const jsonRaw = readFileSync(path, "utf8");
         const jsonParsed = JSON.parse(jsonRaw);
@@ -24,6 +24,6 @@ export const reactiveJson = (path: string): Record<string, unknown> => {
             Logger.error("An unknown error occured:", error);
         }
 
-        return {};
+        throw new Error(error);
     }
 };
