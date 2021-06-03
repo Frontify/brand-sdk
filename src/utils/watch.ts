@@ -1,10 +1,10 @@
 import chokidar from "chokidar";
-import { debounce } from "lodash";
 import path from "path";
+import debounce from "./debounce";
 
 export const watch = (
     watchPath: string,
-    callback: (event: string, eventPath: string) => void,
+    callback: (event: string) => void,
     ignored: string[] = [],
 ): chokidar.FSWatcher => {
     return chokidar
