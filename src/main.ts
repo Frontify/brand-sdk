@@ -17,7 +17,7 @@ printLogo();
 
 (async () => {
     const port = parseArgs.port || 5600;
-    const instanceUrl = parseArgs.instance || process.env.INSTANCE_URL || "";
+    const instanceUrl = parseArgs.instance || process.env.INSTANCE_URL;
 
     switch (parseArgs._[0]) {
         case "block":
@@ -34,14 +34,14 @@ printLogo();
                     createNewProject(projectName);
                     break;
                 case "deploy":
-                    createDeployment(instanceUrl, customBlockPath);
+                    createDeployment(instanceUrl, "block", "custom_block", "src/index.tsx", "dist");
                     break;
             }
             break;
 
         case "login":
             await loginUser(instanceUrl, port);
-            exit(1);
+            break;
 
         case "logout":
             logoutUser();

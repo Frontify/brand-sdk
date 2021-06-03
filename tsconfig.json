@@ -16,9 +16,5 @@
         "target": "ES2020",
         "types": ["jest", "node"]
     },
-    "exclude": [
-        "dist",
-        "node_modules",
-        "**/*.test.ts"
-    ]
+    "exclude": ["dist", "node_modules", "**/*.test.ts"]
 }
