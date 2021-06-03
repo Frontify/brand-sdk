@@ -1,14 +1,19 @@
+import fastGlob from "fast-glob";
 import Logger from "../utils/logger";
+import open from "open";
 import { getUser } from "../utils/user";
-import { getValidInstanceUrl } from "../utils/url";
 import { compile } from "../utils/compile";
 import { reactiveJson } from "../utils/reactiveJson";
 import { join, sep } from "path";
-import fastGlob from "fast-glob";
 import { readFileAsBase64 } from "../utils/file";
 import { HttpClient } from "../utils/httpClient";
 import { promiseExec } from "../utils/promiseExec";
-import open from "open";
+import { blue } from "chalk";
+
+interface Options {
+    dryRun?: boolean;
+    openInBrowser?: boolean;
+}
 
 const makeFilesDict = async (glob: string) => {
     const folderFiles = await fastGlob(join(glob, "**"));
@@ -23,20 +28,21 @@ const makeFilesDict = async (glob: string) => {
 export const createDeployment = async (
     instanceUrl: string,
     surface: string,
+    rootPath: string,
     projectPath: string,
     entryFileName: string,
     distPath: string,
+    { dryRun = false, openInBrowser = false }: Options,
 ): Promise<void> => {
-    Logger.info(`Deploying the custom block...`);
-
     try {
-        const cleanedInstanceUrl = getValidInstanceUrl(instanceUrl);
-        const user = await getUser(cleanedInstanceUrl);
+        const user = await getUser(instanceUrl);
 
         if (user) {
-            Logger.info(`You are logged in as ${user.name} (${cleanedInstanceUrl}).`);
+            dryRun && Logger.info(blue("Dry run: enabled"));
 
-            const manifest = reactiveJson<Manifest>("manifest.json");
+            Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
+
+            const manifest = reactiveJson<Manifest>(join(rootPath, "manifest.json"));
 
             Logger.info("Performing type checks...");
             await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
@@ -55,21 +61,26 @@ export const createDeployment = async (
                 },
             });
 
-            Logger.info("Sending the files to Frontify Marketplace...");
+            if (!dryRun) {
+                Logger.info("Sending the files to Frontify Marketplace...");
 
-            const request = {
-                build_files: await makeFilesDict(join(projectPath, distPath)),
-                source_files: await makeFilesDict(join(projectPath, "src")),
-            };
+                const request = {
+                    build_files: await makeFilesDict(join(projectPath, distPath)),
+                    source_files: await makeFilesDict(join(projectPath, "src")),
+                };
 
-            const httpClient = new HttpClient(instanceUrl);
-            await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request);
+                const httpClient = new HttpClient(instanceUrl);
+                await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request);
 
-            Logger.info("The new version has been pushed.");
+                Logger.success("The new version has been pushed.");
 
-            Logger.info("Opening the Frontify Marketplace page");
-
-            await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                if (openInBrowser) {
+                    Logger.info("Opening the Frontify Marketplace page...");
+                    await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                }
+            } else {
+                Logger.success("The command has been executed without any issue.");
+            }
         }
     } catch (error) {
         Logger.error("The deployment has failed and was aborted.", error);
