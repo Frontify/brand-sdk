@@ -19,8 +19,6 @@ printLogo();
 (async () => {
     const port = parseArgs.port || 5600;
 
-    const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-
     const rootPath = parseArgs.dir || process.cwd();
 
     switch (parseArgs._[0]) {
@@ -38,7 +36,8 @@ printLogo();
                     break;
 
                 case "deploy":
-                    createDeployment(instanceUrl, "block", rootPath, customBlockPath, entryFileName, distPath, {
+                    const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
+                    await createDeployment(instanceUrl, "block", rootPath, customBlockPath, entryFileName, distPath, {
                         dryRun: parseArgs["dry-run"],
                         openInBrowser: parseArgs.open,
                     });
@@ -47,6 +46,7 @@ printLogo();
             break;
 
         case "login":
+            const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
             await loginUser(instanceUrl, port);
             break;
 
