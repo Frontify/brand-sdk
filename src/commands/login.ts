@@ -4,7 +4,6 @@ import FastifyCors from "fastify-cors";
 import open from "open";
 import { Configuration } from "../utils/configuration";
 import { exit } from "process";
-import { bold } from "chalk";
 import { getValidInstanceUrl } from "../utils/url";
 import { HttpClient } from "../utils/httpClient";
 import { Headers } from "node-fetch";
@@ -60,7 +59,7 @@ export class Authenticator {
             Configuration.set("tokens", tokens);
 
             const user = await getUser(this.instanceUrl);
-            user && Logger.info(`${bold(`Welcome back ${user.name} (${this.instanceUrl})!`)}`);
+            user && Logger.success(`${`Welcome back ${user.name} (${this.instanceUrl})!`}`);
 
             exit(0);
         });
