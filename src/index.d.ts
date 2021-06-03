@@ -6,7 +6,3 @@ interface PackageJson {
     name: string;
     version: string;
 }
-
-enum Surface {
-    CustomBlock,
-}
