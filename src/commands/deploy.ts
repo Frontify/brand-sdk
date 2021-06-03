@@ -4,7 +4,7 @@ import open from "open";
 import { getUser } from "../utils/user";
 import { compile } from "../utils/compile";
 import { reactiveJson } from "../utils/reactiveJson";
-import { join, sep } from "path";
+import { join } from "path";
 import { readFileAsBase64 } from "../utils/file";
 import { HttpClient } from "../utils/httpClient";
 import { promiseExec } from "../utils/promiseExec";
@@ -17,7 +17,7 @@ interface Options {
 
 const makeFilesDict = async (glob: string) => {
     const folderFiles = await fastGlob(join(glob, "**"));
-    const folderFilenames = folderFiles.map((filePath) => filePath.replace(glob + sep, ""));
+    const folderFilenames = folderFiles.map((filePath) => filePath.replace(glob, ""));
 
     return folderFilenames.reduce((stack, filename, index) => {
         stack[filename] = readFileAsBase64(folderFiles[index]);
