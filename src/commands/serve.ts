@@ -96,7 +96,7 @@ class DevelopmentServer {
 
             const settingsUpdateWatcher = watch(
                 join(this.customBlockPath, "/src/settings.json"),
-                async (event: string, eventPath: string) => {
+                async (event: string) => {
                     if (event === "change") {
                         try {
                             const settingsJson = this.getSettings();
@@ -111,7 +111,7 @@ class DevelopmentServer {
                             );
                         } catch (error) {
                             if (error instanceof SyntaxError) {
-                                Logger.error(`An error occured while parsing \`settings.json\` in ${eventPath}`);
+                                Logger.error('An error occured while parsing "settings.json"');
                             } else {
                                 Logger.error("An unknown error occured:", error);
                             }
