@@ -51,8 +51,12 @@ class DevelopmentServer {
 
         return watch(
             this.customBlockPath,
-            () => {
-                compile(this.customBlockEntryFile, this.customBlockPath, this.customBlockDistPath);
+            async () => {
+                Logger.info(`Compiling...`);
+                await compile(this.customBlockPath, this.customBlockEntryFile, "DevCustomBlock", {
+                    distPath: this.customBlockDistPath,
+                });
+                Logger.info("Compiled successfully!");
             },
             filesToIgnore,
         );
