@@ -16,6 +16,12 @@ describe("Logger utils", () => {
             expect(console.log).toHaveBeenCalled();
         });
 
+        it("should call success and log to the console", () => {
+            console.log = jest.fn();
+            Logger.success(someRandomText);
+            expect(console.log).toHaveBeenCalled();
+        });
+
         it("should call error and log error to the console", () => {
             console.error = jest.fn();
             Logger.error(someRandomText);

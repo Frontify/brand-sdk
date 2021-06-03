@@ -1,4 +1,4 @@
-import { red } from "chalk";
+import { green, red } from "chalk";
 import { getCurrentTime } from "./date";
 
 export default class Logger {
@@ -8,6 +8,10 @@ export default class Logger {
 
     static info(...messages: string[]): void {
         console.log(`[${getCurrentTime()}] ${messages.join(" ")}`);
+    }
+
+    static success(...messages: string[]): void {
+        console.log(`[${getCurrentTime()}] ${green(messages.join(" "))}`);
     }
 
     static error(...messages: string[]): void {
