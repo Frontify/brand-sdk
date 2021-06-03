@@ -1,4 +1,4 @@
-import { startService } from "esbuild";
+import esbuild from "esbuild";
 import { join } from "path";
 import CompilationFailedError from "../errors/CompilationFailedError";
 
@@ -14,10 +14,8 @@ export const compile = async (
     globalName: string,
     { distPath = "dist", env = {}, minify = false }: Options,
 ): Promise<void> => {
-    const service = await startService();
-
     try {
-        await service.build({
+        await esbuild.build({
             color: true,
             entryPoints: [join(projectPath, entryFileName)],
             outfile: join(distPath, "index.js"),
@@ -37,7 +35,5 @@ export const compile = async (
         });
     } catch (error) {
         throw new CompilationFailedError(error);
-    } finally {
-        service.stop();
     }
 };
