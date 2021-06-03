@@ -5,4 +5,5 @@ interface Manifest {
 interface PackageJson {
     name: string;
     version: string;
+    main: string;
 }
