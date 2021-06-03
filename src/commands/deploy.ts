@@ -58,15 +58,14 @@ export const createDeployment = async (
             Logger.info("Sending the files to Frontify Marketplace...");
 
             const request = {
-                build: await makeFilesDict(join(projectPath, distPath)),
-                source: await makeFilesDict(join(projectPath, "src")),
+                build_files: await makeFilesDict(join(projectPath, distPath)),
+                source_files: await makeFilesDict(join(projectPath, "src")),
             };
 
             const httpClient = new HttpClient(instanceUrl);
-            //TODO: Add version? Do we use the OC version or semVer/incremental?
-            await httpClient.post(`/api/marketplace-app/${manifest.appId}`, request);
+            await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request);
 
-            Logger.info("The new version have been pushed.");
+            Logger.info("The new version has been pushed.");
 
             Logger.info("Opening the Frontify Marketplace page");
 
