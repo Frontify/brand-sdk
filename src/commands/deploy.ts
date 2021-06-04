@@ -5,7 +5,7 @@ import { getUser } from "../utils/user";
 import { compile } from "../utils/compile";
 import { reactiveJson } from "../utils/reactiveJson";
 import { join } from "path";
-import { readFileAsBase64 } from "../utils/file";
+import { readFileAsBase64, readFileLinesAsArray } from "../utils/file";
 import { HttpClient } from "../utils/httpClient";
 import { promiseExec } from "../utils/promiseExec";
 import { blue } from "chalk";
@@ -15,8 +15,9 @@ interface Options {
     openInBrowser?: boolean;
 }
 
-const makeFilesDict = async (glob: string) => {
-    const folderFiles = await fastGlob(join(glob, "**"));
+const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
+    const folderFiles = await fastGlob(join(glob, "**"), { ignore: ignoreGlobs });
+
     const folderFilenames = folderFiles.map((filePath) => filePath.replace(glob, ""));
 
     return folderFilenames.reduce((stack, filename, index) => {
@@ -61,13 +62,17 @@ export const createDeployment = async (
                 },
             });
 
+            const FILE_BLOCK_LIST = [".git", "node_modules", "dist", ".vscode", ".idea", "README.md"];
+            const gitignoreEntries = readFileLinesAsArray(join(projectPath, ".gitignore"));
+            const filesToIgnore = [...gitignoreEntries, ...FILE_BLOCK_LIST].map((path) => join(projectPath, path));
+
+            const request = {
+                build_files: await makeFilesDict(join(projectPath, distPath)),
+                source_files: await makeFilesDict(join(projectPath), filesToIgnore),
+            };
+
             if (!dryRun) {
                 Logger.info("Sending the files to Frontify Marketplace...");
-
-                const request = {
-                    build_files: await makeFilesDict(join(projectPath, distPath)),
-                    source_files: await makeFilesDict(join(projectPath, "src")),
-                };
 
                 const httpClient = new HttpClient(instanceUrl);
                 await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request);
