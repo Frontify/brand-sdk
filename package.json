@@ -4,8 +4,11 @@
     "main": "./dist/main.js",
     "private": false,
     "bin": {
-        "frontify-cli": "dist/main.js"
+        "frontify-cli": "./dist/main.js"
     },
+    "files": [
+        "dist"
+    ],
     "engines": {
         "node": ">=15"
     },
@@ -17,7 +20,7 @@
         "lint": "eslint 'src/**/*.ts' --quiet --fix",
         "lint:no-fix": "eslint '*/**/*.ts'",
         "prepublishOnly": "npm test && npm run lint",
-        "postinstall": "npm run build"
+        "prepare": "npm run build"
     },
     "author": "Frontify Developers <developers@frontify.com>",
     "dependencies": {
