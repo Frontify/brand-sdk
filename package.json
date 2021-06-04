@@ -7,7 +7,7 @@
         "frontify-cli": "dist/main.js"
     },
     "files": [
-        "dist/**/*"
+        "dist"
     ],
     "engines": {
         "node": ">=15"
