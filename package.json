@@ -17,7 +17,8 @@
         "test": "jest",
         "format": "prettier --write 'src/**/*.ts'",
         "lint": "eslint 'src/**/*.ts' --quiet --fix",
-        "lint:no-fix": "eslint '*/**/*.ts'"
+        "lint:no-fix": "eslint '*/**/*.ts'",
+        "prepare": "npm run build"
     },
     "author": "Frontify Developers <developers@frontify.com>",
     "dependencies": {
