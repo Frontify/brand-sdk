@@ -3,7 +3,7 @@ name: Build Frontify CLI
 on:
     push:
         branches:
-            - master
+            - main
 
 jobs:
     build-frontify-cli:
