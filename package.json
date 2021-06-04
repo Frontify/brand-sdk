@@ -8,7 +8,8 @@
         "node": ">=15"
     },
     "files": [
-        "dist"
+        "dist",
+        "shims.js"
     ],
     "types": "index.d.ts",
     "scripts": {
