@@ -4,9 +4,6 @@
     "bin": {
         "frontify-cli": "dist/main.js"
     },
-    "files": [
-        "dist"
-    ],
     "engines": {
         "node": ">=15"
     },
