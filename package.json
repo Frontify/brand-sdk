@@ -10,9 +10,10 @@
     "engines": {
         "node": ">=15"
     },
+    "types": "index.d.ts",
     "scripts": {
         "build": "esbuild src/main.ts --platform=node --bundle --external:esbuild '--define:process.env.NODE_ENV=\"production\"' --external:fsevents --outfile=dist/main.js",
-        "start": "node -r ts-node/register ./src/main.ts",
+        "start": "npm run build && node dist/main.js",
         "test": "jest",
         "format": "prettier --write 'src/**/*.ts'",
         "lint": "eslint 'src/**/*.ts' --quiet --fix",
