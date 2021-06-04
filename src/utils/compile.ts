@@ -21,7 +21,7 @@ export const compile = async (
             outfile: join(distPath, "index.js"),
             bundle: true,
             sourcemap: true,
-            inject: [join("node_modules", "frontify-cli", "shims.js")],
+            inject: [join("node_modules", "@frontify", "frontify-cli", "shims.js")],
             external: ["react", "quill"],
             define: Object.keys(env).reduce((stack, key) => {
                 stack[`process.env.${key}`] = `"${env[key]}"`;
