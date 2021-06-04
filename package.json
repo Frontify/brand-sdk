@@ -7,6 +7,9 @@
     "engines": {
         "node": ">=15"
     },
+    "files": [
+        "dist"
+    ],
     "types": "index.d.ts",
     "scripts": {
         "build": "esbuild src/main.ts --platform=node --bundle --external:esbuild '--define:process.env.NODE_ENV=\"production\"' --external:fsevents --outfile=dist/main.js",
