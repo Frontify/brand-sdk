@@ -64,6 +64,15 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - run: npm publish
+            - name: Set Github packages as repository
+              run: npm config set registry https://npm.pkg.github.com/Frontify
+
+            - name: Create .npmrc file
+              run: echo //npm.pkg.github.com/:_authToken=$GITHUB_ACCESS_TOKEN >> ~/.npmrc
+
+            - name: Publish to Github Packages
+              run: |
+                  npm config set _auth $NODE_AUTH_TOKEN
+                  npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
