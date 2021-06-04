@@ -1,4 +1,4 @@
-name: Build App Bridge
+name: Build Frontify CLI
 
 on:
     push:
@@ -6,7 +6,7 @@ on:
             - master
 
 jobs:
-    build-app-bridge:
+    build-frontify-cli:
         runs-on: ubuntu-latest
 
         steps:
