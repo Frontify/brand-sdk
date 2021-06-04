@@ -33,3 +33,12 @@ export const readFileAsBase64 = (filePath: string): string => {
         throw new FileNotFoundError(filePath);
     }
 };
+
+export const readFileLinesAsArray = (filePath: string): string[] => {
+    try {
+        const content = readFile(filePath);
+        return content.split(/\r?\n/).filter((line) => line !== "");
+    } catch {
+        throw new FileNotFoundError(filePath);
+    }
+};
