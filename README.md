@@ -1,5 +1,7 @@
 # Frontify CLI
 
+[![Continuous Integration](https://github.com/Frontify/frontify-cli/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/Frontify/frontify-cli/actions/workflows/continuous-integration.yml)
+
 ## Prerequisite
 
 - Node >=14
