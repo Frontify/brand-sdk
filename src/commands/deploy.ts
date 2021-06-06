@@ -1,7 +1,7 @@
 import fastGlob from "fast-glob";
 import Logger from "../utils/logger";
 import open from "open";
-import { getUser } from "../utils/user";
+import { getUser, UserInfo } from "../utils/user";
 import { compile } from "../utils/compile";
 import { reactiveJson } from "../utils/reactiveJson";
 import { join } from "path";
@@ -36,12 +36,14 @@ export const createDeployment = async (
     { dryRun = false, openInBrowser = false }: Options,
 ): Promise<void> => {
     try {
-        const user = await getUser(instanceUrl);
+        let user: UserInfo | undefined;
+        if (!dryRun) {
+            user = await getUser(instanceUrl);
+            user && Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
+        }
 
-        if (user) {
+        if (user || dryRun) {
             dryRun && Logger.info(blue("Dry run: enabled"));
-
-            Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
 
             const manifest = reactiveJson<Manifest>(join(rootPath, "manifest.json"));
 

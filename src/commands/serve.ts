@@ -67,7 +67,7 @@ class DevelopmentServer {
         this.registerRoutes();
         this.registerWebsockets();
 
-        this.fastifyServer.listen(this.port);
+        this.fastifyServer.listen(this.port, "0.0.0.0");
     }
 
     registerRoutes(): void {
