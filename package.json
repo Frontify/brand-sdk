@@ -9,6 +9,7 @@
     },
     "files": [
         "dist",
+        "types",
         "shims.js"
     ],
     "types": "index.d.ts",
