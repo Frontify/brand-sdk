@@ -9,6 +9,8 @@ import { readFileAsBase64, readFileLinesAsArray } from "../utils/file";
 import { HttpClient } from "../utils/httpClient";
 import { promiseExec } from "../utils/promiseExec";
 import { blue } from "chalk";
+import { Configuration } from "../utils/configuration";
+import { Headers } from "node-fetch";
 
 interface Options {
     dryRun?: boolean;
@@ -77,7 +79,11 @@ export const createDeployment = async (
                 Logger.info("Sending the files to Frontify Marketplace...");
 
                 const httpClient = new HttpClient(instanceUrl);
-                await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request);
+
+                const accessToken = Configuration.get("tokens.access_token");
+                const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
+
+                await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request, { headers });
 
                 Logger.success("The new version has been pushed.");
 
