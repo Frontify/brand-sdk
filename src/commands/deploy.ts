@@ -66,13 +66,18 @@ export const createDeployment = async (
                 },
             });
 
-            const FILE_BLOCK_LIST = [".git", "node_modules", "dist", ".vscode", ".idea", "README.md"];
+            const BUILD_FILE_BLOCK_LIST = ["**/*.*.map"];
+            const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
+
+            const SOURCE_FILE_BLOCK_LIST = [".git", "node_modules", "dist", ".vscode", ".idea", "README.md"];
             const gitignoreEntries = readFileLinesAsArray(join(projectPath, ".gitignore"));
-            const filesToIgnore = [...gitignoreEntries, ...FILE_BLOCK_LIST].map((path) => join(projectPath, path));
+            const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
+                join(projectPath, path),
+            );
 
             const request = {
-                build_files: await makeFilesDict(join(projectPath, distPath)),
-                source_files: await makeFilesDict(join(projectPath), filesToIgnore),
+                build_files: await makeFilesDict(join(projectPath, distPath), buildFilesToIgnore),
+                source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore),
             };
 
             if (!dryRun) {
