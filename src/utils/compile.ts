@@ -29,7 +29,7 @@ export const compile = async (
             }, {}),
             tsconfig: join(projectPath, "tsconfig.json"),
             logLevel: "error",
-            target: ["chrome58", "firefox57", "safari11", "edge16"],
+            target: ["es2019", "edge18", "firefox60", "chrome61", "safari11"],
             minify,
             globalName,
         });
