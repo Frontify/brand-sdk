@@ -1,4 +1,5 @@
 import esbuild from "esbuild";
+import cssModulesPlugin from "esbuild-css-modules-plugin";
 import { join } from "path";
 import CompilationFailedError from "../errors/CompilationFailedError";
 
@@ -30,6 +31,7 @@ export const compile = async (
             tsconfig: join(projectPath, "tsconfig.json"),
             logLevel: "error",
             target: ["es2019", "edge18", "firefox60", "chrome61", "safari11"],
+            plugins: [cssModulesPlugin()],
             minify,
             globalName,
         });

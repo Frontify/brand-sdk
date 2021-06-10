@@ -41,6 +41,7 @@
         "chalk": "^4.1.1",
         "chokidar": "^3.5.1",
         "conf": "^10.0.1",
+        "esbuild-css-modules-plugin": "^1.0.6",
         "eslint": "^7.27.0",
         "fast-glob": "^3.2.5",
         "fastify": "^3.17.0",
