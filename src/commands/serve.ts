@@ -53,10 +53,17 @@ class DevelopmentServer {
             this.customBlockPath,
             async () => {
                 Logger.info(`Compiling...`);
-                await compile(this.customBlockPath, this.customBlockEntryFile, "DevCustomBlock", {
-                    distPath: this.customBlockDistPath,
-                });
-                Logger.info("Compiled successfully!");
+                try {
+                    await compile(this.customBlockPath, this.customBlockEntryFile, "DevCustomBlock", {
+                        distPath: this.customBlockDistPath,
+                        env: {
+                            NODE_ENV: "development",
+                        },
+                    });
+                    Logger.info("Compiled successfully!");
+                } catch (error) {
+                    Logger.error(error);
+                }
             },
             filesToIgnore,
         );
@@ -79,7 +86,6 @@ class DevelopmentServer {
     registerWebsockets(): void {
         this.fastifyServer.get("/websocket", { websocket: true }, (connection) => {
             // Send blocks and settings on first connection
-            connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
             connection.socket.send(
                 JSON.stringify({
                     message: SocketMessageType.SettingsStructureUpdated,
@@ -95,7 +101,7 @@ class DevelopmentServer {
             });
 
             const settingsUpdateWatcher = watch(
-                join(this.customBlockPath, "/src/settings.json"),
+                join(this.customBlockPath, "src", "settings.json"),
                 async (event: string) => {
                     if (event === "change") {
                         try {
@@ -154,7 +160,7 @@ class DevelopmentServer {
     }
 
     getSettings(): Setting[] {
-        const settingsRaw = readFileSync(join(this.customBlockPath, "src/settings.json"), "utf8");
+        const settingsRaw = readFileSync(join(this.customBlockPath, "src", "settings.json"), "utf8");
         return JSON.parse(settingsRaw);
     }
 }
