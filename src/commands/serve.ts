@@ -36,7 +36,7 @@ class DevelopmentServer {
 
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(entryFileName = "src/index.tsx", customBlockPath = process.cwd(), port = 5600) {
+    constructor(entryFileName = "src/index.tsx", customBlockPath = join(process.cwd(), "custom_block"), port = 5600) {
         this.customBlockPath = customBlockPath;
         this.customBlockEntryFile = entryFileName;
         this.customBlockDistPath = join(this.customBlockPath, "dist");
