@@ -4,7 +4,7 @@ import { deleteDirectory, isDirectoryEmpty } from "../utils/file";
 import { cloneTo, initRepository } from "../utils/git";
 import { installDependencies, updatePackageJsonProjectName } from "../utils/npm";
 
-const CUSTOM_BLOCK_BOILERPLATE_GIT_URL = "git@github.com:Frontify/frontify-block-boilerplate.git";
+const CUSTOM_BLOCK_BOILERPLATE_GIT_URL = "git@github.com:Frontify/marketplace-app-boilerplate.git";
 
 const isValidProjectName = (folderName: string): boolean => {
     if (!folderName) {
@@ -23,7 +23,7 @@ const isValidProjectName = (folderName: string): boolean => {
 
 export const createNewProject = async (projectName: string): Promise<void> => {
     if (isValidProjectName(projectName)) {
-        Logger.info("Creating a new block...");
+        Logger.info("Creating the project...");
 
         Logger.info(`Cloning boilerplate to ${blue(`./${projectName}`)}.`);
         await cloneTo(CUSTOM_BLOCK_BOILERPLATE_GIT_URL, projectName);
