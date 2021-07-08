@@ -49,10 +49,9 @@ jobs:
             - name: Checkout default branch
               uses: actions/checkout@v2
 
-            - name: Use Node.js ${{ secrets.NODE_VERSION }}
+            - name: Use Node.js ${{ secrets.NODE_VERSION }} (npm repository)
               uses: actions/setup-node@v2
               with:
-                  registry-url: "https://npm.pkg.github.com"
                   node-version: ${{ secrets.NODE_VERSION }}
 
             - name: Cache dependencies
@@ -65,7 +64,18 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Publish to Github Packages
+            - name: Publish to npm
+              run: npm publish --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Use Node.js ${{ secrets.NODE_VERSION }} (GitHub repository)
+              uses: actions/setup-node@v2
+              with:
+                  registry-url: "https://npm.pkg.github.com"
+                  node-version: ${{ secrets.NODE_VERSION }}
+
+            - name: Publish to GitHub Packages
               run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
