@@ -14,17 +14,19 @@ npm install -g @frontify/frontify-cli
 yarn global add @frontify/frontify-cli
 ```
 
-## Blocks
+## App
 
 ### Create
 
 ```bash
-frontify-cli block create <block name>
+frontify-cli create <app name>
 ```
 
-The block name needs to be lowercase, spaces are not allowed but you can use an underscore instead.
+The app name needs to be lowercase, spaces are not allowed but you can use an underscore instead.
 
-Example: `my_custom_block`
+Example: `my_custom_app`
+
+## Block
 
 ### Serve
 
