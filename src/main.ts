@@ -10,7 +10,6 @@ import { loginUser } from "./commands/login";
 import { logoutUser } from "./commands/logout";
 import { getValidInstanceUrl } from "./utils/url";
 import { join } from "path";
-import { reactiveJson } from "./utils/reactiveJson";
 
 const parseArgs = minimist(process.argv.slice(2));
 
@@ -24,10 +23,7 @@ printLogo();
     switch (parseArgs._[0]) {
         case "block":
             const customBlockPath = join(rootPath, "custom_block");
-            const customBlockPackageJson = reactiveJson<PackageJson>(join(customBlockPath, "package.json"));
-
-            const entryFileName = parseArgs.entry || customBlockPackageJson.main || "src/index.tsx";
-
+            const entryFileName = parseArgs.entry || "src/index.tsx";
             const distPath = parseArgs.dist || "dist";
 
             switch (parseArgs._[1]) {
@@ -44,6 +40,10 @@ printLogo();
                     break;
             }
             break;
+
+        // case "create":
+
+        //     break
 
         case "login":
             const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
