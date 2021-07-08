@@ -53,6 +53,7 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: ${{ secrets.NODE_VERSION }}
+                  registry-url: 'https://registry.npmjs.org'
 
             - name: Cache dependencies
               id: npm_cache
@@ -67,7 +68,7 @@ jobs:
             - name: Publish to npm
               run: npm publish --access public
               env:
-                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Use Node.js ${{ secrets.NODE_VERSION }} (GitHub repository)
               uses: actions/setup-node@v2
