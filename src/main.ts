@@ -10,6 +10,7 @@ import { loginUser } from "./commands/login";
 import { logoutUser } from "./commands/logout";
 import { getValidInstanceUrl } from "./utils/url";
 import { join } from "path";
+import { createNewProject } from "./commands/create";
 
 const parseArgs = minimist(process.argv.slice(2));
 
@@ -41,9 +42,10 @@ printLogo();
             }
             break;
 
-        // case "create":
-
-        //     break
+        case "create":
+            const projectName = parseArgs._[1] || "";
+            createNewProject(projectName);
+            break;
 
         case "login":
             const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
