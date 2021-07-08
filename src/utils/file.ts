@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, rmdirSync } from "fs";
+import { readdirSync, readFileSync, rmSync } from "fs";
 import FileNotFoundError from "../errors/FileNotFoundError";
 
 export const isDirectoryEmpty = (folderPath: string): boolean => {
@@ -11,7 +11,7 @@ export const isDirectoryEmpty = (folderPath: string): boolean => {
 
 export const deleteDirectory = (folderPath: string): boolean => {
     try {
-        rmdirSync(folderPath, { recursive: true });
+        rmSync(folderPath, { recursive: true });
         return true;
     } catch {
         return false;
