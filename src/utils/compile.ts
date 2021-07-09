@@ -22,7 +22,19 @@ export const compile = async (
             outfile: join(distPath, "index.js"),
             bundle: true,
             sourcemap: true,
-            inject: [join("node_modules", "@frontify", "frontify-cli", "shims.js")],
+            banner: {
+                js: `
+                    window.require = (moduleName) => {
+                        switch (moduleName) {
+                            case "react":
+                                return window["React"];
+                            case "quill":
+                                return window["Quill"];
+                            default:
+                                throw new Error("Could not resolve module");
+                        }
+                    };`
+            },
             external: ["react", "quill"],
             define: Object.keys(env).reduce((stack, key) => {
                 stack[`process.env.${key}`] = `"${env[key]}"`;
