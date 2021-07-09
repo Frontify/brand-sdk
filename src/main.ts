@@ -19,11 +19,12 @@ printLogo();
 (async () => {
     const port = parseArgs.port || 5600;
 
-    const rootPath = parseArgs.dir || process.cwd();
+    const rootDir = parseArgs.dir || process.cwd();
+    const blockDir = parseArgs.blockDir || process.cwd();
 
     switch (parseArgs._[0]) {
         case "block":
-            const customBlockPath = join(rootPath, "custom_block");
+            const customBlockPath = blockDir || join(rootDir, "custom_block");
             const entryFileName = parseArgs.entry || "src/index.tsx";
             const distPath = parseArgs.dist || "dist";
 
@@ -34,7 +35,7 @@ printLogo();
 
                 case "deploy":
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(instanceUrl, "block", rootPath, customBlockPath, entryFileName, distPath, {
+                    await createDeployment(instanceUrl, "block", rootDir, customBlockPath, entryFileName, distPath, {
                         dryRun: parseArgs["dry-run"],
                         openInBrowser: parseArgs.open,
                     });
