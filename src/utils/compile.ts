@@ -33,7 +33,7 @@ export const compile = async (
                             default:
                                 throw new Error("Could not resolve module");
                         }
-                    };`
+                    };`,
             },
             external: ["react", "quill"],
             define: Object.keys(env).reduce((stack, key) => {
