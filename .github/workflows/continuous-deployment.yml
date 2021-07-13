@@ -30,9 +30,6 @@ jobs:
             - name: Lint and fix code
               run: npm run lint
 
-            - name: Format code
-              run: npm run format
-
             - name: Test code
               run: npm test
 
