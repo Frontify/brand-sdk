@@ -35,7 +35,7 @@ export const compile = async (
                         }
                     };`,
             },
-            external: ["react", "quill"],
+            external: ["react", "draft-js"],
             define: Object.keys(env).reduce((stack, key) => {
                 stack[`process.env.${key}`] = `"${env[key]}"`;
                 return stack;
