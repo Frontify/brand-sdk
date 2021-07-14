@@ -28,8 +28,8 @@ export const compile = async (
                         switch (moduleName) {
                             case "react":
                                 return window["React"];
-                            case "quill":
-                                return window["Quill"];
+                            case "draft-js":
+                                return window["draft-js"];
                             default:
                                 throw new Error("Could not resolve module");
                         }
