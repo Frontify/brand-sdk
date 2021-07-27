@@ -28,10 +28,6 @@ export const compile = async (
                         switch (moduleName) {
                             case "react":
                                 return window["React"];
-                            case "react-popper":
-                                return window["react-popper"];
-                            case "@popperjs/core":
-                                return window["@popperjs/core"];
                             case "draft-js":
                                 return window["draft-js"];
                             default:
@@ -39,7 +35,7 @@ export const compile = async (
                         }
                     };`,
             },
-            external: ["react", "react-popper", "@popperjs/core", "draft-js"],
+            external: ["react", "draft-js"],
             define: Object.keys(env).reduce((stack, key) => {
                 stack[`process.env.${key}`] = `"${env[key]}"`;
                 return stack;
