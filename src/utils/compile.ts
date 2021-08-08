@@ -28,14 +28,12 @@ export const compile = async (
                         switch (moduleName) {
                             case "react":
                                 return window["React"];
-                            case "draft-js":
-                                return window["draft-js"];
                             default:
                                 throw new Error("Could not resolve module");
                         }
                     };`,
             },
-            external: ["react", "draft-js"],
+            external: ["react"],
             define: Object.keys(env).reduce((stack, key) => {
                 stack[`process.env.${key}`] = `"${env[key]}"`;
                 return stack;
