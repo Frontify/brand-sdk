@@ -24,7 +24,7 @@ printLogo();
         case "block":
             const customBlockPath = blockDir || join(rootDir, "custom_block");
             const entryFilePath = parseArgs.entry || "src/index.tsx";
-            const settingsStructureFilePath = parseArgs.settingsStructure || "src/index.tsx";
+            const settingsStructureFilePath = parseArgs.settingsStructure || "src/settings.ts";
             const distPath = parseArgs.dist || "dist";
 
             switch (parseArgs._[1]) {
