@@ -4,7 +4,6 @@ import FastifyStatic from "fastify-static";
 import FastifyWebSocket from "fastify-websocket";
 import Logger from "../utils/logger";
 import { join } from "path";
-import { readFileSync } from "fs";
 import { compile } from "../utils/compile";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
@@ -16,7 +15,6 @@ export interface SocketMessage {
 
 export enum SocketMessageType {
     BlockUpdated = "block-updated",
-    SettingsStructureUpdated = "settings-structure-updated",
 }
 
 export type Setting = {
@@ -28,21 +26,24 @@ export type Setting = {
 };
 
 class DevelopmentServer {
-    private readonly customBlockPath: string;
-    private readonly customBlockEntryFile: string;
-    private readonly customBlockDistPath: string;
-
+    private readonly rootPath: string;
+    private readonly entryFilePath: string;
+    private readonly settingsStructureFilePath: string;
+    private readonly distPath: string;
     private readonly port: number;
-
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(entryFileName = "src/index.tsx", customBlockPath = join(process.cwd(), "custom_block"), port = 5600) {
-        this.customBlockPath = customBlockPath;
-        this.customBlockEntryFile = entryFileName;
-        this.customBlockDistPath = join(this.customBlockPath, "dist");
-
+    constructor(
+        entryFilePath = "src/index.tsx",
+        settingsStructureFilePath = "src/settings.ts",
+        customBlockPath = join(process.cwd(), "custom_block"),
+        port = 5600,
+    ) {
+        this.rootPath = customBlockPath;
+        this.entryFilePath = entryFilePath;
+        this.settingsStructureFilePath = settingsStructureFilePath;
+        this.distPath = join(this.rootPath, "dist");
         this.port = port;
-
         this.fastifyServer = Fastify();
     }
 
@@ -50,19 +51,24 @@ class DevelopmentServer {
         const filesToIgnore = ["node_modules", "package*.json", ".git", ".gitignore", "dist", "src/settings.json"];
 
         return watch(
-            this.customBlockPath,
+            this.rootPath,
             async () => {
                 Logger.info(`Compiling...`);
                 try {
-                    await compile(this.customBlockPath, this.customBlockEntryFile, "DevCustomBlock", {
-                        distPath: this.customBlockDistPath,
-                        env: {
-                            NODE_ENV: "development",
+                    await compile(
+                        this.rootPath,
+                        [this.entryFilePath, this.settingsStructureFilePath],
+                        "DevCustomBlock",
+                        {
+                            distPath: this.distPath,
+                            env: {
+                                NODE_ENV: "development",
+                            },
                         },
-                    });
+                    );
                     Logger.info("Compiled successfully!");
                 } catch (error) {
-                    Logger.error(error);
+                    Logger.error(error as string);
                 }
             },
             filesToIgnore,
@@ -88,87 +94,42 @@ class DevelopmentServer {
             // Send blocks and settings on first connection
             connection.socket.send(
                 JSON.stringify({
-                    message: SocketMessageType.SettingsStructureUpdated,
-                    data: this.getSettings(),
+                    message: SocketMessageType.BlockUpdated,
                 }),
             );
 
-            const blocksUpdateWatcher = watch(`${this.customBlockDistPath}/**.js`, (event: string) => {
+            const blocksUpdateWatcher = watch(`${this.distPath}/**.js`, (event: string) => {
                 if (event === "change") {
-                    Logger.info("Notify browser of updated block");
+                    Logger.info("Notifying browser of updated block");
                     connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
-                }
-            });
-
-            const settingsUpdateWatcher = watch(
-                join(this.customBlockPath, "src", "settings.json"),
-                async (event: string) => {
-                    if (event === "change") {
-                        try {
-                            const settingsJson = this.getSettings();
-
-                            Logger.info("Notifying browser of updated settings");
-
-                            connection.socket.send(
-                                JSON.stringify({
-                                    message: SocketMessageType.SettingsStructureUpdated,
-                                    data: settingsJson,
-                                }),
-                            );
-                        } catch (error) {
-                            if (error instanceof SyntaxError) {
-                                Logger.error('An error occured while parsing "settings.json"');
-                            } else {
-                                Logger.error("An unknown error occured:", error);
-                            }
-                        }
-                    }
-                },
-            );
-
-            connection.socket.on("message", (socketMessage: string) => {
-                const parsedEvent: SocketMessage = JSON.parse(socketMessage);
-                const message = parsedEvent.message;
-                const data = parsedEvent.data;
-
-                Logger.info(`Message received: ${message}${data && ` with data: ${data}`}`);
-
-                switch (message) {
-                    default: {
-                        Logger.error("Bad message received");
-                        break;
-                    }
                 }
             });
 
             connection.socket.on("close", () => {
                 connection.socket.close();
                 blocksUpdateWatcher.close();
-                settingsUpdateWatcher.close();
             });
         });
     }
 
     registerPlugins(): void {
         this.fastifyServer.register(FastifyCors);
-
         this.fastifyServer.register(FastifyWebSocket);
-
         this.fastifyServer.register(FastifyStatic, {
-            root: this.customBlockDistPath,
+            root: this.distPath,
         });
-    }
-
-    getSettings(): Setting[] {
-        const settingsRaw = readFileSync(join(this.customBlockPath, "src", "settings.json"), "utf8");
-        return JSON.parse(settingsRaw);
     }
 }
 
-export const createDevelopmentServer = (entryFileName: string, customBlockPath: string, port: number): void => {
+export const createDevelopmentServer = (
+    entryFilePath: string,
+    settingsStructureFilePath: string,
+    customBlockPath: string,
+    port: number,
+): void => {
     Logger.info("Starting the development server...");
 
-    const developmentServer = new DevelopmentServer(entryFileName, customBlockPath, port);
+    const developmentServer = new DevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port);
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 
