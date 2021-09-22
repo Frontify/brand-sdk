@@ -48,7 +48,15 @@ export class HttpClient {
 
         try {
             if (response.status === 200) {
-                return (await response.json()) as T;
+                const contentType = response.headers.get("Content-Type");
+
+                switch (contentType) {
+                    case "application/json":
+                        return await response.json();
+                    default:
+                        const responseText = await response.text();
+                        return responseText || undefined;
+                }
             } else {
                 const errorData = await response.text();
                 throw new Error(errorData);
