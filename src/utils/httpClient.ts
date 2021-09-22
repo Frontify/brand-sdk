@@ -19,7 +19,7 @@ export class HttpClient {
         this.baseUrl = baseUrl.replace(/^https?:\/\//, "");
     }
 
-    private async fetchExtended({ method, url, body, options }: FetchParameters) {
+    private async fetchExtended<T>({ method, url, body, options }: FetchParameters): Promise<T> {
         const agent = new https.Agent({
             rejectUnauthorized: false,
         });
@@ -48,26 +48,18 @@ export class HttpClient {
 
         try {
             if (response.status === 200) {
-                const contentType = response.headers.get("Content-Type");
-
-                switch (contentType) {
-                    case "application/json":
-                        return await response.json();
-                    default:
-                        const responseText = await response.text();
-                        return responseText || undefined;
-                }
+                return (await response.json()) as T;
             } else {
                 const errorData = await response.text();
                 throw new Error(errorData);
             }
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error as string);
         }
     }
 
     public get<T>(url: string, options?: RequestOptions): Promise<T> {
-        return this.fetchExtended({ url, method: "GET", options });
+        return this.fetchExtended<T>({ url, method: "GET", options });
     }
 
     public post<T>(url: string, body?: Record<string, unknown>, options?: RequestOptions): Promise<T> {
