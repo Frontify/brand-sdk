@@ -1,9 +1,6 @@
 name: Continuous Integration
 
-on:
-    push:
-        branches:
-            - main
+on: push
 
 env:
     NODE_VERSION: 16.10.0
