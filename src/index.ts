@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import minimist from "minimist";
 import Logger from "./utils/logger";
 import { exit } from "process";
@@ -25,17 +23,18 @@ printLogo();
     switch (parseArgs._[0]) {
         case "block":
             const customBlockPath = blockDir || join(rootDir, "custom_block");
-            const entryFileName = parseArgs.entry || "src/index.tsx";
+            const entryFilePath = parseArgs.entry || "src/index.tsx";
+            const settingsStructureFilePath = parseArgs.settingsStructure || "src/settings.ts";
             const distPath = parseArgs.dist || "dist";
 
             switch (parseArgs._[1]) {
                 case "serve":
-                    createDevelopmentServer(entryFileName, customBlockPath, port);
+                    createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port);
                     break;
 
                 case "deploy":
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(instanceUrl, "block", rootDir, customBlockPath, entryFileName, distPath, {
+                    await createDeployment(instanceUrl, "block", rootDir, customBlockPath, entryFilePath, distPath, {
                         dryRun: parseArgs["dry-run"],
                         openInBrowser: parseArgs.open,
                     });
