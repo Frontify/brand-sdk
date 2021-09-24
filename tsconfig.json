@@ -2,7 +2,7 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "isolatedModules": true,
-        "lib": ["es6", "es2015"],
+        "lib": ["es2021"],
         "module": "commonjs",
         "moduleResolution": "node",
         "noImplicitAny": false,

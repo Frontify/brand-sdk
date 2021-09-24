@@ -19,7 +19,7 @@ export class HttpClient {
         this.baseUrl = baseUrl.replace(/^https?:\/\//, "");
     }
 
-    private async fetchExtended({ method, url, body, options }: FetchParameters) {
+    private async fetchExtended<T>({ method, url, body, options }: FetchParameters): Promise<T> {
         const agent = new https.Agent({
             rejectUnauthorized: false,
         });
@@ -62,12 +62,12 @@ export class HttpClient {
                 throw new Error(errorData);
             }
         } catch (error) {
-            throw new Error(error);
+            throw new Error(error as string);
         }
     }
 
     public get<T>(url: string, options?: RequestOptions): Promise<T> {
-        return this.fetchExtended({ url, method: "GET", options });
+        return this.fetchExtended<T>({ url, method: "GET", options });
     }
 
     public post<T>(url: string, body?: Record<string, unknown>, options?: RequestOptions): Promise<T> {

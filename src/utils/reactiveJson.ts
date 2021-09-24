@@ -21,10 +21,11 @@ export const reactiveJson = <T>(path: string): T => {
     } catch (error) {
         if (error instanceof SyntaxError) {
             throw new ParseJsonError(path);
-        } else if (error.code === "ENOENT") {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } else if ((error as any).code === "ENOENT") {
             throw new FileNotFoundError(path);
         }
 
-        throw new Error(error);
+        throw new Error(error as string);
     }
 };
