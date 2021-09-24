@@ -1,9 +1,9 @@
 name: Continuous Integration
 
-on:
-    push:
-        branches:
-            - main
+on: push
+
+env:
+    NODE_VERSION: 16.10.0
 
 jobs:
     continuous-integration:
@@ -13,17 +13,17 @@ jobs:
             - name: Checkout default branch
               uses: actions/checkout@v2
 
-            - name: Use Node.js ${{ secrets.NODE_VERSION }}
+            - name: Use Node.js ${{ env.NODE_VERSION }}
               uses: actions/setup-node@v2
               with:
-                  node-version: ${{ secrets.NODE_VERSION }}
+                  node-version: ${{ env.NODE_VERSION }}
 
             - name: Cache dependencies
               id: npm_cache
               uses: actions/cache@v2
               with:
                   path: ~/.npm
-                  key: node${{ secrets.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+                  key: node${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
 
             - name: Install dependencies
               run: npm ci
