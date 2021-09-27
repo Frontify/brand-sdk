@@ -7,5 +7,3 @@ interface PackageJson {
     version: string;
     main: string;
 }
-
-declare module "esbuild-css-modules-plugin";
