@@ -1,15 +1,15 @@
-import resolve from "@rollup/plugin-node-resolve";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import esbuild from "rollup-plugin-esbuild";
 import commonJs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
-import externals from "rollup-plugin-node-externals";
+import pkg from "./package.json";
 
 export default {
     input: "src/index.ts",
-    external: ["rollup"],
+    external: [...Object.keys(pkg.dependencies || {}), "fsevents"],
     plugins: [
-        externals(),
-        resolve(),
+        nodeResolve({ preferBuiltins: true }),
+        commonJs(),
         json(),
         esbuild({
             minify: process.env.NODE_ENV === "production",
@@ -17,7 +17,6 @@ export default {
                 ".json": "json",
             },
         }),
-        commonJs(),
     ],
     output: [
         {

@@ -10,11 +10,11 @@
         "noImplicitThis": true,
         "outDir": "./dist",
         "resolveJsonModule": true,
-        "rootDir": "src",
         "sourceMap": true,
         "strict": true,
         "target": "ES2020",
         "types": ["jest", "node"]
     },
+    "include": ["./src/**/*", "package.json", "rollup.config.ts"],
     "exclude": ["dist", "node_modules", "**/*.test.ts"]
 }
