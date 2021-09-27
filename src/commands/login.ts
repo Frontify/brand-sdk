@@ -124,7 +124,7 @@ export class Authenticator {
 
             return tokens;
         } catch (error) {
-            throw new Error(`An error occured while getting tokens: ${error.message}`);
+            throw new Error(`An error occured while getting tokens: ${(error as Error).message}`);
         }
     }
 }
