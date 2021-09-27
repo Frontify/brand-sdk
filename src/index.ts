@@ -18,7 +18,7 @@ printLogo();
     const port = parseArgs.port || 5600;
 
     const rootDir = parseArgs.dir || process.cwd();
-    const blockDir = parseArgs.blockDir || process.cwd();
+    const blockDir = parseArgs.blockDir || join(process.cwd(), "custom_block");
 
     switch (parseArgs._[0]) {
         case "block":
@@ -34,10 +34,18 @@ printLogo();
 
                 case "deploy":
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(instanceUrl, "block", rootDir, customBlockPath, entryFilePath, distPath, {
-                        dryRun: parseArgs["dry-run"],
-                        openInBrowser: parseArgs.open,
-                    });
+                    await createDeployment(
+                        instanceUrl,
+                        "block",
+                        rootDir,
+                        customBlockPath,
+                        [entryFilePath, customBlockPath],
+                        distPath,
+                        {
+                            dryRun: parseArgs["dry-run"],
+                            openInBrowser: parseArgs.open,
+                        },
+                    );
                     break;
             }
             break;
