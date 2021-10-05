@@ -13,19 +13,29 @@ interface Options {
     env?: Record<string, string>;
     minify?: boolean;
     sourceMap?: boolean;
+    treeshake?: boolean;
 }
 
 export const compile = async (
     projectPath: string,
     entryFileNames: string[],
     iifeGlobalName: string,
-    { distPath = "dist", tsconfigPath = "tsconfig.json", env = {}, minify = false, sourceMap = true }: Options,
+    {
+        distPath = "dist",
+        tsconfigPath = "tsconfig.json",
+        env = {},
+        minify = false,
+        sourceMap = true,
+        treeshake = true,
+    }: Options,
 ): Promise<void> => {
     const rollupConfig: RollupOptions = {
-        external: ["react"],
+        external: ["react", "react-dom"],
+        treeshake,
         input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
         plugins: [
             nodeResolve({
+                browser: true,
                 extensions: [".js", ".ts", ".tsx", ".json"],
             }),
             json(),
@@ -56,6 +66,10 @@ export const compile = async (
         dir: distPath,
         format: "iife",
         name: iifeGlobalName,
+        globals: {
+            react: "React",
+            "react-dom": "ReactDOM",
+        },
     };
 
     try {
