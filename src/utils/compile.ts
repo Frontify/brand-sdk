@@ -6,6 +6,7 @@ import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import combine from "rollup-plugin-combine";
 import postcss from "rollup-plugin-postcss";
+import replace from "@rollup/plugin-replace";
 
 interface Options {
     distPath?: string;
@@ -42,14 +43,19 @@ export const compile = async (
             combine({
                 exports: "named",
             }),
+            replace({
+                preventAssignment: true,
+                values: {
+                    ...Object.keys(env).reduce((stack, key) => {
+                        stack[`process.env.${key}`] = JSON.stringify(env[key]);
+                        return stack;
+                    }, {}),
+                },
+            }),
             esbuild({
                 sourceMap,
                 minify,
                 target: "es6",
-                define: Object.keys(env).reduce((stack, key) => {
-                    stack[`process.env.${key}`] = `"${env[key]}"`;
-                    return stack;
-                }, {}),
                 tsconfig: tsconfigPath,
                 experimentalBundling: true,
             }),
@@ -58,6 +64,7 @@ export const compile = async (
                     path: join(projectPath, "postcss.config.js"),
                     ctx: {},
                 },
+                minimize: minify,
             }),
         ],
     };
