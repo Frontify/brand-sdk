@@ -28,7 +28,7 @@
         "esbuild": "0.13.4",
         "fastify": "3.22.0",
         "fastify-cors": "6.0.2",
-        "fastify-static": "4.4.0",
+        "fastify-static": "4.4.1",
         "fastify-websocket": "4.0.0",
         "rollup": "2.58.0",
         "rollup-plugin-combine": "2.1.1",
