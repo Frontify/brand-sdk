@@ -26,7 +26,7 @@
     "author": "Frontify Developers <developers@frontify.com>",
     "dependencies": {
         "esbuild": "0.13.12",
-        "fastify": "3.23.0",
+        "fastify": "3.23.1",
         "fastify-cors": "6.0.2",
         "fastify-static": "4.5.0",
         "fastify-websocket": "4.0.0",
