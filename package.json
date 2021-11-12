@@ -62,7 +62,7 @@
         "lodash": "4.17.21",
         "minimist": "1.2.5",
         "mock-fs": "5.1.2",
-        "nock": "13.2.0",
+        "nock": "13.2.1",
         "node-fetch": "2.6.6",
         "open": "8.4.0",
         "prettier": "2.4.1",
