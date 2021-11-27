@@ -1,6 +1,6 @@
 {
     "name": "@frontify/frontify-cli",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "bin": {
         "frontify-cli": "dist/index.js"
     },
