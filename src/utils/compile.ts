@@ -21,18 +21,25 @@ export const compile = async (
     projectPath: string,
     entryFileNames: string[],
     iifeGlobalName: string,
-    {
-        distPath = "dist",
-        tsconfigPath = "tsconfig.json",
-        env = {},
-        minify = true,
-        sourceMap = true,
-        treeshake = true,
-    }: CompilerOptions,
+    options: CompilerOptions,
 ): Promise<void> => {
+    const defaultOptions: CompilerOptions = {
+        distPath: "dist",
+        tsconfigPath: "tsconfig.json",
+        env: {},
+        minify: true,
+        sourceMap: true,
+        treeshake: true,
+    };
+
+    const mergedOptions = {
+        ...defaultOptions,
+        ...options,
+    };
+
     const rollupConfig: RollupOptions = {
         external: ["react", "react-dom"],
-        treeshake,
+        treeshake: mergedOptions.treeshake,
         input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
         plugins: [
             nodeResolve({
@@ -45,16 +52,16 @@ export const compile = async (
             replace({
                 preventAssignment: true,
                 values: {
-                    ...Object.keys(env).reduce((stack, key) => {
-                        stack[`process.env.${key}`] = JSON.stringify(env[key]);
+                    ...Object.keys(mergedOptions.env || []).reduce((stack, key) => {
+                        stack[`process.env.${key}`] = JSON.stringify(mergedOptions?.env?.[key] || "null");
                         return stack;
                     }, {}),
                 },
             }),
             esbuild({
-                sourceMap,
-                minify,
-                tsconfig: tsconfigPath,
+                sourceMap: mergedOptions.sourceMap,
+                minify: mergedOptions.minify,
+                tsconfig: mergedOptions.tsconfigPath,
                 experimentalBundling: true,
             }),
             postcss({
@@ -62,13 +69,13 @@ export const compile = async (
                     path: join(projectPath, "postcss.config.js"),
                     ctx: {},
                 },
-                minimize: minify,
+                minimize: mergedOptions.minify,
             }),
         ],
     };
 
     const outputConfig: OutputOptions = {
-        dir: distPath,
+        dir: mergedOptions.distPath,
         format: "iife",
         name: iifeGlobalName,
         globals: {
