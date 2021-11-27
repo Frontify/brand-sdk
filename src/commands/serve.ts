@@ -4,7 +4,7 @@ import FastifyStatic from "fastify-static";
 import FastifyWebSocket from "fastify-websocket";
 import Logger from "../utils/logger";
 import { join } from "path";
-import { compile } from "../utils/compile";
+import { compile, CompilerOptions } from "../utils/compile";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
 
@@ -31,6 +31,7 @@ class DevelopmentServer {
     private readonly settingsStructureFilePath: string;
     private readonly distPath: string;
     private readonly port: number;
+    private readonly options: CompilerOptions;
     private readonly fastifyServer: FastifyInstance;
 
     constructor(
@@ -38,12 +39,14 @@ class DevelopmentServer {
         settingsStructureFilePath = "src/settings.ts",
         customBlockPath = join(process.cwd(), "custom_block"),
         port = 5600,
+        options: CompilerOptions,
     ) {
         this.rootPath = customBlockPath;
         this.entryFilePath = entryFilePath;
         this.settingsStructureFilePath = settingsStructureFilePath;
         this.distPath = join(this.rootPath, "dist");
         this.port = port;
+        this.options = options;
         this.fastifyServer = Fastify();
     }
 
@@ -60,6 +63,7 @@ class DevelopmentServer {
                         [this.entryFilePath, this.settingsStructureFilePath],
                         "DevCustomBlock",
                         {
+                            ...this.options,
                             distPath: this.distPath,
                             env: {
                                 NODE_ENV: "development",
@@ -126,10 +130,17 @@ export const createDevelopmentServer = (
     settingsStructureFilePath: string,
     customBlockPath: string,
     port: number,
+    options: CompilerOptions,
 ): void => {
     Logger.info("Starting the development server...");
 
-    const developmentServer = new DevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port);
+    const developmentServer = new DevelopmentServer(
+        entryFilePath,
+        settingsStructureFilePath,
+        customBlockPath,
+        port,
+        options,
+    );
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 
