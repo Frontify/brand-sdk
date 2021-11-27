@@ -8,13 +8,13 @@ import combine from "rollup-plugin-combine";
 import postcss from "rollup-plugin-postcss";
 import replace from "@rollup/plugin-replace";
 
-interface Options {
+export interface CompilerOptions {
     distPath?: string;
     tsconfigPath?: string;
     env?: Record<string, string>;
     minify?: boolean;
     sourceMap?: boolean;
-    treeshake?: boolean;
+    treeshake?: true | "smallest";
 }
 
 export const compile = async (
@@ -25,10 +25,10 @@ export const compile = async (
         distPath = "dist",
         tsconfigPath = "tsconfig.json",
         env = {},
-        minify = false,
+        minify = true,
         sourceMap = true,
         treeshake = true,
-    }: Options,
+    }: CompilerOptions,
 ): Promise<void> => {
     const rollupConfig: RollupOptions = {
         external: ["react", "react-dom"],
@@ -36,7 +36,6 @@ export const compile = async (
         input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
         plugins: [
             nodeResolve({
-                browser: true,
                 extensions: [".js", ".ts", ".tsx", ".json"],
             }),
             json(),
@@ -55,7 +54,6 @@ export const compile = async (
             esbuild({
                 sourceMap,
                 minify,
-                target: "es6",
                 tsconfig: tsconfigPath,
                 experimentalBundling: true,
             }),

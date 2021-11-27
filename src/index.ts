@@ -29,7 +29,10 @@ printLogo();
 
             switch (parseArgs._[1]) {
                 case "serve":
-                    createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port);
+                    const minify = typeof parseArgs.minify !== undefined ? false : true;
+                    createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port, {
+                        minify,
+                    });
                     break;
 
                 case "deploy":
