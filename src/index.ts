@@ -29,7 +29,8 @@ printLogo();
 
             switch (parseArgs._[1]) {
                 case "serve":
-                    const minify = typeof parseArgs.minify === "string" ? parseArgs.minify === 'true' ? true : false : true;
+                    const minify =
+                        typeof parseArgs.minify === "string" ? (parseArgs.minify === "true" ? true : false) : true;
                     createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port, {
                         minify,
                     });
