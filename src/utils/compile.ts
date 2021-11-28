@@ -14,7 +14,7 @@ export interface CompilerOptions {
     env?: Record<string, string>;
     minify?: boolean;
     sourceMap?: boolean;
-    treeshake?: true | "smallest";
+    treeshake?: boolean | "smallest";
 }
 
 export const compile = async (
