@@ -27,49 +27,7 @@ printLogo();
             const settingsStructureFilePath = parseArgs.settingsStructure || "src/settings.ts";
             const distPath = parseArgs.dist || "dist";
 
-            switch (parseArgs._[1]) {
-                case "serve":
-                    const minify =
-                        typeof parseArgs.minify === "string" ? (parseArgs.minify === "true" ? true : false) : true;
-                    createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port, {
-                        minify,
-                    });
-                    break;
-
-                case "deploy":
-                    const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(
-                        instanceUrl,
-                        "block",
-                        rootDir,
-                        customBlockPath,
-                        [entryFilePath, customBlockPath],
-                        distPath,
-                        {
-                            dryRun: parseArgs["dry-run"],
-                            openInBrowser: parseArgs.open,
-                        },
-                    );
-                    break;
-            }
+            createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port, {});
             break;
-
-        case "create":
-            const projectName = parseArgs._[1] || "";
-            createNewProject(projectName);
-            break;
-
-        case "login":
-            const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-            await loginUser(instanceUrl, port);
-            break;
-
-        case "logout":
-            logoutUser();
-            exit(1);
-
-        default:
-            Logger.error("This command is not yet handled");
-            exit(1);
     }
 })();

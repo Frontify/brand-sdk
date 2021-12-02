@@ -1,12 +1,6 @@
 import { join } from "path";
+import { Stats, webpack } from "webpack";
 import CompilationFailedError from "../errors/CompilationFailedError";
-import { rollup, RollupOptions, OutputOptions } from "rollup";
-import esbuild from "rollup-plugin-esbuild";
-import json from "@rollup/plugin-json";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import combine from "rollup-plugin-combine";
-import postcss from "rollup-plugin-postcss";
-import replace from "@rollup/plugin-replace";
 
 export interface CompilerOptions {
     distPath?: string;
@@ -37,72 +31,162 @@ export const compile = async (
         ...options,
     };
 
-    const rollupConfig: RollupOptions = {
-        external: ["react", "react-dom"],
-        treeshake: mergedOptions.treeshake,
-        input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
-        plugins: [
-            nodeResolve({
+    console.log(join(projectPath, "dist"), entryFileNames);
+
+    const compiler = webpack(
+        {
+            context: projectPath,
+            externals: ["react", "react-dom"],
+            entry: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
+            output: {
+                path: join(projectPath, "dist"),
+                filename: "index.bundle.js",
+            },
+            mode: "production",
+            module: {
+                rules: [
+                    {
+                        test: /\.[jt]sx?$/,
+                        exclude: /node_modules/,
+                        use: [
+                            {
+                                loader: require.resolve("babel-loader"),
+                                options: {
+                                    presets: [
+                                        [
+                                            "@babel/preset-env",
+                                            {
+                                                modules: false,
+                                                loose: true,
+                                            },
+                                        ],
+                                        "@babel/preset-typescript",
+                                    ],
+                                    plugins: [
+                                        [
+                                            "@babel/plugin-transform-react-jsx",
+                                            {
+                                                runtime: "automatic",
+                                            },
+                                        ],
+                                        ["@babel/plugin-proposal-class-properties", { modules: false, loose: true }],
+                                    ],
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        test: /\.css$/,
+                        use: ["style-loader", "css-loader", "postcss-loader"],
+                    },
+                ],
+            },
+            // resolveLoader: {
+            //     modules: [join(projectPath, "node_modules")],
+            // },
+            resolve: {
                 extensions: [".js", ".ts", ".tsx", ".json"],
-            }),
-            json(),
-            combine({
-                exports: "named",
-            }),
-            replace({
-                preventAssignment: true,
-                values: {
-                    ...Object.keys(mergedOptions.env || []).reduce((stack, key) => {
-                        stack[`process.env.${key}`] = JSON.stringify(mergedOptions?.env?.[key] || "null");
-                        return stack;
-                    }, {}),
-                },
-            }),
-            esbuild({
-                sourceMap: mergedOptions.sourceMap,
-                minify: mergedOptions.minify,
-                tsconfig: mergedOptions.tsconfigPath,
-                experimentalBundling: true,
-            }),
-            postcss({
-                config: {
-                    path: join(projectPath, "postcss.config.js"),
-                    ctx: {},
-                },
-                minimize: mergedOptions.minify,
-            }),
-        ],
-    };
-
-    const outputConfig: OutputOptions = {
-        dir: mergedOptions.distPath,
-        format: "iife",
-        name: iifeGlobalName,
-        globals: {
-            react: "React",
-            "react-dom": "ReactDOM",
+                // modules: [join(projectPath, "node_modules")],
+            },
         },
-        banner: `
-            window.require = (moduleName) => {
-                switch (moduleName) {
-                    case "react":
-                        return window["React"];
-                    case "react-dom":
-                        return window["ReactDOM"];
-                    default:
-                        throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
+        (err, stats) => {
+            if (err) {
+                console.error(err.stack || err);
+                if (err.name) {
+                    console.error(err.name);
                 }
-            };
-        `,
-    };
+                return;
+            }
 
-    try {
-        const bundle = await rollup(rollupConfig);
+            const info = stats?.toJson();
 
-        await bundle.write(outputConfig);
+            if (stats?.hasErrors()) {
+                console.error(info?.errors);
+            }
 
-        await bundle.close();
-    } catch (error) {
-        throw new CompilationFailedError(error as string);
-    }
+            if (stats?.hasWarnings()) {
+                console.warn(info?.warnings);
+            }
+        },
+    );
+
+    // compiler.outputPath = join(projectPath, "dist");
+    compiler.run((error, stats) => {
+        if (error) {
+            console.log(error.message);
+        }
+        const info = stats?.toJson();
+        if (stats?.hasErrors() && info?.errors) {
+            console.log(info.errors.join(", "));
+        }
+    });
+
+    // const rollupConfig: RollupOptions = {
+    //     external: ["react", "react-dom"],
+    //     treeshake: mergedOptions.treeshake,
+    //     input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
+    //     plugins: [
+    //         nodeResolve({
+    //             extensions: [".js", ".ts", ".tsx", ".json"],
+    //         }),
+    //         json(),
+    //         combine({
+    //             exports: "named",
+    //         }),
+    //         replace({
+    //             preventAssignment: true,
+    //             values: {
+    //                 ...Object.keys(mergedOptions.env || []).reduce((stack, key) => {
+    //                     stack[`process.env.${key}`] = JSON.stringify(mergedOptions?.env?.[key] || "null");
+    //                     return stack;
+    //                 }, {}),
+    //             },
+    //         }),
+    //         esbuild({
+    //             sourceMap: mergedOptions.sourceMap,
+    //             minify: mergedOptions.minify,
+    //             tsconfig: mergedOptions.tsconfigPath,
+    //             experimentalBundling: true,
+    //         }),
+    //         postcss({
+    //             config: {
+    //                 path: join(projectPath, "postcss.config.js"),
+    //                 ctx: {},
+    //             },
+    //             minimize: mergedOptions.minify,
+    //         }),
+    //     ],
+    // };
+
+    // const outputConfig: OutputOptions = {
+    //     dir: mergedOptions.distPath,
+    //     format: "iife",
+    //     name: iifeGlobalName,
+    //     globals: {
+    //         react: "React",
+    //         "react-dom": "ReactDOM",
+    //     },
+    //     banner: `
+    //         window.require = (moduleName) => {
+    //             switch (moduleName) {
+    //                 case "react":
+    //                     return window["React"];
+    //                 case "react-dom":
+    //                     return window["ReactDOM"];
+    //                 default:
+    //                     throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
+    //             }
+    //         };
+    //     `,
+    // };
+
+    // try {
+    //     const bundle = await rollup(rollupConfig);
+
+    //     await bundle.write(outputConfig);
+
+    //     await bundle.close();
+    // } catch (error) {
+    //     throw new CompilationFailedError(error as string);
+    // }
 };

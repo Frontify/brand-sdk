@@ -52,31 +52,38 @@ class DevelopmentServer {
 
     watchForFileChangesAndCompile(): FSWatcher {
         const filesToIgnore = ["node_modules", "package*.json", ".git", ".gitignore", "dist", "src/settings.json"];
-
-        return watch(
-            this.rootPath,
-            async () => {
-                Logger.info(`Compiling...`);
-                try {
-                    await compile(
-                        this.rootPath,
-                        [this.entryFilePath, this.settingsStructureFilePath],
-                        "DevCustomBlock",
-                        {
-                            ...this.options,
-                            distPath: this.distPath,
-                            env: {
-                                NODE_ENV: "development",
-                            },
-                        },
-                    );
-                    Logger.info("Compiled successfully!");
-                } catch (error) {
-                    Logger.error(error as string);
-                }
+        compile(this.rootPath, [this.entryFilePath, this.settingsStructureFilePath], "DevCustomBlock", {
+            ...this.options,
+            distPath: this.distPath,
+            env: {
+                NODE_ENV: "development",
             },
-            filesToIgnore,
-        );
+        }).then(() => Logger.info("done"));
+
+        // return watch(
+        //     this.rootPath,
+        //     async () => {
+        //         Logger.info(`Compiling...`);
+        //         try {
+        //             await compile(
+        //                 this.rootPath,
+        //                 [this.entryFilePath, this.settingsStructureFilePath],
+        //                 "DevCustomBlock",
+        //                 {
+        //                     ...this.options,
+        //                     distPath: this.distPath,
+        //                     env: {
+        //                         NODE_ENV: "development",
+        //                     },
+        //                 },
+        //             );
+        //             Logger.info("Compiled successfully!");
+        //         } catch (error) {
+        //             Logger.error(error as string);
+        //         }
+        //     },
+        //     filesToIgnore,
+        // );
     }
 
     serve(): void {
@@ -142,7 +149,7 @@ export const createDevelopmentServer = (
         options,
     );
     developmentServer.watchForFileChangesAndCompile();
-    developmentServer.serve();
+    // developmentServer.serve();
 
     Logger.info(`Development server is listening on port ${port}!`);
 };
