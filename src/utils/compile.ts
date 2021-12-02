@@ -1,6 +1,6 @@
 import { join } from "path";
-import { Stats, webpack } from "webpack";
-import CompilationFailedError from "../errors/CompilationFailedError";
+import { ProvidePlugin, webpack } from "webpack";
+import InjectPlugin, { ENTRY_ORDER } from "webpack-inject-plugin";
 
 export interface CompilerOptions {
     distPath?: string;
@@ -84,6 +84,31 @@ export const compile = async (
             resolve: {
                 extensions: [".js", ".ts", ".tsx", ".json"],
             },
+            plugins: [
+                new ProvidePlugin({
+                    React: "react",
+                    "react-dom": "ReactDOM",
+                }),
+                new InjectPlugin(
+                    () => {
+                        return `console.log('this is a banner');
+            window.require = (moduleName) => {
+                switch (moduleName) {
+                    case "react":
+                        console.log('react loaded');
+                        return window["React"];
+                    case "react-dom":
+                        console.log('react-dom loaded');
+                        return window["ReactDOM"];
+                    default:
+                        throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
+                }
+            };
+            `;
+                    },
+                    { entryOrder: ENTRY_ORDER.First },
+                ),
+            ],
         },
         (err, stats) => {
             if (err) {
