@@ -35,12 +35,16 @@ export const compile = async (
 
     const compiler = webpack(
         {
+            name: iifeGlobalName,
             context: projectPath,
-            externals: ["react", "react-dom"],
+            // externals: ["react", "react-dom"],
             entry: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
             output: {
+                library: iifeGlobalName,
+                libraryTarget: "umd",
                 path: join(projectPath, "dist"),
                 filename: "index.js",
+                iife: true,
             },
             mode: "production",
             module: {
