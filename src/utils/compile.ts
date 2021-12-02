@@ -40,7 +40,7 @@ export const compile = async (
             entry: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
             output: {
                 path: join(projectPath, "dist"),
-                filename: "index.bundle.js",
+                filename: "index.js",
             },
             mode: "production",
             module: {
@@ -81,12 +81,8 @@ export const compile = async (
                     },
                 ],
             },
-            // resolveLoader: {
-            //     modules: [join(projectPath, "node_modules")],
-            // },
             resolve: {
                 extensions: [".js", ".ts", ".tsx", ".json"],
-                // modules: [join(projectPath, "node_modules")],
             },
         },
         (err, stats) => {
