@@ -1,7 +1,6 @@
 import { join } from "path";
-import { resolve } from "path/posix";
-import { ProvidePlugin, NormalModuleReplacementPlugin, webpack } from "webpack";
-import InjectPlugin, { ENTRY_ORDER } from "webpack-inject-plugin";
+import { webpack } from "webpack";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 export interface CompilerOptions {
     distPath?: string;
@@ -33,6 +32,7 @@ export const compile = async (
     };
 
     const compiler = webpack({
+        mode: "production",
         context: projectPath,
         externals: {
             react: "React",
@@ -46,7 +46,9 @@ export const compile = async (
             filename: "index.js",
             iife: true,
         },
-        mode: "development",
+        optimization: {
+            concatenateModules: false,
+        },
         module: {
             rules: [
                 {
@@ -88,41 +90,20 @@ export const compile = async (
         resolve: {
             extensions: [".js", ".ts", ".tsx", ".json"],
         },
-        plugins: [
-            // new ProvidePlugin({
-            //     "window.React": "react",
-            //     "window.ReactDOM": "react-dom",
-            // }),
-            //     new InjectPlugin(
-            //         () => {
-            //             return `console.log('this is a banner');
-            // window.require = (moduleName) => {
-            //     switch (moduleName) {
-            //         case "react":
-            //             console.log('react loaded');
-            //             return window["React"];
-            //         case "react-dom":
-            //             console.log('react-dom loaded');
-            //             return window["ReactDOM"];
-            //         default:
-            //             throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
-            //     }
-            // };
-            // `;
-            //         },
-            //         { entryOrder: ENTRY_ORDER.First },
-            //     ),
-        ],
+        plugins: [new BundleAnalyzerPlugin()],
     });
 
     return new Promise((resolve) =>
         compiler.run((error, stats) => {
             if (error) {
-                console.log(error.message);
+                console.log("error", error.message);
             }
             const info = stats?.toJson();
             if (stats?.hasErrors() && info?.errors) {
-                console.log(info.errors.join(", "));
+                console.log(
+                    "errors",
+                    info.errors.forEach((e) => e.details),
+                );
             }
             resolve();
         }),
