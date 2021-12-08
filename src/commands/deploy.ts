@@ -33,7 +33,7 @@ export const createDeployment = async (
     surface: string,
     rootPath: string,
     projectPath: string,
-    entryFileNames: string[],
+    entryFileName: string,
     distPath: string,
     { dryRun = false, openInBrowser = false }: Options,
 ): Promise<void> => {
@@ -59,7 +59,7 @@ export const createDeployment = async (
             await promiseExec(`cd ${projectPath} && npm audit --audit-level=high`);
 
             Logger.info("Compiling code...");
-            await compile(projectPath, entryFileNames, `${surface}_${manifest.appId}`, {
+            await compile(projectPath, entryFileName, `${surface}_${manifest.appId}`, {
                 distPath: join(projectPath, distPath),
                 env: {
                     NODE_ENV: "production",

@@ -58,18 +58,13 @@ class DevelopmentServer {
             async () => {
                 Logger.info(`Compiling...`);
                 try {
-                    await compile(
-                        this.rootPath,
-                        [this.entryFilePath, this.settingsStructureFilePath],
-                        "DevCustomBlock",
-                        {
-                            ...this.options,
-                            distPath: this.distPath,
-                            env: {
-                                NODE_ENV: "development",
-                            },
+                    await compile(this.rootPath, this.entryFilePath, "DevCustomBlock", {
+                        ...this.options,
+                        distPath: this.distPath,
+                        env: {
+                            NODE_ENV: "development",
                         },
-                    );
+                    });
                     Logger.info("Compiled successfully!");
                 } catch (error) {
                     Logger.error(error as string);

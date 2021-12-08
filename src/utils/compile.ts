@@ -1,6 +1,5 @@
 import { join } from "path";
-import { webpack } from "webpack";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import { webpack, DefinePlugin } from "webpack";
 
 export interface CompilerOptions {
     distPath?: string;
@@ -13,7 +12,7 @@ export interface CompilerOptions {
 
 export const compile = async (
     projectPath: string,
-    entryFileNames: string[],
+    entryFilePath: string,
     iifeGlobalName: string,
     options: CompilerOptions,
 ): Promise<void> => {
@@ -32,15 +31,18 @@ export const compile = async (
     };
 
     const compiler = webpack({
-        mode: "production",
+        mode: mergedOptions.env?.NODE_ENV === "development" ? "development" : "production",
         context: projectPath,
         externals: {
             react: "React",
             "react-dom": "ReactDOM",
         },
-        entry: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)).reverse(),
+        entry: join(projectPath, entryFilePath),
         output: {
-            library: iifeGlobalName,
+            library: {
+                name: iifeGlobalName,
+                type: "window",
+            },
             libraryTarget: "umd",
             path: join(projectPath, "dist"),
             filename: "index.js",
@@ -69,12 +71,7 @@ export const compile = async (
                                     "@babel/preset-typescript",
                                 ],
                                 plugins: [
-                                    [
-                                        "@babel/plugin-transform-react-jsx",
-                                        {
-                                            runtime: "automatic",
-                                        },
-                                    ],
+                                    ["@babel/plugin-transform-react-jsx"],
                                     ["@babel/plugin-proposal-class-properties", { modules: false, loose: true }],
                                 ],
                             },
@@ -90,91 +87,30 @@ export const compile = async (
         resolve: {
             extensions: [".js", ".ts", ".tsx", ".json"],
         },
-        plugins: [new BundleAnalyzerPlugin()],
+        plugins: [
+            new DefinePlugin(
+                Object.keys(mergedOptions.env || []).reduce((stack, key) => {
+                    stack[`process.env.${key}`] = JSON.stringify(mergedOptions?.env?.[key] || "null");
+                    return stack;
+                }, {}),
+            ),
+        ],
     });
 
     return new Promise((resolve) =>
         compiler.run((error, stats) => {
             if (error) {
-                console.log("error", error.message);
+                console.log("error", error);
             }
             const info = stats?.toJson();
-            if (stats?.hasErrors() && info?.errors) {
-                console.log(
-                    "errors",
-                    info.errors.forEach((e) => e.details),
-                );
+            if (stats?.hasErrors()) {
+                console.error(info?.errors);
+            }
+
+            if (stats?.hasWarnings()) {
+                console.warn(info?.warnings);
             }
             resolve();
         }),
     );
-
-    // const rollupConfig: RollupOptions = {
-    //     external: ["react", "react-dom"],
-    //     treeshake: mergedOptions.treeshake,
-    //     input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
-    //     plugins: [
-    //         nodeResolve({
-    //             extensions: [".js", ".ts", ".tsx", ".json"],
-    //         }),
-    //         json(),
-    //         combine({
-    //             exports: "named",
-    //         }),
-    //         replace({
-    //             preventAssignment: true,
-    //             values: {
-    //                 ...Object.keys(mergedOptions.env || []).reduce((stack, key) => {
-    //                     stack[`process.env.${key}`] = JSON.stringify(mergedOptions?.env?.[key] || "null");
-    //                     return stack;
-    //                 }, {}),
-    //             },
-    //         }),
-    //         esbuild({
-    //             sourceMap: mergedOptions.sourceMap,
-    //             minify: mergedOptions.minify,
-    //             tsconfig: mergedOptions.tsconfigPath,
-    //             experimentalBundling: true,
-    //         }),
-    //         postcss({
-    //             config: {
-    //                 path: join(projectPath, "postcss.config.js"),
-    //                 ctx: {},
-    //             },
-    //             minimize: mergedOptions.minify,
-    //         }),
-    //     ],
-    // };
-
-    // const outputConfig: OutputOptions = {
-    //     dir: mergedOptions.distPath,
-    //     format: "iife",
-    //     name: iifeGlobalName,
-    //     globals: {
-    //         react: "React",
-    //         "react-dom": "ReactDOM",
-    //     },
-    //     banner: `
-    //         window.require = (moduleName) => {
-    //             switch (moduleName) {
-    //                 case "react":
-    //                     return window["React"];
-    //                 case "react-dom":
-    //                     return window["ReactDOM"];
-    //                 default:
-    //                     throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
-    //             }
-    //         };
-    //     `,
-    // };
-
-    // try {
-    //     const bundle = await rollup(rollupConfig);
-
-    //     await bundle.write(outputConfig);
-
-    //     await bundle.close();
-    // } catch (error) {
-    //     throw new CompilationFailedError(error as string);
-    // }
 };

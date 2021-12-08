@@ -38,18 +38,10 @@ printLogo();
 
                 case "deploy":
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(
-                        instanceUrl,
-                        "block",
-                        rootDir,
-                        customBlockPath,
-                        [entryFilePath, customBlockPath],
-                        distPath,
-                        {
-                            dryRun: parseArgs["dry-run"],
-                            openInBrowser: parseArgs.open,
-                        },
-                    );
+                    await createDeployment(instanceUrl, "block", rootDir, customBlockPath, entryFilePath, distPath, {
+                        dryRun: parseArgs["dry-run"],
+                        openInBrowser: parseArgs.open,
+                    });
                     break;
             }
             break;
