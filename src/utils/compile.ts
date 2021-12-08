@@ -39,10 +39,7 @@ export const compile = async (
         },
         entry: join(projectPath, entryFilePath),
         output: {
-            library: {
-                name: iifeGlobalName,
-                type: "window",
-            },
+            library: iifeGlobalName,
             libraryTarget: "umd",
             path: join(projectPath, "dist"),
             filename: "index.js",
