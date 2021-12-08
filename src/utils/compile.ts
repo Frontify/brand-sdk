@@ -1,5 +1,6 @@
 import { join } from "path";
 import { webpack, DefinePlugin } from "webpack";
+import Logger from "./logger";
 
 export interface CompilerOptions {
     distPath?: string;
@@ -97,16 +98,14 @@ export const compile = async (
     return new Promise((resolve) =>
         compiler.run((error, stats) => {
             if (error) {
-                console.log("error", error);
-            }
-            const info = stats?.toJson();
-            if (stats?.hasErrors()) {
-                console.error(info?.errors);
+                Logger.error(error.message);
             }
 
-            if (stats?.hasWarnings()) {
-                console.warn(info?.warnings);
+            const info = stats?.toJson();
+            if (stats?.hasErrors()) {
+                Logger.error(info?.errors?.map((error) => error.message).toString() ?? "An unknown error occured");
             }
+
             resolve();
         }),
     );
