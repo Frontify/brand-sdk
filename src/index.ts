@@ -1,16 +1,26 @@
 import minimist from "minimist";
-import Logger from "./utils/logger";
+import buildOptions from "minimist-options";
+import { join } from "path";
 import { exit } from "process";
+import { createNewProject } from "./commands/create";
 import { createDeployment } from "./commands/deploy";
-import { createDevelopmentServer } from "./commands/serve";
-import { printLogo } from "./utils/logo";
 import { loginUser } from "./commands/login";
 import { logoutUser } from "./commands/logout";
+import { createDevelopmentServer } from "./commands/serve";
+import { Bundler } from "./utils/compile";
+import Logger from "./utils/logger";
+import { printLogo } from "./utils/logo";
 import { getValidInstanceUrl } from "./utils/url";
-import { join } from "path";
-import { createNewProject } from "./commands/create";
 
-const parseArgs = minimist(process.argv.slice(2));
+const experimentalOptionName = "experimental";
+const options = buildOptions({
+    [experimentalOptionName]: {
+        type: "boolean",
+        alias: "e",
+        default: false,
+    },
+});
+const parseArgs = minimist(process.argv.slice(2), options);
 
 printLogo();
 
@@ -26,6 +36,7 @@ printLogo();
             const entryFilePath = parseArgs.entry || "src/index.tsx";
             const settingsStructureFilePath = parseArgs.settingsStructure || "src/settings.ts";
             const distPath = parseArgs.dist || "dist";
+            const bundler = parseArgs[experimentalOptionName] ? Bundler.Webpack : Bundler.Rollup;
 
             switch (parseArgs._[1]) {
                 case "serve":
@@ -33,15 +44,25 @@ printLogo();
                         typeof parseArgs.minify === "string" ? (parseArgs.minify === "true" ? true : false) : true;
                     createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port, {
                         minify,
+                        bundler,
                     });
                     break;
 
                 case "deploy":
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(instanceUrl, "block", rootDir, customBlockPath, entryFilePath, distPath, {
-                        dryRun: parseArgs["dry-run"],
-                        openInBrowser: parseArgs.open,
-                    });
+                    await createDeployment(
+                        instanceUrl,
+                        "block",
+                        rootDir,
+                        customBlockPath,
+                        [entryFilePath, customBlockPath],
+                        distPath,
+                        {
+                            dryRun: parseArgs["dry-run"],
+                            openInBrowser: parseArgs.open,
+                            bundler,
+                        },
+                    );
                     break;
             }
             break;
