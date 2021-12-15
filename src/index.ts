@@ -55,7 +55,7 @@ printLogo();
                         "block",
                         rootDir,
                         customBlockPath,
-                        [entryFilePath, customBlockPath],
+                        [entryFilePath, settingsStructureFilePath],
                         distPath,
                         {
                             dryRun: parseArgs["dry-run"],
