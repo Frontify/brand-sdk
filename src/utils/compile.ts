@@ -8,7 +8,6 @@ import esbuild from "rollup-plugin-esbuild";
 import postcss from "rollup-plugin-postcss";
 import { DefinePlugin, webpack } from "webpack";
 import CompilationFailedError from "../errors/CompilationFailedError";
-import Logger from "./logger";
 
 export enum Bundler {
     Rollup = "rollup",
