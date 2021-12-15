@@ -167,7 +167,7 @@ const webpackCompile = async (
             "react-dom": "ReactDOM",
         },
         entry: {
-            "./src/test.tsx": getVirtualEntry(entryFileNames),
+            "./index.tsx": getVirtualEntry(entryFileNames),
         },
         devtool: options.sourceMap ? "source-map" : undefined,
         output: {
@@ -233,15 +233,15 @@ const webpackCompile = async (
         ],
     });
 
-    return new Promise((resolve) =>
+    return new Promise((resolve, reject) =>
         compiler.run((error, stats) => {
             if (error) {
-                Logger.error(error.message);
+                reject(error.message);
             }
 
             const info = stats?.toJson();
             if (stats?.hasErrors()) {
-                Logger.error(info?.errors?.map((error) => error.message).toString() ?? "An unknown error occured");
+                reject(info?.errors?.map((error) => error.message).toString() ?? "An unknown error occured");
             }
 
             resolve();
