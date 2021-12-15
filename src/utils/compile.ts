@@ -36,7 +36,7 @@ export const compile = async (
         minify: true,
         sourceMap: true,
         treeshake: true,
-        bundler: Bundler.Webpack,
+        bundler: Bundler.Rollup,
     };
 
     const mergedOptions = {
