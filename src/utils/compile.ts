@@ -143,7 +143,7 @@ const getVirtualEntry = (entryFileNames: string[]): string => {
 
         return {
             name: getWithoutFileExtension(fileName),
-            path: getWithoutFileExtension(filePath),
+            path: getWithoutFileExtension(filePath.replace(/^(\.\/)/, "")), // Get relative path without leading ./
         };
     });
 
