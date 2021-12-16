@@ -166,7 +166,7 @@ const webpackCompile = async (
             "react-dom": "ReactDOM",
         },
         entry: {
-            "./index.tsx": getVirtualEntry(entryFileNames),
+            "./_virtual/index.tsx": getVirtualEntry(entryFileNames),
         },
         devtool: options.sourceMap ? "source-map" : undefined,
         output: {
