@@ -2,7 +2,7 @@ import fastGlob from "fast-glob";
 import Logger from "../utils/logger";
 import open from "open";
 import { getUser, UserInfo } from "../utils/user";
-import { compile } from "../utils/compile";
+import { Bundler, compile } from "../utils/compile";
 import { reactiveJson } from "../utils/reactiveJson";
 import { join } from "path";
 import { readFileAsBase64, readFileLinesAsArray } from "../utils/file";
@@ -15,6 +15,7 @@ import { Headers } from "node-fetch";
 interface Options {
     dryRun?: boolean;
     openInBrowser?: boolean;
+    bundler?: Bundler;
 }
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -35,7 +36,7 @@ export const createDeployment = async (
     projectPath: string,
     entryFileNames: string[],
     distPath: string,
-    { dryRun = false, openInBrowser = false }: Options,
+    { dryRun = false, openInBrowser = false, bundler }: Options,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
@@ -64,6 +65,7 @@ export const createDeployment = async (
                 env: {
                     NODE_ENV: "production",
                 },
+                bundler,
             });
 
             const BUILD_FILE_BLOCK_LIST = ["**/*.*.map"];
