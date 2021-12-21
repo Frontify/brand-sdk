@@ -37,7 +37,7 @@
         "babel-loader": "8.2.3",
         "css-loader": "6.5.1",
         "esbuild": "0.14.7",
-        "fastify": "3.25.0",
+        "fastify": "3.25.1",
         "fastify-cors": "6.0.2",
         "fastify-static": "4.5.0",
         "fastify-websocket": "4.0.0",
