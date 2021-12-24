@@ -44,7 +44,7 @@
         "minimist": "1.2.5",
         "minimist-options": "4.1.0",
         "postcss-loader": "6.2.1",
-        "rollup": "2.60.2",
+        "rollup": "2.62.0",
         "rollup-plugin-combine": "2.1.1",
         "rollup-plugin-esbuild": "4.7.2",
         "rollup-plugin-postcss": "4.0.2",
