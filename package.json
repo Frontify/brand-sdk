@@ -36,7 +36,7 @@
         "@rollup/plugin-replace": "3.0.1",
         "babel-loader": "8.2.3",
         "css-loader": "6.5.1",
-        "esbuild": "0.14.8",
+        "esbuild": "0.14.9",
         "fastify": "3.25.3",
         "fastify-cors": "6.0.2",
         "fastify-static": "4.5.0",
