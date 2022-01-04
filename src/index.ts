@@ -1,6 +1,5 @@
 import minimist from "minimist";
 import buildOptions from "minimist-options";
-import { join } from "path";
 import { exit } from "process";
 import { createNewProject } from "./commands/create";
 import { createDeployment } from "./commands/deploy";
@@ -12,12 +11,60 @@ import Logger from "./utils/logger";
 import { printLogo } from "./utils/logo";
 import { getValidInstanceUrl } from "./utils/url";
 
-const experimentalOptionName = "experimental";
+enum Argument {
+    CustomBlockPath = "customBlockDir",
+    Dir = "dir",
+    DryRun = "dryRun",
+    Experimental = "experimental",
+    EntryPath = "entryPath",
+    Minify = "minify",
+    Port = "port",
+    OutDir = "outDir",
+    SettingsPath = "settingsPath",
+}
+
 const options = buildOptions({
-    [experimentalOptionName]: {
+    [Argument.CustomBlockPath]: {
+        type: "string",
+        default: "custom_block",
+    },
+    [Argument.Dir]: {
+        type: "string",
+        alias: "d",
+        default: process.cwd(),
+    },
+    [Argument.DryRun]: {
         type: "boolean",
-        alias: "e",
         default: false,
+    },
+    [Argument.Experimental]: {
+        type: "boolean",
+        default: false,
+    },
+    [Argument.EntryPath]: {
+        type: "string",
+        alias: "e",
+        default: "src/index.tsx",
+    },
+    [Argument.Minify]: {
+        type: "boolean",
+        alias: "m",
+        default: false,
+    },
+    [Argument.OutDir]: {
+        type: "string",
+        alias: "o",
+        default: "dist",
+    },
+    [Argument.Port]: {
+        type: "number",
+        alias: "p",
+        default: 5600,
+    },
+    [Argument.SettingsPath]: {
+        type: "string",
+        alias: "e",
+        default: "src/settings.ts",
     },
 });
 const parseArgs = minimist(process.argv.slice(2), options);
@@ -25,27 +72,22 @@ const parseArgs = minimist(process.argv.slice(2), options);
 printLogo();
 
 (async () => {
-    const port = parseArgs.port || 5600;
-
-    const rootDir = parseArgs.dir || process.cwd();
-    const blockDir = parseArgs.blockDir || join(process.cwd(), "custom_block");
-
     switch (parseArgs._[0]) {
         case "block":
-            const customBlockPath = blockDir || join(rootDir, "custom_block");
-            const entryFilePath = parseArgs.entry || "src/index.tsx";
-            const settingsStructureFilePath = parseArgs.settingsStructure || "src/settings.ts";
-            const distPath = parseArgs.dist || "dist";
-            const bundler = parseArgs[experimentalOptionName] ? Bundler.Webpack : Bundler.Rollup;
+            const bundler = parseArgs[Argument.Experimental] ? Bundler.Webpack : Bundler.Rollup;
 
             switch (parseArgs._[1]) {
                 case "serve":
-                    const minify =
-                        typeof parseArgs.minify === "string" ? (parseArgs.minify === "true" ? true : false) : true;
-                    createDevelopmentServer(entryFilePath, settingsStructureFilePath, customBlockPath, port, {
-                        minify,
-                        bundler,
-                    });
+                    createDevelopmentServer(
+                        parseArgs[Argument.Dir],
+                        parseArgs[Argument.CustomBlockPath],
+                        [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
+                        parseArgs[Argument.Port],
+                        {
+                            minify: parseArgs[Argument.Minify],
+                            bundler,
+                        },
+                    );
                     break;
 
                 case "deploy":
@@ -53,12 +95,12 @@ printLogo();
                     await createDeployment(
                         instanceUrl,
                         "block",
-                        rootDir,
-                        customBlockPath,
-                        [entryFilePath, settingsStructureFilePath],
-                        distPath,
+                        parseArgs[Argument.Dir],
+                        parseArgs[Argument.CustomBlockPath],
+                        [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
+                        parseArgs[Argument.OutDir],
                         {
-                            dryRun: parseArgs["dry-run"],
+                            dryRun: parseArgs[Argument.DryRun],
                             openInBrowser: parseArgs.open,
                             bundler,
                         },
@@ -74,7 +116,7 @@ printLogo();
 
         case "login":
             const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-            await loginUser(instanceUrl, port);
+            await loginUser(instanceUrl, parseArgs[Argument.Port]);
             break;
 
         case "logout":

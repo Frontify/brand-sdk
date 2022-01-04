@@ -1,7 +1,7 @@
 import { blue, bold } from "chalk";
 import Logger from "../utils/logger";
 import { deleteDirectory, isDirectoryEmpty } from "../utils/file";
-import { cloneTo, initRepository } from "../utils/git";
+import { cloneTo } from "../utils/git";
 import { installDependencies, updatePackageJsonProjectName } from "../utils/npm";
 
 const CUSTOM_BLOCK_BOILERPLATE_GIT_URL = "git@github.com:Frontify/marketplace-app-boilerplate.git";
@@ -35,8 +35,6 @@ export const createNewProject = async (projectName: string): Promise<void> => {
 
         Logger.info(`Installing dependencies with ${bold("npm install")}.`);
         await installDependencies(projectName);
-
-        await initRepository();
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}Project ready!`);
         Logger.defaultInfo(`You can now run "cd ${blue(`./${projectName}`)}" to access the project.`);
