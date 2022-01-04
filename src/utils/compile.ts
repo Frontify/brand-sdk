@@ -19,7 +19,7 @@ export interface CompilerOptions {
     env?: Record<string, string>;
     minify?: boolean;
     sourceMap?: boolean;
-    treeshake?: boolean | "smallest";
+    treeshake?: boolean;
     bundler?: Bundler;
 }
 
@@ -67,10 +67,6 @@ const rollupCompile = async (
         treeshake: options.treeshake,
         input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
         plugins: [
-            nodeResolve({
-                extensions: [".js", ".ts", ".tsx", ".json"],
-            }),
-            json(),
             combine({
                 exports: "named",
             }),
@@ -83,18 +79,22 @@ const rollupCompile = async (
                     }, {}),
                 },
             }),
-            esbuild({
-                sourceMap: options.sourceMap,
-                minify: options.minify,
-                tsconfig: options.tsconfigPath,
-                experimentalBundling: true,
+            nodeResolve({
+                extensions: [".js", ".ts", ".tsx", ".json"],
             }),
+            json(),
             postcss({
                 config: {
                     path: join(projectPath, "postcss.config.js"),
                     ctx: {},
                 },
                 minimize: options.minify,
+            }),
+            esbuild({
+                sourceMap: options.sourceMap,
+                minify: options.minify,
+                tsconfig: options.tsconfigPath,
+                experimentalBundling: true,
             }),
         ],
     };
@@ -107,18 +107,6 @@ const rollupCompile = async (
             react: "React",
             "react-dom": "ReactDOM",
         },
-        banner: `
-            window.require = (moduleName) => {
-                switch (moduleName) {
-                    case "react":
-                        return window["React"];
-                    case "react-dom":
-                        return window["ReactDOM"];
-                    default:
-                        throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
-                }
-            };
-        `,
     };
 
     try {

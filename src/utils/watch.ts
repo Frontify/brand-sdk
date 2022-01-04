@@ -1,6 +1,6 @@
 import chokidar from "chokidar";
 import path from "path";
-import { debounce } from "lodash";
+import { debounce } from "lodash-es";
 
 export const watch = (
     watchPath: string,

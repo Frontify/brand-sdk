@@ -3,7 +3,7 @@ import FastifyCors from "fastify-cors";
 import FastifyStatic from "fastify-static";
 import FastifyWebSocket from "fastify-websocket";
 import Logger from "../utils/logger";
-import { join } from "path";
+import { join, resolve } from "path";
 import { compile, CompilerOptions } from "../utils/compile";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
@@ -27,49 +27,45 @@ export type Setting = {
 
 class DevelopmentServer {
     private readonly rootPath: string;
-    private readonly entryFilePath: string;
-    private readonly settingsStructureFilePath: string;
+    private readonly customBlockPath: string;
+    private readonly entryFilePaths: string[];
     private readonly distPath: string;
     private readonly port: number;
     private readonly options: CompilerOptions;
     private readonly fastifyServer: FastifyInstance;
 
     constructor(
-        entryFilePath = "src/index.tsx",
-        settingsStructureFilePath = "src/settings.ts",
+        rootPath = process.cwd(),
         customBlockPath = join(process.cwd(), "custom_block"),
+        entryFilePaths = ["src/index.tsx", "src/settings.ts"],
         port = 5600,
         options: CompilerOptions,
     ) {
-        this.rootPath = customBlockPath;
-        this.entryFilePath = entryFilePath;
-        this.settingsStructureFilePath = settingsStructureFilePath;
-        this.distPath = join(this.rootPath, "dist");
+        this.rootPath = rootPath;
+        this.customBlockPath = join(this.rootPath, customBlockPath);
+        this.distPath = resolve(this.rootPath, "dist");
+        this.entryFilePaths = entryFilePaths;
         this.port = port;
         this.options = options;
         this.fastifyServer = Fastify();
     }
 
     watchForFileChangesAndCompile(): FSWatcher {
-        const filesToIgnore = ["node_modules", "package*.json", ".git", ".gitignore", "dist", "src/settings.json"];
+        const filesToIgnore = ["node_modules", "package*.json", ".git", ".gitignore", "dist"];
 
         return watch(
-            this.rootPath,
+            this.customBlockPath,
             async () => {
                 Logger.info(`Compiling...`);
                 try {
-                    await compile(
-                        this.rootPath,
-                        [this.entryFilePath, this.settingsStructureFilePath],
-                        "DevCustomBlock",
-                        {
-                            ...this.options,
-                            distPath: this.distPath,
-                            env: {
-                                NODE_ENV: "development",
-                            },
+                    await compile(this.customBlockPath, this.entryFilePaths, "DevCustomBlock", {
+                        ...this.options,
+                        distPath: this.distPath,
+                        env: {
+                            NODE_ENV: "development",
                         },
-                    );
+                    });
+
                     Logger.info("Compiled successfully!");
                 } catch (error) {
                     Logger.error(error as string);
@@ -126,21 +122,15 @@ class DevelopmentServer {
 }
 
 export const createDevelopmentServer = (
-    entryFilePath: string,
-    settingsStructureFilePath: string,
+    rootPath: string,
     customBlockPath: string,
+    entryFilePaths: string[],
     port: number,
     options: CompilerOptions,
 ): void => {
     Logger.info("Starting the development server...");
 
-    const developmentServer = new DevelopmentServer(
-        entryFilePath,
-        settingsStructureFilePath,
-        customBlockPath,
-        port,
-        options,
-    );
+    const developmentServer = new DevelopmentServer(rootPath, customBlockPath, entryFilePaths, port, options);
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 
