@@ -3,7 +3,7 @@ import FastifyCors from "fastify-cors";
 import FastifyStatic from "fastify-static";
 import FastifyWebSocket from "fastify-websocket";
 import Logger from "../utils/logger";
-import { join, resolve } from "path";
+import { join } from "path";
 import { compile, CompilerOptions } from "../utils/compile";
 import { watch } from "../utils/watch";
 import { FSWatcher } from "chokidar";
@@ -26,7 +26,6 @@ export type Setting = {
 };
 
 class DevelopmentServer {
-    private readonly rootPath: string;
     private readonly customBlockPath: string;
     private readonly entryFilePaths: string[];
     private readonly distPath: string;
@@ -35,15 +34,13 @@ class DevelopmentServer {
     private readonly fastifyServer: FastifyInstance;
 
     constructor(
-        rootPath = process.cwd(),
-        customBlockPath = join(process.cwd(), "custom_block"),
+        customBlockPath = "custom_block",
         entryFilePaths = ["src/index.tsx", "src/settings.ts"],
         port = 5600,
         options: CompilerOptions,
     ) {
-        this.rootPath = rootPath;
-        this.customBlockPath = join(this.rootPath, customBlockPath);
-        this.distPath = resolve(this.rootPath, "dist");
+        this.customBlockPath = join(process.cwd(), customBlockPath);
+        this.distPath = join(process.cwd(), "dist");
         this.entryFilePaths = entryFilePaths;
         this.port = port;
         this.options = options;
@@ -122,7 +119,6 @@ class DevelopmentServer {
 }
 
 export const createDevelopmentServer = (
-    rootPath: string,
     customBlockPath: string,
     entryFilePaths: string[],
     port: number,
@@ -130,7 +126,7 @@ export const createDevelopmentServer = (
 ): void => {
     Logger.info("Starting the development server...");
 
-    const developmentServer = new DevelopmentServer(rootPath, customBlockPath, entryFilePaths, port, options);
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePaths, port, options);
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 
