@@ -32,7 +32,6 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
 export const createDeployment = async (
     instanceUrl: string,
     surface: string,
-    rootPath: string,
     projectPath: string,
     entryFileNames: string[],
     distPath: string,
@@ -48,7 +47,7 @@ export const createDeployment = async (
         if (user || dryRun) {
             dryRun && Logger.info(blue("Dry run: enabled"));
 
-            const manifest = reactiveJson<Manifest>(join(rootPath, "manifest.json"));
+            const manifest = reactiveJson<Manifest>(join(process.cwd(), "manifest.json"));
 
             Logger.info("Performing type checks...");
             await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);

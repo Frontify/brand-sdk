@@ -13,7 +13,6 @@ import { getValidInstanceUrl } from "./utils/url";
 
 enum Argument {
     CustomBlockPath = "customBlockDir",
-    Dir = "dir",
     DryRun = "dryRun",
     Experimental = "experimental",
     EntryPath = "entryPath",
@@ -27,11 +26,6 @@ const options = buildOptions({
     [Argument.CustomBlockPath]: {
         type: "string",
         default: "custom_block",
-    },
-    [Argument.Dir]: {
-        type: "string",
-        alias: "d",
-        default: process.cwd(),
     },
     [Argument.DryRun]: {
         type: "boolean",
@@ -79,7 +73,6 @@ printLogo();
             switch (parseArgs._[1]) {
                 case "serve":
                     createDevelopmentServer(
-                        parseArgs[Argument.Dir],
                         parseArgs[Argument.CustomBlockPath],
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         parseArgs[Argument.Port],
@@ -95,7 +88,6 @@ printLogo();
                     await createDeployment(
                         instanceUrl,
                         "block",
-                        parseArgs[Argument.Dir],
                         parseArgs[Argument.CustomBlockPath],
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         parseArgs[Argument.OutDir],
