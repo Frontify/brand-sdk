@@ -4,7 +4,7 @@ import { deleteDirectory, isDirectoryEmpty } from "../utils/file";
 import { cloneTo } from "../utils/git";
 import { installDependencies, updatePackageJsonProjectName } from "../utils/npm";
 
-const CUSTOM_BLOCK_BOILERPLATE_GIT_URL = "git@github.com:Frontify/marketplace-app-boilerplate.git";
+const CUSTOM_BLOCK_BOILERPLATE_GIT_URL = "https://github.com/Frontify/marketplace-app-boilerplate.git";
 
 const isValidProjectName = (folderName: string): boolean => {
     if (!folderName) {

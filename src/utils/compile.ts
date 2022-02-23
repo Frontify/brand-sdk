@@ -107,6 +107,18 @@ const rollupCompile = async (
             react: "React",
             "react-dom": "ReactDOM",
         },
+        banner: `
+            window.require = (moduleName) => {
+                switch (moduleName) {
+                    case "react":
+                        return window["React"];
+                    case "react-dom":
+                        return window["ReactDOM"];
+                    default:
+                        throw new Error("Could not resolve module from Frontify, please install it locally: npm i", moduleName);
+                }
+            };
+        `,
     };
 
     try {
