@@ -16,7 +16,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Use Node.js ${{ env.NODE_VERSION }}
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ env.NODE_VERSION }}
 
@@ -50,7 +50,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Use Node.js ${{ env.NODE_VERSION }} (npm repository)
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ env.NODE_VERSION }}
                   registry-url: "https://registry.npmjs.org"
@@ -74,7 +74,7 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Use Node.js ${{ env.NODE_VERSION }} (GitHub repository)
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   registry-url: "https://npm.pkg.github.com"
                   node-version: ${{ env.NODE_VERSION }}
