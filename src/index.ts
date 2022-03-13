@@ -1,5 +1,6 @@
 import minimist from 'minimist';
 import buildOptions from 'minimist-options';
+import { join } from 'path';
 import { exit } from 'process';
 import { createNewProject } from './commands/create';
 import { createDeployment } from './commands/deploy';
@@ -38,7 +39,7 @@ const options = buildOptions({
     [Argument.EntryPath]: {
         type: 'string',
         alias: 'e',
-        default: 'src/index.tsx',
+        default: join('src', 'index.tsx'),
     },
     [Argument.Minify]: {
         type: 'boolean',
@@ -58,7 +59,7 @@ const options = buildOptions({
     [Argument.SettingsPath]: {
         type: 'string',
         alias: 'e',
-        default: 'src/settings.ts',
+        default: join('src', 'settings.ts'),
     },
 });
 const parseArgs = minimist(process.argv.slice(2), options);
