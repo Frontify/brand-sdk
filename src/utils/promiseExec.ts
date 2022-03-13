@@ -1,5 +1,5 @@
-import { exec, ExecOptions } from "child_process";
-import CommandExecutionError from "../errors/CommandExecutionError";
+import { ExecOptions, exec } from 'child_process';
+import CommandExecutionError from '../errors/CommandExecutionError';
 
 export const promiseExec = (command: string, options: ExecOptions = {}): Promise<string> => {
     return new Promise((resolve, reject) => {

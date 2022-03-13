@@ -1,15 +1,15 @@
-import chokidar from "chokidar";
-import path from "path";
-import { debounce } from "lodash-es";
+import chokidar from 'chokidar';
+import path from 'path';
+import { debounce } from 'lodash-es';
 
 export const watch = (
     watchPath: string,
     callback: (event: string) => void,
-    ignored: string[] = [],
+    ignored: string[] = []
 ): chokidar.FSWatcher => {
     return chokidar
         .watch(watchPath, {
             ignored: ignored.map((s) => path.resolve(watchPath, s)),
         })
-        .on("all", debounce(callback, 200));
+        .on('all', debounce(callback, 200));
 };

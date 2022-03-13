@@ -1,9 +1,9 @@
-import { getCurrentTime } from "./date";
+import { getCurrentTime } from './date';
 
-describe("Date utils", () => {
+describe('Date utils', () => {
     beforeAll(() => {
-        jest.useFakeTimers("modern");
-        jest.setSystemTime(new Date("2021-01-20 12:00:01").getTime());
+        jest.useFakeTimers('modern');
+        jest.setSystemTime(new Date('2021-01-20 12:00:01').getTime());
     });
 
     afterAll(() => {
@@ -11,8 +11,8 @@ describe("Date utils", () => {
     });
 
     describe(getCurrentTime, () => {
-        it("should give the correct time as a string", () => {
-            expect(getCurrentTime()).toEqual("12:00:01");
+        it('should give the correct time as a string', () => {
+            expect(getCurrentTime()).toEqual('12:00:01');
         });
     });
 });

@@ -1,22 +1,22 @@
-import { Configuration } from "../utils/configuration";
-import { logoutUser } from "./logout";
+import { Configuration } from '../utils/configuration';
+import { logoutUser } from './logout';
 
 const dummyTokens = {
-    token_type: "Bearer",
+    token_type: 'Bearer',
     expires_in: 2592000,
-    access_token: "some_access_token",
-    refresh_token: "some_refresh_token",
+    access_token: 'some_access_token',
+    refresh_token: 'some_refresh_token',
 };
 
-describe("Logout command", () => {
+describe('Logout command', () => {
     describe(logoutUser, () => {
-        it("should disconnect user and delete tokens", async () => {
+        it('should disconnect user and delete tokens', async () => {
             //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
-            const oldTokens = Configuration.get("tokens") || {};
-            Configuration.set("tokens", dummyTokens);
+            const oldTokens = Configuration.get('tokens') || {};
+            Configuration.set('tokens', dummyTokens);
             logoutUser();
-            expect(Configuration.get("tokens")).toBeUndefined();
-            Configuration.set("tokens", oldTokens);
+            expect(Configuration.get('tokens')).toBeUndefined();
+            Configuration.set('tokens', oldTokens);
         });
     });
 });
