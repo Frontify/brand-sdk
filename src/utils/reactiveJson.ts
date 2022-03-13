@@ -1,17 +1,17 @@
-import { writeFileSync, readFileSync } from "fs";
-import ParseJsonError from "../errors/ParseJsonError";
-import FileNotFoundError from "../errors/FileNotFoundError";
+import { readFileSync, writeFileSync } from 'fs';
+import ParseJsonError from '../errors/ParseJsonError';
+import FileNotFoundError from '../errors/FileNotFoundError';
 
 export const reactiveJson = <T>(path: string): T => {
     try {
-        const jsonRaw = readFileSync(path, "utf8");
+        const jsonRaw = readFileSync(path, 'utf8');
         const jsonParsed = JSON.parse(jsonRaw);
 
         return new Proxy(jsonParsed, {
             set: (obj, prop, value) => {
                 obj[prop] = value;
 
-                const jsonString = JSON.stringify(obj, null, "\t");
+                const jsonString = JSON.stringify(obj, null, '\t');
 
                 writeFileSync(path, jsonString);
 
@@ -22,7 +22,7 @@ export const reactiveJson = <T>(path: string): T => {
         if (error instanceof SyntaxError) {
             throw new ParseJsonError(path);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } else if ((error as any).code === "ENOENT") {
+        } else if ((error as any).code === 'ENOENT') {
             throw new FileNotFoundError(path);
         }
 
