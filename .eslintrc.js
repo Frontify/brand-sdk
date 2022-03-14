@@ -1,3 +1,3 @@
 module.exports = {
-    extends: ["@frontify/eslint-config-typescript"],
+    extends: ['@frontify/eslint-config-typescript'],
 };
