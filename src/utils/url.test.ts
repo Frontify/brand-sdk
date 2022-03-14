@@ -1,22 +1,22 @@
-import { getValidInstanceUrl } from "./url";
+import { getValidInstanceUrl } from './url';
 
-describe("URL utils", () => {
+describe('URL utils', () => {
     describe(getValidInstanceUrl, () => {
-        it("should correctly give hostname of a given domain name", () => {
+        it('should correctly give hostname of a given domain name', () => {
             const domainNames = [
-                "weare.frontify.com",
-                "weare.frontify.com/",
-                "weare.frontify.com//",
-                "weare.frontify.com///////",
-                "weare.frontify.com/dashboard",
-                "https://weare.frontify.com",
-                "http://weare.frontify.com",
+                'weare.frontify.com',
+                'weare.frontify.com/',
+                'weare.frontify.com//',
+                'weare.frontify.com///////',
+                'weare.frontify.com/dashboard',
+                'https://weare.frontify.com',
+                'http://weare.frontify.com',
             ];
 
-            domainNames.forEach((domainName) => {
+            for (const domainName of domainNames) {
                 const actual = getValidInstanceUrl(domainName);
-                expect(actual).toBe("weare.frontify.com");
-            });
+                expect(actual).toBe('weare.frontify.com');
+            }
         });
     });
 });

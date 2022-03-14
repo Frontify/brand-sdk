@@ -1,8 +1,8 @@
-import Conf from "conf";
+import Conf from 'conf';
 
 export class Configuration {
     private static readonly conf = new Conf({
-        projectName: "frontify-cli",
+        projectName: 'frontify-cli',
     });
 
     static set(key: string, value: unknown): void {

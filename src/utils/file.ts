@@ -1,5 +1,5 @@
-import { readdirSync, readFileSync, rmSync } from "fs";
-import FileNotFoundError from "../errors/FileNotFoundError";
+import { readFileSync, readdirSync, rmSync } from 'fs';
+import FileNotFoundError from '../errors/FileNotFoundError';
 
 export const isDirectoryEmpty = (folderPath: string): boolean => {
     try {
@@ -20,7 +20,7 @@ export const deleteDirectory = (folderPath: string): boolean => {
 
 export const readFile = (filePath: string): string => {
     try {
-        return readFileSync(filePath, "utf-8");
+        return readFileSync(filePath, 'utf-8');
     } catch {
         throw new FileNotFoundError(filePath);
     }
@@ -28,7 +28,7 @@ export const readFile = (filePath: string): string => {
 
 export const readFileAsBase64 = (filePath: string): string => {
     try {
-        return readFileSync(filePath, "base64");
+        return readFileSync(filePath, 'base64');
     } catch {
         throw new FileNotFoundError(filePath);
     }
@@ -37,7 +37,7 @@ export const readFileAsBase64 = (filePath: string): string => {
 export const readFileLinesAsArray = (filePath: string): string[] => {
     try {
         const content = readFile(filePath);
-        return content.split(/\r?\n/).filter((line) => line !== "");
+        return content.split(/\r?\n/).filter((line) => line !== '');
     } catch {
         throw new FileNotFoundError(filePath);
     }
