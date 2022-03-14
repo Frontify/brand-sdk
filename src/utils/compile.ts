@@ -1,7 +1,7 @@
 import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import { join, resolve } from 'path';
+import { join, resolve, sep } from 'path';
 import { OutputOptions, RollupOptions, rollup } from 'rollup';
 import combine from 'rollup-plugin-combine';
 import esbuild from 'rollup-plugin-esbuild';
@@ -56,6 +56,16 @@ export const compile = async (
     }
 };
 
+const getEscapedMultiInputPaths = (projectPath: string, entryFileNames: string[]) =>
+    entryFileNames.map((entryFileName) => {
+        const paths = join(projectPath, entryFileName);
+        if (process.platform === 'win32') {
+            return paths.split(sep).join(`\\${sep}`);
+        }
+
+        return paths;
+    });
+
 const rollupCompile = async (
     projectPath: string,
     entryFileNames: string[],
@@ -65,7 +75,7 @@ const rollupCompile = async (
     const rollupConfig: RollupOptions = {
         external: ['react', 'react-dom'],
         treeshake: options.treeshake,
-        input: entryFileNames.map((entryFileName) => join(projectPath, entryFileName)),
+        input: getEscapedMultiInputPaths(projectPath, entryFileNames),
         plugins: [
             combine({
                 exports: 'named',

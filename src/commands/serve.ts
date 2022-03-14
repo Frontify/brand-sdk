@@ -35,7 +35,7 @@ class DevelopmentServer {
 
     constructor(
         customBlockPath = 'custom_block',
-        entryFilePaths = ['src/index.tsx', 'src/settings.ts'],
+        entryFilePaths = [join('src', 'index.tsx'), join('src', 'settings.ts')],
         port = 5600,
         options: CompilerOptions
     ) {
