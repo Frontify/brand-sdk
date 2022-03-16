@@ -16,12 +16,12 @@ export const getUser = async (instanceUrl: string): Promise<UserInfo | undefined
     const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
 
     try {
-        const user = await httpClient.post<{ data: { current_user: UserInfo } }>(
+        const user = await httpClient.post<{ data: { currentUser: UserInfo } }>(
             '/graphql',
-            { query: '{ current_user { email name } }' },
+            { query: '{ currentUser { email name } }' },
             { headers }
         );
-        return user.data.current_user;
+        return user.data.currentUser;
     } catch {
         Logger.error(`You are not logged in, you can use the command ${bold('frontify-cli login')}.`);
         return undefined;

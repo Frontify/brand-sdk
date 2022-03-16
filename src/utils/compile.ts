@@ -1,6 +1,7 @@
 import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import commonjs from '@rollup/plugin-commonjs';
 import { join, resolve, sep } from 'path';
 import { OutputOptions, RollupOptions, rollup } from 'rollup';
 import combine from 'rollup-plugin-combine';
@@ -89,9 +90,6 @@ const rollupCompile = async (
                     }, {}),
                 },
             }),
-            nodeResolve({
-                extensions: ['.js', '.ts', '.tsx', '.json'],
-            }),
             json(),
             postcss({
                 config: {
@@ -104,8 +102,11 @@ const rollupCompile = async (
                 sourceMap: options.sourceMap,
                 minify: options.minify,
                 tsconfig: options.tsconfigPath,
-                experimentalBundling: true,
             }),
+            nodeResolve({
+                extensions: ['.js', '.ts', '.tsx', '.json'],
+            }),
+            commonjs(),
         ],
     };
 
