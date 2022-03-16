@@ -21,10 +21,10 @@ interface Options {
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
     const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs });
 
-    const folderFilenames = folderFiles.map((filePath) => filePath.replace(glob, ''));
+    const folderFilenames = folderFiles.map((filePath) => filePath.replace(`${glob}/`, ''));
 
     return folderFilenames.reduce((stack, filename, index) => {
-        stack[filename] = readFileAsBase64(folderFiles[index]);
+        stack[`/${filename}`] = readFileAsBase64(folderFiles[index]);
         return stack;
     }, {});
 };
@@ -49,18 +49,19 @@ export const createDeployment = async (
 
             const manifest = reactiveJson<Manifest>(join(process.cwd(), 'manifest.json'));
 
-            Logger.info('Performing type checks...');
-            await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
+            // Logger.info('Performing type checks...');
+            // await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
 
-            Logger.info('Performing eslint checks...');
-            await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
+            // Logger.info('Performing eslint checks...');
+            // await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
 
-            Logger.info('Running security checks...');
-            await promiseExec(`cd ${projectPath} && npm audit --audit-level=high`);
+            // Logger.info('Running security checks...');
+            // await promiseExec(`cd ${projectPath} && npm audit --audit-level=high`);
 
             Logger.info('Compiling code...');
-            await compile(projectPath, entryFileNames, `${surface}_${manifest.appId}`, {
-                distPath: join(projectPath, distPath),
+            const fullProjectPath = join(process.cwd(), projectPath);
+            await compile(fullProjectPath, entryFileNames, `${surface}_${manifest.appId}`, {
+                distPath: join(fullProjectPath, distPath),
                 env: {
                     NODE_ENV: 'production',
                 },
