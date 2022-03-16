@@ -49,14 +49,14 @@ export const createDeployment = async (
 
             const manifest = reactiveJson<Manifest>(join(process.cwd(), 'manifest.json'));
 
-            // Logger.info('Performing type checks...');
-            // await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
+            Logger.info('Performing type checks...');
+            await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
 
-            // Logger.info('Performing eslint checks...');
-            // await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
+            Logger.info('Performing eslint checks...');
+            await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
 
-            // Logger.info('Running security checks...');
-            // await promiseExec(`cd ${projectPath} && npm audit --audit-level=high`);
+            Logger.info('Running security checks...');
+            await promiseExec(`cd ${projectPath} && npm audit --audit-level=high`);
 
             Logger.info('Compiling code...');
             const fullProjectPath = join(process.cwd(), projectPath);
