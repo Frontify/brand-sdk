@@ -22,7 +22,7 @@ const getUserApiResponse = {
 describe('User utils', () => {
     beforeAll(() => {
         const testMockApi = nock(`https://${testBaseUrl}`);
-        testMockApi.post('/graphql', { query: '{ currentYser { email name } }' }).reply(200, getUserApiResponse);
+        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, getUserApiResponse);
     });
 
     describe(getUser, () => {
