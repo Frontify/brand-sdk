@@ -15,14 +15,14 @@ const dummyTokens = {
 
 const getUserApiResponse = {
     data: {
-        current_user: dummyTokens,
+        currentUser: dummyTokens,
     },
 };
 
 describe('User utils', () => {
     beforeAll(() => {
         const testMockApi = nock(`https://${testBaseUrl}`);
-        testMockApi.post('/graphql', { query: '{ current_user { email name } }' }).reply(200, getUserApiResponse);
+        testMockApi.post('/graphql', { query: '{ currentYser { email name } }' }).reply(200, getUserApiResponse);
     });
 
     describe(getUser, () => {
