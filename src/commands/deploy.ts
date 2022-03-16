@@ -47,19 +47,19 @@ export const createDeployment = async (
         if (user || dryRun) {
             dryRun && Logger.info(blue('Dry run: enabled'));
 
+            const fullProjectPath = join(process.cwd(), projectPath);
             const manifest = reactiveJson<Manifest>(join(process.cwd(), 'manifest.json'));
 
             Logger.info('Performing type checks...');
-            await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
+            await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/tsc --noEmit`);
 
             Logger.info('Performing eslint checks...');
-            await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
+            await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
 
             Logger.info('Running security checks...');
-            await promiseExec(`cd ${projectPath} && npm audit --audit-level=high`);
+            await promiseExec(`cd ${fullProjectPath} && npm audit --audit-level=high`);
 
             Logger.info('Compiling code...');
-            const fullProjectPath = join(process.cwd(), projectPath);
             await compile(fullProjectPath, entryFileNames, `${surface}_${manifest.appId}`, {
                 distPath: join(fullProjectPath, distPath),
                 env: {
@@ -90,9 +90,12 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
                 const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
 
-                await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request, { headers });
+                const response = await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request, {
+                    headers,
+                });
 
                 Logger.success('The new version has been pushed.');
+                Logger.info(JSON.stringify(response as any));
 
                 if (openInBrowser) {
                     Logger.info('Opening the Frontify Marketplace page...');
