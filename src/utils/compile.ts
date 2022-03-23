@@ -9,6 +9,7 @@ import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
 import { DefinePlugin, webpack } from 'webpack';
 import CompilationFailedError from '../errors/CompilationFailedError';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export enum Bundler {
     Rollup = 'rollup',
@@ -105,8 +106,10 @@ const rollupCompile = async (
             }),
             nodeResolve({
                 extensions: ['.js', '.ts', '.tsx', '.json'],
+                preferBuiltins: false,
             }),
             commonjs(),
+            nodePolyfills(),
         ],
     };
 
@@ -119,6 +122,7 @@ const rollupCompile = async (
             'react-dom': 'ReactDOM',
         },
         banner: `
+            const global = window;
             window.require = (moduleName) => {
                 switch (moduleName) {
                     case "react":
