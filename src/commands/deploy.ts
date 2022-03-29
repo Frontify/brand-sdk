@@ -90,7 +90,7 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
                 const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
 
-                const response = await httpClient.put(`/api/marketplace-app/apps/${manifest.appId}`, request, {
+                const response = await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
                     headers,
                 });
 
