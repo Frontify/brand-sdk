@@ -117,6 +117,7 @@ const rollupCompile = async (
         dir: options.distPath,
         format: 'iife',
         name: iifeGlobalName,
+        extend: true,
         globals: {
             react: 'React',
             'react-dom': 'ReactDOM',
