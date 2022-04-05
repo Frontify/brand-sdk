@@ -14,6 +14,7 @@ import { Headers } from 'node-fetch';
 
 interface Options {
     dryRun?: boolean;
+    noVerify?: boolean;
     openInBrowser?: boolean;
     bundler?: Bundler;
 }
@@ -29,13 +30,12 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
     }, {});
 };
 
-export const createDeployment = async (
+export const createContentBlockDeployment = async (
     instanceUrl: string,
-    surface: string,
     projectPath: string,
     entryFileNames: string[],
     distPath: string,
-    { dryRun = false, openInBrowser = false, bundler }: Options
+    { dryRun = false, noVerify = false, openInBrowser = false, bundler }: Options
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
@@ -50,17 +50,19 @@ export const createDeployment = async (
             const fullProjectPath = join(process.cwd(), projectPath);
             const manifest = reactiveJson<Manifest>(join(process.cwd(), 'manifest.json'));
 
-            Logger.info('Performing type checks...');
-            await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/tsc --noEmit`);
+            if (!noVerify) {
+                Logger.info('Performing type checks...');
+                await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/tsc --noEmit`);
 
-            Logger.info('Performing eslint checks...');
-            await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
+                Logger.info('Performing eslint checks...');
+                await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
 
-            Logger.info('Running security checks...');
-            await promiseExec(`cd ${fullProjectPath} && npm audit --audit-level=high`);
+                Logger.info('Running security checks...');
+                await promiseExec(`cd ${fullProjectPath} && npm audit --audit-level=high`);
+            }
 
             Logger.info('Compiling code...');
-            await compile(fullProjectPath, entryFileNames, `${surface}_${manifest.appId}`, {
+            await compile(fullProjectPath, entryFileNames, `block_${manifest.appId}`, {
                 distPath: join(fullProjectPath, distPath),
                 env: {
                     NODE_ENV: 'production',
