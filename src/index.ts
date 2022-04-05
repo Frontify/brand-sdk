@@ -2,11 +2,11 @@ import minimist from 'minimist';
 import buildOptions from 'minimist-options';
 import { join } from 'path';
 import { exit } from 'process';
-import { createNewProject } from './commands/create';
-import { createDeployment } from './commands/deploy';
+import { createNewContentBlock } from './commands/createContentBlock';
+import { createContentBlockDeployment } from './commands/deployContentBlock';
 import { loginUser } from './commands/login';
 import { logoutUser } from './commands/logout';
-import { createDevelopmentServer } from './commands/serve';
+import { createContentBlockDevelopmentServer } from './commands/serveContentBlock';
 import { Bundler } from './utils/compile';
 import Logger from './utils/logger';
 import { printLogo } from './utils/logo';
@@ -18,6 +18,7 @@ enum Argument {
     Experimental = 'experimental',
     EntryPath = 'entryPath',
     Minify = 'minify',
+    NoVerify = 'noVerify',
     Port = 'port',
     OutDir = 'outDir',
     SettingsPath = 'settingsPath',
@@ -26,7 +27,7 @@ enum Argument {
 const options = buildOptions({
     [Argument.ContentBlockPath]: {
         type: 'string',
-        default: 'content_block',
+        default: '.',
     },
     [Argument.DryRun]: {
         type: 'boolean',
@@ -44,6 +45,10 @@ const options = buildOptions({
     [Argument.Minify]: {
         type: 'boolean',
         alias: 'm',
+        default: false,
+    },
+    [Argument.NoVerify]: {
+        type: 'boolean',
         default: false,
     },
     [Argument.OutDir]: {
@@ -72,8 +77,13 @@ printLogo();
             const bundler = parseArgs[Argument.Experimental] ? Bundler.Webpack : Bundler.Rollup;
 
             switch (parseArgs._[1]) {
+                case 'create':
+                    const blockName = parseArgs._[2] || '';
+                    createNewContentBlock(blockName);
+                    break;
+
                 case 'serve':
-                    createDevelopmentServer(
+                    createContentBlockDevelopmentServer(
                         parseArgs[Argument.ContentBlockPath],
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         parseArgs[Argument.Port],
@@ -86,25 +96,20 @@ printLogo();
 
                 case 'deploy':
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createDeployment(
+                    await createContentBlockDeployment(
                         instanceUrl,
-                        'block',
                         parseArgs[Argument.ContentBlockPath],
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         parseArgs[Argument.OutDir],
                         {
                             dryRun: parseArgs[Argument.DryRun],
+                            noVerify: parseArgs[Argument.NoVerify],
                             openInBrowser: parseArgs.open,
                             bundler,
                         }
                     );
                     break;
             }
-            break;
-
-        case 'create':
-            const projectName = parseArgs._[1] || '';
-            createNewProject(projectName);
             break;
 
         case 'login':

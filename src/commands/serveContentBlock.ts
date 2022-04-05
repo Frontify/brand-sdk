@@ -25,21 +25,16 @@ export type Setting = {
     value?: string;
 };
 
-class DevelopmentServer {
-    private readonly customBlockPath: string;
+class ContentBlockDevelopmentServer {
+    private readonly contentBlockPath: string;
     private readonly entryFilePaths: string[];
     private readonly distPath: string;
     private readonly port: number;
     private readonly options: CompilerOptions;
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(
-        customBlockPath = 'custom_block',
-        entryFilePaths = [join('src', 'index.tsx'), join('src', 'settings.ts')],
-        port = 5600,
-        options: CompilerOptions
-    ) {
-        this.customBlockPath = join(process.cwd(), customBlockPath);
+    constructor(contentBlockPath: string, entryFilePaths: string[], port: number, options: CompilerOptions) {
+        this.contentBlockPath = join(process.cwd(), contentBlockPath);
         this.distPath = join(process.cwd(), 'dist');
         this.entryFilePaths = entryFilePaths;
         this.port = port;
@@ -51,11 +46,11 @@ class DevelopmentServer {
         const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
 
         return watch(
-            this.customBlockPath,
+            this.contentBlockPath,
             async () => {
                 Logger.info('Compiling...');
                 try {
-                    await compile(this.customBlockPath, this.entryFilePaths, 'DevCustomBlock', {
+                    await compile(this.contentBlockPath, this.entryFilePaths, 'DevCustomBlock', {
                         ...this.options,
                         distPath: this.distPath,
                         env: {
@@ -118,17 +113,17 @@ class DevelopmentServer {
     }
 }
 
-export const createDevelopmentServer = (
+export const createContentBlockDevelopmentServer = (
     customBlockPath: string,
     entryFilePaths: string[],
     port: number,
     options: CompilerOptions
 ): void => {
-    Logger.info('Starting the development server...');
+    Logger.info('Starting the Content Block development server...');
 
-    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePaths, port, options);
+    const developmentServer = new ContentBlockDevelopmentServer(customBlockPath, entryFilePaths, port, options);
     developmentServer.watchForFileChangesAndCompile();
     developmentServer.serve();
 
-    Logger.info(`Development server is listening on port ${port}!`);
+    Logger.info(`Content Block development server is listening on port ${port}!`);
 };

@@ -123,7 +123,9 @@ const rollupCompile = async (
             'react-dom': 'ReactDOM',
         },
         banner: `
-            var global = window;
+            if (!global) {
+                global = window;
+            }
             window.require = (moduleName) => {
                 switch (moduleName) {
                     case "react":
