@@ -4,7 +4,7 @@
 
 ## Prerequisite
 
-- Node >=14
+-   Node >=14
 
 ## Installation
 
@@ -14,19 +14,17 @@ npm install -g @frontify/frontify-cli
 yarn global add @frontify/frontify-cli
 ```
 
-## App
+## Content Block
 
 ### Create
 
 ```bash
-frontify-cli create <app name>
+npx @frontify/frontify-cli block create <app name>
 ```
 
-The app name needs to be lowercase, spaces are not allowed but you can use an underscore instead.
+The content block name needs to be lowercase, spaces are not allowed but you can use an underscore instead.
 
-Example: `my_custom_app`
-
-## Block
+Example: `my_custom_content_block`
 
 ### Serve
 
@@ -37,8 +35,9 @@ frontify-cli block serve
 Params:
 | Parameters | Description | Type | Default Value |
 | ---------- | ----------- | ---- | ------------- |
-| blockDir | Directory of the block | string | Current dir |
-| entry | Path to the entry file | string | `src/index.tsx` |
+| contentBlockPath | Directory of the block | string | Current dir |
+| entryPath | Path to the entry file | string | `src/index.tsx` |
+| settingsPath | Path to the settings file | string | `src/settings.ts` |
 | port | Port for the local web server | string | 5600 |
 
 ### Deploy
