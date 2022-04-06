@@ -3,10 +3,9 @@ import FastifyCors from 'fastify-cors';
 import FastifyStatic from 'fastify-static';
 import FastifyWebSocket from 'fastify-websocket';
 import Logger from '../utils/logger';
-import { join } from 'path';
-import { CompilerOptions, compile } from '../utils/compile';
+import { getOutputConfig, getRollupConfig } from '../utils/compiler';
+import rollup from 'rollup';
 import { watch } from '../utils/watch';
-import { FSWatcher } from 'chokidar';
 
 export interface SocketMessage {
     message: SocketMessageType;
@@ -30,41 +29,63 @@ class ContentBlockDevelopmentServer {
     private readonly entryFilePaths: string[];
     private readonly distPath: string;
     private readonly port: number;
-    private readonly options: CompilerOptions;
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(contentBlockPath: string, entryFilePaths: string[], port: number, options: CompilerOptions) {
-        this.contentBlockPath = join(process.cwd(), contentBlockPath);
-        this.distPath = join(process.cwd(), 'dist');
+    constructor(
+        contentBlockPath: string,
+        entryFilePaths: string[],
+        distPath: string,
+        port: number,
+    ) {
+        this.contentBlockPath = contentBlockPath;
+        this.distPath = distPath;
         this.entryFilePaths = entryFilePaths;
         this.port = port;
-        this.options = options;
         this.fastifyServer = Fastify();
     }
 
-    watchForFileChangesAndCompile(): FSWatcher {
+    watchForFileChangesAndCompile(): void {
+        Logger.info('Warming up the Content Block compiler...');
+
         const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
 
-        return watch(
-            this.contentBlockPath,
-            async () => {
-                Logger.info('Compiling...');
-                try {
-                    await compile(this.contentBlockPath, this.entryFilePaths, 'DevCustomBlock', {
-                        ...this.options,
-                        distPath: this.distPath,
-                        env: {
-                            NODE_ENV: 'development',
-                        },
-                    });
-
-                    Logger.info('Compiled successfully!');
-                } catch (error) {
-                    Logger.error(error as string);
-                }
+        const watcher = rollup.watch({
+            ...getRollupConfig(this.contentBlockPath, this.entryFilePaths, {
+                NODE_ENV: 'development',
+            }),
+            output: getOutputConfig(this.distPath, 'DevCustomBlock'),
+            watch: {
+                include: `${this.contentBlockPath}/**`,
+                exclude: filesToIgnore,
+                chokidar: {
+                    interval: 300,
+                    awaitWriteFinish: {
+                        stabilityThreshold: 500,
+                        pollInterval: 100,
+                    },
+                },
+                clearScreen: true,
             },
-            filesToIgnore
-        );
+        });
+
+        watcher.on('event', (event) => {
+            switch (event.code) {
+                case 'BUNDLE_START':
+                    Logger.info('Compiling Content Block...');
+                    break;
+                case 'BUNDLE_END':
+                    Logger.info('Compiled successfully!');
+                    event.result.close();
+                    break;
+                case 'ERROR':
+                    if (event.error.message && event.error.stack) {
+                        Logger.error(event.error.message);
+                        Logger.error(event.error.stack);
+                    }
+                    event.result?.close();
+                    break;
+            }
+        });
     }
 
     serve(): void {
@@ -72,6 +93,7 @@ class ContentBlockDevelopmentServer {
         this.registerRoutes();
         this.registerWebsockets();
 
+        Logger.info(`Content Block development server is listening on port ${this.port}!`);
         this.fastifyServer.listen(this.port, '0.0.0.0');
     }
 
@@ -116,14 +138,12 @@ class ContentBlockDevelopmentServer {
 export const createContentBlockDevelopmentServer = (
     customBlockPath: string,
     entryFilePaths: string[],
-    port: number,
-    options: CompilerOptions
+    distPath: string,
+    port: number
 ): void => {
     Logger.info('Starting the Content Block development server...');
 
-    const developmentServer = new ContentBlockDevelopmentServer(customBlockPath, entryFilePaths, port, options);
-    developmentServer.watchForFileChangesAndCompile();
+    const developmentServer = new ContentBlockDevelopmentServer(customBlockPath, entryFilePaths, distPath, port);
     developmentServer.serve();
-
-    Logger.info(`Content Block development server is listening on port ${port}!`);
+    developmentServer.watchForFileChangesAndCompile();
 };

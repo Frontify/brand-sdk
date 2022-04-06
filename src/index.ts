@@ -7,7 +7,6 @@ import { createContentBlockDeployment } from './commands/deployContentBlock';
 import { loginUser } from './commands/login';
 import { logoutUser } from './commands/logout';
 import { createContentBlockDevelopmentServer } from './commands/serveContentBlock';
-import { Bundler } from './utils/compile';
 import Logger from './utils/logger';
 import { printLogo } from './utils/logo';
 import { getValidInstanceUrl } from './utils/url';
@@ -15,7 +14,6 @@ import { getValidInstanceUrl } from './utils/url';
 enum Argument {
     ContentBlockPath = 'contentBlockPath',
     DryRun = 'dryRun',
-    Experimental = 'experimental',
     EntryPath = 'entryPath',
     Minify = 'minify',
     NoVerify = 'noVerify',
@@ -30,10 +28,6 @@ const options = buildOptions({
         default: '.',
     },
     [Argument.DryRun]: {
-        type: 'boolean',
-        default: false,
-    },
-    [Argument.Experimental]: {
         type: 'boolean',
         default: false,
     },
@@ -74,8 +68,6 @@ printLogo();
 (async () => {
     switch (parseArgs._[0]) {
         case 'block':
-            const bundler = parseArgs[Argument.Experimental] ? Bundler.Webpack : Bundler.Rollup;
-
             switch (parseArgs._[1]) {
                 case 'create':
                     const blockName = parseArgs._[2] || '';
@@ -84,13 +76,10 @@ printLogo();
 
                 case 'serve':
                     createContentBlockDevelopmentServer(
-                        parseArgs[Argument.ContentBlockPath],
+                        join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
+                        join(process.cwd(), 'dist'),
                         parseArgs[Argument.Port],
-                        {
-                            minify: parseArgs[Argument.Minify],
-                            bundler,
-                        }
                     );
                     break;
 
@@ -105,7 +94,6 @@ printLogo();
                             dryRun: parseArgs[Argument.DryRun],
                             noVerify: parseArgs[Argument.NoVerify],
                             openInBrowser: parseArgs.open,
-                            bundler,
                         }
                     );
                     break;
