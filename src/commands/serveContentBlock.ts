@@ -4,7 +4,7 @@ import FastifyStatic from 'fastify-static';
 import FastifyWebSocket from 'fastify-websocket';
 import Logger from '../utils/logger';
 import { getOutputConfig, getRollupConfig } from '../utils/compiler';
-import rollup from 'rollup';
+import rollup, { RollupWatcher } from 'rollup';
 import { watch } from '../utils/watch';
 
 export interface SocketMessage {
@@ -30,6 +30,7 @@ class ContentBlockDevelopmentServer {
     private readonly distPath: string;
     private readonly port: number;
     private readonly fastifyServer: FastifyInstance;
+    private watcher?: RollupWatcher;
 
     constructor(contentBlockPath: string, entryFilePaths: string[], distPath: string, port: number) {
         this.contentBlockPath = contentBlockPath;
@@ -37,6 +38,7 @@ class ContentBlockDevelopmentServer {
         this.entryFilePaths = entryFilePaths;
         this.port = port;
         this.fastifyServer = Fastify();
+        this.watcher = undefined;
     }
 
     watchForFileChangesAndCompile(): void {
@@ -44,7 +46,7 @@ class ContentBlockDevelopmentServer {
 
         const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
 
-        const watcher = rollup.watch({
+        this.watcher = rollup.watch({
             ...getRollupConfig(this.contentBlockPath, this.entryFilePaths, {
                 NODE_ENV: 'development',
             }),
@@ -52,25 +54,17 @@ class ContentBlockDevelopmentServer {
             watch: {
                 include: `${this.contentBlockPath}/**`,
                 exclude: filesToIgnore,
-                chokidar: {
-                    interval: 300,
-                    awaitWriteFinish: {
-                        stabilityThreshold: 500,
-                        pollInterval: 100,
-                    },
-                },
-                clearScreen: true,
             },
         });
 
-        watcher.on('event', (event) => {
+        this.watcher.on('event', (event) => {
             switch (event.code) {
                 case 'BUNDLE_START':
                     Logger.info('Compiling Content Block...');
                     break;
                 case 'BUNDLE_END':
                     Logger.info('Compiled successfully!');
-                    event.result.close();
+                    event.result?.close();
                     break;
                 case 'ERROR':
                     if (event.error.message && event.error.stack) {
@@ -117,6 +111,7 @@ class ContentBlockDevelopmentServer {
             connection.socket.on('close', () => {
                 connection.socket.close();
                 blocksUpdateWatcher.close();
+                this.watcher?.close();
             });
         });
     }
