@@ -20,7 +20,11 @@ const getEscapedMultiInputPaths = (projectPath: string, entryFileNames: string[]
         return paths;
     });
 
-export const getRollupConfig = (projectPath: string, entryFileNames: string[], env: Record<string, string>): RollupOptions => {
+export const getRollupConfig = (
+    projectPath: string,
+    entryFileNames: string[],
+    env: Record<string, string>
+): RollupOptions => {
     const external = ['react', 'react-dom'];
     const packageJson = reactiveJson<{ dependencies: Record<string, string> }>(join(projectPath, 'package.json'));
     const dependencies = Object.keys(packageJson.dependencies);

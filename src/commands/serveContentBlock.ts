@@ -31,12 +31,7 @@ class ContentBlockDevelopmentServer {
     private readonly port: number;
     private readonly fastifyServer: FastifyInstance;
 
-    constructor(
-        contentBlockPath: string,
-        entryFilePaths: string[],
-        distPath: string,
-        port: number,
-    ) {
+    constructor(contentBlockPath: string, entryFilePaths: string[], distPath: string, port: number) {
         this.contentBlockPath = contentBlockPath;
         this.distPath = distPath;
         this.entryFilePaths = entryFilePaths;

@@ -79,7 +79,7 @@ printLogo();
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         join(process.cwd(), 'dist'),
-                        parseArgs[Argument.Port],
+                        parseArgs[Argument.Port]
                     );
                     break;
 
