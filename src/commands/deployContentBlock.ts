@@ -2,7 +2,7 @@ import fastGlob from 'fast-glob';
 import Logger from '../utils/logger';
 import open from 'open';
 import { UserInfo, getUser } from '../utils/user';
-import { Bundler, compile } from '../utils/compile';
+import { getOutputConfig, getRollupConfig } from '../utils/compiler';
 import { reactiveJson } from '../utils/reactiveJson';
 import { join } from 'path';
 import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
@@ -11,12 +11,13 @@ import { promiseExec } from '../utils/promiseExec';
 import { blue } from 'chalk';
 import { Configuration } from '../utils/configuration';
 import { Headers } from 'node-fetch';
+import CompilationFailedError from '../errors/CompilationFailedError';
+import rollup from 'rollup';
 
 interface Options {
     dryRun?: boolean;
     noVerify?: boolean;
     openInBrowser?: boolean;
-    bundler?: Bundler;
 }
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -35,7 +36,7 @@ export const createContentBlockDeployment = async (
     projectPath: string,
     entryFileNames: string[],
     distPath: string,
-    { dryRun = false, noVerify = false, openInBrowser = false, bundler }: Options
+    { dryRun = false, noVerify = false, openInBrowser = false }: Options
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
@@ -62,13 +63,20 @@ export const createContentBlockDeployment = async (
             }
 
             Logger.info('Compiling code...');
-            await compile(fullProjectPath, entryFileNames, `block_${manifest.appId}`, {
-                distPath: join(fullProjectPath, distPath),
-                env: {
-                    NODE_ENV: 'production',
-                },
-                bundler,
-            });
+            try {
+                const compiler = await rollup.rollup(
+                    getRollupConfig(fullProjectPath, entryFileNames, {
+                        NODE_ENV: 'production',
+                    })
+                );
+                const outputConfig = getOutputConfig(join(fullProjectPath, distPath), `block_${manifest.appId}`);
+
+                await compiler.write(outputConfig);
+
+                await compiler.close();
+            } catch (error) {
+                throw new CompilationFailedError(error as string);
+            }
 
             const BUILD_FILE_BLOCK_LIST = ['**/*.*.map'];
             const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
