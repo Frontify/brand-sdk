@@ -75,7 +75,7 @@ export const getRollupConfig = (
         onwarn: (warning) => {
             //TODO: Remove the silent: https://github.com/egoist/rollup-plugin-esbuild/issues/295
             if (warning.code && !['THIS_IS_UNDEFINED', 'CIRCULAR_DEPENDENCY'].includes(warning.code)) {
-                console.error(`(!) ${warning.message}`);
+                console.error(warning.message);
             }
         },
     };
