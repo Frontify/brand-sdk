@@ -6,6 +6,7 @@ import Logger from '../utils/logger';
 import { getOutputConfig, getRollupConfig } from '../utils/compiler';
 import rollup, { RollupWatcher } from 'rollup';
 import { watch } from '../utils/watch';
+import { FSWatcher } from 'chokidar';
 
 export interface SocketMessage {
     message: SocketMessageType;
@@ -30,7 +31,8 @@ class ContentBlockDevelopmentServer {
     private readonly distPath: string;
     private readonly port: number;
     private readonly fastifyServer: FastifyInstance;
-    private watcher?: RollupWatcher;
+    private compilerWatcher?: RollupWatcher;
+    private distWatcher?: FSWatcher;
 
     constructor(contentBlockPath: string, entryFilePaths: string[], distPath: string, port: number) {
         this.contentBlockPath = contentBlockPath;
@@ -38,15 +40,16 @@ class ContentBlockDevelopmentServer {
         this.entryFilePaths = entryFilePaths;
         this.port = port;
         this.fastifyServer = Fastify();
-        this.watcher = undefined;
+        this.compilerWatcher = undefined;
+        this.distWatcher = undefined;
     }
 
-    watchForFileChangesAndCompile(): void {
+    bindCompilerWatcher(): void {
         Logger.info('Warming up the Content Block compiler...');
 
         const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
 
-        this.watcher = rollup.watch({
+        this.compilerWatcher = rollup.watch({
             ...getRollupConfig(this.contentBlockPath, this.entryFilePaths, {
                 NODE_ENV: 'development',
             }),
@@ -57,7 +60,7 @@ class ContentBlockDevelopmentServer {
             },
         });
 
-        this.watcher.on('event', (event) => {
+        this.compilerWatcher.on('event', (event) => {
             switch (event.code) {
                 case 'BUNDLE_START':
                     Logger.info('Compiling Content Block...');
@@ -73,6 +76,15 @@ class ContentBlockDevelopmentServer {
                     }
                     event.result?.close();
                     break;
+            }
+        });
+    }
+
+    bindDistWatcher(callback: () => void): void {
+        this.distWatcher = watch(`${this.distPath}/**.js`, (event: string) => {
+            if (event === 'change') {
+                Logger.info('Notifying browser of updated block...');
+                callback();
             }
         });
     }
@@ -94,6 +106,8 @@ class ContentBlockDevelopmentServer {
 
     registerWebsockets(): void {
         this.fastifyServer.get('/websocket', { websocket: true }, (connection) => {
+            Logger.info('Page connected to websocket!');
+
             // Send blocks and settings on first connection
             connection.socket.send(
                 JSON.stringify({
@@ -101,17 +115,23 @@ class ContentBlockDevelopmentServer {
                 })
             );
 
-            const blocksUpdateWatcher = watch(`${this.distPath}/**.js`, (event: string) => {
-                if (event === 'change') {
-                    Logger.info('Notifying browser of updated block');
+            if (!this.compilerWatcher) {
+                this.bindCompilerWatcher();
+            }
+
+            if (!this.distWatcher) {
+                this.bindDistWatcher(() => {
                     connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
-                }
-            });
+                });
+            }
 
             connection.socket.on('close', () => {
                 connection.socket.close();
-                blocksUpdateWatcher.close();
-                this.watcher?.close();
+                this.distWatcher?.close();
+                this.distWatcher = undefined;
+                this.compilerWatcher?.close();
+                this.compilerWatcher = undefined;
+                Logger.info('Page reloaded, closing websocket connection...');
             });
         });
     }
@@ -135,5 +155,5 @@ export const createContentBlockDevelopmentServer = (
 
     const developmentServer = new ContentBlockDevelopmentServer(customBlockPath, entryFilePaths, distPath, port);
     developmentServer.serve();
-    developmentServer.watchForFileChangesAndCompile();
+    developmentServer.bindCompilerWatcher();
 };
