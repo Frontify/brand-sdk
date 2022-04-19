@@ -10,8 +10,8 @@ const isValidContentBlockName = (folderName: string): boolean => {
     if (!folderName) {
         Logger.error('The content block name can not be empty.');
         return false;
-    } else if (!/^[_a-z]+$/.test(folderName)) {
-        Logger.error('The project name needs to be "a-z" separated by "_".');
+    } else if (!/^[_a-z-]+$/.test(folderName)) {
+        Logger.error('The project name needs to be "a-z" separated by "-" or "_".');
         return false;
     } else if (!isDirectoryEmpty(folderName)) {
         Logger.error(`The directory ./${folderName} already exist.`);
