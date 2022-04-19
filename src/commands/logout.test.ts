@@ -1,5 +1,6 @@
 import { Configuration } from '../utils/configuration';
 import { logoutUser } from './logout';
+import { describe, expect, test } from 'vitest';
 
 const dummyTokens = {
     token_type: 'Bearer',
@@ -9,8 +10,8 @@ const dummyTokens = {
 };
 
 describe('Logout command', () => {
-    describe(logoutUser, () => {
-        it('should disconnect user and delete tokens', async () => {
+    describe('logoutUser', () => {
+        test('should disconnect user and delete tokens', async () => {
             //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
             const oldTokens = Configuration.get('tokens') || {};
             Configuration.set('tokens', dummyTokens);

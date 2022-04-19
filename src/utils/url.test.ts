@@ -1,8 +1,9 @@
 import { getValidInstanceUrl } from './url';
+import { describe, expect, test } from 'vitest';
 
 describe('URL utils', () => {
-    describe(getValidInstanceUrl, () => {
-        it('should correctly give hostname of a given domain name', () => {
+    describe('getValidInstanceUrl', () => {
+        test('should correctly give hostname of a given domain name', () => {
             const domainNames = [
                 'weare.frontify.com',
                 'weare.frontify.com/',

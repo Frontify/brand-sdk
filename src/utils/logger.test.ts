@@ -1,34 +1,35 @@
 import Logger from './logger';
+import { describe, expect, test, vi } from 'vitest';
 
 const someRandomText = 'It’s a trap!';
 
 describe('Logger utils', () => {
-    describe(Logger, () => {
-        it('should call defaultInfo and log to the console', () => {
-            console.log = jest.fn();
+    describe('Logger', () => {
+        test('should call defaultInfo and log to the console', () => {
+            console.log = vi.fn();
             Logger.defaultInfo(someRandomText);
             expect(console.log).toHaveBeenCalled();
         });
 
-        it('should call info and log to the console', () => {
-            console.log = jest.fn();
+        test('should call info and log to the console', () => {
+            console.log = vi.fn();
             Logger.info(someRandomText);
             expect(console.log).toHaveBeenCalled();
         });
 
-        it('should call success and log to the console', () => {
-            console.log = jest.fn();
+        test('should call success and log to the console', () => {
+            console.log = vi.fn();
             Logger.success(someRandomText);
             expect(console.log).toHaveBeenCalled();
         });
 
-        it('should call error and log error to the console', () => {
-            console.error = jest.fn();
+        test('should call error and log error to the console', () => {
+            console.error = vi.fn();
             Logger.error(someRandomText);
             expect(console.error).toHaveBeenCalled();
         });
 
-        it('should give a string with X spaces', () => {
+        test('should give a string with X spaces', () => {
             expect(Logger.spacer(5)).toEqual('     ');
             expect(Logger.spacer(3)).toEqual('   ');
             expect(Logger.spacer()).toEqual(' ');
