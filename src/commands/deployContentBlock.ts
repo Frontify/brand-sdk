@@ -69,7 +69,7 @@ export const createContentBlockDeployment = async (
                         NODE_ENV: 'production',
                     })
                 );
-                const outputConfig = getOutputConfig(join(fullProjectPath, distPath), `block_${manifest.appId}`);
+                const outputConfig = getOutputConfig(join(fullProjectPath, distPath), manifest.appId);
 
                 await compiler.write(outputConfig);
 
