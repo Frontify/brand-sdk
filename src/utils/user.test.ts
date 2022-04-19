@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { Configuration } from './configuration';
 import { getUser } from './user';
+import { beforeAll, describe, expect, test } from 'vitest';
 
 const testBaseUrl = 'test.frontify.com';
 
@@ -25,8 +26,8 @@ describe('User utils', () => {
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, getUserApiResponse);
     });
 
-    describe(getUser, () => {
-        it('should get user object', async () => {
+    describe('getUser', () => {
+        test('should get user object', async () => {
             //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
             const oldTokens = Configuration.get('tokens') || {};
             Configuration.set('tokens', dummyTokens.tokens);

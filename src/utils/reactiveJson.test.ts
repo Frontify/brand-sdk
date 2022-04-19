@@ -1,6 +1,7 @@
 import mockFs from 'mock-fs';
 import { readFileSync } from 'fs';
 import { reactiveJson } from './reactiveJson';
+import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
 const testString = '{ "some": "body" }';
 const testObject = JSON.parse(testString);
@@ -28,13 +29,13 @@ describe('Reactive JSON utils', () => {
         mockFs.restore();
     });
 
-    describe(reactiveJson, () => {
-        it('should read json and make it as an object', () => {
+    describe('reactiveJson', () => {
+        test('should read json and make it as an object', () => {
             const reactiveObject = reactiveJson(fileTestPath);
             expect(reactiveObject).toEqual(testObject);
         });
 
-        it('should read json and write changes to the file', () => {
+        test('should read json and write changes to the file', () => {
             const reactiveObject = reactiveJson<JsonFile>(fileTestPath);
             reactiveObject.some = 'one';
             reactiveObject.told = 'me';
