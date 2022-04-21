@@ -1,4 +1,4 @@
-import { blue, bold } from 'chalk';
+import chalk from 'chalk';
 import Logger from '../utils/logger';
 import { deleteDirectory, isDirectoryEmpty } from '../utils/file';
 import { cloneTo } from '../utils/git';
@@ -25,18 +25,18 @@ export const createNewContentBlock = async (contentBlockName: string): Promise<v
     if (isValidContentBlockName(contentBlockName)) {
         Logger.info('Creating the content block...');
 
-        Logger.info(`Cloning content block boilerplate to ${blue(`./${contentBlockName}`)}.`);
+        Logger.info(`Cloning content block boilerplate to ${chalk.blue(`./${contentBlockName}`)}.`);
         await cloneTo(CONTENT_BLOCK_BOILERPLATE_GIT_URL, contentBlockName);
 
         deleteDirectory(`./${contentBlockName}/.git`);
 
-        Logger.info(`Renaming boilerplate package to ${bold(contentBlockName)}.`);
+        Logger.info(`Renaming boilerplate package to ${chalk.bold(contentBlockName)}.`);
         updatePackageJsonProjectName(contentBlockName);
 
         Logger.info('Project ready!');
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);
-        Logger.defaultInfo(`${Logger.spacer(4)}cd ${blue(`./${contentBlockName}`)}`);
+        Logger.defaultInfo(`${Logger.spacer(4)}cd ${chalk.blue(`./${contentBlockName}`)}`);
         Logger.defaultInfo(`${Logger.spacer(4)}npm ci`);
         Logger.defaultInfo(`${Logger.spacer(4)}npm run serve`);
 
