@@ -57,9 +57,6 @@ export const createContentBlockDeployment = async (
 
                 Logger.info('Performing eslint checks...');
                 await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
-
-                Logger.info('Running security checks...');
-                await promiseExec(`cd ${fullProjectPath} && npm audit --audit-level=high`);
             }
 
             Logger.info('Compiling code...');
