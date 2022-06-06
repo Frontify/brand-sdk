@@ -26,11 +26,6 @@
     },
     "author": "Frontify Developers <developers@frontify.com>",
     "dependencies": {
-        "@babel/plugin-proposal-class-properties": "7.16.7",
-        "@babel/plugin-transform-react-jsx": "7.17.3",
-        "@babel/preset-env": "7.16.11",
-        "@babel/preset-react": "7.16.7",
-        "@babel/preset-typescript": "7.16.7",
         "@rollup/plugin-alias": "^3.1.9",
         "@rollup/plugin-commonjs": "21.0.3",
         "@rollup/plugin-inject": "^4.0.4",
@@ -51,6 +46,7 @@
         "rollup-plugin-postcss": "4.0.2"
     },
     "devDependencies": {
+        "@babel/core": "^7.18.2",
         "@frontify/eslint-config-typescript": "0.15.2",
         "@types/archiver": "5.3.1",
         "@types/express": "4.17.13",
@@ -72,6 +68,7 @@
         "nock": "13.2.6",
         "node-fetch": "2.6.7",
         "open": "8.4.0",
+        "postcss": "^8.4.14",
         "prettier": "2.6.2",
         "react": "17.0.2",
         "rimraf": "3.0.2",

@@ -8,15 +8,6 @@ import rollup, { RollupWatcher } from 'rollup';
 import { watch } from '../utils/watch';
 import { FSWatcher } from 'chokidar';
 
-export interface SocketMessage {
-    message: SocketMessageType;
-    data: unknown;
-}
-
-export enum SocketMessageType {
-    BlockUpdated = 'block-updated',
-}
-
 export type Setting = {
     id: string;
     label: string;
@@ -25,37 +16,42 @@ export type Setting = {
     value?: string;
 };
 
-class ContentBlockDevelopmentServer {
-    private readonly contentBlockPath: string;
+const typeToGlobalName: Record<'theme' | 'block', string> = {
+    block: 'DevCustomBlock',
+    theme: 'DevCustomTheme',
+};
+
+class DevelopmentServer {
+    private readonly entryPath: string;
     private readonly entryFilePaths: string[];
     private readonly distPath: string;
     private readonly port: number;
     private readonly fastifyServer: FastifyInstance;
+    private readonly type: 'theme' | 'block';
     private compilerWatcher?: RollupWatcher;
     private distWatcher?: FSWatcher;
 
-    constructor(contentBlockPath: string, entryFilePaths: string[], distPath: string, port: number) {
-        this.contentBlockPath = contentBlockPath;
+    constructor(entryPath: string, entryFilePaths: string[], distPath: string, port: number, type: 'theme' | 'block') {
+        this.entryPath = entryPath;
         this.distPath = distPath;
         this.entryFilePaths = entryFilePaths;
         this.port = port;
         this.fastifyServer = Fastify();
         this.compilerWatcher = undefined;
         this.distWatcher = undefined;
+        this.type = type;
     }
 
     bindCompilerWatcher(): void {
-        Logger.info('Warming up the Content Block compiler...');
-
         const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
 
         this.compilerWatcher = rollup.watch({
-            ...getRollupConfig(this.contentBlockPath, this.entryFilePaths, {
+            ...getRollupConfig(this.entryPath, this.entryFilePaths, {
                 NODE_ENV: 'development',
             }),
-            output: getOutputConfig(this.distPath, 'DevCustomBlock'),
+            output: getOutputConfig(this.distPath, typeToGlobalName[this.type]),
             watch: {
-                include: `${this.contentBlockPath}/**`,
+                include: `${this.entryPath}/**`,
                 exclude: filesToIgnore,
             },
         });
@@ -63,7 +59,7 @@ class ContentBlockDevelopmentServer {
         this.compilerWatcher.on('event', (event) => {
             switch (event.code) {
                 case 'BUNDLE_START':
-                    Logger.info('Compiling Content Block...');
+                    Logger.info('Compiling...');
                     break;
                 case 'BUNDLE_END':
                     Logger.info('Compiled successfully!');
@@ -83,7 +79,7 @@ class ContentBlockDevelopmentServer {
     bindDistWatcher(callback: () => void): void {
         this.distWatcher = watch(`${this.distPath}/**.js`, (event: string) => {
             if (event === 'change') {
-                Logger.info('Notifying browser of updated block...');
+                Logger.info(`Notifying browser of updated ${this.type}...`);
                 callback();
             }
         });
@@ -94,7 +90,7 @@ class ContentBlockDevelopmentServer {
         this.registerRoutes();
         this.registerWebsockets();
 
-        Logger.info(`Content Block development server is listening on port ${this.port}!`);
+        Logger.info(`Development server is listening on port ${this.port}!`);
         this.fastifyServer.listen(this.port, '0.0.0.0');
     }
 
@@ -108,12 +104,8 @@ class ContentBlockDevelopmentServer {
         this.fastifyServer.get('/websocket', { websocket: true }, (connection) => {
             Logger.info('Page connected to websocket!');
 
-            // Send blocks and settings on first connection
-            connection.socket.send(
-                JSON.stringify({
-                    message: SocketMessageType.BlockUpdated,
-                })
-            );
+            // Send data on first connection
+            connection.socket.send(JSON.stringify({ message: `${this.type}-updated` }));
 
             if (!this.compilerWatcher) {
                 this.bindCompilerWatcher();
@@ -121,7 +113,7 @@ class ContentBlockDevelopmentServer {
 
             if (!this.distWatcher) {
                 this.bindDistWatcher(() => {
-                    connection.socket.send(JSON.stringify({ message: SocketMessageType.BlockUpdated }));
+                    connection.socket.send(JSON.stringify({ message: `${this.type}-updated` }));
                 });
             }
 
@@ -145,15 +137,16 @@ class ContentBlockDevelopmentServer {
     }
 }
 
-export const createContentBlockDevelopmentServer = (
+export const createDevelopmentServer = (
     customBlockPath: string,
     entryFilePaths: string[],
     distPath: string,
-    port: number
+    port: number,
+    type: 'theme' | 'block'
 ): void => {
-    Logger.info('Starting the Content Block development server...');
+    Logger.info(`Starting the ${type} development server...`);
 
-    const developmentServer = new ContentBlockDevelopmentServer(customBlockPath, entryFilePaths, distPath, port);
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePaths, distPath, port, type);
     developmentServer.serve();
     developmentServer.bindCompilerWatcher();
 };
