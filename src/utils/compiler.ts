@@ -1,16 +1,16 @@
-import { join, sep } from 'path';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { OutputOptions, RollupOptions } from 'rollup';
-import { reactiveJson } from './reactiveJson';
 import alias from '@rollup/plugin-alias';
-import combine from 'rollup-plugin-combine';
 import commonjs from '@rollup/plugin-commonjs';
-import esbuild from 'rollup-plugin-esbuild';
 import inject from '@rollup/plugin-inject';
 import json from '@rollup/plugin-json';
-import postcss from 'rollup-plugin-postcss';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import stdLibBrowser from 'node-stdlib-browser';
+import { join, sep } from 'path';
+import { OutputOptions, RollupOptions } from 'rollup';
+import combine from 'rollup-plugin-combine';
+import esbuild from 'rollup-plugin-esbuild';
+import postcss from 'rollup-plugin-postcss';
+import { reactiveJson } from './reactiveJson';
 
 const getEscapedMultiInputPaths = (projectPath: string, entryFileNames: string[]) =>
     entryFileNames.map((entryFileName) => {
@@ -33,7 +33,7 @@ export const getRollupConfig = (
 
     return {
         external,
-        treeshake: env['NODE_ENV'] === 'production',
+        treeshake: { moduleSideEffects: false },
         input: getEscapedMultiInputPaths(projectPath, entryFileNames),
         plugins: [
             alias({
