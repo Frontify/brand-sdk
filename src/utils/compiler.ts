@@ -1,19 +1,7 @@
+import { BuildOptions } from 'esbuild';
 import { join, sep } from 'path';
 import { OutputOptions } from 'rollup';
-import { InlineConfig } from 'vite';
 import { reactiveJson } from './reactiveJson';
-import alias from '@rollup/plugin-alias';
-import combine from 'rollup-plugin-combine';
-import commonjs from '@rollup/plugin-commonjs';
-import esbuild from 'rollup-plugin-esbuild';
-import inject from '@rollup/plugin-inject';
-import json from '@rollup/plugin-json';
-import postcss from 'rollup-plugin-postcss';
-import replace from '@rollup/plugin-replace';
-import stdLibBrowser from 'node-stdlib-browser';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import iife from 'rollup-plugin-iife';
-import { BuildOptions } from 'esbuild';
 
 const getEscapedMultiInputPaths = (projectPath: string, entryFileNames: string[]) =>
     entryFileNames.map((entryFileName) => {
@@ -39,7 +27,7 @@ export const getRollupConfig = (
         format: 'iife',
         minify: false,
         bundle: true,
-        entryPoints: [join(projectPath, 'src/index.tsx')],
+        entryPoints: [join(projectPath, 'src', 'index.tsx')],
         outdir: join(projectPath, 'dist'),
         banner: {
             js: `
