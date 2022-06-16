@@ -7,6 +7,7 @@ import { getOutputConfig, getRollupConfig } from '../utils/compiler';
 import rollup, { RollupWatcher } from 'rollup';
 import { watch } from '../utils/watch';
 import { FSWatcher } from 'chokidar';
+import { BuildResult, build } from 'esbuild';
 
 export interface SocketMessage {
     message: SocketMessageType;
@@ -31,7 +32,7 @@ class ContentBlockDevelopmentServer {
     private readonly distPath: string;
     private readonly port: number;
     private readonly fastifyServer: FastifyInstance;
-    private compilerWatcher?: RollupWatcher;
+    private compilerWatcher?: BuildResult;
     private distWatcher?: FSWatcher;
 
     constructor(contentBlockPath: string, entryFilePaths: string[], distPath: string, port: number) {
@@ -44,40 +45,61 @@ class ContentBlockDevelopmentServer {
         this.distWatcher = undefined;
     }
 
-    bindCompilerWatcher(): void {
+    async bindCompilerWatcher(): Promise<void> {
         Logger.info('Warming up the Content Block compiler...');
 
         const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
 
-        this.compilerWatcher = rollup.watch({
+        // this.compilerWatcher = rollup.watch({
+        //     ...getRollupConfig(this.contentBlockPath, this.entryFilePaths, {
+        //         NODE_ENV: 'development',
+        //     }),
+        //     output: getOutputConfig(this.distPath, 'DevCustomBlock'),
+        //     watch: {
+        //         include: `${this.contentBlockPath}/**`,
+        //         exclude: filesToIgnore,
+        //     },
+        // });
+
+        this.compilerWatcher = await build({
             ...getRollupConfig(this.contentBlockPath, this.entryFilePaths, {
                 NODE_ENV: 'development',
             }),
-            output: getOutputConfig(this.distPath, 'DevCustomBlock'),
             watch: {
-                include: `${this.contentBlockPath}/**`,
-                exclude: filesToIgnore,
+                onRebuild(error, result) {
+                    if (error) {
+                        Logger.info(`watch build failed: ${error}`);
+                    } else {
+                        Logger.info(`watch build succeeded: ${result}`);
+                    }
+                },
             },
         });
+        if (this.compilerWatcher.errors.length > 0) {
+            Logger.info(`Compiler errors: ${this.compilerWatcher.errors}`);
+            return;
+        }
 
-        this.compilerWatcher.on('event', (event) => {
-            switch (event.code) {
-                case 'BUNDLE_START':
-                    Logger.info('Compiling Content Block...');
-                    break;
-                case 'BUNDLE_END':
-                    Logger.info('Compiled successfully!');
-                    event.result?.close();
-                    break;
-                case 'ERROR':
-                    if (event.error.message && event.error.stack) {
-                        Logger.error(event.error.message);
-                        Logger.error(event.error.stack);
-                    }
-                    event.result?.close();
-                    break;
-            }
-        });
+        Logger.info('Compiled successfully!');
+
+        // this.compilerWatcher.on('event', (event) => {
+        //     switch (event.code) {
+        //         case 'BUNDLE_START':
+        //             Logger.info('Compiling Content Block...');
+        //             break;
+        //         case 'BUNDLE_END':
+        //             Logger.info('Compiled successfully!');
+        //             event.result?.close();
+        //             break;
+        //         case 'ERROR':
+        //             if (event.error.message && event.error.stack) {
+        //                 Logger.error(event.error.message);
+        //                 Logger.error(event.error.stack);
+        //             }
+        //             event.result?.close();
+        //             break;
+        //     }
+        // });
     }
 
     bindDistWatcher(callback: () => void): void {
@@ -105,7 +127,7 @@ class ContentBlockDevelopmentServer {
     }
 
     registerWebsockets(): void {
-        this.fastifyServer.get('/websocket', { websocket: true }, (connection) => {
+        this.fastifyServer.get('/websocket', { websocket: true }, async (connection) => {
             Logger.info('Page connected to websocket!');
 
             // Send blocks and settings on first connection
@@ -116,7 +138,7 @@ class ContentBlockDevelopmentServer {
             );
 
             if (!this.compilerWatcher) {
-                this.bindCompilerWatcher();
+                await this.bindCompilerWatcher();
             }
 
             if (!this.distWatcher) {
@@ -129,7 +151,9 @@ class ContentBlockDevelopmentServer {
                 connection.socket.close();
                 this.distWatcher?.close();
                 this.distWatcher = undefined;
-                this.compilerWatcher?.close();
+                if (this.compilerWatcher?.stop) {
+                    this.compilerWatcher.stop();
+                }
                 this.compilerWatcher = undefined;
                 Logger.info('Page reloaded, closing websocket connection...');
             });

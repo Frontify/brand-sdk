@@ -1,18 +1,18 @@
+import chalk from 'chalk';
+import { build } from 'esbuild';
 import fastGlob from 'fast-glob';
-import Logger from '../utils/logger';
+import { Headers } from 'node-fetch';
 import open from 'open';
-import { UserInfo, getUser } from '../utils/user';
-import { getOutputConfig, getRollupConfig } from '../utils/compiler';
-import { reactiveJson } from '../utils/reactiveJson';
 import { join } from 'path';
+import CompilationFailedError from '../errors/CompilationFailedError';
+import { getRollupConfig } from '../utils/compiler';
+import { Configuration } from '../utils/configuration';
 import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
 import { HttpClient } from '../utils/httpClient';
+import Logger from '../utils/logger';
 import { promiseExec } from '../utils/promiseExec';
-import chalk from 'chalk';
-import { Configuration } from '../utils/configuration';
-import { Headers } from 'node-fetch';
-import CompilationFailedError from '../errors/CompilationFailedError';
-import rollup from 'rollup';
+import { reactiveJson } from '../utils/reactiveJson';
+import { UserInfo, getUser } from '../utils/user';
 
 interface Options {
     dryRun?: boolean;
@@ -61,16 +61,11 @@ export const createContentBlockDeployment = async (
 
             Logger.info('Compiling code...');
             try {
-                const compiler = await rollup.rollup(
+                const compiler = build(
                     getRollupConfig(fullProjectPath, entryFileNames, {
                         NODE_ENV: 'production',
                     })
                 );
-                const outputConfig = getOutputConfig(join(fullProjectPath, distPath), manifest.appId);
-
-                await compiler.write(outputConfig);
-
-                await compiler.close();
             } catch (error) {
                 throw new CompilationFailedError(error as string);
             }
