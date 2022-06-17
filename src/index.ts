@@ -111,7 +111,6 @@ printLogo();
                 case 'serve':
                     createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
-                        // [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         [parseArgs[Argument.EntryPath]],
                         join(process.cwd(), 'dist'),
                         parseArgs[Argument.Port],
