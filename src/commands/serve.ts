@@ -21,6 +21,11 @@ const typeToGlobalName: Record<'theme' | 'block', string> = {
     theme: 'DevCustomTheme',
 };
 
+const typeToSocketMessage: Record<'theme' | 'block', string> = {
+    block: 'block-updated',
+    theme: 'theme-updated',
+};
+
 class DevelopmentServer {
     private readonly entryPath: string;
     private readonly entryFilePaths: string[];
@@ -105,7 +110,7 @@ class DevelopmentServer {
             Logger.info('Page connected to websocket!');
 
             // Send data on first connection
-            connection.socket.send(JSON.stringify({ message: `${this.type}-updated` }));
+            connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
 
             if (!this.compilerWatcher) {
                 this.bindCompilerWatcher();
@@ -113,7 +118,7 @@ class DevelopmentServer {
 
             if (!this.distWatcher) {
                 this.bindDistWatcher(() => {
-                    connection.socket.send(JSON.stringify({ message: `${this.type}-updated` }));
+                    connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
                 });
             }
 
