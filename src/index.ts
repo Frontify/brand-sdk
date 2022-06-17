@@ -6,7 +6,7 @@ import { createNewContentBlock } from './commands/createContentBlock';
 import { createContentBlockDeployment } from './commands/deployContentBlock';
 import { loginUser } from './commands/login';
 import { logoutUser } from './commands/logout';
-import { createContentBlockDevelopmentServer } from './commands/serveContentBlock';
+import { createDevelopmentServer } from './commands/serve';
 import Logger from './utils/logger';
 import { printLogo } from './utils/logo';
 import { getValidInstanceUrl } from './utils/url';
@@ -17,9 +17,10 @@ enum Argument {
     EntryPath = 'entryPath',
     Minify = 'minify',
     NoVerify = 'noVerify',
-    Port = 'port',
     OutDir = 'outDir',
+    Port = 'port',
     SettingsPath = 'settingsPath',
+    ThemePath = 'contentBlockPath',
 }
 
 const options = buildOptions({
@@ -60,6 +61,10 @@ const options = buildOptions({
         alias: 'e',
         default: join('src', 'settings.ts'),
     },
+    [Argument.ThemePath]: {
+        type: 'string',
+        default: '.',
+    },
 });
 const parseArgs = minimist(process.argv.slice(2), options);
 
@@ -75,11 +80,12 @@ printLogo();
                     break;
 
                 case 'serve':
-                    createContentBlockDevelopmentServer(
+                    createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
                         join(process.cwd(), 'dist'),
-                        parseArgs[Argument.Port]
+                        parseArgs[Argument.Port],
+                        'block'
                     );
                     break;
 
@@ -95,6 +101,20 @@ printLogo();
                             noVerify: parseArgs[Argument.NoVerify],
                             openInBrowser: parseArgs.open,
                         }
+                    );
+                    break;
+            }
+            break;
+
+        case 'theme':
+            switch (parseArgs._[1]) {
+                case 'serve':
+                    createDevelopmentServer(
+                        join(process.cwd(), parseArgs[Argument.ThemePath]),
+                        [parseArgs[Argument.EntryPath]],
+                        join(process.cwd(), 'dist'),
+                        parseArgs[Argument.Port],
+                        'theme'
                     );
                     break;
             }
