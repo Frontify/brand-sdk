@@ -34,7 +34,7 @@ specifiers:
   minimist: 1.2.6
   minimist-options: 4.1.0
   mock-fs: 5.1.2
-  nock: 13.2.7
+  nock: 13.2.8
   node-fetch: 2.6.7
   node-stdlib-browser: ^1.2.0
   open: 8.4.0
@@ -91,7 +91,7 @@ devDependencies:
   is-ci: 3.0.1
   lodash-es: 4.17.21
   mock-fs: 5.1.2
-  nock: 13.2.7
+  nock: 13.2.8
   node-fetch: 2.6.7
   open: 8.4.0
   postcss: 8.4.14
@@ -3276,8 +3276,8 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /nock/13.2.7:
-    resolution: {integrity: sha512-R6NUw7RIPtKwgK7jskuKoEi4VFMqIHtV2Uu9K/Uegc4TA5cqe+oNMYslZcUmnVNQCTG6wcSqUBaGTDd7sq5srg==}
+  /nock/13.2.8:
+    resolution: {integrity: sha512-JT42FrXfQRpfyL4cnbBEJdf4nmBpVP0yoCcSBr+xkT8Q1y3pgtaCKHGAAOIFcEJ3O3t0QbVAmid0S0f2bj3Wpg==}
     engines: {node: '>= 10.13'}
     dependencies:
       debug: 4.3.4
