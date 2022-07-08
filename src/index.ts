@@ -3,7 +3,7 @@ import buildOptions from 'minimist-options';
 import { join } from 'path';
 import { exit } from 'process';
 import { createNewContentBlock } from './commands/createContentBlock';
-import { createContentBlockDeployment } from './commands/deployContentBlock';
+import { createDeployment } from './commands/deploy';
 import { loginUser } from './commands/login';
 import { logoutUser } from './commands/logout';
 import { createDevelopmentServer } from './commands/serve';
@@ -91,7 +91,7 @@ printLogo();
 
                 case 'deploy':
                     const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-                    await createContentBlockDeployment(
+                    await createDeployment(
                         instanceUrl,
                         parseArgs[Argument.ContentBlockPath],
                         [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
@@ -115,6 +115,20 @@ printLogo();
                         join(process.cwd(), 'dist'),
                         parseArgs[Argument.Port],
                         'theme'
+                    );
+                    break;
+                case 'deploy':
+                    const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
+                    await createDeployment(
+                        instanceUrl,
+                        parseArgs[Argument.ThemePath],
+                        [parseArgs[Argument.EntryPath]],
+                        parseArgs[Argument.OutDir],
+                        {
+                            dryRun: parseArgs[Argument.DryRun],
+                            noVerify: parseArgs[Argument.NoVerify],
+                            openInBrowser: parseArgs.open,
+                        }
                     );
                     break;
             }

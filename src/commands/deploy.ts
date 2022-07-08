@@ -31,7 +31,7 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
     }, {});
 };
 
-export const createContentBlockDeployment = async (
+export const createDeployment = async (
     instanceUrl: string,
     projectPath: string,
     entryFileNames: string[],
