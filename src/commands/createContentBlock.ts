@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import chalk from 'chalk';
 import Logger from '../utils/logger';
 import { deleteDirectory, isDirectoryEmpty } from '../utils/file';

@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { ExecOptions, exec } from 'child_process';
 import CommandExecutionError from '../errors/CommandExecutionError';
 

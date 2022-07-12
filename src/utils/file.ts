@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { readFileSync, readdirSync, rmSync } from 'fs';
 import FileNotFoundError from '../errors/FileNotFoundError';
 

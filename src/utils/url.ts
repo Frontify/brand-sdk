@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { URL } from 'url';
 import InvalidInstanceUrlError from '../errors/InvalidInstanceUrlError';
 
