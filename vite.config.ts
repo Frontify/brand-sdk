@@ -29,7 +29,7 @@ export default defineConfig({
             name: 'FrontifyCli',
         },
         sourcemap: true,
-        minify: false,
+        minify: true,
         rollupOptions: {
             external: [...dependencies, ...builtinModules, ...builtinModules.map((m) => `node:${m}`)],
             output: [

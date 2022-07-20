@@ -93,8 +93,6 @@ class DevelopmentServer {
             fastify.get('/websocket', { websocket: true }, async (connection) => {
                 Logger.info('Page connected to websocket!');
 
-                console.log(typeToSocketMessage[this.type]);
-
                 // Send data on first connection
                 connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
 
@@ -104,7 +102,7 @@ class DevelopmentServer {
 
                 if (!this.onBundleEnd) {
                     this.onBundleEnd = () => {
-                        Logger.info(`Notifying browser of ${typeToSocketMessage[this.type]}`);
+                        Logger.info(`Notifying browser of ${this.type} update`);
                         connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
                     };
                 }
