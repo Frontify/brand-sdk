@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Fastify, { fastify } from 'fastify';
+import Fastify from 'fastify';
 import FastifyCors from '@fastify/cors';
 import FastifyStatic from '@fastify/static';
 import FastifyWebSocket from '@fastify/websocket';
