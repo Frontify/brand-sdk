@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { getValidInstanceUrl } from './url';
 import { describe, expect, test } from 'vitest';
 

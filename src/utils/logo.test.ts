@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { printLogo } from './logo';
 import { describe, expect, test, vi } from 'vitest';
 

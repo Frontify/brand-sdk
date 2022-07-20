@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import chalk from 'chalk';
+import colors from 'colors/safe';
 import { getCurrentTime } from './date';
 
 export default class Logger {
@@ -13,11 +13,11 @@ export default class Logger {
     }
 
     static success(...messages: string[]): void {
-        console.log(`[${getCurrentTime()}] ${chalk.green(messages.join(' '))}`);
+        console.log(`[${getCurrentTime()}] ${colors.green(messages.join(' '))}`);
     }
 
     static error(...messages: string[]): void {
-        console.error(chalk.red(`[${getCurrentTime()}] ${messages.join(' ')}`));
+        console.error(colors.red(`[${getCurrentTime()}] ${messages.join(' ')}`));
     }
 
     static spacer(width = 1): string {

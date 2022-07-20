@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { getCurrentTime } from './date';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 

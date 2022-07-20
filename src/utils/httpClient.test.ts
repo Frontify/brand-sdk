@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import nock from 'nock';
 import { HttpClient } from './httpClient';
 import { beforeAll, describe, expect, test } from 'vitest';

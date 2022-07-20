@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Fastify, { FastifyInstance } from 'fastify';
-import FastifyCors from 'fastify-cors';
-import FastifyStatic from 'fastify-static';
-import FastifyWebSocket from 'fastify-websocket';
-import { RollupWatcher } from 'rollup';
+import Fastify from 'fastify';
+import FastifyCors from '@fastify/cors';
+import FastifyStatic from '@fastify/static';
+import FastifyWebSocket from '@fastify/websocket';
+import type { RollupWatcher } from 'rollup';
 import { build } from 'vite';
 import { getViteConfig } from '../utils/compiler';
 import Logger from '../utils/logger';
@@ -32,7 +32,7 @@ class DevelopmentServer {
     private readonly entryFilePath: string;
     private readonly distPath: string;
     private readonly port: number;
-    private readonly fastifyServer: FastifyInstance;
+    private readonly fastifyServer = Fastify();
     private readonly type: 'theme' | 'block';
     private compilerWatcher?: RollupWatcher;
     private onBundleEnd?: () => void;
@@ -42,7 +42,6 @@ class DevelopmentServer {
         this.distPath = distPath;
         this.entryFilePath = entryFilePath;
         this.port = port;
-        this.fastifyServer = Fastify();
         this.compilerWatcher = undefined;
         this.type = type;
         this.onBundleEnd = undefined;
@@ -64,10 +63,6 @@ class DevelopmentServer {
                     event.result?.close();
                     break;
                 case 'ERROR':
-                    if (event.error.message && event.error.stack) {
-                        Logger.error(event.error.message);
-                        Logger.error(event.error.stack);
-                    }
                     event.result?.close();
                     break;
             }
@@ -80,7 +75,7 @@ class DevelopmentServer {
         this.registerWebsockets();
 
         Logger.info(`Development server is listening on port ${this.port}!`);
-        this.fastifyServer.listen(this.port, '0.0.0.0');
+        this.fastifyServer.listen({ port: this.port, host: '0.0.0.0' });
     }
 
     registerRoutes(): void {
@@ -90,29 +85,31 @@ class DevelopmentServer {
     }
 
     registerWebsockets(): void {
-        this.fastifyServer.get('/websocket', { websocket: true }, async (connection) => {
-            Logger.info('Page connected to websocket!');
+        this.fastifyServer.register((fastify) =>
+            fastify.get('/websocket', { websocket: true }, async (connection) => {
+                Logger.info('Page connected to websocket!');
 
-            // Send data on first connection
-            connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
+                // Send data on first connection
+                connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
 
-            if (!this.compilerWatcher) {
-                await this.bindCompilerWatcher();
-            }
+                if (!this.compilerWatcher) {
+                    await this.bindCompilerWatcher();
+                }
 
-            if (!this.onBundleEnd) {
-                this.onBundleEnd = () => {
-                    Logger.info(`Notifying browser of ${typeToSocketMessage[this.type]}`);
-                    connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-                };
-            }
+                if (!this.onBundleEnd) {
+                    this.onBundleEnd = () => {
+                        Logger.info(`Notifying browser of ${this.type} update`);
+                        connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
+                    };
+                }
 
-            connection.socket.on('close', () => {
-                connection.socket.close();
-                this.compilerWatcher?.close();
-                Logger.info('Page reloaded, closing websocket connection...');
-            });
-        });
+                connection.socket.on('close', () => {
+                    connection.socket.close();
+                    this.compilerWatcher?.close();
+                    Logger.info('Page reloaded, closing websocket connection...');
+                });
+            })
+        );
     }
 
     registerPlugins(): void {

@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import mockFs from 'mock-fs';
 import { readFileSync } from 'fs';
 import { reactiveJson } from './reactiveJson';

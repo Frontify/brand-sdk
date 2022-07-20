@@ -16,6 +16,7 @@ export const getViteConfig = (
         mode,
         envDir: join(__dirname, 'env'),
         root: projectPath,
+        logLevel: 'warn',
         build: {
             lib: {
                 name: outputName,

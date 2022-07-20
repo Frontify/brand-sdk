@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import mockFs from 'mock-fs';
 import { getFileHash } from './hash';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
