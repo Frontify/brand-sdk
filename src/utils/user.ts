@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import chalk from 'chalk';
+import colors from 'colors/safe';
 import { Headers } from 'node-fetch';
 import { HttpClient } from './httpClient';
 import Logger from './logger';
@@ -25,7 +25,7 @@ export const getUser = async (instanceUrl: string): Promise<UserInfo | undefined
         );
         return user.data.currentUser;
     } catch {
-        Logger.error(`You are not logged in, you can use the command ${chalk.bold('frontify-cli login')}.`);
+        Logger.error(`You are not logged in, you can use the command ${colors.bold('frontify-cli login')}.`);
         return undefined;
     }
 };

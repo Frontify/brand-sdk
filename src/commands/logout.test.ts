@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { Configuration } from '../utils/configuration';
 import { logoutUser } from './logout';
 import { describe, expect, test } from 'vitest';

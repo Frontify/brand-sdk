@@ -10,7 +10,7 @@ import { join } from 'path';
 import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
 import { HttpClient } from '../utils/httpClient';
 import { promiseExec } from '../utils/promiseExec';
-import chalk from 'chalk';
+import colors from 'colors/safe';
 import { Configuration } from '../utils/configuration';
 import { Headers } from 'node-fetch';
 import CompilationFailedError from '../errors/CompilationFailedError';
@@ -48,7 +48,7 @@ export const createDeployment = async (
         }
 
         if (user || dryRun) {
-            dryRun && Logger.info(chalk.blue('Dry run: enabled'));
+            dryRun && Logger.info(colors.blue('Dry run: enabled'));
 
             const fullProjectPath = join(process.cwd(), projectPath);
             const manifest = reactiveJson<Manifest>(join(process.cwd(), 'manifest.json'));

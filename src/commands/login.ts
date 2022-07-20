@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import Logger from '../utils/logger';
-import Fastify, { FastifyInstance } from 'fastify';
-import FastifyCors from 'fastify-cors';
+import Fastify from 'fastify';
+import FastifyCors from '@fastify/cors';
 import open from 'open';
 import { Configuration } from '../utils/configuration';
 import { exit } from 'process';
@@ -10,10 +10,6 @@ import { getValidInstanceUrl } from '../utils/url';
 import { HttpClient } from '../utils/httpClient';
 import { Headers } from 'node-fetch';
 import { getUser } from '../utils/user';
-
-interface Query {
-    code: string;
-}
 
 export interface OauthRandomCodeChallenge {
     secret: string;
@@ -32,7 +28,7 @@ export class Authenticator {
     private readonly port: number;
 
     private readonly httpClient: HttpClient;
-    private readonly fastifyServer: FastifyInstance;
+    private readonly fastifyServer = Fastify();
 
     private randomChallenge: OauthRandomCodeChallenge | undefined;
 
@@ -41,18 +37,17 @@ export class Authenticator {
         this.port = port;
 
         this.httpClient = new HttpClient(instanceUrl);
-        this.fastifyServer = Fastify();
     }
 
     serveCallbackServer(): void {
         this.registerPlugins();
         this.registerRoutes();
 
-        this.fastifyServer.listen(this.port);
+        this.fastifyServer.listen({ port: this.port });
     }
 
     private registerRoutes(): void {
-        this.fastifyServer.get<{ Querystring: Query }>('/oauth', async (req, res) => {
+        this.fastifyServer.get('/oauth', async (req, res) => {
             Logger.info('Access granted, getting access token...');
             res.send('You can close this window.');
 

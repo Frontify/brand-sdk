@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import nock from 'nock';
 import { Configuration } from './configuration';
 import { getUser } from './user';
