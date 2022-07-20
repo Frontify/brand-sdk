@@ -63,10 +63,6 @@ class DevelopmentServer {
                     event.result?.close();
                     break;
                 case 'ERROR':
-                    if (event.error.message && event.error.stack) {
-                        Logger.error(event.error.message);
-                        Logger.error(event.error.stack);
-                    }
                     event.result?.close();
                     break;
             }
