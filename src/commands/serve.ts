@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Fastify, { FastifyInstance } from 'fastify';
-import FastifyCors from 'fastify-cors';
-import FastifyStatic from 'fastify-static';
-import FastifyWebSocket from 'fastify-websocket';
-import { RollupWatcher } from 'rollup';
+import Fastify from 'fastify';
+import FastifyCors from '@fastify/cors';
+import FastifyStatic from '@fastify/static';
+import FastifyWebSocket from '@fastify/websocket';
+import type { RollupWatcher } from 'rollup';
 import { build } from 'vite';
 import { getViteConfig } from '../utils/compiler';
 import Logger from '../utils/logger';
@@ -32,7 +32,7 @@ class DevelopmentServer {
     private readonly entryFilePath: string;
     private readonly distPath: string;
     private readonly port: number;
-    private readonly fastifyServer: FastifyInstance;
+    private readonly fastifyServer = Fastify();
     private readonly type: 'theme' | 'block';
     private compilerWatcher?: RollupWatcher;
     private onBundleEnd?: () => void;
@@ -42,7 +42,6 @@ class DevelopmentServer {
         this.distPath = distPath;
         this.entryFilePath = entryFilePath;
         this.port = port;
-        this.fastifyServer = Fastify();
         this.compilerWatcher = undefined;
         this.type = type;
         this.onBundleEnd = undefined;
@@ -80,7 +79,7 @@ class DevelopmentServer {
         this.registerWebsockets();
 
         Logger.info(`Development server is listening on port ${this.port}!`);
-        this.fastifyServer.listen(this.port, '0.0.0.0');
+        this.fastifyServer.listen({ port: this.port, host: '0.0.0.0' });
     }
 
     registerRoutes(): void {
