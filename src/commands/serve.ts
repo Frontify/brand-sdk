@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Fastify from 'fastify';
+import Fastify, { fastify } from 'fastify';
 import FastifyCors from '@fastify/cors';
 import FastifyStatic from '@fastify/static';
 import FastifyWebSocket from '@fastify/websocket';
@@ -89,29 +89,33 @@ class DevelopmentServer {
     }
 
     registerWebsockets(): void {
-        this.fastifyServer.get('/websocket', { websocket: true }, async (connection) => {
-            Logger.info('Page connected to websocket!');
+        this.fastifyServer.register((fastify) =>
+            fastify.get('/websocket', { websocket: true }, async (connection) => {
+                Logger.info('Page connected to websocket!');
 
-            // Send data on first connection
-            connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
+                console.log(typeToSocketMessage[this.type]);
 
-            if (!this.compilerWatcher) {
-                await this.bindCompilerWatcher();
-            }
+                // Send data on first connection
+                connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
 
-            if (!this.onBundleEnd) {
-                this.onBundleEnd = () => {
-                    Logger.info(`Notifying browser of ${typeToSocketMessage[this.type]}`);
-                    connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-                };
-            }
+                if (!this.compilerWatcher) {
+                    await this.bindCompilerWatcher();
+                }
 
-            connection.socket.on('close', () => {
-                connection.socket.close();
-                this.compilerWatcher?.close();
-                Logger.info('Page reloaded, closing websocket connection...');
-            });
-        });
+                if (!this.onBundleEnd) {
+                    this.onBundleEnd = () => {
+                        Logger.info(`Notifying browser of ${typeToSocketMessage[this.type]}`);
+                        connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
+                    };
+                }
+
+                connection.socket.on('close', () => {
+                    connection.socket.close();
+                    this.compilerWatcher?.close();
+                    Logger.info('Page reloaded, closing websocket connection...');
+                });
+            })
+        );
     }
 
     registerPlugins(): void {
