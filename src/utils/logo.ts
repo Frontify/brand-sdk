@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 export const printLogo = (): void => {
     console.log(`
      ______               _   _  __

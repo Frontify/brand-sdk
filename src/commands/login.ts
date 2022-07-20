@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import Logger from '../utils/logger';
 import Fastify, { FastifyInstance } from 'fastify';
 import FastifyCors from 'fastify-cors';

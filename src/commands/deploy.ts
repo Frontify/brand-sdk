@@ -1,8 +1,10 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import fastGlob from 'fast-glob';
 import Logger from '../utils/logger';
 import open from 'open';
 import { UserInfo, getUser } from '../utils/user';
-import { getOutputConfig, getRollupConfig } from '../utils/compiler';
+import { getViteConfig } from '../utils/compiler';
 import { reactiveJson } from '../utils/reactiveJson';
 import { join } from 'path';
 import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
@@ -12,7 +14,7 @@ import chalk from 'chalk';
 import { Configuration } from '../utils/configuration';
 import { Headers } from 'node-fetch';
 import CompilationFailedError from '../errors/CompilationFailedError';
-import rollup from 'rollup';
+import { build } from 'vite';
 
 interface Options {
     dryRun?: boolean;
@@ -34,7 +36,7 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
 export const createDeployment = async (
     instanceUrl: string,
     projectPath: string,
-    entryFileNames: string[],
+    entryFileName: string,
     distPath: string,
     { dryRun = false, noVerify = false, openInBrowser = false }: Options
 ): Promise<void> => {
@@ -61,16 +63,7 @@ export const createDeployment = async (
 
             Logger.info('Compiling code...');
             try {
-                const compiler = await rollup.rollup(
-                    getRollupConfig(fullProjectPath, entryFileNames, {
-                        NODE_ENV: 'production',
-                    })
-                );
-                const outputConfig = getOutputConfig(join(fullProjectPath, distPath), manifest.appId);
-
-                await compiler.write(outputConfig);
-
-                await compiler.close();
+                await build(getViteConfig(fullProjectPath, entryFileName, 'production', manifest.appId));
             } catch (error) {
                 throw new CompilationFailedError(error as string);
             }
@@ -102,7 +95,7 @@ export const createDeployment = async (
                 });
 
                 Logger.success('The new version has been pushed.');
-                Logger.info(JSON.stringify(response as any));
+                Logger.info(JSON.stringify(response));
 
                 if (openInBrowser) {
                     Logger.info('Opening the Frontify Marketplace page...');

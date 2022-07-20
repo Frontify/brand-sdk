@@ -1,12 +1,13 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import Fastify, { FastifyInstance } from 'fastify';
 import FastifyCors from 'fastify-cors';
 import FastifyStatic from 'fastify-static';
 import FastifyWebSocket from 'fastify-websocket';
+import { RollupWatcher } from 'rollup';
+import { build } from 'vite';
+import { getViteConfig } from '../utils/compiler';
 import Logger from '../utils/logger';
-import { getOutputConfig, getRollupConfig } from '../utils/compiler';
-import rollup, { RollupWatcher } from 'rollup';
-import { watch } from '../utils/watch';
-import { FSWatcher } from 'chokidar';
 
 export type Setting = {
     id: string;
@@ -28,38 +29,29 @@ const typeToSocketMessage: Record<'theme' | 'block', string> = {
 
 class DevelopmentServer {
     private readonly entryPath: string;
-    private readonly entryFilePaths: string[];
+    private readonly entryFilePath: string;
     private readonly distPath: string;
     private readonly port: number;
     private readonly fastifyServer: FastifyInstance;
     private readonly type: 'theme' | 'block';
     private compilerWatcher?: RollupWatcher;
-    private distWatcher?: FSWatcher;
+    private onBundleEnd?: () => void;
 
-    constructor(entryPath: string, entryFilePaths: string[], distPath: string, port: number, type: 'theme' | 'block') {
+    constructor(entryPath: string, entryFilePath: string, distPath: string, port: number, type: 'theme' | 'block') {
         this.entryPath = entryPath;
         this.distPath = distPath;
-        this.entryFilePaths = entryFilePaths;
+        this.entryFilePath = entryFilePath;
         this.port = port;
         this.fastifyServer = Fastify();
         this.compilerWatcher = undefined;
-        this.distWatcher = undefined;
         this.type = type;
+        this.onBundleEnd = undefined;
     }
 
-    bindCompilerWatcher(): void {
-        const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
-
-        this.compilerWatcher = rollup.watch({
-            ...getRollupConfig(this.entryPath, this.entryFilePaths, {
-                NODE_ENV: 'development',
-            }),
-            output: getOutputConfig(this.distPath, typeToGlobalName[this.type]),
-            watch: {
-                include: `${this.entryPath}/**`,
-                exclude: filesToIgnore,
-            },
-        });
+    async bindCompilerWatcher(): Promise<void> {
+        this.compilerWatcher = (await build(
+            getViteConfig(this.entryPath, this.entryFilePath, 'development', typeToGlobalName[this.type], true)
+        )) as RollupWatcher;
 
         this.compilerWatcher.on('event', (event) => {
             switch (event.code) {
@@ -68,6 +60,7 @@ class DevelopmentServer {
                     break;
                 case 'BUNDLE_END':
                     Logger.info('Compiled successfully!');
+                    this.onBundleEnd?.();
                     event.result?.close();
                     break;
                 case 'ERROR':
@@ -77,15 +70,6 @@ class DevelopmentServer {
                     }
                     event.result?.close();
                     break;
-            }
-        });
-    }
-
-    bindDistWatcher(callback: () => void): void {
-        this.distWatcher = watch(`${this.distPath}/**.js`, (event: string) => {
-            if (event === 'change') {
-                Logger.info(`Notifying browser of updated ${this.type}...`);
-                callback();
             }
         });
     }
@@ -106,28 +90,26 @@ class DevelopmentServer {
     }
 
     registerWebsockets(): void {
-        this.fastifyServer.get('/websocket', { websocket: true }, (connection) => {
+        this.fastifyServer.get('/websocket', { websocket: true }, async (connection) => {
             Logger.info('Page connected to websocket!');
 
             // Send data on first connection
             connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
 
             if (!this.compilerWatcher) {
-                this.bindCompilerWatcher();
+                await this.bindCompilerWatcher();
             }
 
-            if (!this.distWatcher) {
-                this.bindDistWatcher(() => {
+            if (!this.onBundleEnd) {
+                this.onBundleEnd = () => {
+                    Logger.info(`Notifying browser of ${typeToSocketMessage[this.type]}`);
                     connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-                });
+                };
             }
 
             connection.socket.on('close', () => {
                 connection.socket.close();
-                this.distWatcher?.close();
-                this.distWatcher = undefined;
                 this.compilerWatcher?.close();
-                this.compilerWatcher = undefined;
                 Logger.info('Page reloaded, closing websocket connection...');
             });
         });
@@ -144,14 +126,14 @@ class DevelopmentServer {
 
 export const createDevelopmentServer = (
     customBlockPath: string,
-    entryFilePaths: string[],
+    entryFilePath: string,
     distPath: string,
     port: number,
     type: 'theme' | 'block'
 ): void => {
     Logger.info(`Starting the ${type} development server...`);
 
-    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePaths, distPath, port, type);
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, distPath, port, type);
     developmentServer.serve();
     developmentServer.bindCompilerWatcher();
 };

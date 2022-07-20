@@ -36,8 +36,7 @@ Params:
 | Parameters | Description | Type | Default Value |
 | ---------- | ----------- | ---- | ------------- |
 | contentBlockPath | Directory of the block | string | Current dir |
-| entryPath | Path to the entry file | string | `src/index.tsx` |
-| settingsPath | Path to the settings file | string | `src/settings.ts` |
+| entryPath | Path to the entry file exporting `block` and `settings` | string | `src/index.tsx` |
 | port | Port for the local web server | string | 5600 |
 
 ### Deploy

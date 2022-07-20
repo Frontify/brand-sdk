@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { readFileSync, writeFileSync } from 'fs';
 import ParseJsonError from '../errors/ParseJsonError';
 import FileNotFoundError from '../errors/FileNotFoundError';

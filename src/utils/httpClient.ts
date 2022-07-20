@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import fetch, { Headers, Response } from 'node-fetch';
 import https from 'https';
 

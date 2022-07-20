@@ -4,6 +4,7 @@ import commonJs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
 import pkg from './package.json';
+import copy from 'rollup-plugin-copy';
 
 /** @type {import('rollup').RollupOptions} */
 const rollupConfig = {
@@ -22,6 +23,14 @@ const rollupConfig = {
             loaders: {
                 '.json': 'json',
             },
+        }),
+        copy({
+            targets: [
+                {
+                    src: 'env',
+                    dest: 'dist',
+                },
+            ],
         }),
     ],
     onwarn: (warning) => {
