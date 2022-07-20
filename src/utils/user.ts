@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import chalk from 'chalk';
 import { Headers } from 'node-fetch';
 import { HttpClient } from './httpClient';

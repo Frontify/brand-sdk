@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { resolve } from 'path';
 import { reactiveJson } from './reactiveJson';
 

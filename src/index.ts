@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import minimist from 'minimist';
 import buildOptions from 'minimist-options';
 import { join } from 'path';
@@ -56,11 +58,6 @@ const options = buildOptions({
         alias: 'p',
         default: 5600,
     },
-    [Argument.SettingsPath]: {
-        type: 'string',
-        alias: 'e',
-        default: join('src', 'settings.ts'),
-    },
     [Argument.ThemePath]: {
         type: 'string',
         default: '.',
@@ -82,7 +79,7 @@ printLogo();
                 case 'serve':
                     createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
-                        [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
+                        parseArgs[Argument.EntryPath],
                         join(process.cwd(), 'dist'),
                         parseArgs[Argument.Port],
                         'block'
@@ -94,7 +91,7 @@ printLogo();
                     await createDeployment(
                         instanceUrl,
                         parseArgs[Argument.ContentBlockPath],
-                        [parseArgs[Argument.EntryPath], parseArgs[Argument.SettingsPath]],
+                        parseArgs[Argument.EntryPath],
                         parseArgs[Argument.OutDir],
                         {
                             dryRun: parseArgs[Argument.DryRun],
@@ -111,7 +108,7 @@ printLogo();
                 case 'serve':
                     createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
-                        [parseArgs[Argument.EntryPath]],
+                        parseArgs[Argument.EntryPath],
                         join(process.cwd(), 'dist'),
                         parseArgs[Argument.Port],
                         'theme'
@@ -122,7 +119,7 @@ printLogo();
                     await createDeployment(
                         instanceUrl,
                         parseArgs[Argument.ThemePath],
-                        [parseArgs[Argument.EntryPath]],
+                        parseArgs[Argument.EntryPath],
                         parseArgs[Argument.OutDir],
                         {
                             dryRun: parseArgs[Argument.DryRun],

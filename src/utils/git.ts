@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import Logger from './logger';
 import { promiseExec } from './promiseExec';
 

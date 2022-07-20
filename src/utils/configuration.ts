@@ -1,3 +1,5 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import Conf from 'conf';
 
 export class Configuration {
