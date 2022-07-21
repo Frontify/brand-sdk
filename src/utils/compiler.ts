@@ -24,7 +24,7 @@ export const getViteConfig = (
             lib: {
                 name: outputName,
                 entry: entryFile,
-                formats: ['es'],
+                formats: ['iife'],
                 fileName: () => 'index.js',
             },
 
