@@ -77,7 +77,7 @@ printLogo();
                     break;
 
                 case 'serve':
-                    createDevelopmentServer(
+                    await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         parseArgs[Argument.EntryPath],
                         join(process.cwd(), 'dist'),
@@ -106,7 +106,7 @@ printLogo();
         case 'theme':
             switch (parseArgs._[1]) {
                 case 'serve':
-                    createDevelopmentServer(
+                    await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
                         parseArgs[Argument.EntryPath],
                         join(process.cwd(), 'dist'),
