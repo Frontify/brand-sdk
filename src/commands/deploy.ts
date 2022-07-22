@@ -90,12 +90,15 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
                 const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
 
-                const response = await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
-                    headers,
-                });
+                try {
+                    await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
+                        headers,
+                    });
 
-                Logger.success('The new version has been pushed.');
-                Logger.info(JSON.stringify(response));
+                    Logger.success('The new version has been pushed.');
+                } catch (error) {
+                    Logger.error('Failed to push the new version:', error as string);
+                }
 
                 if (openInBrowser) {
                     Logger.info('Opening the Frontify Marketplace page...');
