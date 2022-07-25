@@ -18,34 +18,35 @@ export const getViteConfig = (
         envDir: join(__dirname, 'env'),
         root: projectPath,
         plugins: [react()],
-        // logLevel: 'warn',
-        // build: {
-        //     polyfillModulePreload: false,
-        //     lib: {
-        //         name: outputName,
-        //         entry: entryFile,
-        //         formats: ['iife'],
-        //         fileName: () => 'index.js',
-        //     },
 
-        //     watch: watch
-        //         ? {
-        //               include: `${projectPath}/**`,
-        //               exclude: filesToIgnore,
-        //           }
-        //         : null,
-        //     rollupOptions: {
-        //         external: ['react', 'react-dom'],
-        //         input: entryFile,
-        //         output: {
-        //             globals: {
-        //                 react: 'React',
-        //                 'react-dom': 'ReactDOM',
-        //             },
-        //             footer: `window.${outputName} = ${outputName};`,
-        //         },
-        //     },
-        // },
+        // logLevel: 'warn',
+        build: {
+            // polyfillModulePreload: false,
+            lib: {
+                name: outputName,
+                entry: entryFile,
+                formats: ['es'],
+                fileName: () => '[name].[hash].js',
+            },
+
+            // watch: watch
+            //     ? {
+            //           include: `${projectPath}/**`,
+            //           exclude: filesToIgnore,
+            //       }
+            //     : null,
+            rollupOptions: {
+                external: ['react', 'react-dom'],
+                input: entryFile,
+                output: {
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                    },
+                    // footer: `window.${outputName} = ${outputName};`,
+                },
+            },
+        },
     };
 
     return config;

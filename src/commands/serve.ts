@@ -73,15 +73,19 @@ class DevelopmentServer {
         try {
             this.viteDevServer = await createServer({
                 ...getViteConfig(this.entryPath, this.entryFilePath, 'development', typeToGlobalName[this.type], true),
+                base: 'http://localhost:5600/',
                 server: {
-                    host: '0.0.0.0',
-                    // origin: 'localhost',
+                    host: 'localhost',
+                    port: 5600,
+                    cors: true,
                     hmr: {
-                        // protocol: 'http',
                         host: 'localhost',
-                        port: this.port,
+                        port: 5600,
                     },
-                    // cors: true,
+                    fs: {
+                        // INFO: Allow linked packages `../..`.
+                        strict: false,
+                    },
                 },
             });
             await this.viteDevServer.listen(this.port);
