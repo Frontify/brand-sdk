@@ -19,33 +19,33 @@ export const getViteConfig = (
         root: projectPath,
         plugins: [react()],
         // logLevel: 'warn',
-        build: {
-            polyfillModulePreload: false,
-            lib: {
-                name: outputName,
-                entry: entryFile,
-                formats: ['iife'],
-                fileName: () => 'index.js',
-            },
+        // build: {
+        //     polyfillModulePreload: false,
+        //     lib: {
+        //         name: outputName,
+        //         entry: entryFile,
+        //         formats: ['iife'],
+        //         fileName: () => 'index.js',
+        //     },
 
-            watch: watch
-                ? {
-                      include: `${projectPath}/**`,
-                      exclude: filesToIgnore,
-                  }
-                : null,
-            rollupOptions: {
-                external: ['react', 'react-dom'],
-                input: entryFile,
-                output: {
-                    globals: {
-                        react: 'React',
-                        'react-dom': 'ReactDOM',
-                    },
-                    footer: `window.${outputName} = ${outputName};`,
-                },
-            },
-        },
+        //     watch: watch
+        //         ? {
+        //               include: `${projectPath}/**`,
+        //               exclude: filesToIgnore,
+        //           }
+        //         : null,
+        //     rollupOptions: {
+        //         external: ['react', 'react-dom'],
+        //         input: entryFile,
+        //         output: {
+        //             globals: {
+        //                 react: 'React',
+        //                 'react-dom': 'ReactDOM',
+        //             },
+        //             footer: `window.${outputName} = ${outputName};`,
+        //         },
+        //     },
+        // },
     };
 
     return config;

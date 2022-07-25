@@ -33,7 +33,6 @@ class DevelopmentServer {
     private readonly entryFilePath: string;
     private readonly distPath: string;
     private readonly port: number;
-    private readonly fastifyServer = Fastify();
     private readonly type: 'theme' | 'block';
     private viteDevServer?: ViteDevServer;
     private compilerWatcher?: RollupWatcher;
@@ -76,9 +75,17 @@ class DevelopmentServer {
                 ...getViteConfig(this.entryPath, this.entryFilePath, 'development', typeToGlobalName[this.type], true),
                 server: {
                     host: '0.0.0.0',
+                    // origin: 'localhost',
+                    hmr: {
+                        // protocol: 'http',
+                        host: 'localhost',
+                        port: this.port,
+                    },
+                    // cors: true,
                 },
             });
             await this.viteDevServer.listen(this.port);
+            Logger.info(JSON.stringify(this.viteDevServer.ws));
         } catch (e) {
             console.error(e);
             process.exit(1);
@@ -87,34 +94,6 @@ class DevelopmentServer {
         // const listener = await this.viteDevServer.listen(this.port);
         // listener.printUrls();
         Logger.info(`Development server is listening on port ${this.port}!`);
-    }
-
-    registerWebsockets(): void {
-        this.fastifyServer.register((fastify) =>
-            fastify.get('/websocket', { websocket: true }, async (connection) => {
-                Logger.info('Page connected to websocket!');
-
-                // Send data on first connection
-                connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-
-                // if (!this.compilerWatcher) {
-                //     await this.bindCompilerWatcher();
-                // }
-
-                if (!this.onBundleEnd) {
-                    this.onBundleEnd = () => {
-                        Logger.info(`Notifying browser of ${this.type} update`);
-                        connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-                    };
-                }
-
-                connection.socket.on('close', () => {
-                    connection.socket.close();
-                    this.compilerWatcher?.close();
-                    Logger.info('Page reloaded, closing websocket connection...');
-                });
-            })
-        );
     }
 }
 
