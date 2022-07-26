@@ -45,13 +45,6 @@ export const compile = async (
                 formats: ['iife'],
                 fileName: () => 'index.js',
             },
-
-            watch: watch
-                ? {
-                      include: `${projectPath}/**`,
-                      exclude: filesToIgnore,
-                  }
-                : null,
             rollupOptions: {
                 external: ['react', 'react-dom'],
                 output: {
@@ -64,56 +57,4 @@ export const compile = async (
             },
         },
     });
-};
-
-export const getViteConfig = (
-    projectPath: string,
-    entryFile: string,
-    mode: InlineConfig['mode'],
-    outputName: string,
-    watch = false
-): InlineConfig => {
-    const config: InlineConfig = {
-        mode,
-        envDir: join(__dirname, 'env'),
-        root: projectPath,
-        plugins: [
-            react(),
-            viteExternalsPlugin({
-                react: 'React',
-                'react-dom': 'ReactDOM',
-            }),
-        ],
-
-        logLevel: 'info',
-        build: {
-            // polyfillModulePreload: false,
-            lib: {
-                name: outputName,
-                entry: entryFile,
-                formats: ['es'],
-                fileName: () => '[name].[hash].js',
-            },
-
-            // watch: watch
-            //     ? {
-            //           include: `${projectPath}/**`,
-            //           exclude: filesToIgnore,
-            //       }
-            //     : null,
-            rollupOptions: {
-                external: ['react', 'react-dom'],
-                input: entryFile,
-                output: {
-                    globals: {
-                        react: 'React',
-                        'react-dom': 'ReactDOM',
-                    },
-                    // footer: `window.${outputName} = ${outputName};`,
-                },
-            },
-        },
-    };
-
-    return config;
 };
