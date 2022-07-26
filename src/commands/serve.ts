@@ -19,11 +19,10 @@ class DevelopmentServer {
     private readonly entryFilePath: string;
     private readonly port: number;
 
-    constructor(entryPath: string, entryFilePath: string, port: number, type: 'theme' | 'block') {
+    constructor(entryPath: string, entryFilePath: string, port: number) {
         this.entryPath = entryPath;
         this.entryFilePath = entryFilePath;
         this.port = port;
-        this.type = type;
     }
 
     async serve(): Promise<void> {
