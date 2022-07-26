@@ -81,6 +81,7 @@ class DevelopmentServer {
                     hmr: {
                         host: 'localhost',
                         port: 5600,
+                        protocol: 'ws',
                     },
                     fs: {
                         // INFO: Allow linked packages `../..`.
