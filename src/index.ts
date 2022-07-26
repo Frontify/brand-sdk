@@ -80,8 +80,7 @@ printLogo();
                     await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port],
-                        'block'
+                        parseArgs[Argument.Port]
                     );
                     break;
 
@@ -108,8 +107,7 @@ printLogo();
                     await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
                         parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port],
-                        'theme'
+                        parseArgs[Argument.Port]
                     );
                     break;
                 case 'deploy':

@@ -14,24 +14,16 @@ export type Setting = {
     value?: string;
 };
 
-const typeToGlobalName: Record<'theme' | 'block', string> = {
-    block: 'DevCustomBlock',
-    theme: 'DevCustomTheme',
-};
-
 class DevelopmentServer {
     private readonly entryPath: string;
     private readonly entryFilePath: string;
     private readonly port: number;
-    private readonly type: 'theme' | 'block';
-    private onBundleEnd?: () => void;
 
     constructor(entryPath: string, entryFilePath: string, port: number, type: 'theme' | 'block') {
         this.entryPath = entryPath;
         this.entryFilePath = entryFilePath;
         this.port = port;
         this.type = type;
-        this.onBundleEnd = undefined;
     }
 
     async serve(): Promise<void> {
@@ -70,8 +62,6 @@ class DevelopmentServer {
             process.exit(1);
         }
 
-        // const listener = await this.viteDevServer.listen(this.port);
-        // listener.printUrls();
         Logger.info(`Development server is listening on port ${this.port}!`);
     }
 }
@@ -79,11 +69,10 @@ class DevelopmentServer {
 export const createDevelopmentServer = async (
     customBlockPath: string,
     entryFilePath: string,
-    port: number,
-    type: 'theme' | 'block'
+    port: number
 ): Promise<void> => {
-    Logger.info(`Starting the ${type} development server...`);
+    Logger.info('Starting the development server...');
 
-    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port, type);
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port);
     await developmentServer.serve();
 };
