@@ -31,7 +31,6 @@ class DevelopmentServer {
     async serve(): Promise<void> {
         try {
             const server = await createServer({
-                mode: 'development',
                 envDir: join(__dirname, 'env'),
                 root: this.entryPath,
                 plugins: [
