@@ -1,40 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { join } from 'path';
-import { InlineConfig, build } from 'vite';
 import react from '@vitejs/plugin-react';
+import { join } from 'path';
+import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
-const filesToIgnore = ['node_modules', 'package*.json', '.git', '.gitignore', 'dist'];
-
-// const reactWindowPlugin = {
-//     name: 'reactWindow',
-//     setup(build) {
-//         // Intercept import paths called "env" so esbuild doesn't attempt
-//         // to map them to a file system location. Tag them with the "env-ns"
-//         // namespace to reserve them for this plugin.
-//         build.onResolve({ filter: /^react$/ }, (args) => ({
-//             path: args.path,
-//             namespace: 'globalExternal',
-//         }));
-
-//         // Load paths tagged with the "env-ns" namespace and behave as if
-//         // they point to a JSON file containing the environment variables.
-//         build.onLoad({ filter: /.*/, namespace: 'globalExternal' }, () => ({
-//             contents: 'module.exports = globalThis.React',
-//             loader: 'js',
-//         }));
-//     },
-// };
-
-export const compile = async (
-    projectPath: string,
-    entryFile: string,
-    mode: InlineConfig['mode'],
-    outputName: string
-) => {
-    return build({
-        mode,
+export const compile = async (projectPath: string, entryFile: string, outputName: string) =>
+    build({
+        plugins: [
+            react(),
+            viteExternalsPlugin({
+                react: 'React',
+                'react-dom': 'ReactDOM',
+            }),
+        ],
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
         envDir: join(__dirname, 'env'),
         root: projectPath,
         logLevel: 'warn',
@@ -47,6 +29,7 @@ export const compile = async (
             },
             rollupOptions: {
                 external: ['react', 'react-dom'],
+                plugins: [],
                 output: {
                     globals: {
                         react: 'React',
@@ -57,4 +40,3 @@ export const compile = async (
             },
         },
     });
-};

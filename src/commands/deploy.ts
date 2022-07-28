@@ -62,7 +62,7 @@ export const createDeployment = async (
 
             Logger.info('Compiling code...');
             try {
-                await compile(fullProjectPath, entryFileName, 'production', manifest.appId);
+                await compile(fullProjectPath, entryFileName, 'DevCustomBlock');
             } catch (error) {
                 throw new CompilationFailedError(error as string);
             }
