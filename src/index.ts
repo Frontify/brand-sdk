@@ -61,7 +61,7 @@ const options = buildOptions({
     },
     [Argument.MetaPort]: {
         type: 'number',
-        alias: 'p',
+        alias: 'mp',
         default: 5601,
     },
     [Argument.ThemePath]: {
