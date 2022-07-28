@@ -21,6 +21,7 @@ enum Argument {
     NoVerify = 'noVerify',
     OutDir = 'outDir',
     Port = 'port',
+    MetaPort = 'metaPort',
     SettingsPath = 'settingsPath',
     ThemePath = 'contentBlockPath',
 }
@@ -58,6 +59,11 @@ const options = buildOptions({
         alias: 'p',
         default: 5600,
     },
+    [Argument.MetaPort]: {
+        type: 'number',
+        alias: 'p',
+        default: 5601,
+    },
     [Argument.ThemePath]: {
         type: 'string',
         default: '.',
@@ -80,7 +86,8 @@ printLogo();
                     await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port]
+                        parseArgs[Argument.Port],
+                        parseArgs[Argument.MetaPort]
                     );
                     break;
 
@@ -107,7 +114,8 @@ printLogo();
                     await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
                         parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port]
+                        parseArgs[Argument.Port],
+                        parseArgs[Argument.MetaPort]
                     );
                     break;
                 case 'deploy':

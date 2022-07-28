@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
+import Fastify from 'fastify';
 import { join } from 'path';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
@@ -18,11 +19,13 @@ class DevelopmentServer {
     private readonly entryPath: string;
     private readonly entryFilePath: string;
     private readonly port: number;
+    private readonly metaPort: number;
 
-    constructor(entryPath: string, entryFilePath: string, port: number) {
+    constructor(entryPath: string, entryFilePath: string, port: number, metaPort: number) {
         this.entryPath = entryPath;
         this.entryFilePath = entryFilePath;
         this.port = port;
+        this.metaPort = metaPort;
     }
 
     async serve(): Promise<void> {
@@ -61,17 +64,34 @@ class DevelopmentServer {
             process.exit(1);
         }
 
-        Logger.info(`Development server is listening on port ${this.port}!`);
+        const fastifyServer = Fastify();
+        fastifyServer.get('/', (request, reply) => {
+            reply
+                .code(200)
+                .type('text/json')
+                .send(
+                    JSON.stringify({
+                        url: `http://localhost:${this.port}/${this.entryFilePath}`,
+                        entryFilePath: this.entryFilePath,
+                        port: this.port,
+                    })
+                );
+        });
+        await fastifyServer.listen({ port: this.metaPort, host: 'localhost' });
+
+        Logger.info(`Development server is listening on http://localhost:${this.port}`);
+        Logger.info(`Metadata server is listening on http://localhost:${this.metaPort}`);
     }
 }
 
 export const createDevelopmentServer = async (
     customBlockPath: string,
     entryFilePath: string,
-    port: number
+    port: number,
+    metaPort: number
 ): Promise<void> => {
     Logger.info('Starting the development server...');
 
-    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port);
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port, metaPort);
     await developmentServer.serve();
 };
