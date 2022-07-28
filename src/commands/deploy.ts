@@ -79,7 +79,6 @@ export const createDeployment = async (
             const request = {
                 build_files: await makeFilesDict(join(projectPath, distPath), buildFilesToIgnore),
                 source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore),
-                // TODO: expose version? => version: 2,
             };
 
             if (!dryRun) {
