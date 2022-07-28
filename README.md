@@ -37,7 +37,8 @@ Params:
 | ---------- | ----------- | ---- | ------------- |
 | contentBlockPath | Directory of the block | string | Current dir |
 | entryPath | Path to the entry file exporting `block` and `settings` | string | `src/index.tsx` |
-| port | Port for the local web server | string | 5600 |
+| port | Port for the local development server | number | 5600 |
+| metaPort | Port for the local meta information (url, entrypoint, port) | number | 5601 |
 
 ### Deploy
 
