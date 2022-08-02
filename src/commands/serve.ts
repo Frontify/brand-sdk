@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
-import { join } from 'path';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import Logger from '../utils/logger';
+import { join } from 'path';
 
 export type Setting = {
     id: string;
@@ -28,7 +28,6 @@ class DevelopmentServer {
     async serve(): Promise<void> {
         try {
             const viteServer = await createServer({
-                envDir: join(__dirname, 'env'),
                 root: this.entryPath,
                 plugins: [
                     react(),
@@ -37,6 +36,9 @@ class DevelopmentServer {
                         'react-dom': 'ReactDOM',
                     }),
                 ],
+                define: {
+                    'process.env.NODE_ENV': JSON.stringify('development'),
+                },
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
                 server: {
@@ -55,6 +57,15 @@ class DevelopmentServer {
                 },
             });
 
+            viteServer.middlewares.use('/', (req, res, next) => {
+                if (req.url !== '/') {
+                    return next();
+                }
+
+                res.writeHead(200);
+                return res.end('OK');
+            });
+
             viteServer.middlewares.use('/_entrypoint', (req, res, next) => {
                 if (req.url !== '/') {
                     return next();
@@ -71,7 +82,8 @@ class DevelopmentServer {
                 );
             });
 
-            viteServer.listen(this.port);
+            await viteServer.listen(this.port, true);
+
             Logger.info(`Development server is listening on http://localhost:${this.port}`);
         } catch (error) {
             console.error(error);

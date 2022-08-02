@@ -15,7 +15,7 @@ export default defineConfig({
         target: 'node16',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
-            fileName: () => 'index.js',
+            fileName: () => '[name].js',
             name: 'FrontifyCli',
         },
         sourcemap: true,

@@ -60,7 +60,6 @@ export const createDeployment = async (
                 await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
             }
 
-            Logger.info('Compiling code...');
             try {
                 await compile(fullProjectPath, entryFileName, manifest.appId);
             } catch (error) {
@@ -95,13 +94,13 @@ export const createDeployment = async (
                     });
 
                     Logger.success('The new version has been pushed.');
-                } catch (error) {
-                    Logger.error('Failed to push the new version:', error as string);
-                }
 
-                if (openInBrowser) {
-                    Logger.info('Opening the Frontify Marketplace page...');
-                    await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                    if (openInBrowser) {
+                        Logger.info('Opening the Frontify Marketplace page...');
+                        await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                    }
+                } catch (error) {
+                    Logger.error('An error occured while deploying', (error as Error).toString());
                 }
             } else {
                 Logger.success('The command has been executed without any issue.');
