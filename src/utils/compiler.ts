@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
-import { join } from 'path';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
