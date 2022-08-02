@@ -30,7 +30,6 @@
         "minimist": "1.2.6",
         "minimist-options": "4.1.0",
         "vite": "3.0.3",
-        "vite-plugin-environment": "^1.1.2",
         "vite-plugin-externals": "^0.5.1"
     },
     "devDependencies": {

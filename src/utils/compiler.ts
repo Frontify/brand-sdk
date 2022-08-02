@@ -27,7 +27,6 @@ export const compile = async (projectPath: string, entryFile: string, outputName
             },
             rollupOptions: {
                 external: ['react', 'react-dom'],
-                plugins: [],
                 output: {
                     globals: {
                         react: 'React',
