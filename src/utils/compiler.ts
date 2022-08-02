@@ -17,7 +17,6 @@ export const compile = async (projectPath: string, entryFile: string, outputName
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
-        envDir: join(__dirname, 'env'),
         root: projectPath,
         logLevel: 'warn',
         build: {
