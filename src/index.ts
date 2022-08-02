@@ -22,7 +22,7 @@ enum Argument {
     OutDir = 'outDir',
     Port = 'port',
     SettingsPath = 'settingsPath',
-    ThemePath = 'contentBlockPath',
+    ThemePath = 'themePath',
 }
 
 const options = buildOptions({
