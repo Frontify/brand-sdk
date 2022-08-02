@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
-import express from 'express';
 import { join } from 'path';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
@@ -28,8 +27,7 @@ class DevelopmentServer {
 
     async serve(): Promise<void> {
         try {
-            const app = express();
-            const vite = await createServer({
+            const viteServer = await createServer({
                 envDir: join(__dirname, 'env'),
                 root: this.entryPath,
                 plugins: [
@@ -43,7 +41,6 @@ class DevelopmentServer {
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
                 server: {
-                    middlewareMode: true,
                     port: this.port,
                     host: 'localhost',
                     cors: true,
@@ -58,21 +55,27 @@ class DevelopmentServer {
                     },
                 },
             });
-            app.use(vite.middlewares);
-            app.get('/_entrypoint.json', (req, res) =>
-                res.type('application/json').send(
+
+            viteServer.middlewares.use('/_entrypoint', (req, res, next) => {
+                if (req.url !== '/') {
+                    return next();
+                }
+
+                res.setHeader('Content-Type', 'application/json');
+                res.writeHead(200);
+                return res.end(
                     JSON.stringify({
                         url: `http://localhost:${this.port}/${this.entryFilePath}`,
                         entryFilePath: this.entryFilePath,
                         port: this.port,
                     })
-                )
-            );
-            app.listen(this.port, () =>
-                Logger.info(`Development server is listening on http://localhost:${this.port}`)
-            );
-        } catch (e) {
-            console.error(e);
+                );
+            });
+
+            viteServer.listen(this.port);
+            Logger.info(`Development server is listening on http://localhost:${this.port}`);
+        } catch (error) {
+            console.error(error);
             process.exit(1);
         }
     }
