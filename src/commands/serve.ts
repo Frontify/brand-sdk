@@ -37,7 +37,6 @@ class DevelopmentServer {
                         'react-dom': 'ReactDOM',
                     }),
                 ],
-                logLevel: 'warn',
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
                 server: {

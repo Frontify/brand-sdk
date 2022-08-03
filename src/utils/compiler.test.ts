@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import { compile } from './compiler';
 
 const rootPath = `${__dirname}/../../`;
@@ -13,14 +13,18 @@ declare global {
     }
 }
 
-global.window = {} as any;
-
 describe('Compiler utils', async () => {
-    test('should provide a valid build with block and settings', async () => {
-        await compile(rootPath, pathToIndex, 'index');
-        await import(outputFile);
-        expect(global.window).toHaveProperty('index');
-        expect(global.window?.index.block).toBe('this is a block');
-        expect(global.window?.index.settings).toMatchObject({ some: 'settings' });
+    beforeEach(() => {
+        global.window = {} as any;
+    });
+
+    describe('compile', () => {
+        test('should provide a valid build with block and settings', async () => {
+            await compile(rootPath, pathToIndex, 'index');
+            await import(outputFile);
+            expect(global.window).toHaveProperty('index');
+            expect(global.window?.index.block).toBe('this is a block');
+            expect(global.window?.index.settings).toMatchObject({ some: 'settings' });
+        });
     });
 });
