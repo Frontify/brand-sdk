@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import Logger from '../utils/logger';
-import { join } from 'path';
 
 export type Setting = {
     id: string;
