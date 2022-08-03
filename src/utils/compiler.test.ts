@@ -3,9 +3,9 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import { compile } from './compiler';
 
-const rootPath = `${__dirname}/../../`;
-const outputFile = `${__dirname}/../../dist/index.js`;
-const pathToIndex = '__mocks__/index.tsx';
+const rootPath = `${__dirname}/../../__mocks__`;
+const outputFile = `${__dirname}/../../__mocks__/dist/index.js`;
+const pathToIndex = 'index.tsx';
 
 declare global {
     interface Window {
