@@ -1,20 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import colors from 'colors/safe';
 import fastGlob from 'fast-glob';
-import Logger from '../utils/logger';
+import { Headers } from 'node-fetch';
 import open from 'open';
-import { UserInfo, getUser } from '../utils/user';
-import { getViteConfig } from '../utils/compiler';
-import { reactiveJson } from '../utils/reactiveJson';
 import { join } from 'path';
+import CompilationFailedError from '../errors/CompilationFailedError';
+import { compile } from '../utils/compiler';
+import { Configuration } from '../utils/configuration';
 import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
 import { HttpClient } from '../utils/httpClient';
+import Logger from '../utils/logger';
 import { promiseExec } from '../utils/promiseExec';
-import colors from 'colors/safe';
-import { Configuration } from '../utils/configuration';
-import { Headers } from 'node-fetch';
-import CompilationFailedError from '../errors/CompilationFailedError';
-import { build } from 'vite';
+import { reactiveJson } from '../utils/reactiveJson';
+import { UserInfo, getUser } from '../utils/user';
 
 interface Options {
     dryRun?: boolean;
@@ -61,9 +60,8 @@ export const createDeployment = async (
                 await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
             }
 
-            Logger.info('Compiling code...');
             try {
-                await build(getViteConfig(fullProjectPath, entryFileName, 'production', manifest.appId));
+                await compile(fullProjectPath, entryFileName, manifest.appId);
             } catch (error) {
                 throw new CompilationFailedError(error as string);
             }
@@ -96,13 +94,13 @@ export const createDeployment = async (
                     });
 
                     Logger.success('The new version has been pushed.');
-                } catch (error) {
-                    Logger.error('Failed to push the new version:', error as string);
-                }
 
-                if (openInBrowser) {
-                    Logger.info('Opening the Frontify Marketplace page...');
-                    await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                    if (openInBrowser) {
+                        Logger.info('Opening the Frontify Marketplace page...');
+                        await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                    }
+                } catch (error) {
+                    Logger.error('An error occured while deploying', (error as Error).toString());
                 }
             } else {
                 Logger.success('The command has been executed without any issue.');

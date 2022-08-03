@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { defineConfig } from 'vitest/config';
-import copy from 'rollup-plugin-copy';
 import { dependencies as dependenciesMap } from './package.json';
 import { resolve } from 'path';
 import { builtinModules } from 'module';
@@ -12,20 +11,11 @@ export default defineConfig({
     optimizeDeps: {
         exclude: builtinModules,
     },
-    plugins: [
-        copy({
-            targets: [{ src: 'env', dest: 'dist' }],
-            hook: 'writeBundle',
-        }),
-    ],
-    define: {
-        'process.env.NODE_ENV': '"production"',
-    },
     build: {
         target: 'node16',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
-            fileName: () => 'index.js',
+            fileName: () => '[name].js',
             name: 'FrontifyCli',
         },
         sourcemap: true,
