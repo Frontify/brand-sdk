@@ -1,12 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Fastify from 'fastify';
-import FastifyCors from '@fastify/cors';
-import FastifyStatic from '@fastify/static';
-import FastifyWebSocket from '@fastify/websocket';
-import type { RollupWatcher } from 'rollup';
-import { build } from 'vite';
-import { getViteConfig } from '../utils/compiler';
+import react from '@vitejs/plugin-react';
+import { createServer } from 'vite';
+import { viteExternalsPlugin } from 'vite-plugin-externals';
 import Logger from '../utils/logger';
 
 export type Setting = {
@@ -17,120 +13,91 @@ export type Setting = {
     value?: string;
 };
 
-const typeToGlobalName: Record<'theme' | 'block', string> = {
-    block: 'DevCustomBlock',
-    theme: 'DevCustomTheme',
-};
-
-const typeToSocketMessage: Record<'theme' | 'block', string> = {
-    block: 'block-updated',
-    theme: 'theme-updated',
-};
-
 class DevelopmentServer {
     private readonly entryPath: string;
     private readonly entryFilePath: string;
-    private readonly distPath: string;
     private readonly port: number;
-    private readonly fastifyServer = Fastify();
-    private readonly type: 'theme' | 'block';
-    private compilerWatcher?: RollupWatcher;
-    private onBundleEnd?: () => void;
 
-    constructor(entryPath: string, entryFilePath: string, distPath: string, port: number, type: 'theme' | 'block') {
+    constructor(entryPath: string, entryFilePath: string, port: number) {
         this.entryPath = entryPath;
-        this.distPath = distPath;
         this.entryFilePath = entryFilePath;
         this.port = port;
-        this.compilerWatcher = undefined;
-        this.type = type;
-        this.onBundleEnd = undefined;
     }
 
-    async bindCompilerWatcher(): Promise<void> {
-        this.compilerWatcher = (await build(
-            getViteConfig(this.entryPath, this.entryFilePath, 'development', typeToGlobalName[this.type], true)
-        )) as RollupWatcher;
+    async serve(): Promise<void> {
+        try {
+            const viteServer = await createServer({
+                root: this.entryPath,
+                plugins: [
+                    react(),
+                    viteExternalsPlugin({
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                    }),
+                ],
+                define: {
+                    'process.env.NODE_ENV': JSON.stringify('development'),
+                },
+                base: `http://localhost:${this.port}/`,
+                appType: 'custom',
+                server: {
+                    port: this.port,
+                    host: 'localhost',
+                    cors: true,
+                    hmr: {
+                        port: this.port,
+                        host: 'localhost',
+                        protocol: 'ws',
+                    },
+                    fs: {
+                        // INFO: Allow linked packages `../..`.
+                        strict: false,
+                    },
+                },
+            });
 
-        this.compilerWatcher.on('event', (event) => {
-            switch (event.code) {
-                case 'BUNDLE_START':
-                    Logger.info('Compiling...');
-                    break;
-                case 'BUNDLE_END':
-                    Logger.info('Compiled successfully!');
-                    this.onBundleEnd?.();
-                    event.result?.close();
-                    break;
-                case 'ERROR':
-                    event.result?.close();
-                    break;
-            }
-        });
-    }
-
-    serve(): void {
-        this.registerPlugins();
-        this.registerRoutes();
-        this.registerWebsockets();
-
-        Logger.info(`Development server is listening on port ${this.port}!`);
-        this.fastifyServer.listen({ port: this.port, host: '0.0.0.0' });
-    }
-
-    registerRoutes(): void {
-        this.fastifyServer.get('/', (_req, res) => {
-            res.send({ status: 'OK' });
-        });
-    }
-
-    registerWebsockets(): void {
-        this.fastifyServer.register((fastify) =>
-            fastify.get('/websocket', { websocket: true }, async (connection) => {
-                Logger.info('Page connected to websocket!');
-
-                // Send data on first connection
-                connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-
-                if (!this.compilerWatcher) {
-                    await this.bindCompilerWatcher();
+            viteServer.middlewares.use('/', (req, res, next) => {
+                if (req.url !== '/') {
+                    return next();
                 }
 
-                if (!this.onBundleEnd) {
-                    this.onBundleEnd = () => {
-                        Logger.info(`Notifying browser of ${this.type} update`);
-                        connection.socket.send(JSON.stringify({ message: typeToSocketMessage[this.type] }));
-                    };
+                res.writeHead(200);
+                return res.end('OK');
+            });
+
+            viteServer.middlewares.use('/_entrypoint', (req, res, next) => {
+                if (req.url !== '/') {
+                    return next();
                 }
 
-                connection.socket.on('close', () => {
-                    connection.socket.close();
-                    this.compilerWatcher?.close();
-                    Logger.info('Page reloaded, closing websocket connection...');
-                });
-            })
-        );
-    }
+                res.setHeader('Content-Type', 'application/json');
+                res.writeHead(200);
+                return res.end(
+                    JSON.stringify({
+                        url: `http://localhost:${this.port}/${this.entryFilePath}`,
+                        entryFilePath: this.entryFilePath,
+                        port: this.port,
+                    })
+                );
+            });
 
-    registerPlugins(): void {
-        this.fastifyServer.register(FastifyCors);
-        this.fastifyServer.register(FastifyWebSocket);
-        this.fastifyServer.register(FastifyStatic, {
-            root: this.distPath,
-        });
+            await viteServer.listen(this.port, true);
+
+            Logger.info(`Development server is listening on http://localhost:${this.port}`);
+        } catch (error) {
+            console.error(error);
+            process.exit(1);
+        }
     }
 }
 
-export const createDevelopmentServer = (
+export const createDevelopmentServer = async (
     customBlockPath: string,
     entryFilePath: string,
-    distPath: string,
-    port: number,
-    type: 'theme' | 'block'
-): void => {
-    Logger.info(`Starting the ${type} development server...`);
+    port: number
+): Promise<void> => {
+    Logger.info('Starting the development server...');
 
-    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, distPath, port, type);
-    developmentServer.serve();
-    developmentServer.bindCompilerWatcher();
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port);
+    await developmentServer.serve();
 };

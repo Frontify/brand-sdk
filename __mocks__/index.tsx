@@ -1,0 +1,4 @@
+const block = 'this is a block';
+const settings = { some: 'settings' };
+
+export default { block, settings };

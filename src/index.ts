@@ -22,7 +22,7 @@ enum Argument {
     OutDir = 'outDir',
     Port = 'port',
     SettingsPath = 'settingsPath',
-    ThemePath = 'contentBlockPath',
+    ThemePath = 'themePath',
 }
 
 const options = buildOptions({
@@ -77,12 +77,10 @@ printLogo();
                     break;
 
                 case 'serve':
-                    createDevelopmentServer(
+                    await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         parseArgs[Argument.EntryPath],
-                        join(process.cwd(), 'dist'),
-                        parseArgs[Argument.Port],
-                        'block'
+                        parseArgs[Argument.Port]
                     );
                     break;
 
@@ -106,12 +104,10 @@ printLogo();
         case 'theme':
             switch (parseArgs._[1]) {
                 case 'serve':
-                    createDevelopmentServer(
+                    await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
                         parseArgs[Argument.EntryPath],
-                        join(process.cwd(), 'dist'),
-                        parseArgs[Argument.Port],
-                        'theme'
+                        parseArgs[Argument.Port]
                     );
                     break;
                 case 'deploy':
