@@ -14,7 +14,7 @@ specifiers:
   conf: 10.2.0
   eslint: 8.21.0
   fast-glob: 3.2.11
-  fastify: 4.3.0
+  fastify: 4.4.0
   husky: 8.0.1
   is-ci: 3.0.1
   minimist: 1.2.6
@@ -33,7 +33,7 @@ specifiers:
 dependencies:
   '@fastify/cors': 8.1.0
   '@vitejs/plugin-react': 2.0.0_vite@3.0.4
-  fastify: 4.3.0
+  fastify: 4.4.0
   minimist: 1.2.6
   minimist-options: 4.1.0
   vite: 3.0.4
@@ -1725,8 +1725,8 @@ packages:
     resolution: {integrity: sha512-Mf6lkbxHtFgI4sVaC0P/7sqlBvdpoyEUaOCD0cyKpqxjsdN+3EdD/FfSHByb7uXqxYu/DilH9Lb6mTCumN9TQQ==}
     dev: false
 
-  /fastify/4.3.0:
-    resolution: {integrity: sha512-9q5Ron8jWmX6ElFkgZH4zmIIXdnkGIu16JozWG2ohcs7th5rAo1ymNi+rn6xCmbWc6jl9lf+9OxVe93LOg6/2w==}
+  /fastify/4.4.0:
+    resolution: {integrity: sha512-ePI4g9vPJXIBF4YlVcDSLxjvtdTrlM8QzdgYAPFGdCH+rot+4MXoFFAUb10fGrIcRRjaq6CvcbIzxiWQzMMHkw==}
     dependencies:
       '@fastify/ajv-compiler': 3.1.2
       '@fastify/error': 3.0.0
