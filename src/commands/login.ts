@@ -54,6 +54,7 @@ export class Authenticator {
             const tokens = await this.getOauthCredentialDetails(req.query.code);
             Logger.info('Tokens received, storing tokens...');
             Configuration.set('tokens', tokens);
+            Configuration.set('instanceUrl', this.instanceUrl);
 
             const user = await getUser(this.instanceUrl);
             user && Logger.success(`${`Welcome back ${user.name} (${this.instanceUrl})!`}`);
