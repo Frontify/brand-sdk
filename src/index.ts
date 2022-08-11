@@ -85,9 +85,7 @@ printLogo();
                     break;
 
                 case 'deploy':
-                    const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
                     await createDeployment(
-                        instanceUrl,
                         parseArgs[Argument.ContentBlockPath],
                         parseArgs[Argument.EntryPath],
                         parseArgs[Argument.OutDir],
@@ -111,9 +109,7 @@ printLogo();
                     );
                     break;
                 case 'deploy':
-                    const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
                     await createDeployment(
-                        instanceUrl,
                         parseArgs[Argument.ThemePath],
                         parseArgs[Argument.EntryPath],
                         parseArgs[Argument.OutDir],

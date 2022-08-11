@@ -33,7 +33,6 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
 };
 
 export const createDeployment = async (
-    instanceUrl: string,
     projectPath: string,
     entryFileName: string,
     distPath: string,
@@ -41,6 +40,7 @@ export const createDeployment = async (
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
+        const instanceUrl = Configuration.get('instanceUrl') as string;
         if (!dryRun) {
             user = await getUser(instanceUrl);
             user && Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
