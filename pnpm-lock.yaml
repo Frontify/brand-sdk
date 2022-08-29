@@ -14,7 +14,7 @@ specifiers:
   conf: 10.2.0
   eslint: 8.23.0
   fast-glob: 3.2.11
-  fastify: 4.5.2
+  fastify: 4.5.3
   husky: 8.0.1
   is-ci: 3.0.1
   minimist: 1.2.6
@@ -33,7 +33,7 @@ specifiers:
 dependencies:
   '@fastify/cors': 8.1.0
   '@vitejs/plugin-react': 2.0.0_vite@3.0.4
-  fastify: 4.5.2
+  fastify: 4.5.3
   minimist: 1.2.6
   minimist-options: 4.1.0
   vite: 3.0.4
@@ -1748,8 +1748,8 @@ packages:
     resolution: {integrity: sha512-Mf6lkbxHtFgI4sVaC0P/7sqlBvdpoyEUaOCD0cyKpqxjsdN+3EdD/FfSHByb7uXqxYu/DilH9Lb6mTCumN9TQQ==}
     dev: false
 
-  /fastify/4.5.2:
-    resolution: {integrity: sha512-cDLhc0bh1ftzMoS7ccGGPUW/xTUnk6I51TktQqKFeJnhoAfk56tfn+xDs8JcJYfouPK23Ljx4OpMaEi+kIDwEg==}
+  /fastify/4.5.3:
+    resolution: {integrity: sha512-Q8Zvkmg7GnioMCDX1jT2Q7iRqjywlnDZ1735D2Ipf7ashCM/3/bqPKv2Jo1ZF2iDExct2eP1C/tdhcj0GG/OuQ==}
     dependencies:
       '@fastify/ajv-compiler': 3.1.2
       '@fastify/error': 3.0.0
@@ -1757,7 +1757,7 @@ packages:
       abstract-logging: 2.0.1
       avvio: 8.2.0
       find-my-way: 7.0.1
-      light-my-request: 5.4.0
+      light-my-request: 5.5.1
       pino: 8.4.0
       process-warning: 2.0.0
       proxy-addr: 2.0.7
@@ -2222,8 +2222,8 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /light-my-request/5.4.0:
-    resolution: {integrity: sha512-lWwUibGSDifLsCGKVy5mCktifWGYiZUCzuKqXgrb3Na7wHPl8aPShxjDhUGQE3MI8k2wJSuvSJh5lyHkMnOTMg==}
+  /light-my-request/5.5.1:
+    resolution: {integrity: sha512-Zd4oZjF7axSyc5rYQsbB0qsgY4LFFviZSbEywxf7Vi5UE3y3c7tYF/GeheQjBNYY+pQ55BF8UGGJTjneoxOS1w==}
     dependencies:
       cookie: 0.5.0
       process-warning: 2.0.0
