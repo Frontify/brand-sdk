@@ -1,16 +1,16 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@fastify/cors': ^8.0.0
+  '@fastify/cors': 8.1.0
   '@frontify/eslint-config-typescript': 0.15.2
   '@types/minimist': 1.2.2
   '@types/mock-fs': 4.13.1
-  '@types/node': ^17.0.45
+  '@types/node': 17.0.45
   '@types/ws': 8.5.3
-  '@vitejs/plugin-react': ^2.0.0
-  '@vitest/coverage-c8': ^0.22.1
+  '@vitejs/plugin-react': 2.0.1
+  '@vitest/coverage-c8': 0.22.1
   archiver: 5.3.1
-  colors: ^1.4.0
+  colors: 1.4.0
   conf: 10.2.0
   eslint: 8.23.0
   fast-glob: 3.2.11
@@ -27,12 +27,12 @@ specifiers:
   ts-node: 10.9.1
   typescript: 4.7.4
   vite: 3.0.4
-  vite-plugin-externals: ^0.5.1
+  vite-plugin-externals: 0.5.1
   vitest: 0.22.1
 
 dependencies:
   '@fastify/cors': 8.1.0
-  '@vitejs/plugin-react': 2.0.0_vite@3.0.4
+  '@vitejs/plugin-react': 2.0.1_vite@3.0.4
   fastify: 4.5.3
   minimist: 1.2.6
   minimist-options: 4.1.0
@@ -702,9 +702,9 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-react/2.0.0_vite@3.0.4:
-    resolution: {integrity: sha512-zHkRR+X4zqEPNBbKV2FvWSxK7Q6crjMBVIAYroSU8Nbb4M3E5x4qOiLoqJBHtXgr27kfednXjkwr3lr8jS6Wrw==}
-    engines: {node: '>=14.18.0'}
+  /@vitejs/plugin-react/2.0.1_vite@3.0.4:
+    resolution: {integrity: sha512-uINzNHmjrbunlFtyVkST6lY1ewSfz/XwLufG0PIqvLGnpk2nOIOa/1CACTDNcKi1/RwaCzJLmsXwm1NsUVV/NA==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^3.0.0
     dependencies:
