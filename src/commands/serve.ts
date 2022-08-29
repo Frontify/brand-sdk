@@ -31,8 +31,8 @@ class DevelopmentServer {
                 plugins: [
                     react(),
                     viteExternalsPlugin({
-                        react: 'ReactDevelopment',
-                        'react-dom': 'ReactDOMDevelopment',
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
                     }),
                 ],
                 define: {
