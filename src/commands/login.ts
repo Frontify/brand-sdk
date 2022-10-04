@@ -8,7 +8,6 @@ import { Configuration } from '../utils/configuration';
 import { exit } from 'process';
 import { getValidInstanceUrl } from '../utils/url';
 import { HttpClient } from '../utils/httpClient';
-import { Headers } from 'node-fetch';
 import { getUser } from '../utils/user';
 
 export interface OauthRandomCodeChallenge {
@@ -100,25 +99,15 @@ export class Authenticator {
             throw new Error('Random challenge needs to be defined');
         }
 
-        const headers = new Headers({
-            'Content-Type': 'application/json',
-        });
-
         try {
-            const tokens = await this.httpClient.post<OauthAccessTokenApiResponse>(
-                '/api/oauth/accesstoken',
-                {
-                    grant_type: 'authorization_code',
-                    client_id: 'block-cli',
-                    redirect_uri: 'http://localhost:5600/oauth',
-                    scope: 'basic:read%2Bblocks:read%2Bblocks:write',
-                    code_verifier: this.randomChallenge.secret,
-                    code: authorizationCode,
-                },
-                {
-                    headers,
-                }
-            );
+            const tokens = await this.httpClient.post<OauthAccessTokenApiResponse>('/api/oauth/accesstoken', {
+                grant_type: 'authorization_code',
+                client_id: 'block-cli',
+                redirect_uri: 'http://localhost:5600/oauth',
+                scope: 'basic:read%2Bblocks:read%2Bblocks:write',
+                code_verifier: this.randomChallenge.secret,
+                code: authorizationCode,
+            });
 
             return tokens;
         } catch (error) {
