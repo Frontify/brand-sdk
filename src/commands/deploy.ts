@@ -22,7 +22,7 @@ interface Options {
 }
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
-    const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs });
+    const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs, dot: true });
 
     const folderFilenames = folderFiles.map((filePath) => filePath.replace(`${glob}/`, ''));
 
