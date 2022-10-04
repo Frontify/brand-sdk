@@ -8,7 +8,6 @@ import { Configuration } from '../utils/configuration';
 import { exit } from 'process';
 import { getValidInstanceUrl } from '../utils/url';
 import { HttpClient } from '../utils/httpClient';
-import { Headers } from 'node-fetch';
 import { getUser } from '../utils/user';
 
 export interface OauthRandomCodeChallenge {
