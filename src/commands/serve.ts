@@ -42,11 +42,11 @@ class DevelopmentServer {
                 appType: 'custom',
                 server: {
                     port: this.port,
-                    host: 'localhost',
+                    host: '0.0.0.0',
                     cors: true,
                     hmr: {
                         port: this.port,
-                        host: 'localhost',
+                        host: '0.0.0.0',
                         protocol: 'ws',
                     },
                     fs: {
