@@ -6,6 +6,7 @@ import { Headers } from 'node-fetch';
 import open from 'open';
 import { join } from 'path';
 import CompilationFailedError from '../errors/CompilationFailedError';
+import FileNotFoundError from '../errors/FileNotFoundError';
 import { compile } from '../utils/compiler';
 import { Configuration } from '../utils/configuration';
 import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
@@ -21,10 +22,18 @@ interface Options {
     openInBrowser?: boolean;
 }
 
-const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
+const makeFilesDict = async (glob: string, ignoreGlobs?: string[], requiredFileNames?: string[]) => {
     const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs, dot: true });
 
     const folderFilenames = folderFiles.map((filePath) => filePath.replace(`${glob}/`, ''));
+
+    if (requiredFileNames) {
+        for (const fileName of requiredFileNames) {
+            if (!folderFilenames.includes(fileName)) {
+                throw new FileNotFoundError(fileName);
+            }
+        }
+    }
 
     return folderFilenames.reduce((stack, filename, index) => {
         stack[`/${filename}`] = readFileAsBase64(folderFiles[index]);
@@ -69,15 +78,21 @@ export const createDeployment = async (
             const BUILD_FILE_BLOCK_LIST = ['**/*.*.map'];
             const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
 
+            const SOURCE_FILES_REQUIRED_LIST = ['.prettierrc', '.eslintrc.js', 'tsconfig.json'];
             const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.idea', 'README.md'];
-            const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore'));
+
+            const gitignoreEntries: string[] = [];
+            try {
+                gitignoreEntries.push(...readFileLinesAsArray(join(projectPath, '.gitignore')));
+            } catch {}
+
             const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
                 join(projectPath, path)
             );
 
             const request = {
                 build_files: await makeFilesDict(join(projectPath, distPath), buildFilesToIgnore),
-                source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore),
+                source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore, SOURCE_FILES_REQUIRED_LIST),
             };
 
             if (!dryRun) {
