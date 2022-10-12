@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Logger from './logger';
+import { Logger } from './logger';
 import { describe, expect, test, vi } from 'vitest';
 
 const someRandomText = 'It’s a trap!';

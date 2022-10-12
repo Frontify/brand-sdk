@@ -2,7 +2,7 @@
     "name": "@frontify/frontify-cli",
     "version": "5.1.2",
     "bin": {
-        "frontify-cli": "dist/index.js"
+        "frontify-cli": "dist/index.mjs"
     },
     "engines": {
         "node": ">=16"
@@ -10,49 +10,51 @@
     "files": [
         "dist"
     ],
+    "type": "module",
     "scripts": {
         "build": "vite build",
-        "format": "prettier --write 'src/**/*.ts'",
-        "lint": "eslint 'src/**/*.ts'",
-        "lint:fix": "eslint '*/**/*.ts' --fix",
+        "format": "prettier --write src",
+        "lint": "eslint src",
+        "lint:fix": "eslint src --fix",
         "prepare": "is-ci || husky install",
-        "prepublishOnly": "npm run build",
-        "start": "npm run build && node dist/index.js",
+        "start": "npm run build && node dist/index.mjs",
         "test": "vitest run",
         "test:watch": "vitest",
-        "test:coverage": "vitest run --coverage"
+        "test:coverage": "vitest run --coverage",
+        "test:ui": "vitest --ui"
     },
     "author": "Frontify Developers <developers@frontify.com>",
     "dependencies": {
         "@fastify/cors": "8.1.0",
-        "@vitejs/plugin-react": "2.0.1",
-        "fastify": "4.5.3",
-        "minimist": "1.2.6",
-        "minimist-options": "4.1.0",
-        "vite": "3.0.9",
+        "@vitejs/plugin-react": "2.1.0",
+        "archiver": "5.3.1",
+        "cac": "^6.7.14",
+        "conf": "10.2.0",
+        "fast-glob": "3.2.12",
+        "fastify": "4.8.1",
+        "open": "8.4.0",
+        "picocolors": "^1.0.0",
+        "prompts": "^2.4.2",
+        "undici": "^5.11.0",
+        "vite": "3.1.7",
         "vite-plugin-externals": "0.5.1"
     },
     "devDependencies": {
         "@frontify/eslint-config-typescript": "0.15.2",
-        "@types/minimist": "1.2.2",
         "@types/mock-fs": "4.13.1",
-        "@types/node": "17.0.45",
+        "@types/node": "18.8.3",
+        "@types/prompts": "^2.4.1",
         "@types/ws": "8.5.3",
-        "@vitest/coverage-c8": "0.22.1",
-        "archiver": "5.3.1",
-        "colors": "1.4.0",
-        "conf": "10.2.0",
-        "eslint": "8.23.0",
-        "fast-glob": "3.2.11",
+        "@vitest/coverage-c8": "0.24.1",
+        "@vitest/ui": "^0.24.1",
+        "eslint": "8.25.0",
         "husky": "8.0.1",
         "is-ci": "3.0.1",
         "mock-fs": "5.1.4",
         "nock": "13.2.9",
-        "node-fetch": "3.2.10",
-        "open": "8.4.0",
         "prettier": "2.7.1",
         "ts-node": "10.9.1",
-        "typescript": "4.7.4",
-        "vitest": "0.22.1"
+        "typescript": "4.8.4",
+        "vitest": "0.24.1"
     }
 }

@@ -1,14 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Logger from '../utils/logger';
 import Fastify from 'fastify';
 import FastifyCors from '@fastify/cors';
 import open from 'open';
-import { Configuration } from '../utils/configuration';
-import { exit } from 'process';
-import { getValidInstanceUrl } from '../utils/url';
-import { HttpClient } from '../utils/httpClient';
-import { getUser } from '../utils/user';
+import { exit } from 'node:process';
+
+import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils';
 
 export interface OauthRandomCodeChallenge {
     secret: string;
@@ -46,7 +43,7 @@ export class Authenticator {
     }
 
     private registerRoutes(): void {
-        this.fastifyServer.get('/oauth', async (req, res) => {
+        this.fastifyServer.get<{ Querystring: { code: string } }>('/oauth', async (req, res) => {
             Logger.info('Access granted, getting access token...');
             res.send('You can close this window.');
 

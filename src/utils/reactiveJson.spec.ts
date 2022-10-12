@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mockFs from 'mock-fs';
-import { readFileSync } from 'fs';
+import { readFileSync } from 'node:fs';
 import { reactiveJson } from './reactiveJson';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 

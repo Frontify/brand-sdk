@@ -1,10 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import colors from 'colors/safe';
-import Logger from '../utils/logger';
-import { deleteDirectory, isDirectoryEmpty } from '../utils/file';
-import { cloneTo } from '../utils/git';
-import { updatePackageJsonProjectName } from '../utils/npm';
+import pc from 'picocolors';
+import { Logger, cloneTo, deleteDirectory, isDirectoryEmpty, updatePackageJsonProjectName } from '../utils';
 
 const CONTENT_BLOCK_BOILERPLATE_GIT_URL = 'https://github.com/Frontify/marketplace-content-block-boilerplate.git';
 
@@ -27,18 +24,17 @@ export const createNewContentBlock = async (contentBlockName: string): Promise<v
     if (isValidContentBlockName(contentBlockName)) {
         Logger.info('Creating the content block...');
 
-        Logger.info(`Cloning content block boilerplate to ${colors.blue(`./${contentBlockName}`)}.`);
+        Logger.info(`Cloning content block boilerplate to ${pc.blue(`./${contentBlockName}`)}.`);
         await cloneTo(CONTENT_BLOCK_BOILERPLATE_GIT_URL, contentBlockName);
 
         deleteDirectory(`./${contentBlockName}/.git`);
 
-        Logger.info(`Renaming boilerplate package to ${colors.bold(contentBlockName)}.`);
         updatePackageJsonProjectName(contentBlockName);
 
         Logger.info('Project ready!');
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);
-        Logger.defaultInfo(`${Logger.spacer(4)}cd ${colors.blue(`./${contentBlockName}`)}`);
+        Logger.defaultInfo(`${Logger.spacer(4)}cd ${pc.blue(`./${contentBlockName}`)}`);
         Logger.defaultInfo(`${Logger.spacer(4)}npm ci`);
         Logger.defaultInfo(`${Logger.spacer(4)}npm run serve`);
 
