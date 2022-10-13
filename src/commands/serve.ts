@@ -14,15 +14,12 @@ export type Setting = {
 };
 
 class DevelopmentServer {
-    private readonly entryPath: string;
-    private readonly entryFilePath: string;
-    private readonly port: number;
-
-    constructor(entryPath: string, entryFilePath: string, port: number) {
-        this.entryPath = entryPath;
-        this.entryFilePath = entryFilePath;
-        this.port = port;
-    }
+    constructor(
+        private readonly entryPath: string,
+        private readonly entryFilePath: string,
+        private readonly port: number,
+        private readonly allowExternalIps: boolean
+    ) {}
 
     async serve(): Promise<void> {
         try {
@@ -42,11 +39,11 @@ class DevelopmentServer {
                 appType: 'custom',
                 server: {
                     port: this.port,
-                    host: '0.0.0.0',
+                    host: this.allowExternalIps ? '0.0.0.0' : 'localhost',
                     cors: true,
                     hmr: {
                         port: this.port,
-                        host: '0.0.0.0',
+                        host: this.allowExternalIps ? '0.0.0.0' : 'localhost',
                         protocol: 'ws',
                     },
                     fs: {
@@ -94,10 +91,11 @@ class DevelopmentServer {
 export const createDevelopmentServer = async (
     customBlockPath: string,
     entryFilePath: string,
-    port: number
+    port: number,
+    allowExternalIps: boolean
 ): Promise<void> => {
     Logger.info('Starting the development server...');
 
-    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port);
+    const developmentServer = new DevelopmentServer(customBlockPath, entryFilePath, port, allowExternalIps);
     await developmentServer.serve();
 };

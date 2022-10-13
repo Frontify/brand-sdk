@@ -23,6 +23,7 @@ enum Argument {
     Port = 'port',
     SettingsPath = 'settingsPath',
     ThemePath = 'themePath',
+    AllowExternalIps = 'allowExternalIps',
 }
 
 const options = buildOptions({
@@ -62,9 +63,17 @@ const options = buildOptions({
         type: 'string',
         default: '.',
     },
+    [Argument.ThemePath]: {
+        type: 'string',
+        default: '.',
+    },
+    [Argument.AllowExternalIps]: {
+        type: 'boolean',
+        default: false,
+    },
 });
 const parseArgs = minimist(process.argv.slice(2), options);
-
+console.log(parseArgs);
 printLogo();
 
 (async () => {
@@ -80,7 +89,8 @@ printLogo();
                     await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
                         parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port]
+                        parseArgs[Argument.Port],
+                        parseArgs[Argument.AllowExternalIps]
                     );
                     break;
 
