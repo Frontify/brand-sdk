@@ -73,7 +73,7 @@ const options = buildOptions({
     },
 });
 const parseArgs = minimist(process.argv.slice(2), options);
-console.log(parseArgs);
+
 printLogo();
 
 (async () => {
