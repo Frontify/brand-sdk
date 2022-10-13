@@ -115,7 +115,8 @@ printLogo();
                     await createDevelopmentServer(
                         join(process.cwd(), parseArgs[Argument.ThemePath]),
                         parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port]
+                        parseArgs[Argument.Port],
+                        parseArgs[Argument.AllowExternalIps]
                     );
                     break;
                 case 'deploy':
