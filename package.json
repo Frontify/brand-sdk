@@ -27,7 +27,7 @@
         "@fastify/cors": "8.1.0",
         "@vitejs/plugin-react": "2.0.1",
         "fastify": "4.5.3",
-        "minimist": "1.2.6",
+        "minimist": "1.2.7",
         "minimist-options": "4.1.0",
         "vite": "3.0.9",
         "vite-plugin-externals": "0.5.1"
