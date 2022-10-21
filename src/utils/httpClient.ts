@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Response, fetch } from 'undici';
+import fetch from 'node-fetch';
 
 interface RequestOptions {
-    headers?: Record<string, string>;
+    headers?: {
+        Authorization?: string;
+    };
 }
 
 interface FetchParameters {
@@ -21,7 +23,7 @@ export class HttpClient {
     }
 
     private async fetchExtended<T>({ method, url, body, options }: FetchParameters): Promise<T> {
-        const response: Response = await fetch(this.getAbsoluteUrl(url), {
+        const response = await fetch(this.getAbsoluteUrl(url), {
             method,
             ...(body && {
                 body: JSON.stringify(body),
@@ -35,9 +37,16 @@ export class HttpClient {
 
             switch (contentType) {
                 case 'application/json':
-                    return (await response.json()) as T;
+                    const responseJson = await response.json();
+                    if (!responseJson) {
+                        return undefined as T;
+                    }
+                    return responseJson as T;
                 default:
                     const responseText = await response.text();
+                    if (!responseText) {
+                        return undefined as T;
+                    }
                     return responseText as T;
             }
         } else {
@@ -63,7 +72,6 @@ export class HttpClient {
     }
 
     private getAbsoluteUrl(relativeUrl: string): string {
-        console.log(`https://${this.baseUrl}${relativeUrl}`);
         return `https://${this.baseUrl}${relativeUrl}`;
     }
 }

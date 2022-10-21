@@ -2,7 +2,7 @@
 
 import mockFs from 'mock-fs';
 import { readFileSync } from 'node:fs';
-import { reactiveJson } from './reactiveJson';
+import { reactiveJson } from '../../src/utils/reactiveJson';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
 const testString = '{ "some": "body" }';

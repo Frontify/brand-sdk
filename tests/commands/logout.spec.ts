@@ -1,9 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test } from 'vitest';
-import { logoutUser } from './logout';
-import { Configuration } from '../utils';
-// import { DUMMY_TOKENS } from '../tests/server';
+import { logoutUser } from '../../src/commands/logout';
+import { Configuration } from '../../src/utils';
+
+const DUMMY_TOKENS = {
+    token_type: 'Bearer',
+    expires_in: 2592000,
+    access_token: 'some_access_token',
+    refresh_token: 'some_refresh_token',
+};
 
 describe.skip('Logout command', () => {
     describe('logoutUser', () => {
