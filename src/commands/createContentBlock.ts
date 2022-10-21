@@ -24,7 +24,8 @@ export const createNewContentBlock = async (contentBlockName: string): Promise<v
     if (isValidContentBlockName(contentBlockName)) {
         Logger.info('Creating the content block...');
 
-        Logger.info(`Cloning content block boilerplate to ${pc.blue(`./${contentBlockName}`)}.`);
+        const blockPathInBlue = pc.blue(`./${contentBlockName}`);
+        Logger.info(`Cloning content block boilerplate to ${blockPathInBlue}.`);
         await cloneTo(CONTENT_BLOCK_BOILERPLATE_GIT_URL, contentBlockName);
 
         deleteDirectory(`./${contentBlockName}/.git`);
@@ -34,7 +35,8 @@ export const createNewContentBlock = async (contentBlockName: string): Promise<v
         Logger.info('Project ready!');
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);
-        Logger.defaultInfo(`${Logger.spacer(4)}cd ${pc.blue(`./${contentBlockName}`)}`);
+        const blockNameInBlue = pc.blue(`./${contentBlockName}`);
+        Logger.defaultInfo(`${Logger.spacer(4)}cd ${blockNameInBlue}`);
         Logger.defaultInfo(`${Logger.spacer(4)}npm ci`);
         Logger.defaultInfo(`${Logger.spacer(4)}npm run serve`);
 
