@@ -48,15 +48,11 @@ cli.command('logout', 'log out of an instance').action(logoutUser);
  * @deprecated `block serve` and `theme serve` will be removed in version 4.0 in favour of `serve`
  */
 for (const appType of ['block', 'theme']) {
-    cli.command(`[root] ${appType} serve`, `serve the ${appType} locally`)
+    cli.command(`[root] ${appType} serve`, `[deprecated: use 'serve' instead] serve the ${appType} locally`)
         .alias(`${appType} dev`)
-        .option(
-            '-e, --entryPath, --entry-path <entryPath>',
-            `[deprecated: use 'serve' instead] [string] path to the ${appType} entry file`,
-            {
-                default: join('src', 'index.tsx'),
-            }
-        )
+        .option('-e, --entryPath, --entry-path <entryPath>', `[string] path to the ${appType} entry file`, {
+            default: join('src', 'index.tsx'),
+        })
         .option('--port <port>', '[number] specify port', {
             default: process.env.PORT || 5600,
         })
@@ -78,13 +74,36 @@ cli.command('serve', 'serve the app locally')
         await createDevelopmentServer(options.entryPath, options.port);
     });
 
+/**
+ * @deprecated `block deploy` and `theme deploy` will be removed in version 4.0 in favour of `deploy`
+ */
+for (const appType of ['block', 'theme']) {
+    cli.command(
+        `[root] ${appType} deploy`,
+        `[deprecated: use 'deploy' instead] deploy the ${appType} to the marketplace`
+    )
+        .alias(`${appType} dev`)
+        .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.tsx') })
+        .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
+        .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
+        .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
+        .option('--open', '[boolean] open the marketplace app page', { default: false })
+        .action(async (options) => {
+            await createDeployment(options.entryPath, options.outDir, {
+                dryRun: options.dryRun,
+                noVerify: options.noVerify,
+                openInBrowser: options.open,
+            });
+        });
+}
+
 cli.command('deploy', 'deploy the app to the marketplace')
     .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.ts') })
     .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
     .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
     .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
     .option('--open', '[boolean] open the marketplace app page', { default: false })
-    .action(async (_args, options) => {
+    .action(async (options) => {
         await createDeployment(options.entryPath, options.outDir, {
             dryRun: options.dryRun,
             noVerify: options.noVerify,
