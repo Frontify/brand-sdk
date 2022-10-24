@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { Logger } from '../utils/logger';
+import pkg from '../../package.json';
 
 export type Setting = {
     id: string;
@@ -75,6 +76,7 @@ class DevelopmentServer {
                         url: `http://localhost:${this.port}/${this.entryFilePath}`,
                         entryFilePath: this.entryFilePath,
                         port: this.port,
+                        version: pkg.version,
                     })
                 );
             });

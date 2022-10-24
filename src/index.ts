@@ -25,7 +25,7 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
                 name: 'value',
                 message: 'Frontify Instance URL',
                 initial: 'instanceName.frontify.com',
-                validate: (value: string) => (value === '' ? 'You need to enter a URL.' : true),
+                validate: (value: string) => (value.trim() === '' ? 'You need to enter a URL.' : true),
             });
 
             if (!value) {
@@ -50,13 +50,18 @@ cli.command('logout', 'log out of an instance').action(logoutUser);
 for (const appType of ['block', 'theme']) {
     cli.command(`[root] ${appType} serve`, `serve the ${appType} locally`)
         .alias(`${appType} dev`)
-        .option('-e, --entryPath, --entry-path <entryPath>', `[string] path to the ${appType} entry file`, {
-            default: join('src', 'index.tsx'),
-        })
+        .option(
+            '-e, --entryPath, --entry-path <entryPath>',
+            `[deprecated: use 'serve' instead] [string] path to the ${appType} entry file`,
+            {
+                default: join('src', 'index.tsx'),
+            }
+        )
         .option('--port <port>', '[number] specify port', {
             default: process.env.PORT || 5600,
         })
         .action(async (_args, options) => {
+            console.log(_args, options);
             await createDevelopmentServer(options.entryPath, options.port);
         });
 }
@@ -69,7 +74,7 @@ cli.command('serve', 'serve the app locally')
     .option('--port <port>', '[number] specify port', {
         default: process.env.PORT || 5600,
     })
-    .action(async (_args, options) => {
+    .action(async (options) => {
         await createDevelopmentServer(options.entryPath, options.port);
     });
 
@@ -96,7 +101,7 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
             name: 'value',
             message: 'App Name',
             initial: 'my-frontify-app',
-            validate: (value: string) => (value === '' ? 'You need to enter an app name.' : true),
+            validate: (value: string) => (value.trim() === '' ? 'You need to enter an app name.' : true),
         });
 
         if (!value) {
