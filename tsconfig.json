@@ -2,8 +2,8 @@
     "compilerOptions": {
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "lib": ["es2021"],
-        "module": "commonjs",
+        "lib": ["es2020"],
+        "module": "esnext",
         "moduleResolution": "node",
         "noImplicitAny": false,
         "noImplicitReturns": false,
@@ -13,9 +13,8 @@
         "sourceMap": true,
         "skipLibCheck": true,
         "strict": true,
-        "target": "ES2020",
-        "types": ["node"]
+        "target": "ES2020"
     },
-    "include": ["./src/**/*", "package.json", "rollup.config.ts"],
-    "exclude": ["dist", "node_modules", "**/*.test.ts"]
+    "include": ["./src/**/*", "package.json", "tests/**/*"],
+    "exclude": ["dist", "node_modules"]
 }

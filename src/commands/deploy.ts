@@ -1,25 +1,33 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import colors from 'colors/safe';
+import pc from 'picocolors';
 import fastGlob from 'fast-glob';
-import { Headers } from 'node-fetch';
 import open from 'open';
-import { join } from 'path';
-import CompilationFailedError from '../errors/CompilationFailedError';
-import { compile } from '../utils/compiler';
-import { Configuration } from '../utils/configuration';
-import { readFileAsBase64, readFileLinesAsArray } from '../utils/file';
-import { HttpClient } from '../utils/httpClient';
-import Logger from '../utils/logger';
-import { promiseExec } from '../utils/promiseExec';
-import { reactiveJson } from '../utils/reactiveJson';
-import { UserInfo, getUser } from '../utils/user';
+import { join } from 'node:path';
 
-interface Options {
+import {
+    Configuration,
+    HttpClient,
+    Logger,
+    UserInfo,
+    compile,
+    getUser,
+    promiseExec,
+    reactiveJson,
+    readFileAsBase64,
+    readFileLinesAsArray,
+} from '../utils';
+import CompilationFailedError from '../errors/CompilationFailedError';
+
+type Options = {
     dryRun?: boolean;
     noVerify?: boolean;
     openInBrowser?: boolean;
-}
+};
+
+type Manifest = {
+    appId: string;
+};
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
     const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs, dot: true });
@@ -33,7 +41,6 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
 };
 
 export const createDeployment = async (
-    projectPath: string,
     entryFileName: string,
     distPath: string,
     { dryRun = false, noVerify = false, openInBrowser = false }: Options
@@ -47,21 +54,21 @@ export const createDeployment = async (
         }
 
         if (user || dryRun) {
-            dryRun && Logger.info(colors.blue('Dry run: enabled'));
+            dryRun && Logger.info(pc.blue('Dry run: enabled'));
 
-            const fullProjectPath = join(process.cwd(), projectPath);
-            const manifest = reactiveJson<Manifest>(join(process.cwd(), 'manifest.json'));
+            const projectPath = process.cwd();
+            const manifest = reactiveJson<Manifest>(join(projectPath, 'manifest.json'));
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');
-                await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/tsc --noEmit`);
+                await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
 
                 Logger.info('Performing eslint checks...');
-                await promiseExec(`cd ${fullProjectPath} && ./node_modules/.bin/eslint src`);
+                await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
             }
 
             try {
-                await compile(fullProjectPath, entryFileName, manifest.appId);
+                await compile(projectPath, entryFileName, manifest.appId);
             } catch (error) {
                 throw new CompilationFailedError(error as string);
             }
@@ -86,11 +93,10 @@ export const createDeployment = async (
                 const httpClient = new HttpClient(instanceUrl);
 
                 const accessToken = Configuration.get('tokens.access_token');
-                const headers = new Headers({ Authorization: `Bearer ${accessToken}` });
 
                 try {
                     await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
-                        headers,
+                        headers: { Authorization: `Bearer ${accessToken}` },
                     });
 
                     Logger.success('The new version has been pushed.');

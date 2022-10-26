@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Logger from './logger';
+import { Logger } from './logger';
 import { promiseExec } from './promiseExec';
 
 export const cloneTo = async (gitUrl: string, folderName: string): Promise<void> => {

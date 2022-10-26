@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import fetch, { Headers, Response } from 'node-fetch';
-import https from 'https';
+import fetch from 'node-fetch';
 
 interface RequestOptions {
-    headers?: Headers;
+    headers?: {
+        Authorization?: string;
+    };
 }
 
 interface FetchParameters {
@@ -22,49 +23,35 @@ export class HttpClient {
     }
 
     private async fetchExtended<T>({ method, url, body, options }: FetchParameters): Promise<T> {
-        const agent = new https.Agent({
-            rejectUnauthorized: false,
-        });
-
-        const headers = new Headers({
-            ...(body && {
-                'Content-Type': 'application/json',
-            }),
-        });
-
-        if (options?.headers) {
-            for (const header of options.headers.entries()) {
-                headers.append(header[0], header[1]);
-            }
-        }
-
-        const response: Response = await fetch(this.getAbsoluteUrl(url), {
+        const response = await fetch(this.getAbsoluteUrl(url), {
             method,
             ...(body && {
                 body: JSON.stringify(body),
             }),
-            agent,
             ...options,
-            headers,
+            headers: { 'Content-Type': 'application/json', ...options?.headers },
         });
 
-        try {
-            if (response.status === 200) {
-                const contentType = response.headers.get('Content-Type');
+        if (response.status === 200) {
+            const contentType = response.headers.get('Content-Type');
 
-                switch (contentType) {
-                    case 'application/json':
-                        return await response.json();
-                    default:
-                        const responseText = await response.text();
-                        return responseText || undefined;
-                }
-            } else {
-                const errorData = await response.text();
-                throw new Error(errorData);
+            switch (contentType) {
+                case 'application/json':
+                    const responseJson = await response.json();
+                    if (!responseJson) {
+                        return undefined as T;
+                    }
+                    return responseJson as T;
+                default:
+                    const responseText = await response.text();
+                    if (!responseText) {
+                        return undefined as T;
+                    }
+                    return responseText as T;
             }
-        } catch (error) {
-            throw new Error(error as string);
+        } else {
+            const errorData = await response.text();
+            throw new Error(errorData);
         }
     }
 

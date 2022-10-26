@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Logger from '../utils/logger';
+import { Logger } from '../utils/logger';
 import { Configuration } from '../utils/configuration';
 
 export const logoutUser = (): void => {

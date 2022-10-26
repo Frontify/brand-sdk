@@ -2,20 +2,17 @@
 
 import { defineConfig } from 'vitest/config';
 import { dependencies as dependenciesMap } from './package.json';
-import { resolve } from 'path';
-import { builtinModules } from 'module';
+import { resolve } from 'node:path';
+import { builtinModules } from 'node:module';
 
 const dependencies = Object.keys(dependenciesMap);
 
 export default defineConfig({
-    optimizeDeps: {
-        exclude: builtinModules,
-    },
     build: {
         target: 'node16',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
-            fileName: () => '[name].js',
+            fileName: () => '[name].mjs',
             name: 'FrontifyCli',
         },
         sourcemap: true,
@@ -24,7 +21,7 @@ export default defineConfig({
             external: [...dependencies, ...builtinModules, ...builtinModules.map((m) => `node:${m}`)],
             output: [
                 {
-                    format: 'cjs',
+                    format: 'es',
                     banner: '#!/usr/bin/env node\n',
                 },
             ],

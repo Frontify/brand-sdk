@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mockFs from 'mock-fs';
-import { getFileHash } from './hash';
+import { getFileHash } from '../../src/utils/hash';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
 
 const fileTestPath = './frontify-cli/file.zip';
