@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { readFileSync, readdirSync, rmSync } from 'fs';
+import { readFileSync, readdirSync, rmSync } from 'node:fs';
 import FileNotFoundError from '../errors/FileNotFoundError';
 
 export const isDirectoryEmpty = (folderPath: string): boolean => {

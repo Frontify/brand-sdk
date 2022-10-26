@@ -1,139 +1,139 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import minimist from 'minimist';
-import buildOptions from 'minimist-options';
-import { join } from 'path';
-import { exit } from 'process';
-import { createNewContentBlock } from './commands/createContentBlock';
-import { createDeployment } from './commands/deploy';
-import { loginUser } from './commands/login';
-import { logoutUser } from './commands/logout';
-import { createDevelopmentServer } from './commands/serve';
-import Logger from './utils/logger';
-import { printLogo } from './utils/logo';
-import { getValidInstanceUrl } from './utils/url';
+import { cac } from 'cac';
+import prompts from 'prompts';
+import { exit } from 'node:process';
+import { join } from 'node:path';
 
-enum Argument {
-    ContentBlockPath = 'contentBlockPath',
-    DryRun = 'dryRun',
-    EntryPath = 'entryPath',
-    Minify = 'minify',
-    NoVerify = 'noVerify',
-    OutDir = 'outDir',
-    Port = 'port',
-    SettingsPath = 'settingsPath',
-    ThemePath = 'themePath',
+import { createDeployment, createDevelopmentServer, createNewContentBlock, loginUser, logoutUser } from './commands';
+import { getValidInstanceUrl } from './utils';
+import pkg from '../package.json';
+
+const cli = cac(pkg.name.split('/')[1]);
+
+cli.command('login [instanceUrl]', 'log in to a Frontify instance')
+    .option('-i, --instance [instanceUrl]', '[string] url of the Frontify instance')
+    .option('-p, --port <port>', '[number] port for the oauth service', {
+        default: process.env.PORT || 5600,
+    })
+    .action(async (instanceUrl: string, options) => {
+        let promptedInstanceUrl: string | null = null;
+
+        if (!instanceUrl && !options.instance && !process.env.INSTANCE_URL) {
+            const { value } = await prompts({
+                type: 'text',
+                name: 'value',
+                message: 'Frontify Instance URL',
+                initial: 'instanceName.frontify.com',
+                validate: (value: string) => (value.trim() === '' ? 'You need to enter a URL.' : true),
+            });
+
+            if (!value) {
+                exit(0);
+            }
+
+            promptedInstanceUrl = value;
+        }
+
+        const parsedInstanceUrl = getValidInstanceUrl(
+            instanceUrl ?? options.instance ?? process.env.INSTANCE_URL ?? promptedInstanceUrl
+        );
+
+        await loginUser(parsedInstanceUrl, options.port);
+    });
+
+cli.command('logout', 'log out of an instance').action(logoutUser);
+
+/**
+ * @deprecated `block serve` and `theme serve` will be removed in version 4.0 in favour of `serve`
+ */
+for (const appType of ['block', 'theme']) {
+    cli.command(`[root] ${appType} serve`, `[deprecated: use 'serve' instead] serve the ${appType} locally`)
+        .alias(`${appType} dev`)
+        .option('-e, --entryPath, --entry-path <entryPath>', `[string] path to the ${appType} entry file`, {
+            default: join('src', 'index.tsx'),
+        })
+        .option('--port <port>', '[number] specify port', {
+            default: process.env.PORT || 5600,
+        })
+        .action(async (_args, options) => {
+            console.log(_args, options);
+            await createDevelopmentServer(options.entryPath, options.port);
+        });
 }
 
-const options = buildOptions({
-    [Argument.ContentBlockPath]: {
-        type: 'string',
-        default: '.',
-    },
-    [Argument.DryRun]: {
-        type: 'boolean',
-        default: false,
-    },
-    [Argument.EntryPath]: {
-        type: 'string',
-        alias: 'e',
-        default: join('src', 'index.tsx'),
-    },
-    [Argument.Minify]: {
-        type: 'boolean',
-        alias: 'm',
-        default: false,
-    },
-    [Argument.NoVerify]: {
-        type: 'boolean',
-        default: false,
-    },
-    [Argument.OutDir]: {
-        type: 'string',
-        alias: 'o',
-        default: 'dist',
-    },
-    [Argument.Port]: {
-        type: 'number',
-        alias: 'p',
-        default: 5600,
-    },
-    [Argument.ThemePath]: {
-        type: 'string',
-        default: '.',
-    },
-});
-const parseArgs = minimist(process.argv.slice(2), options);
+cli.command('serve', 'serve the app locally')
+    .alias('dev')
+    .option('-e, --entryPath, --entry-path <entryPath>', '[string] path to the entry file', {
+        default: join('src', 'index.ts'),
+    })
+    .option('--port <port>', '[number] specify port', {
+        default: process.env.PORT || 5600,
+    })
+    .action(async (options) => {
+        await createDevelopmentServer(options.entryPath, options.port);
+    });
 
-printLogo();
+/**
+ * @deprecated `block deploy` and `theme deploy` will be removed in version 4.0 in favour of `deploy`
+ */
+for (const appType of ['block', 'theme']) {
+    cli.command(
+        `[root] ${appType} deploy`,
+        `[deprecated: use 'deploy' instead] deploy the ${appType} to the marketplace`
+    )
+        .alias(`${appType} dev`)
+        .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.tsx') })
+        .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
+        .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
+        .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
+        .option('--open', '[boolean] open the marketplace app page', { default: false })
+        .action(async (options) => {
+            await createDeployment(options.entryPath, options.outDir, {
+                dryRun: options.dryRun,
+                noVerify: options.noVerify,
+                openInBrowser: options.open,
+            });
+        });
+}
 
-(async () => {
-    switch (parseArgs._[0]) {
-        case 'block':
-            switch (parseArgs._[1]) {
-                case 'create':
-                    const blockName = parseArgs._[2] || '';
-                    createNewContentBlock(blockName);
-                    break;
+cli.command('deploy', 'deploy the app to the marketplace')
+    .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.ts') })
+    .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
+    .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
+    .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
+    .option('--open', '[boolean] open the marketplace app page', { default: false })
+    .action(async (options) => {
+        await createDeployment(options.entryPath, options.outDir, {
+            dryRun: options.dryRun,
+            noVerify: options.noVerify,
+            openInBrowser: options.open,
+        });
+    });
 
-                case 'serve':
-                    await createDevelopmentServer(
-                        join(process.cwd(), parseArgs[Argument.ContentBlockPath]),
-                        parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port]
-                    );
-                    break;
+cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
+    let promptedName: string | null = null;
 
-                case 'deploy':
-                    await createDeployment(
-                        parseArgs[Argument.ContentBlockPath],
-                        parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.OutDir],
-                        {
-                            dryRun: parseArgs[Argument.DryRun],
-                            noVerify: parseArgs[Argument.NoVerify],
-                            openInBrowser: parseArgs.open,
-                        }
-                    );
-                    break;
-            }
-            break;
+    if (!appName) {
+        const { value } = await prompts({
+            type: 'text',
+            name: 'value',
+            message: 'App Name',
+            initial: 'my-frontify-app',
+            validate: (value: string) => (value.trim() === '' ? 'You need to enter an app name.' : true),
+        });
 
-        case 'theme':
-            switch (parseArgs._[1]) {
-                case 'serve':
-                    await createDevelopmentServer(
-                        join(process.cwd(), parseArgs[Argument.ThemePath]),
-                        parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.Port]
-                    );
-                    break;
-                case 'deploy':
-                    await createDeployment(
-                        parseArgs[Argument.ThemePath],
-                        parseArgs[Argument.EntryPath],
-                        parseArgs[Argument.OutDir],
-                        {
-                            dryRun: parseArgs[Argument.DryRun],
-                            noVerify: parseArgs[Argument.NoVerify],
-                            openInBrowser: parseArgs.open,
-                        }
-                    );
-                    break;
-            }
-            break;
+        if (!value) {
+            exit(0);
+        }
 
-        case 'login':
-            const instanceUrl = getValidInstanceUrl(parseArgs.instance || process.env.INSTANCE_URL);
-            await loginUser(instanceUrl, parseArgs[Argument.Port]);
-            break;
-
-        case 'logout':
-            logoutUser();
-            exit(1);
-
-        default:
-            Logger.error('This command is not yet handled');
-            exit(1);
+        promptedName = value;
     }
-})();
+
+    createNewContentBlock(appName ?? promptedName);
+});
+
+cli.help();
+cli.version(pkg.version);
+
+cli.parse();

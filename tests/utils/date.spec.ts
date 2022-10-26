@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getCurrentTime } from './date';
+import { getCurrentTime } from '../../src/utils/date';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 describe('Date utils', () => {

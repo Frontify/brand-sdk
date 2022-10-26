@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { compile } from './compiler';
+import { compile } from '../../src/utils/compiler';
 
-const rootPath = `${__dirname}/../../__mocks__`;
-const outputFile = `${__dirname}/../../__mocks__/dist/index.js`;
+const rootPath = `${__dirname}/../files/compile-test-files`;
+const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
 const pathToIndex = 'index.tsx';
 
 declare global {
@@ -15,7 +15,7 @@ declare global {
 
 describe('Compiler utils', async () => {
     beforeEach(() => {
-        global.window = {} as any;
+        global.window = {};
     });
 
     describe('compile', () => {

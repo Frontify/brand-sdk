@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { promiseExec } from './promiseExec';
+import { promiseExec } from '../../src/utils/promiseExec';
 import { describe, expect, test } from 'vitest';
 
 describe('exec with Promise wrapper', () => {
