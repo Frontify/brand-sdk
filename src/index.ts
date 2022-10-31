@@ -48,7 +48,7 @@ cli.command('logout', 'log out of an instance').action(logoutUser);
  * @deprecated `block serve` and `theme serve` will be removed in version 4.0 in favour of `serve`
  */
 for (const appType of ['block', 'theme']) {
-    cli.command(`[root] ${appType} serve`, `[deprecated: use 'serve' instead] serve the ${appType} locally`)
+    cli.command(`${appType} serve`, `[deprecated: use 'serve' instead] serve the ${appType} locally`)
         .alias(`${appType} dev`)
         .option('-e, --entryPath, --entry-path <entryPath>', `[string] path to the ${appType} entry file`, {
             default: join('src', 'index.tsx'),
@@ -56,8 +56,7 @@ for (const appType of ['block', 'theme']) {
         .option('--port <port>', '[number] specify port', {
             default: process.env.PORT || 5600,
         })
-        .action(async (_args, options) => {
-            console.log(_args, options);
+        .action(async (options) => {
             await createDevelopmentServer(options.entryPath, options.port);
         });
 }
@@ -78,11 +77,7 @@ cli.command('serve', 'serve the app locally')
  * @deprecated `block deploy` and `theme deploy` will be removed in version 4.0 in favour of `deploy`
  */
 for (const appType of ['block', 'theme']) {
-    cli.command(
-        `[root] ${appType} deploy`,
-        `[deprecated: use 'deploy' instead] deploy the ${appType} to the marketplace`
-    )
-        .alias(`${appType} dev`)
+    cli.command(`${appType} deploy`, `[deprecated: use 'deploy' instead] deploy the ${appType} to the marketplace`)
         .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.tsx') })
         .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
         .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
@@ -136,4 +131,13 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
 cli.help();
 cli.version(pkg.version);
 
-cli.parse();
+const mergeOldBlockCommands = (cliArgs: string[]) => {
+    const blockIndex = cliArgs.findIndex((value) => value === 'block' || value === 'theme');
+    if ((blockIndex !== -1 && cliArgs[blockIndex + 1] === 'serve') || cliArgs[blockIndex + 1] === 'deploy') {
+        cliArgs[blockIndex] = `${cliArgs[blockIndex]} ${cliArgs[blockIndex + 1]}`;
+        cliArgs.splice(blockIndex + 1, 1);
+    }
+    return cliArgs;
+};
+
+cli.parse(mergeOldBlockCommands(process.argv));
