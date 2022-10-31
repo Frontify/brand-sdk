@@ -56,8 +56,11 @@ for (const appType of ['block', 'theme']) {
         .option('--port <port>', '[number] specify port', {
             default: process.env.PORT || 5600,
         })
+        .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
+            default: false,
+        })
         .action(async (options) => {
-            await createDevelopmentServer(options.entryPath, options.port);
+            await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
         });
 }
 
@@ -69,8 +72,11 @@ cli.command('serve', 'serve the app locally')
     .option('--port <port>', '[number] specify port', {
         default: process.env.PORT || 5600,
     })
+    .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
+        default: false,
+    })
     .action(async (options) => {
-        await createDevelopmentServer(options.entryPath, options.port);
+        await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
     });
 
 /**
