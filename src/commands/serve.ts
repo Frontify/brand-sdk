@@ -6,22 +6,12 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { Logger } from '../utils/logger';
 import pkg from '../../package.json';
 
-export type Setting = {
-    id: string;
-    label: string;
-    type: string;
-    placeholder?: string;
-    value?: string;
-};
-
 class DevelopmentServer {
-    private readonly entryFilePath: string;
-    private readonly port: number;
-
-    constructor(entryFilePath: string, port: number) {
-        this.entryFilePath = entryFilePath;
-        this.port = port;
-    }
+    constructor(
+        private readonly entryFilePath: string,
+        private readonly port: number,
+        private readonly allowExternal: boolean
+    ) {}
 
     async serve(): Promise<void> {
         try {
@@ -41,16 +31,12 @@ class DevelopmentServer {
                 appType: 'custom',
                 server: {
                     port: this.port,
-                    host: 'localhost',
+                    host: this.allowExternal ? '0.0.0.0' : 'localhost',
                     cors: true,
                     hmr: {
                         port: this.port,
-                        host: 'localhost',
+                        host: this.allowExternal ? '0.0.0.0' : 'localhost',
                         protocol: 'ws',
-                    },
-                    fs: {
-                        // INFO: Allow linked packages `../..`.
-                        strict: false,
                     },
                 },
             });
@@ -91,9 +77,13 @@ class DevelopmentServer {
     }
 }
 
-export const createDevelopmentServer = async (entryFilePath: string, port: number): Promise<void> => {
+export const createDevelopmentServer = async (
+    entryFilePath: string,
+    port: number,
+    allowExternal: boolean
+): Promise<void> => {
     Logger.info('Starting the development server...');
 
-    const developmentServer = new DevelopmentServer(entryFilePath, port);
+    const developmentServer = new DevelopmentServer(entryFilePath, port, allowExternal);
     await developmentServer.serve();
 };
