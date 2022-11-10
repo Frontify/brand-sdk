@@ -41,14 +41,14 @@
         "vite-plugin-externals": "0.5.1"
     },
     "devDependencies": {
-        "@frontify/eslint-config-typescript": "0.15.2",
+        "@frontify/eslint-config-typescript": "0.15.4",
         "@types/mock-fs": "4.13.1",
         "@types/node": "18.11.8",
         "@types/prompts": "^2.4.1",
         "@types/ws": "8.5.3",
         "@vitest/coverage-c8": "0.24.4",
         "@vitest/ui": "^0.24.4",
-        "eslint": "8.26.0",
+        "eslint": "8.27.0",
         "husky": "8.0.1",
         "is-ci": "3.0.1",
         "mock-fs": "5.2.0",
