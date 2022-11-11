@@ -43,7 +43,7 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
 export const createDeployment = async (
     entryFileName: string,
     distPath: string,
-    { dryRun = false, noVerify = false, openInBrowser = false }: Options
+    { dryRun = false, noVerify = false, openInBrowser = false }: Options,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
@@ -79,7 +79,7 @@ export const createDeployment = async (
             const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.idea', 'README.md'];
             const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore'));
             const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
-                join(projectPath, path)
+                join(projectPath, path),
             );
 
             const request = {

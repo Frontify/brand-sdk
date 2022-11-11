@@ -36,7 +36,7 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
         }
 
         const parsedInstanceUrl = getValidInstanceUrl(
-            instanceUrl ?? options.instance ?? process.env.INSTANCE_URL ?? promptedInstanceUrl
+            instanceUrl ?? options.instance ?? process.env.INSTANCE_URL ?? promptedInstanceUrl,
         );
 
         await loginUser(parsedInstanceUrl, options.port);

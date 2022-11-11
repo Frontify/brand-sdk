@@ -19,7 +19,7 @@ export const getUser = async (instanceUrl: string): Promise<UserInfo | undefined
         const user = await httpClient.post<{ data: { currentUser: UserInfo } }>(
             '/graphql',
             { query: '{ currentUser { email name } }' },
-            { headers: { Authorization: `Bearer ${accessToken}` } }
+            { headers: { Authorization: `Bearer ${accessToken}` } },
         );
         return user.data.currentUser;
     } catch {

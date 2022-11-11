@@ -66,7 +66,7 @@ export class Authenticator {
     async storeRandomCodeChallenge(): Promise<void> {
         try {
             const randomCodeChallenge = await this.httpClient.get<{ data: OauthRandomCodeChallenge }>(
-                '/api/oauth/random'
+                '/api/oauth/random',
             );
             this.randomChallenge = randomCodeChallenge.data;
         } catch {
