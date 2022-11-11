@@ -10,7 +10,7 @@ class DevelopmentServer {
     constructor(
         private readonly entryFilePath: string,
         private readonly port: number,
-        private readonly allowExternal: boolean
+        private readonly allowExternal: boolean,
     ) {}
 
     async serve(): Promise<void> {
@@ -63,7 +63,7 @@ class DevelopmentServer {
                         entryFilePath: this.entryFilePath,
                         port: this.port,
                         version: pkg.version,
-                    })
+                    }),
                 );
             });
 
@@ -80,7 +80,7 @@ class DevelopmentServer {
 export const createDevelopmentServer = async (
     entryFilePath: string,
     port: number,
-    allowExternal: boolean
+    allowExternal: boolean,
 ): Promise<void> => {
     Logger.info('Starting the development server...');
 

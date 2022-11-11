@@ -13,9 +13,9 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "format": "prettier --write src",
-        "lint": "eslint src",
-        "lint:fix": "eslint src --fix",
+        "format": "prettier --write .",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
         "prepare": "is-ci || husky install",
         "start": "npm run build && node dist/index.mjs",
         "test": "vitest run",
@@ -41,7 +41,7 @@
         "vite-plugin-externals": "0.5.1"
     },
     "devDependencies": {
-        "@frontify/eslint-config-typescript": "0.15.4",
+        "@frontify/eslint-config-typescript": "0.15.5",
         "@types/mock-fs": "4.13.1",
         "@types/node": "18.11.8",
         "@types/prompts": "^2.4.1",
@@ -49,6 +49,7 @@
         "@vitest/coverage-c8": "0.24.4",
         "@vitest/ui": "^0.24.4",
         "eslint": "8.27.0",
+        "eslint-plugin-notice": "^0.9.10",
         "husky": "8.0.1",
         "is-ci": "3.0.1",
         "mock-fs": "5.2.0",
