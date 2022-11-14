@@ -11,7 +11,7 @@ const DUMMY_TOKENS = {
     refresh_token: 'some_refresh_token',
 };
 
-describe.skip('Logout command', () => {
+describe('Logout command', () => {
     describe('logoutUser', () => {
         test('should disconnect user and delete tokens', async () => {
             //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
