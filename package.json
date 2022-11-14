@@ -1,6 +1,6 @@
 {
     "name": "@frontify/frontify-cli",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "bin": {
         "frontify-cli": "dist/index.mjs"
     },
