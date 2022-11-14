@@ -131,19 +131,35 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
         promptedName = value;
     }
 
-    createNewContentBlock(appName ?? promptedName);
+    await createNewContentBlock(appName ?? promptedName);
 });
+
+/**
+ * @deprecated `block create` and `theme create` will be removed in version 4.0 in favour of `create`
+ */
+for (const appType of ['block', 'theme']) {
+    cli.command(
+        `${appType} create [appName]`,
+        `[deprecated: use 'create' instead] create a ${appType} app locally`,
+    ).action(createNewContentBlock);
+}
 
 cli.help();
 cli.version(pkg.version);
 
-const mergeOldBlockCommands = (cliArgs: string[]) => {
-    const blockIndex = cliArgs.findIndex((value) => value === 'block' || value === 'theme');
-    if ((blockIndex !== -1 && cliArgs[blockIndex + 1] === 'serve') || cliArgs[blockIndex + 1] === 'deploy') {
-        cliArgs[blockIndex] = `${cliArgs[blockIndex]} ${cliArgs[blockIndex + 1]}`;
-        cliArgs.splice(blockIndex + 1, 1);
+const mergeOldBlockThemeCommands = (cliArgs: string[]) => {
+    const oldCommandIndex = cliArgs.findIndex((value) => value === 'block' || value === 'theme');
+    if (
+        oldCommandIndex !== -1 &&
+        (cliArgs[oldCommandIndex + 1] === 'serve' ||
+            cliArgs[oldCommandIndex + 1] === 'deploy' ||
+            cliArgs[oldCommandIndex + 1] === 'create')
+    ) {
+        cliArgs[oldCommandIndex] = `${cliArgs[oldCommandIndex]} ${cliArgs[oldCommandIndex + 1]}`;
+        cliArgs.splice(oldCommandIndex + 1, 1);
     }
+
     return cliArgs;
 };
 
-cli.parse(mergeOldBlockCommands(process.argv));
+cli.parse(mergeOldBlockThemeCommands(process.argv));
