@@ -40,6 +40,9 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
     }, {});
 };
 
+const BUILD_FILE_BLOCK_LIST = ['**/*.*.map'];
+const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.idea', 'README.md', '.DS_Store'];
+
 export const createDeployment = async (
     entryFileName: string,
     distPath: string,
@@ -73,10 +76,8 @@ export const createDeployment = async (
                 throw new CompilationFailedError(error as string);
             }
 
-            const BUILD_FILE_BLOCK_LIST = ['**/*.*.map'];
             const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
 
-            const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.idea', 'README.md'];
             const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore'));
             const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
                 join(projectPath, path),
