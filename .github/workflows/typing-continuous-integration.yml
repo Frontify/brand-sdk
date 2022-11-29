@@ -1,9 +1,10 @@
-name: CLI CI
+name: Typing packages CI
 
 on:
     push:
         paths:
-            - packages/cli/**
+            - packages/guideline-blocks/**
+            - packages/sidebar-settings/**
 
 env:
     NODE_VERSION: 18
@@ -34,19 +35,8 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
-            - name: Typecheck code
-              run: pnpm --stream --filter {packages/cli} typecheck
-
             - name: Lint code
-              run: pnpm --stream --filter {packages/cli} lint
+              run: pnpm --stream --filter {packages/guideline-blocks} --filter {packages/sidebar-settings} lint
 
-            - name: Test code
-              run: pnpm --stream --filter {packages/cli} test:coverage
-
-            - name: SonarCloud Scan
-              uses: sonarsource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              with:
-                  projectBaseDir: ./packages/cli
+            - name: Build packages
+              run: pnpm build:sidebar-settings && pnpm build:guideline-*
