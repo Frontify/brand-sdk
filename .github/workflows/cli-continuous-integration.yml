@@ -2,8 +2,6 @@ name: CLI CI
 
 on:
     push:
-        branches:
-            - main
         paths:
             - packages/cli/**
 
@@ -36,17 +34,14 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
-            - name: Go to CLI repo
-              run: cd packages/cli
-
             - name: Typecheck code
-              run: pnpm typecheck
+              run: pnpm --stream --filter {packages/cli} typecheck
 
             - name: Lint and fix code
-              run: pnpm lint
+              run: pnpm --stream --filter {packages/cli} lint
 
             - name: Test code
-              run: pnpm test:coverage
+              run: pnpm --stream --filter {packages/cli} test:coverage
 
             - name: SonarCloud Scan
               uses: sonarsource/sonarcloud-github-action@master
