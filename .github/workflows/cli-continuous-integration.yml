@@ -1,9 +1,14 @@
 name: CLI CI
 
 on:
-    push:
+    pull_request:
         paths:
             - packages/cli/**
+
+# Ensures that only one workflow per branch will run at a time.
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 env:
     NODE_VERSION: 18

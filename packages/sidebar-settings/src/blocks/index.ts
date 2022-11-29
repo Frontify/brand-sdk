@@ -1,12 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type {
-    AssetChooserObjectType as AssetChooserObjectTypeAppBridge,
-    AssetChooserProjectType as AssetChooserProjectTypeAppBridge,
-    FileExtension as FileExtensionAppBridge,
-} from '@frontify/app-bridge';
-import type { AssetInputSize as AssetInputSizeFondue, IconEnum as IconEnumFondue } from '@frontify/fondue';
-
 import { AssetInputBlock } from './assetInput';
 import { ChecklistBlock } from './checklist';
 import { ColorInputBlock } from './colorInput';
@@ -39,11 +32,8 @@ export * from './switch';
 export * from './templateInput';
 export * from './textarea';
 
-export type AssetChooserObjectType = AssetChooserObjectTypeAppBridge;
-export type AssetChooserProjectType = AssetChooserProjectTypeAppBridge;
-export type FileExtension = FileExtensionAppBridge;
-export type AssetInputSize = AssetInputSizeFondue;
-export type IconEnum = IconEnumFondue;
+export { FileExtension, AssetChooserObjectType, AssetChooserProjectType } from '@frontify/app-bridge';
+export { AssetInputSize, IconEnum } from '@frontify/fondue';
 
 export type SimpleSettingBlock<AppBridge> =
     | AssetInputBlock<AppBridge>
