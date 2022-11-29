@@ -1,5 +1,12 @@
 # @frontify/guideline-blocks
 
+## 0.24.3
+
+### Patch Changes
+
+- Updated dependencies [[`ab6318e`](https://github.com/Frontify/frontify-cli/commit/ab6318e02b460271fa4ca4d80aa2f95f70a1db2d)]:
+  - @frontify/sidebar-settings@0.0.4
+
 ## 0.24.2
 
 ### Patch Changes
