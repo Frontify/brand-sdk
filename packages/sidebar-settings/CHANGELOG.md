@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.0.4
+
+### Patch Changes
+
+- [#281](https://github.com/Frontify/frontify-cli/pull/281) [`ab6318e`](https://github.com/Frontify/frontify-cli/commit/ab6318e02b460271fa4ca4d80aa2f95f70a1db2d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export all enum from Fondue
+
 ## 0.0.3
 
 ### Patch Changes
