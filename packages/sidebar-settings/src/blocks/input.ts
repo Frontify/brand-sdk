@@ -1,11 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { TextInputType as TextInputTypeFondue } from '@frontify/fondue';
 import type { Rule } from '../validation';
 import type { BaseBlock } from './base';
-import type { IconEnum } from '.';
-
-export type TextInputType = TextInputTypeFondue;
+import type { IconEnum, TextInputType } from '.';
 
 export type InputBlock<AppBridge> = {
     type: 'input';
