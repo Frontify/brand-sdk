@@ -4,6 +4,8 @@ import type { AppBridgeBlock } from '@frontify/app-bridge';
 import type { SettingBlock } from '@frontify/sidebar-settings';
 import type { FC } from 'react';
 
+export * from '@frontify/sidebar-settings';
+
 export enum Sections {
     Main = 'main',
     Basics = 'basics',
