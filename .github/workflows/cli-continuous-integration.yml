@@ -37,7 +37,7 @@ jobs:
             - name: Typecheck code
               run: pnpm --stream --filter {packages/cli} typecheck
 
-            - name: Lint and fix code
+            - name: Lint code
               run: pnpm --stream --filter {packages/cli} lint
 
             - name: Test code

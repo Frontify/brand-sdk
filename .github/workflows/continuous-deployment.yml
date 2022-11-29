@@ -36,7 +36,7 @@ jobs:
             - name: Typecheck code
               run: pnpm typecheck
 
-            - name: Lint and fix code
+            - name: Lint code
               run: pnpm lint
 
             - name: Test code
