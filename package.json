@@ -7,8 +7,7 @@
         "lint:fix": "pnpm --stream --filter {packages/**} --parallel lint:fix",
         "test": "pnpm --stream --filter {packages/**} --parallel test",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
-        "prepare": "is-ci || husky install",
-        "changeset": "changeset"
+        "prepare": "is-ci || husky install"
     },
     "devDependencies": {
         "@changesets/changelog-github": "^0.4.7",
