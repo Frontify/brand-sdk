@@ -28,7 +28,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ env.NODE_VERSION }}
-                  cache: 'pnpm'
+                  cache: "pnpm"
 
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
@@ -60,7 +60,7 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ env.NODE_VERSION }}
-                  cache: 'pnpm'
+                  cache: "pnpm"
 
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
@@ -72,6 +72,7 @@ jobs:
               id: changesets
               uses: changesets/action@v1
               with:
+                  title: "chore: release packages"
                   publish: pnpm publish -r
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
