@@ -77,7 +77,7 @@ jobs:
               with:
                   title: "chore: release packages"
                   createGithubReleases: true
-                  publish: pnpm publish -r
+                  publish: pnpm publish -r --access public
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
