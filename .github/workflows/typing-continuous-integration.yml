@@ -16,7 +16,7 @@ env:
     CI: true
 
 jobs:
-    cli-ci:
+    typing-packages-ci:
         runs-on: ubuntu-latest
 
         steps:
