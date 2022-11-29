@@ -32,8 +32,16 @@ export * from './switch';
 export * from './templateInput';
 export * from './textarea';
 
-export { FileExtension, AssetChooserObjectType, AssetChooserProjectType } from '@frontify/app-bridge';
-export { AssetInputSize, IconEnum } from '@frontify/fondue';
+export { AssetChooserObjectType, AssetChooserProjectType, FileExtension } from '@frontify/app-bridge';
+export {
+    AssetInputSize,
+    DropdownSize,
+    IconEnum,
+    MultiInputLayout,
+    SwitchSize,
+    TextInputType,
+    Validation,
+} from '@frontify/fondue';
 
 export type SimpleSettingBlock<AppBridge> =
     | AssetInputBlock<AppBridge>

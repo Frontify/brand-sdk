@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { SearchResult as SearchResultFondue, Validation as ValidationFondue } from '@frontify/fondue';
+import type { SearchResult as SearchResultFondue } from '@frontify/fondue';
 import type { BaseBlock } from './base';
+import type { Validation } from '.';
 
 export type SearchResult = SearchResultFondue;
-export type Validation = ValidationFondue;
 
 export type LinkChooserBlock<AppBridge> = {
     type: 'linkChooser';
