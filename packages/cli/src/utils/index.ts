@@ -4,7 +4,6 @@ export * from './compiler';
 export * from './configuration';
 export * from './date';
 export * from './file';
-export * from './git';
 export * from './hash';
 export * from './httpClient';
 export * from './logger';

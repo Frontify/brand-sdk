@@ -6,7 +6,7 @@ import { exit } from 'node:process';
 import { join } from 'node:path';
 
 import { createDeployment, createDevelopmentServer, createNewContentBlock, loginUser, logoutUser } from './commands';
-import { getValidInstanceUrl } from './utils';
+import { getValidInstanceUrl, isValidName } from './utils';
 import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);
@@ -17,27 +17,24 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
         default: process.env.PORT || 5600,
     })
     .action(async (instanceUrl: string, options) => {
-        let promptedInstanceUrl: string | null = null;
+        const computedInstanceUrl = instanceUrl || options.instance || process.env.INSTANCE_URL;
+        computedInstanceUrl && prompts.inject([computedInstanceUrl]);
 
-        if (!instanceUrl && !options.instance && !process.env.INSTANCE_URL) {
-            const { value } = await prompts({
+        const { promptedInstanceUrl } = await prompts([
+            {
                 type: 'text',
-                name: 'value',
-                message: 'Frontify Instance URL',
+                name: 'promptedInstanceUrl',
+                message: 'Enter a Frontify instance URL',
                 initial: 'instanceName.frontify.com',
-                validate: (value: string) => (value.trim() === '' ? 'You need to enter a URL.' : true),
-            });
+                validate: (value: string) => (value.trim() === '' ? 'You need to enter a valid URL.' : true),
+            },
+        ]);
 
-            if (!value) {
-                exit(0);
-            }
-
-            promptedInstanceUrl = value;
+        if (!promptedInstanceUrl) {
+            exit(0);
         }
 
-        const parsedInstanceUrl = getValidInstanceUrl(
-            instanceUrl ?? options.instance ?? process.env.INSTANCE_URL ?? promptedInstanceUrl,
-        );
+        const parsedInstanceUrl = getValidInstanceUrl(promptedInstanceUrl);
 
         await loginUser(parsedInstanceUrl, options.port);
     });
@@ -113,25 +110,39 @@ cli.command('deploy', 'deploy the app to the marketplace')
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
-    let promptedName: string | null = null;
+    appName && prompts.inject([appName, undefined]);
 
-    if (!appName) {
-        const { value } = await prompts({
+    const { promptedAppName, stylingFramework } = await prompts([
+        {
             type: 'text',
-            name: 'value',
-            message: 'App Name',
+            name: 'promptedAppName',
+            message: 'Enter your app name',
             initial: 'my-frontify-app',
-            validate: (value: string) => (value.trim() === '' ? 'You need to enter an app name.' : true),
-        });
+            validate: (value: string) => {
+                if (value.trim() === '') {
+                    return 'You need to enter an app name.';
+                }
 
-        if (!value) {
-            exit(0);
-        }
+                return isValidName(value);
+            },
+        },
+        {
+            type: 'select',
+            name: 'stylingFramework',
+            message: 'Choose a styling framework',
+            choices: [
+                { title: 'Tailwind', value: 'tailwind' },
+                { title: 'CSS Modules', value: 'css-modules' },
+                { title: 'None', value: 'css' },
+            ],
+        },
+    ]);
 
-        promptedName = value;
+    if (!promptedAppName || !stylingFramework) {
+        exit(0);
     }
 
-    await createNewContentBlock(appName ?? promptedName);
+    createNewContentBlock(promptedAppName, stylingFramework);
 });
 
 /**

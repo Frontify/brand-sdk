@@ -15,6 +15,8 @@ declare global {
 
 describe('Compiler utils', async () => {
     beforeEach(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         global.window = {};
     });
 
