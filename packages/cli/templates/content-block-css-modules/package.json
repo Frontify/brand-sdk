@@ -1,0 +1,25 @@
+{
+    "name": "template-content-block-css-modules",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "scripts": {
+        "serve": "frontify-cli serve --entryPath src/index.ts",
+        "deploy": "frontify-cli deploy --entryPath src/index.ts"
+    },
+    "dependencies": {
+        "@frontify/app-bridge": "3.0.0-beta.29",
+        "@frontify/fondue": "12.0.0-beta.27",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    },
+    "devDependencies": {
+        "@frontify/eslint-config-react": "0.15.5",
+        "@frontify/frontify-cli": "5.2.1",
+        "@frontify/guideline-blocks-settings": "0.25.0",
+        "@types/react": "17.0.50",
+        "@types/react-dom": "17.0.17",
+        "eslint": "8.28.0",
+        "prettier": "2.8.0",
+        "typescript": "4.8.4"
+    }
+}
