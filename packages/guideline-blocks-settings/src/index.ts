@@ -1,12 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock } from '@frontify/app-bridge';
-import type { Bundle as BundleSidebarSettings, SettingBlock } from '@frontify/sidebar-settings';
+import type {
+    Bundle as BundleSidebarSettings,
+    SettingBlock as SettingBlockSidebarSettings,
+} from '@frontify/sidebar-settings';
 import type { FC } from 'react';
 
 export * from '@frontify/sidebar-settings';
 
 export type Bundle = BundleSidebarSettings<AppBridgeBlock>;
+export type SettingBlock = SettingBlockSidebarSettings<AppBridgeBlock>;
 
 export enum Sections {
     Main = 'main',
@@ -18,11 +22,11 @@ export enum Sections {
 }
 
 export type BlockSettingsStructureExport = {
-    [Sections.Main]?: SettingBlock<AppBridgeBlock>[];
-    [Sections.Basics]?: SettingBlock<AppBridgeBlock>[];
-    [Sections.Layout]?: SettingBlock<AppBridgeBlock>[];
-    [Sections.Style]?: SettingBlock<AppBridgeBlock>[];
-    [Sections.Security]?: SettingBlock<AppBridgeBlock>[];
+    [Sections.Main]?: SettingBlock[];
+    [Sections.Basics]?: SettingBlock[];
+    [Sections.Layout]?: SettingBlock[];
+    [Sections.Style]?: SettingBlock[];
+    [Sections.Security]?: SettingBlock[];
 };
 
 export type BlockProps = {
