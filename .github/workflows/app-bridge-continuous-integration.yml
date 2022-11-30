@@ -15,7 +15,7 @@ env:
     CI: true
 
 jobs:
-    cli-ci:
+    app-bridge-ci:
         runs-on: ubuntu-latest
 
         steps:
