@@ -138,7 +138,7 @@ importers:
 
   packages/guideline-blocks-settings:
     specifiers:
-      '@frontify/app-bridge': latest
+      '@frontify/app-bridge': workspace:*
       '@frontify/eslint-config-typescript': 0.15.5
       '@frontify/fondue': latest
       '@frontify/sidebar-settings': workspace:*
@@ -171,7 +171,7 @@ importers:
 
   packages/sidebar-settings:
     specifiers:
-      '@frontify/app-bridge': latest
+      '@frontify/app-bridge': workspace:*
       '@frontify/eslint-config-typescript': 0.15.5
       '@frontify/fondue': latest
       eslint: 8.28.0
@@ -4830,7 +4830,7 @@ packages:
       '@udecode/plate-styled-components': 18.9.0_egoac5gygp6hoctg2sges42i74
       raf: 3.4.1
       react: 17.0.2
-      react-dnd: 16.0.1_react@17.0.2
+      react-dnd: 16.0.1_q5o373oqrklnndq2vhekyuzhxi
       react-dnd-html5-backend: 15.1.2
       react-dom: 17.0.2_react@17.0.2
       slate: 0.78.0

@@ -32,7 +32,7 @@
         "vitest": "0.25.3"
     },
     "dependencies": {
-        "@frontify/app-bridge": "latest",
+        "@frontify/app-bridge": "workspace:*",
         "@frontify/fondue": "latest"
     },
     "peerDependencies": {

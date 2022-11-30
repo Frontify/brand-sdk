@@ -21,7 +21,8 @@
         "forceConsistentCasingInFileNames": true,
         "declaration": true,
         "skipLibCheck": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "types": ["vite/client"]
     },
     "include": ["./src/**/*"],
     "exclude": ["./dist/**/*"]
