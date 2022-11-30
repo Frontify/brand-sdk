@@ -1,10 +1,6 @@
 import type { FC } from 'react';
-import type { AppBridgeBlock } from '@frontify/app-bridge';
+import type { BlockProps } from '@frontify/guideline-blocks-settings';
 
-type Props = {
-    appBridge: AppBridgeBlock;
-};
-
-export const AnExampleBlock: FC<Props> = ({ appBridge }) => {
+export const AnExampleBlock: FC<BlockProps> = ({ appBridge }) => {
     return <span>A custom block with some text</span>;
 };
