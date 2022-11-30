@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Rule } from '../validation';
+import type { Rule } from '../rules/Rule';
 import type { BaseBlock } from './base';
 import type { IconEnum, TextInputType } from '.';
 

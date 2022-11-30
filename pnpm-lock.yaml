@@ -127,8 +127,9 @@ importers:
       typescript: 4.8.4
       vite: 3.2.4
       vite-plugin-dts: 1.7.1
+      vitest: 0.25.3
     dependencies:
-      '@frontify/app-bridge': 3.0.0-beta.29_sfoxds7t5ydpegc3knd667wn6m
+      '@frontify/app-bridge': 3.0.0-beta.30_sfoxds7t5ydpegc3knd667wn6m
       '@frontify/fondue': 12.0.0-beta.27_sfoxds7t5ydpegc3knd667wn6m
     devDependencies:
       '@frontify/eslint-config-typescript': 0.15.5_n6qshekvp4yqndkuu5fuozz5ni
@@ -140,6 +141,7 @@ importers:
       typescript: 4.8.4
       vite: 3.2.4
       vite-plugin-dts: 1.7.1_vite@3.2.4
+      vitest: 0.25.3
 
 packages:
 
@@ -845,6 +847,21 @@ packages:
 
   /@frontify/app-bridge/3.0.0-beta.29_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-ZCAZBLz3zZ00lBSk3ccfqa+z79pKTrQQZ2R9Aur7r4G3Qt89P6sggvIz4opbGHUjUxUVP5g412pL2GP3QxEk1A==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: ^17.0.2
+      react-dom: ^17.0.2
+    dependencies:
+      lodash-es: 4.17.21
+      mitt: 3.0.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      sinon: 14.0.2
+      type-fest: 3.2.0
+    dev: false
+
+  /@frontify/app-bridge/3.0.0-beta.30_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-JEyd7WfpuOICHrvIXZMHEdpobvSE3KF1B8adUNuuvZQmsX/wkVlEEhUyemT3XEF9plrc/tNnxbaGWFvXLEgCQQ==}
     engines: {node: '>=16'}
     peerDependencies:
       react: ^17.0.2
@@ -4619,7 +4636,7 @@ packages:
       '@udecode/plate-styled-components': 18.9.0_egoac5gygp6hoctg2sges42i74
       raf: 3.4.1
       react: 17.0.2
-      react-dnd: 16.0.1_q5o373oqrklnndq2vhekyuzhxi
+      react-dnd: 16.0.1_react@17.0.2
       react-dnd-html5-backend: 15.1.2
       react-dom: 17.0.2_react@17.0.2
       slate: 0.78.0

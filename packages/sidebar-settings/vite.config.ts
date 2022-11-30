@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { dependencies as dependenciesMap } from './package.json';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';

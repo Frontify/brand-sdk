@@ -2,4 +2,4 @@
 
 export * from './blocks';
 export * from './bundle';
-export * from './validation';
+export * from './rules';
