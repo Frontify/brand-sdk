@@ -31,5 +31,8 @@
     "dependencies": {
         "@frontify/app-bridge": "latest",
         "@frontify/fondue": "latest"
+    },
+    "peerDependencies": {
+        "@frontify/app-bridge": "*"
     }
 }

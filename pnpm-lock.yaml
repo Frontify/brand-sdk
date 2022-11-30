@@ -81,7 +81,7 @@ importers:
       typescript: 4.8.4
       vitest: 0.25.3_@vitest+ui@0.25.3
 
-  packages/guideline-blocks:
+  packages/guideline-blocks-settings:
     specifiers:
       '@frontify/app-bridge': latest
       '@frontify/eslint-config-typescript': 0.15.5

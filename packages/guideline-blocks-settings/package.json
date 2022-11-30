@@ -1,7 +1,7 @@
 {
-    "name": "@frontify/guideline-blocks",
-    "version": "0.24.3",
-    "description": "Provides types and helpers for the guideline development",
+    "name": "@frontify/guideline-blocks-settings",
+    "version": "0.25.0",
+    "description": "Provides types and helpers for the guideline block development",
     "sideEffects": false,
     "main": "dist/index.umd.js",
     "unpkg": "dist/index.umd.js",
@@ -34,5 +34,8 @@
         "@frontify/app-bridge": "latest",
         "@frontify/fondue": "latest",
         "@frontify/sidebar-settings": "workspace:*"
+    },
+    "peerDependencies": {
+        "@frontify/app-bridge": "*"
     }
 }
