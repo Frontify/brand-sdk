@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.25.1
+
+### Patch Changes
+
+- [`712730e`](https://github.com/Frontify/frontify-cli/commit/712730ec8abda54a1fbc6df5447dcd10fd159ed1) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - export `SettingBlock` with generic
+
+- Updated dependencies [[`d4bd194`](https://github.com/Frontify/frontify-cli/commit/d4bd194133470d2a212be80d14e299e63bc12783)]:
+  - @frontify/sidebar-settings@0.0.5
+
 ## 0.24.3
 
 ### Patch Changes
