@@ -1,12 +1,9 @@
 import type { FC } from 'react';
-import { type AppBridgeBlock, useBlockSettings } from '@frontify/app-bridge';
+import { useBlockSettings } from '@frontify/app-bridge';
+import type { BlockProps } from '@frontify/guideline-blocks-settings';
 
 type Settings = {
     color: 'blue' | 'green' | 'red';
-};
-
-type Props = {
-    appBridge: AppBridgeBlock;
 };
 
 const colorTailwindMap: Record<Settings['color'], string> = {
@@ -15,7 +12,7 @@ const colorTailwindMap: Record<Settings['color'], string> = {
     red: 'tw-text-red-600',
 };
 
-export const AnExampleBlock: FC<Props> = ({ appBridge }) => {
+export const AnExampleBlock: FC<BlockProps> = ({ appBridge }) => {
     const [blockSettings] = useBlockSettings<Settings>(appBridge);
 
     return (

@@ -1,20 +1,18 @@
 import type { FC, CSSProperties } from 'react';
-import { type AppBridgeBlock, type Color, useBlockSettings } from '@frontify/app-bridge';
+import { type Color, useBlockSettings } from '@frontify/app-bridge';
+import type { BlockProps } from '@frontify/guideline-blocks-settings';
+
 import style from './style.module.css';
 
 type Settings = {
     color: Color;
 };
 
-type Props = {
-    appBridge: AppBridgeBlock;
-};
-
 const toCssRgbaString = (color: Color): string => {
     return `rgba(${color.red}, ${color.green}, ${color.blue}, ${color.alpha})`;
 };
 
-export const AnExampleBlock: FC<Props> = ({ appBridge }) => {
+export const AnExampleBlock: FC<BlockProps> = ({ appBridge }) => {
     const [blockSettings] = useBlockSettings<Settings>(appBridge);
     const cssFormattedColor = toCssRgbaString(blockSettings.color);
 
