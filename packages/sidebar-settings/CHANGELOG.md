@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.0.5
+
+### Patch Changes
+
+- [`d4bd194`](https://github.com/Frontify/frontify-cli/commit/d4bd194133470d2a212be80d14e299e63bc12783) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update choice to allow promises
+
 ## 0.0.4
 
 ### Patch Changes
