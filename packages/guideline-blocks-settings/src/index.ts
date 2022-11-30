@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock } from '@frontify/app-bridge';
-import type { SettingBlock } from '@frontify/sidebar-settings';
+import type { Bundle as BundleSidebarSettings, SettingBlock } from '@frontify/sidebar-settings';
 import type { FC } from 'react';
 
 export * from '@frontify/sidebar-settings';
+
+export type Bundle = BundleSidebarSettings<AppBridgeBlock>;
 
 export enum Sections {
     Main = 'main',
@@ -30,6 +32,12 @@ export type BlockProps = {
 export type BlockConfigExport = {
     block: FC<BlockProps>;
     settings: ReturnType<typeof defineSettings>;
+    onBlockCreated?:
+        | (({ appBridge }: { appBridge: AppBridgeBlock }) => void)
+        | (({ appBridge }: { appBridge: AppBridgeBlock }) => Promise<void>);
+    onBlockDeleted?:
+        | (({ appBridge }: { appBridge: AppBridgeBlock }) => void)
+        | (({ appBridge }: { appBridge: AppBridgeBlock }) => Promise<void>);
 };
 
 /**

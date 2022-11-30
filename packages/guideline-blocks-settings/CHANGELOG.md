@@ -1,4 +1,4 @@
-# @frontify/guideline-blocks
+# @frontify/guideline-blocks-settings
 
 ## 0.24.3
 
