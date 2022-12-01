@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { minimumNumericalOrPercentOrAutoRule } from '../../src/rules/minimumNumericalOrPercentOrAutoRule';
+import { minimumNumericalOrPercentOrAutoRule } from '../../../src/helpers/rules/minimumNumericalOrPercentOrAutoRule';
 import { describe, expect, test } from 'vitest';
 
 describe('minimumNumericalOrPercentOrAutoRule', () => {

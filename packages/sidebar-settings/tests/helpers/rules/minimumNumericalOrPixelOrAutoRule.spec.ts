@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { minimumNumericalOrPixelOrAutoRule } from '../../src/rules/minimumNumericalOrPixelOrAutoRule';
+import { minimumNumericalOrPixelOrAutoRule } from '../../../src/helpers/rules/minimumNumericalOrPixelOrAutoRule';
 import { describe, expect, test } from 'vitest';
 
 describe('minimumNumericalOrPixelOrAutoRule', () => {

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { betweenPixelRule } from '../../src/rules/betweenPixelRule';
+import { betweenPixelRule } from '../../../src/helpers/rules/betweenPixelRule';
 import { describe, expect, test } from 'vitest';
 
 describe('betweenPixelRule', () => {

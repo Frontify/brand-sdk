@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { numericalOrPercentRule } from '../../src/rules/numericalOrPercentRule';
+import { numericalOrPercentRule } from '../../../src/helpers/rules/numericalOrPercentRule';
 import { describe, expect, test } from 'vitest';
 
 describe('numericalOrPercentRule', () => {
