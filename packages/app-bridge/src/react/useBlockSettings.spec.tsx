@@ -1,19 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { cleanup, render, waitFor } from '@testing-library/react';
 import React, { ReactElement } from 'react';
 import sinon from 'sinon';
 import { afterEach, describe, expect, it } from 'vitest';
-import { cleanup, render, waitFor } from '@testing-library/react';
-
+import type { AppBridgeBlock } from '../AppBridgeBlock';
 import { withAppBridgeBlockStubs } from '../tests/';
 import { useBlockSettings } from './useBlockSettings';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
 
 const BLOCK_SETTINGS_DIV_ID = 'block-settings-div';
 const SET_BLOCK_SETTING_BUTTON = 'set-block-settings-button';
 const SET_BLOCK_SETTING_NULL_BUTTON = 'set-block-settings-null-button';
 const SET_BLOCK_SETTING_UNDEFINED_BUTTON = 'set-block-settings-undefined-button';
 const NEW_SETTINGS = { foo: 'bar' };
+const NEW_SETTINGS_2 = { hello: 'world' };
 const NEW_SETTINGS_NULL = { foo: null };
 const NEW_SETTINGS_UNDEFINED = { foo: undefined };
 const BLOCK_1_ID = 345;
@@ -77,6 +77,25 @@ describe('useBlockSettings', () => {
         });
     });
 
+    it('should only update the changed block setting and save it to the database', async () => {
+        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(Block, {
+            blockSettings: NEW_SETTINGS_2,
+        });
+
+        const { getByTestId } = render(<BlockWithStubs />);
+
+        const buttonElement = getByTestId(SET_BLOCK_SETTING_BUTTON);
+        buttonElement.click();
+
+        sinon.assert.calledOnceWithExactly(appBridge.updateBlockSettings, NEW_SETTINGS);
+
+        await waitFor(() => {
+            expect(getByTestId(BLOCK_SETTINGS_DIV_ID).textContent).toBe(
+                JSON.stringify({ ...NEW_SETTINGS_2, ...NEW_SETTINGS }),
+            );
+        });
+    });
+
     it('should merge the block settings and save it to the database', async () => {
         const CURRENT_SETTINGS = { url: 'https://frontify.com' };
 
@@ -99,7 +118,7 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('should overwritte the block settings and save it to the database', async () => {
+    it('should overwrite the block settings and save it to the database', async () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(Block, {
@@ -119,7 +138,7 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('should set to null a setting and save it to the database', async () => {
+    it('should set a setting to null and save it to the database', async () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(Block, {
@@ -139,7 +158,7 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('should set to undefined a setting and save it to the database', async () => {
+    it('should set a setting to undefined and save it to the database', async () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(Block, {
