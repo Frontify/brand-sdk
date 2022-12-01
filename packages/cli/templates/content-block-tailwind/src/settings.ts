@@ -22,8 +22,9 @@ export const settings = defineSettings({
             id: 'color',
             label: 'Text Color',
             type: 'slider',
-            defaultValue: 'blue',
+            defaultValue: 'violet',
             choices: [
+                { label: 'Violet', value: 'violet' },
                 { label: 'Blue', value: 'blue' },
                 { label: 'Green', value: 'green' },
                 { label: 'Red', value: 'red' },

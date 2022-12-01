@@ -1,4 +1,4 @@
-import { defineSettings, DropdownSize, IconEnum } from '@frontify/guideline-blocks-settings';
+import { DropdownSize, IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
 
 export const settings = defineSettings({
     main: [
@@ -22,7 +22,7 @@ export const settings = defineSettings({
             id: 'color',
             label: 'Text Color',
             type: 'colorInput',
-            defaultValue: { red: 250, green: 191, blue: 89, alpha: 1, name: 'Saffron Mango' },
+            defaultValue: { red: 113, green: 89, blue: 215, alpha: 1, name: 'Frontify Violet' },
         },
     ],
 });
