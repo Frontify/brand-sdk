@@ -1,4 +1,4 @@
-import type { FC, CSSProperties } from 'react';
+import type { CSSProperties, FC } from 'react';
 import { type Color, useBlockSettings } from '@frontify/app-bridge';
 import type { BlockProps } from '@frontify/guideline-blocks-settings';
 
@@ -18,7 +18,7 @@ export const AnExampleBlock: FC<BlockProps> = ({ appBridge }) => {
 
     return (
         <span className={style.text} style={{ '--text-color': cssFormattedColor } as CSSProperties}>
-            A custom block with background color: {cssFormattedColor}
+            A custom block in {blockSettings.color.name ?? cssFormattedColor} and underlined
         </span>
     );
 };

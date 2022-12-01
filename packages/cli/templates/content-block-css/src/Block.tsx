@@ -1,6 +1,8 @@
 import type { FC } from 'react';
 import type { BlockProps } from '@frontify/guideline-blocks-settings';
 
+import './style.css';
+
 export const AnExampleBlock: FC<BlockProps> = ({ appBridge }) => {
-    return <span>A custom block with some text</span>;
+    return <span className="block-text">A custom block in violet and underlined</span>;
 };
