@@ -9,6 +9,11 @@
     "module": "dist/index.es.js",
     "types": "dist/index.d.ts",
     "author": "Frontify Developers <developers@frontify.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Frontify/brand-sdk",
+        "directory": "packages/sidebar-settings"
+    },
     "scripts": {
         "build": "vite build",
         "lint": "eslint .",
