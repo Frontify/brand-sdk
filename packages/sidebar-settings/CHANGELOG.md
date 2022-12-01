@@ -1,5 +1,13 @@
 # @frontify/sidebar-settings
 
+## 0.0.6
+
+### Patch Changes
+
+- [`e58c9d5`](https://github.com/Frontify/brand-sdk/commit/e58c9d5ef0b20e33d91c831f4b19c37afae4f9aa) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add some basic sidebar rules
+
+- [`b651e3d`](https://github.com/Frontify/brand-sdk/commit/b651e3d06d19cbf9de6e85ed58aae8a9f2ed2615) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Added few helpers for the `onChange` hook
+
 ## 0.0.5
 
 ### Patch Changes
