@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { numericalOrPixelRule } from '../../src/rules/numericalOrPixelRule';
+import { numericalOrPixelRule } from '../../../src/helpers/rules/numericalOrPixelRule';
 import { describe, expect, test } from 'vitest';
 
 describe('numericalOrPixelRule', () => {

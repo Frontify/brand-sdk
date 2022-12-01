@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test } from 'vitest';
-import { maximumNumericalRule } from '../../src/rules/maximumNumericalRule';
+import { maximumNumericalRule } from '../../../src/helpers/rules/maximumNumericalRule';
 
 describe('maximumNumericalRule', () => {
     const data = [

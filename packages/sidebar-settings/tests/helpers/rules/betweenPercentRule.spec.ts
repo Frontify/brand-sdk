@@ -1,16 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { betweenNumericalOrPercentOrAutoRule } from '../../src/rules/betweenNumericalOrPercentOrAutoRule';
+import { betweenPercentRule } from '../../../src/helpers/rules/betweenPercentRule';
 import { describe, expect, test } from 'vitest';
 
-describe('betweenNumericalOrPercentOrAutoRule', () => {
+describe('betweenPercentRule', () => {
     const data = [
         { a: 1, b: 5, value: '4', expected: true },
         { a: 1, b: 5, value: '1', expected: true },
         { a: 1, b: 5, value: '5', expected: true },
         { a: 1, b: 5, value: '5%', expected: true },
         { a: 1, b: 5, value: '1%', expected: true },
-        { a: 1, b: 5, value: 'auto', expected: true },
+        { a: 1, b: 5, value: 'auto', expected: false },
         { a: 1, b: 5, value: '2%', expected: true },
         { a: 1, b: 5, value: '-1%', expected: false },
         { a: 1, b: 5, value: '6', expected: false },
@@ -28,7 +28,7 @@ describe('betweenNumericalOrPercentOrAutoRule', () => {
     ];
 
     test.each(data)('validate correctly values ($a $b $value $expected)', ({ a, b, value, expected }) => {
-        const rule = betweenNumericalOrPercentOrAutoRule(a, b);
+        const rule = betweenPercentRule(a, b);
         expect(rule.validate(value)).toBe(expected);
     });
 });

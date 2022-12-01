@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { pixelRule } from '../../src/rules/pixelRule';
+import { pixelRule } from '../../../src/helpers/rules/pixelRule';
 import { describe, expect, test } from 'vitest';
 
 describe('pixelRule', () => {
