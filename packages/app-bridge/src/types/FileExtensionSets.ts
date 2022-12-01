@@ -1,0 +1,62 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
+import type { FileType } from './FileType';
+import { FileExtension } from './FileExtension';
+
+export const FileExtensionSets: Record<keyof typeof FileType, FileExtension[]> = {
+    Audio: [
+        FileExtension.Aac,
+        FileExtension.Ac3,
+        FileExtension.Aif,
+        FileExtension.Aifc,
+        FileExtension.Aiff,
+        FileExtension.Flac,
+        FileExtension.M4a,
+        FileExtension.M4r,
+        FileExtension.Mp3,
+        FileExtension.Ogg,
+        FileExtension.Wav,
+    ],
+    Documents: [
+        FileExtension.Doc,
+        FileExtension.Docx,
+        FileExtension.Dotx,
+        FileExtension.Pdf,
+        FileExtension.Potx,
+        FileExtension.Ppt,
+        FileExtension.Pptx,
+        FileExtension.Xls,
+        FileExtension.Xlsx,
+        FileExtension.Xltx,
+    ],
+    Images: [
+        FileExtension.Ai,
+        FileExtension.Bmp,
+        FileExtension.Dng,
+        FileExtension.Eps,
+        FileExtension.Gif,
+        FileExtension.Heif,
+        FileExtension.Ico,
+        FileExtension.Jpeg,
+        FileExtension.Jpg,
+        FileExtension.Png,
+        FileExtension.Psd,
+        FileExtension.Svg,
+        FileExtension.Tif,
+        FileExtension.Tiff,
+        FileExtension.Webp,
+    ],
+    Videos: [
+        FileExtension.Avi,
+        FileExtension.Flv,
+        FileExtension.M4v,
+        FileExtension.Mkv,
+        FileExtension.Mov,
+        FileExtension.Mp4,
+        FileExtension.Mpg,
+        FileExtension.Mts,
+        FileExtension.Webm,
+        FileExtension.Wmv,
+    ],
+    Templates: [FileExtension.Indd, FileExtension.Indt, FileExtension.Sketch, FileExtension.Artboard],
+};
