@@ -32,7 +32,12 @@ export * from './switch';
 export * from './templateInput';
 export * from './textarea';
 
-export { AssetChooserObjectType, AssetChooserProjectType, FileExtension } from '@frontify/app-bridge';
+export {
+    AssetChooserObjectType,
+    AssetChooserProjectType,
+    FileExtension,
+    FileExtensionSets,
+} from '@frontify/app-bridge';
 export {
     AssetInputSize,
     DropdownSize,
