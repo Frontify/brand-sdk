@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 
 import { AppBridgeTheme } from '../AppBridgeTheme';
 import type {
+    BrandportalLink,
     CoverPage,
     CoverPageCreate,
     CreateDocumentGroup,
@@ -49,6 +50,16 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     ) => {
         window.emitter.emit('AppBridge:GuidelineCoverPageUpdate', {
             coverPage,
+            action,
+        });
+    };
+
+    const emitBrandportalLinkAction = <A extends EmitterAction>(
+        brandportalLink: Partial<BrandportalLink>,
+        action: A,
+    ) => {
+        window.emitter.emit('AppBridge:GuidelineBrandportalLinkUpdate', {
+            brandportalLink,
             action,
         });
     };
@@ -224,6 +235,17 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         emitCoverPageAction(undefined, 'delete');
     }, [appBridge]);
 
+    const updateBrandportalLink = useCallback(
+        async (brandportalLink: Partial<BrandportalLink>) => {
+            const result = await appBridge.updateBrandportalLink(brandportalLink);
+
+            if (result) {
+                emitBrandportalLinkAction(result, 'update');
+            }
+        },
+        [appBridge],
+    );
+
     return {
         createLink,
         updateLink,
@@ -241,6 +263,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createDocumentGroup,
         updateDocumentGroup,
         deleteDocumentGroup,
+        updateBrandportalLink,
         createDocument: createStandardDocument,
         updateDocument: updateStandardDocument,
         deleteDocument: deleteStandardDocument,

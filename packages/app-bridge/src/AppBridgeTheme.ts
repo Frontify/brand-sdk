@@ -210,7 +210,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateBrandportalLink(brandportalLink: BrandportalLink) {
+    public async updateBrandportalLink(brandportalLink: Partial<BrandportalLink>) {
         try {
             return await updateBrandportalLink({ ...brandportalLink, portalId: this.getPortalId() });
         } catch (error) {

@@ -3,19 +3,25 @@
 import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { CoverPage, EmitterAction } from '../types';
+import type { BrandportalLink, EmitterAction } from '../types';
+
+const defaultState: BrandportalLink = {
+    enabled: false,
+    label: '',
+    url: '',
+};
 
 export type UseBrandportalLinkReturnType = {
-    brandportalLink: Nullable<CoverPage>;
+    brandportalLink: Nullable<BrandportalLink>;
 };
 
 export const useBrandportalLink = (appBridge: AppBridgeTheme): UseBrandportalLinkReturnType => {
-    const [brandportalLink, setBrandportalLink] = useState<Nullable<CoverPage>>(null);
+    const [brandportalLink, setBrandportalLink] = useState<Nullable<BrandportalLink>>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchBrandportalLink = async () => {
-            setBrandportalLink(await appBridge.getCoverPage());
+            setBrandportalLink(await appBridge.getBrandportalLink());
         };
 
         if (isLoading) {
@@ -25,19 +31,13 @@ export const useBrandportalLink = (appBridge: AppBridgeTheme): UseBrandportalLin
     }, [appBridge, isLoading]);
 
     useEffect(() => {
-        const updateBrandportalLinkFromEvent = (event: { brandportalLink: CoverPage; action: EmitterAction }) => {
+        const updateBrandportalLinkFromEvent = (event: {
+            brandportalLink: Partial<BrandportalLink>;
+            action: Extract<EmitterAction, 'update'>;
+        }) => {
             setBrandportalLink((previousState) => {
-                if (event.action === 'add') {
-                    setIsLoading(true);
-                    return previousState;
-                }
-
-                if (event.action === 'delete') {
-                    return null;
-                }
-
                 if (event.action === 'update') {
-                    return { ...previousState, ...event.brandportalLink };
+                    return { ...defaultState, ...previousState, ...event.brandportalLink };
                 }
 
                 return previousState;
