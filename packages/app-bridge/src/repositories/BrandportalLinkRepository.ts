@@ -12,6 +12,7 @@ export const getBrandportalLink = async (hubId: number): Promise<BrandportalLink
 export const updateBrandportalLink = async (
     brandportalLink: Partial<BrandportalLink> & {
         portalId?: number;
+        i18n: string;
     },
 ): Promise<Partial<BrandportalLink> | null> => {
     const { portalId, ...brandportalLinkData } = brandportalLink;
@@ -20,7 +21,7 @@ export const updateBrandportalLink = async (
         brand_portal_link_enabled: brandportalLink.enabled,
         brand_portal_label: brandportalLink.label,
         brand_portal_link: brandportalLink.url,
-        i18n: '',
+        i18n: brandportalLink.i18n,
     });
 
     if (result.success) {

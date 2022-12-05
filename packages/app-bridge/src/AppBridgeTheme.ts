@@ -51,6 +51,7 @@ import type {
     UpdateDocumentStandard,
 } from './types';
 import { BrandportalLink } from './types/BrandportalLink';
+import { getDatasetByElement } from './utilities';
 
 export class AppBridgeTheme {
     constructor(private readonly portalId: number) {}
@@ -212,7 +213,11 @@ export class AppBridgeTheme {
 
     public async updateBrandportalLink(brandportalLink: Partial<BrandportalLink>) {
         try {
-            return await updateBrandportalLink({ ...brandportalLink, portalId: this.getPortalId() });
+            return await updateBrandportalLink({
+                ...brandportalLink,
+                portalId: this.getPortalId(),
+                i18n: this.getTranslationLanguage(),
+            });
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -272,5 +277,9 @@ export class AppBridgeTheme {
 
     public async getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]> {
         return getColorsByColorPaletteId(colorPaletteId);
+    }
+
+    public getTranslationLanguage(): string {
+        return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
     }
 }
