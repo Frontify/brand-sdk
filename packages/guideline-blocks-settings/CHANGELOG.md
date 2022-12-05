@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.25.3
+
+### Patch Changes
+
+- [`f140510`](https://github.com/Frontify/brand-sdk/commit/f14051013520f73a9e60bcbac704eb607a69468a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Added documentation link to the types.
+  Added custom section handling in types.
+- Updated dependencies [[`ac89fc6`](https://github.com/Frontify/brand-sdk/commit/ac89fc60cdf58d1a7cae2aae2a057c744fc7e9b6)]:
+  - @frontify/sidebar-settings@0.0.7
+
 ## 0.25.2
 
 ### Patch Changes
