@@ -37,6 +37,10 @@ describe('AppBridgeThemeTest', () => {
         document.body.appendChild(domElement);
     };
 
+    const setTranslationLanguage = (translationLanguage: string) => {
+        document.body.setAttribute('data-translation-language', translationLanguage);
+    };
+
     beforeAll(() => {
         window.application = {
             ...window.application,
@@ -62,6 +66,8 @@ describe('AppBridgeThemeTest', () => {
         vi.mock('./repositories/ColorRepository', async () => ({
             getColorsByColorPaletteId: vi.fn(),
         }));
+
+        setTranslationLanguage('');
     });
 
     afterEach(() => {
@@ -239,5 +245,12 @@ describe('AppBridgeThemeTest', () => {
 
         expect(getColorsByColorPaletteId).toHaveBeenCalledTimes(1);
         expect(result).resolves.toEqual(colors);
+    });
+
+    test('returns the translation language', () => {
+        setTranslationLanguage('de');
+
+        const appBridge = new AppBridgeTheme(PROJECT_ID);
+        expect(appBridge.getTranslationLanguage()).toBe('de');
     });
 });

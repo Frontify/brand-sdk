@@ -40,4 +40,8 @@ export type Emitter = MittEmitter<{
         coverPage: CoverPage;
         action: EmitterAction;
     };
+    'AppBridge:GuidelineBrandportalLinkUpdate': {
+        brandportalLink: CoverPage;
+        action: EmitterAction;
+    };
 }>;
