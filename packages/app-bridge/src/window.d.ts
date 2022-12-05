@@ -86,6 +86,10 @@ declare global {
                 coverPage: CoverPage;
                 action: EmitterAction;
             };
+            'AppBridge:GuidelineBrandportalLinkUpdate': {
+                brandportalLink: CoverPage;
+                action: EmitterAction;
+            };
         }>;
     }
 }
