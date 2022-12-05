@@ -4,6 +4,7 @@ export * from './useAssetChooser';
 export * from './useAssetUpload';
 export * from './useBlockAssets';
 export * from './useBlockSettings';
+export * from './useBrandportalLink';
 export * from './useColorPalettes';
 export * from './useColors';
 export * from './useCoverPage';
