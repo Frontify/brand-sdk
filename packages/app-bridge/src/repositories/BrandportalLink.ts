@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { BrandportalLink, BrandportalLinkApi } from '../types/BrandportalLink';
 import { HttpClient } from '../utilities';
+import type { BrandportalLink, BrandportalLinkApi } from '../types';
 
 export const getBrandportalLink = async (hubId: number): Promise<BrandportalLink> => {
     const { result } = await HttpClient.get<BrandportalLinkApi>(`/api/document/navigation/${hubId}`);
