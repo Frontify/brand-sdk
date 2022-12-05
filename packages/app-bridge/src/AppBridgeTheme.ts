@@ -9,6 +9,7 @@ import {
     deleteDocument,
     deleteDocumentGroup,
     deleteDocumentPage,
+    getBrandportalLink,
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
     getCoverPage,
@@ -19,6 +20,7 @@ import {
     getDocumentsWithoutDocumentGroupByProjectId,
     getUncategorizedPagesByDocumentId,
     publishCoverPage,
+    updateBrandportalLink,
     updateCoverPage,
     updateDocument,
     updateDocumentGroup,
@@ -48,6 +50,7 @@ import type {
     UpdateDocumentPage,
     UpdateDocumentStandard,
 } from './types';
+import { BrandportalLink } from './types/BrandportalLink';
 
 export class AppBridgeTheme {
     constructor(private readonly portalId: number) {}
@@ -207,6 +210,14 @@ export class AppBridgeTheme {
         }
     }
 
+    public async updateBrandportalLink(brandportalLink: BrandportalLink) {
+        try {
+            return await updateBrandportalLink({ ...brandportalLink, portalId: this.getPortalId() });
+        } catch (error) {
+            throw console.error('Error: ', error);
+        }
+    }
+
     public getPortalId(): number {
         return this.portalId;
     }
@@ -225,6 +236,10 @@ export class AppBridgeTheme {
 
     public getCoverPage(): Promise<CoverPage> {
         return getCoverPage(this.getPortalId());
+    }
+
+    public getBrandportalLink(): Promise<BrandportalLink> {
+        return getBrandportalLink(this.getPortalId());
     }
 
     public getDocumentsWithoutDocumentGroups(): Promise<Document[]> {

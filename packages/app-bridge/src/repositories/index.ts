@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 export * from './AssetRepository';
+export * from './BrandportalLink';
 export * from './ColorPaletteRepository';
 export * from './ColorRepository';
 export * from './CoverPageRepository';
