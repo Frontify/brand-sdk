@@ -3,8 +3,8 @@
 import { HttpClient } from '../utilities';
 import type { BrandportalLink, BrandportalLinkApi } from '../types';
 
-export const getBrandportalLink = async (hubId: number): Promise<BrandportalLink> => {
-    const { result } = await HttpClient.get<BrandportalLinkApi>(`/api/document/navigation/${hubId}`);
+export const getBrandportalLink = async (portalId: number): Promise<BrandportalLink> => {
+    const { result } = await HttpClient.get<BrandportalLinkApi>(`/api/document/navigation/${portalId}`);
 
     return (result as unknown as BrandportalLinkApi)?.brand_portal ?? null;
 };

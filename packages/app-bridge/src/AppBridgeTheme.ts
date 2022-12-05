@@ -28,6 +28,7 @@ import {
 } from './repositories';
 
 import type {
+    BrandportalLink,
     Color,
     ColorPalette,
     CoverPage,
@@ -50,7 +51,6 @@ import type {
     UpdateDocumentPage,
     UpdateDocumentStandard,
 } from './types';
-import { BrandportalLink } from './types/BrandportalLink';
 import { getDatasetByElement } from './utilities';
 
 export class AppBridgeTheme {
@@ -58,7 +58,7 @@ export class AppBridgeTheme {
 
     public async createLink(link: CreateDocumentLink) {
         try {
-            return await createDocument<DocumentLink>(link as DocumentLink);
+            return createDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -66,7 +66,7 @@ export class AppBridgeTheme {
 
     public async updateLink(link: UpdateDocumentLink) {
         try {
-            return await updateDocument<DocumentLink>(link as DocumentLink);
+            return updateDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -74,7 +74,7 @@ export class AppBridgeTheme {
 
     public async deleteLink(id: number) {
         try {
-            return await deleteDocument(id);
+            return deleteDocument(id);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -82,7 +82,7 @@ export class AppBridgeTheme {
 
     public async createLibrary(library: CreateDocumentLibrary) {
         try {
-            return await createDocument<DocumentLibrary>(library as DocumentLibrary);
+            return createDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -90,7 +90,7 @@ export class AppBridgeTheme {
 
     public async updateLibrary(library: UpdateDocumentLibrary) {
         try {
-            return await updateDocument<DocumentLibrary>(library as DocumentLibrary);
+            return updateDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -98,7 +98,7 @@ export class AppBridgeTheme {
 
     public async deleteLibrary(id: number) {
         try {
-            return await deleteDocument(id);
+            return deleteDocument(id);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -106,7 +106,7 @@ export class AppBridgeTheme {
 
     public async createStandardDocument(document: CreateDocumentStandard) {
         try {
-            return await createDocument<Document>(document as Document);
+            return createDocument<Document>(document as Document);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -114,7 +114,7 @@ export class AppBridgeTheme {
 
     public async updateStandardDocument(document: UpdateDocumentStandard) {
         try {
-            return await updateDocument<Document>(document as Document);
+            return updateDocument<Document>(document as Document);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -122,7 +122,7 @@ export class AppBridgeTheme {
 
     public async deleteStandardDocument(id: number) {
         try {
-            return await deleteDocument(id);
+            return deleteDocument(id);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -130,7 +130,7 @@ export class AppBridgeTheme {
 
     public async createDocumentGroup(documentGroup: CreateDocumentGroup) {
         try {
-            return await createDocumentGroup(documentGroup as DocumentGroup);
+            return createDocumentGroup(documentGroup as DocumentGroup);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -138,7 +138,7 @@ export class AppBridgeTheme {
 
     public async updateDocumentGroup(documentGroup: UpdateDocumentGroup) {
         try {
-            return await updateDocumentGroup(documentGroup as DocumentGroup);
+            return updateDocumentGroup(documentGroup as DocumentGroup);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -146,7 +146,7 @@ export class AppBridgeTheme {
 
     public async deleteDocumentGroup(id: number) {
         try {
-            return await deleteDocumentGroup(id);
+            return deleteDocumentGroup(id);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -154,7 +154,7 @@ export class AppBridgeTheme {
 
     public async createDocumentPage(documentPage: CreateDocumentPage) {
         try {
-            return await createDocumentPage(documentPage as DocumentPage);
+            return createDocumentPage(documentPage as DocumentPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -162,7 +162,7 @@ export class AppBridgeTheme {
 
     public async updateDocumentPage(documentPage: UpdateDocumentPage) {
         try {
-            return await updateDocumentPage(documentPage as DocumentPage);
+            return updateDocumentPage(documentPage as DocumentPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -170,7 +170,7 @@ export class AppBridgeTheme {
 
     public async deleteDocumentPage(id: number) {
         try {
-            return await deleteDocumentPage(id);
+            return deleteDocumentPage(id);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -178,7 +178,7 @@ export class AppBridgeTheme {
 
     public async createCoverPage(coverPage: CoverPageCreate) {
         try {
-            return await createCoverPage(coverPage as CoverPage);
+            return createCoverPage(coverPage as CoverPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -186,7 +186,7 @@ export class AppBridgeTheme {
 
     public async updateCoverPage(coverPage: CoverPage) {
         try {
-            return await updateCoverPage(coverPage as CoverPage);
+            return updateCoverPage(coverPage as CoverPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -197,7 +197,7 @@ export class AppBridgeTheme {
      */
     public async publishCoverPage(coverPage: { brandhome_draft: boolean }) {
         try {
-            return await publishCoverPage({ ...coverPage, portalId: this.getPortalId() });
+            return publishCoverPage({ ...coverPage, portalId: this.getPortalId() });
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -205,7 +205,7 @@ export class AppBridgeTheme {
 
     public async deleteCoverPage() {
         try {
-            return await deleteCoverPage(this.getPortalId());
+            return deleteCoverPage(this.getPortalId());
         } catch (error) {
             throw console.error('Error: ', error);
         }

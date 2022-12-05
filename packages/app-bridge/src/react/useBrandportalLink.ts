@@ -17,18 +17,14 @@ export type UseBrandportalLinkReturnType = {
 
 export const useBrandportalLink = (appBridge: AppBridgeTheme): UseBrandportalLinkReturnType => {
     const [brandportalLink, setBrandportalLink] = useState<Nullable<BrandportalLink>>(null);
-    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchBrandportalLink = async () => {
             setBrandportalLink(await appBridge.getBrandportalLink());
         };
 
-        if (isLoading) {
-            fetchBrandportalLink();
-            setIsLoading(false);
-        }
-    }, [appBridge, isLoading]);
+        fetchBrandportalLink();
+    }, [appBridge]);
 
     useEffect(() => {
         const updateBrandportalLinkFromEvent = (event: {
