@@ -36,7 +36,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const emitPageAction = <A extends EmitterAction>(
-        page: A extends 'delete' ? { id: number } : DocumentPage,
+        page: A extends 'delete' ? { id: number } : DocumentPage | DocumentPageCategory,
         action: A,
     ) => {
         window.emitter.emit('AppBridge:GuidelineDocumentPageUpdate', {
@@ -203,9 +203,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     const createCategory = useCallback(
         async (category: DocumentPageCategory) => {
             const result = await appBridge.createDocumentPageCategory(category);
-            console.log('🚀 ~ result', result);
 
-            // emitPageAction(result, 'add');
+            emitPageAction(result, 'add');
         },
         [appBridge],
     );
@@ -213,9 +212,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     const updateCategory = useCallback(
         async (category: DocumentPageCategory) => {
             const result = await appBridge.updateDocumentPageCategory(category);
-            console.log('🚀 ~ result', result);
 
-            // emitPageAction(result, 'update');
+            emitPageAction(result, 'update');
         },
         [appBridge],
     );
@@ -224,7 +222,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         async (id: number) => {
             await appBridge.deleteDocumentPageCategory(id);
 
-            // emitPageAction({ id }, 'delete');
+            emitPageAction({ id }, 'delete');
         },
         [appBridge],
     );
