@@ -3,14 +3,48 @@
 import type { FC } from 'react';
 import type { AppBridgeBlock } from '@frontify/app-bridge';
 import type {
+    AssetInputBlock as AssetInputBlockSidebarSettings,
+    BaseBlock as BaseBlockSidebarSettings,
     Bundle as BundleSidebarSettings,
+    ChecklistBlock as ChecklistBlockSidebarSettings,
+    ChoicesType as ChoicesTypeSidebarSettings,
+    DropdownBlock as DropdownBlockSidebarSettings,
+    DynamicSupportedBlock as DynamicSupportedBlockSidebarSettings,
+    InputBlock as InputBlockSidebarSettings,
+    LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
+    LinkChooserBlock as LinkChooserBlockSidebarSettings,
+    MultiInputBlock as MultiInputBlockSidebarSettings,
+    NotificationBlock as NotificationBlockSidebarSettings,
+    SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
     SettingBlock as SettingBlockSidebarSettings,
+    SliderBlock as SliderBlockSidebarSettings,
+    SwitchBlock as SwitchBlockSidebarSettings,
+    TemplateInputBlock as TemplateInputBlockSidebarSettings,
+    TextareaBlock as TextareaBlockSidebarSettings,
+    ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
 } from '@frontify/sidebar-settings';
 
 export * from '@frontify/sidebar-settings';
 
+export type AssetInputBlock = AssetInputBlockSidebarSettings<AppBridgeBlock>;
+export type BaseBlock = BaseBlockSidebarSettings<AppBridgeBlock>;
 export type Bundle = BundleSidebarSettings<AppBridgeBlock>;
+export type ChecklistBlock = ChecklistBlockSidebarSettings<AppBridgeBlock>;
+export type ChoicesType = ChoicesTypeSidebarSettings<AppBridgeBlock>;
+export type DropdownBlock = DropdownBlockSidebarSettings<AppBridgeBlock>;
+export type DynamicSupportedBlock = DynamicSupportedBlockSidebarSettings<AppBridgeBlock>;
+export type InputBlock = InputBlockSidebarSettings<AppBridgeBlock>;
+export type LegacyAssetInputBlock = LegacyAssetInputBlockSidebarSettings<AppBridgeBlock>;
+export type LinkChooserBlock = LinkChooserBlockSidebarSettings<AppBridgeBlock>;
+export type MultiInputBlock = MultiInputBlockSidebarSettings<AppBridgeBlock>;
+export type NotificationBlock = NotificationBlockSidebarSettings<AppBridgeBlock>;
+export type SectionHeadingBlock = SectionHeadingBlockSidebarSettings<AppBridgeBlock>;
 export type SettingBlock = SettingBlockSidebarSettings<AppBridgeBlock>;
+export type SliderBlock = SliderBlockSidebarSettings<AppBridgeBlock>;
+export type SwitchBlock = SwitchBlockSidebarSettings<AppBridgeBlock>;
+export type TemplateInputBlock = TemplateInputBlockSidebarSettings<AppBridgeBlock>;
+export type TextareaBlock = TextareaBlockSidebarSettings<AppBridgeBlock>;
+export type ValueOrPromisedValue<T> = ValueOrPromisedValueSidebarSettings<AppBridgeBlock, T>;
 
 export enum Sections {
     Main = 'main',
