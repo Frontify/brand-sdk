@@ -13,9 +13,9 @@ import type {
     CreateDocumentPage,
     CreateDocumentStandard,
     Document,
+    DocumentCategory,
     DocumentGroup,
     DocumentPage,
-    DocumentPageCategory,
     EmitterAction,
     UpdateDocumentGroup,
     UpdateDocumentLibrary,
@@ -36,7 +36,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const emitPageAction = <A extends EmitterAction>(
-        page: A extends 'delete' ? { id: number } : DocumentPage | DocumentPageCategory,
+        page: A extends 'delete' ? { id: number } : DocumentPage | DocumentCategory,
         action: A,
     ) => {
         window.emitter.emit('AppBridge:GuidelineDocumentPageUpdate', {
@@ -201,8 +201,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createCategory = useCallback(
-        async (category: DocumentPageCategory) => {
-            const result = await appBridge.createDocumentPageCategory(category);
+        async (category: DocumentCategory) => {
+            const result = await appBridge.createDocumentCategory(category);
 
             emitPageAction(result, 'add');
         },
@@ -210,8 +210,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCategory = useCallback(
-        async (category: DocumentPageCategory) => {
-            const result = await appBridge.updateDocumentPageCategory(category);
+        async (category: PickRequired<Partial<DocumentCategory>, 'id'>) => {
+            const result = await appBridge.updateDocumentCategory(category);
 
             emitPageAction(result, 'update');
         },
@@ -220,7 +220,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const deleteCategory = useCallback(
         async (id: number) => {
-            await appBridge.deleteDocumentPageCategory(id);
+            await appBridge.deleteDocumentCategory(id);
 
             emitPageAction({ id }, 'delete');
         },

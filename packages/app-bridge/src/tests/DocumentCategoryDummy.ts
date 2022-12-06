@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentPageCategory, DocumentPage } from '../types';
+import { DocumentCategory, DocumentPage } from '../types';
 
 export class DocumentCategoryDummy {
-    static with(id: number, documentPages: DocumentPage[]): DocumentPageCategory {
+    static with(id: number, documentPages: DocumentPage[]): DocumentCategory {
         return {
             id,
             creator: 9,

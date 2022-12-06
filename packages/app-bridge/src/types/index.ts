@@ -11,7 +11,7 @@ export * from './Document';
 export * from './DocumentBlockAsset';
 export * from './DocumentGroup';
 export * from './DocumentPage';
-export * from './DocumentPageCategory';
+export * from './DocumentCategory';
 export * from './DocumentSection';
 export * from './Emitter';
 export * from './File';

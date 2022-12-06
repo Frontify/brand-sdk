@@ -6,7 +6,7 @@ export * from './ColorPaletteRepository';
 export * from './ColorRepository';
 export * from './CoverPageRepository';
 export * from './DocumentGroupRepository';
-export * from './DocumentPageCategoryRepository';
+export * from './DocumentCategoryRepository';
 export * from './DocumentPageRepository';
 export * from './DocumentRepository';
 export * from './DocumentSectionRepository';

@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentPage, DocumentPageCategory, EmitterAction } from '../types';
+import type { DocumentCategory, DocumentPage, EmitterAction } from '../types';
 
 export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) => {
-    const [documentPages, setDocumentPages] = useState<Nullable<(DocumentPage | DocumentPageCategory)[]>>(null);
+    const [documentPages, setDocumentPages] = useState<Nullable<(DocumentPage | DocumentCategory)[]>>(null);
 
     useEffect(() => {
         const fetchAllDocumentPages = async () => {
@@ -26,7 +26,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
     }, [appBridge, documentId]);
 
     useEffect(() => {
-        const updatePageFromEvent = (event: { page: DocumentPage | DocumentPageCategory; action: EmitterAction }) => {
+        const updatePageFromEvent = (event: { page: DocumentPage | DocumentCategory; action: EmitterAction }) => {
             setDocumentPages((previousState) => {
                 if (event.action === 'add') {
                     return previousState ? [...cloneDeep(previousState), event.page] : [event.page];
