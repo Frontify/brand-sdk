@@ -15,6 +15,7 @@ import type {
     Document,
     DocumentGroup,
     DocumentPage,
+    DocumentPageCategory,
     EmitterAction,
     UpdateDocumentGroup,
     UpdateDocumentLibrary,
@@ -199,6 +200,35 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const createCategory = useCallback(
+        async (category: DocumentPageCategory) => {
+            const result = await appBridge.createDocumentPageCategory(category);
+            console.log('🚀 ~ result', result);
+
+            // emitPageAction(result, 'add');
+        },
+        [appBridge],
+    );
+
+    const updateCategory = useCallback(
+        async (category: DocumentPageCategory) => {
+            const result = await appBridge.updateDocumentPageCategory(category);
+            console.log('🚀 ~ result', result);
+
+            // emitPageAction(result, 'update');
+        },
+        [appBridge],
+    );
+
+    const deleteCategory = useCallback(
+        async (id: number) => {
+            await appBridge.deleteDocumentPageCategory(id);
+
+            // emitPageAction({ id }, 'delete');
+        },
+        [appBridge],
+    );
+
     const createCoverPage = useCallback(
         async (coverPage: CoverPageCreate) => {
             const result = await appBridge.createCoverPage(coverPage);
@@ -209,7 +239,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCoverPage = useCallback(
-        async (coverPage: CoverPage) => {
+        async (coverPage: Partial<CoverPage>) => {
             const result = await appBridge.updateCoverPage(coverPage);
 
             emitCoverPageAction(result, 'update');
@@ -256,6 +286,9 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createLibrary,
         updateLibrary,
         deleteLibrary,
+        createCategory,
+        updateCategory,
+        deleteCategory,
         createCoverPage,
         updateCoverPage,
         deleteCoverPage,

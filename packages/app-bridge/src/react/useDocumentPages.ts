@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import cloneDeep from 'lodash-es/cloneDeep';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentCategory, DocumentPage, EmitterAction } from '../types';
+import type { DocumentPageCategory, DocumentPage, EmitterAction } from '../types';
 
 export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) => {
-    const [documentPages, setDocumentPages] = useState<Nullable<(DocumentPage | DocumentCategory)[]>>(null);
+    const [documentPages, setDocumentPages] = useState<Nullable<(DocumentPage | DocumentPageCategory)[]>>(null);
 
     useEffect(() => {
         const fetchAllDocumentPages = async () => {

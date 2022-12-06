@@ -4,7 +4,7 @@ import type { CamelCasedPropertiesDeep } from 'type-fest';
 
 import type { DocumentPageApi } from './DocumentPage';
 
-export type DocumentCategoryApi = {
+export type DocumentPageCategoryApi = {
     id: number;
     document_id: number;
     slug: string;
@@ -19,4 +19,4 @@ export type DocumentCategoryApi = {
     document_pages: DocumentPageApi[];
 };
 
-export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
+export type DocumentPageCategory = CamelCasedPropertiesDeep<DocumentPageCategoryApi>;

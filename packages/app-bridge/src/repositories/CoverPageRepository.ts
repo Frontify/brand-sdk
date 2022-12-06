@@ -27,10 +27,10 @@ export const createCoverPage = async (coverPage: CoverPage): Promise<CoverPage> 
     return mapToCoverPage({ ...result.data, brandhome: { draft: 1, enabled: 1 } as CoverPageApi['brandhome'] });
 };
 
-export const updateCoverPage = async (coverPage: CoverPage): Promise<CoverPage> => {
+export const updateCoverPage = async (coverPage: Partial<CoverPage>): Promise<CoverPage> => {
     const { result } = await HttpClient.patch<CoverPageApi>(
         `/api/brandportal/${coverPage.id}`,
-        mapToCoverPageApi(coverPage),
+        mapToCoverPageApi(coverPage as CoverPage),
     );
 
     return mapToCoverPage(result.data);

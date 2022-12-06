@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentCategoryApi, DocumentPageApi } from '../types';
+import type { DocumentPageCategoryApi, DocumentPageApi } from '../types';
 
 export class DocumentCategoryApiDummy {
-    static with(id: number, documentPages: DocumentPageApi[]): DocumentCategoryApi {
+    static with(id: number, documentPages: DocumentPageApi[]): DocumentPageCategoryApi {
         return {
             id,
             creator: 9,

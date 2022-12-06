@@ -5,10 +5,12 @@ import {
     createDocument,
     createDocumentGroup,
     createDocumentPage,
+    createDocumentPageCategory,
     deleteCoverPage,
     deleteDocument,
     deleteDocumentGroup,
     deleteDocumentPage,
+    deleteDocumentPageCategory,
     getBrandportalLink,
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
@@ -25,6 +27,7 @@ import {
     updateDocument,
     updateDocumentGroup,
     updateDocumentPage,
+    updateDocumentPageCategory,
 } from './repositories';
 
 import type {
@@ -39,11 +42,11 @@ import type {
     CreateDocumentPage,
     CreateDocumentStandard,
     Document,
-    DocumentCategory,
     DocumentGroup,
     DocumentLibrary,
     DocumentLink,
     DocumentPage,
+    DocumentPageCategory,
     DocumentSection,
     UpdateDocumentGroup,
     UpdateDocumentLibrary,
@@ -176,6 +179,30 @@ export class AppBridgeTheme {
         }
     }
 
+    public async createDocumentPageCategory(category: DocumentPageCategory) {
+        try {
+            return createDocumentPageCategory(category);
+        } catch (error) {
+            throw console.error('Error: ', error);
+        }
+    }
+
+    public async updateDocumentPageCategory(category: DocumentPageCategory) {
+        try {
+            return updateDocumentPageCategory(category);
+        } catch (error) {
+            throw console.error('Error: ', error);
+        }
+    }
+
+    public async deleteDocumentPageCategory(id: number) {
+        try {
+            return deleteDocumentPageCategory(id);
+        } catch (error) {
+            throw console.error('Error: ', error);
+        }
+    }
+
     public async createCoverPage(coverPage: CoverPageCreate) {
         try {
             return createCoverPage(coverPage as CoverPage);
@@ -184,9 +211,9 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateCoverPage(coverPage: CoverPage) {
+    public async updateCoverPage(coverPage: Partial<CoverPage>) {
         try {
-            return updateCoverPage(coverPage as CoverPage);
+            return updateCoverPage(coverPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -259,7 +286,7 @@ export class AppBridgeTheme {
         return getDocumentPagesByDocumentId(documentId);
     }
 
-    public getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]> {
+    public getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentPageCategory[]> {
         return getDocumentCategoriesByDocumentId(documentId);
     }
 
