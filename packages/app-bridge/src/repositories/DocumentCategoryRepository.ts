@@ -32,7 +32,7 @@ export const updateDocumentCategory = async (
 };
 
 export const deleteDocumentCategory = async (id: number): Promise<void> => {
-    const { result } = await HttpClient.delete(`/api/document-page-category//${id}`);
+    const { result } = await HttpClient.delete(`/api/document-page-category/${id}`);
 
     if (!result.success) {
         throw new Error('Could not delete document page category');
