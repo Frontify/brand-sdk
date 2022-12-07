@@ -41,8 +41,8 @@ export type DocumentPageApi = {
 };
 
 export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
-export type CreateDocumentPage = Pick<DocumentPage, 'title' | 'documentId'>;
+export type CreateDocumentPage = Pick<DocumentPage, 'title' | 'documentId' | 'categoryId'>;
 export type UpdateDocumentPage = SetRequired<
-    Partial<Pick<DocumentPage, 'title' | 'documentId' | 'visibility' | 'id'>>,
+    Partial<Pick<DocumentPage, 'title' | 'documentId' | 'visibility' | 'id' | 'categoryId'>>,
     'id'
 >;

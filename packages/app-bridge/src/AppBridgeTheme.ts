@@ -37,6 +37,7 @@ import type {
     CoverPage,
     CoverPageCreate,
     CoverPageUpdateLegacy,
+    CreateDocumentCategory,
     CreateDocumentGroup,
     CreateDocumentLibrary,
     CreateDocumentLink,
@@ -49,6 +50,7 @@ import type {
     DocumentLink,
     DocumentPage,
     DocumentSection,
+    UpdateDocumentCategory,
     UpdateDocumentGroup,
     UpdateDocumentLibrary,
     UpdateDocumentLink,
@@ -180,15 +182,15 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentCategory(category: DocumentCategory) {
+    public async createDocumentCategory(category: CreateDocumentCategory) {
         try {
-            return createDocumentCategory(category);
+            return createDocumentCategory(category as DocumentCategory);
         } catch (error) {
             throw console.error('Error: ', error);
         }
     }
 
-    public async updateDocumentCategory(category: PickRequired<Partial<DocumentCategory>, 'id'>) {
+    public async updateDocumentCategory(category: UpdateDocumentCategory) {
         try {
             return updateDocumentCategory(category);
         } catch (error) {

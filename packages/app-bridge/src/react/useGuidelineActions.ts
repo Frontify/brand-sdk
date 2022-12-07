@@ -8,6 +8,7 @@ import type {
     CoverPage,
     CoverPageCreate,
     CoverPageUpdateLegacy,
+    CreateDocumentCategory,
     CreateDocumentGroup,
     CreateDocumentLibrary,
     CreateDocumentLink,
@@ -18,6 +19,7 @@ import type {
     DocumentGroup,
     DocumentPage,
     EmitterAction,
+    UpdateDocumentCategory,
     UpdateDocumentGroup,
     UpdateDocumentLibrary,
     UpdateDocumentLink,
@@ -202,7 +204,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createCategory = useCallback(
-        async (category: DocumentCategory) => {
+        async (category: CreateDocumentCategory) => {
             const result = await appBridge.createDocumentCategory(category);
 
             emitPageAction(result, 'add');
@@ -211,7 +213,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCategory = useCallback(
-        async (category: PickRequired<Partial<DocumentCategory>, 'id'>) => {
+        async (category: UpdateDocumentCategory) => {
             const result = await appBridge.updateDocumentCategory(category);
 
             emitPageAction(result, 'update');

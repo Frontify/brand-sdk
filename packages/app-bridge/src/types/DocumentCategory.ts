@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep } from 'type-fest';
+import type { CamelCasedPropertiesDeep, SetRequired } from 'type-fest';
 
 import type { DocumentPageApi } from './DocumentPage';
 
@@ -20,3 +20,5 @@ export type DocumentCategoryApi = {
 };
 
 export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
+export type CreateDocumentCategory = Pick<DocumentCategory, 'title' | 'documentId'>;
+export type UpdateDocumentCategory = SetRequired<Partial<Pick<DocumentCategory, 'title' | 'id'>>, 'id'>;
