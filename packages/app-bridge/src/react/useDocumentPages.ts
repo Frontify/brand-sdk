@@ -28,27 +28,25 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
     useEffect(() => {
         const updatePageFromEvent = (event: { page: DocumentPage | DocumentCategory; action: EmitterAction }) => {
             setDocumentPages((previousState) => {
-                if (event.action === 'add') {
-                    return previousState ? [...cloneDeep(previousState), event.page] : [event.page];
+                const isInitial = previousState === null;
+
+                if (isInitial) {
+                    return event.action === 'update' || event.action === 'add' ? [event.page] : previousState;
                 }
 
                 if (event.action === 'delete') {
-                    return previousState
-                        ? cloneDeep(previousState).filter((page) => page.id !== event.page.id)
-                        : previousState;
+                    return previousState.filter((document) => document.id !== event.page.id);
                 }
 
-                const pageToUpdateIndex = previousState?.findIndex((page) => page.id === event.page.id);
-
-                if (!pageToUpdateIndex || previousState === null) {
-                    return previousState;
+                if (event.action === 'add') {
+                    return addPage(previousState, event.page);
                 }
 
-                const stateClone = cloneDeep(previousState);
+                if (event.action === 'update') {
+                    return updatePage(previousState, event.page);
+                }
 
-                stateClone[pageToUpdateIndex] = event.page;
-
-                return stateClone;
+                return previousState;
             });
         };
 
@@ -60,4 +58,43 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
     }, [appBridge]);
 
     return [documentPages];
+};
+
+const addPage = (pages: (DocumentPage | DocumentCategory)[], pageToAdd: DocumentPage | DocumentCategory) => {
+    const pagesClone = cloneDeep(pages);
+
+    const isPageInCategory = 'categoryId' in pageToAdd && pageToAdd.categoryId !== null;
+
+    const addPageToCategory = () => {
+        for (const page of pagesClone) {
+            if (
+                page.id === (pageToAdd as DocumentPage).categoryId &&
+                page.documentId === pageToAdd.documentId &&
+                'documentPages' in page
+            ) {
+                page.documentPages
+                    ? page.documentPages.push(pageToAdd as DocumentPage)
+                    : (page.documentPages = [pageToAdd as DocumentPage]);
+
+                break;
+            }
+        }
+    };
+
+    isPageInCategory ? addPageToCategory() : pagesClone.push(pageToAdd);
+
+    return pagesClone;
+};
+
+const updatePage = (
+    documents: (DocumentPage | DocumentCategory)[],
+    documentToUpdate: DocumentPage | DocumentCategory,
+) => {
+    const pagesClone = cloneDeep(documents);
+
+    const documentToUpdateIndex = pagesClone.findIndex((document) => document.id === documentToUpdate.id);
+
+    pagesClone[documentToUpdateIndex] = documentToUpdate;
+
+    return pagesClone;
 };
