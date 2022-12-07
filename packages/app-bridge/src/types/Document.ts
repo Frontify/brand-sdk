@@ -15,7 +15,7 @@ type DocumentApiDeprecatedFields = {
  * virtual fields of Document
  */
 type DocumentApiVirtualFields = {
-    document_group_id: Nullable<number>;
+    document_group_id?: Nullable<number>;
 };
 
 export type DocumentLibraryMode = 'MEDIALIBRARY' | 'ICONLIBRARY' | 'LOGOLIBRARY' | 'DOCUMENTLIBRARY';
