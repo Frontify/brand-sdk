@@ -47,7 +47,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const emitCoverPageAction = <A extends EmitterAction>(
-        coverPage: A extends 'delete' ? undefined : CoverPage,
+        coverPage: A extends 'delete' ? undefined : Partial<CoverPage>,
         action: A,
     ) => {
         window.emitter.emit('AppBridge:GuidelineCoverPageUpdate', {
@@ -252,21 +252,14 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     const updateLegacyCoverPage = useCallback(
         async (coverPage: Partial<CoverPage>) => {
             const legacyCoverPage: CoverPageUpdateLegacy = {
-                brandhome_draft: coverPage.draft,
-                brandhome_hide_in_nav: coverPage.hideInNav,
-                brandhome_title: coverPage.title,
+                ...(coverPage.draft && { brandhome_draft: coverPage.draft }),
+                ...(coverPage.title && { brandhome_title: coverPage.title }),
+                ...(coverPage.hideInNav && { brandhome_hide_in_nav: coverPage.hideInNav }),
             };
 
-            const result = await appBridge.updateLegacyCoverPage(legacyCoverPage);
+            await appBridge.updateLegacyCoverPage(legacyCoverPage);
 
-            emitCoverPageAction(
-                {
-                    title: result.brandhome_title,
-                    draft: result.brandhome_draft,
-                    hideInNav: result.brandhome_hide_in_nav,
-                } as CoverPage,
-                'update',
-            );
+            emitCoverPageAction(coverPage, 'update');
         },
         [appBridge],
     );
