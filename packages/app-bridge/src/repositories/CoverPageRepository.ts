@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { HttpClient, convertObjectCase } from '../utilities';
-import type { CoverPage, CoverPageApi } from '../types';
+import type { CoverPage, CoverPageApi, CoverPageUpdateLegacy } from '../types';
 
 export const mapToCoverPage = (coverPage: CoverPageApi): CoverPage => ({
     ...convertObjectCase(coverPage.brandhome, 'camel'),
@@ -39,10 +39,17 @@ export const updateCoverPage = async (coverPage: Partial<CoverPage>): Promise<Co
 /**
  * @deprecated legacy endpoint, should be removed once new is available
  */
-export const publishCoverPage = async (coverPage: { brandhome_draft: boolean; portalId: number }): Promise<unknown> => {
-    const { result } = await HttpClient.post<CoverPageApi>(`/api/hub/settings/${coverPage.portalId}`, coverPage);
+export const updateLegacyCoverPage = async (
+    coverPage: CoverPageUpdateLegacy & {
+        portalId: number;
+    },
+): Promise<CoverPageUpdateLegacy> => {
+    const { result } = await HttpClient.post<CoverPageUpdateLegacy>(
+        `/api/hub/settings/${coverPage.portalId}`,
+        coverPage,
+    );
 
-    return result;
+    return result as unknown as CoverPageUpdateLegacy;
 };
 
 export const getCoverPage = async (hubId: number): Promise<CoverPage> => {

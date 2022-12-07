@@ -33,3 +33,9 @@ export type CoverPage = Merge<
 >;
 
 export type CoverPageCreate = PickRequired<CoverPage, 'template' | 'documentId'>;
+
+export type CoverPageUpdateLegacy = {
+    brandhome_draft?: boolean;
+    brandhome_title?: string;
+    brandhome_hide_in_nav?: boolean;
+};

@@ -7,6 +7,7 @@ import type {
     BrandportalLink,
     CoverPage,
     CoverPageCreate,
+    CoverPageUpdateLegacy,
     CreateDocumentGroup,
     CreateDocumentLibrary,
     CreateDocumentLink,
@@ -248,11 +249,24 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     /**
      * @deprecated legacy method, should be removed once new endpoint is available
      */
-    const publishCoverPage = useCallback(
-        async (coverPage: { brandhome_draft: boolean }) => {
-            const result = (await appBridge.publishCoverPage(coverPage)) as { brandhome_draft: boolean };
+    const updateLegacyCoverPage = useCallback(
+        async (coverPage: Partial<CoverPage>) => {
+            const legacyCoverPage: CoverPageUpdateLegacy = {
+                brandhome_draft: coverPage.draft,
+                brandhome_hide_in_nav: coverPage.hideInNav,
+                brandhome_title: coverPage.title,
+            };
 
-            emitCoverPageAction({ draft: result.brandhome_draft } as CoverPage, 'update');
+            const result = await appBridge.updateLegacyCoverPage(legacyCoverPage);
+
+            emitCoverPageAction(
+                {
+                    title: result.brandhome_title,
+                    draft: result.brandhome_draft,
+                    hideInNav: result.brandhome_hide_in_nav,
+                } as CoverPage,
+                'update',
+            );
         },
         [appBridge],
     );
@@ -290,7 +304,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createCoverPage,
         updateCoverPage,
         deleteCoverPage,
-        publishCoverPage,
+        updateLegacyCoverPage,
         createDocumentGroup,
         updateDocumentGroup,
         deleteDocumentGroup,

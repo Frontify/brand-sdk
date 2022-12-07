@@ -21,13 +21,13 @@ import {
     getDocumentSectionsByDocumentPageId,
     getDocumentsWithoutDocumentGroupByProjectId,
     getUncategorizedPagesByDocumentId,
-    publishCoverPage,
     updateBrandportalLink,
     updateCoverPage,
     updateDocument,
     updateDocumentCategory,
     updateDocumentGroup,
     updateDocumentPage,
+    updateLegacyCoverPage,
 } from './repositories';
 
 import type {
@@ -36,6 +36,7 @@ import type {
     ColorPalette,
     CoverPage,
     CoverPageCreate,
+    CoverPageUpdateLegacy,
     CreateDocumentGroup,
     CreateDocumentLibrary,
     CreateDocumentLink,
@@ -222,9 +223,9 @@ export class AppBridgeTheme {
     /**
      * @deprecated legacy method, should be removed once new endpoint is available
      */
-    public async publishCoverPage(coverPage: { brandhome_draft: boolean }) {
+    public async updateLegacyCoverPage(coverPage: CoverPageUpdateLegacy) {
         try {
-            return publishCoverPage({ ...coverPage, portalId: this.getPortalId() });
+            return updateLegacyCoverPage({ ...coverPage, portalId: this.getPortalId() });
         } catch (error) {
             throw console.error('Error: ', error);
         }
