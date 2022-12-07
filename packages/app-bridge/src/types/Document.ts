@@ -12,7 +12,7 @@ type DocumentApiDeprecatedFields = {
 };
 
 /**
- * virtual properties of Document
+ * virtual fields of Document
  */
 type DocumentApiVirtualFields = {
     document_group_id: Nullable<number>;
