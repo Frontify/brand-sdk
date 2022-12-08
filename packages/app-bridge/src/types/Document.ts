@@ -27,12 +27,12 @@ export enum LinkType {
 }
 
 type DocumentApiAsLink = {
-    link_type: Extract<keyof typeof LinkType, 'EXTERNAL'>;
+    link_type: 'EXTERNAL';
     link_url: string;
 };
 
 type DocumentApiAsNoneLink = {
-    link_type?: Extract<keyof typeof LinkType, 'INTERNAL'>;
+    link_type?: 'INTERNAL';
     link_url?: never;
 };
 
