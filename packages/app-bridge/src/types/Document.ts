@@ -27,12 +27,12 @@ export enum LinkType {
 }
 
 type DocumentApiAsLink = {
-    link_type: LinkType.External;
+    link_type: Extract<keyof typeof LinkType, 'EXTERNAL'>;
     link_url: string;
 };
 
 type DocumentApiAsNoneLink = {
-    link_type?: LinkType.Internal;
+    link_type?: Extract<keyof typeof LinkType, 'INTERNAL'>;
     link_url?: never;
 };
 
@@ -51,8 +51,8 @@ export type DocumentApi = Simplify<
             portal_id: Nullable<number>;
             title: string;
             slug: Nullable<string>;
-            heading: Nullable<string>;
-            subheading: Nullable<string>;
+            heading?: Nullable<string>;
+            subheading?: Nullable<string>;
             description: Nullable<string>;
             logo: Nullable<string>;
             sort: Nullable<number>;
