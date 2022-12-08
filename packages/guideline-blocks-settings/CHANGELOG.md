@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.25.4
+
+### Patch Changes
+
+- [`56eecbe`](https://github.com/Frontify/brand-sdk/commit/56eecbe5c5b60080d814dc5678510af8aeb111f8) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add more export with AppBridge passed to generic
+
 ## 0.25.3
 
 ### Patch Changes
