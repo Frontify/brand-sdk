@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 5.3.2
+
+### Patch Changes
+
+- [`6637b3d`](https://github.com/Frontify/brand-sdk/commit/6637b3d8ca27680007d8078095c72ae3b83660ae) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix `block create` command
+
+- [`a03d515`](https://github.com/Frontify/brand-sdk/commit/a03d515bef69d2f7aff64bc56bcdc89f3e90fcd9) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update templates dependencies
+
 ## 5.3.1
 
 ### Patch Changes
