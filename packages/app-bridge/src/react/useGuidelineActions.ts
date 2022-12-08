@@ -295,11 +295,6 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
-    updatePage({
-        id: 1,
-        title: '',
-    });
-
     return {
         createLink,
         updateLink,
