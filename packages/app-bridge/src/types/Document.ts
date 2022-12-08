@@ -20,16 +20,20 @@ type DocumentApiVirtualFields = {
 
 export type DocumentLibraryMode = 'MEDIALIBRARY' | 'ICONLIBRARY' | 'LOGOLIBRARY' | 'DOCUMENTLIBRARY';
 export type DocumentMode = Simplify<'DEFAULT' | DocumentLibraryMode>;
-export type LinkType = 'EXTERNAL' | 'INTERNAL';
+
+export enum LinkType {
+    External = 'EXTERNAL',
+    Internal = 'INTERNAL',
+}
 
 type DocumentApiAsLink = {
-    link_type: Extract<LinkType, 'EXTERNAL'>;
+    link_type: LinkType.External;
     link_url: string;
 };
 
 type DocumentApiAsNoneLink = {
-    link_type?: Extract<LinkType, 'INTERNAL'>;
-    link_url: never;
+    link_type?: LinkType.Internal;
+    link_url?: never;
 };
 
 export type DocumentApi = Simplify<
@@ -56,7 +60,7 @@ export type DocumentApi = Simplify<
             link_settings: Nullable<any>;
             view_count: Nullable<number>;
             mode: DocumentMode;
-            settings: Nullable<Record<string, any>>;
+            settings: any[];
             appearance: Nullable<Record<string, any>>;
             logo_file_id: Nullable<string>;
             logo_settings: Nullable<any>;

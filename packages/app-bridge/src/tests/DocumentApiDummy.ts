@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentApi } from '../types';
+import { DocumentApi, LinkType } from '../types';
 
 export class DocumentApiDummy {
     static with(id: number): DocumentApi {
@@ -24,8 +24,7 @@ export class DocumentApiDummy {
             layout: null,
             sort: 5,
             lazy: true,
-            link_type: 'internal',
-            link_url: null,
+            link_type: LinkType.Internal,
             link_settings: null,
             view_count: 0,
             mode: 'DEFAULT',
