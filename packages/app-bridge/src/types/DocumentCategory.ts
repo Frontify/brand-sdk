@@ -19,8 +19,8 @@ export type DocumentCategoryApi = {
     document_pages: DocumentPageApi[];
 };
 
-export type ValidDocumentCategoryFields = 'title' | 'documentId' | 'id';
+type DocumentPageRequestFields = 'title' | 'documentId' | 'id';
 
 export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
 
-export type ValidDocumentCategory = Pick<DocumentCategory, ValidDocumentCategoryFields>;
+export type DocumentCategoryRequest = Pick<DocumentCategory, DocumentPageRequestFields>;

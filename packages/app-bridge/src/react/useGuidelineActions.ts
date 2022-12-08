@@ -1,24 +1,27 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback } from 'react';
+import { RequireAtLeastOne } from 'type-fest';
 
 import { AppBridgeTheme } from '../AppBridgeTheme';
 import type {
     BrandportalLink,
     CoverPage,
+    CoverPageRequestCreate,
     CoverPageUpdateLegacy,
     Document,
     DocumentCategory,
+    DocumentCategoryRequest,
     DocumentGroup,
+    DocumentGroupRequest,
+    DocumentLibraryRequest,
+    DocumentLibraryRequestCreate,
+    DocumentLinkRequest,
     DocumentPage,
+    DocumentPageRequest,
+    DocumentPageRequestUpdate,
+    DocumentStandardRequest,
     EmitterAction,
-    ValidCoverPage,
-    ValidDocumentCategory,
-    ValidDocumentGroup,
-    ValidDocumentLibrary,
-    ValidDocumentLink,
-    ValidDocumentPage,
-    ValidDocumentStandard,
 } from '../types';
 
 export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
@@ -63,7 +66,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const createLink = useCallback(
-        async (link: Omit<ValidDocumentLink, 'id'>) => {
+        async (link: Omit<DocumentLinkRequest, 'id'>) => {
             const result = await appBridge.createLink(link);
 
             emitDocumentAction({ ...result, documentGroupId: link.documentGroupId }, 'add');
@@ -72,7 +75,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateLink = useCallback(
-        async (link: RequireOnlyOne<ValidDocumentLink, 'id'>) => {
+        async (link: RequireOnlyOne<DocumentLinkRequest, 'id'>) => {
             const result = await appBridge.updateLink(link);
 
             emitDocumentAction({ ...result, documentGroupId: link.documentGroupId }, 'update');
@@ -90,7 +93,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createLibrary = useCallback(
-        async (library: Omit<ValidDocumentLibrary, 'id'>) => {
+        async (library: DocumentLibraryRequestCreate) => {
             const result = await appBridge.createLibrary(library);
 
             emitDocumentAction({ ...result, documentGroupId: library.documentGroupId }, 'add');
@@ -99,7 +102,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateLibrary = useCallback(
-        async (library: RequireOnlyOne<ValidDocumentLibrary, 'id'>) => {
+        async (library: RequireOnlyOne<DocumentLibraryRequest, 'id'>) => {
             const result = await appBridge.updateLibrary(library);
 
             emitDocumentAction({ ...result, documentGroupId: library.documentGroupId }, 'update');
@@ -117,7 +120,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createStandardDocument = useCallback(
-        async (document: Omit<ValidDocumentStandard, 'id'>) => {
+        async (document: Omit<DocumentStandardRequest, 'id'>) => {
             const result = await appBridge.createStandardDocument(document);
 
             emitDocumentAction({ ...result, documentGroupId: document.documentGroupId }, 'add');
@@ -126,7 +129,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateStandardDocument = useCallback(
-        async (document: RequireOnlyOne<ValidDocumentStandard, 'id'>) => {
+        async (document: RequireOnlyOne<DocumentStandardRequest, 'id'>) => {
             const result = await appBridge.updateStandardDocument(document);
 
             emitDocumentAction({ ...result, documentGroupId: document.documentGroupId }, 'update');
@@ -144,7 +147,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createDocumentGroup = useCallback(
-        async (documentGroup: Omit<ValidDocumentGroup, 'id'>) => {
+        async (documentGroup: Omit<DocumentGroupRequest, 'id'>) => {
             const result = await appBridge.createDocumentGroup(documentGroup);
 
             emitDocumentAction(result, 'add');
@@ -153,7 +156,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateDocumentGroup = useCallback(
-        async (documentGroup: RequireOnlyOne<ValidDocumentGroup, 'id'>) => {
+        async (documentGroup: DocumentGroupRequest) => {
             const result = await appBridge.updateDocumentGroup(documentGroup);
 
             emitDocumentAction(result, 'update');
@@ -171,7 +174,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createPage = useCallback(
-        async (documentPage: Omit<ValidDocumentPage, 'id'>) => {
+        async (documentPage: PickRequired<DocumentPageRequest, 'title' | 'documentId'>) => {
             const result = await appBridge.createDocumentPage(documentPage);
 
             emitPageAction(result, 'add');
@@ -179,8 +182,23 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    /**
+     * A method for page update
+     *
+     * @param documentPage - {@link DocumentPageRequestUpdate} object
+     * @requires id - Indicates page identifier.
+     *
+     *
+     * and at least one of
+     *
+     * @property  title - Indicates title of a page.
+     * @property  documentId - Indicates to witch document the page belongs to.
+     * @property  categoryId - Indicates to witch category the page belongs to.
+     * @property  visibility - Indicates whether the page is visible only to the editor or everyone.
+     * @property  linkUrl - Indicates whether the page is link or not.
+     */
     const updatePage = useCallback(
-        async (documentPage: RequireOnlyOne<ValidDocumentPage, 'id'>) => {
+        async (documentPage: DocumentPageRequestUpdate) => {
             const result = await appBridge.updateDocumentPage(documentPage);
 
             emitPageAction(result, 'update');
@@ -198,7 +216,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createCategory = useCallback(
-        async (category: Omit<ValidDocumentCategory, 'id'>) => {
+        async (category: Omit<DocumentCategoryRequest, 'id'>) => {
             const result = await appBridge.createDocumentCategory(category);
 
             emitPageAction(result, 'add');
@@ -207,7 +225,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCategory = useCallback(
-        async (category: RequireOnlyOne<ValidDocumentCategory, 'id'>) => {
+        async (category: RequireAtLeastOne<DocumentCategoryRequest, 'title' | 'documentId'>) => {
             const result = await appBridge.updateDocumentCategory(category);
 
             emitPageAction(result, 'update');
@@ -225,7 +243,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createCoverPage = useCallback(
-        async (coverPage: Omit<ValidCoverPage, 'id'>) => {
+        async (coverPage: CoverPageRequestCreate) => {
             const result = await appBridge.createCoverPage(coverPage);
 
             emitCoverPageAction(result, 'add');
@@ -234,7 +252,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCoverPage = useCallback(
-        async (coverPage: RequireOnlyOne<ValidCoverPage, 'id'>) => {
+        async (coverPage: RequireOnlyOne<CoverPage, 'id'>) => {
             const result = await appBridge.updateCoverPage(coverPage);
 
             emitCoverPageAction(result, 'update');
@@ -246,7 +264,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
      * @deprecated legacy method, should be removed once new endpoint is available
      */
     const updateLegacyCoverPage = useCallback(
-        async (coverPage: Partial<ValidCoverPage>) => {
+        async (coverPage: Partial<CoverPage>) => {
             const legacyCoverPage: CoverPageUpdateLegacy = {
                 ...(coverPage.draft && { brandhome_draft: coverPage.draft }),
                 ...(coverPage.title && { brandhome_title: coverPage.title }),
@@ -276,6 +294,11 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         },
         [appBridge],
     );
+
+    updatePage({
+        id: 1,
+        title: '',
+    });
 
     return {
         createLink,

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { CamelCasedPropertiesDeep, Simplify } from 'type-fest';
+import type { CamelCasedPropertiesDeep, RequireAtLeastOne, SetOptional, Simplify } from 'type-fest';
 
 /**
  * @deprecated fields that are not used anymore
@@ -12,7 +12,7 @@ type DocumentApiDeprecatedFields = {
 };
 
 /**
- * virtual fields of Document
+ * virtual fields of Document that wont be returned by API
  */
 type DocumentApiVirtualFields = {
     document_group_id?: Nullable<number>;
@@ -32,8 +32,8 @@ type DocumentApiAsLink = {
 };
 
 type DocumentApiAsNoneLink = {
-    link_type?: 'INTERNAL';
-    link_url?: never;
+    link_type: 'INTERNAL';
+    link_url: Nullable<never>;
 };
 
 export type DocumentApi = Simplify<
@@ -51,8 +51,8 @@ export type DocumentApi = Simplify<
             portal_id: Nullable<number>;
             title: string;
             slug: Nullable<string>;
-            heading?: Nullable<string>;
-            subheading?: Nullable<string>;
+            heading: Nullable<string>;
+            subheading: Nullable<string>;
             description: Nullable<string>;
             logo: Nullable<string>;
             sort: Nullable<number>;
@@ -82,16 +82,9 @@ export type Document = CamelCasedPropertiesDeep<DocumentApi>;
 type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
 type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
 
-export type DocumentLinkValidFields = 'linkSettings' | 'title' | 'documentGroupId' | 'linkUrl' | 'id';
-export type DocumentStandardValidFields = 'title' | 'documentGroupId' | 'id';
-export type DocumentLibraryValidFields =
-    | 'mode'
-    | 'settings'
-    | 'title'
-    | 'heading'
-    | 'subheading'
-    | 'documentGroupId'
-    | 'id';
+type DocumentStandardRequestFields = 'title' | 'documentGroupId' | 'id';
+type DocumentLinkRequestFields = 'linkSettings' | 'title' | 'documentGroupId' | 'linkUrl' | 'id';
+type DocumentLibraryRequestFields = 'mode' | 'settings' | 'title' | 'heading' | 'subheading' | 'documentGroupId' | 'id';
 
 export type DocumentLink = Simplify<Document & DocumentAsLink & { linkSettings: { newTab: boolean } }>;
 
@@ -99,6 +92,17 @@ export type DocumentLibrary = Simplify<
     Document & DocumentAsNoneLink & { settings?: { project: number }; mode: DocumentLibraryMode }
 >;
 
-export type ValidDocumentLink = Pick<DocumentLink, DocumentLinkValidFields>;
-export type ValidDocumentLibrary = Pick<DocumentLibrary, DocumentLibraryValidFields>;
-export type ValidDocumentStandard = Pick<Document, DocumentStandardValidFields>;
+export type DocumentStandard = Simplify<Document & DocumentAsNoneLink>;
+
+export type DocumentLinkRequest = Pick<DocumentLink, DocumentLinkRequestFields>;
+export type DocumentLibraryRequest = Pick<DocumentLibrary, DocumentLibraryRequestFields>;
+export type DocumentStandardRequest = Pick<DocumentStandard, DocumentStandardRequestFields>;
+
+export type DocumentLibraryRequestCreate = SetOptional<Omit<DocumentLibraryRequest, 'id'>, 'heading' | 'subheading'>;
+
+export type DocumentLinkRequestUpdate = RequireAtLeastOne<DocumentLink, Exclude<DocumentLinkRequestFields, 'id'>>;
+
+export type DocumentStandardRequestUpdate = RequireAtLeastOne<
+    DocumentStandard,
+    Exclude<DocumentLibraryRequestFields, 'id'>
+>;

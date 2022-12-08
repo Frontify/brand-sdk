@@ -7,19 +7,19 @@ import { DocumentApi } from './Document';
 export type DocumentGroupApi = {
     id: number;
     name: string;
-    sort?: Nullable<number>;
+    sort: Nullable<number>;
     creator: number;
     created: string;
-    modified: string;
-    modifier: number;
+    modified: Nullable<string>;
+    modifier: Nullable<number>;
     valid_to: Nullable<string>;
     project_id: number;
     portal_id: number;
-    documents?: Nullable<DocumentApi[]>;
+    documents: Nullable<DocumentApi[]>;
 };
 
-export type DocumentGroupValidFields = 'name' | 'documents' | 'sort' | 'id';
+type DocumentGroupRequestFields = 'name' | 'id';
 
 export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
 
-export type ValidDocumentGroup = Pick<DocumentGroup, DocumentGroupValidFields>;
+export type DocumentGroupRequest = Pick<DocumentGroup, DocumentGroupRequestFields>;

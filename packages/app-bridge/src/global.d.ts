@@ -11,3 +11,5 @@ type RequireOnlyOne<ObjectType, KeysType extends keyof ObjectType = keyof Object
     [Key in KeysType]: Required<Pick<ObjectType, Key>> & Partial<Record<Exclude<KeysType, Key>, never>>;
 }[KeysType] &
     Partial<Omit<ObjectType, KeysType>>;
+
+type PickRequired<Type, Key extends keyof Type> = Type & Required<Pick<Type, Key>>;

@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { RequireAtLeastOne } from 'type-fest';
 import {
     createCoverPage,
     createDocument,
@@ -35,29 +36,31 @@ import {
     Color,
     ColorPalette,
     CoverPage,
+    CoverPageRequestCreate,
     CoverPageUpdateLegacy,
     Document,
     DocumentCategory,
+    DocumentCategoryRequest,
     DocumentGroup,
+    DocumentGroupRequest,
     DocumentLibrary,
+    DocumentLibraryRequest,
+    DocumentLibraryRequestCreate,
     DocumentLink,
+    DocumentLinkRequest,
     DocumentPage,
+    DocumentPageRequest,
+    DocumentPageRequestUpdate,
     DocumentSection,
+    DocumentStandardRequest,
     LinkType,
-    ValidCoverPage,
-    ValidDocumentCategory,
-    ValidDocumentGroup,
-    ValidDocumentLibrary,
-    ValidDocumentLink,
-    ValidDocumentPage,
-    ValidDocumentStandard,
 } from './types';
 import { getDatasetByElement } from './utilities';
 
 export class AppBridgeTheme {
     constructor(private readonly portalId: number) {}
 
-    public async createLink(link: Omit<ValidDocumentLink, 'id'>) {
+    public async createLink(link: Omit<DocumentLinkRequest, 'id'>) {
         try {
             return createDocument<DocumentLink>({
                 ...link,
@@ -69,7 +72,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLink(link: RequireOnlyOne<ValidDocumentLink, 'id'>) {
+    public async updateLink(link: RequireOnlyOne<DocumentLinkRequest, 'id'>) {
         try {
             return updateDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
@@ -85,7 +88,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createLibrary(library: Omit<ValidDocumentLibrary, 'id'>) {
+    public async createLibrary(library: DocumentLibraryRequestCreate) {
         try {
             return createDocument<DocumentLibrary>({
                 ...library,
@@ -97,7 +100,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLibrary(library: RequireOnlyOne<ValidDocumentLibrary, 'id'>) {
+    public async updateLibrary(library: RequireOnlyOne<DocumentLibraryRequest, 'id'>) {
         try {
             return updateDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
@@ -113,7 +116,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createStandardDocument(document: Omit<ValidDocumentStandard, 'id'>) {
+    public async createStandardDocument(document: Omit<DocumentStandardRequest, 'id'>) {
         try {
             return createDocument<Document>({ ...document, portalId: this.getPortalId() } as Document);
         } catch (error) {
@@ -121,7 +124,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateStandardDocument(document: RequireOnlyOne<ValidDocumentStandard, 'id'>) {
+    public async updateStandardDocument(document: RequireOnlyOne<DocumentStandardRequest, 'id'>) {
         try {
             return updateDocument<Document>(document as Document);
         } catch (error) {
@@ -137,7 +140,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentGroup(documentGroup: Omit<ValidDocumentGroup, 'id'>) {
+    public async createDocumentGroup(documentGroup: Omit<DocumentGroupRequest, 'id'>) {
         try {
             return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
         } catch (error) {
@@ -145,7 +148,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentGroup(documentGroup: RequireOnlyOne<ValidDocumentGroup, 'id'>) {
+    public async updateDocumentGroup(documentGroup: DocumentGroupRequest) {
         try {
             return updateDocumentGroup(documentGroup as DocumentGroup);
         } catch (error) {
@@ -161,17 +164,38 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentPage(documentPage: Omit<ValidDocumentPage, 'id'>) {
+    public async createDocumentPage(documentPage: PickRequired<DocumentPageRequest, 'id' | 'documentId'>) {
         try {
-            return createDocumentPage(documentPage as DocumentPage);
+            return createDocumentPage({
+                ...documentPage,
+                ...(documentPage.linkUrl && { linkType: LinkType.External }),
+            } as DocumentPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
     }
 
-    public async updateDocumentPage(documentPage: RequireOnlyOne<ValidDocumentPage, 'id'>) {
+    /**
+     * A method for page update
+     *
+     * @param documentPage - {@link DocumentPageRequestUpdate} object
+     * @requires id - Indicates page identifier.
+     *
+     *
+     * and at least one of
+     *
+     * @property  title - Indicates title of a page.
+     * @property  documentId - Indicates to witch document the page belongs to.
+     * @property  categoryId - Indicates to witch category the page belongs to.
+     * @property  visibility - Indicates whether the page is visible only to the editor or everyone.
+     * @property  linkUrl - Indicates whether the page is link or not.
+     */
+    public async updateDocumentPage(documentPage: DocumentPageRequestUpdate) {
         try {
-            return updateDocumentPage(documentPage as DocumentPage);
+            return updateDocumentPage({
+                ...documentPage,
+                ...(documentPage.linkUrl && { linkType: LinkType.External }),
+            } as DocumentPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -185,7 +209,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentCategory(category: Omit<ValidDocumentCategory, 'id'>) {
+    public async createDocumentCategory(category: Omit<DocumentCategoryRequest, 'id'>) {
         try {
             return createDocumentCategory(category as DocumentCategory);
         } catch (error) {
@@ -193,7 +217,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentCategory(category: RequireOnlyOne<ValidDocumentCategory, 'id'>) {
+    public async updateDocumentCategory(category: RequireAtLeastOne<DocumentCategoryRequest, 'title' | 'documentId'>) {
         try {
             return updateDocumentCategory(category as DocumentCategory);
         } catch (error) {
@@ -209,7 +233,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createCoverPage(coverPage: Omit<ValidCoverPage, 'id'>) {
+    public async createCoverPage(coverPage: CoverPageRequestCreate) {
         try {
             return createCoverPage(coverPage as CoverPage);
         } catch (error) {
@@ -217,7 +241,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateCoverPage(coverPage: RequireOnlyOne<ValidCoverPage, 'id'>) {
+    public async updateCoverPage(coverPage: RequireOnlyOne<CoverPage, 'id'>) {
         try {
             return updateCoverPage(coverPage as CoverPage);
         } catch (error) {
