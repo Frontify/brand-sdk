@@ -87,7 +87,11 @@ export class AppBridgeTheme {
 
     public async createLibrary(library: Omit<ValidDocumentLibrary, 'id'>) {
         try {
-            return createDocument<DocumentLibrary>({ ...library, portalId: this.getPortalId() } as DocumentLibrary);
+            return createDocument<DocumentLibrary>({
+                ...library,
+                portalId: this.getPortalId(),
+                settings: { project: library.settings.project ?? this.getProjectId() },
+            } as DocumentLibrary);
         } catch (error) {
             throw console.error('Error: ', error);
         }

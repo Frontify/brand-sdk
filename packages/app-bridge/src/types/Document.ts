@@ -96,7 +96,7 @@ export type DocumentLibraryValidFields =
 export type DocumentLink = Simplify<Document & DocumentAsLink & { linkSettings: { newTab: boolean } }>;
 
 export type DocumentLibrary = Simplify<
-    Document & DocumentAsNoneLink & { settings: { project: number }; mode: DocumentLibraryMode }
+    Document & DocumentAsNoneLink & { settings?: { project: number }; mode: DocumentLibraryMode }
 >;
 
 export type ValidDocumentLink = Pick<DocumentLink, DocumentLinkValidFields>;
