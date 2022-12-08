@@ -56,173 +56,6 @@ import { getDatasetByElement } from './utilities';
 export class AppBridgeTheme {
     constructor(private readonly portalId: number) {}
 
-    public async createLink(link: CreateDocumentLink) {
-        try {
-            return createDocument<DocumentLink>(link as DocumentLink);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateLink(link: UpdateDocumentLink) {
-        try {
-            return updateDocument<DocumentLink>(link as DocumentLink);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteLink(id: number) {
-        try {
-            return deleteDocument(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async createLibrary(library: CreateDocumentLibrary) {
-        try {
-            return createDocument<DocumentLibrary>(library as DocumentLibrary);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateLibrary(library: UpdateDocumentLibrary) {
-        try {
-            return updateDocument<DocumentLibrary>(library as DocumentLibrary);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteLibrary(id: number) {
-        try {
-            return deleteDocument(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async createStandardDocument(document: CreateDocumentStandard) {
-        try {
-            return createDocument<Document>(document as Document);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateStandardDocument(document: UpdateDocumentStandard) {
-        try {
-            return updateDocument<Document>(document as Document);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteStandardDocument(id: number) {
-        try {
-            return deleteDocument(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async createDocumentGroup(documentGroup: CreateDocumentGroup) {
-        try {
-            return createDocumentGroup(documentGroup as DocumentGroup);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateDocumentGroup(documentGroup: UpdateDocumentGroup) {
-        try {
-            return updateDocumentGroup(documentGroup as DocumentGroup);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteDocumentGroup(id: number) {
-        try {
-            return deleteDocumentGroup(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async createDocumentPage(documentPage: CreateDocumentPage) {
-        try {
-            return createDocumentPage(documentPage as DocumentPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateDocumentPage(documentPage: UpdateDocumentPage) {
-        try {
-            return updateDocumentPage(documentPage as DocumentPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteDocumentPage(id: number) {
-        try {
-            return deleteDocumentPage(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async createCoverPage(coverPage: CoverPageCreate) {
-        try {
-            return createCoverPage(coverPage as CoverPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateCoverPage(coverPage: CoverPage) {
-        try {
-            return updateCoverPage(coverPage as CoverPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    /**
-     * @deprecated legacy method, should be removed once new endpoint is available
-     */
-    public async publishCoverPage(coverPage: { brandhome_draft: boolean }) {
-        try {
-            return publishCoverPage({ ...coverPage, portalId: this.getPortalId() });
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteCoverPage() {
-        try {
-            return deleteCoverPage(this.getPortalId());
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateBrandportalLink(brandportalLink: Partial<BrandportalLink>) {
-        try {
-            return await updateBrandportalLink({
-                ...brandportalLink,
-                portalId: this.getPortalId(),
-                i18n: this.getTranslationLanguage(),
-            });
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
     public getPortalId(): number {
         return this.portalId;
     }
@@ -237,6 +70,97 @@ export class AppBridgeTheme {
 
     public openNavigationManager() {
         window.emitter.emit('OpenNavigationManager');
+    }
+
+    public getTranslationLanguage(): string {
+        return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
+    }
+
+    public async createLink(link: CreateDocumentLink) {
+        return createDocument<DocumentLink>(link as DocumentLink);
+    }
+
+    public async updateLink(link: UpdateDocumentLink) {
+        return updateDocument<DocumentLink>(link as DocumentLink);
+    }
+
+    public async deleteLink(id: number) {
+        return deleteDocument(id);
+    }
+
+    public async createLibrary(library: CreateDocumentLibrary) {
+        return createDocument<DocumentLibrary>(library as DocumentLibrary);
+    }
+
+    public async updateLibrary(library: UpdateDocumentLibrary) {
+        return updateDocument<DocumentLibrary>(library as DocumentLibrary);
+    }
+
+    public async deleteLibrary(id: number) {
+        return deleteDocument(id);
+    }
+
+    public async createStandardDocument(document: CreateDocumentStandard) {
+        return createDocument<Document>(document as Document);
+    }
+
+    public async updateStandardDocument(document: UpdateDocumentStandard) {
+        return updateDocument<Document>(document as Document);
+    }
+
+    public async deleteStandardDocument(id: number) {
+        return deleteDocument(id);
+    }
+
+    public async createDocumentGroup(documentGroup: CreateDocumentGroup) {
+        return createDocumentGroup(documentGroup as DocumentGroup);
+    }
+
+    public async updateDocumentGroup(documentGroup: UpdateDocumentGroup) {
+        return updateDocumentGroup(documentGroup as DocumentGroup);
+    }
+
+    public async deleteDocumentGroup(id: number) {
+        return deleteDocumentGroup(id);
+    }
+
+    public async createDocumentPage(documentPage: CreateDocumentPage) {
+        return createDocumentPage(documentPage as DocumentPage);
+    }
+
+    public async updateDocumentPage(documentPage: UpdateDocumentPage) {
+        return updateDocumentPage(documentPage as DocumentPage);
+    }
+
+    public async deleteDocumentPage(id: number) {
+        return deleteDocumentPage(id);
+    }
+
+    public async createCoverPage(coverPage: CoverPageCreate) {
+        return createCoverPage(coverPage as CoverPage);
+    }
+
+    public async updateCoverPage(coverPage: CoverPage) {
+        return updateCoverPage(coverPage as CoverPage);
+    }
+
+    /**
+     * @deprecated legacy method, should be removed once new endpoint is available
+     */
+    public async publishCoverPage(coverPage: { brandhome_draft: boolean }) {
+        return publishCoverPage({ ...coverPage, portalId: this.getPortalId() });
+    }
+
+    public async deleteCoverPage() {
+        return deleteCoverPage(this.getPortalId());
+    }
+
+    public async updateBrandportalLink(brandportalLink: Partial<BrandportalLink>) {
+        return updateBrandportalLink({
+            ...brandportalLink,
+            portalId: this.getPortalId(),
+            i18n: this.getTranslationLanguage(),
+        });
     }
 
     public getCoverPage(): Promise<CoverPage> {
@@ -277,9 +201,5 @@ export class AppBridgeTheme {
 
     public async getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]> {
         return getColorsByColorPaletteId(colorPaletteId);
-    }
-
-    public getTranslationLanguage(): string {
-        return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
     }
 }
