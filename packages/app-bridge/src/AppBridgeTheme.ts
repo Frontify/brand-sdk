@@ -90,7 +90,7 @@ export class AppBridgeTheme {
             return createDocument<DocumentLibrary>({
                 ...library,
                 portalId: this.getPortalId(),
-                settings: { project: library.settings.project ?? this.getProjectId() },
+                settings: { project: library.settings?.project ?? this.getProjectId() },
             } as DocumentLibrary);
         } catch (error) {
             throw console.error('Error: ', error);
