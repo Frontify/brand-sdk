@@ -1,12 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-// import { RequireExactlyOne } from 'type-fest';
-
 type Nullable<T> = T | null;
 
-// type RequireOnlyOne<ObjectType, KeysType extends keyof ObjectType = keyof ObjectType> = Partial<ObjectType> &
-//     RequireExactlyOne<ObjectType, KeysType>;
+/**
+Type that behaves just like RequiredExactlyOne from type-fest with only difference that the remaining keys are set to optional.
 
+@category Object
+*/
 type RequireOnlyOne<ObjectType, KeysType extends keyof ObjectType = keyof ObjectType> = {
     [Key in KeysType]: Required<Pick<ObjectType, Key>> & Partial<Record<Exclude<KeysType, Key>, never>>;
 }[KeysType] &
