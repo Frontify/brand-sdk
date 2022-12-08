@@ -41,6 +41,6 @@
         "@frontify/fondue": "latest"
     },
     "peerDependencies": {
-        "@frontify/app-bridge": "*"
+        "@frontify/app-bridge": ">=3 || >=3.0.0-beta"
     }
 }
