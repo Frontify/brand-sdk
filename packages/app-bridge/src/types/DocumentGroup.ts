@@ -18,7 +18,7 @@ export type DocumentGroupApi = {
     documents: Nullable<DocumentApi[]>;
 };
 
-export type DocumentGroupValidFields = 'name' | 'projectId' | 'portalId' | 'id';
+export type DocumentGroupValidFields = 'name' | 'projectId' | 'id';
 
 export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
 

@@ -2,7 +2,6 @@
 
 import { HttpClient, convertObjectCase } from '../utilities';
 import type { Document, DocumentApi } from '../types';
-import { RequireExactlyOne } from 'type-fest';
 
 export const getDocumentsWithoutDocumentGroupByProjectId = async (portalId: number): Promise<Document[]> => {
     const { result } = await HttpClient.get<DocumentApi[]>(

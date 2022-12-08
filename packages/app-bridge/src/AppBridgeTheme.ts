@@ -59,7 +59,7 @@ export class AppBridgeTheme {
 
     public async createLink(link: Omit<ValidDocumentLink, 'id'>) {
         try {
-            return createDocument<DocumentLink>(link as DocumentLink);
+            return createDocument<DocumentLink>({ ...link, portalId: this.getPortalId() } as DocumentLink);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -83,7 +83,7 @@ export class AppBridgeTheme {
 
     public async createLibrary(library: Omit<ValidDocumentLibrary, 'id'>) {
         try {
-            return createDocument<DocumentLibrary>(library as DocumentLibrary);
+            return createDocument<DocumentLibrary>({ ...library, portalId: this.getPortalId() } as DocumentLibrary);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -107,7 +107,7 @@ export class AppBridgeTheme {
 
     public async createStandardDocument(document: Omit<ValidDocumentStandard, 'id'>) {
         try {
-            return createDocument<Document>(document as Document);
+            return createDocument<Document>({ ...document, portalId: this.getPortalId() } as Document);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -131,7 +131,7 @@ export class AppBridgeTheme {
 
     public async createDocumentGroup(documentGroup: Omit<ValidDocumentGroup, 'id'>) {
         try {
-            return createDocumentGroup(documentGroup as DocumentGroup);
+            return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
         } catch (error) {
             throw console.error('Error: ', error);
         }
