@@ -30,7 +30,7 @@ import {
     updateLegacyCoverPage,
 } from './repositories';
 
-import type {
+import {
     BrandportalLink,
     Color,
     ColorPalette,
@@ -43,6 +43,7 @@ import type {
     DocumentLink,
     DocumentPage,
     DocumentSection,
+    LinkType,
     ValidCoverPage,
     ValidDocumentCategory,
     ValidDocumentGroup,
@@ -58,7 +59,11 @@ export class AppBridgeTheme {
 
     public async createLink(link: Omit<ValidDocumentLink, 'id'>) {
         try {
-            return createDocument<DocumentLink>({ ...link, portalId: this.getPortalId() } as DocumentLink);
+            return createDocument<DocumentLink>({
+                ...link,
+                linkType: LinkType.External,
+                portalId: this.getPortalId(),
+            } as DocumentLink);
         } catch (error) {
             throw console.error('Error: ', error);
         }

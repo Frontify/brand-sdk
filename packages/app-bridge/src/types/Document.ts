@@ -82,7 +82,7 @@ export type Document = CamelCasedPropertiesDeep<DocumentApi>;
 type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
 type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
 
-export type DocumentLinkValidFields = 'linkSettings' | 'title' | 'documentGroupId' | 'id';
+export type DocumentLinkValidFields = 'linkSettings' | 'title' | 'documentGroupId' | 'linkUrl' | 'id';
 export type DocumentStandardValidFields = 'title' | 'documentGroupId' | 'id';
 export type DocumentLibraryValidFields =
     | 'mode'
