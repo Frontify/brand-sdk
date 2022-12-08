@@ -36,7 +36,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
                 }
 
                 if (event.action === 'delete') {
-                    return previousState.filter((document) => document.id !== event.document.id);
+                    return deleteDocument(previousState, event.document);
                 }
 
                 if (event.action === 'add') {
@@ -89,6 +89,26 @@ const updateDocument = (documents: (Document | DocumentGroup)[], documentToUpdat
     const documentToUpdateIndex = documentsClone.findIndex((document) => document.id === documentToUpdate.id);
 
     documentsClone[documentToUpdateIndex] = documentToUpdate;
+
+    return documentsClone;
+};
+
+const deleteDocument = (documents: (Document | DocumentGroup)[], documentToDelete: { id: number }) => {
+    const documentsClone = cloneDeep(documents);
+
+    for (const [index, doc] of documents.entries()) {
+        if (doc.id === documentToDelete.id) {
+            delete documentsClone[index];
+
+            break;
+        } else if ('documents' in doc && doc.documents?.some((doc) => doc.id === documentToDelete.id)) {
+            const index = doc.documents.findIndex((doc) => doc.id === documentToDelete.id);
+
+            delete (documentsClone[index] as DocumentGroup).documents?.[index];
+
+            break;
+        }
+    }
 
     return documentsClone;
 };
