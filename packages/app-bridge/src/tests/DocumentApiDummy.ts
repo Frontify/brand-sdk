@@ -25,6 +25,7 @@ export class DocumentApiDummy {
             sort: 5,
             lazy: true,
             link_type: LinkType.Internal,
+            link_url: null,
             link_settings: null,
             view_count: 0,
             mode: 'DEFAULT',

@@ -25,6 +25,7 @@ export class DocumentDummy {
             sort: 5,
             lazy: true,
             linkType: LinkType.Internal,
+            linkUrl: null,
             linkSettings: null,
             viewCount: 0,
             mode: 'DEFAULT',
