@@ -111,6 +111,8 @@ const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { 
             const index = page.documentPages.findIndex((page) => page.id === pageToDelete.id);
 
             delete (pagesClone[index] as DocumentCategory).documentPages[index];
+
+            break;
         }
     }
 
