@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback } from 'react';
-import { RequireExactlyOne } from 'type-fest';
 
 import { AppBridgeTheme } from '../AppBridgeTheme';
 import type {
@@ -73,7 +72,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateLink = useCallback(
-        async (link: RequireExactlyOne<ValidDocumentLink, 'id'>) => {
+        async (link: RequireOnlyOne<ValidDocumentLink, 'id'>) => {
             const result = await appBridge.updateLink(link);
 
             emitDocumentAction({ ...result, documentGroupId: link.documentGroupId }, 'update');
@@ -100,7 +99,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateLibrary = useCallback(
-        async (library: RequireExactlyOne<ValidDocumentLibrary, 'id'>) => {
+        async (library: RequireOnlyOne<ValidDocumentLibrary, 'id'>) => {
             const result = await appBridge.updateLibrary(library);
 
             emitDocumentAction({ ...result, documentGroupId: library.documentGroupId }, 'update');
@@ -127,7 +126,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateStandardDocument = useCallback(
-        async (document: RequireExactlyOne<ValidDocumentStandard, 'id'>) => {
+        async (document: RequireOnlyOne<ValidDocumentStandard, 'id'>) => {
             const result = await appBridge.updateStandardDocument(document);
 
             emitDocumentAction({ ...result, documentGroupId: document.documentGroupId }, 'update');
@@ -154,7 +153,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateDocumentGroup = useCallback(
-        async (documentGroup: RequireExactlyOne<ValidDocumentGroup, 'id'>) => {
+        async (documentGroup: RequireOnlyOne<ValidDocumentGroup, 'id'>) => {
             const result = await appBridge.updateDocumentGroup(documentGroup);
 
             emitDocumentAction(result, 'update');
@@ -181,7 +180,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updatePage = useCallback(
-        async (documentPage: RequireExactlyOne<ValidDocumentPage, 'id'>) => {
+        async (documentPage: RequireOnlyOne<ValidDocumentPage, 'id'>) => {
             const result = await appBridge.updateDocumentPage(documentPage);
 
             emitPageAction(result, 'update');
@@ -208,7 +207,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCategory = useCallback(
-        async (category: RequireExactlyOne<ValidDocumentCategory, 'id'>) => {
+        async (category: RequireOnlyOne<ValidDocumentCategory, 'id'>) => {
             const result = await appBridge.updateDocumentCategory(category);
 
             emitPageAction(result, 'update');
@@ -235,7 +234,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCoverPage = useCallback(
-        async (coverPage: RequireExactlyOne<ValidCoverPage, 'id'>) => {
+        async (coverPage: RequireOnlyOne<ValidCoverPage, 'id'>) => {
             const result = await appBridge.updateCoverPage(coverPage);
 
             emitCoverPageAction(result, 'update');

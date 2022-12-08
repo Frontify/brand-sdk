@@ -7,7 +7,7 @@ import { DocumentApi } from './Document';
 export type DocumentGroupApi = {
     id: number;
     name: string;
-    sort: number;
+    sort: Nullable<number>;
     creator: number;
     created: string;
     modified: string;

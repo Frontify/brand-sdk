@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { RequireExactlyOne } from 'type-fest';
 import {
     createCoverPage,
     createDocument,
@@ -65,7 +64,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLink(link: RequireExactlyOne<ValidDocumentLink, 'id'>) {
+    public async updateLink(link: RequireOnlyOne<ValidDocumentLink, 'id'>) {
         try {
             return updateDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
@@ -89,7 +88,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLibrary(library: RequireExactlyOne<ValidDocumentLibrary, 'id'>) {
+    public async updateLibrary(library: RequireOnlyOne<ValidDocumentLibrary, 'id'>) {
         try {
             return updateDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
@@ -113,7 +112,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateStandardDocument(document: RequireExactlyOne<ValidDocumentStandard, 'id'>) {
+    public async updateStandardDocument(document: RequireOnlyOne<ValidDocumentStandard, 'id'>) {
         try {
             return updateDocument<Document>(document as Document);
         } catch (error) {
@@ -137,7 +136,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentGroup(documentGroup: RequireExactlyOne<ValidDocumentGroup, 'id'>) {
+    public async updateDocumentGroup(documentGroup: RequireOnlyOne<ValidDocumentGroup, 'id'>) {
         try {
             return updateDocumentGroup(documentGroup as DocumentGroup);
         } catch (error) {
@@ -161,7 +160,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentPage(documentPage: RequireExactlyOne<ValidDocumentPage, 'id'>) {
+    public async updateDocumentPage(documentPage: RequireOnlyOne<ValidDocumentPage, 'id'>) {
         try {
             return updateDocumentPage(documentPage as DocumentPage);
         } catch (error) {
@@ -185,7 +184,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentCategory(category: RequireExactlyOne<ValidDocumentCategory, 'id'>) {
+    public async updateDocumentCategory(category: RequireOnlyOne<ValidDocumentCategory, 'id'>) {
         try {
             return updateDocumentCategory(category as DocumentCategory);
         } catch (error) {
@@ -209,7 +208,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateCoverPage(coverPage: RequireExactlyOne<ValidCoverPage, 'id'>) {
+    public async updateCoverPage(coverPage: RequireOnlyOne<ValidCoverPage, 'id'>) {
         try {
             return updateCoverPage(coverPage as CoverPage);
         } catch (error) {
