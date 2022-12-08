@@ -35,7 +35,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
                 }
 
                 if (event.action === 'delete') {
-                    return previousState.filter((document) => document.id !== event.page.id);
+                    return deletePage(previousState, event.page);
                 }
 
                 if (event.action === 'add') {
@@ -95,6 +95,24 @@ const updatePage = (
     const documentToUpdateIndex = pagesClone.findIndex((document) => document.id === documentToUpdate.id);
 
     pagesClone[documentToUpdateIndex] = documentToUpdate;
+
+    return pagesClone;
+};
+
+const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { id: number }) => {
+    const pagesClone = cloneDeep(pages);
+
+    for (const [index, page] of pages.entries()) {
+        if (page.id === pageToDelete.id) {
+            delete pagesClone[index];
+
+            break;
+        } else if ('documentPages' in page && page.documentPages.some((page) => page.id === pageToDelete.id)) {
+            const index = page.documentPages.findIndex((page) => page.id === pageToDelete.id);
+
+            delete (pagesClone[index] as DocumentCategory).documentPages[index];
+        }
+    }
 
     return pagesClone;
 };
