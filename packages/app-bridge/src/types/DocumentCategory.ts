@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep, SetRequired } from 'type-fest';
+import type { CamelCasedPropertiesDeep } from 'type-fest';
 
 import type { DocumentPageApi } from './DocumentPage';
 
 export type DocumentCategoryApi = {
-    id: number;
+    id?: number;
     document_id: number;
     slug: string;
     title: string;
@@ -19,6 +19,8 @@ export type DocumentCategoryApi = {
     document_pages: DocumentPageApi[];
 };
 
+export type ValidDocumentCategoryFields = 'title' | 'documentId' | 'id';
+
 export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
-export type CreateDocumentCategory = Pick<DocumentCategory, 'title' | 'documentId'>;
-export type UpdateDocumentCategory = SetRequired<Partial<Pick<DocumentCategory, 'title' | 'id'>>, 'id'>;
+
+export type ValidDocumentCategory = Pick<DocumentCategory, ValidDocumentCategoryFields>;

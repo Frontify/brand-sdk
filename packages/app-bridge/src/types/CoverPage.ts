@@ -32,7 +32,17 @@ export type CoverPage = Merge<
     }
 >;
 
-export type CoverPageCreate = PickRequired<CoverPage, 'template' | 'documentId'>;
+export type CoverPageValidFields =
+    | 'template'
+    | 'documentId'
+    | 'enabled'
+    | 'url'
+    | 'id'
+    | 'hideInNav'
+    | 'draft'
+    | 'title';
+
+export type ValidCoverPage = Pick<CoverPage, CoverPageValidFields>;
 
 export type CoverPageUpdateLegacy = {
     brandhome_draft?: boolean;

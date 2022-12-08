@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { CamelCasedPropertiesDeep, SetRequired } from 'type-fest';
+import type { CamelCasedPropertiesDeep } from 'type-fest';
 
 export enum DocumentPageVisibility {
     Everyone = 'EVERYONE',
@@ -40,9 +40,8 @@ export type DocumentPageApi = {
     parent_portal?: any;
 };
 
+export type ValidDocumentPageFields = 'title' | 'documentId' | 'categoryId' | 'id';
+
 export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
-export type CreateDocumentPage = Pick<DocumentPage, 'title' | 'documentId' | 'categoryId'>;
-export type UpdateDocumentPage = SetRequired<
-    Partial<Pick<DocumentPage, 'title' | 'documentId' | 'visibility' | 'id' | 'categoryId'>>,
-    'id'
->;
+
+export type ValidDocumentPage = Pick<DocumentPage, ValidDocumentPageFields>;

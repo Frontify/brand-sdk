@@ -2,6 +2,7 @@
 
 import { HttpClient, convertObjectCase } from '../utilities';
 import type { CoverPage, CoverPageApi, CoverPageUpdateLegacy } from '../types';
+import { RequireExactlyOne } from 'type-fest';
 
 export const mapToCoverPage = (coverPage: CoverPageApi): CoverPage => ({
     ...convertObjectCase(coverPage.brandhome, 'camel'),
@@ -27,10 +28,10 @@ export const createCoverPage = async (coverPage: CoverPage): Promise<CoverPage> 
     return mapToCoverPage({ ...result.data, brandhome: { draft: 1, enabled: 1 } as CoverPageApi['brandhome'] });
 };
 
-export const updateCoverPage = async (coverPage: Partial<CoverPage>): Promise<CoverPage> => {
+export const updateCoverPage = async (coverPage: RequireExactlyOne<CoverPage, 'id'>): Promise<CoverPage> => {
     const { result } = await HttpClient.patch<CoverPageApi>(
         `/api/brandportal/${coverPage.id}`,
-        mapToCoverPageApi(coverPage as CoverPage),
+        mapToCoverPageApi(coverPage),
     );
 
     return mapToCoverPage(result.data);

@@ -20,9 +20,7 @@ export const createDocumentCategory = async (category: DocumentCategory): Promis
     return convertObjectCase(result.data, 'camel');
 };
 
-export const updateDocumentCategory = async (
-    category: PickRequired<Partial<DocumentCategory>, 'id'>,
-): Promise<DocumentCategory> => {
+export const updateDocumentCategory = async (category: DocumentCategory): Promise<DocumentCategory> => {
     const { result } = await HttpClient.patch<DocumentCategoryApi>(
         `/api/document-page-category/${category.id}`,
         convertObjectCase(category, 'snake'),

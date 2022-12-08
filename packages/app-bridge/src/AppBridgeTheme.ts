@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { RequireExactlyOne } from 'type-fest';
 import {
     createCoverPage,
     createDocument,
@@ -35,14 +36,7 @@ import type {
     Color,
     ColorPalette,
     CoverPage,
-    CoverPageCreate,
     CoverPageUpdateLegacy,
-    CreateDocumentCategory,
-    CreateDocumentGroup,
-    CreateDocumentLibrary,
-    CreateDocumentLink,
-    CreateDocumentPage,
-    CreateDocumentStandard,
     Document,
     DocumentCategory,
     DocumentGroup,
@@ -50,19 +44,20 @@ import type {
     DocumentLink,
     DocumentPage,
     DocumentSection,
-    UpdateDocumentCategory,
-    UpdateDocumentGroup,
-    UpdateDocumentLibrary,
-    UpdateDocumentLink,
-    UpdateDocumentPage,
-    UpdateDocumentStandard,
+    ValidCoverPage,
+    ValidDocumentCategory,
+    ValidDocumentGroup,
+    ValidDocumentLibrary,
+    ValidDocumentLink,
+    ValidDocumentPage,
+    ValidDocumentStandard,
 } from './types';
 import { getDatasetByElement } from './utilities';
 
 export class AppBridgeTheme {
     constructor(private readonly portalId: number) {}
 
-    public async createLink(link: CreateDocumentLink) {
+    public async createLink(link: Omit<ValidDocumentLink, 'id'>) {
         try {
             return createDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
@@ -70,7 +65,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLink(link: UpdateDocumentLink) {
+    public async updateLink(link: RequireExactlyOne<ValidDocumentLink, 'id'>) {
         try {
             return updateDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
@@ -86,7 +81,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createLibrary(library: CreateDocumentLibrary) {
+    public async createLibrary(library: Omit<ValidDocumentLibrary, 'id'>) {
         try {
             return createDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
@@ -94,7 +89,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLibrary(library: UpdateDocumentLibrary) {
+    public async updateLibrary(library: RequireExactlyOne<ValidDocumentLibrary, 'id'>) {
         try {
             return updateDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
@@ -110,7 +105,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createStandardDocument(document: CreateDocumentStandard) {
+    public async createStandardDocument(document: Omit<ValidDocumentStandard, 'id'>) {
         try {
             return createDocument<Document>(document as Document);
         } catch (error) {
@@ -118,7 +113,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateStandardDocument(document: UpdateDocumentStandard) {
+    public async updateStandardDocument(document: RequireExactlyOne<ValidDocumentStandard, 'id'>) {
         try {
             return updateDocument<Document>(document as Document);
         } catch (error) {
@@ -134,7 +129,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentGroup(documentGroup: CreateDocumentGroup) {
+    public async createDocumentGroup(documentGroup: Omit<ValidDocumentGroup, 'id'>) {
         try {
             return createDocumentGroup(documentGroup as DocumentGroup);
         } catch (error) {
@@ -142,7 +137,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentGroup(documentGroup: UpdateDocumentGroup) {
+    public async updateDocumentGroup(documentGroup: RequireExactlyOne<ValidDocumentGroup, 'id'>) {
         try {
             return updateDocumentGroup(documentGroup as DocumentGroup);
         } catch (error) {
@@ -158,7 +153,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentPage(documentPage: CreateDocumentPage) {
+    public async createDocumentPage(documentPage: Omit<ValidDocumentPage, 'id'>) {
         try {
             return createDocumentPage(documentPage as DocumentPage);
         } catch (error) {
@@ -166,7 +161,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentPage(documentPage: UpdateDocumentPage) {
+    public async updateDocumentPage(documentPage: RequireExactlyOne<ValidDocumentPage, 'id'>) {
         try {
             return updateDocumentPage(documentPage as DocumentPage);
         } catch (error) {
@@ -182,7 +177,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentCategory(category: CreateDocumentCategory) {
+    public async createDocumentCategory(category: Omit<ValidDocumentCategory, 'id'>) {
         try {
             return createDocumentCategory(category as DocumentCategory);
         } catch (error) {
@@ -190,9 +185,9 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateDocumentCategory(category: UpdateDocumentCategory) {
+    public async updateDocumentCategory(category: RequireExactlyOne<ValidDocumentCategory, 'id'>) {
         try {
-            return updateDocumentCategory(category);
+            return updateDocumentCategory(category as DocumentCategory);
         } catch (error) {
             throw console.error('Error: ', error);
         }
@@ -206,7 +201,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createCoverPage(coverPage: CoverPageCreate) {
+    public async createCoverPage(coverPage: Omit<ValidCoverPage, 'id'>) {
         try {
             return createCoverPage(coverPage as CoverPage);
         } catch (error) {
@@ -214,9 +209,9 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateCoverPage(coverPage: Partial<CoverPage>) {
+    public async updateCoverPage(coverPage: RequireExactlyOne<ValidCoverPage, 'id'>) {
         try {
-            return updateCoverPage(coverPage);
+            return updateCoverPage(coverPage as CoverPage);
         } catch (error) {
             throw console.error('Error: ', error);
         }

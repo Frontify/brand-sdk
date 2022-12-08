@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { CamelCasedPropertiesDeep, SetRequired, Simplify } from 'type-fest';
+import type { CamelCasedPropertiesDeep, Simplify } from 'type-fest';
 
 /**
  * @deprecated fields that are not used anymore
@@ -20,6 +20,17 @@ type DocumentApiVirtualFields = {
 
 export type DocumentLibraryMode = 'MEDIALIBRARY' | 'ICONLIBRARY' | 'LOGOLIBRARY' | 'DOCUMENTLIBRARY';
 export type DocumentMode = Simplify<'DEFAULT' | DocumentLibraryMode>;
+export type LinkType = 'EXTERNAL' | 'INTERNAL';
+
+type DocumentApiAsLink = {
+    link_type: Extract<LinkType, 'EXTERNAL'>;
+    link_url: string;
+};
+
+type DocumentApiAsNoneLink = {
+    link_type?: Extract<LinkType, 'INTERNAL'>;
+    link_url: never;
+};
 
 export type DocumentApi = Simplify<
     DocumentApiDeprecatedFields &
@@ -42,8 +53,6 @@ export type DocumentApi = Simplify<
             logo: Nullable<string>;
             sort: Nullable<number>;
             lazy: Nullable<boolean>;
-            link_type: string;
-            link_url: Nullable<string>;
             link_settings: Nullable<any>;
             view_count: Nullable<number>;
             mode: DocumentMode;
@@ -61,49 +70,32 @@ export type DocumentApi = Simplify<
             change_comment_by: Nullable<string>;
             change_title: Nullable<string>;
             targets: any;
-        }
+        } & (DocumentApiAsLink | DocumentApiAsNoneLink)
 >;
 
 export type Document = CamelCasedPropertiesDeep<DocumentApi>;
 
-export type DocumentLink = Simplify<
-    PickRequired<Document, 'title' | 'linkUrl' | 'linkType' | 'portalId' | 'documentGroupId'> & {
-        categoryId?: number;
-        documentGroupId?: number;
-        linkSettings: {
-            newTab: boolean;
-        };
-    }
->;
+type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
+type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
+
+export type DocumentLinkValidFields = 'linkSettings' | 'title' | 'portalId' | 'documentGroupId' | 'id';
+export type DocumentStandardValidFields = 'title' | 'portalId' | 'documentGroupId' | 'id';
+export type DocumentLibraryValidFields =
+    | 'mode'
+    | 'settings'
+    | 'title'
+    | 'portalId'
+    | 'heading'
+    | 'subheading'
+    | 'documentGroupId'
+    | 'id';
+
+export type DocumentLink = Simplify<Document & DocumentAsLink & { linkSettings: { newTab: boolean } }>;
 
 export type DocumentLibrary = Simplify<
-    PickRequired<Document, 'title' | 'portalId' | 'heading' | 'subheading' | 'documentGroupId'> & {
-        documentGroupId?: number;
-        settings: { project: number };
-        mode: DocumentLibraryMode;
-    }
+    Document & DocumentAsNoneLink & { settings: { project: number }; mode: DocumentLibraryMode }
 >;
 
-export type CreateDocumentLink = Pick<
-    DocumentLink,
-    'linkUrl' | 'portalId' | 'title' | 'linkSettings' | 'documentGroupId'
->;
-
-export type UpdateDocumentLink = SetRequired<
-    Partial<Pick<DocumentLink, 'linkUrl' | 'portalId' | 'title' | 'linkSettings' | 'id'>>,
-    'id'
->;
-
-export type CreateDocumentLibrary = Pick<
-    DocumentLibrary,
-    'title' | 'mode' | 'portalId' | 'settings' | 'documentGroupId'
->;
-
-export type UpdateDocumentLibrary = SetRequired<
-    Partial<Pick<DocumentLibrary, 'title' | 'mode' | 'portalId' | 'settings' | 'id'>>,
-    'id'
->;
-
-export type CreateDocumentStandard = Pick<Document, 'title' | 'portalId' | 'documentGroupId'>;
-
-export type UpdateDocumentStandard = SetRequired<Partial<Pick<Document, 'title' | 'portalId' | 'id'>>, 'id'>;
+export type ValidDocumentLink = Pick<DocumentLink, DocumentLinkValidFields>;
+export type ValidDocumentLibrary = Pick<DocumentLibrary, DocumentLibraryValidFields>;
+export type ValidDocumentStandard = Pick<Document, DocumentStandardValidFields>;
