@@ -270,9 +270,9 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     const updateLegacyCoverPage = useCallback(
         async (coverPage: Partial<CoverPage>) => {
             const legacyCoverPage: CoverPageUpdateLegacy = {
-                ...(coverPage.draft && { brandhome_draft: coverPage.draft }),
                 ...(coverPage.title && { brandhome_title: coverPage.title }),
-                ...(coverPage.hideInNav && { brandhome_hide_in_nav: coverPage.hideInNav }),
+                ...(coverPage.draft !== undefined && { brandhome_draft: coverPage.draft }),
+                ...(coverPage.hideInNav !== undefined && { brandhome_hide_in_nav: coverPage.hideInNav }),
             };
 
             await appBridge.updateLegacyCoverPage(legacyCoverPage);
