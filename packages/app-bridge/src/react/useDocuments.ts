@@ -64,7 +64,10 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
 const addDocument = (documents: (Document | DocumentGroup)[], documentToAdd: Document | DocumentGroup) => {
     const documentsClone = cloneDeep(documents);
 
-    const isDocumentInGroup = 'documentGroupId' in documentToAdd && documentToAdd.documentGroupId !== null;
+    const isDocumentInGroup =
+        'documentGroupId' in documentToAdd &&
+        documentToAdd.documentGroupId !== null &&
+        documentToAdd.documentGroupId !== undefined;
 
     const addDocumentToGroup = () => {
         for (const document of documentsClone) {

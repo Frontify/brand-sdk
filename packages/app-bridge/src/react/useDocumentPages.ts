@@ -63,7 +63,8 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
 const addPage = (pages: (DocumentPage | DocumentCategory)[], pageToAdd: DocumentPage | DocumentCategory) => {
     const pagesClone = cloneDeep(pages);
 
-    const isPageInCategory = 'categoryId' in pageToAdd && pageToAdd.categoryId !== null;
+    const isPageInCategory =
+        'categoryId' in pageToAdd && pageToAdd.categoryId !== null && pageToAdd.categoryId !== undefined;
 
     const addPageToCategory = () => {
         for (const page of pagesClone) {
