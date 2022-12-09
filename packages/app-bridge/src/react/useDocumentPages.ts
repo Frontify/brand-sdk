@@ -66,7 +66,7 @@ const addPage = (
     currentDocument: number,
 ) => {
     if (pageToAdd.documentId !== currentDocument) {
-        pages;
+        return pages;
     }
 
     const pagesClone = cloneDeep(pages);
