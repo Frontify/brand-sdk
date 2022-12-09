@@ -8,7 +8,9 @@ import type {
     Bundle as BundleSidebarSettings,
     ChecklistBlock as ChecklistBlockSidebarSettings,
     ChoicesType as ChoicesTypeSidebarSettings,
+    ColorInputBlock as ColorInputBlockSidebarSettings,
     DropdownBlock as DropdownBlockSidebarSettings,
+    DynamicSettingBlock as DynamicSettingBlockSidebarSettings,
     DynamicSupportedBlock as DynamicSupportedBlockSidebarSettings,
     InputBlock as InputBlockSidebarSettings,
     LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
@@ -27,11 +29,14 @@ import type {
 export * from '@frontify/sidebar-settings';
 
 export type AssetInputBlock = AssetInputBlockSidebarSettings<AppBridgeBlock>;
-export type BaseBlock = BaseBlockSidebarSettings<AppBridgeBlock>;
+export type BaseBlock<T = undefined> = BaseBlockSidebarSettings<AppBridgeBlock, T>;
 export type Bundle = BundleSidebarSettings<AppBridgeBlock>;
 export type ChecklistBlock = ChecklistBlockSidebarSettings<AppBridgeBlock>;
 export type ChoicesType = ChoicesTypeSidebarSettings<AppBridgeBlock>;
+export type ColorInputBlock = ColorInputBlockSidebarSettings<AppBridgeBlock>;
 export type DropdownBlock = DropdownBlockSidebarSettings<AppBridgeBlock>;
+export type DynamicSettingBlock<Block extends DynamicSupportedBlock = DynamicSupportedBlock> =
+    DynamicSettingBlockSidebarSettings<AppBridgeBlock, Block>;
 export type DynamicSupportedBlock = DynamicSupportedBlockSidebarSettings<AppBridgeBlock>;
 export type InputBlock = InputBlockSidebarSettings<AppBridgeBlock>;
 export type LegacyAssetInputBlock = LegacyAssetInputBlockSidebarSettings<AppBridgeBlock>;

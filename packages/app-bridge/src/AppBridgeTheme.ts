@@ -61,60 +61,56 @@ import { getDatasetByElement } from './utilities';
 export class AppBridgeTheme {
     constructor(private readonly portalId: number) {}
 
+    public getPortalId(): number {
+        return this.portalId;
+    }
+
+    public getProjectId(): number {
+        return window.application.sandbox.config.context.project.id;
+    }
+
+    public getEditorState(): boolean {
+        return document.querySelector('.js-co-powerbar__sg-edit.state-active') !== null;
+    }
+
+    public openNavigationManager() {
+        window.emitter.emit('OpenNavigationManager');
+    }
+
+    public getTranslationLanguage(): string {
+        return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
+    }
+
     public async createLink(link: Omit<DocumentLinkRequest, 'id'>) {
-        try {
-            return createDocument<DocumentLink>({
-                ...link,
-                linkType: LinkType.External,
-                portalId: this.getPortalId(),
-            } as DocumentLink);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return createDocument<DocumentLink>({
+            ...link,
+            linkType: LinkType.External,
+            portalId: this.getPortalId(),
+        } as DocumentLink);
     }
 
     public async updateLink(link: DocumentLinkRequestUpdate) {
-        try {
-            return updateDocument<DocumentLink>(link as DocumentLink);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateDocument<DocumentLink>(link as DocumentLink);
     }
 
     public async deleteLink(id: number) {
-        try {
-            return deleteDocument(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return deleteDocument(id);
     }
 
     public async createLibrary(library: DocumentLibraryRequestCreate) {
-        try {
-            return createDocument<DocumentLibrary>({
-                ...library,
-                portalId: this.getPortalId(),
-                settings: { project: library.settings?.project ?? this.getProjectId() },
-            } as DocumentLibrary);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return createDocument<DocumentLibrary>({
+            ...library,
+            portalId: this.getPortalId(),
+            settings: { project: library.settings?.project ?? this.getProjectId() },
+        } as DocumentLibrary);
     }
 
     public async updateLibrary(library: DocumentLibraryRequestUpdate) {
-        try {
-            return updateDocument<DocumentLibrary>(library as DocumentLibrary);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateDocument<DocumentLibrary>(library as DocumentLibrary);
     }
 
     public async deleteLibrary(id: number) {
-        try {
-            return deleteDocument(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return deleteDocument(id);
     }
 
     public async createStandardDocument(document: Omit<DocumentStandardRequest, 'id'>) {
@@ -128,54 +124,42 @@ export class AppBridgeTheme {
     public async updateStandardDocument(
         document: RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>,
     ) {
-        try {
-            return updateDocument<Document>(document as Document);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateDocument<Document>(document as Document);
     }
 
     public async deleteStandardDocument(id: number) {
-        try {
-            return deleteDocument(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return deleteDocument(id);
     }
 
     public async createDocumentGroup(documentGroup: Omit<DocumentGroupRequest, 'id'>) {
-        try {
-            return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
     }
 
     public async updateDocumentGroup(documentGroup: DocumentGroupRequest) {
-        try {
-            return updateDocumentGroup(documentGroup as DocumentGroup);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateDocumentGroup(documentGroup as DocumentGroup);
     }
 
     public async deleteDocumentGroup(id: number) {
-        try {
-            return deleteDocumentGroup(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return deleteDocumentGroup(id);
+    }
+
+    public async createDocumentCategory(category: Omit<DocumentCategoryRequest, 'id'>) {
+        return createDocumentCategory(category as DocumentCategory);
+    }
+
+    public async updateDocumentCategory(category: RequireAtLeastOne<DocumentCategoryRequest, 'title' | 'documentId'>) {
+        return updateDocumentCategory(category as DocumentCategory);
+    }
+
+    public async deleteDocumentCategory(id: number) {
+        return deleteDocumentCategory(id);
     }
 
     public async createDocumentPage(documentPage: DocumentPageRequestCreate) {
-        try {
-            return createDocumentPage({
-                ...documentPage,
-                ...(documentPage.linkUrl && { linkType: LinkType.External }),
-            } as DocumentPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return createDocumentPage({
+            ...documentPage,
+            ...(documentPage.linkUrl && { linkType: LinkType.External }),
+        } as DocumentPage);
     }
 
     /**
@@ -194,46 +178,14 @@ export class AppBridgeTheme {
      * @property  linkUrl - Indicates whether the page is link or not.
      */
     public async updateDocumentPage(documentPage: DocumentPageRequestUpdate) {
-        try {
-            return updateDocumentPage({
-                ...documentPage,
-                ...(documentPage.linkUrl && { linkType: LinkType.External }),
-            } as DocumentPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateDocumentPage({
+            ...documentPage,
+            ...(documentPage.linkUrl && { linkType: LinkType.External }),
+        } as DocumentPage);
     }
 
     public async deleteDocumentPage(id: number) {
-        try {
-            return deleteDocumentPage(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async createDocumentCategory(category: Omit<DocumentCategoryRequest, 'id'>) {
-        try {
-            return createDocumentCategory(category as DocumentCategory);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async updateDocumentCategory(category: RequireAtLeastOne<DocumentCategoryRequest, 'title' | 'documentId'>) {
-        try {
-            return updateDocumentCategory(category as DocumentCategory);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public async deleteDocumentCategory(id: number) {
-        try {
-            return deleteDocumentCategory(id);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return deleteDocumentPage(id);
     }
 
     public async createCoverPage(coverPage: CoverPageRequestCreate) {
@@ -245,58 +197,26 @@ export class AppBridgeTheme {
     }
 
     public async updateCoverPage(coverPage: RequireOnlyOne<CoverPage, 'id'>) {
-        try {
-            return updateCoverPage(coverPage as CoverPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateCoverPage(coverPage as CoverPage);
     }
 
     /**
      * @deprecated legacy method, should be removed once new endpoint is available
      */
     public async updateLegacyCoverPage(coverPage: CoverPageUpdateLegacy) {
-        try {
-            return updateLegacyCoverPage({ ...coverPage, portalId: this.getPortalId() });
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return updateLegacyCoverPage({ ...coverPage, portalId: this.getPortalId() });
     }
 
     public async deleteCoverPage() {
-        try {
-            return deleteCoverPage(this.getPortalId());
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return deleteCoverPage(this.getPortalId());
     }
 
     public async updateBrandportalLink(brandportalLink: Partial<BrandportalLink>) {
-        try {
-            return await updateBrandportalLink({
-                ...brandportalLink,
-                portalId: this.getPortalId(),
-                i18n: this.getTranslationLanguage(),
-            });
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
-    }
-
-    public getPortalId(): number {
-        return this.portalId;
-    }
-
-    public getProjectId(): number {
-        return window.application.sandbox.config.context.project.id;
-    }
-
-    public getEditorState(): boolean {
-        return document.querySelector('.js-co-powerbar__sg-edit.state-active') !== null;
-    }
-
-    public openNavigationManager() {
-        window.emitter.emit('OpenNavigationManager');
+        return updateBrandportalLink({
+            ...brandportalLink,
+            portalId: this.getPortalId(),
+            i18n: this.getTranslationLanguage(),
+        });
     }
 
     public getCoverPage(): Promise<CoverPage> {
@@ -337,9 +257,5 @@ export class AppBridgeTheme {
 
     public async getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]> {
         return getColorsByColorPaletteId(colorPaletteId);
-    }
-
-    public getTranslationLanguage(): string {
-        return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
     }
 }
