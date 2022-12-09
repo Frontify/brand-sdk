@@ -189,11 +189,7 @@ export class AppBridgeTheme {
     }
 
     public async createCoverPage(coverPage: CoverPageRequestCreate) {
-        try {
-            return createCoverPage(coverPage as CoverPage);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+        return createCoverPage(coverPage as CoverPage);
     }
 
     public async updateCoverPage(coverPage: RequireOnlyOne<CoverPage, 'id'>) {
