@@ -97,31 +97,14 @@ const updateDocument = (documents: (Document | DocumentGroup)[], documentToUpdat
 };
 
 const deleteDocument = (documents: (Document | DocumentGroup)[], documentToDelete: { id: number }) => {
-    const documentsClone = cloneDeep(documents);
+    const filteredDocuments = documents.filter((document) => document.id !== documentToDelete.id);
 
-    for (const [index, doc] of documents.entries()) {
-        if (doc.id === documentToDelete.id) {
-            delete documentsClone[index];
-
-            break;
-        } else if ('documents' in doc && doc.documents?.some((doc) => doc.id === documentToDelete.id)) {
-            const index = doc.documents.findIndex((doc) => doc.id === documentToDelete.id);
-
-            delete (documentsClone[index] as DocumentGroup).documents?.[index];
-
-            break;
+    const updatedDocuments = filteredDocuments.map((document) => {
+        if ('documents' in document && document.documents !== null) {
+            document.documents = document.documents.filter((document) => document.id !== documentToDelete.id);
         }
-    }
-
-    const result = documentsClone.filter((document) => {
-        if (document !== undefined && 'documents' in document && document.documents !== null) {
-            document.documents = document.documents.filter((doc) => doc !== undefined);
-
-            return true;
-        }
-
-        return document !== undefined;
+        return document;
     });
 
-    return result;
+    return updatedDocuments;
 };

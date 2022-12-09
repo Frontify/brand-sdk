@@ -109,31 +109,14 @@ const updatePage = (
 };
 
 const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { id: number }) => {
-    const pagesClone = cloneDeep(pages);
+    const filteredPages = pages.filter((page) => page.id !== pageToDelete.id);
 
-    for (const [index, page] of pages.entries()) {
-        if (page.id === pageToDelete.id) {
-            delete pagesClone[index];
-
-            break;
-        } else if ('documentPages' in page && page.documentPages.some((page) => page.id === pageToDelete.id)) {
-            const index = page.documentPages.findIndex((page) => page.id === pageToDelete.id);
-
-            delete (pagesClone[index] as DocumentCategory).documentPages[index];
-
-            break;
+    const updatedPages = filteredPages.map((page) => {
+        if ('documentPages' in page) {
+            page.documentPages = page.documentPages.filter((page) => page.id !== pageToDelete.id);
         }
-    }
-
-    const result = pagesClone.filter((page) => {
-        if (page !== undefined && 'documentPages' in page) {
-            page.documentPages = page.documentPages.filter((page) => page !== undefined);
-
-            return true;
-        }
-
-        return page !== undefined;
+        return page;
     });
 
-    return result;
+    return updatedPages;
 };
