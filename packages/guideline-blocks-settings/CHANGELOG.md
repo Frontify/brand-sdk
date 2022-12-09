@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.25.5
+
+### Patch Changes
+
+- [`4063217`](https://github.com/Frontify/brand-sdk/commit/4063217a946f0896f7dd3aacbc0b21f4c355b21c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`13be4e4`](https://github.com/Frontify/brand-sdk/commit/13be4e40dee7cc13c20de53d2c5c44a1ee1c3c8f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export more types with generic
+
+- Updated dependencies [[`4063217`](https://github.com/Frontify/brand-sdk/commit/4063217a946f0896f7dd3aacbc0b21f4c355b21c)]:
+  - @frontify/sidebar-settings@0.0.8
+
 ## 0.25.4
 
 ### Patch Changes
