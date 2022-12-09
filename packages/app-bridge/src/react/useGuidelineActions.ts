@@ -18,7 +18,7 @@ import type {
     DocumentLibraryRequestCreate,
     DocumentLinkRequest,
     DocumentPage,
-    DocumentPageRequest,
+    DocumentPageRequestCreate,
     DocumentPageRequestUpdate,
     DocumentStandardRequest,
     EmitterAction,
@@ -174,7 +174,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createPage = useCallback(
-        async (documentPage: PickRequired<DocumentPageRequest, 'title' | 'documentId'>) => {
+        async (documentPage: DocumentPageRequestCreate) => {
             const result = await appBridge.createDocumentPage(documentPage);
 
             emitPageAction(result, 'add');

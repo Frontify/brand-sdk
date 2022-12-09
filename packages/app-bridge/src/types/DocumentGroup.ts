@@ -18,8 +18,6 @@ export type DocumentGroupApi = {
     documents: Nullable<DocumentApi[]>;
 };
 
-type DocumentGroupRequestFields = 'name' | 'id';
-
 export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
 
-export type DocumentGroupRequest = Pick<DocumentGroup, DocumentGroupRequestFields>;
+export type DocumentGroupRequest = Pick<DocumentGroup, 'name' | 'id'>;

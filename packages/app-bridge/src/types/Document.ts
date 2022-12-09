@@ -36,6 +36,9 @@ type DocumentApiAsNoneLink = {
     link_url: Nullable<never>;
 };
 
+type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
+type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
+
 export type DocumentApi = Simplify<
     DocumentApiDeprecatedFields &
         DocumentApiVirtualFields & {
@@ -79,13 +82,6 @@ export type DocumentApi = Simplify<
 
 export type Document = CamelCasedPropertiesDeep<DocumentApi>;
 
-type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
-type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
-
-type DocumentStandardRequestFields = 'title' | 'documentGroupId' | 'id';
-type DocumentLinkRequestFields = 'linkSettings' | 'title' | 'documentGroupId' | 'linkUrl' | 'id';
-type DocumentLibraryRequestFields = 'mode' | 'settings' | 'title' | 'heading' | 'subheading' | 'documentGroupId' | 'id';
-
 export type DocumentLink = Simplify<Document & DocumentAsLink & { linkSettings: { newTab: boolean } }>;
 
 export type DocumentLibrary = Simplify<
@@ -94,15 +90,34 @@ export type DocumentLibrary = Simplify<
 
 export type DocumentStandard = Simplify<Document & DocumentAsNoneLink>;
 
-export type DocumentLinkRequest = Pick<DocumentLink, DocumentLinkRequestFields>;
-export type DocumentLibraryRequest = Pick<DocumentLibrary, DocumentLibraryRequestFields>;
-export type DocumentStandardRequest = Pick<DocumentStandard, DocumentStandardRequestFields>;
+export type DocumentLinkRequest = {
+    id: number;
+    title: string;
+    linkUrl: string;
+    linkSettings: {
+        newTab: boolean;
+    };
+    documentGroupId?: number;
+};
+export type DocumentLibraryRequest = {
+    id: number;
+    mode: DocumentLibraryMode;
+    settings: { project: number };
+    title: string;
+    heading?: string;
+    subheading?: string;
+    documentGroupId?: number;
+};
+
+export type DocumentStandardRequest = {
+    id: number;
+    title: string;
+    documentGroupId?: number;
+};
 
 export type DocumentLibraryRequestCreate = SetOptional<Omit<DocumentLibraryRequest, 'id'>, 'heading' | 'subheading'>;
 
-export type DocumentLinkRequestUpdate = RequireAtLeastOne<DocumentLink, Exclude<DocumentLinkRequestFields, 'id'>>;
-
-export type DocumentStandardRequestUpdate = RequireAtLeastOne<
-    DocumentStandard,
-    Exclude<DocumentLibraryRequestFields, 'id'>
+export type DocumentLinkRequestUpdate = RequireAtLeastOne<
+    DocumentLinkRequest,
+    'title' | 'linkUrl' | 'linkSettings' | 'documentGroupId'
 >;

@@ -49,7 +49,7 @@ import {
     DocumentLink,
     DocumentLinkRequest,
     DocumentPage,
-    DocumentPageRequest,
+    DocumentPageRequestCreate,
     DocumentPageRequestUpdate,
     DocumentSection,
     DocumentStandardRequest,
@@ -164,7 +164,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async createDocumentPage(documentPage: PickRequired<DocumentPageRequest, 'id' | 'documentId'>) {
+    public async createDocumentPage(documentPage: DocumentPageRequestCreate) {
         try {
             return createDocumentPage({
                 ...documentPage,
