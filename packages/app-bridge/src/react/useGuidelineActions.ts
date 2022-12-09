@@ -7,20 +7,25 @@ import type {
     BrandportalLink,
     CoverPage,
     CoverPageCreate,
-    CreateDocumentGroup,
-    CreateDocumentLibrary,
-    CreateDocumentLink,
-    CreateDocumentPage,
-    CreateDocumentStandard,
+    CoverPageUpdate,
+    CoverPageUpdateLegacy,
     Document,
+    DocumentCategory,
+    DocumentCategoryCreate,
+    DocumentCategoryUpdate,
     DocumentGroup,
+    DocumentGroupCreate,
+    DocumentGroupUpdate,
+    DocumentLibraryCreate,
+    DocumentLibraryUpdate,
+    DocumentLinkCreate,
+    DocumentLinkUpdate,
     DocumentPage,
+    DocumentPageCreate,
+    DocumentPageUpdate,
+    DocumentStandardCreate,
+    DocumentStandardUpdate,
     EmitterAction,
-    UpdateDocumentGroup,
-    UpdateDocumentLibrary,
-    UpdateDocumentLink,
-    UpdateDocumentPage,
-    UpdateDocumentStandard,
 } from '../types';
 
 export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
@@ -35,7 +40,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const emitPageAction = <A extends EmitterAction>(
-        page: A extends 'delete' ? { id: number } : DocumentPage,
+        page: A extends 'delete' ? { id: number } : DocumentPage | DocumentCategory,
         action: A,
     ) => {
         window.emitter.emit('AppBridge:GuidelineDocumentPageUpdate', {
@@ -45,7 +50,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const emitCoverPageAction = <A extends EmitterAction>(
-        coverPage: A extends 'delete' ? undefined : CoverPage,
+        coverPage: A extends 'delete' ? undefined : Partial<CoverPage>,
         action: A,
     ) => {
         window.emitter.emit('AppBridge:GuidelineCoverPageUpdate', {
@@ -65,19 +70,19 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     };
 
     const createLink = useCallback(
-        async (link: CreateDocumentLink) => {
+        async (link: DocumentLinkCreate) => {
             const result = await appBridge.createLink(link);
 
-            emitDocumentAction(result, 'add');
+            emitDocumentAction({ ...result, documentGroupId: link.documentGroupId }, 'add');
         },
         [appBridge],
     );
 
     const updateLink = useCallback(
-        async (link: UpdateDocumentLink) => {
+        async (link: DocumentLinkUpdate) => {
             const result = await appBridge.updateLink(link);
 
-            emitDocumentAction(result, 'update');
+            emitDocumentAction({ ...result, documentGroupId: link.documentGroupId }, 'update');
         },
         [appBridge],
     );
@@ -92,19 +97,19 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createLibrary = useCallback(
-        async (library: CreateDocumentLibrary) => {
+        async (library: DocumentLibraryCreate) => {
             const result = await appBridge.createLibrary(library);
 
-            emitDocumentAction(result, 'add');
+            emitDocumentAction({ ...result, documentGroupId: library.documentGroupId }, 'add');
         },
         [appBridge],
     );
 
     const updateLibrary = useCallback(
-        async (library: UpdateDocumentLibrary) => {
+        async (library: DocumentLibraryUpdate) => {
             const result = await appBridge.updateLibrary(library);
 
-            emitDocumentAction(result, 'update');
+            emitDocumentAction({ ...result, documentGroupId: library.documentGroupId }, 'update');
         },
         [appBridge],
     );
@@ -119,19 +124,19 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createStandardDocument = useCallback(
-        async (document: CreateDocumentStandard) => {
+        async (document: DocumentStandardCreate) => {
             const result = await appBridge.createStandardDocument(document);
 
-            emitDocumentAction(result, 'add');
+            emitDocumentAction({ ...result, documentGroupId: document.documentGroupId }, 'add');
         },
         [appBridge],
     );
 
     const updateStandardDocument = useCallback(
-        async (document: UpdateDocumentStandard) => {
+        async (document: DocumentStandardUpdate) => {
             const result = await appBridge.updateStandardDocument(document);
 
-            emitDocumentAction(result, 'update');
+            emitDocumentAction({ ...result, documentGroupId: document.documentGroupId }, 'update');
         },
         [appBridge],
     );
@@ -146,7 +151,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createDocumentGroup = useCallback(
-        async (documentGroup: CreateDocumentGroup) => {
+        async (documentGroup: DocumentGroupCreate) => {
             const result = await appBridge.createDocumentGroup(documentGroup);
 
             emitDocumentAction(result, 'add');
@@ -155,7 +160,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateDocumentGroup = useCallback(
-        async (documentGroup: UpdateDocumentGroup) => {
+        async (documentGroup: DocumentGroupUpdate) => {
             const result = await appBridge.updateDocumentGroup(documentGroup);
 
             emitDocumentAction(result, 'update');
@@ -173,7 +178,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const createPage = useCallback(
-        async (documentPage: CreateDocumentPage) => {
+        async (documentPage: DocumentPageCreate) => {
             const result = await appBridge.createDocumentPage(documentPage);
 
             emitPageAction(result, 'add');
@@ -181,8 +186,23 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    /**
+     * A method for page update
+     *
+     * @param documentPage - {@link DocumentPageUpdate} object
+     * @requires id - Indicates page identifier.
+     *
+     *
+     * and at least one of
+     *
+     * @property  title - Indicates title of a page.
+     * @property  documentId - Indicates to witch document the page belongs to.
+     * @property  categoryId - Indicates to witch category the page belongs to.
+     * @property  visibility - Indicates whether the page is visible only to the editor or everyone.
+     * @property  linkUrl - Indicates whether the page is link or not.
+     */
     const updatePage = useCallback(
-        async (documentPage: UpdateDocumentPage) => {
+        async (documentPage: DocumentPageUpdate) => {
             const result = await appBridge.updateDocumentPage(documentPage);
 
             emitPageAction(result, 'update');
@@ -199,6 +219,33 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const createCategory = useCallback(
+        async (category: DocumentCategoryCreate) => {
+            const result = await appBridge.createDocumentCategory(category);
+
+            emitPageAction(result, 'add');
+        },
+        [appBridge],
+    );
+
+    const updateCategory = useCallback(
+        async (category: DocumentCategoryUpdate) => {
+            const result = await appBridge.updateDocumentCategory(category);
+
+            emitPageAction(result, 'update');
+        },
+        [appBridge],
+    );
+
+    const deleteCategory = useCallback(
+        async (id: number) => {
+            await appBridge.deleteDocumentCategory(id);
+
+            emitPageAction({ id }, 'delete');
+        },
+        [appBridge],
+    );
+
     const createCoverPage = useCallback(
         async (coverPage: CoverPageCreate) => {
             const result = await appBridge.createCoverPage(coverPage);
@@ -209,7 +256,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateCoverPage = useCallback(
-        async (coverPage: CoverPage) => {
+        async (coverPage: CoverPageUpdate) => {
             const result = await appBridge.updateCoverPage(coverPage);
 
             emitCoverPageAction(result, 'update');
@@ -220,11 +267,17 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     /**
      * @deprecated legacy method, should be removed once new endpoint is available
      */
-    const publishCoverPage = useCallback(
-        async (coverPage: { brandhome_draft: boolean }) => {
-            const result = (await appBridge.publishCoverPage(coverPage)) as { brandhome_draft: boolean };
+    const updateLegacyCoverPage = useCallback(
+        async (coverPage: Partial<CoverPage>) => {
+            const legacyCoverPage: CoverPageUpdateLegacy = {
+                ...(coverPage.title && { brandhome_title: coverPage.title }),
+                ...(coverPage.draft !== undefined && { brandhome_draft: coverPage.draft }),
+                ...(coverPage.hideInNav !== undefined && { brandhome_hide_in_nav: coverPage.hideInNav }),
+            };
 
-            emitCoverPageAction({ draft: result.brandhome_draft } as CoverPage, 'update');
+            await appBridge.updateLegacyCoverPage(legacyCoverPage);
+
+            emitCoverPageAction(coverPage, 'update');
         },
         [appBridge],
     );
@@ -256,10 +309,13 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createLibrary,
         updateLibrary,
         deleteLibrary,
+        createCategory,
+        updateCategory,
+        deleteCategory,
         createCoverPage,
         updateCoverPage,
         deleteCoverPage,
-        publishCoverPage,
+        updateLegacyCoverPage,
         createDocumentGroup,
         updateDocumentGroup,
         deleteDocumentGroup,

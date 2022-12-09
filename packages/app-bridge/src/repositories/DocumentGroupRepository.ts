@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { RequireExactlyOne } from 'type-fest';
 import type { DocumentGroup, DocumentGroupApi } from '../types';
 import { HttpClient, convertObjectCase } from '../utilities';
 
@@ -16,7 +17,9 @@ export const createDocumentGroup = async (documentGroup: DocumentGroup) => {
     return convertObjectCase(result.data, 'camel');
 };
 
-export const updateDocumentGroup = async (documentGroup: DocumentGroup): Promise<DocumentGroup> => {
+export const updateDocumentGroup = async (
+    documentGroup: RequireExactlyOne<DocumentGroup, 'id'>,
+): Promise<DocumentGroup> => {
     const { result } = await HttpClient.put<DocumentGroupApi>(
         `/api/document-group/${documentGroup.id}`,
         convertObjectCase(documentGroup, 'snake'),
