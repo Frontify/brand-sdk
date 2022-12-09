@@ -3,10 +3,12 @@
 import {
     createCoverPage,
     createDocument,
+    createDocumentCategory,
     createDocumentGroup,
     createDocumentPage,
     deleteCoverPage,
     deleteDocument,
+    deleteDocumentCategory,
     deleteDocumentGroup,
     deleteDocumentPage,
     getBrandportalLink,
@@ -19,37 +21,43 @@ import {
     getDocumentSectionsByDocumentPageId,
     getDocumentsWithoutDocumentGroupByProjectId,
     getUncategorizedPagesByDocumentId,
-    publishCoverPage,
     updateBrandportalLink,
     updateCoverPage,
     updateDocument,
+    updateDocumentCategory,
     updateDocumentGroup,
     updateDocumentPage,
+    updateLegacyCoverPage,
 } from './repositories';
 
-import type {
+import {
     BrandportalLink,
     Color,
     ColorPalette,
     CoverPage,
     CoverPageCreate,
-    CreateDocumentGroup,
-    CreateDocumentLibrary,
-    CreateDocumentLink,
-    CreateDocumentPage,
-    CreateDocumentStandard,
+    CoverPageUpdate,
+    CoverPageUpdateLegacy,
     Document,
     DocumentCategory,
+    DocumentCategoryCreate,
+    DocumentCategoryUpdate,
     DocumentGroup,
+    DocumentGroupCreate,
+    DocumentGroupUpdate,
     DocumentLibrary,
+    DocumentLibraryCreate,
+    DocumentLibraryUpdate,
     DocumentLink,
+    DocumentLinkCreate,
+    DocumentLinkUpdate,
     DocumentPage,
+    DocumentPageCreate,
+    DocumentPageUpdate,
     DocumentSection,
-    UpdateDocumentGroup,
-    UpdateDocumentLibrary,
-    UpdateDocumentLink,
-    UpdateDocumentPage,
-    UpdateDocumentStandard,
+    DocumentStandardCreate,
+    DocumentStandardUpdate,
+    LinkType,
 } from './types';
 import { getDatasetByElement } from './utilities';
 
@@ -76,11 +84,15 @@ export class AppBridgeTheme {
         return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
     }
 
-    public async createLink(link: CreateDocumentLink) {
-        return createDocument<DocumentLink>(link as DocumentLink);
+    public async createLink(link: DocumentLinkCreate) {
+        return createDocument<DocumentLink>({
+            ...link,
+            linkType: LinkType.External,
+            portalId: this.getPortalId(),
+        } as DocumentLink);
     }
 
-    public async updateLink(link: UpdateDocumentLink) {
+    public async updateLink(link: DocumentLinkUpdate) {
         return updateDocument<DocumentLink>(link as DocumentLink);
     }
 
@@ -88,11 +100,15 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
-    public async createLibrary(library: CreateDocumentLibrary) {
-        return createDocument<DocumentLibrary>(library as DocumentLibrary);
+    public async createLibrary(library: DocumentLibraryCreate) {
+        return createDocument<DocumentLibrary>({
+            ...library,
+            portalId: this.getPortalId(),
+            settings: { project: library.settings?.project ?? this.getProjectId() },
+        } as DocumentLibrary);
     }
 
-    public async updateLibrary(library: UpdateDocumentLibrary) {
+    public async updateLibrary(library: DocumentLibraryUpdate) {
         return updateDocument<DocumentLibrary>(library as DocumentLibrary);
     }
 
@@ -100,11 +116,11 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
-    public async createStandardDocument(document: CreateDocumentStandard) {
-        return createDocument<Document>(document as Document);
+    public async createStandardDocument(document: DocumentStandardCreate) {
+        return createDocument<Document>({ ...document, portalId: this.getPortalId() } as Document);
     }
 
-    public async updateStandardDocument(document: UpdateDocumentStandard) {
+    public async updateStandardDocument(document: DocumentStandardUpdate) {
         return updateDocument<Document>(document as Document);
     }
 
@@ -112,11 +128,11 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
-    public async createDocumentGroup(documentGroup: CreateDocumentGroup) {
-        return createDocumentGroup(documentGroup as DocumentGroup);
+    public async createDocumentGroup(documentGroup: DocumentGroupCreate) {
+        return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
     }
 
-    public async updateDocumentGroup(documentGroup: UpdateDocumentGroup) {
+    public async updateDocumentGroup(documentGroup: DocumentGroupUpdate) {
         return updateDocumentGroup(documentGroup as DocumentGroup);
     }
 
@@ -124,12 +140,45 @@ export class AppBridgeTheme {
         return deleteDocumentGroup(id);
     }
 
-    public async createDocumentPage(documentPage: CreateDocumentPage) {
-        return createDocumentPage(documentPage as DocumentPage);
+    public async createDocumentCategory(category: DocumentCategoryCreate) {
+        return createDocumentCategory(category as DocumentCategory);
     }
 
-    public async updateDocumentPage(documentPage: UpdateDocumentPage) {
-        return updateDocumentPage(documentPage as DocumentPage);
+    public async updateDocumentCategory(category: DocumentCategoryUpdate) {
+        return updateDocumentCategory(category as DocumentCategory);
+    }
+
+    public async deleteDocumentCategory(id: number) {
+        return deleteDocumentCategory(id);
+    }
+
+    public async createDocumentPage(documentPage: DocumentPageCreate) {
+        return createDocumentPage({
+            ...documentPage,
+            ...(documentPage.linkUrl && { linkType: LinkType.External }),
+        } as DocumentPage);
+    }
+
+    /**
+     * A method for page update
+     *
+     * @param documentPage - {@link DocumentPageUpdate} object
+     * @requires id - Indicates page identifier.
+     *
+     *
+     * and at least one of
+     *
+     * @property  title - Indicates title of a page.
+     * @property  documentId - Indicates to witch document the page belongs to.
+     * @property  categoryId - Indicates to witch category the page belongs to.
+     * @property  visibility - Indicates whether the page is visible only to the editor or everyone.
+     * @property  linkUrl - Indicates whether the page is link or not.
+     */
+    public async updateDocumentPage(documentPage: DocumentPageUpdate) {
+        return updateDocumentPage({
+            ...documentPage,
+            ...(documentPage.linkUrl && { linkType: LinkType.External }),
+        } as DocumentPage);
     }
 
     public async deleteDocumentPage(id: number) {
@@ -140,15 +189,15 @@ export class AppBridgeTheme {
         return createCoverPage(coverPage as CoverPage);
     }
 
-    public async updateCoverPage(coverPage: CoverPage) {
+    public async updateCoverPage(coverPage: CoverPageUpdate) {
         return updateCoverPage(coverPage as CoverPage);
     }
 
     /**
      * @deprecated legacy method, should be removed once new endpoint is available
      */
-    public async publishCoverPage(coverPage: { brandhome_draft: boolean }) {
-        return publishCoverPage({ ...coverPage, portalId: this.getPortalId() });
+    public async updateLegacyCoverPage(coverPage: CoverPageUpdateLegacy) {
+        return updateLegacyCoverPage({ ...coverPage, portalId: this.getPortalId() });
     }
 
     public async deleteCoverPage() {

@@ -29,27 +29,25 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
     useEffect(() => {
         const updateDocumentsFromEvent = (event: { document: Document | DocumentGroup; action: EmitterAction }) => {
             setDocuments((previousState) => {
-                if (event.action === 'add') {
-                    return previousState ? [...cloneDeep(previousState), event.document] : [event.document];
+                const isInitial = previousState === null;
+
+                if (isInitial) {
+                    return event.action === 'update' || event.action === 'add' ? [event.document] : previousState;
                 }
 
                 if (event.action === 'delete') {
-                    return previousState
-                        ? cloneDeep(previousState).filter((document) => document.id !== event.document.id)
-                        : previousState;
+                    return deleteDocument(previousState, event.document);
                 }
 
-                const documentToUpdateIndex = previousState?.findIndex((document) => document.id === event.document.id);
-
-                if (!documentToUpdateIndex || previousState === null) {
-                    return previousState;
+                if (event.action === 'add') {
+                    return addDocument(previousState, event.document);
                 }
 
-                const stateClone = cloneDeep(previousState);
+                if (event.action === 'update') {
+                    return updateDocument(previousState, event.document);
+                }
 
-                stateClone[documentToUpdateIndex] = event.document;
-
-                return stateClone;
+                return previousState;
             });
         };
 
@@ -61,4 +59,51 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
     }, [appBridge]);
 
     return { documents };
+};
+
+const addDocument = (documents: (Document | DocumentGroup)[], documentToAdd: Document | DocumentGroup) => {
+    const documentsClone = cloneDeep(documents);
+
+    const isDocumentInGroup =
+        'documentGroupId' in documentToAdd &&
+        documentToAdd.documentGroupId !== null &&
+        documentToAdd.documentGroupId !== undefined;
+
+    const addDocumentToGroup = () => {
+        for (const document of documentsClone) {
+            if (document.id === (documentToAdd as Document).documentGroupId && 'documents' in document) {
+                document.documents
+                    ? document.documents.push(documentToAdd as Document)
+                    : (document.documents = [documentToAdd as Document]);
+
+                break;
+            }
+        }
+    };
+
+    isDocumentInGroup ? addDocumentToGroup() : documentsClone.push(documentToAdd);
+
+    return documentsClone;
+};
+
+const updateDocument = (documents: (Document | DocumentGroup)[], documentToUpdate: Document | DocumentGroup) => {
+    const documentsClone = cloneDeep(documents);
+
+    const documentToUpdateIndex = documentsClone.findIndex((document) => document.id === documentToUpdate.id);
+
+    documentsClone[documentToUpdateIndex] = documentToUpdate;
+
+    return documentsClone;
+};
+
+const deleteDocument = (documents: (Document | DocumentGroup)[], documentToDelete: { id: number }) => {
+    const filteredDocuments = documents.filter((document) => document.id !== documentToDelete.id);
+
+    return filteredDocuments.map((document) => {
+        if ('documents' in document && document.documents !== null) {
+            document.documents = document.documents.filter((document) => document.id !== documentToDelete.id);
+        }
+
+        return document;
+    });
 };

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { HttpClient, convertObjectCase } from '../utilities';
-import type { CoverPage, CoverPageApi } from '../types';
+import type { CoverPage, CoverPageApi, CoverPageUpdateLegacy } from '../types';
+import { RequireExactlyOne } from 'type-fest';
 
 export const mapToCoverPage = (coverPage: CoverPageApi): CoverPage => ({
     ...convertObjectCase(coverPage.brandhome, 'camel'),
@@ -27,7 +28,7 @@ export const createCoverPage = async (coverPage: CoverPage): Promise<CoverPage> 
     return mapToCoverPage({ ...result.data, brandhome: { draft: 1, enabled: 1 } as CoverPageApi['brandhome'] });
 };
 
-export const updateCoverPage = async (coverPage: CoverPage): Promise<CoverPage> => {
+export const updateCoverPage = async (coverPage: RequireExactlyOne<CoverPage, 'id'>): Promise<CoverPage> => {
     const { result } = await HttpClient.patch<CoverPageApi>(
         `/api/brandportal/${coverPage.id}`,
         mapToCoverPageApi(coverPage),
@@ -39,10 +40,17 @@ export const updateCoverPage = async (coverPage: CoverPage): Promise<CoverPage> 
 /**
  * @deprecated legacy endpoint, should be removed once new is available
  */
-export const publishCoverPage = async (coverPage: { brandhome_draft: boolean; portalId: number }): Promise<unknown> => {
-    const { result } = await HttpClient.post<CoverPageApi>(`/api/hub/settings/${coverPage.portalId}`, coverPage);
+export const updateLegacyCoverPage = async (
+    coverPage: CoverPageUpdateLegacy & {
+        portalId: number;
+    },
+): Promise<CoverPageUpdateLegacy> => {
+    const { result } = await HttpClient.post<CoverPageUpdateLegacy>(
+        `/api/hub/settings/${coverPage.portalId}`,
+        coverPage,
+    );
 
-    return result;
+    return result as unknown as CoverPageUpdateLegacy;
 };
 
 export const getCoverPage = async (hubId: number): Promise<CoverPage> => {

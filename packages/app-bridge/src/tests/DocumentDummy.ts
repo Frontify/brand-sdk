@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Document } from '../types';
+import { Document, LinkType } from '../types';
 
 export class DocumentDummy {
     static with(id: number): Document {
@@ -24,7 +24,7 @@ export class DocumentDummy {
             layout: null,
             sort: 5,
             lazy: true,
-            linkType: 'internal',
+            linkType: LinkType.Internal,
             linkUrl: null,
             linkSettings: null,
             viewCount: 0,
