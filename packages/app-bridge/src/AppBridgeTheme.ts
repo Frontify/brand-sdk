@@ -44,10 +44,11 @@ import {
     DocumentGroup,
     DocumentGroupRequest,
     DocumentLibrary,
-    DocumentLibraryRequest,
     DocumentLibraryRequestCreate,
+    DocumentLibraryRequestUpdate,
     DocumentLink,
     DocumentLinkRequest,
+    DocumentLinkRequestUpdate,
     DocumentPage,
     DocumentPageRequestCreate,
     DocumentPageRequestUpdate,
@@ -72,7 +73,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLink(link: RequireOnlyOne<DocumentLinkRequest, 'id'>) {
+    public async updateLink(link: DocumentLinkRequestUpdate) {
         try {
             return updateDocument<DocumentLink>(link as DocumentLink);
         } catch (error) {
@@ -100,7 +101,7 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateLibrary(library: RequireOnlyOne<DocumentLibraryRequest, 'id'>) {
+    public async updateLibrary(library: DocumentLibraryRequestUpdate) {
         try {
             return updateDocument<DocumentLibrary>(library as DocumentLibrary);
         } catch (error) {
@@ -124,7 +125,9 @@ export class AppBridgeTheme {
         }
     }
 
-    public async updateStandardDocument(document: RequireOnlyOne<DocumentStandardRequest, 'id'>) {
+    public async updateStandardDocument(
+        document: RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>,
+    ) {
         try {
             return updateDocument<Document>(document as Document);
         } catch (error) {

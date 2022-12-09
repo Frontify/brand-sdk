@@ -116,6 +116,10 @@ export type DocumentStandardRequest = {
 };
 
 export type DocumentLibraryRequestCreate = SetOptional<Omit<DocumentLibraryRequest, 'id'>, 'heading' | 'subheading'>;
+export type DocumentLibraryRequestUpdate = RequireAtLeastOne<
+    DocumentLibraryRequest,
+    'documentGroupId' | 'heading' | 'mode' | 'settings' | 'subheading' | 'title'
+>;
 
 export type DocumentLinkRequestUpdate = RequireAtLeastOne<
     DocumentLinkRequest,

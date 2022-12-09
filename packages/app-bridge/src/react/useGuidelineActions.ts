@@ -14,9 +14,10 @@ import type {
     DocumentCategoryRequest,
     DocumentGroup,
     DocumentGroupRequest,
-    DocumentLibraryRequest,
     DocumentLibraryRequestCreate,
+    DocumentLibraryRequestUpdate,
     DocumentLinkRequest,
+    DocumentLinkRequestUpdate,
     DocumentPage,
     DocumentPageRequestCreate,
     DocumentPageRequestUpdate,
@@ -75,7 +76,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateLink = useCallback(
-        async (link: RequireOnlyOne<DocumentLinkRequest, 'id'>) => {
+        async (link: DocumentLinkRequestUpdate) => {
             const result = await appBridge.updateLink(link);
 
             emitDocumentAction({ ...result, documentGroupId: link.documentGroupId }, 'update');
@@ -102,7 +103,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateLibrary = useCallback(
-        async (library: RequireOnlyOne<DocumentLibraryRequest, 'id'>) => {
+        async (library: DocumentLibraryRequestUpdate) => {
             const result = await appBridge.updateLibrary(library);
 
             emitDocumentAction({ ...result, documentGroupId: library.documentGroupId }, 'update');
@@ -129,7 +130,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateStandardDocument = useCallback(
-        async (document: RequireOnlyOne<DocumentStandardRequest, 'id'>) => {
+        async (document: RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>) => {
             const result = await appBridge.updateStandardDocument(document);
 
             emitDocumentAction({ ...result, documentGroupId: document.documentGroupId }, 'update');
