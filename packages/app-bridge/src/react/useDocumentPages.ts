@@ -39,7 +39,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
                 }
 
                 if (event.action === 'add') {
-                    return addPage(previousState, event.page);
+                    return addPage(previousState, event.page, documentId);
                 }
 
                 if (event.action === 'update') {
@@ -55,12 +55,20 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentPageUpdate', updatePageFromEvent);
         };
-    }, [appBridge]);
+    }, [appBridge, documentId]);
 
     return [documentPages];
 };
 
-const addPage = (pages: (DocumentPage | DocumentCategory)[], pageToAdd: DocumentPage | DocumentCategory) => {
+const addPage = (
+    pages: (DocumentPage | DocumentCategory)[],
+    pageToAdd: DocumentPage | DocumentCategory,
+    currentDocument: number,
+) => {
+    if (pageToAdd.documentId !== currentDocument) {
+        pages;
+    }
+
     const pagesClone = cloneDeep(pages);
 
     const isPageInCategory =
