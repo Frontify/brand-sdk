@@ -1,5 +1,4 @@
 ---
-"@frontify/app-bridge": patch
 "@frontify/frontify-cli": patch
 "@frontify/guideline-blocks-settings": patch
 "@frontify/sidebar-settings": patch
