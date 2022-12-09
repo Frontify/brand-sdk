@@ -1,6 +1,6 @@
 {
     "name": "@frontify/sidebar-settings",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Provides types and helpers for the settings sidebar",
     "sideEffects": false,
     "main": "dist/index.umd.js",
