@@ -20,4 +20,6 @@ export type DocumentGroupApi = {
 
 export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
 
-export type DocumentGroupRequest = Pick<DocumentGroup, 'name' | 'id'>;
+export type DocumentGroupCreate = Pick<DocumentGroup, 'name'>;
+
+export type DocumentGroupUpdate = Pick<DocumentGroup, 'name' | 'id'>;

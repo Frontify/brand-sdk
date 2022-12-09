@@ -57,7 +57,7 @@ export type DocumentPageApi = {
 
 export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
 
-export type DocumentPageRequest = {
+type DocumentPageRequest = {
     id: number;
     title: string;
     documentId: number;
@@ -66,9 +66,9 @@ export type DocumentPageRequest = {
     visibility?: DocumentPageVisibility;
 };
 
-export type DocumentPageRequestCreate = Omit<DocumentPageRequest, 'id'>;
+export type DocumentPageCreate = Omit<DocumentPageRequest, 'id'>;
 
-export type DocumentPageRequestUpdate = RequireAtLeastOne<
+export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
     'categoryId' | 'documentId' | 'linkUrl' | 'title' | 'visibility'
 >;

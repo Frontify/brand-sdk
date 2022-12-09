@@ -32,7 +32,8 @@ export type CoverPage = Merge<
     }
 >;
 
-export type CoverPageRequestCreate = PickRequired<Omit<Partial<CoverPage>, 'id'>, 'documentId' | 'template'>;
+export type CoverPageCreate = PickRequired<Omit<Partial<CoverPage>, 'id'>, 'documentId' | 'template'>;
+export type CoverPageUpdate = RequireOnlyOne<CoverPage, 'id'>;
 
 export type CoverPageUpdateLegacy = {
     brandhome_draft?: boolean;

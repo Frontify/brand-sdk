@@ -90,7 +90,7 @@ export type DocumentLibrary = Simplify<
 
 export type DocumentStandard = Simplify<Document & DocumentAsNoneLink>;
 
-export type DocumentLinkRequest = {
+type DocumentLinkRequest = {
     id: number;
     title: string;
     linkUrl: string;
@@ -99,7 +99,7 @@ export type DocumentLinkRequest = {
     };
     documentGroupId?: number;
 };
-export type DocumentLibraryRequest = {
+type DocumentLibraryRequest = {
     id: number;
     mode: DocumentLibraryMode;
     settings: { project: number };
@@ -109,19 +109,23 @@ export type DocumentLibraryRequest = {
     documentGroupId?: number;
 };
 
-export type DocumentStandardRequest = {
+type DocumentStandardRequest = {
     id: number;
     title: string;
     documentGroupId?: number;
 };
 
-export type DocumentLibraryRequestCreate = SetOptional<Omit<DocumentLibraryRequest, 'id'>, 'heading' | 'subheading'>;
-export type DocumentLibraryRequestUpdate = RequireAtLeastOne<
+export type DocumentStandardCreate = Omit<DocumentStandardRequest, 'id'>;
+export type DocumentStandardUpdate = RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>;
+
+export type DocumentLibraryCreate = SetOptional<Omit<DocumentLibraryRequest, 'id'>, 'heading' | 'subheading'>;
+export type DocumentLibraryUpdate = RequireAtLeastOne<
     DocumentLibraryRequest,
     'documentGroupId' | 'heading' | 'mode' | 'settings' | 'subheading' | 'title'
 >;
 
-export type DocumentLinkRequestUpdate = RequireAtLeastOne<
+export type DocumentLinkCreate = Omit<DocumentLinkRequest, 'id'>;
+export type DocumentLinkUpdate = RequireAtLeastOne<
     DocumentLinkRequest,
     'title' | 'linkUrl' | 'linkSettings' | 'documentGroupId'
 >;

@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { RequireAtLeastOne } from 'type-fest';
 import {
     createCoverPage,
     createDocument,
@@ -36,24 +35,28 @@ import {
     Color,
     ColorPalette,
     CoverPage,
-    CoverPageRequestCreate,
+    CoverPageCreate,
+    CoverPageUpdate,
     CoverPageUpdateLegacy,
     Document,
     DocumentCategory,
-    DocumentCategoryRequest,
+    DocumentCategoryCreate,
+    DocumentCategoryUpdate,
     DocumentGroup,
-    DocumentGroupRequest,
+    DocumentGroupCreate,
+    DocumentGroupUpdate,
     DocumentLibrary,
-    DocumentLibraryRequestCreate,
-    DocumentLibraryRequestUpdate,
+    DocumentLibraryCreate,
+    DocumentLibraryUpdate,
     DocumentLink,
-    DocumentLinkRequest,
-    DocumentLinkRequestUpdate,
+    DocumentLinkCreate,
+    DocumentLinkUpdate,
     DocumentPage,
-    DocumentPageRequestCreate,
-    DocumentPageRequestUpdate,
+    DocumentPageCreate,
+    DocumentPageUpdate,
     DocumentSection,
-    DocumentStandardRequest,
+    DocumentStandardCreate,
+    DocumentStandardUpdate,
     LinkType,
 } from './types';
 import { getDatasetByElement } from './utilities';
@@ -81,7 +84,7 @@ export class AppBridgeTheme {
         return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
     }
 
-    public async createLink(link: Omit<DocumentLinkRequest, 'id'>) {
+    public async createLink(link: DocumentLinkCreate) {
         return createDocument<DocumentLink>({
             ...link,
             linkType: LinkType.External,
@@ -89,7 +92,7 @@ export class AppBridgeTheme {
         } as DocumentLink);
     }
 
-    public async updateLink(link: DocumentLinkRequestUpdate) {
+    public async updateLink(link: DocumentLinkUpdate) {
         return updateDocument<DocumentLink>(link as DocumentLink);
     }
 
@@ -97,7 +100,7 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
-    public async createLibrary(library: DocumentLibraryRequestCreate) {
+    public async createLibrary(library: DocumentLibraryCreate) {
         return createDocument<DocumentLibrary>({
             ...library,
             portalId: this.getPortalId(),
@@ -105,7 +108,7 @@ export class AppBridgeTheme {
         } as DocumentLibrary);
     }
 
-    public async updateLibrary(library: DocumentLibraryRequestUpdate) {
+    public async updateLibrary(library: DocumentLibraryUpdate) {
         return updateDocument<DocumentLibrary>(library as DocumentLibrary);
     }
 
@@ -113,17 +116,11 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
-    public async createStandardDocument(document: Omit<DocumentStandardRequest, 'id'>) {
-        try {
-            return createDocument<Document>({ ...document, portalId: this.getPortalId() } as Document);
-        } catch (error) {
-            throw console.error('Error: ', error);
-        }
+    public async createStandardDocument(document: DocumentStandardCreate) {
+        return createDocument<Document>({ ...document, portalId: this.getPortalId() } as Document);
     }
 
-    public async updateStandardDocument(
-        document: RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>,
-    ) {
+    public async updateStandardDocument(document: DocumentStandardUpdate) {
         return updateDocument<Document>(document as Document);
     }
 
@@ -131,11 +128,11 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
-    public async createDocumentGroup(documentGroup: Omit<DocumentGroupRequest, 'id'>) {
+    public async createDocumentGroup(documentGroup: DocumentGroupCreate) {
         return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
     }
 
-    public async updateDocumentGroup(documentGroup: DocumentGroupRequest) {
+    public async updateDocumentGroup(documentGroup: DocumentGroupUpdate) {
         return updateDocumentGroup(documentGroup as DocumentGroup);
     }
 
@@ -143,11 +140,11 @@ export class AppBridgeTheme {
         return deleteDocumentGroup(id);
     }
 
-    public async createDocumentCategory(category: Omit<DocumentCategoryRequest, 'id'>) {
+    public async createDocumentCategory(category: DocumentCategoryCreate) {
         return createDocumentCategory(category as DocumentCategory);
     }
 
-    public async updateDocumentCategory(category: RequireAtLeastOne<DocumentCategoryRequest, 'title' | 'documentId'>) {
+    public async updateDocumentCategory(category: DocumentCategoryUpdate) {
         return updateDocumentCategory(category as DocumentCategory);
     }
 
@@ -155,7 +152,7 @@ export class AppBridgeTheme {
         return deleteDocumentCategory(id);
     }
 
-    public async createDocumentPage(documentPage: DocumentPageRequestCreate) {
+    public async createDocumentPage(documentPage: DocumentPageCreate) {
         return createDocumentPage({
             ...documentPage,
             ...(documentPage.linkUrl && { linkType: LinkType.External }),
@@ -165,7 +162,7 @@ export class AppBridgeTheme {
     /**
      * A method for page update
      *
-     * @param documentPage - {@link DocumentPageRequestUpdate} object
+     * @param documentPage - {@link DocumentPageUpdate} object
      * @requires id - Indicates page identifier.
      *
      *
@@ -177,7 +174,7 @@ export class AppBridgeTheme {
      * @property  visibility - Indicates whether the page is visible only to the editor or everyone.
      * @property  linkUrl - Indicates whether the page is link or not.
      */
-    public async updateDocumentPage(documentPage: DocumentPageRequestUpdate) {
+    public async updateDocumentPage(documentPage: DocumentPageUpdate) {
         return updateDocumentPage({
             ...documentPage,
             ...(documentPage.linkUrl && { linkType: LinkType.External }),
@@ -188,11 +185,11 @@ export class AppBridgeTheme {
         return deleteDocumentPage(id);
     }
 
-    public async createCoverPage(coverPage: CoverPageRequestCreate) {
+    public async createCoverPage(coverPage: CoverPageCreate) {
         return createCoverPage(coverPage as CoverPage);
     }
 
-    public async updateCoverPage(coverPage: RequireOnlyOne<CoverPage, 'id'>) {
+    public async updateCoverPage(coverPage: CoverPageUpdate) {
         return updateCoverPage(coverPage as CoverPage);
     }
 
