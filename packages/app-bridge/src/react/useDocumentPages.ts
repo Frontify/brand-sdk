@@ -111,12 +111,11 @@ const updatePage = (
 const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { id: number }) => {
     const filteredPages = pages.filter((page) => page.id !== pageToDelete.id);
 
-    const updatedPages = filteredPages.map((page) => {
+    return filteredPages.map((page) => {
         if ('documentPages' in page) {
             page.documentPages = page.documentPages.filter((page) => page.id !== pageToDelete.id);
         }
+
         return page;
     });
-
-    return updatedPages;
 };

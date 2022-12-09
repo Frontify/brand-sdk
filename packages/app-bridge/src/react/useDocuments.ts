@@ -99,12 +99,11 @@ const updateDocument = (documents: (Document | DocumentGroup)[], documentToUpdat
 const deleteDocument = (documents: (Document | DocumentGroup)[], documentToDelete: { id: number }) => {
     const filteredDocuments = documents.filter((document) => document.id !== documentToDelete.id);
 
-    const updatedDocuments = filteredDocuments.map((document) => {
+    return filteredDocuments.map((document) => {
         if ('documents' in document && document.documents !== null) {
             document.documents = document.documents.filter((document) => document.id !== documentToDelete.id);
         }
+
         return document;
     });
-
-    return updatedDocuments;
 };
