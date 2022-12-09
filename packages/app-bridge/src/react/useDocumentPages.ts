@@ -125,9 +125,9 @@ const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { 
         }
     }
 
-    const result = pagesClone.map((page) => {
+    const result = pagesClone.filter((page) => {
         if (page !== undefined && 'documentPages' in page) {
-            page.documentPages.map((page) => page !== undefined);
+            page.documentPages.filter((page) => page !== undefined);
         }
 
         return page !== undefined;

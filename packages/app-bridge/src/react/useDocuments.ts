@@ -113,9 +113,9 @@ const deleteDocument = (documents: (Document | DocumentGroup)[], documentToDelet
         }
     }
 
-    const result = documentsClone.map((document) => {
+    const result = documentsClone.filter((document) => {
         if (document !== undefined && 'documents' in document) {
-            document.documents?.map((doc) => doc !== undefined);
+            document.documents?.filter((doc) => doc !== undefined);
         }
 
         return document !== undefined;
