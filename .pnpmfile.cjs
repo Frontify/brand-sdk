@@ -12,7 +12,6 @@ function readPackage(pkg) {
     if (pkg.name === "@frontify/fondue") {
         pkg.dependencies = {
             ...pkg.dependencies,
-            "@xstate/immer": "^4.29.0",
             scheduler: ">=0.19.0",
         };
     }
