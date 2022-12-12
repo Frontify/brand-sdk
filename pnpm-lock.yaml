@@ -22,7 +22,7 @@ importers:
       '@testing-library/react': 12.1.5
       '@testing-library/react-hooks': 8.0.1
       '@types/lodash-es': 4.17.6
-      '@types/react': 18.0.26
+      '@types/react': 17.0.52
       '@types/sinon': 10.0.13
       '@vitest/coverage-c8': 0.25.7
       '@vitest/ui': 0.25.7
@@ -51,9 +51,9 @@ importers:
     devDependencies:
       '@frontify/eslint-config-react': 0.15.5_noqqohriplxq4oq74z62mmtwye
       '@testing-library/react': 12.1.5_sfoxds7t5ydpegc3knd667wn6m
-      '@testing-library/react-hooks': 8.0.1_yqqarjzm4nnoetch7z7xn2dea4
+      '@testing-library/react-hooks': 8.0.1_gzv7pa6nrbev3fs6gyzn7sadkq
       '@types/lodash-es': 4.17.6
-      '@types/react': 18.0.26
+      '@types/react': 17.0.52
       '@types/sinon': 10.0.13
       '@vitest/coverage-c8': 0.25.7_7xd7ipqvkgytwzflupn24cxnca
       '@vitest/ui': 0.25.7
@@ -2671,7 +2671,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/react-hooks/8.0.1_yqqarjzm4nnoetch7z7xn2dea4:
+  /@testing-library/react-hooks/8.0.1_gzv7pa6nrbev3fs6gyzn7sadkq:
     resolution: {integrity: sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -2688,7 +2688,7 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.20.6
-      '@types/react': 18.0.26
+      '@types/react': 17.0.52
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-error-boundary: 3.1.4_react@17.0.2
@@ -2898,14 +2898,6 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
-
-  /@types/react/18.0.26:
-    resolution: {integrity: sha512-hCR3PJQsAIXyxhTNSiDFY//LhnMZWpNNr5etoCqx/iUfGc5gXWtQR2Phl908jVR6uPXacojQWTg4qRpkxTuGug==}
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.2
-      csstype: 3.1.1
-    dev: true
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
@@ -4967,7 +4959,7 @@ packages:
       '@udecode/plate-styled-components': 18.9.0_egoac5gygp6hoctg2sges42i74
       raf: 3.4.1
       react: 17.0.2
-      react-dnd: 16.0.1_react@17.0.2
+      react-dnd: 16.0.1_q5o373oqrklnndq2vhekyuzhxi
       react-dnd-html5-backend: 15.1.2
       react-dom: 17.0.2_react@17.0.2
       slate: 0.78.0
