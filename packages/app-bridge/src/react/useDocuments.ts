@@ -27,34 +27,77 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
     }, [appBridge]);
 
     useEffect(() => {
-        const updateDocumentsFromEvent = (event: { document: Document | DocumentGroup; action: EmitterAction }) => {
+        const updateFromEvent = (event: {
+            action: EmitterAction;
+            documentOrDocumentGroup: Document | DocumentGroup | { id: number };
+        }): void => {
             setDocuments((previousState) => {
                 const isInitial = previousState === null;
 
                 if (isInitial) {
-                    return event.action === 'update' || event.action === 'add' ? [event.document] : previousState;
+                    return event.action === 'update' || event.action === 'add'
+                        ? [event.documentOrDocumentGroup as Document | DocumentGroup]
+                        : previousState;
                 }
 
                 if (event.action === 'delete') {
-                    return deleteDocument(previousState, event.document);
+                    return deleteDocument(previousState, event.documentOrDocumentGroup as { id: number });
                 }
 
                 if (event.action === 'add') {
-                    return addDocument(previousState, event.document);
+                    return addDocument(previousState, event.documentOrDocumentGroup as Document | DocumentGroup);
                 }
 
                 if (event.action === 'update') {
-                    return updateDocument(previousState, event.document);
+                    return updateDocument(previousState, event.documentOrDocumentGroup as Document | DocumentGroup);
                 }
 
                 return previousState;
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentUpdate', updateDocumentsFromEvent);
+        const updateStandardDocumentFromEvent = ({
+            action,
+            standardDocument,
+        }: {
+            action: EmitterAction;
+            standardDocument: Document | { id: number };
+        }) => updateFromEvent({ action, documentOrDocumentGroup: standardDocument });
+
+        const updateLibraryDocumentFromEvent = ({
+            action,
+            library,
+        }: {
+            action: EmitterAction;
+            library: Document | { id: number };
+        }) => updateFromEvent({ action, documentOrDocumentGroup: library });
+
+        const updateLinkDocumentFromEvent = ({
+            action,
+            link,
+        }: {
+            action: EmitterAction;
+            link: Document | { id: number };
+        }) => updateFromEvent({ action, documentOrDocumentGroup: link });
+
+        const updateDocumentGroupFromEvent = ({
+            action,
+            documentGroup,
+        }: {
+            action: EmitterAction;
+            documentGroup: DocumentGroup | { id: number };
+        }) => updateFromEvent({ action, documentOrDocumentGroup: documentGroup });
+
+        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
+        window.emitter.on('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
+        window.emitter.on('AppBridge:GuidelineLibraryAction', updateLibraryDocumentFromEvent);
+        window.emitter.on('AppBridge:GuidelineLinkAction', updateLinkDocumentFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentUpdate', updateDocumentsFromEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
+            window.emitter.off('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
+            window.emitter.off('AppBridge:GuidelineLibraryAction', updateLibraryDocumentFromEvent);
+            window.emitter.off('AppBridge:GuidelineLinkAction', updateLinkDocumentFromEvent);
         };
     }, [appBridge]);
 

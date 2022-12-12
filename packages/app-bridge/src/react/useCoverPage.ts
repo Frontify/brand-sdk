@@ -25,7 +25,7 @@ export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType 
     }, [appBridge, isLoading]);
 
     useEffect(() => {
-        const updateCoverPageFromEvent = (event: { coverPage: CoverPage; action: EmitterAction }) => {
+        const updateCoverPageFromEvent = (event: { action: EmitterAction; coverPage?: CoverPage }) => {
             setCoverPage((previousState) => {
                 if (event.action === 'add') {
                     setIsLoading(true);
@@ -36,18 +36,18 @@ export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType 
                     return null;
                 }
 
-                if (event.action === 'update') {
-                    return { ...previousState, ...event.coverPage };
+                if (event.action === 'update' && coverPage) {
+                    return { ...previousState, ...coverPage };
                 }
 
                 return previousState;
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineCoverPageUpdate', updateCoverPageFromEvent);
+        window.emitter.on('AppBridge:GuidelineCoverPageAction', updateCoverPageFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineCoverPageUpdate', updateCoverPageFromEvent);
+            window.emitter.off('AppBridge:GuidelineCoverPageAction', updateCoverPageFromEvent);
         };
     }, [appBridge]);
 

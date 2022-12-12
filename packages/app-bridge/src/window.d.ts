@@ -1,18 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BlockSettingsUpdateEvent } from './react';
-import type {
-    Asset,
-    Color,
-    ColorPalette,
-    CoverPage,
-    Document,
-    DocumentGroup,
-    DocumentPage,
-    EmitterAction,
-    TerrificComponent,
-    TerrificEvent,
-} from './types';
+import type { Emitter, EmitterAction, TerrificComponent, TerrificEvent } from './types';
+
+type AddUpdateEmitterAction = Omit<EmitterAction, 'delete'>;
 
 declare global {
     interface Window {
@@ -60,37 +50,7 @@ declare global {
             };
         };
         blockSettings: Record<number, Record<string, unknown>>;
-        emitter: Emitter<{
-            'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
-            'AppBridge:BlockAssetsUpdated': {
-                blockId: number;
-                blockAssets: Record<string, Asset[]>;
-            };
-            'AppBridge:ColorsUpdated': {
-                blockId: number;
-                colors: Color[];
-            };
-            'AppBridge:ColorPalettesUpdated': {
-                blockId: number;
-                colorPalettes: ColorPalette[];
-            };
-            'AppBridge:GuidelineDocumentUpdate': {
-                document: Document | DocumentGroup;
-                action: EmitterAction;
-            };
-            'AppBridge:GuidelineDocumentPageUpdate': {
-                page: DocumentPage;
-                action: EmitterAction;
-            };
-            'AppBridge:GuidelineCoverPageUpdate': {
-                coverPage: CoverPage;
-                action: EmitterAction;
-            };
-            'AppBridge:GuidelineBrandportalLinkUpdate': {
-                brandportalLink: CoverPage;
-                action: EmitterAction;
-            };
-        }>;
+        emitter: Emitter;
     }
 }
 

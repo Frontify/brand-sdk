@@ -18,9 +18,9 @@ export const useBlockSettings = <T = Record<string, unknown>>(
 
     // Add listener for block settings updates
     useEffect(() => {
-        const updateBlockSettingsFromEvent = (event: BlockSettingsUpdateEvent<T>) => {
+        const updateBlockSettingsFromEvent = (event: BlockSettingsUpdateEvent) => {
             if (event.blockId === blockId) {
-                setBlockSettings({ ...event.blockSettings });
+                setBlockSettings({ ...event.blockSettings } as T);
             }
         };
 

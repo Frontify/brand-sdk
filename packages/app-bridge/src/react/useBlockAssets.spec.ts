@@ -6,6 +6,7 @@ import { cleanup, renderHook } from '@testing-library/react-hooks';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 import { useBlockAssets } from './useBlockAssets';
+import { SinonStub } from 'sinon';
 
 describe('useBlockAssets hook', () => {
     afterEach(() => {
@@ -42,7 +43,7 @@ describe('useBlockAssets hook', () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
         });
 
-        const call = window.emitter.emit.getCall(0);
+        const call = (window.emitter.emit as SinonStub).getCall(0);
 
         expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
         expect(call.lastArg.blockId).toEqual(123);
@@ -69,7 +70,7 @@ describe('useBlockAssets hook', () => {
             await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
         });
 
-        const call = window.emitter.emit.getCall(0);
+        const call = (window.emitter.emit as SinonStub).getCall(0);
         expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
         expect(call.lastArg.blockId).toEqual(123);
         expect(call.lastArg.blockAssets).toMatchObject({ key: [asset, assetToAdd] });
