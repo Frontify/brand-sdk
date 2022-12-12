@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.0.9
+
+### Patch Changes
+
+- [`ff4cf93`](https://github.com/Frontify/brand-sdk/commit/ff4cf935fbffa4933b31eeea6cad3a0c89b8bf88) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update App Bridge to latest
+
 ## 0.0.8
 
 ### Patch Changes
