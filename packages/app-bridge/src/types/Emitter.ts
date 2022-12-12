@@ -6,11 +6,12 @@ import type { BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
 import type { Asset } from './Asset';
 import type { Color } from './Color';
-import { Document } from './Document';
-import { DocumentPage } from './DocumentPage';
-import { DocumentGroup } from './DocumentGroup';
+import type { Document } from './Document';
+import type { DocumentPage } from './DocumentPage';
 import type { ColorPalette } from './ColorPalette';
 import type { CoverPage } from './CoverPage';
+import type { DocumentGroup } from './DocumentGroup';
+import type { DocumentCategory } from './DocumentCategory';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
@@ -19,29 +20,83 @@ export type Emitter = MittEmitter<{
     'AppBridge:BlockAssetsUpdated': {
         blockId: number;
         blockAssets: Record<string, Asset[]>;
+        prevBlockAssets: Record<string, Asset[]>;
     };
     'AppBridge:ColorsUpdated': {
         blockId: number;
         colors: Color[];
+        prevColors: Color[];
     };
     'AppBridge:ColorPalettesUpdated': {
         blockId: number;
         colorPalettes: ColorPalette[];
+        prevColorPalettes: ColorPalette[];
     };
-    'AppBridge:GuidelineDocumentUpdate': {
-        document: Document | DocumentGroup;
-        action: EmitterAction;
-    };
-    'AppBridge:GuidelineDocumentPageUpdate': {
-        page: DocumentPage;
-        action: EmitterAction;
-    };
-    'AppBridge:GuidelineCoverPageUpdate': {
-        coverPage: CoverPage;
-        action: EmitterAction;
-    };
-    'AppBridge:GuidelineBrandportalLinkUpdate': {
+    'AppBridge:GuidelineStandardDocumentAction':
+        | {
+              standardDocument: Document;
+              action: 'add' | 'update';
+          }
+        | {
+              standardDocument: { id: number };
+              action: 'delete';
+          };
+    'AppBridge:GuidelineLibraryAction':
+        | {
+              library: Document;
+              action: 'add' | 'update';
+          }
+        | {
+              library: { id: number };
+              action: 'delete';
+          };
+    'AppBridge:GuidelineLinkAction':
+        | {
+              link: Document;
+              action: 'add' | 'update';
+          }
+        | {
+              link: { id: number };
+              action: 'delete';
+          };
+    'AppBridge:GuidelineDocumentGroupAction':
+        | {
+              documentGroup: DocumentGroup;
+              action: 'add' | 'update';
+          }
+        | {
+              documentGroup: { id: number };
+              action: 'delete';
+          };
+    'AppBridge:GuidelineDocumentCategoryAction':
+        | {
+              documentCategory: DocumentCategory;
+              action: 'add' | 'update';
+          }
+        | {
+              documentCategory: { id: number };
+              action: 'delete';
+          };
+    'AppBridge:GuidelineDocumentPageAction':
+        | {
+              documentPage: DocumentPage;
+              action: 'add' | 'update';
+          }
+        | {
+              documentPage: { id: number };
+              action: 'delete';
+          };
+    'AppBridge:GuidelineCoverPageAction':
+        | {
+              coverPage: CoverPage;
+              action: 'add' | 'update';
+          }
+        | {
+              action: 'delete';
+          };
+    'AppBridge:GuidelineBrandportalLinkAction': {
         brandportalLink: CoverPage;
-        action: EmitterAction;
+        action: 'update';
     };
+    'AppBridge:OpenNavigationManager': void;
 }>;

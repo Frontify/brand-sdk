@@ -22,6 +22,7 @@ import {
 } from './tests';
 import { HttpClient } from './utilities';
 import { getColorPalettesByProjectId, getColorsByColorPaletteId } from './repositories';
+import { Emitter } from './types';
 
 const PORTAL_ID = 652;
 const PROJECT_ID = 453;
@@ -104,12 +105,12 @@ describe('AppBridgeThemeTest', () => {
 
     it('open the navigation manager', () => {
         const emitterEmitStub = vi.fn();
-        window.emitter = { emit: emitterEmitStub };
+        window.emitter = { emit: emitterEmitStub } as unknown as Emitter;
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
         appBridge.openNavigationManager();
 
-        expect(emitterEmitStub).toHaveBeenCalledWith('OpenNavigationManager');
+        expect(emitterEmitStub).toHaveBeenCalledWith('AppBridge:OpenNavigationManager');
     });
 
     it('return cover page', async () => {

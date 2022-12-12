@@ -40,10 +40,10 @@ export const useBrandportalLink = (appBridge: AppBridgeTheme): UseBrandportalLin
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineBrandportalLinkUpdate', updateBrandportalLinkFromEvent);
+        window.emitter.on('AppBridge:GuidelineBrandportalLinkAction', updateBrandportalLinkFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineBrandportalLinkUpdate', updateBrandportalLinkFromEvent);
+            window.emitter.off('AppBridge:GuidelineBrandportalLinkAction', updateBrandportalLinkFromEvent);
         };
     }, [appBridge]);
 

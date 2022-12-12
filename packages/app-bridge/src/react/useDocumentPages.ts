@@ -26,34 +26,64 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
     }, [appBridge, documentId]);
 
     useEffect(() => {
-        const updatePageFromEvent = (event: { page: DocumentPage | DocumentCategory; action: EmitterAction }) => {
+        const updateFromEvent = (event: {
+            action: EmitterAction;
+            documentPageOrDocumentCategory: DocumentPage | DocumentCategory | { id: number };
+        }) => {
             setDocumentPages((previousState) => {
                 const isInitial = previousState === null;
 
                 if (isInitial) {
-                    return event.action === 'update' || event.action === 'add' ? [event.page] : previousState;
+                    return event.action === 'update' || event.action === 'add'
+                        ? [event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory]
+                        : previousState;
                 }
 
                 if (event.action === 'delete') {
-                    return deletePage(previousState, event.page);
+                    return deletePage(previousState, event.documentPageOrDocumentCategory);
                 }
 
                 if (event.action === 'add') {
-                    return addPage(previousState, event.page, documentId);
+                    return addPage(
+                        previousState,
+                        event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory,
+                        documentId,
+                    );
                 }
 
                 if (event.action === 'update') {
-                    return updatePage(previousState, event.page);
+                    return updatePage(
+                        previousState,
+                        event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory,
+                    );
                 }
 
                 return previousState;
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentPageUpdate', updatePageFromEvent);
+        const updateDocumentPageFromEvent = ({
+            action,
+            documentPage,
+        }: {
+            action: EmitterAction;
+            documentPage: DocumentPage | { id: number };
+        }) => updateFromEvent({ action, documentPageOrDocumentCategory: documentPage });
+
+        const updateDocumentCategoryFromEvent = ({
+            action,
+            documentCategory,
+        }: {
+            action: EmitterAction;
+            documentCategory: DocumentCategory | { id: number };
+        }) => updateFromEvent({ action, documentPageOrDocumentCategory: documentCategory });
+
+        window.emitter.on('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentPageUpdate', updatePageFromEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
         };
     }, [appBridge, documentId]);
 

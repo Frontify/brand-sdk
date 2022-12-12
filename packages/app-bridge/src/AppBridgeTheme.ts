@@ -77,7 +77,7 @@ export class AppBridgeTheme {
     }
 
     public openNavigationManager() {
-        window.emitter.emit('OpenNavigationManager');
+        window.emitter.emit('AppBridge:OpenNavigationManager');
     }
 
     public getTranslationLanguage(): string {
