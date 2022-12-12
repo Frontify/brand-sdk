@@ -13,7 +13,6 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             fileName: (format: string) => `[name].${format}.js`,
-            name: 'GuidelineBlocksSettings',
         },
         sourcemap: true,
         minify: true,
@@ -21,14 +20,17 @@ export default defineConfig({
             external: [...dependencies],
             output: [
                 {
+                    name: 'GuidelineBlocksSettings',
                     format: 'es',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
                 },
                 {
+                    name: 'GuidelineBlocksSettings',
                     format: 'umd',
                 },
                 {
+                    name: 'GuidelineBlocksSettings',
                     format: 'cjs',
                 },
             ],

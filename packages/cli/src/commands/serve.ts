@@ -67,9 +67,8 @@ class DevelopmentServer {
                 );
             });
 
-            await viteServer.listen(this.port, true);
-
-            Logger.info(`Development server is listening on http://localhost:${this.port}`);
+            const server = await viteServer.listen(this.port, true);
+            server.printUrls();
         } catch (error) {
             console.error(error);
             process.exit(1);

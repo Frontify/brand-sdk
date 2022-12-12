@@ -26,7 +26,6 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             fileName: (format: string) => `[name].${format}.js`,
-            name: 'AppBridge',
         },
         sourcemap: true,
         minify: true,
@@ -34,16 +33,19 @@ export default defineConfig({
             external: [...dependencies, ...peerDependencies],
             output: [
                 {
+                    name: 'AppBridge',
                     format: 'es',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
                     globals,
                 },
                 {
+                    name: 'AppBridge',
                     format: 'umd',
                     globals,
                 },
                 {
+                    name: 'AppBridge',
                     format: 'cjs',
                     globals,
                 },
