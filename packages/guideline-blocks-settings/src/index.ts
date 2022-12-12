@@ -19,6 +19,7 @@ import type {
     NotificationBlock as NotificationBlockSidebarSettings,
     SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
     SettingBlock as SettingBlockSidebarSettings,
+    SimpleSettingBlock as SimpleSettingBlockSidebarSettings,
     SliderBlock as SliderBlockSidebarSettings,
     SwitchBlock as SwitchBlockSidebarSettings,
     TemplateInputBlock as TemplateInputBlockSidebarSettings,
@@ -45,6 +46,7 @@ export type MultiInputBlock = MultiInputBlockSidebarSettings<AppBridgeBlock>;
 export type NotificationBlock = NotificationBlockSidebarSettings<AppBridgeBlock>;
 export type SectionHeadingBlock = SectionHeadingBlockSidebarSettings<AppBridgeBlock>;
 export type SettingBlock = SettingBlockSidebarSettings<AppBridgeBlock>;
+export type SimpleSettingBlock = SimpleSettingBlockSidebarSettings<AppBridgeBlock>;
 export type SliderBlock = SliderBlockSidebarSettings<AppBridgeBlock>;
 export type SwitchBlock = SwitchBlockSidebarSettings<AppBridgeBlock>;
 export type TemplateInputBlock = TemplateInputBlockSidebarSettings<AppBridgeBlock>;
