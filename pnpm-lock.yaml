@@ -153,10 +153,10 @@ importers:
       vite: 3.2.5
       vite-plugin-dts: 1.7.1
     dependencies:
-      '@frontify/app-bridge': link:../app-bridge
-      '@frontify/fondue': 12.0.0-beta.32_gzv7pa6nrbev3fs6gyzn7sadkq
+      '@frontify/fondue': 12.0.0-beta.33_gzv7pa6nrbev3fs6gyzn7sadkq
       '@frontify/sidebar-settings': link:../sidebar-settings
     devDependencies:
+      '@frontify/app-bridge': link:../app-bridge
       '@frontify/eslint-config-typescript': 0.15.5_inulksvuwhzgv4fhejozepzeya
       '@types/react': 17.0.52
       '@types/react-dom': 17.0.18
@@ -184,7 +184,7 @@ importers:
       vite-plugin-dts: 1.7.1
       vitest: 0.25.4
     dependencies:
-      '@frontify/fondue': 12.0.0-beta.32_sfoxds7t5ydpegc3knd667wn6m
+      '@frontify/fondue': 12.0.0-beta.33_sfoxds7t5ydpegc3knd667wn6m
     devDependencies:
       '@frontify/app-bridge': link:../app-bridge
       '@frontify/eslint-config-typescript': 0.15.5_k6xd2qypu5lqzqcy2u2jingzq4
@@ -1007,8 +1007,8 @@ packages:
       - ts-node
     dev: false
 
-  /@frontify/fondue/12.0.0-beta.32_gzv7pa6nrbev3fs6gyzn7sadkq:
-    resolution: {integrity: sha512-GLMQC/SDH/JzK3a4DlrnZrhL6GXsLzZV5BYCxjfD+TEfJV8fJaKu5iZJcvXk3cSjygTY8nGzLWZSbWRdbJ9OYg==}
+  /@frontify/fondue/12.0.0-beta.33_gzv7pa6nrbev3fs6gyzn7sadkq:
+    resolution: {integrity: sha512-yxqaFptDsmCbTRnDB5Od8HKo8PoF7a4iBTAEDUhNPljkXsqNkLoHR4VhdfrIAJ0sZuP7dd7bwbBar1Gmyg9oHw==}
     engines: {node: '>=16'}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
@@ -1095,8 +1095,8 @@ packages:
       - ts-node
     dev: false
 
-  /@frontify/fondue/12.0.0-beta.32_sfoxds7t5ydpegc3knd667wn6m:
-    resolution: {integrity: sha512-GLMQC/SDH/JzK3a4DlrnZrhL6GXsLzZV5BYCxjfD+TEfJV8fJaKu5iZJcvXk3cSjygTY8nGzLWZSbWRdbJ9OYg==}
+  /@frontify/fondue/12.0.0-beta.33_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-yxqaFptDsmCbTRnDB5Od8HKo8PoF7a4iBTAEDUhNPljkXsqNkLoHR4VhdfrIAJ0sZuP7dd7bwbBar1Gmyg9oHw==}
     engines: {node: '>=16'}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0

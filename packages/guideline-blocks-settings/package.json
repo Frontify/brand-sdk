@@ -23,6 +23,7 @@
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
+        "@frontify/app-bridge": "workspace:*",
         "@frontify/eslint-config-typescript": "0.15.5",
         "@types/react": "17",
         "@types/react-dom": "17",
@@ -36,7 +37,6 @@
         "vite-plugin-dts": "1.7.1"
     },
     "dependencies": {
-        "@frontify/app-bridge": "workspace:*",
         "@frontify/fondue": "latest",
         "@frontify/sidebar-settings": "workspace:*"
     },
