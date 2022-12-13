@@ -25,7 +25,6 @@
         "test:watch": "vitest"
     },
     "devDependencies": {
-        "@frontify/app-bridge": "workspace:*",
         "@frontify/eslint-config-typescript": "0.15.5",
         "eslint": "8.29.0",
         "eslint-plugin-notice": "0.9.10",
@@ -38,9 +37,7 @@
         "vitest": "0.25.7"
     },
     "dependencies": {
-        "@frontify/fondue": "latest"
-    },
-    "peerDependencies": {
-        "@frontify/app-bridge": ">=3 || >=3.0.0-beta"
+        "@frontify/fondue": "latest",
+        "@frontify/app-bridge": "workspace:>=3||>=3.0.0-beta"
     }
 }
