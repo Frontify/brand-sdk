@@ -1,5 +1,15 @@
 # @frontify/sidebar-settings
 
+## 0.0.10
+
+### Patch Changes
+
+- [#299](https://github.com/Frontify/brand-sdk/pull/299) [`187466a`](https://github.com/Frontify/brand-sdk/commit/187466ae50c08f4abf5d0b257951ccf083d6344d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update to Vite 4 and TS 4.9
+
+- [`e47c574`](https://github.com/Frontify/brand-sdk/commit/e47c5747ab1041a62dc880fa92436b8ab464bfef) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`3afb60d`](https://github.com/Frontify/brand-sdk/commit/3afb60d849a8ffb262aed4dc8e53d46b9b9a04ea) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Move App Bridge from peerDependencies to dependencies
+
 ## 0.0.9
 
 ### Patch Changes
