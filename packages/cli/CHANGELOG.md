@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 5.3.4
+
+### Patch Changes
+
+- [#299](https://github.com/Frontify/brand-sdk/pull/299) [`187466a`](https://github.com/Frontify/brand-sdk/commit/187466ae50c08f4abf5d0b257951ccf083d6344d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update to Vite 4 and TS 4.9
+
+- [`e47c574`](https://github.com/Frontify/brand-sdk/commit/e47c5747ab1041a62dc880fa92436b8ab464bfef) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 5.3.3
 
 ### Patch Changes
