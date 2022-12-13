@@ -138,7 +138,7 @@ importers:
 
   packages/guideline-blocks-settings:
     specifiers:
-      '@frontify/app-bridge': workspace:*
+      '@frontify/app-bridge': workspace:>=3||>=3.0.0-beta
       '@frontify/eslint-config-typescript': 0.15.5
       '@frontify/fondue': latest
       '@frontify/sidebar-settings': workspace:*
@@ -153,10 +153,10 @@ importers:
       vite: 4.0.0
       vite-plugin-dts: 1.7.1
     dependencies:
+      '@frontify/app-bridge': link:../app-bridge
       '@frontify/fondue': 12.0.0-beta.33_gzv7pa6nrbev3fs6gyzn7sadkq
       '@frontify/sidebar-settings': link:../sidebar-settings
     devDependencies:
-      '@frontify/app-bridge': link:../app-bridge
       '@frontify/eslint-config-typescript': 0.15.5_lqwc2zjgrlxsq4ydjmen4lphum
       '@types/react': 17.0.52
       '@types/react-dom': 17.0.18
@@ -171,7 +171,7 @@ importers:
 
   packages/sidebar-settings:
     specifiers:
-      '@frontify/app-bridge': workspace:*
+      '@frontify/app-bridge': workspace:>=3||>=3.0.0-beta
       '@frontify/eslint-config-typescript': 0.15.5
       '@frontify/fondue': latest
       eslint: 8.29.0
@@ -184,9 +184,9 @@ importers:
       vite-plugin-dts: 1.7.1
       vitest: 0.25.7
     dependencies:
+      '@frontify/app-bridge': link:../app-bridge
       '@frontify/fondue': 12.0.0-beta.33_sfoxds7t5ydpegc3knd667wn6m
     devDependencies:
-      '@frontify/app-bridge': link:../app-bridge
       '@frontify/eslint-config-typescript': 0.15.5_lqwc2zjgrlxsq4ydjmen4lphum
       eslint: 8.29.0
       eslint-plugin-notice: 0.9.10_eslint@8.29.0
