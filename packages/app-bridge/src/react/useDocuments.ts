@@ -34,22 +34,22 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             setDocuments((previousState) => {
                 const isInitial = previousState === null;
 
+                const item = event.documentOrDocumentGroup as Document | DocumentGroup;
+
                 if (isInitial) {
-                    return event.action === 'update' || event.action === 'add'
-                        ? [event.documentOrDocumentGroup as Document | DocumentGroup]
-                        : previousState;
+                    return event.action === 'update' || event.action === 'add' ? [item] : previousState;
                 }
 
                 if (event.action === 'delete') {
-                    return deleteDocument(previousState, event.documentOrDocumentGroup as { id: number });
+                    return deleteItem(previousState, event.documentOrDocumentGroup satisfies { id: number });
                 }
 
                 if (event.action === 'add') {
-                    return addDocument(previousState, event.documentOrDocumentGroup as Document | DocumentGroup);
+                    return addItem(previousState, item);
                 }
 
                 if (event.action === 'update') {
-                    return updateDocument(previousState, event.documentOrDocumentGroup as Document | DocumentGroup);
+                    return updateItem(previousState, item);
                 }
 
                 return previousState;
@@ -104,49 +104,84 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
     return { documents };
 };
 
-const addDocument = (documents: (Document | DocumentGroup)[], documentToAdd: Document | DocumentGroup) => {
-    const documentsClone = cloneDeep(documents);
+const addItem = (items: (Document | DocumentGroup)[], itemToAdd: Document | DocumentGroup) => {
+    const itemsClone = cloneDeep(items);
 
     const isDocumentInGroup =
-        'documentGroupId' in documentToAdd &&
-        documentToAdd.documentGroupId !== null &&
-        documentToAdd.documentGroupId !== undefined;
+        'documentGroupId' in itemToAdd && itemToAdd.documentGroupId !== null && itemToAdd.documentGroupId !== undefined;
 
     const addDocumentToGroup = () => {
-        for (const document of documentsClone) {
-            if (document.id === (documentToAdd as Document).documentGroupId && 'documents' in document) {
-                document.documents
-                    ? document.documents.push(documentToAdd as Document)
-                    : (document.documents = [documentToAdd as Document]);
+        for (const item of itemsClone) {
+            const isDocumentGroup = 'documents' in item;
+            const itShouldAdd = item.id === (itemToAdd as Document).documentGroupId;
+
+            if (isDocumentGroup && itShouldAdd) {
+                if (item.documents) {
+                    item.documents.push(itemToAdd as Document);
+                } else {
+                    item.documents = [itemToAdd as Document];
+                }
 
                 break;
             }
         }
     };
 
-    isDocumentInGroup ? addDocumentToGroup() : documentsClone.push(documentToAdd);
+    isDocumentInGroup ? addDocumentToGroup() : itemsClone.push(itemToAdd);
 
-    return documentsClone;
+    return itemsClone;
 };
 
-const updateDocument = (documents: (Document | DocumentGroup)[], documentToUpdate: Document | DocumentGroup) => {
-    const documentsClone = cloneDeep(documents);
+const updateItem = (items: (Document | DocumentGroup)[], itemToUpdate: Document | DocumentGroup) => {
+    const itemsClone = cloneDeep(items);
 
-    const documentToUpdateIndex = documentsClone.findIndex((document) => document.id === documentToUpdate.id);
+    const isDocumentInGroup =
+        'documentGroupId' in itemToUpdate &&
+        itemToUpdate.documentGroupId !== null &&
+        itemToUpdate.documentGroupId !== undefined;
 
-    documentsClone[documentToUpdateIndex] = documentToUpdate;
+    const updateDocumentInDocumentGroup = () => {
+        for (const item of itemsClone) {
+            const isDocumentGroup = 'documents' in item;
 
-    return documentsClone;
+            const itShouldUpdate = item.id === (itemToUpdate as Document).documentGroupId;
+
+            if (isDocumentGroup && itShouldUpdate && item.documents) {
+                const documentToUpdateIndex = item.documents.findIndex((document) => document.id === itemToUpdate.id);
+
+                item.documents[documentToUpdateIndex] = {
+                    ...item.documents[documentToUpdateIndex],
+                    ...(itemToUpdate as Document),
+                };
+
+                break;
+            }
+        }
+    };
+
+    if (isDocumentInGroup) {
+        updateDocumentInDocumentGroup();
+
+        return itemsClone;
+    }
+
+    const itemToUpdateIndex = itemsClone.findIndex((item) => item.id === itemToUpdate.id);
+
+    if (itemToUpdateIndex !== -1) {
+        itemsClone[itemToUpdateIndex] = itemToUpdate;
+    }
+
+    return itemsClone;
 };
 
-const deleteDocument = (documents: (Document | DocumentGroup)[], documentToDelete: { id: number }) => {
-    const filteredDocuments = documents.filter((document) => document.id !== documentToDelete.id);
+const deleteItem = (items: (Document | DocumentGroup)[], itemToDelete: { id: number }) => {
+    const filteredItems = items.filter((item) => item.id !== itemToDelete.id);
 
-    return filteredDocuments.map((document) => {
-        if ('documents' in document && document.documents !== null) {
-            document.documents = document.documents.filter((document) => document.id !== documentToDelete.id);
+    return filteredItems.map((item) => {
+        if ('documents' in item && item.documents !== null) {
+            item.documents = item.documents.filter((document) => document.id !== itemToDelete.id);
         }
 
-        return document;
+        return item;
     });
 };

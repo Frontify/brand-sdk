@@ -40,7 +40,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
                 }
 
                 if (event.action === 'delete') {
-                    return deleteItem(previousState, event.documentPageOrDocumentCategory);
+                    return deleteItem(previousState, event.documentPageOrDocumentCategory satisfies { id: number });
                 }
 
                 if (event.action === 'add') {
@@ -127,17 +127,17 @@ const updateItem = (items: (DocumentPage | DocumentCategory)[], itemToUpdate: Do
         'categoryId' in itemToUpdate && itemToUpdate.categoryId !== null && itemToUpdate.categoryId !== undefined;
 
     const updatePageInCategory = () => {
-        for (const page of itemsClone) {
-            const isCategory = 'documentPages' in page;
+        for (const item of itemsClone) {
+            const isCategory = 'documentPages' in item;
 
             const itShouldUpdate =
-                page.id === (itemToUpdate as DocumentPage).categoryId && page.documentId === itemToUpdate.documentId;
+                item.id === (itemToUpdate as DocumentPage).categoryId && item.documentId === itemToUpdate.documentId;
 
             if (isCategory && itShouldUpdate) {
-                const pageToUpdateIndex = page.documentPages.findIndex((page) => page.id === itemToUpdate.id);
+                const pageToUpdateIndex = item.documentPages.findIndex((page) => page.id === itemToUpdate.id);
 
-                page.documentPages[pageToUpdateIndex] = {
-                    ...page.documentPages[pageToUpdateIndex],
+                item.documentPages[pageToUpdateIndex] = {
+                    ...item.documentPages[pageToUpdateIndex],
                     ...(itemToUpdate as DocumentPage),
                 };
 

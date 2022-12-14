@@ -64,7 +64,7 @@ export type DocumentApi = Simplify<
             view_count: Nullable<number>;
             mode: DocumentMode;
             settings: any[];
-            appearance: Nullable<Record<string, any>>;
+            appearance: any;
             logo_file_id: Nullable<string>;
             logo_settings: Nullable<any>;
             background_file_id: Nullable<string>;
