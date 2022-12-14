@@ -42,10 +42,16 @@ export enum AssetChooserObjectType {
 }
 
 export type AssetChooserOptions = {
-    selectedValueId?: number | string;
     projectTypes?: AssetChooserProjectType[];
     objectTypes?: AssetChooserObjectType[];
     multiSelection?: boolean;
     extensions?: (FileExtension | string)[];
     urlContains?: string;
-};
+} & (
+    | {
+          selectedValueId?: number | string;
+      }
+    | {
+          selectedValueIds?: (number | string)[];
+      }
+);
