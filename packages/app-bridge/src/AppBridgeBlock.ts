@@ -293,9 +293,9 @@ export class AppBridgeBlock {
 
         window.blockSettings[this.blockId] = mergedSettings;
 
-        this.getReferencesIds().forEach((blockReferenceId) => {
+        for (const blockReferenceId of this.getReferencesIds()) {
             window.blockSettings[blockReferenceId] = mergedSettings;
-        });
+        }
     }
 
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
