@@ -289,7 +289,13 @@ export class AppBridgeBlock {
             throw new Error('Could not update the block settings');
         }
 
-        window.blockSettings[this.blockId] = mergeDeep(window.blockSettings[this.blockId] || {}, newSettings);
+        const mergedSettings = mergeDeep(window.blockSettings[this.blockId] || {}, newSettings);
+
+        window.blockSettings[this.blockId] = mergedSettings;
+
+        this.getReferencesIds().forEach((blockReferenceId) => {
+            window.blockSettings[blockReferenceId] = mergedSettings;
+        });
     }
 
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
@@ -411,6 +417,12 @@ export class AppBridgeBlock {
     private getBlockReferenceToken(): Nullable<string> {
         const blockElement = document.querySelector<HTMLElement>(`[data-block="${this.blockId}"]`);
         return blockElement?.dataset?.referenceToken ?? null;
+    }
+
+    private getReferencesIds(): number[] {
+        const elements = document.querySelectorAll<HTMLElement>(`[data-reference-url$="${this.blockId}"].referenced`);
+        const blockIds = Array.from(elements).map((element) => element.dataset.block ?? '');
+        return blockIds.map((blockId) => parseInt(blockId, 10));
     }
 
     private mapUserApiToUser(userApi: UserApi): User {
