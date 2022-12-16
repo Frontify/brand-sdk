@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it, vi } from 'vitest';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { ColorDummy, getAppBridgeBlockStub } from '../tests';
 import { useColors } from './useColors';
@@ -19,11 +19,13 @@ describe('useColors hook', () => {
     it('should get all the colors of a palette', async () => {
         const { result } = await loadUseColors();
 
-        expect(result.current.colorsByPaletteId).toEqual([
-            ColorDummy.red(9834),
-            ColorDummy.yellow(9314),
-            ColorDummy.green(342),
-        ]);
+        waitFor(() =>
+            expect(result.current.colorsByPaletteId).toEqual([
+                ColorDummy.red(9834),
+                ColorDummy.yellow(9314),
+                ColorDummy.green(342),
+            ]),
+        );
     });
 
     it('should not throw createColor', async () => {
