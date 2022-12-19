@@ -16,7 +16,7 @@ export const globals = {
 
 export default defineConfig({
     plugins: [
-        dts({ insertTypesEntry: true }),
+        dts({ insertTypesEntry: true, rollupTypes: true }),
         copy({
             targets: [{ src: './src/workers/upload.worker.js', dest: './dist' }],
             hook: 'writeBundle',
