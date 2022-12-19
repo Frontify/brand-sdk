@@ -15,8 +15,11 @@ import { SwitchBlock } from './switch';
 import { TemplateInputBlock } from './templateInput';
 import { TextareaBlock } from './textarea';
 
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+
 export * from './assetInput';
 export * from './base';
+export * from './checkbox';
 export * from './checklist';
 export * from './choices';
 export * from './colorInput';
@@ -72,7 +75,7 @@ export type DynamicSupportedBlock<AppBridge> =
 export type DynamicSettingBlock<
     AppBridge,
     T extends DynamicSupportedBlock<AppBridge> = DynamicSupportedBlock<AppBridge>
-> = Omit<T, 'value'> & {
+> = UnionOmit<T, 'value'> & {
     value?: DynamicSupportedBlock<AppBridge>['value'][];
     dynamic: {
         addButtonLabel: string;
