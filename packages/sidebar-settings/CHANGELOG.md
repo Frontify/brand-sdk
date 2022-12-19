@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.0.11
+
+### Patch Changes
+
+- [`fa95406`](https://github.com/Frontify/brand-sdk/commit/fa9540631337193ffa0225a58f7b7b46b4f48e2a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export Checkbox type
+
 ## 0.0.10
 
 ### Patch Changes
