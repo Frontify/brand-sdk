@@ -344,8 +344,11 @@ export class AppBridgeBlock {
                   projectTypes: options.projectTypes?.map((value) => projectTypesMap[value]),
                   multiSelectionAllowed: options.multiSelection,
                   filters: [
-                      ...(options.selectedValueId !== undefined
+                      ...('selectedValueId' in options
                           ? [{ key: 'id', values: [options.selectedValueId], inverted: true }]
+                          : []),
+                      ...('selectedValueIds' in options
+                          ? [{ key: 'id', values: options.selectedValueIds, inverted: true }]
                           : []),
                       ...(options.extensions ? [{ key: 'ext', values: options.extensions }] : []),
                       ...(options.objectTypes ? [{ key: 'object_type', values: options.objectTypes }] : []),
