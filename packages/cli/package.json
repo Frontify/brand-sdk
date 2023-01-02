@@ -50,7 +50,7 @@
         "@frontify/eslint-config-typescript": "0.15.5",
         "@types/glob-to-regexp": "^0.4.1",
         "@types/mock-fs": "4.13.1",
-        "@types/node": "18.11.17",
+        "@types/node": "18.11.18",
         "@types/prompts": "^2.4.2",
         "@types/ws": "8.5.3",
         "@vitest/coverage-c8": "0.26.0",
