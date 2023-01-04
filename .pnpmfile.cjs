@@ -2,6 +2,7 @@
 
 function readPackage(pkg) {
     //INFO: temporary until we add those peerDependencies in fondue package.json
+    // and update the xstate package in fondue
     if (pkg.name === "@frontify/fondue-tokens") {
         pkg.dependencies = {
             ...pkg.dependencies,
@@ -13,6 +14,13 @@ function readPackage(pkg) {
         pkg.dependencies = {
             ...pkg.dependencies,
             scheduler: ">=0.19.0",
+        };
+    }
+
+    if (pkg.name === "@xstate/immer") {
+        pkg.dependencies = {
+            ...pkg.dependencies,
+            xstate: "^4.29.0",
         };
     }
 
