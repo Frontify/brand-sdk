@@ -9,4 +9,5 @@ export type ColorFormats = Color | ColorRgb;
 
 export type ColorInputBlock<AppBridge> = {
     type: 'colorInput';
+    clearable?: boolean;
 } & BaseBlock<AppBridge, ColorFormats>;

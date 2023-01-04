@@ -8,4 +8,5 @@ export type DropdownBlock<AppBridge> = {
     disabled?: boolean;
     placeholder?: string;
     size?: DropdownSize;
+    clearable?: boolean;
 } & ChoicesType<AppBridge>;
