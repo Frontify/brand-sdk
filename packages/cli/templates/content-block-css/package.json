@@ -5,6 +5,8 @@
     "scripts": {
         "serve": "frontify-cli serve --entryPath src/index.ts",
         "deploy": "frontify-cli deploy --entryPath src/index.ts",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
