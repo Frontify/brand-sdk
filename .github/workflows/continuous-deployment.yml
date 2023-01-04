@@ -65,9 +65,6 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
-            - name: Build the packages
-              run: pnpm build
-
             - name: Create release PR or publish to npm
               id: changesets
               uses: changesets/action@v1
