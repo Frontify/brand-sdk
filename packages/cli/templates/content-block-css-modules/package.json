@@ -4,22 +4,25 @@
     "main": "src/index.ts",
     "scripts": {
         "serve": "frontify-cli serve --entryPath src/index.ts",
-        "deploy": "frontify-cli deploy --entryPath src/index.ts"
+        "deploy": "frontify-cli deploy --entryPath src/index.ts",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@frontify/app-bridge": "3.0.0-beta.31",
-        "@frontify/fondue": "12.0.0-beta.31",
+        "@frontify/app-bridge": "3.0.0-beta.35",
+        "@frontify/fondue": "12.0.0-beta.36",
         "react": "^17.0.2",
         "react-dom": "^17.0.2"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "0.15.5",
-        "@frontify/frontify-cli": "5.3.1",
-        "@frontify/guideline-blocks-settings": "0.25.5",
+        "@frontify/frontify-cli": "5.3.4",
+        "@frontify/guideline-blocks-settings": "0.25.8",
         "@types/react": "17.0.50",
         "@types/react-dom": "17.0.17",
-        "eslint": "8.29.0",
+        "eslint": "8.31.0",
         "prettier": "2.8.1",
-        "typescript": "4.8.4"
+        "typescript": "4.9.4"
     }
 }

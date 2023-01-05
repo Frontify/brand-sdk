@@ -2,16 +2,17 @@
     "name": "root",
     "private": true,
     "scripts": {
-        "build": "pnpm build:app-bridge && pnpm build:sidebar-settings && pnpm build:guideline-* && pnpm build:cli",
+        "build": "pnpm build:app-bridge && pnpm build:sidebar-settings && pnpm build:guideline-packages && pnpm build:cli",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
         "build:sidebar-settings": "pnpm --stream --filter {packages/sidebar-settings} build",
-        "build:guideline-*": "pnpm --stream --filter {packages/guideline-*} --parallel build",
+        "build:guideline-packages": "pnpm --stream --filter {packages/guideline-*} --parallel build",
         "build:cli": "pnpm --stream --filter {packages/cli} build",
         "lint": "pnpm --stream --filter {packages/**} --parallel lint",
         "lint:fix": "pnpm --stream --filter {packages/**} --parallel lint:fix",
         "test": "pnpm --stream --filter {packages/**} --parallel test",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
-        "prepare": "is-ci || husky install"
+        "prepare": "is-ci || husky install",
+        "ci:publish": "pnpm build && pnpm publish -r --access public"
     },
     "devDependencies": {
         "@changesets/changelog-github": "^0.4.7",

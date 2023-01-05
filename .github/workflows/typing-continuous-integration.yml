@@ -47,4 +47,4 @@ jobs:
               run: pnpm --stream --filter {packages/guideline-blocks} --filter {packages/sidebar-settings} lint
 
             - name: Build packages (+ typechecking)
-              run: pnpm build:sidebar-settings && pnpm build:guideline-*
+              run: pnpm build:sidebar-settings && pnpm build:guideline-packages

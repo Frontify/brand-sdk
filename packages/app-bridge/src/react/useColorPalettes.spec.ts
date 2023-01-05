@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it, vi } from 'vitest';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { useColorPalettes } from './useColorPalettes';
@@ -23,11 +23,13 @@ describe('useColorPalettes hook', () => {
     it('should get all the color palettes', async () => {
         const { result } = await loadUseColorPalettes();
 
-        expect(result.current.colorPalettes).toEqual([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]);
+        waitFor(() =>
+            expect(result.current.colorPalettes).toEqual([
+                ColorPaletteDummy.with(678, 'Palette 1'),
+                ColorPaletteDummy.with(427, 'Palette 2'),
+                ColorPaletteDummy.with(679, 'Palette 3'),
+            ]),
+        );
     });
 
     it('should not throw createColorPalette', async () => {
