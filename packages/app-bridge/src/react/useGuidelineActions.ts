@@ -11,6 +11,7 @@ import type {
     CoverPageUpdateLegacy,
     DocumentCategoryCreate,
     DocumentCategoryUpdate,
+    DocumentGroup,
     DocumentGroupCreate,
     DocumentGroupUpdate,
     DocumentLibraryCreate,
@@ -146,10 +147,12 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const updateDocumentGroup = useCallback(
         async (documentGroup: DocumentGroupUpdate) => {
-            const result = await appBridge.updateDocumentGroup(documentGroup);
+            // we are not passing documents as BE does not return them
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { documents, ...restOfDocumentGroup } = await appBridge.updateDocumentGroup(documentGroup);
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroupAction', {
-                documentGroup: result,
+                documentGroup: restOfDocumentGroup as DocumentGroup,
                 action: 'update',
             });
         },
