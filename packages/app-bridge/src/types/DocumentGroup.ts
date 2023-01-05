@@ -2,7 +2,7 @@
 
 import type { CamelCasedPropertiesDeep } from 'type-fest';
 
-import { DocumentApi } from './Document';
+import type { Document, DocumentApi } from './Document';
 
 export type DocumentGroupApi = {
     id: number;
@@ -18,7 +18,9 @@ export type DocumentGroupApi = {
     documents: Nullable<DocumentApi[]>;
 };
 
-export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
+export type DocumentGroup = Omit<CamelCasedPropertiesDeep<DocumentGroupApi>, 'documents'> & {
+    documents: Nullable<Document[]>;
+};
 
 export type DocumentGroupCreate = Pick<DocumentGroup, 'name'>;
 

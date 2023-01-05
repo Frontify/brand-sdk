@@ -1,5 +1,19 @@
 # @frontify/sidebar-settings
 
+## 0.0.12
+
+### Patch Changes
+
+- [`d955377`](https://github.com/Frontify/brand-sdk/commit/d955377f1a6f115dac3cad8513627973c7bf428f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add clearable to color input and dropdown
+
+- [`d955377`](https://github.com/Frontify/brand-sdk/commit/d955377f1a6f115dac3cad8513627973c7bf428f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+## 0.0.11
+
+### Patch Changes
+
+- [`fa95406`](https://github.com/Frontify/brand-sdk/commit/fa9540631337193ffa0225a58f7b7b46b4f48e2a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export Checkbox type
+
 ## 0.0.10
 
 ### Patch Changes

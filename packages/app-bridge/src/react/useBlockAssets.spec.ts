@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { act } from '@testing-library/react';
+import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { cleanup, renderHook } from '@testing-library/react-hooks';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 import { useBlockAssets } from './useBlockAssets';
@@ -31,9 +30,11 @@ describe('useBlockAssets hook', () => {
         });
 
         const call = appBridgeStub.deleteAssetIdsFromBlockAssetKey.getCall(0);
-        expect(call.firstArg).toEqual('key');
-        expect(call.lastArg).toEqual([1]);
-        expect(result.current.blockAssets).toStrictEqual({ key: [] });
+        waitFor(() => {
+            expect(call.firstArg).toEqual('key');
+            expect(call.lastArg).toEqual([1]);
+            expect(result.current.blockAssets).toStrictEqual({ key: [] });
+        });
     });
 
     it('should notify about updated assets on delete', async () => {
@@ -45,10 +46,12 @@ describe('useBlockAssets hook', () => {
 
         const call = (window.emitter.emit as SinonStub).getCall(0);
 
-        expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
-        expect(call.lastArg.blockId).toEqual(123);
-        expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
-        expect(call.lastArg.blockAssets).toStrictEqual({ key: [] });
+        waitFor(() => {
+            expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
+            expect(call.lastArg.blockId).toEqual(123);
+            expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
+            expect(call.lastArg.blockAssets).toStrictEqual({ key: [] });
+        });
     });
 
     it('should add asset ids', async () => {
@@ -58,9 +61,11 @@ describe('useBlockAssets hook', () => {
         });
 
         const call = appBridgeStub.addAssetIdsToBlockAssetKey.getCall(0);
-        expect(call.firstArg).toEqual('key');
-        expect(call.lastArg).toEqual([2]);
-        expect(result.current.blockAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+        waitFor(() => {
+            expect(call.firstArg).toEqual('key');
+            expect(call.lastArg).toEqual([2]);
+            expect(result.current.blockAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+        });
     });
 
     it('should notify about updated assets on add asset ids to key', async () => {
@@ -71,9 +76,11 @@ describe('useBlockAssets hook', () => {
         });
 
         const call = (window.emitter.emit as SinonStub).getCall(0);
-        expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
-        expect(call.lastArg.blockId).toEqual(123);
-        expect(call.lastArg.blockAssets).toMatchObject({ key: [asset, assetToAdd] });
-        expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
+        waitFor(() => {
+            expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
+            expect(call.lastArg.blockId).toEqual(123);
+            expect(call.lastArg.blockAssets).toMatchObject({ key: [asset, assetToAdd] });
+            expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
+        });
     });
 });
