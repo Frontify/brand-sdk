@@ -27,7 +27,7 @@ describe('useDocumentPages', () => {
     });
 
     it('should fetch and set the document pages and categories on mount', async () => {
-        const documentCategories = [DocumentCategoryDummy.with(1, [12])];
+        const documentCategories = [DocumentCategoryDummy.with(1, [DocumentPageDummy.with(12)])];
         const documentPages = [DocumentPageDummy.with(11)];
 
         vi.spyOn(appBridgeMock, 'getDocumentCategoriesByDocumentId').mockResolvedValue(documentCategories);

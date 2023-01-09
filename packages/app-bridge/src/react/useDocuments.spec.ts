@@ -13,7 +13,7 @@ describe('useDocuments', () => {
 
     beforeEach(() => {
         appBridge = {
-            getDocumentGroups: vi.fn(() => Promise.resolve([DocumentGroupDummy.with(11, [2])])),
+            getDocumentGroups: vi.fn(() => Promise.resolve([DocumentGroupDummy.with(11, [DocumentDummy.with(2)])])),
             getDocumentsWithoutDocumentGroups: vi.fn(() => Promise.resolve([DocumentDummy.with(1)])),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any;
@@ -31,7 +31,10 @@ describe('useDocuments', () => {
         expect(appBridge.getDocumentsWithoutDocumentGroups).toHaveBeenCalledTimes(1);
 
         await waitFor(() =>
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2]), DocumentDummy.with(1)]),
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentDummy.with(1),
+            ]),
         );
     });
 
@@ -42,16 +45,22 @@ describe('useDocuments', () => {
         expect(appBridge.getDocumentsWithoutDocumentGroups).toHaveBeenCalledTimes(1);
 
         waitFor(() => {
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2]), DocumentDummy.with(1)]);
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentDummy.with(1),
+            ]);
 
             act(() =>
                 window.emitter.emit('AppBridge:GuidelineDocumentGroupAction', {
                     action: 'update',
-                    documentGroup: DocumentGroupDummy.with(11, [2, 3]),
+                    documentGroup: DocumentGroupDummy.with(11, [DocumentDummy.with(2), DocumentDummy.with(3)]),
                 }),
             );
 
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2, 3]), DocumentDummy.with(1)]);
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2), DocumentDummy.with(3)]),
+                DocumentDummy.with(1),
+            ]);
         });
     });
 
@@ -61,11 +70,11 @@ describe('useDocuments', () => {
         act(() =>
             window.emitter.emit('AppBridge:GuidelineDocumentGroupAction', {
                 action: 'add',
-                documentGroup: DocumentGroupDummy.with(12, [5]),
+                documentGroup: DocumentGroupDummy.with(12, [DocumentDummy.with(5)]),
             }),
         );
 
-        expect(result.current.documents).toEqual([DocumentGroupDummy.with(12, [5])]);
+        expect(result.current.documents).toEqual([DocumentGroupDummy.with(12, [DocumentDummy.with(5)])]);
     });
 
     it('should delete document group on delete event', async () => {
@@ -94,11 +103,14 @@ describe('useDocuments', () => {
                 window.emitter.emit('AppBridge:GuidelineDocumentGroupAction', {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     action: 'invalid' as any,
-                    documentGroup: DocumentGroupDummy.with(11, [2, 3]),
+                    documentGroup: DocumentGroupDummy.with(11, [DocumentDummy.with(2), DocumentDummy.with(3)]),
                 }),
             );
 
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2]), DocumentDummy.with(1)]);
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentDummy.with(1),
+            ]);
         });
     });
 
@@ -109,7 +121,10 @@ describe('useDocuments', () => {
         expect(appBridge.getDocumentsWithoutDocumentGroups).toHaveBeenCalledTimes(1);
 
         waitFor(() => {
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2]), DocumentDummy.with(1)]);
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentDummy.with(1),
+            ]);
 
             act(() =>
                 window.emitter.emit('AppBridge:GuidelineStandardDocumentAction', {
@@ -119,7 +134,7 @@ describe('useDocuments', () => {
             );
 
             expect(result.current.documents).toEqual([
-                DocumentGroupDummy.with(11, [2]),
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
                 DocumentDummy.withFields({ ...DocumentDummy.with(1), title: 'updateTitle' }),
             ]);
         });
@@ -152,7 +167,7 @@ describe('useDocuments', () => {
                 }),
             );
 
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2])]);
+            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [DocumentDummy.with(2)])]);
         });
     });
 
@@ -168,7 +183,10 @@ describe('useDocuments', () => {
                 }),
             );
 
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [2]), DocumentDummy.with(1)]);
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentDummy.with(1),
+            ]);
         });
     });
 });
