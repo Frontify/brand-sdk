@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { BrandportalLink } from '../types';
+import type { BrandportalLink } from '../types';
 import { convertObjectCase } from '../utilities';
 import { BrandportalLinkApiDummy } from './BrandportalLinkApiDummy';
 

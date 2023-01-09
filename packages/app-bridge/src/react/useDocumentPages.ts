@@ -149,39 +149,3 @@ const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { 
         return page;
     });
 };
-
-// const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { id: number }) => {
-//     const pagesClone = cloneDeep(pages);
-
-//     const deletePageFromCategory = (category: DocumentCategory) => {
-//         const pagesInCategory = category.documentPages || [];
-//         category.documentPages = pagesInCategory.filter((page) => page.id !== pageToDelete.id);
-//     };
-
-//     const deleteCategory = (categories: DocumentCategory[]) => {
-//         return categories.filter((category) => category.id !== pageToDelete.id);
-//     };
-
-//     const deletePageFromDocument = (documentPages: DocumentPage[]) => {
-//         return documentPages.filter((page) => page.id !== pageToDelete.id);
-//     };
-
-//     const deletePageOrCategoryFromState = (page) => {
-//         const updatedCategories = deleteCategory(pagesClone);
-//         const updatedPages = deletePageFromDocument(pagesClone);
-
-//         return updatedCategories.length > 0 ? updatedCategories : updatedPages;
-//     };
-
-//     for (const page of pagesClone) {
-//         if (page.id === pageToDelete.id) {
-//             return deletePageOrCategoryFromState(page);
-//         }
-
-//         if ('documentPages' in page) {
-//             deletePageFromCategory(page);
-//         }
-//     }
-
-//     return pagesClone;
-// };

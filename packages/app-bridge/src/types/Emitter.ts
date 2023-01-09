@@ -12,7 +12,7 @@ import type { ColorPalette } from './ColorPalette';
 import type { CoverPage } from './CoverPage';
 import type { DocumentGroup } from './DocumentGroup';
 import type { DocumentCategory } from './DocumentCategory';
-import { BrandportalLink } from './BrandportalLink';
+import type { BrandportalLink } from './BrandportalLink';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 

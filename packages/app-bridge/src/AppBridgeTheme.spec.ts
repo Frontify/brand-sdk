@@ -152,8 +152,8 @@ describe('AppBridgeThemeTest', () => {
         HttpClient.get = mockHttpClientGet;
 
         const mappedDocumentGroups = [
-            DocumentGroupDummy.with(123, [123, 456]),
-            DocumentGroupDummy.with(456, [123, 456]),
+            DocumentGroupDummy.with(123, [DocumentDummy.with(123), DocumentDummy.with(456)]),
+            DocumentGroupDummy.with(456, [DocumentDummy.with(123), DocumentDummy.with(456)]),
         ];
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
@@ -180,7 +180,9 @@ describe('AppBridgeThemeTest', () => {
         const documentCategoriesFromApi = [
             DocumentCategoryApiDummy.with(123, [DocumentPageApiDummy.with(123), DocumentPageApiDummy.with(456)]),
         ];
-        const mappedDocumentCategories = [DocumentCategoryDummy.with(123, [123, 456])];
+        const mappedDocumentCategories = [
+            DocumentCategoryDummy.with(123, [DocumentPageDummy.with(123), DocumentPageDummy.with(456)]),
+        ];
 
         const mockHttpClientGet = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(documentCategoriesFromApi));
 

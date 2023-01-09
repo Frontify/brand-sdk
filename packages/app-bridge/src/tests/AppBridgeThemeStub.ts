@@ -2,8 +2,10 @@
 
 import mitt from 'mitt';
 import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
+
 import { Emitter } from '../types/Emitter';
 import { AppBridgeTheme } from '../AppBridgeTheme';
+
 import {
     ColorDummy,
     ColorPaletteDummy,
