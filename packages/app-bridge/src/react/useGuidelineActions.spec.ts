@@ -20,7 +20,6 @@ import {
     CoverPage,
     CoverPageCreate,
     CoverPageUpdate,
-    CoverPageUpdateLegacy,
     DocumentCategoryCreate,
     DocumentCategoryUpdate,
     DocumentGroupCreate,
