@@ -11,7 +11,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
 
     useEffect(() => {
         const fetchAllDocumentPages = async () => {
-            const [allDocumentCategories, allDocumentsWithoutCategories] = await Promise.all([
+            const [allDocumentCategories = [], allDocumentsWithoutCategories = []] = await Promise.all([
                 appBridge.getDocumentCategoriesByDocumentId(documentId),
                 appBridge.getUncategorizedPagesByDocumentId(documentId),
             ]);
@@ -87,7 +87,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         };
     }, [appBridge, documentId]);
 
-    return [documentPages];
+    return { documentPages };
 };
 
 const addPage = (
@@ -143,7 +143,7 @@ const deletePage = (pages: (DocumentPage | DocumentCategory)[], pageToDelete: { 
 
     return filteredPages.map((page) => {
         if ('documentPages' in page) {
-            page.documentPages = page.documentPages.filter((page) => page.id !== pageToDelete.id);
+            page.documentPages = deletePage(page.documentPages, pageToDelete) as DocumentPage[];
         }
 
         return page;

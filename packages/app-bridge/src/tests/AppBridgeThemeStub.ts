@@ -2,9 +2,12 @@
 
 import mitt from 'mitt';
 import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
+
 import { Emitter } from '../types/Emitter';
 import { AppBridgeTheme } from '../AppBridgeTheme';
+
 import {
+    BrandportalLinkDummy,
     ColorDummy,
     ColorPaletteDummy,
     CoverPageDummy,
@@ -76,5 +79,21 @@ export const getAppBridgeThemeStub = ({
             ColorDummy.green(342),
             ColorDummy.yellow(9314),
         ]),
+        createLink: Promise.resolve(DocumentDummy.with(1)),
+        createLibrary: Promise.resolve(DocumentDummy.with(1)),
+        createStandardDocument: Promise.resolve(DocumentDummy.with(1)),
+        createDocumentPage: Promise.resolve(DocumentPageDummy.with(1)),
+        createDocumentGroup: Promise.resolve(DocumentGroupDummy.with(1, [])),
+        createDocumentCategory: Promise.resolve(DocumentCategoryDummy.with(1, [])),
+        createCoverPage: Promise.resolve(CoverPageDummy.with(1)),
+        updateLink: Promise.resolve(DocumentDummy.with(1)),
+        updateLibrary: Promise.resolve(DocumentDummy.with(1)),
+        updateStandardDocument: Promise.resolve(DocumentDummy.with(1)),
+        updateDocumentPage: Promise.resolve(DocumentPageDummy.with(1)),
+        updateDocumentGroup: Promise.resolve(DocumentGroupDummy.with(1, [])),
+        updateDocumentCategory: Promise.resolve(DocumentCategoryDummy.with(1, [])),
+        updateCoverPage: Promise.resolve(CoverPageDummy.with(1)),
+        updateLegacyCoverPage: Promise.resolve(CoverPageDummy.withLegacy(1)),
+        updateBrandportalLink: Promise.resolve(BrandportalLinkDummy.with()),
     });
 };

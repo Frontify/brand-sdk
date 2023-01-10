@@ -36,8 +36,8 @@ export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType 
                     return null;
                 }
 
-                if (event.action === 'update' && coverPage) {
-                    return { ...previousState, ...coverPage };
+                if (event.action === 'update' && event.coverPage) {
+                    return { ...previousState, ...event.coverPage };
                 }
 
                 return previousState;
