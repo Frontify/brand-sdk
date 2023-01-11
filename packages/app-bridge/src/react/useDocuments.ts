@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-import { cloneDeep } from 'lodash-es';
+import cloneDeep from 'lodash/cloneDeep';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document, DocumentGroup, EmitterAction } from '../types';
