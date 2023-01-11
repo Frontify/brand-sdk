@@ -4,6 +4,8 @@ export * from './AppBridgeBlockStub';
 export * from './AppBridgeThemeStub';
 export * from './AssetApiDummy';
 export * from './AssetDummy';
+export * from './BrandportalLinkApiDummy';
+export * from './BrandportalLinkDummy';
 export * from './ColorApiDummy';
 export * from './ColorDummy';
 export * from './ColorPaletteApiDummy';
