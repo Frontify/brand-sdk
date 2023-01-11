@@ -6,10 +6,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
-import { useDocumentPages } from './useDocumentPages';
+import { useDocumentCategoriesAndPages } from './useDocumentCategoriesAndPages';
 import { DocumentCategoryDummy, DocumentPageDummy } from '../tests';
 
-describe('useDocumentPages', () => {
+describe('useDocumentCategoriesAndPages', () => {
     const documentId = 123;
     let appBridgeMock: AppBridgeTheme;
 
@@ -33,20 +33,20 @@ describe('useDocumentPages', () => {
         vi.spyOn(appBridgeMock, 'getDocumentCategoriesByDocumentId').mockResolvedValue(documentCategories);
         vi.spyOn(appBridgeMock, 'getUncategorizedPagesByDocumentId').mockResolvedValue(documentPages);
 
-        const { result } = renderHook(() => useDocumentPages(appBridgeMock, documentId));
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, documentId));
 
-        expect(result.current.documentPages).toBe(null);
+        expect(result.current.documentCategoriesAndPages).toBe(null);
 
         expect(appBridgeMock.getDocumentCategoriesByDocumentId).toHaveBeenCalledWith(documentId);
         expect(appBridgeMock.getUncategorizedPagesByDocumentId).toHaveBeenCalledWith(documentId);
 
         await waitFor(() => {
-            expect(result.current.documentPages).toEqual([...documentCategories, ...documentPages]);
+            expect(result.current.documentCategoriesAndPages).toEqual([...documentCategories, ...documentPages]);
         });
     });
 
     it('should update the document pages and categories when an update event is emitted', () => {
-        const { result } = renderHook(() => useDocumentPages(appBridgeMock, documentId));
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, documentId));
         const updatedPage = DocumentPageDummy.withFields({ ...DocumentPageDummy.with(11), sort: 222 });
 
         act(() => {
@@ -56,11 +56,11 @@ describe('useDocumentPages', () => {
             });
         });
 
-        expect(result.current.documentPages).toEqual([updatedPage]);
+        expect(result.current.documentCategoriesAndPages).toEqual([updatedPage]);
     });
 
     it('should add a document page or category when an add event is emitted', () => {
-        const { result } = renderHook(() => useDocumentPages(appBridgeMock, documentId));
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, documentId));
         const addedPage = DocumentPageDummy.with(13);
 
         act(() => {
@@ -70,15 +70,15 @@ describe('useDocumentPages', () => {
             });
         });
 
-        expect(result.current.documentPages).toEqual([addedPage]);
+        expect(result.current.documentCategoriesAndPages).toEqual([addedPage]);
     });
 
     it('should delete a document page or category when a delete event is emitted', async () => {
-        const { result } = renderHook(() => useDocumentPages(appBridgeMock, documentId));
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, documentId));
 
         const pages = [DocumentPageDummy.with(1)];
 
-        result.current.documentPages = pages;
+        result.current.documentCategoriesAndPages = pages;
 
         act(() => {
             window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
@@ -88,15 +88,15 @@ describe('useDocumentPages', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.documentPages).toEqual([]);
+            expect(result.current.documentCategoriesAndPages).toEqual([]);
         });
     });
 
     it('should not update the document pages and categories when an event with an invalid action is emitted', () => {
-        const { result } = renderHook(() => useDocumentPages(appBridgeMock, documentId));
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, documentId));
         const pages = [DocumentPageDummy.with(1)];
 
-        result.current.documentPages = pages;
+        result.current.documentCategoriesAndPages = pages;
 
         act(() => {
             window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
@@ -106,6 +106,6 @@ describe('useDocumentPages', () => {
             });
         });
 
-        expect(result.current.documentPages).toEqual(pages);
+        expect(result.current.documentCategoriesAndPages).toEqual(pages);
     });
 });
