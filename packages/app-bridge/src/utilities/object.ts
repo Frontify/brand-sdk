@@ -2,9 +2,9 @@
 
 import type { CamelCasedPropertiesDeep, SnakeCasedPropertiesDeep } from 'type-fest';
 
-import transform from 'lodash/transform';
-import snakeCase from 'lodash/snakeCase';
-import camelCase from 'lodash/camelCase';
+import transform from 'lodash-es/transform';
+import snakeCase from 'lodash-es/snakeCase';
+import camelCase from 'lodash-es/camelCase';
 
 export const compareObjects = (obj1: unknown, obj2: unknown) => {
     if (!obj1 || !obj2 || typeof obj1 !== 'object' || typeof obj2 !== 'object') {
