@@ -10,7 +10,7 @@ import { useDocumentCategoriesAndPages } from './useDocumentCategoriesAndPages';
 import { DocumentCategoryDummy, DocumentPageDummy } from '../tests';
 
 describe('useDocumentCategoriesAndPages', () => {
-    const documentId = 123;
+    const documentId = 145;
     let appBridgeMock: AppBridgeTheme;
 
     beforeEach(() => {
@@ -103,6 +103,38 @@ describe('useDocumentCategoriesAndPages', () => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 action: 'invalid' as any,
                 documentPage: { id: 1, sort: 20 },
+            });
+        });
+
+        expect(result.current.documentCategoriesAndPages).toEqual(pages);
+    });
+
+    it('should not update the document page or category for invalid document', () => {
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, 123));
+        const pages = [DocumentPageDummy.with(1)];
+
+        result.current.documentCategoriesAndPages = pages;
+
+        act(() => {
+            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+                action: 'update',
+                documentPage: DocumentPageDummy.withFields({ ...DocumentPageDummy.with(11), sort: 222 }),
+            });
+        });
+
+        expect(result.current.documentCategoriesAndPages).toEqual(pages);
+    });
+
+    it('should not add document page or category for invalid document', () => {
+        const { result } = renderHook(() => useDocumentCategoriesAndPages(appBridgeMock, 123));
+        const pages = [DocumentPageDummy.with(1)];
+
+        result.current.documentCategoriesAndPages = pages;
+
+        act(() => {
+            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+                action: 'add',
+                documentPage: DocumentPageDummy.with(13),
             });
         });
 
