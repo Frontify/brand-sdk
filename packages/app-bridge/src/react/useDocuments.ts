@@ -6,53 +6,45 @@ import { cloneDeep } from 'lodash-es';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document, DocumentGroup, EmitterAction } from '../types';
 
+type Event = {
+    action: EmitterAction;
+    documentOrDocumentGroup: Document | DocumentGroup | { id: number };
+};
+
+type DocumentsAndGroups = (Document | DocumentGroup)[];
+
 export const useDocuments = (appBridge: AppBridgeTheme) => {
-    const [documents, setDocuments] = useState<Nullable<(Document | DocumentGroup)[]>>(null);
+    const [documents, setDocuments] = useState<Nullable<DocumentsAndGroups>>(null);
 
     useEffect(() => {
         const fetchAllDocuments = async () => {
-            const [allDocumentGroups, allDocumentsWithoutGroup] = await Promise.all([
+            const [groups, documents] = await Promise.all([
                 appBridge.getDocumentGroups(),
                 appBridge.getDocumentsWithoutDocumentGroups(),
             ]);
 
-            setDocuments(
-                [...allDocumentGroups, ...allDocumentsWithoutGroup].sort((a, b) =>
-                    a.sort && b.sort ? a.sort - b.sort : 0,
-                ),
+            const documentsAndGroups = [...groups, ...documents].sort((a, b) =>
+                a.sort && b.sort ? a.sort - b.sort : 0,
             );
+
+            setDocuments(documentsAndGroups);
         };
 
         fetchAllDocuments();
     }, [appBridge]);
 
     useEffect(() => {
-        const updateFromEvent = (event: {
-            action: EmitterAction;
-            documentOrDocumentGroup: Document | DocumentGroup | { id: number };
-        }): void => {
+        const handleEventUpdates = (event: Event): void => {
             setDocuments((previousState) => {
                 const isInitial = previousState === null;
 
-                const item = event.documentOrDocumentGroup as Document | DocumentGroup;
-
                 if (isInitial) {
-                    return event.action === 'update' || event.action === 'add' ? [item] : previousState;
+                    return initialize(previousState, event);
                 }
 
-                if (event.action === 'delete') {
-                    return deleteItem(previousState, event.documentOrDocumentGroup satisfies { id: number });
-                }
+                const handler = actionHandlers[event.action] || actionHandlers.default;
 
-                if (event.action === 'add') {
-                    return addItem(previousState, item);
-                }
-
-                if (event.action === 'update') {
-                    return updateItem(previousState, item);
-                }
-
-                return previousState;
+                return handler(previousState, event);
             });
         };
 
@@ -62,7 +54,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         }: {
             action: EmitterAction;
             standardDocument: Document | { id: number };
-        }) => updateFromEvent({ action, documentOrDocumentGroup: standardDocument });
+        }) => handleEventUpdates({ action, documentOrDocumentGroup: standardDocument });
 
         const updateLibraryDocumentFromEvent = ({
             action,
@@ -70,7 +62,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         }: {
             action: EmitterAction;
             library: Document | { id: number };
-        }) => updateFromEvent({ action, documentOrDocumentGroup: library });
+        }) => handleEventUpdates({ action, documentOrDocumentGroup: library });
 
         const updateLinkDocumentFromEvent = ({
             action,
@@ -78,7 +70,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         }: {
             action: EmitterAction;
             link: Document | { id: number };
-        }) => updateFromEvent({ action, documentOrDocumentGroup: link });
+        }) => handleEventUpdates({ action, documentOrDocumentGroup: link });
 
         const updateDocumentGroupFromEvent = ({
             action,
@@ -86,7 +78,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         }: {
             action: EmitterAction;
             documentGroup: DocumentGroup | { id: number };
-        }) => updateFromEvent({ action, documentOrDocumentGroup: documentGroup });
+        }) => handleEventUpdates({ action, documentOrDocumentGroup: documentGroup });
 
         window.emitter.on('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
         window.emitter.on('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
@@ -104,7 +96,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
     return { documents };
 };
 
-const addItem = (items: (Document | DocumentGroup)[], itemToAdd: Document | DocumentGroup) => {
+const addItem = (items: DocumentsAndGroups, itemToAdd: Document | DocumentGroup) => {
     const itemsClone = cloneDeep(items);
 
     const isDocumentInGroup =
@@ -132,7 +124,7 @@ const addItem = (items: (Document | DocumentGroup)[], itemToAdd: Document | Docu
     return itemsClone;
 };
 
-const updateItem = (items: (Document | DocumentGroup)[], itemToUpdate: Document | DocumentGroup) => {
+const updateItem = (items: DocumentsAndGroups, itemToUpdate: Document | DocumentGroup) => {
     const itemsClone = cloneDeep(items);
 
     const isDocumentInGroup =
@@ -168,13 +160,13 @@ const updateItem = (items: (Document | DocumentGroup)[], itemToUpdate: Document 
     const itemToUpdateIndex = itemsClone.findIndex((item) => item.id === itemToUpdate.id);
 
     if (itemToUpdateIndex !== -1) {
-        itemsClone[itemToUpdateIndex] = itemToUpdate;
+        itemsClone[itemToUpdateIndex] = { ...itemsClone[itemToUpdateIndex], ...itemToUpdate };
     }
 
     return itemsClone;
 };
 
-const deleteItem = (items: (Document | DocumentGroup)[], itemToDelete: { id: number }) => {
+const deleteItem = (items: DocumentsAndGroups, itemToDelete: { id: number }) => {
     const filteredItems = items.filter((item) => item.id !== itemToDelete.id);
 
     return filteredItems.map((item) => {
@@ -184,4 +176,25 @@ const deleteItem = (items: (Document | DocumentGroup)[], itemToDelete: { id: num
 
         return item;
     });
+};
+
+const actionHandlers = {
+    add: (items: DocumentsAndGroups, event: Event) =>
+        addItem(items, event.documentOrDocumentGroup as Document | DocumentGroup),
+
+    update: (items: DocumentsAndGroups, event: Event) =>
+        updateItem(items, event.documentOrDocumentGroup as Document | DocumentGroup),
+
+    delete: (items: DocumentsAndGroups, event: Event) =>
+        deleteItem(items, event.documentOrDocumentGroup as { id: number }),
+
+    default: (items: DocumentsAndGroups) => items,
+};
+
+const initialize = (previousState: Nullable<DocumentsAndGroups>, event: Event) => {
+    if (event.action === 'update' || event.action === 'add') {
+        return [event.documentOrDocumentGroup as Document | DocumentGroup];
+    }
+
+    return previousState;
 };
