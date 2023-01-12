@@ -516,6 +516,9 @@ describe('useGuidelineActions hook', () => {
             name: 'Updated Document Group',
         };
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { documents, ...restOfDocumentGroup } = DocumentGroupDummy.with(1, []);
+
         act(() => {
             useGuidelineActionsStub.updateDocumentGroup(group);
         });
@@ -523,7 +526,7 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(updateDocumentGroup).toHaveBeenCalledWith(group);
             expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroupAction', {
-                documentGroup: DocumentGroupDummy.with(1, []),
+                documentGroup: restOfDocumentGroup,
                 action: 'update',
             });
         });
