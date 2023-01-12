@@ -34,22 +34,26 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
             setDocumentCategoriesAndPages((previousState) => {
                 const isInitial = previousState === null;
 
-                const item = event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory;
+                const documentPageOrDocumentCategory = event.documentPageOrDocumentCategory as
+                    | DocumentPage
+                    | DocumentCategory;
 
                 if (isInitial) {
-                    return event.action === 'update' || event.action === 'add' ? [item] : previousState;
+                    return event.action === 'update' || event.action === 'add'
+                        ? [documentPageOrDocumentCategory]
+                        : previousState;
                 }
 
                 if (event.action === 'delete') {
-                    return deleteItem(previousState, event.documentPageOrDocumentCategory);
+                    return deleteItem(previousState, event.documentPageOrDocumentCategory as { id: number });
                 }
 
                 if (event.action === 'add') {
-                    return addItem(previousState, item, documentId);
+                    return addItem(previousState, documentPageOrDocumentCategory, documentId);
                 }
 
                 if (event.action === 'update') {
-                    return updateItem(previousState, item);
+                    return updateItem(previousState, documentPageOrDocumentCategory);
                 }
 
                 return previousState;
