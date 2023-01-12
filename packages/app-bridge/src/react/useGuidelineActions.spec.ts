@@ -576,6 +576,7 @@ describe('useGuidelineActions hook', () => {
             title: 'Updated Document Category',
         };
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { documentPages, ...categoryWithoutPages } = DocumentCategoryDummy.with(1, []);
 
         act(() => {
