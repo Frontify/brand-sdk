@@ -317,7 +317,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
             if (result) {
                 window.emitter.emit('AppBridge:GuidelineBrandportalLinkAction', {
-                    brandportalLink: result as CoverPage,
+                    brandportalLink: result as BrandportalLink,
                     action: 'update',
                 });
             }

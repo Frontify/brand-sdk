@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CoverPage } from '../types';
+import { CoverPage, CoverPageUpdateLegacy } from '../types';
 import { convertObjectCase } from '../utilities';
 import { CoverPageApiDummy } from './CoverPageApiDummy';
 
@@ -14,6 +14,14 @@ export class CoverPageDummy {
             documentId: coverPageApi.document_id,
             draft: Boolean(coverPageApi.brandhome.draft),
             enabled: Boolean(coverPageApi.brandhome.enabled),
+        };
+    }
+
+    static withLegacy(id: number, title = 'Legacy Cover Page'): CoverPageUpdateLegacy {
+        return {
+            brandhome_draft: true,
+            brandhome_title: title,
+            brandhome_hide_in_nav: false,
         };
     }
 }

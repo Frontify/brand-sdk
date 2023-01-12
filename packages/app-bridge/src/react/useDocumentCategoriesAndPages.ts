@@ -1,17 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-import cloneDeep from 'lodash-es/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentCategory, DocumentPage, EmitterAction } from '../types';
 
-export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) => {
-    const [documentPages, setDocumentPages] = useState<Nullable<(DocumentPage | DocumentCategory)[]>>(null);
+export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documentId: number) => {
+    const [documentCategoriesAndPages, setDocumentCategoriesAndPages] =
+        useState<Nullable<(DocumentPage | DocumentCategory)[]>>(null);
 
     useEffect(() => {
         const fetchAllDocumentPages = async () => {
-            const [allDocumentCategories, allDocumentsWithoutCategories] = await Promise.all([
+            const [allDocumentCategories = [], allDocumentsWithoutCategories = []] = await Promise.all([
                 appBridge.getDocumentCategoriesByDocumentId(documentId),
                 appBridge.getUncategorizedPagesByDocumentId(documentId),
             ]);
@@ -19,7 +20,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
             allDocumentCategories.sort((a, b) => a.sort - b.sort);
             allDocumentsWithoutCategories.sort((a, b) => a.sort - b.sort);
 
-            setDocumentPages([...allDocumentCategories, ...allDocumentsWithoutCategories]);
+            setDocumentCategoriesAndPages([...allDocumentCategories, ...allDocumentsWithoutCategories]);
         };
 
         fetchAllDocumentPages();
@@ -30,7 +31,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
             action: EmitterAction;
             documentPageOrDocumentCategory: DocumentPage | DocumentCategory | { id: number };
         }) => {
-            setDocumentPages((previousState) => {
+            setDocumentCategoriesAndPages((previousState) => {
                 const isInitial = previousState === null;
 
                 const item = event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory;
@@ -80,7 +81,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         };
     }, [appBridge, documentId]);
 
-    return [documentPages];
+    return { documentCategoriesAndPages };
 };
 
 const addItem = (
@@ -166,7 +167,7 @@ const deleteItem = (items: (DocumentPage | DocumentCategory)[], itemToDelete: { 
 
     return filteredItems.map((item) => {
         if ('documentPages' in item) {
-            item.documentPages = item.documentPages.filter((page) => page.id !== itemToDelete.id);
+            item.documentPages = deleteItem(item.documentPages, itemToDelete) as DocumentPage[];
         }
 
         return item;
