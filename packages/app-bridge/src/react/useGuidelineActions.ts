@@ -9,6 +9,7 @@ import type {
     CoverPageCreate,
     CoverPageUpdate,
     CoverPageUpdateLegacy,
+    DocumentCategory,
     DocumentCategoryCreate,
     DocumentCategoryUpdate,
     DocumentGroup,
@@ -236,10 +237,12 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const updateCategory = useCallback(
         async (category: DocumentCategoryUpdate) => {
-            const result = await appBridge.updateDocumentCategory(category);
+            // documentPages are not passed as BE does not return them
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { documentPages, ...restOfCategory } = await appBridge.updateDocumentCategory(category);
 
             window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
-                documentCategory: result,
+                documentCategory: restOfCategory as DocumentCategory,
                 action: 'update',
             });
         },

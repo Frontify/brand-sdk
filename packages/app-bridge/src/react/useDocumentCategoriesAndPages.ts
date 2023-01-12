@@ -6,53 +6,47 @@ import { cloneDeep } from 'lodash-es';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentCategory, DocumentPage, EmitterAction } from '../types';
 
+type Event = {
+    action: EmitterAction;
+    documentPageOrDocumentCategory: DocumentPage | DocumentCategory | { id: number };
+};
+
+type PagesAndCategories = (DocumentPage | DocumentCategory)[];
+
 export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documentId: number) => {
-    const [documentCategoriesAndPages, setDocumentCategoriesAndPages] =
-        useState<Nullable<(DocumentPage | DocumentCategory)[]>>(null);
+    const [documentCategoriesAndPages, setDocumentCategoriesAndPages] = useState<Nullable<PagesAndCategories>>(null);
 
     useEffect(() => {
         const fetchAllDocumentPages = async () => {
-            const [allDocumentCategories = [], allDocumentsWithoutCategories = []] = await Promise.all([
+            const [categories = [], pages = []] = await Promise.all([
                 appBridge.getDocumentCategoriesByDocumentId(documentId),
                 appBridge.getUncategorizedPagesByDocumentId(documentId),
             ]);
 
-            allDocumentCategories.sort((a, b) => a.sort - b.sort);
-            allDocumentsWithoutCategories.sort((a, b) => a.sort - b.sort);
+            const pagesAndCategories = [...categories, ...pages].sort((a, b) => a.sort - b.sort);
 
-            setDocumentCategoriesAndPages([...allDocumentCategories, ...allDocumentsWithoutCategories]);
+            setDocumentCategoriesAndPages(pagesAndCategories);
         };
 
         fetchAllDocumentPages();
     }, [appBridge, documentId]);
 
     useEffect(() => {
-        const updateFromEvent = (event: {
-            action: EmitterAction;
-            documentPageOrDocumentCategory: DocumentPage | DocumentCategory | { id: number };
-        }) => {
+        const handleEventUpdates = (event: Event) => {
+            if (isInvalidDocument(event.documentPageOrDocumentCategory, documentId)) {
+                return;
+            }
+
             setDocumentCategoriesAndPages((previousState) => {
                 const isInitial = previousState === null;
 
-                const item = event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory;
-
                 if (isInitial) {
-                    return event.action === 'update' || event.action === 'add' ? [item] : previousState;
+                    return initialize(previousState, event);
                 }
 
-                if (event.action === 'delete') {
-                    return deleteItem(previousState, event.documentPageOrDocumentCategory satisfies { id: number });
-                }
+                const handler = actionHandlers[event.action] || actionHandlers.default;
 
-                if (event.action === 'add') {
-                    return addItem(previousState, item, documentId);
-                }
-
-                if (event.action === 'update') {
-                    return updateItem(previousState, item);
-                }
-
-                return previousState;
+                return handler(previousState, event);
             });
         };
 
@@ -62,7 +56,7 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
         }: {
             action: EmitterAction;
             documentPage: DocumentPage | { id: number };
-        }) => updateFromEvent({ action, documentPageOrDocumentCategory: documentPage });
+        }) => handleEventUpdates({ action, documentPageOrDocumentCategory: documentPage });
 
         const updateDocumentCategoryFromEvent = ({
             action,
@@ -70,7 +64,7 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
         }: {
             action: EmitterAction;
             documentCategory: DocumentCategory | { id: number };
-        }) => updateFromEvent({ action, documentPageOrDocumentCategory: documentCategory });
+        }) => handleEventUpdates({ action, documentPageOrDocumentCategory: documentCategory });
 
         window.emitter.on('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
         window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
@@ -84,15 +78,7 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
     return { documentCategoriesAndPages };
 };
 
-const addItem = (
-    items: (DocumentPage | DocumentCategory)[],
-    itemToAdd: DocumentPage | DocumentCategory,
-    currentDocument: number,
-) => {
-    if (itemToAdd.documentId !== currentDocument) {
-        return items;
-    }
-
+const addItem = (items: PagesAndCategories, itemToAdd: DocumentPage | DocumentCategory) => {
     const itemsClone = cloneDeep(items);
 
     const isPageInCategory =
@@ -121,7 +107,7 @@ const addItem = (
     return itemsClone;
 };
 
-const updateItem = (items: (DocumentPage | DocumentCategory)[], itemToUpdate: DocumentPage | DocumentCategory) => {
+const updateItem = (items: PagesAndCategories, itemToUpdate: DocumentPage | DocumentCategory) => {
     const itemsClone = cloneDeep(items);
 
     const isPageInCategory =
@@ -134,7 +120,7 @@ const updateItem = (items: (DocumentPage | DocumentCategory)[], itemToUpdate: Do
             const itShouldUpdate =
                 item.id === (itemToUpdate as DocumentPage).categoryId && item.documentId === itemToUpdate.documentId;
 
-            if (isCategory && itShouldUpdate) {
+            if (isCategory && itShouldUpdate && item.documentPages) {
                 const pageToUpdateIndex = item.documentPages.findIndex((page) => page.id === itemToUpdate.id);
 
                 item.documentPages[pageToUpdateIndex] = {
@@ -156,20 +142,49 @@ const updateItem = (items: (DocumentPage | DocumentCategory)[], itemToUpdate: Do
     const pageToUpdateIndex = itemsClone.findIndex((document) => document.id === itemToUpdate.id);
 
     if (pageToUpdateIndex !== -1) {
-        itemsClone[pageToUpdateIndex] = itemToUpdate;
+        itemsClone[pageToUpdateIndex] = { ...itemsClone[pageToUpdateIndex], ...itemToUpdate };
     }
 
     return itemsClone;
 };
 
-const deleteItem = (items: (DocumentPage | DocumentCategory)[], itemToDelete: { id: number }) => {
+const deleteItem = (items: PagesAndCategories, itemToDelete: { id: number }) => {
     const filteredItems = items.filter((item) => item.id !== itemToDelete.id);
 
     return filteredItems.map((item) => {
-        if ('documentPages' in item) {
+        if ('documentPages' in item && item.documentPages) {
             item.documentPages = deleteItem(item.documentPages, itemToDelete) as DocumentPage[];
         }
 
         return item;
     });
+};
+
+const isInvalidDocument = (eventItem: DocumentPage | DocumentCategory | { id: number }, sourceDocumentId: number) => {
+    if ('documentId' in eventItem) {
+        return eventItem.documentId !== sourceDocumentId;
+    }
+
+    return false;
+};
+
+const actionHandlers = {
+    add: (items: PagesAndCategories, event: Event) =>
+        addItem(items, event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory),
+
+    update: (items: PagesAndCategories, event: Event) =>
+        updateItem(items, event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory),
+
+    delete: (items: PagesAndCategories, event: Event) =>
+        deleteItem(items, event.documentPageOrDocumentCategory as { id: number }),
+
+    default: (items: PagesAndCategories) => items,
+};
+
+const initialize = (previousState: Nullable<PagesAndCategories>, event: Event) => {
+    if (event.action === 'update' || event.action === 'add') {
+        return [event.documentPageOrDocumentCategory as DocumentPage | DocumentCategory];
+    }
+
+    return previousState;
 };
