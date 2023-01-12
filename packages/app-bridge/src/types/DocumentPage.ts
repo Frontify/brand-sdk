@@ -7,13 +7,6 @@ export enum DocumentPageVisibility {
     Editor = 'EDITOR',
 }
 
-/**
- * virtual fields of Document Page that wont be returned by API
- */
-type DocumentPageApiVirtualFields = {
-    category_id?: Nullable<number>;
-};
-
 type DocumentPageApiAsLink = {
     link_type: 'EXTERNAL';
     link_url: string;
@@ -52,8 +45,7 @@ export type DocumentPageApi = {
     parent_document?: Nullable<Record<string, unknown>>;
     parent_portal?: Nullable<Record<string, unknown>>;
     translations?: Nullable<Record<string, unknown>>;
-} & DocumentPageApiVirtualFields &
-    (DocumentPageApiAsLink | DocumentPageApiAsNoneLink);
+} & (DocumentPageApiAsLink | DocumentPageApiAsNoneLink);
 
 export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
 

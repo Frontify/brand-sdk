@@ -2,7 +2,7 @@
 
 import type { CamelCasedPropertiesDeep, RequireAtLeastOne } from 'type-fest';
 
-import type { DocumentPage, DocumentPageApi } from './DocumentPage';
+import type { DocumentPageApi } from './DocumentPage';
 
 export type DocumentCategoryApi = {
     id: number;
@@ -16,14 +16,12 @@ export type DocumentCategoryApi = {
     modified: Nullable<string>;
     valid_from: string;
     valid_to: Nullable<string>;
-    document_pages: DocumentPageApi[];
+    document_pages: Nullable<DocumentPageApi[]>;
 };
 
 type DocumentPageRequestFields = 'title' | 'documentId' | 'id';
 
-export type DocumentCategory = Omit<CamelCasedPropertiesDeep<DocumentCategoryApi>, 'documentPages'> & {
-    documentPages: DocumentPage[];
-};
+export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
 
 export type DocumentCategoryCreate = Pick<DocumentCategory, 'title' | 'documentId'>;
 

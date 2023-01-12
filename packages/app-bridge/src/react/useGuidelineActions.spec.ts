@@ -576,6 +576,9 @@ describe('useGuidelineActions hook', () => {
             title: 'Updated Document Category',
         };
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { documentPages, ...categoryWithoutPages } = DocumentCategoryDummy.with(1, []);
+
         act(() => {
             useGuidelineActionsStub.updateCategory(category);
         });
@@ -583,7 +586,7 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(updateDocumentCategory).toHaveBeenCalledWith(category);
             expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategoryAction', {
-                documentCategory: DocumentCategoryDummy.with(1, []),
+                documentCategory: categoryWithoutPages,
                 action: 'update',
             });
         });
