@@ -114,17 +114,17 @@ const updateItem = (items: PagesAndCategories, itemToUpdate: DocumentPage | Docu
         'categoryId' in itemToUpdate && itemToUpdate.categoryId !== null && itemToUpdate.categoryId !== undefined;
 
     const updatePageInCategory = () => {
-        for (const item of itemsClone) {
-            const isCategory = 'documentPages' in item;
+        for (const page of itemsClone) {
+            const isCategory = 'documentPages' in page;
 
             const itShouldUpdate =
-                item.id === (itemToUpdate as DocumentPage).categoryId && item.documentId === itemToUpdate.documentId;
+                page.id === (itemToUpdate as DocumentPage).categoryId && page.documentId === itemToUpdate.documentId;
 
-            if (isCategory && itShouldUpdate && item.documentPages) {
-                const pageToUpdateIndex = item.documentPages.findIndex((page) => page.id === itemToUpdate.id);
+            if (isCategory && itShouldUpdate && page.documentPages) {
+                const pageToUpdateIndex = page.documentPages.findIndex((page) => page.id === itemToUpdate.id);
 
-                item.documentPages[pageToUpdateIndex] = {
-                    ...item.documentPages[pageToUpdateIndex],
+                page.documentPages[pageToUpdateIndex] = {
+                    ...page.documentPages[pageToUpdateIndex],
                     ...(itemToUpdate as DocumentPage),
                 };
 
