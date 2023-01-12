@@ -23,9 +23,9 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
                 appBridge.getUncategorizedPagesByDocumentId(documentId),
             ]);
 
-            const pagesAndCategories = [...categories, ...pages];
+            const pagesAndCategories = [...categories, ...pages].sort((a, b) => a.sort - b.sort);
 
-            setDocumentCategoriesAndPages(pagesAndCategories.sort((a, b) => a.sort - b.sort));
+            setDocumentCategoriesAndPages(pagesAndCategories);
         };
 
         fetchAllDocumentPages();
