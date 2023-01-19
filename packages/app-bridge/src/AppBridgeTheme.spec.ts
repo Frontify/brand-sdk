@@ -16,9 +16,12 @@ import {
     DocumentGroupDummy,
     DocumentPageApiDummy,
     DocumentPageDummy,
+    DocumentPageTargetsApiDummy,
     DocumentSectionApiDummy,
     DocumentSectionDummy,
+    DocumentTargetsApiDummy,
     HttpUtilResponseDummy,
+    TargetsDummy,
 } from './tests';
 import { HttpClient } from './utilities';
 import { getColorPalettesByProjectId, getColorsByColorPaletteId } from './repositories';
@@ -246,6 +249,34 @@ describe('AppBridgeThemeTest', () => {
 
         expect(getColorsByColorPaletteId).toHaveBeenCalledTimes(1);
         expect(result).resolves.toEqual(colors);
+    });
+
+    it('return document targets', async () => {
+        const documentTargetsFromApi = DocumentTargetsApiDummy.with(1);
+        const mappedDocumentTargets = TargetsDummy.with();
+
+        const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentTargetsFromApi });
+
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        const result = await appBridge.getDocumentTargets(DOCUMENT_ID);
+
+        expect(result).toEqual(mappedDocumentTargets);
+    });
+
+    it('return document page targets', async () => {
+        const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(1);
+        const mappedDocumentPageTargets = TargetsDummy.with();
+
+        const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentPageTargetsFromApi });
+
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        const result = await appBridge.getDocumentPageTargets(DOCUMENT_ID);
+
+        expect(result).toEqual(mappedDocumentPageTargets);
     });
 
     test('returns the translation language', () => {
