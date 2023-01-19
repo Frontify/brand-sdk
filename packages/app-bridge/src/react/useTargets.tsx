@@ -17,15 +17,11 @@ export const useTargets = (appBridge: AppBridgeTheme, id: number): UseTargetsRet
 
     useEffect(() => {
         const fetchDocumentTargets = async () => {
-            const documentTargets = await appBridge.getDocumentTargets(id);
-
-            setDocumentTargets(documentTargets);
+            setDocumentTargets(await appBridge.getDocumentTargets(id));
         };
 
         const fetchDocumentPageTargets = async () => {
-            const documentPageTargets = await appBridge.getDocumentPageTargets(id);
-
-            setDocumentPageTargets(documentPageTargets);
+            setDocumentPageTargets(await appBridge.getDocumentPageTargets(id));
         };
 
         fetchDocumentTargets();
