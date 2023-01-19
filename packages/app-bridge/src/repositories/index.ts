@@ -10,3 +10,4 @@ export * from './DocumentGroupRepository';
 export * from './DocumentPageRepository';
 export * from './DocumentRepository';
 export * from './DocumentSectionRepository';
+export * from './TargetsRepository';

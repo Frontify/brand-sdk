@@ -17,4 +17,5 @@ export * from './useFileUpload';
 export * from './useGuidelineActions';
 export * from './useNavigationManager';
 export * from './useReadyForPrint';
+export * from './useTargets';
 export * from './useTemplateChooser';

@@ -23,6 +23,8 @@ export * from './DocumentPageDummy';
 export * from './DocumentSectionApiDummy';
 export * from './DocumentSectionDummy';
 export * from './HttpUtilResponseDummy';
+export * from './TargetsApiDummy';
+export * from './TargetsDummy';
 export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
 export * from './withAppBridgeThemeStubs';
