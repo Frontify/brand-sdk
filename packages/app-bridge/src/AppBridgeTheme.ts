@@ -62,6 +62,8 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
     LinkType,
+    Targets,
+    TargetsUpdate,
 } from './types';
 import { getDatasetByElement } from './utilities';
 
@@ -256,19 +258,19 @@ export class AppBridgeTheme {
         return getColorsByColorPaletteId(colorPaletteId);
     }
 
-    public getDocumentTargets = (id: number) => {
+    public getDocumentTargets = (id: number): Promise<Targets> => {
         return getDocumentTargets(id);
     };
 
-    public updateDocumentTargets = (data: string[], ids: number[]) => {
+    public updateDocumentTargets = (data: string[], ids: number[]): Promise<TargetsUpdate> => {
         return updateDocumentTargets(data, ids);
     };
 
-    public getDocumentPageTargets = (id: number) => {
+    public getDocumentPageTargets = (id: number): Promise<Targets> => {
         return getDocumentPageTargets(id);
     };
 
-    public updateDocumentPageTargets = (data: string[], ids: number[]) => {
+    public updateDocumentPageTargets = (data: string[], ids: number[]): Promise<TargetsUpdate> => {
         return updateDocumentPageTargets(data, ids);
     };
 }
