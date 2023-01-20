@@ -6,9 +6,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { TargetsDummy } from '../tests';
-import { useTargets } from './useTargets';
+import { useDocumentTargets } from './useDocumentTargets';
 
-describe('useTargets', () => {
+describe('useDocumentTargets', () => {
     const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
 
     afterEach(() => {
@@ -20,7 +20,7 @@ describe('useTargets', () => {
 
         appBridge.getDocumentTargets = vi.fn().mockResolvedValue(documentTargets);
 
-        const { result } = renderHook(() => useTargets(appBridge, 1));
+        const { result } = renderHook(() => useDocumentTargets(appBridge, 1));
 
         expect(result.current.documentTargets.length).toBe(0);
 
@@ -36,7 +36,7 @@ describe('useTargets', () => {
 
         appBridge.getDocumentPageTargets = vi.fn().mockResolvedValue(documentPageTargets);
 
-        const { result } = renderHook(() => useTargets(appBridge, 1));
+        const { result } = renderHook(() => useDocumentTargets(appBridge, 1));
 
         expect(result.current.documentPageTargets.length).toBe(0);
 
