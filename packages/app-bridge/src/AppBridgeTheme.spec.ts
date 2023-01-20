@@ -251,7 +251,7 @@ describe('AppBridgeThemeTest', () => {
         expect(result).resolves.toEqual(colors);
     });
 
-    it('return document targets', async () => {
+    it('returns document targets', async () => {
         const documentTargetsFromApi = DocumentTargetsApiDummy.with(1);
         const mappedDocumentTargets = TargetsDummy.with();
 
@@ -265,7 +265,7 @@ describe('AppBridgeThemeTest', () => {
         expect(result).toEqual(mappedDocumentTargets);
     });
 
-    it('return document page targets', async () => {
+    it('returns document page targets', async () => {
         const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(1);
         const mappedDocumentPageTargets = TargetsDummy.with();
 
