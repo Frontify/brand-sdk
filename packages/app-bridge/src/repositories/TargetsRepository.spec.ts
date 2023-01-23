@@ -7,8 +7,15 @@ import {
     getDocumentTargets,
     mapToDocumentPageTargets,
     mapToDocumentTargets,
+    updateDocumentPageTargets,
+    updateDocumentTargets,
 } from './TargetsRepository';
-import { DocumentPageTargetsApiDummy, DocumentTargetsApiDummy } from '../tests';
+import {
+    DocumentPageTargetsApiDummy,
+    DocumentTargetsApiDummy,
+    HttpUtilResponseDummy,
+    UpdateTargetsApiDummy,
+} from '../tests';
 import { HttpClient } from '../utilities';
 
 const DOCUMENT_ID = 1;
@@ -32,6 +39,18 @@ describe('TargetsRepositoryTest', () => {
         expect(result).toEqual(mapToDocumentTargets(apiDocumentTargets));
     });
 
+    test('updateDocumentTargets with success', async () => {
+        const apiUpdateDocumentTargets = UpdateTargetsApiDummy.with([1, 2, 3]);
+        const mockHttpClientPost = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(apiUpdateDocumentTargets));
+
+        HttpClient.post = mockHttpClientPost;
+
+        const result = await updateDocumentTargets([PAGE_ID], [DOCUMENT_ID]);
+
+        expect(mockHttpClientPost).toHaveBeenCalledTimes(1);
+        expect(result).toEqual(apiUpdateDocumentTargets);
+    });
+
     test('getPageTargets with success', async () => {
         const apiDocumentPageTargets = DocumentPageTargetsApiDummy.with(1);
 
@@ -43,5 +62,19 @@ describe('TargetsRepositoryTest', () => {
 
         expect(mockHttpClientGet).toHaveBeenCalledTimes(1);
         expect(result).toEqual(mapToDocumentPageTargets(apiDocumentPageTargets));
+    });
+
+    test('updateDocumentPageTargets with success', async () => {
+        const apiUpdateDocumentPageTargets = UpdateTargetsApiDummy.with([1, 2, 3]);
+        const mockHttpClientPost = vi
+            .fn()
+            .mockReturnValue(HttpUtilResponseDummy.successWith(apiUpdateDocumentPageTargets));
+
+        HttpClient.post = mockHttpClientPost;
+
+        const result = await updateDocumentPageTargets([PAGE_ID], [DOCUMENT_ID]);
+
+        expect(mockHttpClientPost).toHaveBeenCalledTimes(1);
+        expect(result).toEqual(apiUpdateDocumentPageTargets);
     });
 });

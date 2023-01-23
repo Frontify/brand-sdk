@@ -23,7 +23,7 @@ export const updateDocumentTargets = async (targetIds: number[], documentIds: nu
         type: 'document',
     });
 
-    return result as unknown as TargetsUpdate;
+    return result.data;
 };
 
 export const getDocumentPageTargets = async (id: number): Promise<Targets> => {
@@ -39,5 +39,5 @@ export const updateDocumentPageTargets = async (targetIds: number[], documentIds
         type: 'documentpage',
     });
 
-    return result as unknown as TargetsUpdate;
+    return result.data;
 };

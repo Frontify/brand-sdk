@@ -61,6 +61,16 @@ export class DocumentTargetsApiDummy {
     }
 }
 
+export class UpdateTargetsApiDummy {
+    static with(targetIds: number[]) {
+        return {
+            success: true,
+            data: true,
+            targets: targetIds,
+        };
+    }
+}
+
 export class DocumentPageTargetsApiDummy {
     static with(id: number): DocumentPageTargetsApi {
         return {
