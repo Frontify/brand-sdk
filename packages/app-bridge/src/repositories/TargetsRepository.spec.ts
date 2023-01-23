@@ -20,6 +20,7 @@ import { HttpClient } from '../utilities';
 
 const DOCUMENT_ID = 1;
 const PAGE_ID = 1;
+const TARGET_IDS = [1, 2, 3];
 
 describe('TargetsRepositoryTest', () => {
     afterEach(() => {
@@ -40,7 +41,7 @@ describe('TargetsRepositoryTest', () => {
     });
 
     test('updateDocumentTargets with success', async () => {
-        const apiUpdateDocumentTargets = UpdateTargetsApiDummy.with([1, 2, 3]);
+        const apiUpdateDocumentTargets = UpdateTargetsApiDummy.with(TARGET_IDS);
         const mockHttpClientPost = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(apiUpdateDocumentTargets));
 
         HttpClient.post = mockHttpClientPost;
@@ -65,7 +66,7 @@ describe('TargetsRepositoryTest', () => {
     });
 
     test('updateDocumentPageTargets with success', async () => {
-        const apiUpdateDocumentPageTargets = UpdateTargetsApiDummy.with([1, 2, 3]);
+        const apiUpdateDocumentPageTargets = UpdateTargetsApiDummy.with(TARGET_IDS);
         const mockHttpClientPost = vi
             .fn()
             .mockReturnValue(HttpUtilResponseDummy.successWith(apiUpdateDocumentPageTargets));

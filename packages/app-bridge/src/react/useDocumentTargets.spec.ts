@@ -8,6 +8,8 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 import { TargetsDummy } from '../tests';
 import { useDocumentTargets } from './useDocumentTargets';
 
+const DOCUMENT_ID = 1;
+
 describe('useDocumentTargets', () => {
     const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
 
@@ -20,7 +22,7 @@ describe('useDocumentTargets', () => {
 
         appBridge.getDocumentTargets = vi.fn().mockResolvedValue(documentTargets);
 
-        const { result } = renderHook(() => useDocumentTargets(appBridge, 1));
+        const { result } = renderHook(() => useDocumentTargets(appBridge, DOCUMENT_ID));
 
         expect(result.current.documentTargets.length).toBe(0);
 

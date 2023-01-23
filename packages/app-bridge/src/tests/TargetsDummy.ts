@@ -15,3 +15,13 @@ export class TargetsDummy {
         return [...convertObjectCase(singleTargetApis, 'camel')];
     }
 }
+
+export class UpdateTargetsDummy {
+    static with(targetIds: number[]) {
+        return {
+            success: true,
+            data: true,
+            targets: targetIds,
+        };
+    }
+}
