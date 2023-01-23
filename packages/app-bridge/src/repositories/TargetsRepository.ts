@@ -18,8 +18,8 @@ export const getDocumentTargets = async (id: number): Promise<Targets> => {
 
 export const updateDocumentTargets = async (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
     const { result } = await HttpClient.post<TargetsUpdateApi>('/api/target/bytype', {
-        targetIds,
-        documentIds,
+        data: targetIds,
+        ids: documentIds,
         type: 'document',
     });
 
@@ -34,8 +34,8 @@ export const getDocumentPageTargets = async (id: number): Promise<Targets> => {
 
 export const updateDocumentPageTargets = async (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
     const { result } = await HttpClient.post<TargetsUpdateApi>('/api/target/bytype', {
-        targetIds,
-        documentIds,
+        data: targetIds,
+        ids: documentIds,
         type: 'documentpage',
     });
 
