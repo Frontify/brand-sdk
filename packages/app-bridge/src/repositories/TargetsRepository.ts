@@ -16,7 +16,7 @@ export const getDocumentTargets = async (id: number): Promise<Targets> => {
     return mapToDocumentTargets(result as unknown as DocumentTargetsApi);
 };
 
-export const updateDocumentTargets = async (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
+export const updateDocumentTargets = async (targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> => {
     const { result } = await HttpClient.post<TargetsUpdateApi>('/api/target/bytype', {
         data: targetIds,
         ids: documentIds,
@@ -32,7 +32,7 @@ export const getDocumentPageTargets = async (id: number): Promise<Targets> => {
     return mapToDocumentPageTargets(result as unknown as DocumentPageTargetsApi);
 };
 
-export const updateDocumentPageTargets = async (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
+export const updateDocumentPageTargets = async (targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> => {
     const { result } = await HttpClient.post<TargetsUpdateApi>('/api/target/bytype', {
         data: targetIds,
         ids: documentIds,

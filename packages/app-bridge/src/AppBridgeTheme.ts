@@ -258,19 +258,19 @@ export class AppBridgeTheme {
         return getColorsByColorPaletteId(colorPaletteId);
     }
 
-    public getDocumentTargets = (id: number): Promise<Targets> => {
+    public async getDocumentTargets(id: number): Promise<Targets> {
         return getDocumentTargets(id);
-    };
+    }
 
-    public updateDocumentTargets = (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
+    public async updateDocumentTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
         return updateDocumentTargets(targetIds, documentIds);
-    };
+    }
 
-    public getDocumentPageTargets = (id: number): Promise<Targets> => {
+    public async getDocumentPageTargets(id: number): Promise<Targets> {
         return getDocumentPageTargets(id);
-    };
+    }
 
-    public updateDocumentPageTargets = (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
+    public async updateDocumentPageTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
         return updateDocumentPageTargets(targetIds, documentIds);
-    };
+    }
 }

@@ -6,7 +6,7 @@ import { Targets } from '../types';
 
 export type UseDocumentPageTargetsReturnType = {
     documentPageTargets: Targets;
-    updateDocumentPageTargets: (targetIds: string[], documentIds: number[]) => void;
+    updateDocumentPageTargets: (targetIds: number[], documentIds: number[]) => void;
 };
 
 export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentPageTargetsReturnType => {
@@ -20,7 +20,7 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
         fetchDocumentPageTargets();
     }, [appBridge, id]);
 
-    const updateDocumentPageTargets = async (targetIds: string[], documentIds: number[]) => {
+    const updateDocumentPageTargets = async (targetIds: number[], documentIds: number[]) => {
         await appBridge.updateDocumentPageTargets(targetIds, documentIds);
     };
 
