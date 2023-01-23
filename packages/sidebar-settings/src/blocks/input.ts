@@ -6,7 +6,7 @@ import type { IconEnum, TextInputType } from '.';
 
 export type InputBlock<AppBridge> = {
     type: 'input';
-    icon?: IconEnum;
+    icon?: IconEnum | keyof typeof IconEnum;
     inputType?: TextInputType;
     placeholder?: string;
     clearable?: boolean;
