@@ -262,15 +262,15 @@ export class AppBridgeTheme {
         return getDocumentTargets(id);
     };
 
-    public updateDocumentTargets = (data: string[], ids: number[]): Promise<TargetsUpdate> => {
-        return updateDocumentTargets(data, ids);
+    public updateDocumentTargets = (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
+        return updateDocumentTargets(targetIds, documentIds);
     };
 
     public getDocumentPageTargets = (id: number): Promise<Targets> => {
         return getDocumentPageTargets(id);
     };
 
-    public updateDocumentPageTargets = (data: string[], ids: number[]): Promise<TargetsUpdate> => {
-        return updateDocumentPageTargets(data, ids);
+    public updateDocumentPageTargets = (targetIds: string[], documentIds: number[]): Promise<TargetsUpdate> => {
+        return updateDocumentPageTargets(targetIds, documentIds);
     };
 }
