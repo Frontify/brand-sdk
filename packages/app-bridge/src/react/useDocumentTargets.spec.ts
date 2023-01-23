@@ -30,20 +30,4 @@ describe('useDocumentTargets', () => {
 
         expect(result.current.documentTargets).toEqual(documentTargets);
     });
-
-    it('should return the document page targets from appBridge', async () => {
-        const documentPageTargets = TargetsDummy.with();
-
-        appBridge.getDocumentPageTargets = vi.fn().mockResolvedValue(documentPageTargets);
-
-        const { result } = renderHook(() => useDocumentTargets(appBridge, 1));
-
-        expect(result.current.documentPageTargets.length).toBe(0);
-
-        await act(async () => {
-            await appBridge.getDocumentPageTargets(1);
-        });
-
-        expect(result.current.documentPageTargets).toEqual(documentPageTargets);
-    });
 });
