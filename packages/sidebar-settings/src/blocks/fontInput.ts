@@ -10,7 +10,7 @@ export enum FontProvider {
 
 export type FontValue = {
     fontFamily: string | number;
-    fontProvider: FontProvider | keyof FontProvider;
+    fontProvider: FontProvider | keyof typeof FontProvider;
     color?: {
         red: number;
         green: number;
