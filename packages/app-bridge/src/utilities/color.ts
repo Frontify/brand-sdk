@@ -8,21 +8,23 @@ export const rgbStringToRgbObject = (
         return trimmedValue.startsWith('rgba(') || trimmedValue.startsWith('rgb(');
     };
 
-    if (!isRgbaStringFormat(rgbString)) {
+    const colorArray = rgbString.split('(')[1].split(')')[0].split(',');
+
+    const isColorArrayCorrectTypes = colorArray
+        .slice(0, 2)
+        .every((value) => value.trim() === parseInt(value).toString());
+
+    if (!isRgbaStringFormat(rgbString) || !isColorArrayCorrectTypes) {
         throw new Error(`String is not a valid color (passed: "${rgbString}").`);
     }
 
-    const colorArray = rgbString
-        .split('(')[1]
-        .split(')')[0]
-        .split(',')
-        .map((value) => parseFloat(value));
+    const parsedColorArray = colorArray.map((value) => parseFloat(value));
 
     return {
-        red: colorArray[0] || 0,
-        green: colorArray[1] || 0,
-        blue: colorArray[2] || 0,
-        alpha: colorArray?.[3] || 1,
+        red: parsedColorArray[0] || 0,
+        green: parsedColorArray[1] || 0,
+        blue: parsedColorArray[2] || 0,
+        alpha: parsedColorArray?.[3] || 1,
     };
 };
 

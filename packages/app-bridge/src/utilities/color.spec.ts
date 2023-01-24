@@ -15,14 +15,16 @@ describe('Color', () => {
             { input: '    rgba( 1    ,  2  ,  3 , 0.6 )    ', expected: { red: 1, green: 2, blue: 3, alpha: 0.6 } },
             { input: 'rgb(1, 2, 3);    ', expected: { red: 1, green: 2, blue: 3, alpha: 1 } },
             { input: 'rgba(1, 2, 3, 0.6);    ', expected: { red: 1, green: 2, blue: 3, alpha: 0.6 } },
-            { input: 'rgba(,,, 0.6);    ', expected: { red: 0, green: 0, blue: 0, alpha: 0.6 } },
         ])('convert rgb(a) string to object', ({ input, expected }) => {
             expect(rgbStringToRgbObject(input)).toStrictEqual(expected);
         });
 
-        it.each(['', 'color', '   rgb', 'rgb    ', '   rgb   '])('throw error on wrong string', (input) => {
-            expect(() => rgbStringToRgbObject(input)).toThrowError();
-        });
+        it.each(['', 'color', '   rgb', 'rgb    ', '   rgb   ', 'rgba(,,, 0.6)', 'rgba(1.1,2.2,3.3,0.6)'])(
+            'throw error on wrong string',
+            (input) => {
+                expect(() => rgbStringToRgbObject(input)).toThrowError();
+            },
+        );
     });
 
     describe('rgbObjectToRgbString', () => {
