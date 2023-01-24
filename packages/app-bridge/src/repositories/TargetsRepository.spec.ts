@@ -18,9 +18,9 @@ import {
 } from '../tests';
 import { HttpClient } from '../utilities';
 
-const DOCUMENT_ID = 1;
-const PAGE_ID = 1;
-const TARGET_IDS = [1, 2, 3];
+const DOCUMENT_ID = 13451;
+const DOCUMENT_PAGE_ID = 1865;
+const TARGET_IDS = [13, 254, 3234];
 
 describe('TargetsRepositoryTest', () => {
     afterEach(() => {
@@ -28,7 +28,7 @@ describe('TargetsRepositoryTest', () => {
     });
 
     test('getDocumentTargets with success', async () => {
-        const apiDocumentTargets = DocumentTargetsApiDummy.with(1);
+        const apiDocumentTargets = DocumentTargetsApiDummy.with(DOCUMENT_ID);
 
         const mockHttpClientGet = vi.fn().mockReturnValue({ result: apiDocumentTargets });
 
@@ -46,20 +46,20 @@ describe('TargetsRepositoryTest', () => {
 
         HttpClient.post = mockHttpClientPost;
 
-        const result = await updateDocumentTargets([PAGE_ID], [DOCUMENT_ID]);
+        const result = await updateDocumentTargets([DOCUMENT_PAGE_ID], [DOCUMENT_ID]);
 
         expect(mockHttpClientPost).toHaveBeenCalledTimes(1);
         expect(result).toEqual(apiUpdateDocumentTargets);
     });
 
     test('getPageTargets with success', async () => {
-        const apiDocumentPageTargets = DocumentPageTargetsApiDummy.with(1);
+        const apiDocumentPageTargets = DocumentPageTargetsApiDummy.with(DOCUMENT_ID);
 
         const mockHttpClientGet = vi.fn().mockReturnValue({ result: apiDocumentPageTargets });
 
         HttpClient.get = mockHttpClientGet;
 
-        const result = await getDocumentPageTargets(PAGE_ID);
+        const result = await getDocumentPageTargets(DOCUMENT_PAGE_ID);
 
         expect(mockHttpClientGet).toHaveBeenCalledTimes(1);
         expect(result).toEqual(mapToDocumentPageTargets(apiDocumentPageTargets));
@@ -73,7 +73,7 @@ describe('TargetsRepositoryTest', () => {
 
         HttpClient.post = mockHttpClientPost;
 
-        const result = await updateDocumentPageTargets([PAGE_ID], [DOCUMENT_ID]);
+        const result = await updateDocumentPageTargets([DOCUMENT_PAGE_ID], [DOCUMENT_ID]);
 
         expect(mockHttpClientPost).toHaveBeenCalledTimes(1);
         expect(result).toEqual(apiUpdateDocumentPageTargets);

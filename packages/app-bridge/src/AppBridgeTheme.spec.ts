@@ -34,7 +34,7 @@ const DOCUMENT_PAGE_ID = 4562;
 const PAGE_ID = 12312;
 const DOCUMENT_ID = 35345;
 const COLOR_PALETTE_ID = 500;
-const TARGET_IDS = [1, 2, 3];
+const TARGET_IDS = [2341, 6642, 2213];
 
 describe('AppBridgeThemeTest', () => {
     const createEditButton = (enabled: boolean) => {
@@ -255,7 +255,7 @@ describe('AppBridgeThemeTest', () => {
     });
 
     it('returns document targets', async () => {
-        const documentTargetsFromApi = DocumentTargetsApiDummy.with(1);
+        const documentTargetsFromApi = DocumentTargetsApiDummy.with(DOCUMENT_ID);
         const mappedDocumentTargets = TargetsDummy.with();
 
         const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentTargetsFromApi });
@@ -281,7 +281,7 @@ describe('AppBridgeThemeTest', () => {
     });
 
     it('returns document page targets', async () => {
-        const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(1);
+        const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(DOCUMENT_ID);
         const mappedDocumentPageTargets = TargetsDummy.with();
 
         const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentPageTargetsFromApi });

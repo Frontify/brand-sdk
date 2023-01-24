@@ -8,7 +8,7 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 import { TargetsDummy } from '../tests';
 import { useDocumentTargets } from './useDocumentTargets';
 
-const DOCUMENT_ID = 1;
+const DOCUMENT_ID = 92341;
 
 describe('useDocumentTargets', () => {
     const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
@@ -27,7 +27,7 @@ describe('useDocumentTargets', () => {
         expect(result.current.documentTargets.length).toBe(0);
 
         await act(async () => {
-            await appBridge.getDocumentTargets(1);
+            await appBridge.getDocumentTargets(DOCUMENT_ID);
         });
 
         expect(result.current.documentTargets).toEqual(documentTargets);
