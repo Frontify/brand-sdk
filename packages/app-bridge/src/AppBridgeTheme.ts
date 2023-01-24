@@ -258,16 +258,16 @@ export class AppBridgeTheme {
         return getColorsByColorPaletteId(colorPaletteId);
     }
 
-    public async getDocumentTargets(id: number): Promise<Targets> {
-        return getDocumentTargets(id);
+    public async getDocumentTargets(documentId: number): Promise<Targets> {
+        return getDocumentTargets(documentId);
     }
 
     public async updateDocumentTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
         return updateDocumentTargets(targetIds, documentIds);
     }
 
-    public async getDocumentPageTargets(id: number): Promise<Targets> {
-        return getDocumentPageTargets(id);
+    public async getDocumentPageTargets(documentPageId: number): Promise<Targets> {
+        return getDocumentPageTargets(documentPageId);
     }
 
     public async updateDocumentPageTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
