@@ -5,7 +5,7 @@ import type { BaseBlock, ValueOrPromisedValue } from './base';
 
 export type Choice = {
     label?: string | number;
-    icon?: IconEnum;
+    icon?: IconEnum | keyof typeof IconEnum;
     value: string | number;
 };
 

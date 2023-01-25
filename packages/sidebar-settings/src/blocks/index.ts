@@ -4,6 +4,7 @@ import { AssetInputBlock } from './assetInput';
 import { ChecklistBlock } from './checklist';
 import { ColorInputBlock } from './colorInput';
 import { DropdownBlock } from './dropdown';
+import { FontInputBlock } from './fontInput';
 import { InputBlock } from './input';
 import { LegacyAssetInputBlock } from './legacyAssetInput';
 import { LinkChooserBlock } from './linkChooser';
@@ -24,6 +25,7 @@ export * from './checklist';
 export * from './choices';
 export * from './colorInput';
 export * from './dropdown';
+export * from './fontInput';
 export * from './input';
 export * from './legacyAssetInput';
 export * from './linkChooser';
@@ -56,6 +58,7 @@ export type SimpleSettingBlock<AppBridge> =
     | ChecklistBlock<AppBridge>
     | ColorInputBlock<AppBridge>
     | DropdownBlock<AppBridge>
+    | FontInputBlock<AppBridge>
     | InputBlock<AppBridge>
     | LegacyAssetInputBlock<AppBridge>
     | LinkChooserBlock<AppBridge>
