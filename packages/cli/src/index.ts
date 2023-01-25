@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import { createDeployment, createDevelopmentServer, createNewContentBlock, loginUser, logoutUser } from './commands';
 import { getValidInstanceUrl, isValidName } from './utils';
 import pkg from '../package.json';
+import { createPlatformApp } from './commands/createPlatformApp';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -112,7 +113,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
     appName && prompts.inject([appName, undefined]);
 
-    const { promptedAppName, stylingFramework } = await prompts([
+    const { promptedAppName, appType, stylingFramework } = await prompts([
         {
             type: 'text',
             name: 'promptedAppName',
@@ -125,6 +126,15 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
 
                 return isValidName(value);
             },
+        },
+        {
+            type: 'select',
+            name: 'appType',
+            message: 'Choose your appType',
+            choices: [
+                { title: 'Content Block or Theme', value: 'block' },
+                { title: 'Platform App', value: 'platformApp' },
+            ],
         },
         {
             type: 'select',
@@ -142,7 +152,11 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
         exit(0);
     }
 
-    createNewContentBlock(promptedAppName, stylingFramework);
+    if (appType === 'block') {
+        createNewContentBlock(promptedAppName, stylingFramework);
+    } else if (appType === 'platformApp') {
+        createPlatformApp(promptedAppName, stylingFramework);
+    }
 });
 
 /**
