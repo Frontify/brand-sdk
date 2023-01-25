@@ -12,6 +12,7 @@ import type {
     DropdownBlock as DropdownBlockSidebarSettings,
     DynamicSettingBlock as DynamicSettingBlockSidebarSettings,
     DynamicSupportedBlock as DynamicSupportedBlockSidebarSettings,
+    FontInputBlock as FontInputBlockSidebarSettings,
     InputBlock as InputBlockSidebarSettings,
     LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
     LinkChooserBlock as LinkChooserBlockSidebarSettings,
@@ -39,6 +40,7 @@ export type DropdownBlock = DropdownBlockSidebarSettings<AppBridgeBlock>;
 export type DynamicSettingBlock<Block extends DynamicSupportedBlock = DynamicSupportedBlock> =
     DynamicSettingBlockSidebarSettings<AppBridgeBlock, Block>;
 export type DynamicSupportedBlock = DynamicSupportedBlockSidebarSettings<AppBridgeBlock>;
+export type FontInputBlock = FontInputBlockSidebarSettings<AppBridgeBlock>;
 export type InputBlock = InputBlockSidebarSettings<AppBridgeBlock>;
 export type LegacyAssetInputBlock = LegacyAssetInputBlockSidebarSettings<AppBridgeBlock>;
 export type LinkChooserBlock = LinkChooserBlockSidebarSettings<AppBridgeBlock>;
