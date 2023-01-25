@@ -21,9 +21,9 @@ export const rgbStringToRgbObject = (
     const parsedColorArray = colorArray.map((value) => parseFloat(value));
 
     return {
-        red: parsedColorArray[0] || 0,
-        green: parsedColorArray[1] || 0,
-        blue: parsedColorArray[2] || 0,
+        red: parsedColorArray[0],
+        green: parsedColorArray[1],
+        blue: parsedColorArray[2],
         alpha: parsedColorArray?.[3] || 1,
     };
 };
