@@ -1,5 +1,15 @@
 # @frontify/sidebar-settings
 
+## 0.0.13
+
+### Patch Changes
+
+- [`5fb81d6`](https://github.com/Frontify/brand-sdk/commit/5fb81d6a3f8e0bd7083b2a2c1cc95b7a2d98e395) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [#329](https://github.com/Frontify/brand-sdk/pull/329) [`d2ecd25`](https://github.com/Frontify/brand-sdk/commit/d2ecd2592d129d40de72d4793c8848f2f291f896) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add font input setting
+
+- [`45653fa`](https://github.com/Frontify/brand-sdk/commit/45653faaf4168517ccbb3a9775bbf88871149692) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 0.0.12
 
 ### Patch Changes
