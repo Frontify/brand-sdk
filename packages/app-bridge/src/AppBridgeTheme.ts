@@ -21,6 +21,9 @@ import {
     getDocumentSectionsByDocumentPageId,
     getDocumentsWithoutDocumentGroupByProjectId,
     getUncategorizedPagesByDocumentId,
+    moveDocument,
+    moveDocumentCategory,
+    moveDocumentPage,
     updateBrandportalLink,
     updateCoverPage,
     updateDocument,
@@ -128,6 +131,10 @@ export class AppBridgeTheme {
         return deleteDocument(id);
     }
 
+    public async moveDocument(id: number, position: number, newGroupId?: number, oldGroupId?: number) {
+        return moveDocument(id, this.getPortalId(), position, newGroupId, oldGroupId);
+    }
+
     public async createDocumentGroup(documentGroup: DocumentGroupCreate) {
         return createDocumentGroup({ ...documentGroup, portalId: this.getPortalId() } as DocumentGroup);
     }
@@ -150,6 +157,10 @@ export class AppBridgeTheme {
 
     public async deleteDocumentCategory(id: number) {
         return deleteDocumentCategory(id);
+    }
+
+    public async moveDocumentCategory(id: number, documentId: number, position: number) {
+        return moveDocumentCategory(id, documentId, position);
     }
 
     public async createDocumentPage(documentPage: DocumentPageCreate) {
@@ -183,6 +194,10 @@ export class AppBridgeTheme {
 
     public async deleteDocumentPage(id: number) {
         return deleteDocumentPage(id);
+    }
+
+    public async moveDocumentPage(id: number, documentId: number, position: number, category?: number) {
+        return moveDocumentPage(id, documentId, position, category);
     }
 
     public async createCoverPage(coverPage: CoverPageCreate) {

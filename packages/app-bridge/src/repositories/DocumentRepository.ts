@@ -32,3 +32,20 @@ export const deleteDocument = async (id: number): Promise<void> => {
         throw new Error('Could not delete document');
     }
 };
+
+export const moveDocument = async (
+    id: number,
+    portalId: number,
+    position: number,
+    newGroupId?: number,
+    oldGroupId?: number,
+): Promise<Document> => {
+    const { result } = await HttpClient.put(`/api/document/sorting/${id}`, {
+        portalId,
+        position,
+        newGroupId,
+        oldGroupId,
+    });
+
+    return convertObjectCase(result.data, 'camel') as Document;
+};

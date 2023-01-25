@@ -19,6 +19,7 @@ import type {
     DocumentLibraryUpdate,
     DocumentLinkCreate,
     DocumentLinkUpdate,
+    DocumentPage,
     DocumentPageCreate,
     DocumentPageUpdate,
     DocumentStandardCreate,
@@ -328,6 +329,37 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const moveDocument = useCallback(
+        async (id: number, position: number, newGroupId?: number, oldGroupId?: number) => {
+            await appBridge.moveDocument(id, position, newGroupId, oldGroupId);
+        },
+        [appBridge],
+    );
+
+    const moveDocumentCategory = useCallback(
+        async (id: number, documentId: number, position: number) => {
+            await appBridge.moveDocumentCategory(id, documentId, position);
+
+            window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+                documentCategory: { id, documentId, sort: position } as DocumentCategory,
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
+    const moveDocumentPage = useCallback(
+        async (id: number, documentId: number, position: number, category?: number) => {
+            await appBridge.moveDocumentPage(id, documentId, position, category);
+
+            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+                documentPage: { id, documentId, sort: position } as DocumentPage,
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
     return {
         createLink,
         updateLink,
@@ -335,12 +367,14 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createPage,
         updatePage,
         deletePage,
+        moveDocumentPage,
         createLibrary,
         updateLibrary,
         deleteLibrary,
         createCategory,
         updateCategory,
         deleteCategory,
+        moveDocumentCategory,
         createCoverPage,
         updateCoverPage,
         deleteCoverPage,
@@ -352,5 +386,6 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createDocument: createStandardDocument,
         updateDocument: updateStandardDocument,
         deleteDocument: deleteStandardDocument,
+        moveDocument,
     };
 };

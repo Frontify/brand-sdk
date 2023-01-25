@@ -36,3 +36,16 @@ export const deleteDocumentPage = async (id: number): Promise<void> => {
         throw new Error('Could not delete document page');
     }
 };
+
+export const moveDocumentPage = async (
+    id: number,
+    documentId: number,
+    position: number,
+    category?: number,
+): Promise<void> => {
+    const { result } = await HttpClient.post(`/api/document/page/${documentId}/${id}`, { sort: position, category });
+
+    if (!result.success) {
+        throw new Error('Could not move document page');
+    }
+};
