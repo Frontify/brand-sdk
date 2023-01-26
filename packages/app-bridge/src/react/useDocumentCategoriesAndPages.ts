@@ -71,12 +71,15 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
             handleEventUpdates({ action, documentPageOrDocumentCategory: documentCategory });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
-        window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
+        window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, updateDocumentPageFromEvent);
+        window.emitter.on(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, updateDocumentCategoryFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
-            window.emitter.off('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
+            window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, updateDocumentPageFromEvent);
+            window.emitter.off(
+                `AppBridge:GuidelineDocumentCategoryAction:${documentId}`,
+                updateDocumentCategoryFromEvent,
+            );
         };
     }, [appBridge, documentId]);
 

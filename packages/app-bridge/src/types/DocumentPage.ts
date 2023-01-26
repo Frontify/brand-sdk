@@ -62,5 +62,5 @@ export type DocumentPageCreate = Omit<DocumentPageRequest, 'id'>;
 
 export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
-    'categoryId' | 'documentId' | 'linkUrl' | 'title' | 'visibility'
+    'categoryId' | 'linkUrl' | 'title' | 'visibility'
 >;

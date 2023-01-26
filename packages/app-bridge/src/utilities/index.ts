@@ -2,6 +2,7 @@
 
 export * from './dom';
 export * from './file';
+export * from './guideline';
 export * from './hash';
 export * from './httpClient';
 export * from './notify';

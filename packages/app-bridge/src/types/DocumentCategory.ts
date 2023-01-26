@@ -25,7 +25,4 @@ export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
 
 export type DocumentCategoryCreate = Pick<DocumentCategory, 'title' | 'documentId'>;
 
-export type DocumentCategoryUpdate = RequireAtLeastOne<
-    Pick<DocumentCategory, DocumentPageRequestFields>,
-    'title' | 'documentId'
->;
+export type DocumentCategoryUpdate = RequireAtLeastOne<Pick<DocumentCategory, DocumentPageRequestFields>, 'title'>;

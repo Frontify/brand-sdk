@@ -36,7 +36,7 @@ export const getAppBridgeBlockStub = ({
     sectionId = SECTION_ID,
     user = UserDummy.with(USER_ID),
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
-    window.emitter = spy(mitt()) as Emitter;
+    window.emitter = spy(mitt()) as unknown as Emitter;
 
     window.blockSettings ??= {};
     window.blockSettings[blockId] = blockSettings;

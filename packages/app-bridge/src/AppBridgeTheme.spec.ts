@@ -136,7 +136,7 @@ describe('AppBridgeThemeTest', () => {
         HttpClient.get = mockHttpClientGet;
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
-        const result = await appBridge.getDocumentsWithoutDocumentGroups();
+        const result = await appBridge.getUngroupedDocuments();
 
         expect(result).toEqual(mappedDocuments);
     });
