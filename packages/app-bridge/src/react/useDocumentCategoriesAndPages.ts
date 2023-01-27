@@ -23,14 +23,8 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
     }, [appBridge, documentId]);
 
     useEffect(() => {
-        const initializeData = async () => {
-            const data = await fetchAllDocumentPages(appBridge, documentId);
-
-            setDocumentCategoriesAndPages(data);
-        };
-
-        initializeData();
-    }, [appBridge, documentId]);
+        refetch();
+    }, [refetch]);
 
     useEffect(() => {
         const handleEventUpdates = (event: Event) => {
@@ -71,12 +65,15 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
             handleEventUpdates({ action, documentPageOrDocumentCategory: documentCategory });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
-        window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
+        window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, updateDocumentPageFromEvent);
+        window.emitter.on(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, updateDocumentCategoryFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
-            window.emitter.off('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
+            window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, updateDocumentPageFromEvent);
+            window.emitter.off(
+                `AppBridge:GuidelineDocumentCategoryAction:${documentId}`,
+                updateDocumentCategoryFromEvent,
+            );
         };
     }, [appBridge, documentId]);
 

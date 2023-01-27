@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash-es';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -16,22 +16,15 @@ type DocumentsAndGroups = (Document | DocumentGroup)[];
 export const useDocuments = (appBridge: AppBridgeTheme) => {
     const [documents, setDocuments] = useState<Nullable<DocumentsAndGroups>>(null);
 
-    useEffect(() => {
-        const fetchAllDocuments = async () => {
-            const [groups, documents] = await Promise.all([
-                appBridge.getDocumentGroups(),
-                appBridge.getDocumentsWithoutDocumentGroups(),
-            ]);
+    const refetch = useCallback(async () => {
+        const data = await fetchAllDocuments(appBridge);
 
-            const documentsAndGroups = [...groups, ...documents].sort((a, b) =>
-                a.sort && b.sort ? a.sort - b.sort : 0,
-            );
-
-            setDocuments(documentsAndGroups);
-        };
-
-        fetchAllDocuments();
+        setDocuments(data);
     }, [appBridge]);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     useEffect(() => {
         const handleEventUpdates = (event: Event): void => {
@@ -93,7 +86,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         };
     }, [appBridge]);
 
-    return { documents };
+    return { documents, refetch };
 };
 
 const addItem = (items: DocumentsAndGroups, itemToAdd: Document | DocumentGroup) => {
@@ -197,4 +190,13 @@ const initialize = (previousState: Nullable<DocumentsAndGroups>, event: Event) =
     }
 
     return previousState;
+};
+
+const fetchAllDocuments = async (appBridge: AppBridgeTheme) => {
+    const [groups, documents] = await Promise.all([
+        appBridge.getDocumentGroups(),
+        appBridge.getDocumentsWithoutDocumentGroups(),
+    ]);
+
+    return [...groups, ...documents].sort((a, b) => (a.sort && b.sort ? a.sort - b.sort : 0));
 };
