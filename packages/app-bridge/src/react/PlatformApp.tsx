@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React from 'react';
+import React, { FC, ReactElement } from 'react';
 import { AppBridgePlatformApp } from '../AppBridgePlatformApp';
+import { PlatformAppProperties } from '../types/PlatformApp';
 
-export const PlatformAppContext = React.createContext({});
+export const PlatformAppContext = React.createContext<PlatformAppProperties>({});
 
 // Just to demo, AppBridge is no object like that
 // export const AppBridge = {
@@ -17,11 +18,34 @@ export const PlatformAppContext = React.createContext({});
 //         console.log('execute Query with data', graphQlQuery, data),
 // };
 
-export const PlatformApp: React.FC = ({ children }) => {
+type settings = {
+    hidden: any;
+    main: any;
+    style: any;
+};
+
+type PlatformAppProps = {
+    children: ReactElement;
+    settings: settings;
+};
+
+export const PlatformApp: FC<PlatformAppProps> = ({ children, settings }) => {
     // check if token exists -> refresh or get new token
     // Inject in GraphQL Library as bearer token
 
     const AppBridge = new AppBridgePlatformApp();
 
-    return <PlatformAppContext.Provider value={AppBridge.setContextData()}>{children}</PlatformAppContext.Provider>;
+    const scopeSettings = settings.hidden.scope;
+    const entryView = settings.hidden.entry.view;
+    const styling = settings.style[0].id;
+
+    return (
+        <PlatformAppContext.Provider value={AppBridge.setContextData()}>
+            <p>Settings: {scopeSettings}</p>
+            <p>Scope: {entryView}</p>
+            <p>Styling: {styling} </p>
+
+            {children}
+        </PlatformAppContext.Provider>
+    );
 };

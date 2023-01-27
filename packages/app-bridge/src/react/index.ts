@@ -18,3 +18,5 @@ export * from './useGuidelineActions';
 export * from './useNavigationManager';
 export * from './useReadyForPrint';
 export * from './useTemplateChooser';
+export * from './usePlatformContext';
+export * from './PlatformApp';

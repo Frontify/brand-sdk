@@ -1,25 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { FC } from 'react';
+import { usePlatformContext } from '@frontify/app-bridge';
 
-type Settings = {
-    color: 'violet' | 'blue' | 'green' | 'red';
-};
-
-const colorTailwindMap: Record<Settings['color'], string> = {
-    violet: 'tw-text-[rgb(113,89,215)]',
-    blue: 'tw-text-blue-600',
-    green: 'tw-text-green-600',
-    red: 'tw-text-red-600',
-};
-
-export const App: FC = () => {
-    const context = usePlatformContext<Detail>(PlatformAppContext);
+export const App = () => {
+    const context = usePlatformContext();
 
     return (
         <div>
-            <p>I augment Asset {context.assetId}</p>
-            <p>Im in view {context.view}</p>
+            <p>Whats our view: {context.view}</p>
+            <p>Whats our token: {context.token}</p>
         </div>
     );
 };

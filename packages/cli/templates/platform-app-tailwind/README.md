@@ -1,1 +1,1 @@
-# Frontify Block Boilerplate
+# Frontify Platform Boilerplate

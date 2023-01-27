@@ -4,17 +4,23 @@ import { Topic } from './types';
 import { generateRandomString } from './utilities/hash';
 import { NotifyData, notify } from './utilities/notify';
 import { subscribe } from './utilities/subscribe';
+import { PlatformAppProperties } from './types/PlatformApp';
 
 const PUBSUB_TOKEN = generateRandomString();
 
-const getQueryParams = () => ({
-    assetId: 1551122,
-    view: 'asset-creation',
-});
-
 export class AppBridgePlatformApp {
-    setContextData() {
-        return getQueryParams();
+    setContextData(): PlatformAppProperties {
+        const params = {};
+        const searchParams = new URLSearchParams(window.location.search);
+
+        // Display the keys
+        // @ts-ignore
+        for (const key of searchParams.keys()) {
+            // @ts-ignore
+            params[key] = searchParams.get(key);
+        }
+
+        return params;
     }
 
     /**
