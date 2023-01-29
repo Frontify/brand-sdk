@@ -198,5 +198,11 @@ const fetchAllDocuments = async (appBridge: AppBridgeTheme) => {
         appBridge.getDocumentsWithoutDocumentGroups(),
     ]);
 
+    for (const group of groups) {
+        if (group.documents) {
+            group.documents = group.documents.sort((a, b) => (a.sort && b.sort ? a.sort - b.sort : 0));
+        }
+    }
+
     return [...groups, ...documents].sort((a, b) => (a.sort && b.sort ? a.sort - b.sort : 0));
 };

@@ -200,6 +200,12 @@ const fetchAllDocumentPages = async (appBridge: AppBridgeTheme, documentId: numb
         appBridge.getUncategorizedPagesByDocumentId(documentId),
     ]);
 
+    for (const category of categories) {
+        if (category.documentPages) {
+            category.documentPages = category.documentPages?.sort((a, b) => a.sort - b.sort);
+        }
+    }
+
     return [
         ...categories.sort((a, b) => a.sort - b.sort),
         ...pages.sort((a, b) => a.sort - b.sort),
