@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash-es';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -16,20 +16,15 @@ type PagesAndCategories = (DocumentPage | DocumentCategory)[];
 export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documentId: number) => {
     const [documentCategoriesAndPages, setDocumentCategoriesAndPages] = useState<Nullable<PagesAndCategories>>(null);
 
-    useEffect(() => {
-        const fetchAllDocumentPages = async () => {
-            const [categories = [], pages = []] = await Promise.all([
-                appBridge.getDocumentCategoriesByDocumentId(documentId),
-                appBridge.getUncategorizedPagesByDocumentId(documentId),
-            ]);
+    const refetch = useCallback(async () => {
+        const data = await fetchAllDocumentPages(appBridge, documentId);
 
-            const pagesAndCategories = [...categories, ...pages].sort((a, b) => a.sort - b.sort);
-
-            setDocumentCategoriesAndPages(pagesAndCategories);
-        };
-
-        fetchAllDocumentPages();
+        setDocumentCategoriesAndPages(data);
     }, [appBridge, documentId]);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     useEffect(() => {
         const handleEventUpdates = (event: Event) => {
@@ -56,7 +51,9 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
         }: {
             action: EmitterAction;
             documentPage: DocumentPage | { id: number };
-        }) => handleEventUpdates({ action, documentPageOrDocumentCategory: documentPage });
+        }) => {
+            handleEventUpdates({ action, documentPageOrDocumentCategory: documentPage });
+        };
 
         const updateDocumentCategoryFromEvent = ({
             action,
@@ -64,18 +61,23 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
         }: {
             action: EmitterAction;
             documentCategory: DocumentCategory | { id: number };
-        }) => handleEventUpdates({ action, documentPageOrDocumentCategory: documentCategory });
+        }) => {
+            handleEventUpdates({ action, documentPageOrDocumentCategory: documentCategory });
+        };
 
-        window.emitter.on('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
-        window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
+        window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, updateDocumentPageFromEvent);
+        window.emitter.on(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, updateDocumentCategoryFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentPageAction', updateDocumentPageFromEvent);
-            window.emitter.off('AppBridge:GuidelineDocumentCategoryAction', updateDocumentCategoryFromEvent);
+            window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, updateDocumentPageFromEvent);
+            window.emitter.off(
+                `AppBridge:GuidelineDocumentCategoryAction:${documentId}`,
+                updateDocumentCategoryFromEvent,
+            );
         };
     }, [appBridge, documentId]);
 
-    return { documentCategoriesAndPages };
+    return { documentCategoriesAndPages, refetch };
 };
 
 const addItem = (items: PagesAndCategories, itemToAdd: DocumentPage | DocumentCategory) => {
@@ -190,4 +192,22 @@ const initialize = (previousState: Nullable<PagesAndCategories>, event: Event) =
     }
 
     return previousState;
+};
+
+const fetchAllDocumentPages = async (appBridge: AppBridgeTheme, documentId: number) => {
+    const [categories = [], pages = []] = await Promise.all([
+        appBridge.getDocumentCategoriesByDocumentId(documentId),
+        appBridge.getUncategorizedPagesByDocumentId(documentId),
+    ]);
+
+    for (const category of categories) {
+        if (category.documentPages) {
+            category.documentPages = category.documentPages?.sort((a, b) => a.sort - b.sort);
+        }
+    }
+
+    return [
+        ...categories.sort((a, b) => a.sort - b.sort),
+        ...pages.sort((a, b) => a.sort - b.sort),
+    ] as PagesAndCategories;
 };
