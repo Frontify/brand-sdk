@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { compile } from '../../src/utils/compiler';
+import { compile } from '../../src/utils/compiler.js';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;

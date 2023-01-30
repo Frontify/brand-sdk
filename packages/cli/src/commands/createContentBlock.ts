@@ -3,7 +3,7 @@
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import pc from 'picocolors';
-import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils';
+import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index.js';
 
 const CONTENT_BLOCK_PREFIX = 'content-block-';
 

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import pc from 'picocolors';
-import { getCurrentTime } from './date';
+import { getCurrentTime } from './date.js';
 
 export class Logger {
     static defaultInfo(...messages: string[]): void {

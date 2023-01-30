@@ -7,6 +7,8 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 export const compile = async (projectPath: string, entryFile: string, outputName: string) =>
     build({
         plugins: [
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
             react(),
             viteExternalsPlugin({
                 react: 'React',

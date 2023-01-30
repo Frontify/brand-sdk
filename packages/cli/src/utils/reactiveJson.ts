@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import ParseJsonError from '../errors/ParseJsonError';
-import FileNotFoundError from '../errors/FileNotFoundError';
+import ParseJsonError from '../errors/ParseJsonError.js';
+import FileNotFoundError from '../errors/FileNotFoundError.js';
 
 export const reactiveJson = <T>(path: string): T => {
     try {

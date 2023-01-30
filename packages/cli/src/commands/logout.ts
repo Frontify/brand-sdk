@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Logger } from '../utils/logger';
-import { Configuration } from '../utils/configuration';
+import { Logger } from '../utils/logger.js';
+import { Configuration } from '../utils/configuration.js';
 
 export const logoutUser = (): void => {
     Configuration.delete('tokens');
