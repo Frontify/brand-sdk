@@ -27,7 +27,7 @@ describe('useDocumentPageTargets', () => {
         expect(result.current.documentPageTargets.length).toBe(0);
 
         await act(async () => {
-            await appBridge.getDocumentPageTargets(1);
+            await appBridge.getDocumentPageTargets(DOCUMENT_PAGE_ID);
         });
 
         expect(result.current.documentPageTargets).toEqual(documentPageTargets);
