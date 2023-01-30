@@ -14,7 +14,7 @@ export type Checkbox = {
     label?: string;
 
     /**
-     * Additionnal information about the settings to be shown in a tooltip
+     * Additional information about the settings to be shown in a tooltip.
      */
     info?: string;
 

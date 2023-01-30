@@ -36,7 +36,7 @@ export type FontValue = (
       }
 ) & {
     /**
-     * The color of the text.
+     * The rgba-color of the text.
      */
     color?: {
         /**
@@ -52,7 +52,7 @@ export type FontValue = (
          */
         blue: number;
         /**
-         * The blue value of the color (0-1).
+         * The alpha value of the color (0-1).
          */
         alpha?: number;
     } | null;
@@ -78,38 +78,38 @@ export type FontValue = (
     lineHeight?: string;
 
     /**
-     * Whether the font should be in uppercase or not.
+     * Whether the font should be uppercase or not.
      */
     uppercase: boolean;
 
     /**
-     * Whether the font should be in italic or not.
+     * Whether the font should be italic or not.
      */
     italic: boolean;
 
     /**
-     * Whether the font should be in underlined or not.
+     * Whether the font should be underlined or not.
      */
     underline: boolean;
 
     /**
-     * The color of the text on hover.
+     * The rgba-color of the text on hover.
      */
     hoverColor?: {
         /**
-         * Red color: 0-255
+         * The red value of the color (0-255).
          */
         red: number;
         /**
-         * Green color: 0-255
+         * The green value of the color (0-255).
          */
         green: number;
         /**
-         * Blue color: 0-255
+         * The blue value of the color (0-255).
          */
         blue: number;
         /**
-         * Alpha channel: 0-1
+         * The alpha value of the color (0-1).
          */
         alpha?: number;
     } | null;
@@ -119,19 +119,19 @@ export type FontValue = (
      */
     hoverBackgroundColor?: {
         /**
-         * Red color: 0-255
+         * The red value of the color (0-255).
          */
         red: number;
         /**
-         * Green color: 0-255
+         * The green value of the color (0-255).
          */
         green: number;
         /**
-         * Blue color: 0-255
+         * The blue value of the color (0-255).
          */
         blue: number;
         /**
-         * Alpha channel: 0-1
+         * The alpha value of the color (0-1).
          */
         alpha?: number;
     } | null;
@@ -157,17 +157,17 @@ export type FontValue = (
     hoverLineHeight?: string;
 
     /**
-     * Whether the font should be in uppercase or not on hover.
+     * Whether the font should be uppercase or not on hover.
      */
     hoverUppercase: boolean;
 
     /**
-     * Whether the font should be in italic or not on hover.
+     * Whether the font should be italic or not on hover.
      */
     hoverItalic: boolean;
 
     /**
-     * Whether the font should be in underlined or not on hover.
+     * Whether the font should be underlined or not on hover.
      */
     hoverUnderline: boolean;
 
@@ -236,17 +236,17 @@ export type FontValue = (
     activeLineHeight?: string;
 
     /**
-     * Whether the font should be in uppercase or not when active.
+     * Whether the font should be uppercase or not when active.
      */
     activeUppercase: boolean;
 
     /**
-     * Whether the font should be in italic or not when active.
+     * Whether the font should be italic or not when active.
      */
     activeItalic: boolean;
 
     /**
-     * Whether the font should be in underlined or not when active.
+     * Whether the font should be underlined or not when active.
      */
     activeUnderline: boolean;
 };

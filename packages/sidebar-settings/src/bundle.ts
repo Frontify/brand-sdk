@@ -20,8 +20,8 @@ export type Bundle<AppBridge> = {
     getAppBridge: () => AppBridge;
 
     /**
-     * A function that allows you to programmitically set the value of a given id.
-     * @param id Represent the setting id.
+     * A function that allows you to programmatically set the value for a block by its id.
+     * @param id Represents the setting id.
      * @param value The new value to set.
      */
     setBlockValue: (id: string, value: SettingBlock<AppBridge>['value']) => void;

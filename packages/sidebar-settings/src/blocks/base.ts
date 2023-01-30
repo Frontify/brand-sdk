@@ -36,7 +36,7 @@ export type BaseBlock<AppBridge, T = undefined> = {
     defaultValue?: T;
 
     /**
-     * Whether the setting should be show when translating the page or not.
+     * Whether the setting should be shown when translating the page or not.
      */
     showForTranslations?: boolean;
 
