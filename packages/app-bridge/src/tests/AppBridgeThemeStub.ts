@@ -16,6 +16,7 @@ import {
     DocumentGroupDummy,
     DocumentPageDummy,
     DocumentSectionDummy,
+    TargetsDummy,
 } from '.';
 
 const PROJECT_ID = 3452;
@@ -79,6 +80,8 @@ export const getAppBridgeThemeStub = ({
             ColorDummy.green(342),
             ColorDummy.yellow(9314),
         ]),
+        getDocumentTargets: Promise.resolve(TargetsDummy.with()),
+        getDocumentPageTargets: Promise.resolve(TargetsDummy.with()),
         createLink: Promise.resolve(DocumentDummy.with(1)),
         createLibrary: Promise.resolve(DocumentDummy.with(1)),
         createStandardDocument: Promise.resolve(DocumentDummy.with(1)),

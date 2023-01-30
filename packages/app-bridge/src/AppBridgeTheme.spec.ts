@@ -16,9 +16,13 @@ import {
     DocumentGroupDummy,
     DocumentPageApiDummy,
     DocumentPageDummy,
+    DocumentPageTargetsApiDummy,
     DocumentSectionApiDummy,
     DocumentSectionDummy,
+    DocumentTargetsApiDummy,
     HttpUtilResponseDummy,
+    TargetsDummy,
+    UpdateTargetsApiDummy,
 } from './tests';
 import { HttpClient } from './utilities';
 import { getColorPalettesByProjectId, getColorsByColorPaletteId } from './repositories';
@@ -27,8 +31,10 @@ import { Emitter } from './types';
 const PORTAL_ID = 652;
 const PROJECT_ID = 453;
 const DOCUMENT_PAGE_ID = 4562;
+const PAGE_ID = 12312;
 const DOCUMENT_ID = 35345;
 const COLOR_PALETTE_ID = 500;
+const TARGET_IDS = [2341, 6642, 2213];
 
 describe('AppBridgeThemeTest', () => {
     const createEditButton = (enabled: boolean) => {
@@ -246,6 +252,60 @@ describe('AppBridgeThemeTest', () => {
 
         expect(getColorsByColorPaletteId).toHaveBeenCalledTimes(1);
         expect(result).resolves.toEqual(colors);
+    });
+
+    it('returns document targets', async () => {
+        const documentTargetsFromApi = DocumentTargetsApiDummy.with(DOCUMENT_ID);
+        const mappedDocumentTargets = TargetsDummy.with();
+
+        const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentTargetsFromApi });
+
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        const result = await appBridge.getDocumentTargets(DOCUMENT_ID);
+
+        expect(result).toEqual(mappedDocumentTargets);
+    });
+
+    it('returns updated document targets', async () => {
+        const apiUpdateDocumentTargets = UpdateTargetsApiDummy.with(TARGET_IDS);
+        const mockHttpClientPost = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(apiUpdateDocumentTargets));
+
+        HttpClient.post = mockHttpClientPost;
+
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        const result = await appBridge.updateDocumentTargets([PAGE_ID], [DOCUMENT_ID]);
+
+        expect(result).toEqual(apiUpdateDocumentTargets);
+    });
+
+    it('returns document page targets', async () => {
+        const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(DOCUMENT_ID);
+        const mappedDocumentPageTargets = TargetsDummy.with();
+
+        const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentPageTargetsFromApi });
+
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        const result = await appBridge.getDocumentPageTargets(DOCUMENT_ID);
+
+        expect(result).toEqual(mappedDocumentPageTargets);
+    });
+
+    it('returns updated document page targets', async () => {
+        const apiUpdateDocumentPageTargets = UpdateTargetsApiDummy.with(TARGET_IDS);
+        const mockHttpClientPost = vi
+            .fn()
+            .mockReturnValue(HttpUtilResponseDummy.successWith(apiUpdateDocumentPageTargets));
+
+        HttpClient.post = mockHttpClientPost;
+
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        const result = await appBridge.updateDocumentPageTargets([PAGE_ID], [DOCUMENT_ID]);
+
+        expect(result).toEqual(apiUpdateDocumentPageTargets);
     });
 
     test('returns the translation language', () => {
