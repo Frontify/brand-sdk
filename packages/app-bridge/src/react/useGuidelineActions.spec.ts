@@ -128,13 +128,13 @@ describe('useGuidelineActions hook', () => {
     it('should not throw updateCategory', async () => {
         const updateCategoryMock = vi.fn(useGuidelineActionsStub.updateCategory);
 
-        expect(updateCategoryMock({ id: 1, title: 'updateCategoryTest' })).resolves.not.toThrow();
+        expect(updateCategoryMock({ id: 1, title: 'updateCategoryTest', documentId: 20 })).resolves.not.toThrow();
     });
 
     it('should not throw updatePage', async () => {
         const updatePageMock = vi.fn(useGuidelineActionsStub.updatePage);
 
-        expect(updatePageMock({ id: 1, title: 'updatePageTest' })).resolves.not.toThrow();
+        expect(updatePageMock({ id: 1, title: 'updatePageTest', documentId: 20 })).resolves.not.toThrow();
     });
 
     it('should not throw updateLegacyCoverPage', async () => {
@@ -176,7 +176,7 @@ describe('useGuidelineActions hook', () => {
     it('should not throw deletePage', async () => {
         const deletePageMock = vi.fn(useGuidelineActionsStub.deletePage);
 
-        expect(deletePageMock(1)).resolves.not.toThrow();
+        expect(deletePageMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteDocumentGroup', async () => {
@@ -188,7 +188,7 @@ describe('useGuidelineActions hook', () => {
     it('should not throw deleteCategory', async () => {
         const deleteCategoryMock = vi.fn(useGuidelineActionsStub.deleteCategory);
 
-        expect(deleteCategoryMock(1)).resolves.not.toThrow();
+        expect(deleteCategoryMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteCoverPage', async () => {
@@ -564,7 +564,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createDocumentCategory).toHaveBeenCalledWith(category);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategoryAction', {
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentCategoryAction:${category.documentId}`, {
                 documentCategory: DocumentCategoryDummy.with(1, []),
                 action: 'add',
             });
@@ -577,6 +577,7 @@ describe('useGuidelineActions hook', () => {
         const category: DocumentCategoryUpdate = {
             id: 1,
             title: 'Updated Document Category',
+            documentId: 15,
         };
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -588,7 +589,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateDocumentCategory).toHaveBeenCalledWith(category);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategoryAction', {
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentCategoryAction:${category.documentId}`, {
                 documentCategory: categoryWithoutPages,
                 action: 'update',
             });
@@ -598,16 +599,16 @@ describe('useGuidelineActions hook', () => {
     it('should delete a document category and emit an event', async () => {
         const deleteDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'deleteCategory');
 
-        const id = 1;
+        const category = { id: 1, documentId: 16 };
 
         act(() => {
-            useGuidelineActionsStub.deleteCategory(id);
+            useGuidelineActionsStub.deleteCategory(category);
         });
 
         await waitFor(() => {
-            expect(deleteDocumentCategory).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategoryAction', {
-                documentCategory: { id },
+            expect(deleteDocumentCategory).toHaveBeenCalledWith(category);
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentCategoryAction:${category.documentId}`, {
+                documentCategory: { id: category.id },
                 action: 'delete',
             });
         });
@@ -627,7 +628,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createPage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageAction', {
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
                 documentPage: DocumentPageDummy.with(1),
                 action: 'add',
             });
@@ -640,6 +641,7 @@ describe('useGuidelineActions hook', () => {
         const page: DocumentPageUpdate = {
             id: 1,
             title: 'Updated Page',
+            documentId: 25,
         };
 
         act(() => {
@@ -648,7 +650,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updatePage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageAction', {
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
                 documentPage: DocumentPageDummy.with(1),
                 action: 'update',
             });
@@ -658,16 +660,16 @@ describe('useGuidelineActions hook', () => {
     it('should delete a page and emit an event', async () => {
         const deletePage = vi.spyOn(useGuidelineActionsStub, 'deletePage');
 
-        const id = 1;
+        const page = { id: 1, documentId: 22 };
 
         act(() => {
-            useGuidelineActionsStub.deletePage(id);
+            useGuidelineActionsStub.deletePage(page);
         });
 
         await waitFor(() => {
-            expect(deletePage).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageAction', {
-                documentPage: { id },
+            expect(deletePage).toHaveBeenCalledWith(page);
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
+                documentPage: { id: page.id },
                 action: 'delete',
             });
         });

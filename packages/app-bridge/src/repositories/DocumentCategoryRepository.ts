@@ -36,3 +36,11 @@ export const deleteDocumentCategory = async (id: number): Promise<void> => {
         throw new Error('Could not delete document page category');
     }
 };
+
+export const moveDocumentCategory = async (id: number, documentId: number, position: number): Promise<void> => {
+    const { result } = await HttpClient.post(`/api/document/category/${documentId}/${id}`, { sort: position });
+
+    if (!result.success) {
+        throw new Error('Could not move document category');
+    }
+};

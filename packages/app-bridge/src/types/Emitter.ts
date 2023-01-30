@@ -69,24 +69,6 @@ export type Emitter = MittEmitter<{
               documentGroup: { id: number };
               action: 'delete';
           };
-    'AppBridge:GuidelineDocumentCategoryAction':
-        | {
-              documentCategory: DocumentCategory;
-              action: 'add' | 'update';
-          }
-        | {
-              documentCategory: { id: number };
-              action: 'delete';
-          };
-    'AppBridge:GuidelineDocumentPageAction':
-        | {
-              documentPage: DocumentPage;
-              action: 'add' | 'update';
-          }
-        | {
-              documentPage: { id: number };
-              action: 'delete';
-          };
     'AppBridge:GuidelineCoverPageAction':
         | {
               coverPage: CoverPage;
@@ -100,4 +82,24 @@ export type Emitter = MittEmitter<{
         action: 'update';
     };
     'AppBridge:OpenNavigationManager': void;
+
+    [key: `AppBridge:GuidelineDocumentPageAction:${number}`]:
+        | {
+              documentPage: DocumentPage;
+              action: 'add' | 'update';
+          }
+        | {
+              documentPage: { id: number };
+              action: 'delete';
+          };
+
+    [key: `AppBridge:GuidelineDocumentCategoryAction:${number}`]:
+        | {
+              documentCategory: DocumentCategory;
+              action: 'add' | 'update';
+          }
+        | {
+              documentCategory: { id: number };
+              action: 'delete';
+          };
 }>;

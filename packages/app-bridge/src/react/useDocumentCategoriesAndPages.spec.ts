@@ -50,7 +50,7 @@ describe('useDocumentCategoriesAndPages', () => {
         const updatedPage = DocumentPageDummy.withFields({ ...DocumentPageDummy.with(11), sort: 222 });
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
                 action: 'update',
                 documentPage: updatedPage,
             });
@@ -64,7 +64,7 @@ describe('useDocumentCategoriesAndPages', () => {
         const addedPage = DocumentPageDummy.with(13);
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
                 action: 'add',
                 documentPage: addedPage,
             });
@@ -81,7 +81,7 @@ describe('useDocumentCategoriesAndPages', () => {
         result.current.documentCategoriesAndPages = pages;
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
                 action: 'delete',
                 documentPage: { id: 1 },
             });
@@ -99,7 +99,7 @@ describe('useDocumentCategoriesAndPages', () => {
         result.current.documentCategoriesAndPages = pages;
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 action: 'invalid' as any,
                 documentPage: { id: 1, sort: 20 },
@@ -116,7 +116,7 @@ describe('useDocumentCategoriesAndPages', () => {
         result.current.documentCategoriesAndPages = pages;
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
                 action: 'update',
                 documentPage: DocumentPageDummy.withFields({ ...DocumentPageDummy.with(11), sort: 222 }),
             });
@@ -132,7 +132,7 @@ describe('useDocumentCategoriesAndPages', () => {
         result.current.documentCategoriesAndPages = pages;
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
                 action: 'add',
                 documentPage: DocumentPageDummy.with(13),
             });

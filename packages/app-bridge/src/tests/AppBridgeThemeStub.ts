@@ -33,7 +33,7 @@ export const getAppBridgeThemeStub = ({
     portalId = PORTAL_ID,
     projectId = PROJECT_ID,
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
-    window.emitter = spy(mitt()) as Emitter;
+    window.emitter = spy(mitt()) as unknown as Emitter;
 
     return createStubInstance(AppBridgeTheme, {
         getPortalId: portalId,
