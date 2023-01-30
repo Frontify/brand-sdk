@@ -11,7 +11,6 @@ import { Unit } from './types';
  * @param {('px'|'em'|'rem'|'%')} [unit='px'] Unit
  * @returns {string} Set block value to string with unit
  */
-
 export const appendUnit = <AppBridge = unknown>(
     bundle: Bundle<AppBridge>,
     settingId: string,
