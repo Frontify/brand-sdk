@@ -20,13 +20,50 @@ export type AssetInputValue = {
 };
 
 export type AssetInputBlock<AppBridge> = {
+    /**
+     * The setting type.
+     */
     type: 'assetInput';
+
+    /**
+     * Whether multiple assets can be selected.
+     */
     multiSelection?: boolean;
-    extensions?: (FileExtension | string)[];
+
+    /**
+     * Allowed project types for the asset chooser.
+     */
     projectTypes?: AssetChooserProjectType[];
+
+    /**
+     * Allowed object types for the asset chooser.
+     */
     objectTypes?: AssetChooserObjectType[];
+
+    /**
+     * The mode of the asset input.
+     *
+     * It allows to restrict usage of upload and asset chooser.
+     */
     mode?: AssetInputMode;
+
+    /**
+     * The size of the input.
+     */
     size?: AssetInputSize;
-    hideExtension?: boolean;
+
+    /**
+     * The allowed file extensions to be uploaded.
+     */
+    extensions?: (FileExtension | string)[];
+
+    /**
+     * Whether the file size should be hidden or not.
+     */
     hideSize?: boolean;
+
+    /**
+     * Whether the file extension should be hidden or not.
+     */
+    hideExtension?: boolean;
 } & BaseBlock<AppBridge, AssetInputValue | AssetInputValue['value']>;
