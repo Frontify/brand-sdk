@@ -17,8 +17,10 @@ import {
     getCoverPage,
     getDocumentCategoriesByDocumentId,
     getDocumentGroupsByPortalId,
+    getDocumentPageTargets,
     getDocumentPagesByDocumentId,
     getDocumentSectionsByDocumentPageId,
+    getDocumentTargets,
     getDocumentsWithoutDocumentGroupByProjectId,
     getUncategorizedPagesByDocumentId,
     updateBrandportalLink,
@@ -27,6 +29,8 @@ import {
     updateDocumentCategory,
     updateDocumentGroup,
     updateDocumentPage,
+    updateDocumentPageTargets,
+    updateDocumentTargets,
     updateLegacyCoverPage,
 } from './repositories';
 
@@ -58,6 +62,8 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
     LinkType,
+    Targets,
+    TargetsUpdate,
 } from './types';
 import { getDatasetByElement } from './utilities';
 
@@ -250,5 +256,21 @@ export class AppBridgeTheme {
 
     public async getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]> {
         return getColorsByColorPaletteId(colorPaletteId);
+    }
+
+    public async getDocumentTargets(documentId: number): Promise<Targets> {
+        return getDocumentTargets(documentId);
+    }
+
+    public async updateDocumentTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
+        return updateDocumentTargets(targetIds, documentIds);
+    }
+
+    public async getDocumentPageTargets(documentPageId: number): Promise<Targets> {
+        return getDocumentPageTargets(documentPageId);
+    }
+
+    public async updateDocumentPageTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
+        return updateDocumentPageTargets(targetIds, documentIds);
     }
 }
