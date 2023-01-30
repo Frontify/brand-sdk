@@ -3,8 +3,8 @@
 import { beforeAll, describe, expect, test } from 'vitest';
 import nock from 'nock';
 
-import { Configuration } from '../../src/utils/configuration';
-import { getUser } from '../../src/utils/user';
+import { Configuration } from '../../src/utils/configuration.js';
+import { getUser } from '../../src/utils/user.js';
 
 const DUMMY_TOKENS = {
     tokens: {

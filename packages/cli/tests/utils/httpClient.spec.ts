@@ -3,7 +3,7 @@
 import { beforeAll, describe, expect, test } from 'vitest';
 import nock from 'nock';
 
-import { HttpClient } from '../../src/utils/httpClient';
+import { HttpClient } from '../../src/utils/httpClient.js';
 
 const BODY_OBJECT = { some: 'body', told: 'me' };
 const TEST_BASE_URL = 'testing.frontify.test';

@@ -5,8 +5,14 @@ import prompts from 'prompts';
 import { exit } from 'node:process';
 import { join } from 'node:path';
 
-import { createDeployment, createDevelopmentServer, createNewContentBlock, loginUser, logoutUser } from './commands';
-import { getValidInstanceUrl, isValidName } from './utils';
+import {
+    createDeployment,
+    createDevelopmentServer,
+    createNewContentBlock,
+    loginUser,
+    logoutUser,
+} from './commands/index.js';
+import { getValidInstanceUrl, isValidName } from './utils/index.js';
 import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);

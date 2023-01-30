@@ -16,8 +16,8 @@ import {
     reactiveJson,
     readFileAsBase64,
     readFileLinesAsArray,
-} from '../utils';
-import CompilationFailedError from '../errors/CompilationFailedError';
+} from '../utils/index.js';
+import CompilationFailedError from '../errors/CompilationFailedError.js';
 
 type Options = {
     dryRun?: boolean;

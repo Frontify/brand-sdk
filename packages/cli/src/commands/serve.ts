@@ -3,7 +3,7 @@
 import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
-import { Logger } from '../utils/logger';
+import { Logger } from '../utils/logger.js';
 import pkg from '../../package.json';
 
 class DevelopmentServer {
@@ -18,6 +18,8 @@ class DevelopmentServer {
             const viteServer = await createServer({
                 root: process.cwd(),
                 plugins: [
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
                     react(),
                     viteExternalsPlugin({
                         react: 'React',

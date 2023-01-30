@@ -5,7 +5,7 @@ import FastifyCors from '@fastify/cors';
 import open from 'open';
 import { exit } from 'node:process';
 
-import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils';
+import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils/index.js';
 
 export interface OauthRandomCodeChallenge {
     secret: string;

@@ -3,7 +3,7 @@
 import { copyFileSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import globToRegExp from 'glob-to-regexp';
-import FileNotFoundError from '../errors/FileNotFoundError';
+import FileNotFoundError from '../errors/FileNotFoundError.js';
 
 export const isDirectoryEmpty = (folderPath: string): boolean => {
     try {
