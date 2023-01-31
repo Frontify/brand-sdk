@@ -35,3 +35,12 @@ export const deleteDocumentGroup = async (id: number): Promise<void> => {
         throw new Error('Could not delete document group');
     }
 };
+
+export const moveDocumentGroup = async (id: number, portalId: number, position: number): Promise<DocumentGroup> => {
+    const { result } = await HttpClient.put(`/api/document-group/sorting/${id}`, {
+        portalId,
+        position,
+    });
+
+    return convertObjectCase(result.data, 'camel') as DocumentGroup;
+};

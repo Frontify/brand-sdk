@@ -41,7 +41,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             });
         };
 
-        const updateStandardDocumentFromEvent = ({
+        const handleStandardDocumentEventUpdates = ({
             action,
             standardDocument,
         }: {
@@ -49,7 +49,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             standardDocument: Document | { id: number };
         }) => handleEventUpdates({ action, documentOrDocumentGroup: standardDocument });
 
-        const updateLibraryDocumentFromEvent = ({
+        const handleLibraryDocumentEventUpdates = ({
             action,
             library,
         }: {
@@ -57,7 +57,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             library: Document | { id: number };
         }) => handleEventUpdates({ action, documentOrDocumentGroup: library });
 
-        const updateLinkDocumentFromEvent = ({
+        const handleLinkDocumentEventUpdates = ({
             action,
             link,
         }: {
@@ -65,7 +65,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             link: Document | { id: number };
         }) => handleEventUpdates({ action, documentOrDocumentGroup: link });
 
-        const updateDocumentGroupFromEvent = ({
+        const handleDocumentGroupEventUpdates = ({
             action,
             documentGroup,
         }: {
@@ -73,16 +73,31 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             documentGroup: DocumentGroup | { id: number };
         }) => handleEventUpdates({ action, documentOrDocumentGroup: documentGroup });
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
-        window.emitter.on('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
-        window.emitter.on('AppBridge:GuidelineLibraryAction', updateLibraryDocumentFromEvent);
-        window.emitter.on('AppBridge:GuidelineLinkAction', updateLinkDocumentFromEvent);
+        const handleDocumentMoveEvent = ({ action, document }: { action: 'update'; document: Document }) =>
+            handleEventUpdates({ action, documentOrDocumentGroup: document });
+
+        const handleDocumentGroupMoveEvent = ({
+            action,
+            documentGroup,
+        }: {
+            action: 'update';
+            documentGroup: DocumentGroup;
+        }) => handleEventUpdates({ action, documentOrDocumentGroup: documentGroup });
+
+        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', handleDocumentGroupEventUpdates);
+        window.emitter.on('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineLibraryAction', handleLibraryDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineLinkAction', handleLinkDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentGroupMoveAction', handleDocumentGroupMoveEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
-            window.emitter.off('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
-            window.emitter.off('AppBridge:GuidelineLibraryAction', updateLibraryDocumentFromEvent);
-            window.emitter.off('AppBridge:GuidelineLinkAction', updateLinkDocumentFromEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', handleDocumentGroupEventUpdates);
+            window.emitter.off('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineLibraryAction', handleLibraryDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineLinkAction', handleLinkDocumentEventUpdates);
+            window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
+            window.emitter.on('AppBridge:GuidelineDocumentGroupMoveAction', handleDocumentGroupMoveEvent);
         };
     }, [appBridge]);
 
@@ -198,9 +213,13 @@ const fetchAllDocuments = async (appBridge: AppBridgeTheme) => {
         appBridge.getDocumentsWithoutDocumentGroups(),
     ]);
 
+    const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
+
     for (const group of groups) {
         if (group.documents) {
-            group.documents = group.documents.sort((a, b) => (a.sort && b.sort ? a.sort - b.sort : 0));
+            group.documents = group.documents
+                .sort(sortDocuments)
+                .map((document) => ({ ...document, documentGroupId: group.id }));
         }
     }
 

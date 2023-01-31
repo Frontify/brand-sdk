@@ -18,21 +18,25 @@ export type EmitterAction = 'add' | 'update' | 'delete';
 
 export type Emitter = MittEmitter<{
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
+
     'AppBridge:BlockAssetsUpdated': {
         blockId: number;
         blockAssets: Record<string, Asset[]>;
         prevBlockAssets: Record<string, Asset[]>;
     };
+
     'AppBridge:ColorsUpdated': {
         blockId: number;
         colors: Color[];
         prevColors: Color[];
     };
+
     'AppBridge:ColorPalettesUpdated': {
         blockId: number;
         colorPalettes: ColorPalette[];
         prevColorPalettes: ColorPalette[];
     };
+
     'AppBridge:GuidelineStandardDocumentAction':
         | {
               standardDocument: Document;
@@ -42,6 +46,7 @@ export type Emitter = MittEmitter<{
               standardDocument: { id: number };
               action: 'delete';
           };
+
     'AppBridge:GuidelineLibraryAction':
         | {
               library: Document;
@@ -51,6 +56,7 @@ export type Emitter = MittEmitter<{
               library: { id: number };
               action: 'delete';
           };
+
     'AppBridge:GuidelineLinkAction':
         | {
               link: Document;
@@ -60,6 +66,7 @@ export type Emitter = MittEmitter<{
               link: { id: number };
               action: 'delete';
           };
+
     'AppBridge:GuidelineDocumentGroupAction':
         | {
               documentGroup: DocumentGroup;
@@ -69,6 +76,7 @@ export type Emitter = MittEmitter<{
               documentGroup: { id: number };
               action: 'delete';
           };
+
     'AppBridge:GuidelineCoverPageAction':
         | {
               coverPage: CoverPage;
@@ -77,10 +85,22 @@ export type Emitter = MittEmitter<{
         | {
               action: 'delete';
           };
+
     'AppBridge:GuidelineBrandportalLinkAction': {
         brandportalLink: BrandportalLink;
         action: 'update';
     };
+
+    'AppBridge:GuidelineDocumentMoveAction': {
+        document: Document;
+        action: 'update';
+    };
+
+    'AppBridge:GuidelineDocumentGroupMoveAction': {
+        documentGroup: DocumentGroup;
+        action: 'update';
+    };
+
     'AppBridge:OpenNavigationManager': void;
 
     [key: `AppBridge:GuidelineDocumentPageAction:${number}`]:

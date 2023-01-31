@@ -25,6 +25,7 @@ import {
     getUncategorizedPagesByDocumentId,
     moveDocument,
     moveDocumentCategory,
+    moveDocumentGroup,
     moveDocumentPage,
     updateBrandportalLink,
     updateCoverPage,
@@ -151,6 +152,10 @@ export class AppBridgeTheme {
 
     public async deleteDocumentGroup(id: number) {
         return deleteDocumentGroup(id);
+    }
+
+    public async moveDocumentGroup(id: number, position: number) {
+        return moveDocumentGroup(id, this.getPortalId(), position);
     }
 
     public async createDocumentCategory(category: DocumentCategoryCreate) {

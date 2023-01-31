@@ -9,6 +9,7 @@ import type {
     CoverPageCreate,
     CoverPageUpdate,
     CoverPageUpdateLegacy,
+    Document,
     DocumentCategory,
     DocumentCategoryCreate,
     DocumentCategoryUpdate,
@@ -344,6 +345,23 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     const moveDocument = useCallback(
         async (id: number, position: number, newGroupId?: number, oldGroupId?: number) => {
             await appBridge.moveDocument(id, position, newGroupId, oldGroupId);
+
+            window.emitter.emit('AppBridge:GuidelineDocumentMoveAction', {
+                document: { id, sort: position, ...(newGroupId && { documentGroupId: newGroupId }) } as Document,
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
+    const moveDocumentGroup = useCallback(
+        async (id: number, position: number) => {
+            await appBridge.moveDocumentGroup(id, position);
+
+            window.emitter.emit('AppBridge:GuidelineDocumentGroupMoveAction', {
+                documentGroup: { id, sort: position } as DocumentGroup,
+                action: 'update',
+            });
         },
         [appBridge],
     );
@@ -391,6 +409,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         updateCoverPage,
         deleteCoverPage,
         updateLegacyCoverPage,
+        moveDocumentGroup,
         createDocumentGroup,
         updateDocumentGroup,
         deleteDocumentGroup,
