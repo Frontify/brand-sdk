@@ -32,7 +32,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.createLink(link);
 
             window.emitter.emit('AppBridge:GuidelineLinkAction', {
-                link: { ...result, documentGroupId: link.documentGroupId },
+                link: { ...result, ...(link.documentGroupId && { documentGroupId: link.documentGroupId }) },
                 action: 'add',
             });
         },
@@ -44,7 +44,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.updateLink(link);
 
             window.emitter.emit('AppBridge:GuidelineLinkAction', {
-                link: { ...result, documentGroupId: link.documentGroupId },
+                link: { ...result, ...(link.documentGroupId && { documentGroupId: link.documentGroupId }) },
                 action: 'update',
             });
         },
@@ -68,7 +68,10 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.createLibrary(library);
 
             window.emitter.emit('AppBridge:GuidelineLibraryAction', {
-                library: { ...result, documentGroupId: library.documentGroupId },
+                library: {
+                    ...result,
+                    ...(library.documentGroupId && { documentGroupId: library.documentGroupId }),
+                },
                 action: 'add',
             });
         },
@@ -80,7 +83,10 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.updateLibrary(library);
 
             window.emitter.emit('AppBridge:GuidelineLibraryAction', {
-                library: { ...result, documentGroupId: library.documentGroupId },
+                library: {
+                    ...result,
+                    ...(library.documentGroupId && { documentGroupId: library.documentGroupId }),
+                },
                 action: 'update',
             });
         },
@@ -104,7 +110,10 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.createStandardDocument(document);
 
             window.emitter.emit('AppBridge:GuidelineStandardDocumentAction', {
-                standardDocument: { ...result, documentGroupId: document.documentGroupId },
+                standardDocument: {
+                    ...result,
+                    ...(document.documentGroupId && { documentGroupId: document.documentGroupId }),
+                },
                 action: 'add',
             });
         },
@@ -116,7 +125,10 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.updateStandardDocument(document);
 
             window.emitter.emit('AppBridge:GuidelineStandardDocumentAction', {
-                standardDocument: { ...result, documentGroupId: document.documentGroupId },
+                standardDocument: {
+                    ...result,
+                    ...(document.documentGroupId && { documentGroupId: document.documentGroupId }),
+                },
                 action: 'update',
             });
         },
