@@ -23,14 +23,8 @@ export const useDocumentCategoriesAndPages = (appBridge: AppBridgeTheme, documen
     }, [appBridge, documentId]);
 
     useEffect(() => {
-        const initializeData = async () => {
-            const data = await fetchAllDocumentPages(appBridge, documentId);
-
-            setDocumentCategoriesAndPages(data);
-        };
-
-        initializeData();
-    }, [appBridge, documentId]);
+        refetch();
+    }, [refetch]);
 
     useEffect(() => {
         const handleEventUpdates = (event: Event) => {
@@ -205,6 +199,12 @@ const fetchAllDocumentPages = async (appBridge: AppBridgeTheme, documentId: numb
         appBridge.getDocumentCategoriesByDocumentId(documentId),
         appBridge.getUncategorizedPagesByDocumentId(documentId),
     ]);
+
+    for (const category of categories) {
+        if (category.documentPages) {
+            category.documentPages = category.documentPages?.sort((a, b) => a.sort - b.sort);
+        }
+    }
 
     return [
         ...categories.sort((a, b) => a.sort - b.sort),

@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test } from 'vitest';
-import { logoutUser } from '../../src/commands/logout';
-import { Configuration } from '../../src/utils';
+import { logoutUser } from '../../src/commands/logout.js';
+import { Configuration } from '../../src/utils/index.js';
 
 const DUMMY_TOKENS = {
     token_type: 'Bearer',

@@ -11,7 +11,6 @@ import { Bundle } from '../bundle';
  * @param {Object} map Map of enum and values
  * @returns Set value of custom input to predefined value from the slider
  */
-
 export const presetCustomValue = <AppBridge = unknown>(
     bundle: Bundle<AppBridge>,
     sliderId: string,

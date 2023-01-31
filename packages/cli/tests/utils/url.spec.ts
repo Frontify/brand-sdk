@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getValidInstanceUrl } from '../../src/utils/url';
 import { describe, expect, test } from 'vitest';
+import { getValidInstanceUrl } from '../../src/utils/url.js';
 
 describe('URL utils', () => {
     describe('getValidInstanceUrl', () => {

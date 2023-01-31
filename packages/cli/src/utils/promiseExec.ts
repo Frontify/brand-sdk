@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ExecOptions, exec } from 'node:child_process';
-import CommandExecutionError from '../errors/CommandExecutionError';
+import CommandExecutionError from '../errors/CommandExecutionError.js';
 
 export const promiseExec = (command: string, options: ExecOptions = {}): Promise<string> => {
     return new Promise((resolve, reject) => {
