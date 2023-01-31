@@ -15,7 +15,7 @@ describe('useDocumentsAndDocumentGroups', () => {
     beforeEach(() => {
         appBridge = {
             getDocumentGroups: vi.fn(() => Promise.resolve([DocumentGroupDummy.with(11, [DocumentDummy.with(2)])])),
-            getDocumentsWithoutDocumentGroups: vi.fn(() => Promise.resolve([DocumentDummy.with(1)])),
+            getUngroupedDocuments: vi.fn(() => Promise.resolve([DocumentDummy.with(1)])),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any;
         window.emitter = mitt();
@@ -33,7 +33,9 @@ describe('useDocumentsAndDocumentGroups', () => {
 
         await waitFor(() =>
             expect(result.current.documents).toEqual([
-                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentGroupDummy.with(11, [
+                    DocumentDummy.withFields({ ...DocumentDummy.with(2), documentGroupId: 11 }),
+                ]),
                 DocumentDummy.with(1),
             ]),
         );
@@ -117,7 +119,9 @@ describe('useDocumentsAndDocumentGroups', () => {
             );
 
             expect(result.current.documents).toEqual([
-                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentGroupDummy.with(11, [
+                    DocumentDummy.withFields({ ...DocumentDummy.with(2), documentGroupId: 11 }),
+                ]),
                 DocumentDummy.with(1),
             ]);
         });
@@ -180,7 +184,11 @@ describe('useDocumentsAndDocumentGroups', () => {
                 }),
             );
 
-            expect(result.current.documents).toEqual([DocumentGroupDummy.with(11, [DocumentDummy.with(2)])]);
+            expect(result.current.documents).toEqual([
+                DocumentGroupDummy.with(11, [
+                    DocumentDummy.withFields({ ...DocumentDummy.with(2), documentGroupId: 11 }),
+                ]),
+            ]);
         });
 
         unmount();
@@ -199,7 +207,9 @@ describe('useDocumentsAndDocumentGroups', () => {
             );
 
             expect(result.current.documents).toEqual([
-                DocumentGroupDummy.with(11, [DocumentDummy.with(2)]),
+                DocumentGroupDummy.with(11, [
+                    DocumentDummy.withFields({ ...DocumentDummy.with(2), documentGroupId: 11 }),
+                ]),
                 DocumentDummy.with(1),
             ]);
         });
