@@ -13,7 +13,7 @@ type Event = {
 
 type DocumentsAndGroups = (Document | DocumentGroup)[];
 
-export const useDocuments = (appBridge: AppBridgeTheme) => {
+export const useDocumentsAndDocumentGroups = (appBridge: AppBridgeTheme) => {
     const [documents, setDocuments] = useState<Nullable<DocumentsAndGroups>>(null);
 
     const refetch = useCallback(async () => {
