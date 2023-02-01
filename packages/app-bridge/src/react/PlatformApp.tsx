@@ -9,18 +9,6 @@ import { PlatformAppProperties } from '../types/PlatformApp';
 
 export const PlatformAppContext = React.createContext<PlatformAppProperties>({ domain: '', clientId: '' });
 
-// Just to demo, AppBridge is no object like that
-// export const AppBridge = {
-//     getScreenInformation: () => getScreenInformation(),
-//     getContext: () => React.useContext(PlatformAppContext),
-//     // Uses GraphQl Library with bearer token injectd
-//     // We will call against the Public API
-//     useGetQuery: (graphQlQuery) => console.log('execute query', graphQlQuery),
-//     // Uses GraphQl Library with bearer token injectd
-//     set: (graphQlQuery, data) =>
-//         console.log('execute Query with data', graphQlQuery, data),
-// };
-
 // We would need a typed settings Object
 type settings = {
     hidden: {
