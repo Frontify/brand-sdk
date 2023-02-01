@@ -18,6 +18,7 @@ export const useGetQuery = (): ((query: string) => Promise<unknown>) => {
 
     return async (query: string) => {
         try {
+            // Here lets use React Query instead of fetch
             const res = await fetch(getGraphQlEndpoint(token!.bearerToken.domain), {
                 method: 'POST',
                 headers: {
