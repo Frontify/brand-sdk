@@ -125,6 +125,10 @@ export class AppBridgeBlock {
         await this.waitForFinishedProcessing(key);
     }
 
+    public async openAssetInViewer(token: string): Promise<void> {
+        window.emitter.emit('Viewer:Opened', token);
+    }
+
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
     public async getTemplateById(templateId: number): Promise<Template> {
         const brandId = window.application.sandbox.config.context.brand.id;
