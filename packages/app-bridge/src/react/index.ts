@@ -23,4 +23,5 @@ export * from './useFileUpload';
 export * from './useGuidelineActions';
 export * from './useNavigationManager';
 export * from './useReadyForPrint';
+export * from './useAssetViewer';
 export * from './useTemplateChooser';

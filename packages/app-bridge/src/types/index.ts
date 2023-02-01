@@ -20,6 +20,7 @@ export * from './FileExtensionSets';
 export * from './FileType';
 export * from './OauthTokens';
 export * from './PostExternalAssetParams';
+export * from './Screen';
 export * from './Targets';
 export * from './Template';
 export * from './Terrific';
