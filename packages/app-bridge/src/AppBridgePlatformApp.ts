@@ -4,20 +4,18 @@ import { Topic } from './types';
 import { generateRandomString } from './utilities/hash';
 import { NotifyData, notify } from './utilities/notify';
 import { subscribe } from './utilities/subscribe';
-import { PlatformAppProperties } from './types/PlatformApp';
 
 const PUBSUB_TOKEN = generateRandomString();
 
 export class AppBridgePlatformApp {
-    setContextData(): PlatformAppProperties {
-        const params = {};
-        const searchParams = new URLSearchParams(window.location.search);
-
-        // Display the keys
-        // @ts-ignore
-        for (const key of searchParams.keys()) {
-            // @ts-ignore
-            params[key] = searchParams.get(key);
+    getScreenInformation<T = Record<string, unknown>>(): T {
+        let params = {} as T;
+        const searchParams = new URLSearchParams(window.location.search) as any;
+        for (const [key, value] of searchParams.entries()) {
+            params = {
+                ...params,
+                [key]: value,
+            };
         }
 
         return params;

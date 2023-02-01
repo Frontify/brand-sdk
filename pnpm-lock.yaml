@@ -19,6 +19,7 @@ importers:
   packages/app-bridge:
     specifiers:
       '@frontify/eslint-config-react': 0.15.5
+      '@frontify/frontify-authenticator': ^2.0.0
       '@testing-library/react': 13.4.0
       '@types/lodash-es': 4.17.6
       '@types/react': 18.0.26
@@ -43,6 +44,7 @@ importers:
       vite-plugin-dts: 1.7.1
       vitest: 0.27.1
     dependencies:
+      '@frontify/frontify-authenticator': 2.0.0
       lodash-es: 4.17.21
       mitt: 3.0.0
       sinon: 15.0.1
@@ -1213,6 +1215,10 @@ packages:
       - ts-node
       - valtio
       - wonka
+    dev: false
+
+  /@frontify/frontify-authenticator/2.0.0:
+    resolution: {integrity: sha512-1Ssnw9S20dpSqbtt7MFb4mu6x7eiRxbPg2pzfTkzwNRwV3e+H1NtBXpcMqHWprem5B87hnK5yqxTKk+fURESXg==}
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
@@ -2769,7 +2775,6 @@ packages:
 
   /@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==}
-    dev: true
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -2784,7 +2789,6 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/react-dom/18.0.10:
     resolution: {integrity: sha512-E42GW/JA4Qv15wQdqJq8DL4JhNpB3prJgjgapN3qJT9K2zO5IIAQh4VXvCEDupoqAwnz0cY4RlXeC/ajX5SFHg==}
@@ -2798,11 +2802,9 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.1
-    dev: true
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: true
 
   /@types/semver/6.2.3:
     resolution: {integrity: sha512-KQf+QAMWKMrtBMsB8/24w53tEsxllMj6TuA80TT/5igJalLI/zm0L3oXRbIAl4Ohfc85gyHX/jhMwsVkmhLU4A==}
@@ -9368,7 +9370,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: true
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
@@ -9501,7 +9502,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: true
 
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}

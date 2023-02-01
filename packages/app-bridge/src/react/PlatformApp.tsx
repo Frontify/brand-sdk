@@ -1,25 +1,31 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React, { FC, ReactElement } from 'react';
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+import { Token, authorize } from '@frontify/frontify-authenticator';
+
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { AppBridgePlatformApp } from '../AppBridgePlatformApp';
 import { PlatformAppProperties } from '../types/PlatformApp';
 
-export const PlatformAppContext = React.createContext<PlatformAppProperties>({});
+export const PlatformAppContext = React.createContext<PlatformAppProperties>({ domain: '', clientId: '' });
 
 // Just to demo, AppBridge is no object like that
 // export const AppBridge = {
-//     setContextData: () => getQueryParams(),
+//     getScreenInformation: () => getScreenInformation(),
 //     getContext: () => React.useContext(PlatformAppContext),
 //     // Uses GraphQl Library with bearer token injectd
 //     // We will call against the Public API
-//     get: (graphQlQuery) => console.log('execute query', graphQlQuery),
+//     useGetQuery: (graphQlQuery) => console.log('execute query', graphQlQuery),
 //     // Uses GraphQl Library with bearer token injectd
 //     set: (graphQlQuery, data) =>
 //         console.log('execute Query with data', graphQlQuery, data),
 // };
 
+// We would need a typed settings Object
 type settings = {
-    hidden: any;
+    hidden: {
+        scope: string[];
+    };
     main: any;
     style: any;
 };
@@ -27,23 +33,43 @@ type settings = {
 type PlatformAppProps = {
     children: ReactElement;
     settings: settings;
+    appBridge?: AppBridgePlatformApp;
 };
 
-export const PlatformApp: FC<PlatformAppProps> = ({ children, settings }) => {
-    // check if token exists -> refresh or get new token
-    // Inject in GraphQL Library as bearer token
+export const PlatformApp: FC<PlatformAppProps> = ({ children, settings, appBridge = new AppBridgePlatformApp() }) => {
+    const [token, setToken] = useState<Token>();
 
-    const AppBridge = new AppBridgePlatformApp();
+    /**
+     * Initial Screen Info through queryParams
+     */
+    const { domain, clientId } = appBridge.getScreenInformation<PlatformAppProperties>();
 
-    const scopeSettings = settings.hidden.scope;
-    const entryView = settings.hidden.entry.view;
-    const styling = settings.style[0].id;
+    /**
+     * Access the settings
+     */
+    const scopes = settings.hidden.scope;
+
+    /**
+     * get the token through with the Authenticator
+     * Impl: refresh of the token
+     *
+     * -> we could also pass down the token and do the auth on
+     * clarify side
+     *
+     * For simplicity we always trigger auth
+     */
+    useEffect(() => {
+        const auth = async () => {
+            const ressourceToken: Token = await authorize({ domain, clientId, scopes });
+            setToken(ressourceToken);
+        };
+        auth();
+    }, []);
 
     return (
-        <PlatformAppContext.Provider value={AppBridge.setContextData()}>
-            <p>Settings: {scopeSettings}</p>
-            <p>Scope: {entryView}</p>
-            <p>Styling: {styling} </p>
+        <PlatformAppContext.Provider value={{ ...appBridge.getScreenInformation(), token }}>
+            <p>Settings: {scopes}</p>
+            <p>In Platform Token: {token && token.bearerToken.accessToken}</p>
 
             {children}
         </PlatformAppContext.Provider>
