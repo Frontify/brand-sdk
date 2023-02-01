@@ -39,11 +39,28 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         };
     }, [documentId]);
 
-    const categorized = useMemo(() => new Map([...pages].filter(([, page]) => page.categoryId)), [pages]);
+    /**
+     * returns list of document pages that do not belong to any document category
+     */
+    const getUncategorizedPages = useCallback(
+        () => Array.from(pages.values()).filter((page) => !page.categoryId),
+        [pages],
+    );
 
-    const uncategorized = useMemo(() => new Map([...pages].filter(([, page]) => !page.categoryId)), [pages]);
+    /**
+     * returns list of document pages of specific document category
+     * if documentGroupId is provided.
+     * Otherwise, it returns document pages for all document categories
+     */
+    const getCategorizedPages = useCallback(
+        (documentCategoryId?: number) =>
+            Array.from(pages.values()).filter((page) =>
+                documentCategoryId ? page.categoryId === documentCategoryId : page.categoryId,
+            ),
+        [pages],
+    );
 
-    return { categorized, uncategorized, pages, refetch };
+    return { pages, getCategorizedPages, getUncategorizedPages, refetch };
 };
 
 const actionHandlers = {

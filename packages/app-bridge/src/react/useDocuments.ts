@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document, EmitterAction } from '../types';
@@ -62,17 +62,28 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         };
     }, []);
 
-    const grouped = useMemo(
-        () => new Map([...documents].filter(([, document]) => document.documentGroupId)),
+    /**
+     * returns list of documents that do not belong to any document group
+     */
+    const getUngroupedDocuments = useCallback(
+        () => Array.from(documents.values()).filter((document) => !document.documentGroupId),
         [documents],
     );
 
-    const ungrouped = useMemo(
-        () => new Map([...documents].filter(([, document]) => !document.documentGroupId)),
+    /**
+     * returns list of documents of specific group
+     * if documentGroupId is provided.
+     * Otherwise, it returns documents for all groups
+     */
+    const getGroupedDocuments = useCallback(
+        (documentGroupId?: number) =>
+            Array.from(documents.values()).filter((document) =>
+                documentGroupId ? document.documentGroupId === documentGroupId : document.documentGroupId,
+            ),
         [documents],
     );
 
-    return { grouped, ungrouped, documents, refetch };
+    return { documents, getUngroupedDocuments, getGroupedDocuments, refetch };
 };
 
 const actionHandlers = {
