@@ -10,6 +10,8 @@ type Event = {
     document: Document | { id: number };
 };
 
+const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
+
 export const useDocuments = (appBridge: AppBridgeTheme) => {
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
 
@@ -51,14 +53,18 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         const handleLinkEventUpdates = ({ action, link }: { action: EmitterAction; link: Document | { id: number } }) =>
             handleEventUpdates({ action, document: link });
 
+        const handleDocumentMoveEvent = (event: { action: 'update'; document: Document }) => handleEventUpdates(event);
+
         window.emitter.on('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
         window.emitter.on('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
             window.emitter.off('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
+            window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
         };
     }, []);
 
@@ -76,10 +82,15 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
      * Otherwise, it returns documents for all groups
      */
     const getGroupedDocuments = useCallback(
-        (documentGroupId?: number) =>
-            Array.from(documents.values()).filter((document) =>
-                documentGroupId ? document.documentGroupId === documentGroupId : document.documentGroupId,
-            ),
+        (
+            documentGroupId?: number,
+            options: { sortBy?: (a: Document, b: Document) => any } = { sortBy: sortDocuments },
+        ) =>
+            Array.from(documents.values())
+                .filter((document) =>
+                    documentGroupId ? document.documentGroupId === documentGroupId : document.documentGroupId,
+                )
+                .sort(options.sortBy),
         [documents],
     );
 

@@ -6,9 +6,14 @@ import { useCallback, useEffect, useState } from 'react';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentGroup, EmitterAction } from '../types';
 
-type Event = {
+type DocumentGroupEvent = {
     action: EmitterAction;
     documentGroup: DocumentGroup | { id: number };
+};
+
+type DocumentEvent = {
+    action: EmitterAction;
+    document: { id: number; documentGroupId?: number | null };
 };
 
 export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
@@ -25,7 +30,7 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
     }, [refetch]);
 
     useEffect(() => {
-        const handleEventUpdates = (event: Event) => {
+        const handleEventUpdates = (event: DocumentGroupEvent) => {
             setDocumentGroups((previousState) => {
                 const handler = actionHandlers[event.action] || actionHandlers.default;
 
@@ -33,14 +38,82 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
             });
         };
 
+        const handleDocumentEventUpdates = (event: DocumentEvent) => {
+            setDocumentGroups((previousState) => {
+                const action: 'add-document' | 'delete-document' | 'update-document' = `${event.action}-document`;
+
+                const handler = actionHandlers[action] || actionHandlers.default;
+
+                return handler(previousState, event.document);
+            });
+        };
+
         window.emitter.on('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
+            window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
         };
     }, []);
 
     return { documentGroups, refetch };
+};
+
+const getGroupWithDocument = (groups: Map<number, DocumentGroup>, documentId: number) =>
+    Array.from(groups.values()).find((group) => group.documents?.includes(documentId as any));
+
+const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: DocumentEvent['document']) => {
+    const group = groups.get(documentToAdd.documentGroupId as number);
+
+    if (!group) {
+        console.error(
+            `Can not add document to document group, document group with id ${documentToAdd.documentGroupId} does not exist`,
+        );
+        return groups;
+    }
+
+    group.documents = [...((group.documents ?? []) as any), documentToAdd.id];
+
+    return new Map(groups.set(group.id, group));
+};
+
+const updateDocument = (groups: Map<number, DocumentGroup>, document: DocumentEvent['document']) => {
+    const currentGroup = getGroupWithDocument(groups, document.id);
+    let updatedGroups = new Map(groups);
+
+    const shouldAddDocumentToGroup = !currentGroup && document.documentGroupId !== null;
+
+    const documentMovedToDifferentGroup =
+        currentGroup && document.documentGroupId !== null && currentGroup.id !== document.documentGroupId;
+
+    const documentMovedToUngrouped = currentGroup && document.documentGroupId === null;
+
+    if (documentMovedToDifferentGroup || documentMovedToUngrouped) {
+        updatedGroups = deleteDocument(groups, document);
+    }
+
+    if (documentMovedToDifferentGroup || shouldAddDocumentToGroup) {
+        updatedGroups = addDocument(groups, document);
+    }
+
+    return updatedGroups;
+};
+
+const deleteDocument = (groups: Map<number, DocumentGroup>, documentToDelete: DocumentEvent['document']) => {
+    const group = getGroupWithDocument(groups, documentToDelete.id);
+
+    if (!group) {
+        console.error(
+            `Can not delete document from document group, document group that has document with id ${documentToDelete.id} does not exist`,
+        );
+        return groups;
+    }
+
+    group.documents =
+        group.documents?.filter((documentId) => (documentId as unknown as any) !== documentToDelete.id) ?? [];
+
+    return new Map(groups.set(group.id, group));
 };
 
 const actionHandlers = {
@@ -58,6 +131,12 @@ const actionHandlers = {
         nextGroups.delete(groupToDelete.id);
         return nextGroups;
     },
+
+    'add-document': addDocument,
+
+    'update-document': updateDocument,
+
+    'delete-document': deleteDocument,
 
     default: (groups: Map<number, DocumentGroup>) => groups,
 };

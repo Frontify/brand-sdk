@@ -5,10 +5,12 @@ import { useCallback, useEffect, useState } from 'react';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentPage, EmitterAction } from '../types';
 
-type Event = {
+export type DocumentPageEvent = {
     action: EmitterAction;
     documentPage: DocumentPage | { id: number };
 };
+
+const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) => {
     const [pages, setPages] = useState<Map<number, DocumentPage>>(new Map([]));
@@ -24,7 +26,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
     }, [refetch]);
 
     useEffect(() => {
-        const handleEventUpdates = (event: Event) => {
+        const handleEventUpdates = (event: DocumentPageEvent) => {
             setPages((previousState) => {
                 const handler = actionHandlers[event.action] || actionHandlers.default;
 
@@ -53,10 +55,13 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
      * Otherwise, it returns document pages for all document categories
      */
     const getCategorizedPages = useCallback(
-        (documentCategoryId?: number) =>
-            Array.from(pages.values()).filter((page) =>
-                documentCategoryId ? page.categoryId === documentCategoryId : page.categoryId,
-            ),
+        (
+            documentCategoryId?: number,
+            options: { sortBy?: (a: DocumentPage, b: DocumentPage) => any } = { sortBy: sortDocumentPages },
+        ) =>
+            Array.from(pages.values())
+                .filter((page) => (documentCategoryId ? page.categoryId === documentCategoryId : page.categoryId))
+                .sort(options.sortBy),
         [pages],
     );
 
