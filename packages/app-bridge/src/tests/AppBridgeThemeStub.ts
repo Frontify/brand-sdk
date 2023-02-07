@@ -40,7 +40,7 @@ export const getAppBridgeThemeStub = ({
         getProjectId: projectId,
         getEditorState: editorState,
         getCoverPage: Promise.resolve(CoverPageDummy.with(123)),
-        getDocumentsWithoutDocumentGroups: Promise.resolve([
+        getUngroupedDocuments: Promise.resolve([
             DocumentDummy.with(411),
             DocumentDummy.with(455),
             DocumentDummy.with(499),
