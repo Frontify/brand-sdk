@@ -64,7 +64,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             window.emitter.off('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
             window.emitter.off('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
-            window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
         };
     }, []);
 

@@ -53,7 +53,7 @@ export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: num
 
         return () => {
             window.emitter.off(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, handleEventUpdates);
-            window.emitter.on(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, handlePageEventUpdates);
+            window.emitter.off(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, handlePageEventUpdates);
         };
     }, [documentId]);
 

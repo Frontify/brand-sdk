@@ -53,7 +53,7 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
-            window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
         };
     }, []);
 
