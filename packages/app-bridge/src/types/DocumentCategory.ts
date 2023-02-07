@@ -21,9 +21,7 @@ export type DocumentCategoryApi = {
 
 type DocumentPageRequestFields = 'title' | 'documentId' | 'id';
 
-export type DocumentCategory = CamelCasedPropertiesDeep<Omit<DocumentCategoryApi, 'document_pages'>> & {
-    documentPages: number[];
-};
+export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
 
 export type DocumentCategoryCreate = Pick<DocumentCategory, 'title' | 'documentId'>;
 

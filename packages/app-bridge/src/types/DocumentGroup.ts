@@ -18,9 +18,7 @@ export type DocumentGroupApi = {
     documents: Nullable<DocumentApi[]>;
 };
 
-export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi> & {
-    documents: number[];
-};
+export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
 
 export type DocumentGroupCreate = Pick<DocumentGroup, 'name'>;
 
