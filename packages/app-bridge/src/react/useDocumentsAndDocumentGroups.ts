@@ -73,31 +73,16 @@ export const useDocumentsAndDocumentGroups = (appBridge: AppBridgeTheme) => {
             documentGroup: DocumentGroup | { id: number };
         }) => handleEventUpdates({ action, documentOrDocumentGroup: documentGroup });
 
-        // const handleDocumentMoveEvent = ({ action, document }: { action: 'update'; document: Document }) =>
-        //     handleEventUpdates({ action, documentOrDocumentGroup: document });
-
-        // const handleDocumentGroupMoveEvent = ({
-        //     action,
-        //     documentGroup,
-        // }: {
-        //     action: 'update';
-        //     documentGroup: DocumentGroup;
-        // }) => handleEventUpdates({ action, documentOrDocumentGroup: documentGroup });
-
         window.emitter.on('AppBridge:GuidelineDocumentGroupAction', handleDocumentGroupEventUpdates);
         window.emitter.on('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineLibraryAction', handleLibraryDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineLinkAction', handleLinkDocumentEventUpdates);
-        // window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
-        // window.emitter.on('AppBridge:GuidelineDocumentGroupMoveAction', handleDocumentGroupMoveEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroupAction', handleDocumentGroupEventUpdates);
             window.emitter.off('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineLibraryAction', handleLibraryDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineLinkAction', handleLinkDocumentEventUpdates);
-            // window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
-            // window.emitter.on('AppBridge:GuidelineDocumentGroupMoveAction', handleDocumentGroupMoveEvent);
         };
     }, [appBridge]);
 
@@ -119,7 +104,7 @@ const addItem = (items: DocumentsAndGroups, itemToAdd: Document | DocumentGroup)
                 if (item.documents) {
                     item.documents.push(itemToAdd as Document);
                 } else {
-                    item.documents = [itemToAdd as Document];
+                    item.documents = [itemToAdd as any];
                 }
 
                 break;
@@ -150,7 +135,7 @@ const updateItem = (items: DocumentsAndGroups, itemToUpdate: Document | Document
                 const documentToUpdateIndex = item.documents.findIndex((document) => document.id === itemToUpdate.id);
 
                 item.documents[documentToUpdateIndex] = {
-                    ...item.documents[documentToUpdateIndex],
+                    ...(item.documents[documentToUpdateIndex] as any),
                     ...(itemToUpdate as Document),
                 };
 
@@ -177,9 +162,9 @@ const updateItem = (items: DocumentsAndGroups, itemToUpdate: Document | Document
 const deleteItem = (items: DocumentsAndGroups, itemToDelete: { id: number }) => {
     const filteredItems = items.filter((item) => item.id !== itemToDelete.id);
 
-    return filteredItems.map((item) => {
+    return filteredItems.map((item: any) => {
         if ('documents' in item && item.documents !== null) {
-            item.documents = item.documents.filter((document) => document.id !== itemToDelete.id);
+            item.documents = item.documents.filter((document: any) => document.id !== itemToDelete.id);
         }
 
         return item;
@@ -214,7 +199,7 @@ const fetchAllDocuments = async (appBridge: AppBridgeTheme) => {
 
     for (const group of groups) {
         if (group.documents) {
-            group.documents = group.documents
+            (group as any).documents = group.documents
                 .sort(sortDocuments)
                 .map((document) => ({ ...document, documentGroupId: group.id }));
         }
