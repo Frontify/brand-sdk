@@ -94,9 +94,9 @@ const addItem = (items: PagesAndCategories, itemToAdd: DocumentPage | DocumentCa
 
             if (isCategory && itShouldAdd) {
                 if (item.documentPages) {
-                    item.documentPages.push(itemToAdd as DocumentPage);
+                    item.documentPages.push(itemToAdd as any);
                 } else {
-                    item.documentPages = [itemToAdd as DocumentPage];
+                    item.documentPages = [itemToAdd as any];
                 }
 
                 break;
@@ -125,11 +125,11 @@ const updateItem = (items: PagesAndCategories, itemToUpdate: DocumentPage | Docu
 
             if (isCategory && itShouldUpdate && documentCategoryOrPage.documentPages) {
                 const pageToUpdateIndex = documentCategoryOrPage.documentPages.findIndex(
-                    (page) => page.id === itemToUpdate.id,
+                    (page: any) => page.id === itemToUpdate.id,
                 );
 
                 documentCategoryOrPage.documentPages[pageToUpdateIndex] = {
-                    ...documentCategoryOrPage.documentPages[pageToUpdateIndex],
+                    ...(documentCategoryOrPage.documentPages[pageToUpdateIndex] as any),
                     ...(itemToUpdate as DocumentPage),
                 };
 
@@ -158,7 +158,7 @@ const deleteItem = (items: PagesAndCategories, itemToDelete: { id: number }) => 
 
     return filteredItems.map((item) => {
         if ('documentPages' in item && item.documentPages) {
-            item.documentPages = deleteItem(item.documentPages, itemToDelete) as DocumentPage[];
+            item.documentPages = deleteItem(item.documentPages as any, itemToDelete) as any;
         }
 
         return item;

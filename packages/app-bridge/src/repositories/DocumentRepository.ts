@@ -3,10 +3,15 @@
 import { HttpClient, convertObjectCase } from '../utilities';
 import type { Document, DocumentApi } from '../types';
 
-export const getDocumentsWithoutDocumentGroupByProjectId = async (portalId: number): Promise<Document[]> => {
+export const getUngroupedDocumentsByProjectId = async (portalId: number): Promise<Document[]> => {
     const { result } = await HttpClient.get<DocumentApi[]>(
         `/api/document?portal_id=${portalId}&exclude_grouped_documents`,
     );
+    return convertObjectCase(result.data, 'camel');
+};
+
+export const getAllDocumentsByProjectId = async (portalId: number): Promise<Document[]> => {
+    const { result } = await HttpClient.get<DocumentApi[]>(`/api/document?portal_id=${portalId}`);
     return convertObjectCase(result.data, 'camel');
 };
 

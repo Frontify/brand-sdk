@@ -1,25 +1,24 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { cloneDeep } from 'lodash-es';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { Document, DocumentGroup, EmitterAction } from '../types';
+import type { Document, EmitterAction } from '../types';
 
 type Event = {
     action: EmitterAction;
-    documentOrDocumentGroup: Document | DocumentGroup | { id: number };
+    document: Document | { id: number };
 };
 
-type DocumentsAndGroups = (Document | DocumentGroup)[];
+const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocuments = (appBridge: AppBridgeTheme) => {
-    const [documents, setDocuments] = useState<Nullable<DocumentsAndGroups>>(null);
+    const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
 
     const refetch = useCallback(async () => {
-        const data = await fetchAllDocuments(appBridge);
+        const documents = await fetchDocuments(appBridge);
 
-        setDocuments(data);
+        setDocuments(documents);
     }, [appBridge]);
 
     useEffect(() => {
@@ -27,182 +26,107 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
     }, [refetch]);
 
     useEffect(() => {
-        const handleEventUpdates = (event: Event): void => {
+        const handleEventUpdates = (event: Event) => {
             setDocuments((previousState) => {
-                const isInitial = previousState === null;
-
-                if (isInitial) {
-                    return initialize(previousState, event);
-                }
-
                 const handler = actionHandlers[event.action] || actionHandlers.default;
 
-                return handler(previousState, event);
+                return handler(previousState, event.document as Document);
             });
         };
 
-        const updateStandardDocumentFromEvent = ({
+        const handleStandardDocumentEventUpdates = ({
             action,
             standardDocument,
         }: {
             action: EmitterAction;
             standardDocument: Document | { id: number };
-        }) => handleEventUpdates({ action, documentOrDocumentGroup: standardDocument });
+        }) => handleEventUpdates({ action, document: standardDocument });
 
-        const updateLibraryDocumentFromEvent = ({
+        const handleLibraryEventUpdates = ({
             action,
             library,
         }: {
             action: EmitterAction;
             library: Document | { id: number };
-        }) => handleEventUpdates({ action, documentOrDocumentGroup: library });
+        }) => handleEventUpdates({ action, document: library });
 
-        const updateLinkDocumentFromEvent = ({
-            action,
-            link,
-        }: {
-            action: EmitterAction;
-            link: Document | { id: number };
-        }) => handleEventUpdates({ action, documentOrDocumentGroup: link });
+        const handleLinkEventUpdates = ({ action, link }: { action: EmitterAction; link: Document | { id: number } }) =>
+            handleEventUpdates({ action, document: link });
 
-        const updateDocumentGroupFromEvent = ({
-            action,
-            documentGroup,
-        }: {
-            action: EmitterAction;
-            documentGroup: DocumentGroup | { id: number };
-        }) => handleEventUpdates({ action, documentOrDocumentGroup: documentGroup });
+        const handleDocumentMoveEvent = (event: { action: 'update'; document: Document }) => handleEventUpdates(event);
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
-        window.emitter.on('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
-        window.emitter.on('AppBridge:GuidelineLibraryAction', updateLibraryDocumentFromEvent);
-        window.emitter.on('AppBridge:GuidelineLinkAction', updateLinkDocumentFromEvent);
+        window.emitter.on('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
+        window.emitter.on('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', updateDocumentGroupFromEvent);
-            window.emitter.off('AppBridge:GuidelineStandardDocumentAction', updateStandardDocumentFromEvent);
-            window.emitter.off('AppBridge:GuidelineLibraryAction', updateLibraryDocumentFromEvent);
-            window.emitter.off('AppBridge:GuidelineLinkAction', updateLinkDocumentFromEvent);
+            window.emitter.off('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
+            window.emitter.off('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
         };
-    }, [appBridge]);
+    }, []);
 
-    return { documents, refetch };
-};
+    /**
+     * returns list of documents that do not belong to any document group
+     */
+    const getUngroupedDocuments = useCallback(
+        () => Array.from(documents.values()).filter((document) => !document.documentGroupId),
+        [documents],
+    );
 
-const addItem = (items: DocumentsAndGroups, itemToAdd: Document | DocumentGroup) => {
-    const itemsClone = cloneDeep(items);
+    /**
+     * returns list of documents of specific group
+     * if documentGroupId is provided.
+     * Otherwise, it returns documents for all groups
+     */
+    const getGroupedDocuments = useCallback(
+        (
+            documentGroupId?: number,
+            options: { sortBy?: (a: Document, b: Document) => any } = { sortBy: sortDocuments },
+        ) =>
+            Array.from(documents.values())
+                .filter((document) =>
+                    documentGroupId ? document.documentGroupId === documentGroupId : document.documentGroupId,
+                )
+                .sort(options.sortBy),
+        [documents],
+    );
 
-    const isDocumentInGroup =
-        'documentGroupId' in itemToAdd && itemToAdd.documentGroupId !== null && itemToAdd.documentGroupId !== undefined;
-
-    const addDocumentToGroup = () => {
-        for (const item of itemsClone) {
-            const isDocumentGroup = 'documents' in item;
-            const itShouldAdd = item.id === (itemToAdd as Document).documentGroupId;
-
-            if (isDocumentGroup && itShouldAdd) {
-                if (item.documents) {
-                    item.documents.push(itemToAdd as Document);
-                } else {
-                    item.documents = [itemToAdd as Document];
-                }
-
-                break;
-            }
-        }
-    };
-
-    isDocumentInGroup ? addDocumentToGroup() : itemsClone.push(itemToAdd);
-
-    return itemsClone;
-};
-
-const updateItem = (items: DocumentsAndGroups, itemToUpdate: Document | DocumentGroup) => {
-    const itemsClone = cloneDeep(items);
-
-    const isDocumentInGroup =
-        'documentGroupId' in itemToUpdate &&
-        itemToUpdate.documentGroupId !== null &&
-        itemToUpdate.documentGroupId !== undefined;
-
-    const updateDocumentInDocumentGroup = () => {
-        for (const item of itemsClone) {
-            const isDocumentGroup = 'documents' in item;
-
-            const itShouldUpdate = item.id === (itemToUpdate as Document).documentGroupId;
-
-            if (isDocumentGroup && itShouldUpdate && item.documents) {
-                const documentToUpdateIndex = item.documents.findIndex((document) => document.id === itemToUpdate.id);
-
-                item.documents[documentToUpdateIndex] = {
-                    ...item.documents[documentToUpdateIndex],
-                    ...(itemToUpdate as Document),
-                };
-
-                break;
-            }
-        }
-    };
-
-    if (isDocumentInGroup) {
-        updateDocumentInDocumentGroup();
-
-        return itemsClone;
-    }
-
-    const itemToUpdateIndex = itemsClone.findIndex((item) => item.id === itemToUpdate.id);
-
-    if (itemToUpdateIndex !== -1) {
-        itemsClone[itemToUpdateIndex] = { ...itemsClone[itemToUpdateIndex], ...itemToUpdate };
-    }
-
-    return itemsClone;
-};
-
-const deleteItem = (items: DocumentsAndGroups, itemToDelete: { id: number }) => {
-    const filteredItems = items.filter((item) => item.id !== itemToDelete.id);
-
-    return filteredItems.map((item) => {
-        if ('documents' in item && item.documents !== null) {
-            item.documents = item.documents.filter((document) => document.id !== itemToDelete.id);
-        }
-
-        return item;
-    });
+    return { documents, getUngroupedDocuments, getGroupedDocuments, refetch };
 };
 
 const actionHandlers = {
-    add: (items: DocumentsAndGroups, event: Event) =>
-        addItem(items, event.documentOrDocumentGroup as Document | DocumentGroup),
+    add: (documents: Map<number, Document>, documentToAdd: Document) =>
+        new Map(documents.set(documentToAdd.id, documentToAdd)),
 
-    update: (items: DocumentsAndGroups, event: Event) =>
-        updateItem(items, event.documentOrDocumentGroup as Document | DocumentGroup),
+    update: (documents: Map<number, Document>, documentToUpdate: Document) => {
+        const document = documents.get(documentToUpdate.id);
 
-    delete: (items: DocumentsAndGroups, event: Event) =>
-        deleteItem(items, event.documentOrDocumentGroup as { id: number }),
+        return new Map(documents.set(documentToUpdate.id, { ...document, ...documentToUpdate }));
+    },
 
-    default: (items: DocumentsAndGroups) => items,
+    delete: (documents: Map<number, Document>, documentToDelete: Document) => {
+        const nextDocuments = new Map(documents);
+        nextDocuments.delete(documentToDelete.id);
+        return nextDocuments;
+    },
+
+    default: (documents: Map<number, Document>) => documents,
 };
 
-const initialize = (previousState: Nullable<DocumentsAndGroups>, event: Event) => {
-    if (event.action === 'update' || event.action === 'add') {
-        return [event.documentOrDocumentGroup as Document | DocumentGroup];
-    }
+const fetchDocuments = async (appBridge: AppBridgeTheme) => {
+    const [groups, documents] = await Promise.all([appBridge.getDocumentGroups(), appBridge.getAllDocuments()]);
 
-    return previousState;
-};
-
-const fetchAllDocuments = async (appBridge: AppBridgeTheme) => {
-    const [groups, documents] = await Promise.all([
-        appBridge.getDocumentGroups(),
-        appBridge.getDocumentsWithoutDocumentGroups(),
-    ]);
-
-    for (const group of groups) {
-        if (group.documents) {
-            group.documents = group.documents.sort((a, b) => (a.sort && b.sort ? a.sort - b.sort : 0));
+    // TODO: has to be done like this as BE does not support returning documentGroupId in documents. Remove it once it is supported
+    for (const document of documents) {
+        for (const group of groups) {
+            if (group.documents && group.documents.some((groupedDocument) => groupedDocument.id === document.id)) {
+                document.documentGroupId = group.id;
+            }
         }
     }
 
-    return [...groups, ...documents].sort((a, b) => (a.sort && b.sort ? a.sort - b.sort : 0));
+    return new Map(documents.map((document) => [document.id, document]));
 };

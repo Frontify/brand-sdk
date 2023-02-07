@@ -11,6 +11,7 @@ import {
     deleteDocumentCategory,
     deleteDocumentGroup,
     deleteDocumentPage,
+    getAllDocumentsByProjectId,
     getBrandportalLink,
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
@@ -21,10 +22,11 @@ import {
     getDocumentPagesByDocumentId,
     getDocumentSectionsByDocumentPageId,
     getDocumentTargets,
-    getDocumentsWithoutDocumentGroupByProjectId,
     getUncategorizedPagesByDocumentId,
+    getUngroupedDocumentsByProjectId,
     moveDocument,
     moveDocumentCategory,
+    moveDocumentGroup,
     moveDocumentPage,
     updateBrandportalLink,
     updateCoverPage,
@@ -153,6 +155,10 @@ export class AppBridgeTheme {
         return deleteDocumentGroup(id);
     }
 
+    public async moveDocumentGroup(id: number, position: number) {
+        return moveDocumentGroup(id, this.getPortalId(), position);
+    }
+
     public async createDocumentCategory(category: DocumentCategoryCreate) {
         return createDocumentCategory(category as DocumentCategory);
     }
@@ -241,8 +247,12 @@ export class AppBridgeTheme {
         return getBrandportalLink(this.getPortalId());
     }
 
-    public getDocumentsWithoutDocumentGroups(): Promise<Document[]> {
-        return getDocumentsWithoutDocumentGroupByProjectId(this.getPortalId());
+    public getUngroupedDocuments(): Promise<Document[]> {
+        return getUngroupedDocumentsByProjectId(this.getPortalId());
+    }
+
+    public getAllDocuments(): Promise<Document[]> {
+        return getAllDocumentsByProjectId(this.getPortalId());
     }
 
     public getDocumentGroups(): Promise<DocumentGroup[]> {
