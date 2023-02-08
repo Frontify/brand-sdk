@@ -1,5 +1,13 @@
 # @frontify/sidebar-settings
 
+## 0.0.14
+
+### Patch Changes
+
+- [#332](https://github.com/Frontify/brand-sdk/pull/332) [`2f58027`](https://github.com/Frontify/brand-sdk/commit/2f580271ca0540729539da3dfe66286ee3f50eda) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add JSDoc on sidebar settings types
+
+- [`0198626`](https://github.com/Frontify/brand-sdk/commit/0198626b9d8e49f31d861a05e15ca6e59d349b59) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 0.0.13
 
 ### Patch Changes

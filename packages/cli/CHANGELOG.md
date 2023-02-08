@@ -1,5 +1,23 @@
 # @frontify/frontify-cli
 
+## 5.3.7
+
+### Patch Changes
+
+- [`787f147`](https://github.com/Frontify/brand-sdk/commit/787f147fa56ad16c53da68061632936d6756276e) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update `vite-plugin-externals` because of broken exports
+
+- [#335](https://github.com/Frontify/brand-sdk/pull/335) [`8d692d1`](https://github.com/Frontify/brand-sdk/commit/8d692d16594f4c2fcd2c5db6dd71c2b6946eecb7) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix path issue on Windows when deploying the app
+
+- [`10b2d28`](https://github.com/Frontify/brand-sdk/commit/10b2d2875170c57c5f8bdc155a1589ef4e1a57fd) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Improve Http Client error handling
+
+- [`528f81b`](https://github.com/Frontify/brand-sdk/commit/528f81bc02c36157c7e77971102f68e31f27714b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Remove extra css module file in tailwind template
+
+- [`c1275a6`](https://github.com/Frontify/brand-sdk/commit/c1275a6c094cb0ca3567d7fd7e3d01e258f2b09f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update errors messages
+
+- [`60627d5`](https://github.com/Frontify/brand-sdk/commit/60627d51ce04645b3df72d8b0dff281675bd6508) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Use module resolution `node16`
+
+- [`0198626`](https://github.com/Frontify/brand-sdk/commit/0198626b9d8e49f31d861a05e15ca6e59d349b59) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 5.3.6
 
 ### Patch Changes
