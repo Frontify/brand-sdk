@@ -67,9 +67,9 @@ export const moveDocumentPageBetweenDocuments = async (
 };
 
 export const duplicateDocumentPage = async (id: number): Promise<DocumentPageDuplicate> => {
-    const { result } = await HttpClient.post<DocumentPageDuplicateApi>('/api/pages/copy', {
+    const { result } = await HttpClient.post('/api/pages/copy', {
         page_id: id,
     });
 
-    return convertObjectCase(result.data, 'camel');
+    return convertObjectCase((result as unknown as DocumentPageDuplicateApi).page, 'camel');
 };

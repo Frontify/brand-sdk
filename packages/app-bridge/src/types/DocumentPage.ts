@@ -2,6 +2,8 @@
 
 import type { CamelCasedPropertiesDeep, RequireAtLeastOne } from 'type-fest';
 
+import { LinkType } from './Document';
+
 export enum DocumentPageVisibility {
     Everyone = 'EVERYONE',
     Editor = 'EDITOR',
@@ -68,7 +70,12 @@ export type DocumentPageUpdate = RequireAtLeastOne<
 export type DocumentPageDuplicateApi = {
     page: {
         id: number;
+        link_type: LinkType;
+        name: string;
+        sections: unknown[];
+        url: string;
+        visibility: DocumentPageVisibility;
     };
 };
 
-export type DocumentPageDuplicate = CamelCasedPropertiesDeep<DocumentPageDuplicateApi>;
+export type DocumentPageDuplicate = CamelCasedPropertiesDeep<DocumentPageDuplicateApi['page']>;
