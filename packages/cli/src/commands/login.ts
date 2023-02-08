@@ -3,7 +3,6 @@
 import Fastify from 'fastify';
 import FastifyCors from '@fastify/cors';
 import open from 'open';
-import { exit } from 'node:process';
 
 import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils/index.js';
 
@@ -55,7 +54,7 @@ export class Authenticator {
             const user = await getUser(this.instanceUrl);
             user && Logger.success(`${`Welcome back ${user.name} (${this.instanceUrl})!`}`);
 
-            exit(0);
+            process.exit(0);
         });
     }
 
@@ -126,5 +125,6 @@ export const loginUser = async (instanceUrl: string, port: number): Promise<void
         await open(loginUrl);
     } catch {
         Logger.error('You need to enter a valid Frontify instance URL.');
+        process.exit(-1);
     }
 };

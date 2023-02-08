@@ -17,7 +17,6 @@ import {
     readFileAsBase64,
     readFileLinesAsArray,
 } from '../utils/index.js';
-import CompilationFailedError from '../errors/CompilationFailedError.js';
 
 type Options = {
     dryRun?: boolean;
@@ -73,7 +72,8 @@ export const createDeployment = async (
             try {
                 await compile(projectPath, entryFileName, manifest.appId);
             } catch (error) {
-                throw new CompilationFailedError(error as string);
+                Logger.error(error as string);
+                process.exit(-1);
             }
 
             const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
@@ -108,12 +108,15 @@ export const createDeployment = async (
                     }
                 } catch (error) {
                     Logger.error('An error occured while deploying', (error as Error).toString());
+                    process.exit(-1);
                 }
             } else {
                 Logger.success('The command has been executed without any issue.');
+                process.exit(0);
             }
         }
     } catch (error) {
-        Logger.error('The deployment has failed and was aborted.', error as string);
+        Logger.error('The deployment has failed and was aborted due to an error:', error as string);
+        process.exit(-1);
     }
 };
