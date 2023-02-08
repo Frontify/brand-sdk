@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import fetch from 'node-fetch';
+import { HttpClientError } from '../errors/HttpClientError.js';
 
 interface RequestOptions {
     headers?: {
@@ -50,8 +51,8 @@ export class HttpClient {
                     return responseText as T;
             }
         } else {
-            const errorData = await response.text();
-            throw new Error(errorData);
+            const errorData = (await response.json()) as { sucess: false; error: string };
+            throw new HttpClientError(response.status, errorData);
         }
     }
 
