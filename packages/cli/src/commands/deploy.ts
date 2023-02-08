@@ -17,6 +17,7 @@ import {
     readFileAsBase64,
     readFileLinesAsArray,
 } from '../utils/index.js';
+import { HttpClientError } from '../errors/HttpClientError.js';
 
 type Options = {
     dryRun?: boolean;
@@ -107,7 +108,7 @@ export const createDeployment = async (
                         await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
                     }
                 } catch (error) {
-                    Logger.error('An error occured while deploying', (error as Error).toString());
+                    Logger.error('An error occured while deploying:', (error as HttpClientError).responseBody.error);
                     process.exit(-1);
                 }
             } else {
