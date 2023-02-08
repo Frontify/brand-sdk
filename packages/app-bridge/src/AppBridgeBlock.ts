@@ -16,7 +16,6 @@ import type {
     ColorPalettePatch,
     ColorPatch,
     DocumentBlockAsset,
-    Screen,
     Template,
     TemplateApi,
     User,
@@ -41,7 +40,6 @@ import {
 
 type UserApi = SnakeCasedPropertiesDeep<User>;
 type DocumentBlockAssetApi = Omit<SnakeCasedPropertiesDeep<DocumentBlockAsset>, 'asset'> & { asset: AssetApi };
-type ScreenApi = SnakeCasedPropertiesDeep<Screen>;
 
 export class AppBridgeBlock {
     constructor(private readonly blockId: number, private readonly sectionId?: number) {
@@ -129,16 +127,6 @@ export class AppBridgeBlock {
 
     public openAssetViewer(token: string): void {
         window.emitter.emit('AppBridge:ViewerOpened', { token });
-    }
-
-    public async getScreen({ id, projectId }: Asset): Promise<Screen> {
-        const { result } = await HttpClient.get<ScreenApi>(`/api/screen/styleguide/${id}/asset/${projectId}`);
-
-        if (!result.success) {
-            throw new Error(`Couldn't get screen with id=${id} and projectId=${projectId}`);
-        }
-
-        return this.mapScreenApiToScreen(result.data);
     }
 
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
@@ -486,25 +474,7 @@ export class AppBridgeBlock {
     }
 
     private mapDocumentBlockAssetApiToAsset(documentBlockAsset: DocumentBlockAssetApi): Asset {
-        return {
-            creatorName: '', // TODO: implement enriching of the data (https://app.clickup.com/t/29ad2bj)
-            extension: documentBlockAsset.asset.ext,
-            fileName: documentBlockAsset.asset.file_name,
-            genericUrl: documentBlockAsset.asset.generic_url,
-            originUrl: documentBlockAsset.asset.file_origin_url,
-            externalUrl: documentBlockAsset.asset.external_url,
-            height: documentBlockAsset.asset.height,
-            id: documentBlockAsset.asset.id,
-            objectType: documentBlockAsset.asset.object_type,
-            previewUrl: documentBlockAsset.asset.preview_url,
-            projectId: documentBlockAsset.asset.project_id,
-            fileSize: documentBlockAsset.asset.file_size,
-            fileSizeHumanReadable: documentBlockAsset.asset.file_size_formatted,
-            status: documentBlockAsset.asset.status,
-            title: documentBlockAsset.asset.title,
-            width: documentBlockAsset.asset.width,
-            fileId: documentBlockAsset.asset.file_id,
-        };
+        return mapAssetApiToAsset(documentBlockAsset.asset);
     }
 
     private mapDocumentBlockAssetsApiToBlockAssets(
@@ -522,30 +492,6 @@ export class AppBridgeBlock {
             },
             {},
         );
-    }
-
-    private mapScreenApiToScreen(screenApi: ScreenApi): Screen {
-        return {
-            id: screenApi.id,
-            created: screenApi.created,
-            modified: screenApi.modified,
-            ext: screenApi.ext,
-            objectType: screenApi.object_type,
-            status: screenApi.status,
-            filename: screenApi.filename,
-            backgroundColor: screenApi.background_color,
-            width: screenApi.width,
-            height: screenApi.height,
-            title: screenApi.title,
-            previewFileId: screenApi.preview_file_id,
-            previewSettings: screenApi.preview_settings,
-            projectId: screenApi.project_id,
-            project: screenApi.project,
-            token: screenApi.token,
-            genericUrl: screenApi.generic_url,
-            previewUrl: screenApi.preview_url,
-            fileId: screenApi.file_id,
-        };
     }
 
     private async waitForFinishedAssetProcessing(key: string): Promise<void> {

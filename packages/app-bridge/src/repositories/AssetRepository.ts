@@ -32,5 +32,6 @@ export const mapAssetApiToAsset = (asset: AssetApi): Asset => {
         status: asset.status,
         title: asset.title,
         fileId: asset.file_id,
+        token: asset.token,
     };
 };
