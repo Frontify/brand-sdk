@@ -21,6 +21,31 @@ import {
 
 const PROJECT_ID = 3452;
 const PORTAL_ID = 7777;
+const DOCUMENT_GROUP_ID_1 = 5332;
+const DOCUMENT_GROUP_ID_2 = 95694;
+const DOCUMENT_GROUP_ID_3 = 345882;
+const DOCUMENT_ID_1 = 6456;
+const DOCUMENT_ID_2 = 34532;
+const DOCUMENT_ID_3 = 3455345;
+const DOCUMENT_ID_4 = 2342;
+const DOCUMENT_ID_5 = 2343445;
+const GROUPED_DOCUMENT_ID_1 = 2434;
+const GROUPED_DOCUMENT_ID_2 = 552;
+const GROUPED_DOCUMENT_ID_3 = 1145;
+const GROUPED_DOCUMENT_ID_4 = 32345;
+const DOCUMENT_CATEGORY_ID_1 = 147;
+const DOCUMENT_CATEGORY_ID_2 = 258;
+const DOCUMENT_CATEGORY_ID_3 = 369;
+const DOCUMENT_PAGE_ID_1 = 23442;
+const DOCUMENT_PAGE_ID_2 = 235345;
+const DOCUMENT_PAGE_ID_3 = 12352;
+const DOCUMENT_PAGE_ID_4 = 55221;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
+const DOCUMENT_SECTION_ID_1 = 3421;
+const DOCUMENT_SECTION_ID_2 = 65725;
+const DOCUMENT_SECTION_ID_3 = 95934;
 
 export type getAppBridgeThemeStubProps = {
     editorState?: boolean;
@@ -40,35 +65,65 @@ export const getAppBridgeThemeStub = ({
         getProjectId: projectId,
         getEditorState: editorState,
         getCoverPage: Promise.resolve(CoverPageDummy.with(123)),
+        getAllDocuments: Promise.resolve([
+            DocumentDummy.with(DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(GROUPED_DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            DocumentDummy.with(GROUPED_DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_4),
+            DocumentDummy.with(GROUPED_DOCUMENT_ID_3),
+            DocumentDummy.with(DOCUMENT_ID_5),
+            DocumentDummy.with(GROUPED_DOCUMENT_ID_4),
+        ]),
         getUngroupedDocuments: Promise.resolve([
-            DocumentDummy.with(411),
-            DocumentDummy.with(455),
-            DocumentDummy.with(499),
+            DocumentDummy.with(DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            DocumentDummy.with(DOCUMENT_ID_4),
+            DocumentDummy.with(DOCUMENT_ID_5),
         ]),
         getDocumentGroups: Promise.resolve([
-            DocumentGroupDummy.with(512, []),
-            DocumentGroupDummy.with(532, []),
-            DocumentGroupDummy.with(552, []),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, [
+                DocumentDummy.with(DOCUMENT_ID_1),
+                DocumentDummy.with(DOCUMENT_ID_2),
+                DocumentDummy.with(DOCUMENT_ID_3),
+            ]),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, []),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, [
+                DocumentDummy.with(DOCUMENT_ID_4),
+                DocumentDummy.with(DOCUMENT_ID_5),
+            ]),
         ]),
         getDocumentPagesByDocumentId: Promise.resolve([
-            DocumentPageDummy.with(1111),
-            DocumentPageDummy.with(2222),
-            DocumentPageDummy.with(3333),
+            DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
+            DocumentPageDummy.with(DOCUMENT_PAGE_ID_2),
+            DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_1),
+            DocumentPageDummy.with(DOCUMENT_PAGE_ID_3),
+            DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_2),
+            DocumentPageDummy.with(DOCUMENT_PAGE_ID_4),
+            DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_3),
         ]),
         getDocumentCategoriesByDocumentId: Promise.resolve([
-            DocumentCategoryDummy.with(147, []),
-            DocumentCategoryDummy.with(258, []),
-            DocumentCategoryDummy.with(369, []),
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1, [
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_2),
+            ]),
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_2, []),
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_3, [
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_3),
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_4),
+            ]),
         ]),
         getUncategorizedPagesByDocumentId: Promise.resolve([
-            DocumentPageDummy.with(4444),
-            DocumentPageDummy.with(5555),
-            DocumentPageDummy.with(6666),
+            DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_1),
+            DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_2),
+            DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_3),
         ]),
         getDocumentSectionsByDocumentPageId: Promise.resolve([
-            DocumentSectionDummy.with(159),
-            DocumentSectionDummy.with(148),
-            DocumentSectionDummy.with(126),
+            DocumentSectionDummy.with(DOCUMENT_SECTION_ID_1),
+            DocumentSectionDummy.with(DOCUMENT_SECTION_ID_2),
+            DocumentSectionDummy.with(DOCUMENT_SECTION_ID_3),
         ]),
         getColorPalettes: Promise.resolve([
             ColorPaletteDummy.with(678, 'Palette 1'),
