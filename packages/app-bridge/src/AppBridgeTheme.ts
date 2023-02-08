@@ -11,6 +11,7 @@ import {
     deleteDocumentCategory,
     deleteDocumentGroup,
     deleteDocumentPage,
+    duplicateDocumentPage,
     getBrandportalLink,
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
@@ -26,6 +27,7 @@ import {
     moveDocument,
     moveDocumentCategory,
     moveDocumentPage,
+    moveDocumentPageBetweenDocuments,
     updateBrandportalLink,
     updateCoverPage,
     updateDocument,
@@ -204,6 +206,14 @@ export class AppBridgeTheme {
 
     public async moveDocumentPage(id: number, documentId: number, position: number, category?: number) {
         return moveDocumentPage(id, documentId, position, category);
+    }
+
+    public async moveDocumentPageBetweenDocuments(id: number, sourceDocumentId: number, targetDocumentId: number) {
+        return moveDocumentPageBetweenDocuments(id, sourceDocumentId, targetDocumentId);
+    }
+
+    public async duplicateDocumentPage(id: number) {
+        return duplicateDocumentPage(id);
     }
 
     public async createCoverPage(coverPage: CoverPageCreate) {

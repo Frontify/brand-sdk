@@ -360,6 +360,25 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const moveDocumentPageBetweenDocuments = useCallback(
+        async (id: number, sourceDocumentId: number, targetDocumentId: number) => {
+            await appBridge.moveDocumentPageBetweenDocuments(id, sourceDocumentId, targetDocumentId);
+
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${targetDocumentId}`, {
+                documentPage: { id, documentId: targetDocumentId } as DocumentPage,
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
+    const duplicateDocumentPage = useCallback(
+        async (id: number) => {
+            await appBridge.duplicateDocumentPage(id);
+        },
+        [appBridge],
+    );
+
     return {
         createLink,
         updateLink,
@@ -368,6 +387,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         updatePage,
         deletePage,
         moveDocumentPage,
+        moveDocumentPageBetweenDocuments,
+        duplicateDocumentPage,
         createLibrary,
         updateLibrary,
         deleteLibrary,

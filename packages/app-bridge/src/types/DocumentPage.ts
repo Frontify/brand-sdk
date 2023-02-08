@@ -64,3 +64,11 @@ export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
     'categoryId' | 'linkUrl' | 'title' | 'visibility'
 >;
+
+export type DocumentPageDuplicateApi = {
+    page: {
+        id: number;
+    };
+};
+
+export type DocumentPageDuplicate = CamelCasedPropertiesDeep<DocumentPageDuplicateApi>;
