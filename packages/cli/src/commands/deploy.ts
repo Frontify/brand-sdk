@@ -64,10 +64,10 @@ export const createDeployment = async (
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');
-                await promiseExec(`cd ${projectPath} && ./node_modules/.bin/tsc --noEmit`);
+                await promiseExec('npx tsc --noEmit');
 
                 Logger.info('Performing eslint checks...');
-                await promiseExec(`cd ${projectPath} && ./node_modules/.bin/eslint src`);
+                await promiseExec('npx eslint src');
             }
 
             try {
