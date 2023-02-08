@@ -73,7 +73,7 @@ const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: Document
         return groups;
     }
 
-    group.documents = [...((group.documents ?? []) as any), documentToAdd.id];
+    group.documents = [documentToAdd.id, ...((group.documents ?? []) as any)];
 
     return new Map(groups.set(group.id, group));
 };
@@ -82,12 +82,17 @@ const updateDocument = (groups: Map<number, DocumentGroup>, document: DocumentEv
     const currentGroup = getGroupWithDocument(groups, document.id);
     let updatedGroups = new Map(groups);
 
-    const shouldAddDocumentToGroup = !currentGroup && document.documentGroupId !== null;
+    const shouldAddDocumentToGroup =
+        !currentGroup && document.documentGroupId !== null && document.documentGroupId !== undefined;
 
     const documentMovedToDifferentGroup =
-        currentGroup && document.documentGroupId !== null && currentGroup.id !== document.documentGroupId;
+        currentGroup &&
+        document.documentGroupId !== null &&
+        document.documentGroupId !== undefined &&
+        currentGroup.id !== document.documentGroupId;
 
-    const documentMovedToUngrouped = currentGroup && document.documentGroupId === null;
+    const documentMovedToUngrouped =
+        currentGroup && (document.documentGroupId === null || document.documentGroupId === undefined);
 
     if (documentMovedToDifferentGroup || documentMovedToUngrouped) {
         updatedGroups = deleteDocument(groups, document);
