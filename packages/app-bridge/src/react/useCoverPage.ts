@@ -7,6 +7,7 @@ import type { CoverPage, EmitterAction } from '../types';
 
 export type UseCoverPageReturnType = {
     coverPage: Nullable<CoverPage>;
+    isLoading: boolean;
 };
 
 export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType => {
@@ -51,5 +52,5 @@ export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType 
         };
     }, [appBridge]);
 
-    return { coverPage };
+    return { coverPage, isLoading };
 };

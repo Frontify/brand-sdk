@@ -14,11 +14,14 @@ const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort -
 
 export const useDocuments = (appBridge: AppBridgeTheme) => {
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
+        setIsLoading(true);
         const documents = await fetchDocuments(appBridge);
 
         setDocuments(documents);
+        setIsLoading(false);
     }, [appBridge]);
 
     useEffect(() => {
@@ -94,7 +97,7 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
         [documents],
     );
 
-    return { documents, getUngroupedDocuments, getGroupedDocuments, refetch };
+    return { documents, getUngroupedDocuments, getGroupedDocuments, refetch, isLoading };
 };
 
 const actionHandlers = {

@@ -18,11 +18,14 @@ type DocumentPageEvent = {
 
 export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: number) => {
     const [documentCategories, setDocumentCategories] = useState<Map<number, DocumentCategory>>(new Map([]));
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
+        setIsLoading(true);
         const pages = await fetchDocumentCategories(appBridge, documentId);
 
         setDocumentCategories(pages);
+        setIsLoading(false);
     }, [appBridge, documentId]);
 
     useEffect(() => {
@@ -57,7 +60,7 @@ export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: num
         };
     }, [documentId]);
 
-    return { documentCategories, refetch };
+    return { documentCategories, refetch, isLoading };
 };
 
 const getCategoryWithPage = (categories: Map<number, DocumentCategory>, pageId: number) =>
