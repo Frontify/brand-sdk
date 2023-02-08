@@ -510,6 +510,27 @@ describe('AppBridgeBlockTest', () => {
         expect(window.blockSettings[BLOCK_ID]).toEqual(settings);
     });
 
+    test('getBlockAssets with successful response returns asset with legacy supported format', () => {
+        const asset = AssetApiDummy.with(1);
+        const mockHttpClientGet = vi.fn().mockReturnValue({
+            result: {
+                success: true,
+                data: [
+                    {
+                        setting_id: 1,
+                        asset,
+                    },
+                ],
+            },
+        });
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeBlock(BLOCK_ID, SECTION_ID);
+        const result = appBridge.getBlockAssets();
+
+        expect(result).resolves.toEqual({ 1: [{ ...asset, ...AssetDummy.with(1) }] });
+    });
+
     test('openAssetViewer emits AppBridge:ViewerOpened event', () => {
         const emitterEmitStub = vi.fn();
         window.emitter = { emit: emitterEmitStub } as unknown as Emitter;

@@ -455,10 +455,6 @@ export class AppBridgeBlock {
         };
     }
 
-    private mapDocumentBlockAssetApiToAsset(documentBlockAsset: DocumentBlockAssetApi): Asset {
-        return mapAssetApiToAsset(documentBlockAsset.asset);
-    }
-
     private mapDocumentBlockAssetsApiToBlockAssets(
         documentBlockAssets: DocumentBlockAssetApi[],
     ): Record<string, Asset[]> {
@@ -467,7 +463,7 @@ export class AppBridgeBlock {
                 stack[documentBlockAsset.setting_id] = stack[documentBlockAsset.setting_id] ?? [];
                 stack[documentBlockAsset.setting_id].push({
                     ...documentBlockAsset.asset,
-                    ...this.mapDocumentBlockAssetApiToAsset(documentBlockAsset),
+                    ...mapAssetApiToAsset(documentBlockAsset.asset),
                 });
 
                 return stack;
