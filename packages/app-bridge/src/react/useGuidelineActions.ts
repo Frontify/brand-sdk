@@ -395,7 +395,11 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             await appBridge.moveDocument(id, position, newGroupId, oldGroupId);
 
             window.emitter.emit('AppBridge:GuidelineDocumentMoveAction', {
-                document: { id, sort: position, ...(newGroupId && { documentGroupId: newGroupId }) } as Document,
+                document: {
+                    id,
+                    sort: position,
+                    documentGroupId: newGroupId,
+                } as Document,
                 action: 'update',
             });
 
