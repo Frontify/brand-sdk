@@ -122,7 +122,7 @@ export class AppBridgeBlock {
             throw new Error("Couldn't add assets");
         }
 
-        await this.waitForFinishedAssetProcessing(key);
+        await this.waitForFinishedProcessing(key);
     }
 
     public openAssetViewer(token: string): void {
@@ -494,7 +494,7 @@ export class AppBridgeBlock {
         );
     }
 
-    private async waitForFinishedAssetProcessing(key: string): Promise<void> {
+    private async waitForFinishedProcessing(key: string): Promise<void> {
         return new Promise((resolve) => {
             const intervalId = window.setInterval(async () => {
                 const currentBlockAssets = await this.getBlockAssets();
