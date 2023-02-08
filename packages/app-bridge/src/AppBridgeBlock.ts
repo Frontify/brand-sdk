@@ -439,25 +439,7 @@ export class AppBridgeBlock {
     }
 
     private mapAssetChooserResultToAsset(asset: AssetChooserResult): Asset {
-        return {
-            id: asset.id,
-            objectType: asset.object_type,
-            extension: asset.ext,
-            creatorName: asset.creator_name,
-            externalUrl: asset.external_url,
-            genericUrl: asset.generic_url,
-            previewUrl: asset.preview_url,
-            originUrl: asset.file_origin_url,
-            fileName: asset.file_name,
-            fileSize: asset.filesize,
-            fileSizeHumanReadable: asset.file_size_formatted,
-            height: asset.height,
-            width: asset.width,
-            projectId: asset.project,
-            status: asset.status,
-            title: asset.title,
-            fileId: asset.file_id,
-        };
+        return mapAssetApiToAsset({ ...asset, project_id: asset.project, file_size: asset.filesize });
     }
 
     private mapTemplateApiToTemplate(template: TemplateApi): Template {
