@@ -24,6 +24,7 @@ export class AssetApiDummy {
             status: 'FINISHED',
             title: 'A title',
             width: 640,
+            token: '--token--',
         };
     }
 }
