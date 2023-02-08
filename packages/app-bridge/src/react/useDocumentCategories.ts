@@ -71,7 +71,7 @@ const addPage = (categories: Map<number, DocumentCategory>, pageToAdd: DocumentP
         return categories;
     }
 
-    category.documentPages = [...((category.documentPages ?? []) as any), pageToAdd.id];
+    category.documentPages = [pageToAdd.id, ...((category.documentPages ?? []) as any)];
 
     return new Map(categories.set(category.id, category));
 };
