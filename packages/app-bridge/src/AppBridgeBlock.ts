@@ -125,6 +125,10 @@ export class AppBridgeBlock {
         await this.waitForFinishedProcessing(key);
     }
 
+    public openAssetViewer(token: string): void {
+        window.emitter.emit('AppBridge:ViewerOpened', { token });
+    }
+
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
     public async getTemplateById(templateId: number): Promise<Template> {
         const brandId = window.application.sandbox.config.context.brand.id;
@@ -435,25 +439,7 @@ export class AppBridgeBlock {
     }
 
     private mapAssetChooserResultToAsset(asset: AssetChooserResult): Asset {
-        return {
-            id: asset.id,
-            objectType: asset.object_type,
-            extension: asset.ext,
-            creatorName: asset.creator_name,
-            externalUrl: asset.external_url,
-            genericUrl: asset.generic_url,
-            previewUrl: asset.preview_url,
-            originUrl: asset.file_origin_url,
-            fileName: asset.file_name,
-            fileSize: asset.filesize,
-            fileSizeHumanReadable: asset.file_size_formatted,
-            height: asset.height,
-            width: asset.width,
-            projectId: asset.project,
-            status: asset.status,
-            title: asset.title,
-            fileId: asset.file_id,
-        };
+        return mapAssetApiToAsset({ ...asset, project_id: asset.project, file_size: asset.filesize });
     }
 
     private mapTemplateApiToTemplate(template: TemplateApi): Template {
@@ -469,28 +455,6 @@ export class AppBridgeBlock {
         };
     }
 
-    private mapDocumentBlockAssetApiToAsset(documentBlockAsset: DocumentBlockAssetApi): Asset {
-        return {
-            creatorName: '', // TODO: implement enriching of the data (https://app.clickup.com/t/29ad2bj)
-            extension: documentBlockAsset.asset.ext,
-            fileName: documentBlockAsset.asset.file_name,
-            genericUrl: documentBlockAsset.asset.generic_url,
-            originUrl: documentBlockAsset.asset.file_origin_url,
-            externalUrl: documentBlockAsset.asset.external_url,
-            height: documentBlockAsset.asset.height,
-            id: documentBlockAsset.asset.id,
-            objectType: documentBlockAsset.asset.object_type,
-            previewUrl: documentBlockAsset.asset.preview_url,
-            projectId: documentBlockAsset.asset.project_id,
-            fileSize: documentBlockAsset.asset.file_size,
-            fileSizeHumanReadable: documentBlockAsset.asset.file_size_formatted,
-            status: documentBlockAsset.asset.status,
-            title: documentBlockAsset.asset.title,
-            width: documentBlockAsset.asset.width,
-            fileId: documentBlockAsset.asset.file_id,
-        };
-    }
-
     private mapDocumentBlockAssetsApiToBlockAssets(
         documentBlockAssets: DocumentBlockAssetApi[],
     ): Record<string, Asset[]> {
@@ -499,7 +463,7 @@ export class AppBridgeBlock {
                 stack[documentBlockAsset.setting_id] = stack[documentBlockAsset.setting_id] ?? [];
                 stack[documentBlockAsset.setting_id].push({
                     ...documentBlockAsset.asset,
-                    ...this.mapDocumentBlockAssetApiToAsset(documentBlockAsset),
+                    ...mapAssetApiToAsset(documentBlockAsset.asset),
                 });
 
                 return stack;
