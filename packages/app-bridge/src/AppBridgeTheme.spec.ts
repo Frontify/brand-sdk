@@ -149,8 +149,8 @@ describe('AppBridgeThemeTest', () => {
 
     it('returns all document groups', async () => {
         const documentGroupsFromApi = [
-            DocumentGroupApiDummy.with(123, [DocumentApiDummy.with(123), DocumentApiDummy.with(456)]),
-            DocumentGroupApiDummy.with(456, [DocumentApiDummy.with(123), DocumentApiDummy.with(456)]),
+            DocumentGroupApiDummy.with(123, [123, 456]),
+            DocumentGroupApiDummy.with(456, [123, 456]),
         ];
 
         const mockHttpClientGet = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(documentGroupsFromApi));
@@ -158,8 +158,8 @@ describe('AppBridgeThemeTest', () => {
         HttpClient.get = mockHttpClientGet;
 
         const mappedDocumentGroups = [
-            DocumentGroupDummy.with(123, [DocumentDummy.with(123), DocumentDummy.with(456)]),
-            DocumentGroupDummy.with(456, [DocumentDummy.with(123), DocumentDummy.with(456)]),
+            DocumentGroupDummy.with(123, [123, 456]),
+            DocumentGroupDummy.with(456, [123, 456]),
         ];
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
@@ -183,12 +183,8 @@ describe('AppBridgeThemeTest', () => {
     });
 
     it('returns document categories by document id', async () => {
-        const documentCategoriesFromApi = [
-            DocumentCategoryApiDummy.with(123, [DocumentPageApiDummy.with(123), DocumentPageApiDummy.with(456)]),
-        ];
-        const mappedDocumentCategories = [
-            DocumentCategoryDummy.with(123, [DocumentPageDummy.with(123), DocumentPageDummy.with(456)]),
-        ];
+        const documentCategoriesFromApi = [DocumentCategoryApiDummy.with(123, [100, 200])];
+        const mappedDocumentCategories = [DocumentCategoryDummy.with(123, [100, 200])];
 
         const mockHttpClientGet = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(documentCategoriesFromApi));
 
