@@ -14,11 +14,14 @@ const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sor
 
 export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) => {
     const [pages, setPages] = useState<Map<number, DocumentPage>>(new Map([]));
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
+        setIsLoading(true);
         const pages = await fetchDocumentPages(appBridge, documentId);
 
         setPages(pages);
+        setIsLoading(false);
     }, [appBridge, documentId]);
 
     useEffect(() => {
@@ -65,7 +68,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         [pages],
     );
 
-    return { pages, getCategorizedPages, getUncategorizedPages, refetch };
+    return { pages, getCategorizedPages, getUncategorizedPages, refetch, isLoading };
 };
 
 const actionHandlers = {

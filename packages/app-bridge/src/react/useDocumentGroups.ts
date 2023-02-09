@@ -18,11 +18,14 @@ type DocumentEvent = {
 
 export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
+        setIsLoading(true);
         const pages = await fetchDocumentGroups(appBridge);
 
         setDocumentGroups(pages);
+        setIsLoading(false);
     }, [appBridge]);
 
     useEffect(() => {
@@ -57,7 +60,7 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
         };
     }, []);
 
-    return { documentGroups, refetch };
+    return { documentGroups, refetch, isLoading };
 };
 
 const getGroupWithDocument = (groups: Map<number, DocumentGroup>, documentId: number) =>
