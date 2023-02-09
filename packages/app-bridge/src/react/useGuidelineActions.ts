@@ -475,6 +475,11 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         async (id: number, sourceDocumentId: number, targetDocumentId: number) => {
             await appBridge.moveDocumentPageBetweenDocuments(id, sourceDocumentId, targetDocumentId);
 
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${sourceDocumentId}`, {
+                documentPage: { id, documentId: sourceDocumentId } as DocumentPage,
+                action: 'update',
+            });
+
             window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${targetDocumentId}`, {
                 documentPage: { id, documentId: targetDocumentId } as DocumentPage,
                 action: 'update',
