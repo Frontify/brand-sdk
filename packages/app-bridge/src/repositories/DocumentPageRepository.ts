@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { HttpClient, convertObjectCase } from '../utilities';
-import type { DocumentPage, DocumentPageApi } from '../types';
+import type { DocumentPage, DocumentPageApi, DocumentPageDuplicate, DocumentPageDuplicateApi } from '../types';
 
 export const getDocumentPagesByDocumentId = async (documentId: number): Promise<DocumentPage[]> => {
     const { result } = await HttpClient.get<DocumentPageApi[]>(`/api/document-page?document_id=${documentId}`);
@@ -37,6 +37,7 @@ export const deleteDocumentPage = async (id: number): Promise<void> => {
     }
 };
 
+// Possibly rename to moveDocumentPageWithinDocument
 export const moveDocumentPage = async (
     id: number,
     documentId: number,
@@ -48,4 +49,27 @@ export const moveDocumentPage = async (
     if (!result.success) {
         throw new Error('Could not move document page');
     }
+};
+
+export const moveDocumentPageBetweenDocuments = async (
+    id: number,
+    sourceDocumentId: number,
+    targetDocumentId: number,
+): Promise<void> => {
+    const { result } = await HttpClient.post(`/api/document/page/${sourceDocumentId}`, {
+        page: id,
+        document: targetDocumentId,
+    });
+
+    if (!result.success) {
+        throw new Error('Could not move document page');
+    }
+};
+
+export const duplicateDocumentPage = async (id: number): Promise<DocumentPageDuplicate> => {
+    const { result } = await HttpClient.post('/api/pages/copy', {
+        page_id: id,
+    });
+
+    return convertObjectCase((result as unknown as DocumentPageDuplicateApi).page, 'camel');
 };

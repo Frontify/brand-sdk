@@ -15,6 +15,7 @@ import {
     DocumentDummy,
     DocumentGroupDummy,
     DocumentPageDummy,
+    DocumentPageDuplicateDummy,
     DocumentSectionDummy,
     TargetsDummy,
 } from '.';
@@ -46,6 +47,7 @@ const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
 const DOCUMENT_SECTION_ID_1 = 3421;
 const DOCUMENT_SECTION_ID_2 = 65725;
 const DOCUMENT_SECTION_ID_3 = 95934;
+const DOCUMENT_PAGE_DUPLICATE_ID_1 = 2341;
 
 export type getAppBridgeThemeStubProps = {
     editorState?: boolean;
@@ -135,6 +137,7 @@ export const getAppBridgeThemeStub = ({
             ColorDummy.green(342),
             ColorDummy.yellow(9314),
         ]),
+        duplicateDocumentPage: Promise.resolve(DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1)),
         getDocumentTargets: Promise.resolve(TargetsDummy.with()),
         getDocumentPageTargets: Promise.resolve(TargetsDummy.with()),
         createLink: Promise.resolve(DocumentDummy.with(1)),

@@ -11,6 +11,7 @@ import {
     DocumentDummy,
     DocumentGroupDummy,
     DocumentPageDummy,
+    DocumentPageDuplicateDummy,
     getAppBridgeThemeStub,
 } from '../tests';
 
@@ -195,6 +196,12 @@ describe('useGuidelineActions hook', () => {
         const deleteCoverPageMock = vi.fn(useGuidelineActionsStub.deleteCoverPage);
 
         expect(deleteCoverPageMock()).resolves.not.toThrow();
+    });
+
+    it('should not throw duplicatePage', async () => {
+        const duplicatePageMock = vi.fn(useGuidelineActionsStub.duplicatePage);
+
+        expect(duplicatePageMock({ id: 1, documentId: 5 })).resolves.not.toThrow();
     });
 
     it('should create a link and emit an event', async () => {
@@ -671,6 +678,33 @@ describe('useGuidelineActions hook', () => {
             expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
                 documentPage: { id: page.id },
                 action: 'delete',
+            });
+        });
+    });
+
+    it('should duplicate a page and emit an event', async () => {
+        const duplicatePage = vi.spyOn(useGuidelineActionsStub, 'duplicatePage');
+
+        const page = {
+            id: 2341,
+            documentId: 10,
+        };
+
+        act(() => {
+            useGuidelineActionsStub.duplicatePage(page);
+        });
+
+        const documentPageDuplicateDummy = DocumentPageDuplicateDummy.with(2341);
+
+        await waitFor(() => {
+            expect(duplicatePage).toHaveBeenCalledWith(page);
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
+                documentPage: {
+                    ...documentPageDuplicateDummy,
+                    title: documentPageDuplicateDummy.name,
+                    documentId: page.documentId,
+                },
+                action: 'add',
             });
         });
     });

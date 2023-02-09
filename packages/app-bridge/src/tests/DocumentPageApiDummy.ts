@@ -32,3 +32,18 @@ export class DocumentPageApiDummy {
         };
     }
 }
+
+export class DocumentPageDuplicateApiDummy {
+    static with(id: number): DocumentPageDuplicateApiDummy {
+        return {
+            page: {
+                id,
+                link_type: 'INTERNAL',
+                name: 'Document page duplicate dummy',
+                sections: [],
+                url: `document-page-duplicate-dummy-${id}`,
+                visibility: 'EVERYONE',
+            },
+        };
+    }
+}

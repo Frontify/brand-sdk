@@ -285,6 +285,25 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const duplicatePage = useCallback(
+        async ({ id, documentId, categoryId }: { id: number; documentId: number; categoryId?: number }) => {
+            const result = await appBridge.duplicateDocumentPage(id);
+
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
+                documentPage: { ...result, title: result.name, documentId, categoryId } as unknown as DocumentPage,
+                action: 'add',
+            });
+
+            if (categoryId) {
+                window.emitter.emit(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, {
+                    documentPage: { id: result.id, categoryId },
+                    action: 'add',
+                });
+            }
+        },
+        [appBridge],
+    );
+
     const createCategory = useCallback(
         async (category: DocumentCategoryCreate) => {
             const result = await appBridge.createDocumentCategory(category);
@@ -452,6 +471,18 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const moveDocumentPageBetweenDocuments = useCallback(
+        async (id: number, sourceDocumentId: number, targetDocumentId: number) => {
+            await appBridge.moveDocumentPageBetweenDocuments(id, sourceDocumentId, targetDocumentId);
+
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${targetDocumentId}`, {
+                documentPage: { id, documentId: targetDocumentId } as DocumentPage,
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
     return {
         createLink,
         updateLink,
@@ -459,7 +490,9 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         createPage,
         updatePage,
         deletePage,
+        duplicatePage,
         moveDocumentPage,
+        moveDocumentPageBetweenDocuments,
         createLibrary,
         updateLibrary,
         deleteLibrary,
