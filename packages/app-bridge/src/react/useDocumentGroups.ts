@@ -5,15 +5,11 @@ import { useCallback, useEffect, useState } from 'react';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentGroup, EmitterAction } from '../types';
 
-type DocumentGroupEvent = {
-    action: EmitterAction;
-    documentGroup: DocumentGroup | { id: number };
-};
-
 type DocumentEvent = {
     action: EmitterAction;
     document: { id: number; documentGroupId?: number | null };
 };
+const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
@@ -29,17 +25,15 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
 
     useEffect(() => {
         refetch();
+
+        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', refetch);
+
+        return () => {
+            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', refetch);
+        };
     }, [refetch]);
 
     useEffect(() => {
-        const handleEventUpdates = (event: DocumentGroupEvent) => {
-            setDocumentGroups((previousState) => {
-                const handler = actionHandlers[event.action] || actionHandlers.default;
-
-                return handler(previousState, event.documentGroup as DocumentGroup);
-            });
-        };
-
         const handleDocumentEventUpdates = (event: DocumentEvent) => {
             setDocumentGroups((previousState) => {
                 const action: 'add-document' | 'delete-document' | 'update-document' = `${event.action}-document`;
@@ -50,16 +44,27 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
         window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
             window.emitter.off('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
         };
     }, []);
 
-    return { documentGroups, refetch, isLoading };
+    /**
+     * returns list of document groups,
+     *  as default sorted by sort value
+     */
+    const getSortedDocumentGroups = useCallback(
+        (
+            options: { sortBy?: (a: DocumentGroup, b: DocumentGroup) => any } = {
+                sortBy: sortDocumentGroups,
+            },
+        ) => Array.from(documentGroups.values()).sort(options.sortBy),
+        [documentGroups],
+    );
+
+    return { documentGroups, getSortedDocumentGroups, refetch, isLoading };
 };
 
 const getGroupWithDocument = (groups: Map<number, DocumentGroup>, documentId: number) =>
@@ -123,21 +128,6 @@ const deleteDocument = (groups: Map<number, DocumentGroup>, documentToDelete: Do
 };
 
 const actionHandlers = {
-    add: (groups: Map<number, DocumentGroup>, groupToAdd: DocumentGroup) =>
-        new Map(groups.set(groupToAdd.id, groupToAdd)),
-
-    update: (groups: Map<number, DocumentGroup>, groupToUpdate: DocumentGroup) => {
-        const group = groups.get(groupToUpdate.id);
-
-        return new Map(groups.set(groupToUpdate.id, { ...group, ...groupToUpdate }));
-    },
-
-    delete: (groups: Map<number, DocumentGroup>, groupToDelete: DocumentGroup) => {
-        const nextGroups = new Map(groups);
-        nextGroups.delete(groupToDelete.id);
-        return nextGroups;
-    },
-
     'add-document': addDocument,
 
     'update-document': updateDocument,

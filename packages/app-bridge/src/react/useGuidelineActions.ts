@@ -455,16 +455,16 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocumentPage = useCallback(
-        async (id: number, documentId: number, position: number, category?: number) => {
-            await appBridge.moveDocumentPage(id, documentId, position, category);
+        async (id: number, documentId: number, position: number, categoryId?: number) => {
+            await appBridge.moveDocumentPage(id, documentId, position, categoryId);
 
             window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
-                documentPage: { id, documentId, sort: position } as DocumentPage,
+                documentPage: { id, documentId, sort: position, categoryId } as DocumentPage,
                 action: 'update',
             });
 
             window.emitter.emit(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, {
-                documentPage: { id, categoryId: category as number },
+                documentPage: { id, categoryId: categoryId as number },
                 action: 'update',
             });
         },
