@@ -37,37 +37,10 @@ export const useDocuments = (appBridge: AppBridgeTheme) => {
             });
         };
 
-        const handleStandardDocumentEventUpdates = ({
-            action,
-            standardDocument,
-        }: {
-            action: EmitterAction;
-            standardDocument: Document | { id: number };
-        }) => handleEventUpdates({ action, document: standardDocument });
-
-        const handleLibraryEventUpdates = ({
-            action,
-            library,
-        }: {
-            action: EmitterAction;
-            library: Document | { id: number };
-        }) => handleEventUpdates({ action, document: library });
-
-        const handleLinkEventUpdates = ({ action, link }: { action: EmitterAction; link: Document | { id: number } }) =>
-            handleEventUpdates({ action, document: link });
-
-        const handleDocumentMoveEvent = (event: { action: 'update'; document: Document }) => handleEventUpdates(event);
-
-        window.emitter.on('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
-        window.emitter.on('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
-        window.emitter.on('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
-        window.emitter.on('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentAction', handleEventUpdates);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineStandardDocumentAction', handleStandardDocumentEventUpdates);
-            window.emitter.off('AppBridge:GuidelineLibraryAction', handleLibraryEventUpdates);
-            window.emitter.off('AppBridge:GuidelineLinkAction', handleLinkEventUpdates);
-            window.emitter.off('AppBridge:GuidelineDocumentMoveAction', handleDocumentMoveEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentAction', handleEventUpdates);
         };
     }, []);
 
@@ -125,7 +98,7 @@ const fetchDocuments = async (appBridge: AppBridgeTheme) => {
     // TODO: has to be done like this as BE does not support returning documentGroupId in documents. Remove it once it is supported
     for (const document of documents) {
         for (const group of groups) {
-            if (group.documents && group.documents.some((groupedDocument) => groupedDocument.id === document.id)) {
+            if (group.documents && group.documents.includes(document.id)) {
                 document.documentGroupId = group.id;
             }
         }

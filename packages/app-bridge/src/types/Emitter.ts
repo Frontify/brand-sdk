@@ -37,33 +37,13 @@ export type Emitter = MittEmitter<{
         prevColorPalettes: ColorPalette[];
     };
 
-    'AppBridge:GuidelineStandardDocumentAction':
+    'AppBridge:GuidelineDocumentAction':
         | {
-              standardDocument: Document;
+              document: Document;
               action: 'add' | 'update';
           }
         | {
-              standardDocument: { id: number };
-              action: 'delete';
-          };
-
-    'AppBridge:GuidelineLibraryAction':
-        | {
-              library: Document;
-              action: 'add' | 'update';
-          }
-        | {
-              library: { id: number };
-              action: 'delete';
-          };
-
-    'AppBridge:GuidelineLinkAction':
-        | {
-              link: Document;
-              action: 'add' | 'update';
-          }
-        | {
-              link: { id: number };
+              document: { id: number };
               action: 'delete';
           };
 
@@ -132,9 +112,4 @@ export type Emitter = MittEmitter<{
               document: { id: number };
               action: 'delete';
           };
-
-    'AppBridge:GuidelineDocumentMoveAction': {
-        document: Document;
-        action: 'update';
-    };
 }>;

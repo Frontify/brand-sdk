@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import cloneDeep from 'lodash-es/cloneDeep';
 import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -64,7 +63,7 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
 };
 
 const getGroupWithDocument = (groups: Map<number, DocumentGroup>, documentId: number) =>
-    Array.from(groups.values()).find((group) => group.documents?.includes(documentId as any));
+    Array.from(groups.values()).find((group) => group.documents?.includes(documentId));
 
 const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: DocumentEvent['document']) => {
     const group = groups.get(documentToAdd.documentGroupId as number);
@@ -76,7 +75,7 @@ const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: Document
         return groups;
     }
 
-    group.documents = [documentToAdd.id, ...((group.documents ?? []) as any)];
+    group.documents = [documentToAdd.id, ...group.documents];
 
     return new Map(groups.set(group.id, group));
 };
@@ -118,8 +117,7 @@ const deleteDocument = (groups: Map<number, DocumentGroup>, documentToDelete: Do
         return groups;
     }
 
-    group.documents =
-        group.documents?.filter((documentId) => (documentId as unknown as any) !== documentToDelete.id) ?? [];
+    group.documents = group.documents.filter((documentId) => documentId !== documentToDelete.id);
 
     return new Map(groups.set(group.id, group));
 };
@@ -152,20 +150,5 @@ const actionHandlers = {
 const fetchDocumentGroups = async (appBridge: AppBridgeTheme) => {
     const documentGroups = await appBridge.getDocumentGroups();
 
-    return convertToGroupsMap(documentGroups);
-};
-
-const convertToGroupsMap = (documentGroups: DocumentGroup[]) => {
-    const groupsClone: DocumentGroup[] = cloneDeep(documentGroups);
-
-    for (const group of groupsClone) {
-        if (!group.documents) {
-            continue;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        group.documents = group.documents.map((document) => document.id) as any;
-    }
-
-    return new Map(groupsClone.map((group) => [group.id, group]));
+    return new Map(documentGroups.map((group) => [group.id, group]));
 };

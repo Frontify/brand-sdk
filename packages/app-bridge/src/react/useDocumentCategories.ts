@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import cloneDeep from 'lodash-es/cloneDeep';
 import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -64,7 +63,7 @@ export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: num
 };
 
 const getCategoryWithPage = (categories: Map<number, DocumentCategory>, pageId: number) =>
-    Array.from(categories.values()).find((category) => category.documentPages?.includes(pageId as any));
+    Array.from(categories.values()).find((category) => category.documentPages?.includes(pageId));
 
 const addPage = (categories: Map<number, DocumentCategory>, pageToAdd: DocumentPageEvent['documentPage']) => {
     const category = categories.get(pageToAdd.categoryId as number);
@@ -74,7 +73,7 @@ const addPage = (categories: Map<number, DocumentCategory>, pageToAdd: DocumentP
         return categories;
     }
 
-    category.documentPages = [pageToAdd.id, ...((category.documentPages ?? []) as any)];
+    category.documentPages = [pageToAdd.id, ...category.documentPages];
 
     return new Map(categories.set(category.id, category));
 };
@@ -111,8 +110,7 @@ const deletePage = (categories: Map<number, DocumentCategory>, pageToDelete: Doc
         return categories;
     }
 
-    category.documentPages =
-        category.documentPages?.filter((pageId) => (pageId as unknown as any) !== pageToDelete.id) ?? [];
+    category.documentPages = category.documentPages?.filter((pageId) => pageId !== pageToDelete.id);
 
     return new Map(categories.set(category.id, category));
 };
@@ -145,20 +143,5 @@ const actionHandlers = {
 const fetchDocumentCategories = async (appBridge: AppBridgeTheme, documentId: number) => {
     const categories = await appBridge.getDocumentCategoriesByDocumentId(documentId);
 
-    return convertToCategoriesMap(categories);
-};
-
-const convertToCategoriesMap = (documentCategories: DocumentCategory[]) => {
-    const categoriesClone: DocumentCategory[] = cloneDeep(documentCategories);
-
-    for (const category of categoriesClone) {
-        if (!category.documentPages) {
-            continue;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        category.documentPages = category.documentPages.map((page) => page.id) as any;
-    }
-
-    return new Map(categoriesClone.map((category) => [category.id, category]));
+    return new Map(categories.map((category) => [category.id, category]));
 };
