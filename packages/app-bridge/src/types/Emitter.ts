@@ -112,4 +112,8 @@ export type Emitter = MittEmitter<{
               document: { id: number };
               action: 'delete';
           };
+
+    'AppBridge:ViewerOpened': {
+        token: string;
+    };
 }>;
