@@ -6,6 +6,7 @@ import {
     createDocumentCategory,
     createDocumentGroup,
     createDocumentPage,
+    createProject,
     deleteCoverPage,
     deleteDocument,
     deleteDocumentCategory,
@@ -69,6 +70,7 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
     LinkType,
+    Project,
     Targets,
     TargetsUpdate,
 } from './types';
@@ -114,11 +116,17 @@ export class AppBridgeTheme {
     }
 
     public async createLibrary(library: DocumentLibraryCreate) {
+        const createdProject = this.#createProject();
+
         return createDocument<DocumentLibrary>({
             ...library,
             portalId: this.getPortalId(),
             settings: { project: library.settings?.project ?? this.getProjectId() },
         } as DocumentLibrary);
+    }
+
+    #createProject(project: Project) {
+        return createProject(project);
     }
 
     public async updateLibrary(library: DocumentLibraryUpdate) {
