@@ -137,4 +137,7 @@ export type Emitter = MittEmitter<{
         document: Document;
         action: 'update';
     };
+    'AppBridge:ViewerOpened': {
+        token: string;
+    };
 }>;

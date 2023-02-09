@@ -22,6 +22,7 @@ export class AssetDummy {
             fileSize: 256,
             fileSizeHumanReadable: '123.45 MB',
             fileId: 'x1x1x1x1x1x1',
+            token: '--token--',
         };
     }
 }
