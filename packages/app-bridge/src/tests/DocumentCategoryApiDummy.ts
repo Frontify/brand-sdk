@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentCategoryApi, DocumentPageApi } from '../types';
+import type { DocumentCategoryApi } from '../types';
+
+import { DocumentPageApiDummy } from './DocumentPageApiDummy';
 
 export class DocumentCategoryApiDummy {
-    static with(id: number, documentPages: DocumentPageApi[]): DocumentCategoryApi {
+    static with(id: number, document_pages: number[] = []): DocumentCategoryApi {
         return {
             id,
             creator: 9,
@@ -16,7 +18,7 @@ export class DocumentCategoryApiDummy {
             title: `Document Category Dummy ${id}`,
             slug: `document-category-dummy-${id}`,
             sort: 1,
-            document_pages: documentPages,
+            document_pages: document_pages.map((page) => DocumentPageApiDummy.with(page)),
         };
     }
 }

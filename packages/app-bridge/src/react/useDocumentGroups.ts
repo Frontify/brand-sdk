@@ -1,20 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import cloneDeep from 'lodash-es/cloneDeep';
 import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentGroup, EmitterAction } from '../types';
 
-type DocumentGroupEvent = {
-    action: EmitterAction;
-    documentGroup: DocumentGroup | { id: number };
-};
-
 type DocumentEvent = {
     action: EmitterAction;
     document: { id: number; documentGroupId?: number | null };
 };
+const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
@@ -30,17 +25,15 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
 
     useEffect(() => {
         refetch();
+
+        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', refetch);
+
+        return () => {
+            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', refetch);
+        };
     }, [refetch]);
 
     useEffect(() => {
-        const handleEventUpdates = (event: DocumentGroupEvent) => {
-            setDocumentGroups((previousState) => {
-                const handler = actionHandlers[event.action] || actionHandlers.default;
-
-                return handler(previousState, event.documentGroup as DocumentGroup);
-            });
-        };
-
         const handleDocumentEventUpdates = (event: DocumentEvent) => {
             setDocumentGroups((previousState) => {
                 const action: 'add-document' | 'delete-document' | 'update-document' = `${event.action}-document`;
@@ -51,20 +44,37 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
         window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', handleEventUpdates);
             window.emitter.off('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
         };
     }, []);
 
-    return { documentGroups, refetch, isLoading };
+    /**
+     * Returns a sorted list of document groups.
+     *
+     * The returned list is sorted based on the `sortBy` option provided. By default, it uses the `sort` property to sort the list.
+     *
+     * @param options An object with the following properties:
+     *   - sortBy: (optional) A function used to sort the list of document groups. It should take two document group objects as arguments and return a value that represents their sort order.
+     *
+     * @returns An array of sorted document groups.
+     */
+    const getSortedDocumentGroups = useCallback(
+        (
+            options: { sortBy?: (a: DocumentGroup, b: DocumentGroup) => any } = {
+                sortBy: sortDocumentGroups,
+            },
+        ) => Array.from(documentGroups.values()).sort(options.sortBy),
+        [documentGroups],
+    );
+
+    return { documentGroups, getSortedDocumentGroups, refetch, isLoading };
 };
 
 const getGroupWithDocument = (groups: Map<number, DocumentGroup>, documentId: number) =>
-    Array.from(groups.values()).find((group) => group.documents?.includes(documentId as any));
+    Array.from(groups.values()).find((group) => group.documents?.includes(documentId));
 
 const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: DocumentEvent['document']) => {
     const group = groups.get(documentToAdd.documentGroupId as number);
@@ -76,7 +86,7 @@ const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: Document
         return groups;
     }
 
-    group.documents = [documentToAdd.id, ...((group.documents ?? []) as any)];
+    group.documents = [documentToAdd.id, ...group.documents];
 
     return new Map(groups.set(group.id, group));
 };
@@ -118,28 +128,12 @@ const deleteDocument = (groups: Map<number, DocumentGroup>, documentToDelete: Do
         return groups;
     }
 
-    group.documents =
-        group.documents?.filter((documentId) => (documentId as unknown as any) !== documentToDelete.id) ?? [];
+    group.documents = group.documents.filter((documentId) => documentId !== documentToDelete.id);
 
     return new Map(groups.set(group.id, group));
 };
 
 const actionHandlers = {
-    add: (groups: Map<number, DocumentGroup>, groupToAdd: DocumentGroup) =>
-        new Map(groups.set(groupToAdd.id, groupToAdd)),
-
-    update: (groups: Map<number, DocumentGroup>, groupToUpdate: DocumentGroup) => {
-        const group = groups.get(groupToUpdate.id);
-
-        return new Map(groups.set(groupToUpdate.id, { ...group, ...groupToUpdate }));
-    },
-
-    delete: (groups: Map<number, DocumentGroup>, groupToDelete: DocumentGroup) => {
-        const nextGroups = new Map(groups);
-        nextGroups.delete(groupToDelete.id);
-        return nextGroups;
-    },
-
     'add-document': addDocument,
 
     'update-document': updateDocument,
@@ -152,20 +146,5 @@ const actionHandlers = {
 const fetchDocumentGroups = async (appBridge: AppBridgeTheme) => {
     const documentGroups = await appBridge.getDocumentGroups();
 
-    return convertToGroupsMap(documentGroups);
-};
-
-const convertToGroupsMap = (documentGroups: DocumentGroup[]) => {
-    const groupsClone: DocumentGroup[] = cloneDeep(documentGroups);
-
-    for (const group of groupsClone) {
-        if (!group.documents) {
-            continue;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        group.documents = group.documents.map((document) => document.id) as any;
-    }
-
-    return new Map(groupsClone.map((group) => [group.id, group]));
+    return new Map(documentGroups.map((group) => [group.id, group]));
 };

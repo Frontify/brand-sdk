@@ -13,7 +13,6 @@ export * from './useDocumentGroups';
 export * from './useDocumentPages';
 export * from './useDocumentPageTargets';
 export * from './useDocuments';
-export * from './useDocumentsAndDocumentGroups';
 export * from './useDocumentSection';
 export * from './useDocumentTargets';
 export * from './useEditorState';
