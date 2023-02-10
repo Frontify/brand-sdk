@@ -56,7 +56,7 @@ export const moveDocumentPageBetweenDocuments = async (
     sourceDocumentId: number,
     targetDocumentId: number,
 ): Promise<void> => {
-    const { result } = await HttpClient.post(`/api/document/page/${sourceDocumentId}`, {
+    const { result } = await HttpClient.patch(`/api/document/page/${sourceDocumentId}`, {
         page: id,
         document: targetDocumentId,
     });

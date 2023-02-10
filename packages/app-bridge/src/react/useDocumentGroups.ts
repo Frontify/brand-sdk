@@ -52,8 +52,14 @@ export const useDocumentGroups = (appBridge: AppBridgeTheme) => {
     }, []);
 
     /**
-     * returns list of document groups,
-     *  as default sorted by sort value
+     * Returns a sorted list of document groups.
+     *
+     * The returned list is sorted based on the `sortBy` option provided. By default, it uses the `sort` property to sort the list.
+     *
+     * @param options An object with the following properties:
+     *   - sortBy: (optional) A function used to sort the list of document groups. It should take two document group objects as arguments and return a value that represents their sort order.
+     *
+     * @returns An array of sorted document groups.
      */
     const getSortedDocumentGroups = useCallback(
         (

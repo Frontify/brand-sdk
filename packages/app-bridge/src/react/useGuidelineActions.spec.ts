@@ -708,4 +708,34 @@ describe('useGuidelineActions hook', () => {
             });
         });
     });
+
+    it('should move a page between documents and emit all events', async () => {
+        const moveDocumentPageBetweenDocuments = vi.spyOn(useGuidelineActionsStub, 'moveDocumentPageBetweenDocuments');
+
+        const page = { id: 1, sourceDocumentId: 22, targetDocumentId: 33 };
+
+        act(() => {
+            useGuidelineActionsStub.moveDocumentPageBetweenDocuments(
+                page.id,
+                page.sourceDocumentId,
+                page.targetDocumentId,
+            );
+        });
+
+        await waitFor(() => {
+            expect(moveDocumentPageBetweenDocuments).toHaveBeenCalledWith(
+                page.id,
+                page.sourceDocumentId,
+                page.targetDocumentId,
+            );
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.sourceDocumentId}`, {
+                documentPage: { id: page.id, documentId: page.sourceDocumentId },
+                action: 'update',
+            });
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.targetDocumentId}`, {
+                documentPage: { id: page.id, documentId: page.targetDocumentId },
+                action: 'update',
+            });
+        });
+    });
 });

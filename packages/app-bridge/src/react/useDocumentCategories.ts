@@ -9,6 +9,7 @@ type DocumentPageEvent = {
     action: EmitterAction;
     documentPage: { id: number; categoryId?: number | null };
 };
+
 const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: number) => {
@@ -48,8 +49,14 @@ export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: num
     }, [documentId, refetch]);
 
     /**
-     * returns list of document categories,
-     *  as default sorted by sort value
+     * Returns a sorted list of document categories.
+     *
+     * The returned list is sorted based on the `sortBy` option provided. By default, it uses the `sort` property to sort the list.
+     *
+     * @param options An object with the following properties:
+     *   - sortBy: (optional) A function used to sort the list of document categories. It should take two document category objects as arguments and return a value that represents their sort order.
+     *
+     * @returns An array of sorted document categories.
      */
     const getSortedCategories = useCallback(
         (
