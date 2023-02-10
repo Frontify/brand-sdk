@@ -4,17 +4,34 @@ import { RequireExactlyOne } from 'type-fest';
 import type { DocumentGroup, DocumentGroupApi } from '../types';
 import { HttpClient, convertObjectCase } from '../utilities';
 
-export const getDocumentGroupsByPortalId = async (portalId: number): Promise<DocumentGroup[]> => {
-    const { result } = await HttpClient.get<DocumentGroupApi[]>(`/api/document-group?portal_id=${portalId}`);
-    return convertObjectCase(result.data, 'camel');
+const mutateDocumentGroups = (documentGroups: DocumentGroupApi[]): DocumentGroup[] => {
+    const groups: DocumentGroup[] = [];
+
+    for (const group of documentGroups) {
+        groups.push({
+            ...convertObjectCase(group, 'camel'),
+            documents: group.documents?.map((document) => document.id) ?? [],
+        });
+    }
+
+    return groups;
 };
 
-export const createDocumentGroup = async (documentGroup: DocumentGroup) => {
+export const getDocumentGroupsByPortalId = async (portalId: number): Promise<DocumentGroup[]> => {
+    const { result } = await HttpClient.get<DocumentGroupApi[]>(`/api/document-group?portal_id=${portalId}`);
+
+    return mutateDocumentGroups(result.data);
+};
+
+export const createDocumentGroup = async (documentGroup: DocumentGroup): Promise<DocumentGroup> => {
     const { result } = await HttpClient.post<DocumentGroupApi>(
         '/api/document-group',
         convertObjectCase(documentGroup, 'snake'),
     );
-    return convertObjectCase(result.data, 'camel');
+    return {
+        ...convertObjectCase(result.data, 'camel'),
+        documents: result.data.documents?.map((document) => document.id) ?? [],
+    };
 };
 
 export const updateDocumentGroup = async (
@@ -25,7 +42,10 @@ export const updateDocumentGroup = async (
         convertObjectCase(documentGroup, 'snake'),
     );
 
-    return convertObjectCase(result.data, 'camel');
+    return {
+        ...convertObjectCase(result.data, 'camel'),
+        documents: result.data.documents?.map((document) => document.id) ?? [],
+    };
 };
 
 export const deleteDocumentGroup = async (id: number): Promise<void> => {

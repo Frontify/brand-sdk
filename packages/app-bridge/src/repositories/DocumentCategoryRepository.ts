@@ -3,12 +3,25 @@
 import { HttpClient, convertObjectCase } from '../utilities';
 import type { DocumentCategory, DocumentCategoryApi } from '../types';
 
+const mutateDocumentCategories = (documentCategories: DocumentCategoryApi[]): DocumentCategory[] => {
+    const categories: DocumentCategory[] = [];
+
+    for (const category of documentCategories) {
+        categories.push({
+            ...convertObjectCase(category, 'camel'),
+            documentPages: category.document_pages?.map((page) => page.id) ?? [],
+        });
+    }
+
+    return categories;
+};
+
 export const getDocumentCategoriesByDocumentId = async (documentId: number): Promise<DocumentCategory[]> => {
     const { result } = await HttpClient.get<DocumentCategoryApi[]>(
         `/api/document-page-category?document_id=${documentId}`,
     );
 
-    return convertObjectCase(result.data, 'camel');
+    return mutateDocumentCategories(result.data);
 };
 
 export const createDocumentCategory = async (category: DocumentCategory): Promise<DocumentCategory> => {
@@ -17,7 +30,10 @@ export const createDocumentCategory = async (category: DocumentCategory): Promis
         convertObjectCase(category, 'snake'),
     );
 
-    return convertObjectCase(result.data, 'camel');
+    return {
+        ...convertObjectCase(result.data, 'camel'),
+        documentPages: result.data.document_pages?.map((page) => page.id) ?? [],
+    };
 };
 
 export const updateDocumentCategory = async (category: DocumentCategory): Promise<DocumentCategory> => {
@@ -26,7 +42,10 @@ export const updateDocumentCategory = async (category: DocumentCategory): Promis
         convertObjectCase(category, 'snake'),
     );
 
-    return convertObjectCase(result.data, 'camel');
+    return {
+        ...convertObjectCase(result.data, 'camel'),
+        documentPages: result.data.document_pages?.map((page) => page.id) ?? [],
+    };
 };
 
 export const deleteDocumentCategory = async (id: number): Promise<void> => {

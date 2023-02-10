@@ -1,20 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import cloneDeep from 'lodash-es/cloneDeep';
 import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentCategory, EmitterAction } from '../types';
 
-type DocumentCategoryEvent = {
-    action: EmitterAction;
-    documentCategory: DocumentCategory | { id: number };
-};
-
 type DocumentPageEvent = {
     action: EmitterAction;
     documentPage: { id: number; categoryId?: number | null };
 };
+const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: number) => {
     const [documentCategories, setDocumentCategories] = useState<Map<number, DocumentCategory>>(new Map([]));
@@ -33,14 +28,6 @@ export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: num
     }, [refetch]);
 
     useEffect(() => {
-        const handleEventUpdates = (event: DocumentCategoryEvent) => {
-            setDocumentCategories((previousState) => {
-                const handler = actionHandlers[event.action] || actionHandlers.default;
-
-                return handler(previousState, event.documentCategory as DocumentCategory);
-            });
-        };
-
         const handlePageEventUpdates = (event: DocumentPageEvent) => {
             setDocumentCategories((previousState) => {
                 const action: 'add-page' | 'delete-page' | 'update-page' = `${event.action}-page`;
@@ -51,20 +38,39 @@ export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: num
             });
         };
 
-        window.emitter.on(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, handleEventUpdates);
+        window.emitter.on(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, refetch);
         window.emitter.on(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, handlePageEventUpdates);
 
         return () => {
-            window.emitter.off(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, handleEventUpdates);
+            window.emitter.off(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, refetch);
             window.emitter.off(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, handlePageEventUpdates);
         };
-    }, [documentId]);
+    }, [documentId, refetch]);
 
-    return { documentCategories, refetch, isLoading };
+    /**
+     * Returns a sorted list of document categories.
+     *
+     * The returned list is sorted based on the `sortBy` option provided. By default, it uses the `sort` property to sort the list.
+     *
+     * @param options An object with the following properties:
+     *   - sortBy: (optional) A function used to sort the list of document categories. It should take two document category objects as arguments and return a value that represents their sort order.
+     *
+     * @returns An array of sorted document categories.
+     */
+    const getSortedCategories = useCallback(
+        (
+            options: { sortBy?: (a: DocumentCategory, b: DocumentCategory) => any } = {
+                sortBy: sortDocumentCategories,
+            },
+        ) => Array.from(documentCategories.values()).sort(options.sortBy),
+        [documentCategories],
+    );
+
+    return { documentCategories, getSortedCategories, refetch, isLoading };
 };
 
 const getCategoryWithPage = (categories: Map<number, DocumentCategory>, pageId: number) =>
-    Array.from(categories.values()).find((category) => category.documentPages?.includes(pageId as any));
+    Array.from(categories.values()).find((category) => category.documentPages?.includes(pageId));
 
 const addPage = (categories: Map<number, DocumentCategory>, pageToAdd: DocumentPageEvent['documentPage']) => {
     const category = categories.get(pageToAdd.categoryId as number);
@@ -74,7 +80,7 @@ const addPage = (categories: Map<number, DocumentCategory>, pageToAdd: DocumentP
         return categories;
     }
 
-    category.documentPages = [pageToAdd.id, ...((category.documentPages ?? []) as any)];
+    category.documentPages = [pageToAdd.id, ...category.documentPages];
 
     return new Map(categories.set(category.id, category));
 };
@@ -111,28 +117,12 @@ const deletePage = (categories: Map<number, DocumentCategory>, pageToDelete: Doc
         return categories;
     }
 
-    category.documentPages =
-        category.documentPages?.filter((pageId) => (pageId as unknown as any) !== pageToDelete.id) ?? [];
+    category.documentPages = category.documentPages?.filter((pageId) => pageId !== pageToDelete.id);
 
     return new Map(categories.set(category.id, category));
 };
 
 const actionHandlers = {
-    add: (categories: Map<number, DocumentCategory>, categoryToAdd: DocumentCategory) =>
-        new Map(categories.set(categoryToAdd.id, categoryToAdd)),
-
-    update: (categories: Map<number, DocumentCategory>, categoryToUpdate: DocumentCategory) => {
-        const category = categories.get(categoryToUpdate.id);
-
-        return new Map(categories.set(categoryToUpdate.id, { ...category, ...categoryToUpdate }));
-    },
-
-    delete: (categories: Map<number, DocumentCategory>, categoryToDelete: DocumentCategory) => {
-        const nextCategories = new Map(categories);
-        nextCategories.delete(categoryToDelete.id);
-        return nextCategories;
-    },
-
     'add-page': addPage,
 
     'update-page': updatePage,
@@ -145,20 +135,5 @@ const actionHandlers = {
 const fetchDocumentCategories = async (appBridge: AppBridgeTheme, documentId: number) => {
     const categories = await appBridge.getDocumentCategoriesByDocumentId(documentId);
 
-    return convertToCategoriesMap(categories);
-};
-
-const convertToCategoriesMap = (documentCategories: DocumentCategory[]) => {
-    const categoriesClone: DocumentCategory[] = cloneDeep(documentCategories);
-
-    for (const category of categoriesClone) {
-        if (!category.documentPages) {
-            continue;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        category.documentPages = category.documentPages.map((page) => page.id) as any;
-    }
-
-    return new Map(categoriesClone.map((category) => [category.id, category]));
+    return new Map(categories.map((category) => [category.id, category]));
 };

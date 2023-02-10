@@ -86,16 +86,9 @@ export const getAppBridgeThemeStub = ({
             DocumentDummy.with(DOCUMENT_ID_5),
         ]),
         getDocumentGroups: Promise.resolve([
-            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, [
-                DocumentDummy.with(DOCUMENT_ID_1),
-                DocumentDummy.with(DOCUMENT_ID_2),
-                DocumentDummy.with(DOCUMENT_ID_3),
-            ]),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, [DOCUMENT_ID_1, DOCUMENT_ID_2, DOCUMENT_ID_3]),
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, []),
-            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, [
-                DocumentDummy.with(DOCUMENT_ID_4),
-                DocumentDummy.with(DOCUMENT_ID_5),
-            ]),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, [DOCUMENT_ID_4, DOCUMENT_ID_5]),
         ]),
         getDocumentPagesByDocumentId: Promise.resolve([
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
@@ -107,15 +100,9 @@ export const getAppBridgeThemeStub = ({
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_3),
         ]),
         getDocumentCategoriesByDocumentId: Promise.resolve([
-            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1, [
-                DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
-                DocumentPageDummy.with(DOCUMENT_PAGE_ID_2),
-            ]),
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1, [DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2]),
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_2, []),
-            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_3, [
-                DocumentPageDummy.with(DOCUMENT_PAGE_ID_3),
-                DocumentPageDummy.with(DOCUMENT_PAGE_ID_4),
-            ]),
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_3, [DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]),
         ]),
         getUncategorizedPagesByDocumentId: Promise.resolve([
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_1),

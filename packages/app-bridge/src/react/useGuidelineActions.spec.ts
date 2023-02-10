@@ -220,8 +220,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createLink).toHaveBeenCalledWith(link);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineLinkAction', {
-                link: { ...DocumentDummy.with(1), documentGroupId: link.documentGroupId },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { ...DocumentDummy.with(1), documentGroupId: link.documentGroupId },
                 action: 'add',
             });
         });
@@ -242,8 +242,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateLink).toHaveBeenCalledWith(link);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineLinkAction', {
-                link: { ...DocumentDummy.with(1), documentGroupId: link.documentGroupId },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { ...DocumentDummy.with(1), documentGroupId: link.documentGroupId },
                 action: 'update',
             });
         });
@@ -260,8 +260,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(deleteLink).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineLinkAction', {
-                link: { id },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { id },
                 action: 'delete',
             });
         });
@@ -285,8 +285,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createLibrary).toHaveBeenCalledWith(library);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineLibraryAction', {
-                library: { ...DocumentDummy.with(1), documentGroupId: library.documentGroupId },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { ...DocumentDummy.with(1), documentGroupId: library.documentGroupId },
                 action: 'add',
             });
         });
@@ -307,8 +307,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateLibrary).toHaveBeenCalledWith(library);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineLibraryAction', {
-                library: { ...DocumentDummy.with(1), documentGroupId: library.documentGroupId },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { ...DocumentDummy.with(1), documentGroupId: library.documentGroupId },
                 action: 'update',
             });
         });
@@ -325,8 +325,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(deleteLibrary).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineLibraryAction', {
-                library: { id },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { id },
                 action: 'delete',
             });
         });
@@ -346,8 +346,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createStandardDocument).toHaveBeenCalledWith(document);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineStandardDocumentAction', {
-                standardDocument: { ...DocumentDummy.with(1), documentGroupId: document.documentGroupId },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { ...DocumentDummy.with(1), documentGroupId: document.documentGroupId },
                 action: 'add',
             });
         });
@@ -368,8 +368,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateStandardDocument).toHaveBeenCalledWith(document);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineStandardDocumentAction', {
-                standardDocument: { ...DocumentDummy.with(1), documentGroupId: document.documentGroupId },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { ...DocumentDummy.with(1), documentGroupId: document.documentGroupId },
                 action: 'update',
             });
         });
@@ -386,8 +386,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(deleteStandardDocument).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineStandardDocumentAction', {
-                standardDocument: { id },
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+                document: { id },
                 action: 'delete',
             });
         });

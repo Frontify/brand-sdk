@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep } from 'type-fest';
+import type { CamelCasedPropertiesDeep, Merge } from 'type-fest';
 
 import type { DocumentApi } from './Document';
 
@@ -18,7 +18,7 @@ export type DocumentGroupApi = {
     documents: Nullable<DocumentApi[]>;
 };
 
-export type DocumentGroup = CamelCasedPropertiesDeep<DocumentGroupApi>;
+export type DocumentGroup = Merge<CamelCasedPropertiesDeep<DocumentGroupApi>, { documents: number[] }>;
 
 export type DocumentGroupCreate = Pick<DocumentGroup, 'name'>;
 
