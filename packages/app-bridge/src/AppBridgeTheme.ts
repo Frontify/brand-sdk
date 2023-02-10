@@ -70,7 +70,7 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
     LinkType,
-    Project,
+    ProjectCreate,
     Targets,
     TargetsUpdate,
 } from './types';
@@ -85,6 +85,10 @@ export class AppBridgeTheme {
 
     public getProjectId(): number {
         return window.application.sandbox.config.context.project.id;
+    }
+
+    public getBrandId(): number {
+        return window.application.sandbox.config.context.brand.id;
     }
 
     public getEditorState(): boolean {
@@ -116,16 +120,27 @@ export class AppBridgeTheme {
     }
 
     public async createLibrary(library: DocumentLibraryCreate) {
-        const createdProject = this.#createProject();
+        const projectId = library.settings?.project ?? (await this.#createProjectIdForLibrary(library));
 
         return createDocument<DocumentLibrary>({
             ...library,
             portalId: this.getPortalId(),
-            settings: { project: library.settings?.project ?? this.getProjectId() },
+            settings: { project: projectId },
         } as DocumentLibrary);
     }
 
-    #createProject(project: Project) {
+    async #createProjectIdForLibrary(library: DocumentLibraryCreate) {
+        const createdProject = await this.#createProject({
+            projectType: library.mode,
+            name: library.title,
+            styleguide: this.getProjectId(),
+            brand: this.getBrandId(),
+        });
+
+        return createdProject.id;
+    }
+
+    async #createProject(project: ProjectCreate) {
         return createProject(project);
     }
 
