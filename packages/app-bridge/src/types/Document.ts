@@ -118,7 +118,10 @@ type DocumentStandardRequest = {
 export type DocumentStandardCreate = Omit<DocumentStandardRequest, 'id'>;
 export type DocumentStandardUpdate = RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>;
 
-export type DocumentLibraryCreate = SetOptional<Omit<DocumentLibraryRequest, 'id'>, 'heading' | 'subheading'>;
+export type DocumentLibraryCreate = SetOptional<
+    Omit<DocumentLibraryRequest, 'id'>,
+    'heading' | 'subheading' | 'settings'
+>;
 export type DocumentLibraryUpdate = RequireAtLeastOne<
     DocumentLibraryRequest,
     'documentGroupId' | 'heading' | 'mode' | 'settings' | 'subheading' | 'title'

@@ -9,6 +9,7 @@ type DocumentPageEvent = {
     action: EmitterAction;
     documentPage: { id: number; categoryId?: number | null };
 };
+
 const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentCategories = (appBridge: AppBridgeTheme, documentId: number) => {

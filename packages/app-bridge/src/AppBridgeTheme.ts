@@ -6,6 +6,7 @@ import {
     createDocumentCategory,
     createDocumentGroup,
     createDocumentPage,
+    createProject,
     deleteCoverPage,
     deleteDocument,
     deleteDocumentCategory,
@@ -69,6 +70,7 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
     LinkType,
+    ProjectCreate,
     Targets,
     TargetsUpdate,
 } from './types';
@@ -83,6 +85,10 @@ export class AppBridgeTheme {
 
     public getProjectId(): number {
         return window.application.sandbox.config.context.project.id;
+    }
+
+    public getBrandId(): number {
+        return window.application.sandbox.config.context.brand.id;
     }
 
     public getEditorState(): boolean {
@@ -114,11 +120,28 @@ export class AppBridgeTheme {
     }
 
     public async createLibrary(library: DocumentLibraryCreate) {
+        const projectId = library.settings?.project ?? (await this.createProjectIdForLibrary(library));
+
         return createDocument<DocumentLibrary>({
             ...library,
             portalId: this.getPortalId(),
-            settings: { project: library.settings?.project ?? this.getProjectId() },
+            settings: { project: projectId },
         } as DocumentLibrary);
+    }
+
+    private async createProjectIdForLibrary(library: DocumentLibraryCreate) {
+        const createdProject = await this.createProject({
+            projectType: library.mode,
+            name: library.title,
+            styleguide: this.getProjectId(),
+            brand: this.getBrandId(),
+        });
+
+        return createdProject.id;
+    }
+
+    private async createProject(project: ProjectCreate) {
+        return createProject(project);
     }
 
     public async updateLibrary(library: DocumentLibraryUpdate) {
