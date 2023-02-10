@@ -120,7 +120,7 @@ export class AppBridgeTheme {
     }
 
     public async createLibrary(library: DocumentLibraryCreate) {
-        const projectId = library.settings?.project ?? (await this.#createProjectIdForLibrary(library));
+        const projectId = library.settings?.project ?? (await this.createProjectIdForLibrary(library));
 
         return createDocument<DocumentLibrary>({
             ...library,
@@ -129,8 +129,8 @@ export class AppBridgeTheme {
         } as DocumentLibrary);
     }
 
-    async #createProjectIdForLibrary(library: DocumentLibraryCreate) {
-        const createdProject = await this.#createProject({
+    private async createProjectIdForLibrary(library: DocumentLibraryCreate) {
+        const createdProject = await this.createProject({
             projectType: library.mode,
             name: library.title,
             styleguide: this.getProjectId(),
@@ -140,7 +140,7 @@ export class AppBridgeTheme {
         return createdProject.id;
     }
 
-    async #createProject(project: ProjectCreate) {
+    private async createProject(project: ProjectCreate) {
         return createProject(project);
     }
 
