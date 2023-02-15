@@ -344,6 +344,7 @@ export class AppBridgeBlock {
 
         const assetChooserOptions = options
             ? {
+                  userBrandChooser: true,
                   brandId: window.application.sandbox.config.context.brand.id,
                   projectTypes: options.projectTypes?.map((value) => projectTypesMap[value]),
                   multiSelectionAllowed: options.multiSelection,
