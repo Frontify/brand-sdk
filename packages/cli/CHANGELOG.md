@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.3.8
+
+### Patch Changes
+
+- [`b334c60`](https://github.com/Frontify/brand-sdk/commit/b334c60c33900a65739686d5c581c36fbcfe8498) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 5.3.7
 
 ### Patch Changes
