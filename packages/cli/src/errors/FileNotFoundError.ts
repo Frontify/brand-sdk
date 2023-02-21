@@ -6,6 +6,6 @@ export default class FileNotFoundError extends Error {
     readonly name = 'FileNotFoundError';
     constructor(path: string) {
         super();
-        Logger.error(`The file at "${path}" was not been found.`);
+        Logger.error(`The file at "${path}" was not found.`);
     }
 }
