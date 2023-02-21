@@ -3,7 +3,7 @@
 import Conf from 'conf';
 
 export class Configuration {
-    private static readonly conf = new Conf({
+    private static readonly conf = new Conf<Record<string, string | undefined>>({
         projectName: 'frontify-cli',
     });
 
@@ -11,11 +11,11 @@ export class Configuration {
         this.conf.set(key, value);
     }
 
-    static get(key: string): unknown {
-        return this.conf.get(key);
+    static get(key: string): string | undefined {
+        return this.conf.get(key, undefined);
     }
 
-    static delete(key: string): unknown {
+    static delete(key: string): void {
         return this.conf.delete(key);
     }
 }
