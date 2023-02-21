@@ -116,14 +116,12 @@ cli.command('deploy', 'deploy the app to the marketplace')
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
-    appName && prompts.inject([appName, undefined]);
-
     const { promptedAppName, stylingFramework } = await prompts([
         {
             type: 'text',
             name: 'promptedAppName',
             message: 'Enter your app name',
-            initial: 'my-frontify-app',
+            initial: appName || 'my-frontify-app',
             validate: (value: string) => {
                 if (value.trim() === '') {
                     return 'You need to enter an app name.';
