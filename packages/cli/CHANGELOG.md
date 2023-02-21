@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 5.3.9
+
+### Patch Changes
+
+- [`f6fcc6e`](https://github.com/Frontify/brand-sdk/commit/f6fcc6ec3a4bd56ae8c43718079d5d78dc755a9f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`bc9c16c`](https://github.com/Frontify/brand-sdk/commit/bc9c16c69ca26eb8c87edd6eeb559fc050d52a31) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Typos in errors
+
+- [`f0efea8`](https://github.com/Frontify/brand-sdk/commit/f0efea87d161f9e6cda668399d4bd7420303fe5a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Error message when deploying and not logged in
+
 ## 5.3.8
 
 ### Patch Changes
