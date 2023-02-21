@@ -58,5 +58,11 @@ export const FileExtensionSets: Record<keyof typeof FileType, FileExtension[]> =
         FileExtension.Webm,
         FileExtension.Wmv,
     ],
-    Templates: [FileExtension.Indd, FileExtension.Indt, FileExtension.Sketch, FileExtension.Artboard],
+    Templates: [
+        FileExtension.Artboard,
+        FileExtension.Idml,
+        FileExtension.Indd,
+        FileExtension.Indt,
+        FileExtension.Sketch,
+    ],
 };
