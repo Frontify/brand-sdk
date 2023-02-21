@@ -58,6 +58,7 @@ export enum FileExtension {
     Ice = 'ice',
     Ico = 'ico',
     Ics = 'ics',
+    Idml = 'idml',
     Ief = 'ief',
     Ifb = 'ifb',
     Iges = 'iges',
