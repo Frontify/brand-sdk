@@ -50,7 +50,12 @@ export const createDeployment = async (
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
-        const instanceUrl = Configuration.get('instanceUrl') as string;
+        const instanceUrl = Configuration.get('instanceUrl') as string | undefined;
+        if (!instanceUrl) {
+            Logger.error(`You are not logged in, you can use the command ${pc.bold('frontify-cli login')}.`);
+            process.exit(-1);
+        }
+
         if (!dryRun) {
             user = await getUser(instanceUrl);
             user && Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
@@ -117,7 +122,7 @@ export const createDeployment = async (
             }
         }
     } catch (error) {
-        Logger.error('The deployment has failed and was aborted due to an error:', error as string);
+        Logger.error('The deployment has failed and was aborted due to an error:', error);
         process.exit(-1);
     }
 };
