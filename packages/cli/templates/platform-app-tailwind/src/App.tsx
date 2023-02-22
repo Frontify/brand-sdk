@@ -44,7 +44,7 @@ export const App = () => {
         const response = await fetch(openai_endpoing, {
             method: 'POST',
             headers: {
-                Authorization: 'Bearer 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',
+                Authorization: 'Bearer <Bearer>',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
