@@ -13,9 +13,4 @@ export type SectionHeadingBlock<AppBridge> = {
      * The list of blocks that make up the section.
      */
     blocks: SettingBlock<AppBridge>[];
-
-    /**
-     * The label of the section.
-     */
-    label?: string;
 } & BaseBlock<AppBridge>;
