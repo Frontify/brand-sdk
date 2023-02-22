@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { PlatformApp } from '@frontify/app-bridge';
 import { App } from './App';
 import { settings } from './settings';
+import '@frontify/fondue/style';
 
 export const AnExamplePlatformApp = () => {
     // Here we also read out the settings.ts to generate the settings element
