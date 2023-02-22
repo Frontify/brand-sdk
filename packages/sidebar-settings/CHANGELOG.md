@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.0.15
+
+### Patch Changes
+
+- [#356](https://github.com/Frontify/brand-sdk/pull/356) [`c6a1aff`](https://github.com/Frontify/brand-sdk/commit/c6a1affe88b6f1ab87cbe74ca1daa0e9c28640e0) Thanks [@SamCreasey](https://github.com/SamCreasey)! - SectionHeadingBlock now supports an asynchronous label type
+
 ## 0.0.14
 
 ### Patch Changes
