@@ -45,7 +45,7 @@ export const PlatformApp: FC<PlatformAppProps> = ({ children, settings, appBridg
      * clarify side
      *
      * To have it simple we just store it in the localStorage for now
-     * Todo: Storing in localstorage can be snooped
+     * Todo: remove storing in localstorage
      */
     useEffect(() => {
         const auth = async () => {
