@@ -8,7 +8,7 @@ import { PlatformAppContext } from '../PlatformApp';
  * Returns a function to fetch
  * Data with handled Auth
  */
-export const useGetQuery = (): ((query: string) => Promise<unknown>) => {
+export const useGetQuery = (): (<T>(query: string) => Promise<T>) => {
     // Here we would need to be sure that the token is available and valid
     const { token } = useContext<PlatformAppProperties>(PlatformAppContext);
 
@@ -17,9 +17,8 @@ export const useGetQuery = (): ((query: string) => Promise<unknown>) => {
     }
 
     return async (query: string) => {
-        try {
-            // Here lets use React Query instead of fetch
-            const res = await fetch(getGraphQlEndpoint(token!.bearerToken.domain), {
+        if (token) {
+            const res = await fetch(getGraphQlEndpoint(token.bearerToken.domain), {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -30,9 +29,9 @@ export const useGetQuery = (): ((query: string) => Promise<unknown>) => {
             });
 
             return await res.json();
-        } catch (error) {
-            // What should be the error here?
-            console.warn(error);
+        } else {
+            // Let's just throw for the moment
+            throw new Error('No token provided');
         }
     };
 };

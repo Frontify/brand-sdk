@@ -44,21 +44,26 @@ export const PlatformApp: FC<PlatformAppProps> = ({ children, settings, appBridg
      * -> we could also pass down the token and do the auth on
      * clarify side
      *
-     * For simplicity we always trigger auth
+     * To have it simple we just store it in the localStorage for now
+     * Todo: Storing in localstorage can be snooped
      */
     useEffect(() => {
         const auth = async () => {
-            const ressourceToken: Token = await authorize({ domain, clientId, scopes });
-            setToken(ressourceToken);
+            const token = localStorage.getItem('token');
+            if (token) {
+                setToken(JSON.parse(token));
+            } else {
+                const ressourceToken: Token = await authorize({ domain, clientId, scopes });
+                setToken(ressourceToken);
+                localStorage.setItem('token', JSON.stringify(ressourceToken));
+            }
         };
+
         auth();
     }, []);
 
     return (
         <PlatformAppContext.Provider value={{ ...appBridge.getScreenInformation(), token }}>
-            <p>Settings: {scopes}</p>
-            <p>In Platform Token: {token && token.bearerToken.accessToken}</p>
-
             {children}
         </PlatformAppContext.Provider>
     );

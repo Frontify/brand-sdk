@@ -7,6 +7,7 @@ export type PlatformAppProperties = {
     token?: Token;
     domain: string;
     clientId: string;
+    projectId?: string;
 };
 
 export enum PlatformAppView {
