@@ -42,7 +42,7 @@ export type DocumentTargetsApi = {
     subheading: unknown;
     success: boolean;
     targets: {
-        disabled: unknown[];
+        disabled: SingleTargetApi[];
         has_selected_targets: boolean;
         targets: SingleTargetApi[];
     };
@@ -51,7 +51,7 @@ export type DocumentTargetsApi = {
 
 export type DocumentPageTargetsApi = {
     default: boolean;
-    disabled: unknown[];
+    disabled: SingleTargetApi[];
     has_selected_targets: boolean;
     id: number;
     success: boolean;
