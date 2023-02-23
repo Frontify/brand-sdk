@@ -18,7 +18,15 @@ type DocumentApiVirtualFields = {
     document_group_id?: Nullable<number>;
 };
 
-export type DocumentLibraryMode = 'MEDIALIBRARY' | 'ICONLIBRARY' | 'LOGOLIBRARY' | 'DOCUMENTLIBRARY';
+export type DocumentLibraryMode =
+    | 'MEDIALIBRARY'
+    | 'ICONLIBRARY'
+    | 'LOGOLIBRARY'
+    | 'DOCUMENTLIBRARY'
+    | 'TEMPLATELIBRARY'
+    | 'TEXTLIBRARY'
+    | 'PATTERNLIBRARY';
+
 export type DocumentMode = Simplify<'DEFAULT' | DocumentLibraryMode>;
 
 export enum LinkType {
