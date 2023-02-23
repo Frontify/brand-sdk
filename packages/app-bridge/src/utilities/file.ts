@@ -2,7 +2,7 @@
 
 import { FileExtension } from '../types/FileExtension';
 
-export const mimeTypes: Record<string, string> = {
+export const mimeTypes: Record<FileExtension, string> = {
     [FileExtension.Aac]: 'audio/aac',
     [FileExtension.Ac3]: 'audio/ac3',
     [FileExtension.Ai]: 'application/postscript',
@@ -60,6 +60,7 @@ export const mimeTypes: Record<string, string> = {
     [FileExtension.Ice]: 'x-conference/x-cooltalk',
     [FileExtension.Ico]: 'image/x-icon',
     [FileExtension.Ics]: 'text/calendar',
+    [FileExtension.Idml]: 'mimetypeapplication/vnd.adobe.indesign-idml-package',
     [FileExtension.Ief]: 'image/ief',
     [FileExtension.Ifb]: 'text/calendar',
     [FileExtension.Iges]: 'model/iges',
@@ -150,10 +151,10 @@ export const mimeTypes: Record<string, string> = {
     [FileExtension.Silo]: 'model/mesh',
     [FileExtension.Sit]: 'application/x-stuffit',
     [FileExtension.Skd]: 'application/x-koan',
+    [FileExtension.Sketch]: 'application/zip',
     [FileExtension.Skm]: 'application/x-koan',
     [FileExtension.Skp]: 'application/x-koan',
     [FileExtension.Skt]: 'application/x-koan',
-    [FileExtension.Sketch]: 'application/zip',
     [FileExtension.Smi]: 'application/smil',
     [FileExtension.Smil]: 'application/smil',
     [FileExtension.Snd]: 'audio/basic',
