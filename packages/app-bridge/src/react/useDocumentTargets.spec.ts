@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
-import { TargetsDummy } from '../tests';
+import { DocumentTargetsDummy } from '../tests';
 import { useDocumentTargets } from './useDocumentTargets';
 
 const DOCUMENT_ID = 92341;
@@ -18,13 +18,13 @@ describe('useDocumentTargets', () => {
     });
 
     it('should return the document targets from appBridge', async () => {
-        const documentTargets = TargetsDummy.with();
+        const documentTargets = DocumentTargetsDummy.with(DOCUMENT_ID);
 
         appBridge.getDocumentTargets = vi.fn().mockResolvedValue(documentTargets);
 
         const { result } = renderHook(() => useDocumentTargets(appBridge, DOCUMENT_ID));
 
-        expect(result.current.documentTargets.length).toBe(0);
+        expect(result.current.documentTargets).toBe(null);
 
         await act(async () => {
             await appBridge.getDocumentTargets(DOCUMENT_ID);

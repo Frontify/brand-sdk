@@ -2,6 +2,31 @@
 
 import { CamelCasedPropertiesDeep } from 'type-fest';
 
+export type SingleTargetApi = {
+    checked: boolean;
+    disabled: boolean;
+    indeterminate: boolean;
+    label: string;
+    target: {
+        account_id: number;
+        asset_ids: unknown[];
+        created: string;
+        creator: number;
+        description: string;
+        group_ids: unknown[];
+        id: number;
+        modified: Nullable<unknown>;
+        modifier: Nullable<unknown>;
+        name: string;
+        sort: number;
+        total_groups: Nullable<unknown>;
+        total_links: Nullable<unknown>;
+        total_users: Nullable<unknown>;
+        user_ids: unknown[];
+    };
+    value: number;
+};
+
 export type DocumentTargetsApi = {
     appearance: unknown;
     background_file_id: unknown;
@@ -33,32 +58,8 @@ export type DocumentPageTargetsApi = {
     targets: SingleTargetApi[];
 };
 
-export type SingleTargetApi = {
-    checked: boolean;
-    disabled: boolean;
-    indeterminate: boolean;
-    label: string;
-    target: {
-        account_id: number;
-        asset_ids: unknown[];
-        created: string;
-        creator: number;
-        description: string;
-        group_ids: unknown[];
-        id: number;
-        modified: Nullable<unknown>;
-        modifier: Nullable<unknown>;
-        name: string;
-        sort: number;
-        total_groups: Nullable<unknown>;
-        total_links: Nullable<unknown>;
-        total_users: Nullable<unknown>;
-        user_ids: unknown[];
-    };
-    value: number;
-};
-
-export type Targets = CamelCasedPropertiesDeep<SingleTargetApi>[];
+export type DocumentTargets = CamelCasedPropertiesDeep<DocumentTargetsApi['targets']>;
+export type DocumentPageTargets = CamelCasedPropertiesDeep<DocumentPageTargetsApi>;
 
 export type TargetsUpdateApi = {
     data: boolean;

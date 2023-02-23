@@ -1,18 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Targets } from '../types';
+// import { Targets } from '../types';
 import { convertObjectCase } from '../utilities';
-import { SingleTargetApiDummy } from './TargetsApiDummy';
+import { DocumentPageTargetsApiDummy, DocumentTargetsApiDummy } from './TargetsApiDummy';
 
-export class TargetsDummy {
-    static with(): Targets {
-        const singleTargetApis = [
-            SingleTargetApiDummy.target(1),
-            SingleTargetApiDummy.target(2),
-            SingleTargetApiDummy.target(3),
-        ];
+export class DocumentTargetsDummy {
+    static with(id: number) {
+        return convertObjectCase(DocumentTargetsApiDummy.with(id).targets, 'camel');
+    }
+}
 
-        return [...convertObjectCase(singleTargetApis, 'camel')];
+export class DocumentPageTargetsDummy {
+    static with(id: number) {
+        return convertObjectCase(DocumentPageTargetsApiDummy.with(id), 'camel');
     }
 }
 

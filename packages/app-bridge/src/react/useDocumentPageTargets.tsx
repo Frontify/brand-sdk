@@ -1,17 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
+
 import { AppBridgeTheme } from '../AppBridgeTheme';
-import { Targets } from '../types';
+import { DocumentPageTargets } from '../types';
 
 export type UseDocumentPageTargetsReturnType = {
-    documentPageTargets: Targets;
+    documentPageTargets: Nullable<DocumentPageTargets>;
     updateDocumentPageTargets: (targetIds: number[], documentIds: number[]) => void;
     isLoading: boolean;
 };
 
 export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentPageTargetsReturnType => {
-    const [documentPageTargets, setDocumentPageTargets] = useState<Targets>([]);
+    const [documentPageTargets, setDocumentPageTargets] = useState<Nullable<DocumentPageTargets>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
