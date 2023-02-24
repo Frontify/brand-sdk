@@ -65,13 +65,14 @@ import {
     DocumentLinkUpdate,
     DocumentPage,
     DocumentPageCreate,
+    DocumentPageTargets,
     DocumentPageUpdate,
     DocumentSection,
     DocumentStandardCreate,
     DocumentStandardUpdate,
+    DocumentTargets,
     LinkType,
     ProjectCreate,
-    Targets,
     TargetsUpdate,
 } from './types';
 import { getDatasetByElement } from './utilities';
@@ -316,7 +317,7 @@ export class AppBridgeTheme {
         return getColorsByColorPaletteId(colorPaletteId);
     }
 
-    public async getDocumentTargets(documentId: number): Promise<Targets> {
+    public async getDocumentTargets(documentId: number): Promise<DocumentTargets> {
         return getDocumentTargets(documentId);
     }
 
@@ -324,7 +325,7 @@ export class AppBridgeTheme {
         return updateDocumentTargets(targetIds, documentIds);
     }
 
-    public async getDocumentPageTargets(documentPageId: number): Promise<Targets> {
+    public async getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets> {
         return getDocumentPageTargets(documentPageId);
     }
 

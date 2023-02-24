@@ -17,11 +17,12 @@ import {
     DocumentPageApiDummy,
     DocumentPageDummy,
     DocumentPageTargetsApiDummy,
+    DocumentPageTargetsDummy,
     DocumentSectionApiDummy,
     DocumentSectionDummy,
     DocumentTargetsApiDummy,
+    DocumentTargetsDummy,
     HttpUtilResponseDummy,
-    TargetsDummy,
     UpdateTargetsApiDummy,
 } from './tests';
 import { HttpClient } from './utilities';
@@ -252,7 +253,7 @@ describe('AppBridgeThemeTest', () => {
 
     it('returns document targets', async () => {
         const documentTargetsFromApi = DocumentTargetsApiDummy.with(DOCUMENT_ID);
-        const mappedDocumentTargets = TargetsDummy.with();
+        const mappedDocumentTargets = DocumentTargetsDummy.with(DOCUMENT_ID);
 
         const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentTargetsFromApi });
 
@@ -277,15 +278,15 @@ describe('AppBridgeThemeTest', () => {
     });
 
     it('returns document page targets', async () => {
-        const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(DOCUMENT_ID);
-        const mappedDocumentPageTargets = TargetsDummy.with();
+        const documentPageTargetsFromApi = DocumentPageTargetsApiDummy.with(DOCUMENT_PAGE_ID);
+        const mappedDocumentPageTargets = DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID);
 
         const mockHttpClientGet = vi.fn().mockReturnValue({ result: documentPageTargetsFromApi });
 
         HttpClient.get = mockHttpClientGet;
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
-        const result = await appBridge.getDocumentPageTargets(DOCUMENT_ID);
+        const result = await appBridge.getDocumentPageTargets(DOCUMENT_PAGE_ID);
 
         expect(result).toEqual(mappedDocumentPageTargets);
     });
