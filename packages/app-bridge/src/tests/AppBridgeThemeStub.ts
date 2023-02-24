@@ -16,8 +16,9 @@ import {
     DocumentGroupDummy,
     DocumentPageDummy,
     DocumentPageDuplicateDummy,
+    DocumentPageTargetsDummy,
     DocumentSectionDummy,
-    TargetsDummy,
+    DocumentTargetsDummy,
 } from '.';
 
 const PROJECT_ID = 3452;
@@ -125,8 +126,8 @@ export const getAppBridgeThemeStub = ({
             ColorDummy.yellow(9314),
         ]),
         duplicateDocumentPage: Promise.resolve(DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1)),
-        getDocumentTargets: Promise.resolve(TargetsDummy.with()),
-        getDocumentPageTargets: Promise.resolve(TargetsDummy.with()),
+        getDocumentTargets: Promise.resolve(DocumentTargetsDummy.with(DOCUMENT_ID_1)),
+        getDocumentPageTargets: Promise.resolve(DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1)),
         createLink: Promise.resolve(DocumentDummy.with(1)),
         createLibrary: Promise.resolve(DocumentDummy.with(1)),
         createStandardDocument: Promise.resolve(DocumentDummy.with(1)),
