@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.25.12
+
+### Patch Changes
+
+- [`d89d0e0`](https://github.com/Frontify/brand-sdk/commit/d89d0e06be900fd6bba897d05ad8427e5d44f1f0) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Allow beta versions of Fondue
+
+- Updated dependencies [[`d89d0e0`](https://github.com/Frontify/brand-sdk/commit/d89d0e06be900fd6bba897d05ad8427e5d44f1f0)]:
+  - @frontify/sidebar-settings@0.0.16
+
 ## 0.25.11
 
 ### Patch Changes
