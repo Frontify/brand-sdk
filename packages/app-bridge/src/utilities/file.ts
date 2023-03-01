@@ -60,7 +60,7 @@ export const mimeTypes: Record<FileExtension, string> = {
     [FileExtension.Ice]: 'x-conference/x-cooltalk',
     [FileExtension.Ico]: 'image/x-icon',
     [FileExtension.Ics]: 'text/calendar',
-    [FileExtension.Idml]: 'mimetypeapplication/vnd.adobe.indesign-idml-package',
+    [FileExtension.Idml]: 'application/vnd.adobe.indesign-idml-package',
     [FileExtension.Ief]: 'image/ief',
     [FileExtension.Ifb]: 'text/calendar',
     [FileExtension.Iges]: 'model/iges',
