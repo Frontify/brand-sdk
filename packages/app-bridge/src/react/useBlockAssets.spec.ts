@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { SinonStub } from 'sinon';
+import { Mock, afterEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 import { useBlockAssets } from './useBlockAssets';
-import { SinonStub } from 'sinon';
 
 describe('useBlockAssets hook', () => {
     afterEach(() => {
@@ -37,20 +37,37 @@ describe('useBlockAssets hook', () => {
         });
     });
 
-    it('should reorder asset', async () => {
+    it('should sort assets', async () => {
         const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+
         await act(async () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
         });
 
         const deleteCall = appBridgeStub.deleteAssetIdsFromBlockAssetKey.getCall(0);
         const addCall = appBridgeStub.addAssetIdsToBlockAssetKey.getCall(0);
-        waitFor(() => {
+
+        await waitFor(async () => {
             expect(deleteCall.firstArg).toEqual('key');
             expect(deleteCall.lastArg).toEqual([1, 2]);
             expect(addCall.firstArg).toEqual('key');
             expect(addCall.lastArg).toEqual([2, 1]);
-            expect(result.current.blockAssets).toStrictEqual({ key: [2, 1] });
+            expect(result.current.blockAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+        });
+    });
+
+    it('should not sort assets if api call throws error', async () => {
+        const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+        (appBridgeStub.deleteAssetIdsFromBlockAssetKey as unknown as Mock) = vi
+            .fn()
+            .mockRejectedValue('Unsuccessful API call');
+
+        await act(async () => {
+            await result.current.updateAssetIdsFromKey('key', [2, 1]);
+        });
+
+        await waitFor(async () => {
+            expect(result.current.blockAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
         });
     });
 
