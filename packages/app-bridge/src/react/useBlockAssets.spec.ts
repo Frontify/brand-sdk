@@ -12,11 +12,11 @@ describe('useBlockAssets hook', () => {
         cleanup();
     });
 
-    const loadUseBlockAssets = async () => {
+    const loadUseBlockAssets = async (existingAssets = [AssetDummy.with(1)]) => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeBlockStub({
             blockId: 123,
-            blockAssets: { key: [AssetDummy.with(1)] },
+            blockAssets: { key: existingAssets },
         });
 
         const { result } = renderHook(() => useBlockAssets(appBridgeStub));
@@ -34,6 +34,23 @@ describe('useBlockAssets hook', () => {
             expect(call.firstArg).toEqual('key');
             expect(call.lastArg).toEqual([1]);
             expect(result.current.blockAssets).toStrictEqual({ key: [] });
+        });
+    });
+
+    it('should reorder asset', async () => {
+        const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+        await act(async () => {
+            await result.current.updateAssetIdsFromKey('key', [2, 1]);
+        });
+
+        const deleteCall = appBridgeStub.deleteAssetIdsFromBlockAssetKey.getCall(0);
+        const addCall = appBridgeStub.addAssetIdsToBlockAssetKey.getCall(0);
+        waitFor(() => {
+            expect(deleteCall.firstArg).toEqual('key');
+            expect(deleteCall.lastArg).toEqual([1, 2]);
+            expect(addCall.firstArg).toEqual('key');
+            expect(addCall.lastArg).toEqual([2, 1]);
+            expect(result.current.blockAssets).toStrictEqual({ key: [2, 1] });
         });
     });
 
