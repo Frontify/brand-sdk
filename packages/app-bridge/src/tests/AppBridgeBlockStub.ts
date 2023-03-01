@@ -80,11 +80,12 @@ export const getAppBridgeBlockStub = ({
     appBridgeBlock.openAssetChooser.callsFake(openAssetChooser);
     appBridgeBlock.getBlockAssets.callsFake(async () => {
         return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
-            const addedAssetIdsDiff = (addedAssetIds[key] ?? []).filter(
-                (id) => !assets.map((asset) => asset.id).includes(id),
-            );
-            assetsDiff[key] = [...assets, ...addedAssetIdsDiff.map((id) => AssetDummy.with(id))];
-            assetsDiff[key] = assetsDiff[key].filter((asset) => !(deletedAssetIds[key] ?? []).includes(asset.id));
+            const addedAssetIdsList = addedAssetIds[key] ?? [];
+            const deletedAssetIdsList = deletedAssetIds[key] ?? [];
+            assetsDiff[key] = [
+                ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
+                ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
+            ];
             return assetsDiff;
         }, {});
     });
