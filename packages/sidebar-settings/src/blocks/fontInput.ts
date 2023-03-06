@@ -11,30 +11,17 @@ export enum FontProvider {
     System = 'System',
 }
 
-export type FontValue = (
-    | {
-          /**
-           * The origin of the font.
-           */
-          fontProvider: Exclude<FontProvider, 'Selfhosted'> | `${Exclude<FontProvider, 'Selfhosted'>}`;
+export type FontValue = {
+    /**
+     * The origin of the font.
+     */
+    fontProvider: FontProvider | `${FontProvider}`;
 
-          /**
-           * The name of font family.
-           */
-          fontFamily: string;
-      }
-    | {
-          /**
-           * The origin of the font.
-           */
-          fontProvider: Extract<FontProvider, 'Selfhosted'> | `${Extract<FontProvider, 'Selfhosted'>}`;
+    /**
+     * The identifier of the font family.
+     */
+    fontFamily: string | number;
 
-          /**
-           * The identifier of the font family.
-           */
-          fontFamily: number;
-      }
-) & {
     /**
      * The rgba-color of the text.
      */
