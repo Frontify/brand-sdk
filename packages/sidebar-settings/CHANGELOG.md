@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.0.17
+
+### Patch Changes
+
+- [`b8b0b78`](https://github.com/Frontify/brand-sdk/commit/b8b0b783f1a1cc0968c04c5f392f6bb6db518f86) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Simplify type of font value
+
 ## 0.0.16
 
 ### Patch Changes
