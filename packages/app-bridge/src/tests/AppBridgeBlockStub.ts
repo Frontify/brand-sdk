@@ -14,6 +14,7 @@ import { ColorDummy } from './ColorDummy';
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
+const PROJECT_ID = 345214;
 
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
@@ -23,6 +24,7 @@ export type getAppBridgeBlockStubProps = {
     closeAssetChooser?: () => void;
     blockId?: number;
     sectionId?: number;
+    projectId?: number;
     user?: User;
 };
 
@@ -34,6 +36,7 @@ export const getAppBridgeBlockStub = ({
     closeAssetChooser = () => null,
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
+    projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = spy(mitt()) as unknown as Emitter;
@@ -47,6 +50,7 @@ export const getAppBridgeBlockStub = ({
     const appBridgeBlock = createStubInstance(AppBridgeBlock, {
         getBlockId: blockId,
         getSectionId: sectionId,
+        getProjectId: projectId,
         getEditorState: editorState,
         getBlockSettings: Promise.resolve(window.blockSettings),
         getAvailablePalettes: Promise.resolve([
