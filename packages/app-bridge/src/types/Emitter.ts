@@ -113,6 +113,18 @@ export type Emitter = MittEmitter<{
               action: 'delete';
           };
 
+    'AppBridge:GuidelineDocumentPageTargetsAction': {
+        targets: number[];
+        action: 'update';
+        pageIds: number[];
+    };
+
+    'AppBridge:GuidelineDocumentTargetsAction': {
+        targets: number[];
+        action: 'update';
+        documentIds: number[];
+    };
+
     'AppBridge:ViewerOpened': {
         token: string;
     };

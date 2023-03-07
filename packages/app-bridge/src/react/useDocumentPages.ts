@@ -30,9 +30,11 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
 
     useEffect(() => {
         window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetch);
 
         return () => {
             window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetch);
         };
     }, [documentId, refetch]);
 

@@ -7,8 +7,13 @@ import { DocumentPageTargets } from '../types';
 
 export type UseDocumentPageTargetsReturnType = {
     documentPageTargets: Nullable<DocumentPageTargets>;
-    updateDocumentPageTargets: (targetIds: number[], documentIds: number[]) => void;
     isLoading: boolean;
+};
+
+type DocumentPageTargetEvent = {
+    action: 'update';
+    targets: number[];
+    pageIds: number[];
 };
 
 export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentPageTargetsReturnType => {
@@ -25,9 +30,39 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
         fetchDocumentPageTargets();
     }, [appBridge, id]);
 
-    const updateDocumentPageTargets = async (targetIds: number[], documentIds: number[]) => {
-        await appBridge.updateDocumentPageTargets(targetIds, documentIds);
-    };
+    useEffect(() => {
+        const handleTargetEventUpdates = (event: DocumentPageTargetEvent) => {
+            setDocumentPageTargets((previousState) => {
+                const action: 'update-targets' = `${event.action}-targets`;
 
-    return { documentPageTargets, updateDocumentPageTargets, isLoading };
+                const handler = event.pageIds.includes(id) ? actionHandlers[action] : actionHandlers.default;
+
+                return handler(previousState, event.targets);
+            });
+        };
+
+        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
+        return () => {
+            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
+        };
+    }, [id]);
+
+    return { documentPageTargets, isLoading };
+};
+
+const updateTargets = (prevState: Nullable<DocumentPageTargets>, targetIds: number[]) =>
+    prevState
+        ? {
+              ...prevState,
+              hasSelectedTargets: targetIds.length > 0,
+              targets: prevState.targets.map((target) => ({
+                  ...target,
+                  target: { ...target.target, checked: targetIds.includes(target.target.id) },
+              })),
+          }
+        : null;
+
+const actionHandlers = {
+    'update-targets': updateTargets,
+    default: (targets: Nullable<DocumentPageTargets>) => targets,
 };
