@@ -46,9 +46,9 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
 
         return () => {
             window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
-            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExists);
+            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
         };
-    }, [documentId, refetch, refetchIfPageExists]);
+    }, [documentId, refetch, refetchIfPageExistsInMap]);
 
     /**
      * returns list of document pages that do not belong to any document category
