@@ -25,22 +25,19 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         setIsLoading(false);
     }, [appBridge, documentId]);
 
-    const refetchIfPageExistsInMap = useCallback(
-        (event: DocumentPageTargetEvent) => {
-            for (const id of event.pageIds) {
-                if (pages.has(id)) {
-                    refetch();
-                }
-            }
-        },
-        [refetch, pages],
-    );
-
     useEffect(() => {
         refetch();
     }, [refetch]);
 
     useEffect(() => {
+        const refetchIfPageExistsInMap = (event: DocumentPageTargetEvent) => {
+            for (const id of event.payload.pageIds) {
+                if (pages.has(id)) {
+                    refetch();
+                }
+            }
+        };
+
         window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
         window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
 
@@ -48,7 +45,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
             window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
             window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
         };
-    }, [documentId, refetch, refetchIfPageExistsInMap]);
+    }, [documentId, refetch, pages]);
 
     /**
      * returns list of document pages that do not belong to any document category

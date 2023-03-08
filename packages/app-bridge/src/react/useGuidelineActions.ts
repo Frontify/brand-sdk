@@ -492,9 +492,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         async (targets: number[], pageIds: number[]) => {
             await appBridge.updateDocumentPageTargets(targets, pageIds);
             window.emitter.emit('AppBridge:GuidelineDocumentPageTargetsAction', {
-                targets,
+                payload: { targets, pageIds },
                 action: 'update',
-                pageIds,
             });
         },
         [appBridge],
@@ -504,9 +503,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         async (targets: number[], documentIds: number[]) => {
             await appBridge.updateDocumentTargets(targets, documentIds);
             window.emitter.emit('AppBridge:GuidelineDocumentTargetsAction', {
-                targets,
+                payload: { targets, documentIds },
                 action: 'update',
-                documentIds,
             });
         },
         [appBridge],

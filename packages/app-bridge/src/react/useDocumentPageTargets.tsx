@@ -12,8 +12,10 @@ export type UseDocumentPageTargetsReturnType = {
 
 export type DocumentPageTargetEvent = {
     action: 'update';
-    targets: number[];
-    pageIds: number[];
+    payload: {
+        targets: number[];
+        pageIds: number[];
+    };
 };
 
 export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentPageTargetsReturnType => {
@@ -32,8 +34,8 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
 
     useEffect(() => {
         const handleTargetEventUpdates = (event: DocumentPageTargetEvent) => {
-            if (event.pageIds.includes(id)) {
-                setDocumentPageTargets((previousState) => updateTargets(previousState, event.targets));
+            if (event.payload.pageIds.includes(id)) {
+                setDocumentPageTargets((previousState) => updateTargets(previousState, event.payload.targets));
             }
         };
 
@@ -47,14 +49,16 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
     return { documentPageTargets, isLoading };
 };
 
-const updateTargets = (prevState: Nullable<DocumentPageTargets>, targetIds: number[]) =>
-    prevState
-        ? {
-              ...prevState,
-              hasSelectedTargets: targetIds.length > 0,
-              targets: prevState.targets.map((target) => ({
-                  ...target,
-                  target: { ...target.target, checked: targetIds.includes(target.target.id) },
-              })),
-          }
-        : null;
+const updateTargets = (prevState: Nullable<DocumentPageTargets>, targetIds: number[]) => {
+    if (!prevState) {
+        return prevState;
+    }
+    return {
+        ...prevState,
+        hasSelectedTargets: targetIds.length > 0,
+        targets: prevState.targets.map((target) => ({
+            ...target,
+            target: { ...target.target, checked: targetIds.includes(target.target.id) },
+        })),
+    };
+};

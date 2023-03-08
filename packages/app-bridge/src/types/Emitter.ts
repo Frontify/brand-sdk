@@ -114,15 +114,19 @@ export type Emitter = MittEmitter<{
           };
 
     'AppBridge:GuidelineDocumentPageTargetsAction': {
-        targets: number[];
         action: 'update';
-        pageIds: number[];
+        payload: {
+            targets: number[];
+            pageIds: number[];
+        };
     };
 
     'AppBridge:GuidelineDocumentTargetsAction': {
-        targets: number[];
+        payload: {
+            targets: number[];
+            documentIds: number[];
+        };
         action: 'update';
-        documentIds: number[];
     };
 
     'AppBridge:ViewerOpened': {
