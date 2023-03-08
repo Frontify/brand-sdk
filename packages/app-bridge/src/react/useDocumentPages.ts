@@ -25,7 +25,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         setIsLoading(false);
     }, [appBridge, documentId]);
 
-    const refetchIfPageExists = useCallback(
+    const refetchIfPageExistsInMap = useCallback(
         (event: DocumentPageTargetEvent) => {
             for (const id of event.pageIds) {
                 if (pages.has(id)) {
@@ -42,7 +42,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
 
     useEffect(() => {
         window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
-        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExists);
+        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
 
         return () => {
             window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);

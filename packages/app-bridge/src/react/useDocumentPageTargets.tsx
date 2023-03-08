@@ -33,7 +33,7 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
     useEffect(() => {
         const handleTargetEventUpdates = (event: DocumentPageTargetEvent) => {
             if (event.pageIds.includes(id)) {
-                setDocumentPageTargets((targets) => updateTargets(targets, event.targets));
+                setDocumentPageTargets((previousState) => updateTargets(previousState, event.targets));
             }
         };
 
