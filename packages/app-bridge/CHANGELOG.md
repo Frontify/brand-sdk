@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.0.0
+
+### Patch Changes
+
+- [#365](https://github.com/Frontify/brand-sdk/pull/365) [`5f1fae6`](https://github.com/Frontify/brand-sdk/commit/5f1fae6c352c97b058f20ab03c55292f621bb52e) Thanks [@SamCreasey](https://github.com/SamCreasey)! - `updateDocumentTargets` has been moved from `useDocumentTargets` to `useGuidelineActions`. `updateDocumentPageTargets` has been moved from `useDocumentPageTargets` to `useGuidelineActions`. Targets will trigger pages and documents to be re-fetched when they are modified
+
 ## 3.0.0-beta.32
 
 ### Patch Changes
