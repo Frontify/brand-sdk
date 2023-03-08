@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, renderHook } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import mitt from 'mitt';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
@@ -12,6 +13,10 @@ const DOCUMENT_ID = 92341;
 
 describe('useDocumentTargets', () => {
     const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
+
+    beforeEach(() => {
+        window.emitter = mitt();
+    });
 
     afterEach(() => {
         vi.restoreAllMocks();

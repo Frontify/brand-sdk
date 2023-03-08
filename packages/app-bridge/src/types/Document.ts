@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { CamelCasedPropertiesDeep, RequireAtLeastOne, SetOptional, Simplify } from 'type-fest';
+import { SingleTargetApi } from './Targets';
 
 /**
  * @deprecated fields that are not used anymore
@@ -84,7 +85,7 @@ export type DocumentApi = Simplify<
             change_comment: Nullable<string>;
             change_comment_by: Nullable<string>;
             change_title: Nullable<string>;
-            targets: any;
+            targets: Nullable<SingleTargetApi[]>;
         } & (DocumentApiAsLink | DocumentApiAsNoneLink)
 >;
 

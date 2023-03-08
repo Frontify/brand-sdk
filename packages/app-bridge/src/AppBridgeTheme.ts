@@ -329,7 +329,7 @@ export class AppBridgeTheme {
         return getDocumentPageTargets(documentPageId);
     }
 
-    public async updateDocumentPageTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate> {
-        return updateDocumentPageTargets(targetIds, documentIds);
+    public async updateDocumentPageTargets(targetIds: number[], documentPageIds: number[]): Promise<TargetsUpdate> {
+        return updateDocumentPageTargets(targetIds, documentPageIds);
     }
 }
