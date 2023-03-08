@@ -764,9 +764,11 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(updateDocumentTargets).toHaveBeenCalledWith(targets, documentIds);
             expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentTargetsAction', {
-                targets,
+                payload: {
+                    targets,
+                    documentIds,
+                },
                 action: 'update',
-                documentIds,
             });
         });
     });
@@ -784,9 +786,8 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(updateDocumentPageTargets).toHaveBeenCalledWith(targets, pageIds);
             expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageTargetsAction', {
-                targets,
+                payload: { targets, pageIds },
                 action: 'update',
-                pageIds,
             });
         });
     });
