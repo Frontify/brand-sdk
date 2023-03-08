@@ -38,6 +38,7 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
         };
 
         window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
+
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
         };
