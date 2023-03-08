@@ -7,8 +7,15 @@ import { DocumentTargets } from '../types';
 
 export type UseDocumentTargetsReturnType = {
     documentTargets: Nullable<DocumentTargets>;
-    updateDocumentTargets: (targetIds: number[], documentIds: number[]) => void;
     isLoading: boolean;
+};
+
+type DocumentTargetEvent = {
+    action: 'update';
+    payload: {
+        targets: number[];
+        documentIds: number[];
+    };
 };
 
 export const useDocumentTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentTargetsReturnType => {
@@ -25,9 +32,33 @@ export const useDocumentTargets = (appBridge: AppBridgeTheme, id: number): UseDo
         fetchDocumentTargets();
     }, [appBridge, id]);
 
-    const updateDocumentTargets = async (targetIds: number[], documentIds: number[]) => {
-        await appBridge.updateDocumentTargets(targetIds, documentIds);
-    };
+    useEffect(() => {
+        const handleTargetEventUpdates = (event: DocumentTargetEvent) => {
+            if (event.payload.documentIds.includes(id)) {
+                setDocumentTargets((previousState) => updateTargets(previousState, event.payload.targets));
+            }
+        };
 
-    return { documentTargets, updateDocumentTargets, isLoading };
+        window.emitter.on('AppBridge:GuidelineDocumentTargetsAction', handleTargetEventUpdates);
+        return () => {
+            window.emitter.off('AppBridge:GuidelineDocumentTargetsAction', handleTargetEventUpdates);
+        };
+    }, [id]);
+
+    return { documentTargets, isLoading };
+};
+
+const updateTargets = (prevState: Nullable<DocumentTargets>, targetIds: number[]) => {
+    if (!prevState) {
+        return prevState;
+    }
+
+    return {
+        ...prevState,
+        hasSelectedTargets: targetIds.length > 0,
+        targets: prevState.targets.map((target) => ({
+            ...target,
+            target: { ...target.target, checked: targetIds.includes(target.target.id) },
+        })),
+    };
 };

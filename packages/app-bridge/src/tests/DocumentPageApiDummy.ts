@@ -29,6 +29,7 @@ export class DocumentPageApiDummy {
             change_comment: null,
             change_comment_by: null,
             change_title: null,
+            targets: null,
         };
     }
 }

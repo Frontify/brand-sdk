@@ -488,6 +488,28 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
+    const updateDocumentPageTargets = useCallback(
+        async (targets: number[], pageIds: number[]) => {
+            await appBridge.updateDocumentPageTargets(targets, pageIds);
+            window.emitter.emit('AppBridge:GuidelineDocumentPageTargetsAction', {
+                payload: { targets, pageIds },
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
+    const updateDocumentTargets = useCallback(
+        async (targets: number[], documentIds: number[]) => {
+            await appBridge.updateDocumentTargets(targets, documentIds);
+            window.emitter.emit('AppBridge:GuidelineDocumentTargetsAction', {
+                payload: { targets, documentIds },
+                action: 'update',
+            });
+        },
+        [appBridge],
+    );
+
     return {
         createLink,
         updateLink,
@@ -518,5 +540,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         updateDocument: updateStandardDocument,
         deleteDocument: deleteStandardDocument,
         moveDocument,
+        updateDocumentPageTargets,
+        updateDocumentTargets,
     };
 };

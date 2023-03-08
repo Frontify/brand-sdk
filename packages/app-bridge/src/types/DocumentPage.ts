@@ -3,6 +3,7 @@
 import type { CamelCasedPropertiesDeep, RequireAtLeastOne } from 'type-fest';
 
 import { LinkType } from './Document';
+import { SingleTargetApi } from './Targets';
 
 export enum DocumentPageVisibility {
     Everyone = 'EVERYONE',
@@ -42,7 +43,7 @@ export type DocumentPageApi = {
     change_comment: Nullable<string>;
     change_comment_by: Nullable<number>;
     change_title: Nullable<string>;
-    targets?: Nullable<Record<string, unknown>>;
+    targets: Nullable<SingleTargetApi[]>;
     category?: Nullable<Record<string, unknown>>;
     parent_document?: Nullable<Record<string, unknown>>;
     parent_portal?: Nullable<Record<string, unknown>>;
