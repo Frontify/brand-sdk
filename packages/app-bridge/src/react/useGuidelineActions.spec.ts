@@ -204,6 +204,18 @@ describe('useGuidelineActions hook', () => {
         expect(duplicatePageMock({ id: 1, documentId: 5 })).resolves.not.toThrow();
     });
 
+    it('should not throw updateDocumentTargets', async () => {
+        const updateDocumentTargetsMock = vi.fn(useGuidelineActionsStub.updateDocumentTargets);
+
+        expect(updateDocumentTargetsMock([1, 2, 3], [203])).resolves.not.toThrow();
+    });
+
+    it('should not throw updateDocumentPageTargets', async () => {
+        const updateDocumentPageTargetsMock = vi.fn(useGuidelineActionsStub.updateDocumentPageTargets);
+
+        expect(updateDocumentPageTargetsMock([1, 2, 3], [203])).resolves.not.toThrow();
+    });
+
     it('should create a link and emit an event', async () => {
         const createLink = vi.spyOn(useGuidelineActionsStub, 'createLink');
 
@@ -735,6 +747,46 @@ describe('useGuidelineActions hook', () => {
             expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.targetDocumentId}`, {
                 documentPage: { id: page.id, documentId: page.targetDocumentId },
                 action: 'update',
+            });
+        });
+    });
+
+    it('should udpate document targets and emit all events', async () => {
+        const updateDocumentTargets = vi.spyOn(useGuidelineActionsStub, 'updateDocumentTargets');
+
+        const targets = [1, 2, 3];
+        const documentIds = [204];
+
+        act(() => {
+            useGuidelineActionsStub.updateDocumentTargets(targets, documentIds);
+        });
+
+        await waitFor(() => {
+            expect(updateDocumentTargets).toHaveBeenCalledWith(targets, documentIds);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentTargetsAction', {
+                targets,
+                action: 'update',
+                documentIds,
+            });
+        });
+    });
+
+    it('should udpate document page targets and emit all events', async () => {
+        const updateDocumentPageTargets = vi.spyOn(useGuidelineActionsStub, 'updateDocumentPageTargets');
+
+        const targets = [1, 2, 3];
+        const pageIds = [204];
+
+        act(() => {
+            useGuidelineActionsStub.updateDocumentPageTargets(targets, pageIds);
+        });
+
+        await waitFor(() => {
+            expect(updateDocumentPageTargets).toHaveBeenCalledWith(targets, pageIds);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageTargetsAction', {
+                targets,
+                action: 'update',
+                pageIds,
             });
         });
     });

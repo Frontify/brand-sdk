@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentPage, EmitterAction } from '../types';
+import { DocumentPageTargetEvent } from './useDocumentPageTargets';
 
 export type DocumentPageEvent = {
     action: EmitterAction;
@@ -24,19 +25,30 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
         setIsLoading(false);
     }, [appBridge, documentId]);
 
+    const refetchIfPageExists = useCallback(
+        (event: DocumentPageTargetEvent) => {
+            for (const id of event.pageIds) {
+                if (pages.has(id)) {
+                    refetch();
+                }
+            }
+        },
+        [refetch, pages],
+    );
+
     useEffect(() => {
         refetch();
     }, [refetch]);
 
     useEffect(() => {
         window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
-        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExists);
 
         return () => {
             window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
-            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExists);
         };
-    }, [documentId, refetch]);
+    }, [documentId, refetch, refetchIfPageExists]);
 
     /**
      * returns list of document pages that do not belong to any document category

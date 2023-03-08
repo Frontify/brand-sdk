@@ -32,13 +32,9 @@ export const useDocumentTargets = (appBridge: AppBridgeTheme, id: number): UseDo
 
     useEffect(() => {
         const handleTargetEventUpdates = (event: DocumentTargetEvent) => {
-            setDocumentTargets((previousState) => {
-                const action: 'update-targets' = `${event.action}-targets`;
-
-                const handler = event.documentIds.includes(id) ? actionHandlers[action] : actionHandlers.default;
-
-                return handler(previousState, event.targets);
-            });
+            if (event.documentIds.includes(id)) {
+                setDocumentTargets((previousState) => updateTargets(previousState, event.targets));
+            }
         };
 
         window.emitter.on('AppBridge:GuidelineDocumentTargetsAction', handleTargetEventUpdates);
@@ -61,8 +57,3 @@ const updateTargets = (prevState: Nullable<DocumentTargets>, targetIds: number[]
               })),
           }
         : null;
-
-const actionHandlers = {
-    'update-targets': updateTargets,
-    default: (targets: Nullable<DocumentTargets>) => targets,
-};

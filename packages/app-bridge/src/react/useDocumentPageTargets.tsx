@@ -10,7 +10,7 @@ export type UseDocumentPageTargetsReturnType = {
     isLoading: boolean;
 };
 
-type DocumentPageTargetEvent = {
+export type DocumentPageTargetEvent = {
     action: 'update';
     targets: number[];
     pageIds: number[];
@@ -32,13 +32,9 @@ export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): U
 
     useEffect(() => {
         const handleTargetEventUpdates = (event: DocumentPageTargetEvent) => {
-            setDocumentPageTargets((previousState) => {
-                const action: 'update-targets' = `${event.action}-targets`;
-
-                const handler = event.pageIds.includes(id) ? actionHandlers[action] : actionHandlers.default;
-
-                return handler(previousState, event.targets);
-            });
+            if (event.pageIds.includes(id)) {
+                setDocumentPageTargets((targets) => updateTargets(targets, event.targets));
+            }
         };
 
         window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
@@ -61,8 +57,3 @@ const updateTargets = (prevState: Nullable<DocumentPageTargets>, targetIds: numb
               })),
           }
         : null;
-
-const actionHandlers = {
-    'update-targets': updateTargets,
-    default: (targets: Nullable<DocumentPageTargets>) => targets,
-};
