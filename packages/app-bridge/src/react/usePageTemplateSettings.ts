@@ -16,7 +16,7 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
     template: 'cover' | 'document' | 'library',
 ): [Nullable<T>, (newSettings: Partial<T>) => Promise<void>] => {
-    const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<T>>(null as T);
+    const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<T>>(null);
 
     useEffect(() => {
         const updateBlockSettingsFromEvent = (event: PageTemplateSettingsUpdateEvent) => {
