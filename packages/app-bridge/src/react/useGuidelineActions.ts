@@ -43,6 +43,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                     action: 'add',
                 });
             }
+
+            return result;
         },
         [appBridge],
     );
@@ -94,6 +96,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                     action: 'add',
                 });
             }
+
+            return result;
         },
         [appBridge],
     );
@@ -148,6 +152,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                     action: 'add',
                 });
             }
+
+            return result;
         },
         [appBridge],
     );
@@ -192,6 +198,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 documentGroup: result,
                 action: 'add',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -237,6 +245,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                     action: 'add',
                 });
             }
+
+            return result;
         },
         [appBridge],
     );
@@ -300,6 +310,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                     action: 'add',
                 });
             }
+
+            return result;
         },
         [appBridge],
     );
@@ -312,6 +324,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 documentCategory: result,
                 action: 'add',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -350,6 +364,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 coverPage: result,
                 action: 'add',
             });
+
+            return result;
         },
         [appBridge],
     );
