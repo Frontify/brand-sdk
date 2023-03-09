@@ -28,7 +28,7 @@ export const mapHubApiToFlatSettingsDottedNotation = (hubSettings: any) => ({
         hubSettings?.brandhome_settings?.document_appearance?.grid?.margin_bottom,
     'brandhome_appearance.grid.background_color': hubSettings?.brandhome_settings?.document_appearance?.grid
         .background_color
-        ? rgbStringToRgbObject(hubSettings?.brandhome_settings?.document_appearance?.grid?.background_color)
+        ? rgbStringToRgbObject(hubSettings.brandhome_settings.document_appearance.grid.background_color)
         : undefined,
 
     'brandhome_appearance.logo.x': hubSettings?.brandhome_settings?.document_appearance?.logo?.x,
@@ -46,9 +46,7 @@ export const mapFlatSettingsDottedNotationToHubApi = (settings: Record<string, u
         ? rgbObjectToRgbString(
               settings['brandhome_appearance.grid.background_color'] as Parameters<typeof rgbObjectToRgbString>[0],
           )
-        : 'rgba(255, 255, 255, 0)';
-    const gridBackgroundColor =
-        'brandhome_appearance.grid.background_color' in settings ? computedGridBackgroundColor : undefined;
+        : undefined;
 
     return {
         brandhome_appearance: {
@@ -57,7 +55,7 @@ export const mapFlatSettingsDottedNotationToHubApi = (settings: Record<string, u
                 margin: settings['brandhome_appearance.grid.margin'],
                 margin_top: settings['brandhome_appearance.grid.margin_top'],
                 margin_bottom: settings['brandhome_appearance.grid.margin_bottom'],
-                background_color: gridBackgroundColor,
+                background_color: computedGridBackgroundColor,
             },
             logo: {
                 x: settings['brandhome_appearance.logo.x'],
