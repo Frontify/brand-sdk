@@ -57,6 +57,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 document: { ...result, ...(link.documentGroupId && { documentGroupId: link.documentGroupId }) },
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -113,6 +115,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 },
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -169,6 +173,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 },
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -274,6 +280,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 documentPage: result,
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -378,6 +386,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 coverPage: result,
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -393,12 +403,14 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 ...(coverPage.hideInNav !== undefined && { brandhome_hide_in_nav: coverPage.hideInNav }),
             };
 
-            await appBridge.updateLegacyCoverPage(legacyCoverPage);
+            const result = await appBridge.updateLegacyCoverPage(legacyCoverPage);
 
             window.emitter.emit('AppBridge:GuidelineCoverPageAction', {
                 coverPage: coverPage as CoverPage,
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
@@ -421,6 +433,8 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                     action: 'update',
                 });
             }
+
+            return result;
         },
         [appBridge],
     );
@@ -506,22 +520,28 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const updateDocumentPageTargets = useCallback(
         async (targets: number[], pageIds: number[]) => {
-            await appBridge.updateDocumentPageTargets(targets, pageIds);
+            const result = await appBridge.updateDocumentPageTargets(targets, pageIds);
+
             window.emitter.emit('AppBridge:GuidelineDocumentPageTargetsAction', {
                 payload: { targets, pageIds },
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
 
     const updateDocumentTargets = useCallback(
         async (targets: number[], documentIds: number[]) => {
-            await appBridge.updateDocumentTargets(targets, documentIds);
+            const result = await appBridge.updateDocumentTargets(targets, documentIds);
+
             window.emitter.emit('AppBridge:GuidelineDocumentTargetsAction', {
                 payload: { targets, documentIds },
                 action: 'update',
             });
+
+            return result;
         },
         [appBridge],
     );
