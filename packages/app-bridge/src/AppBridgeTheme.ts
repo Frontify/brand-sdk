@@ -18,7 +18,6 @@ import {
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
     getCoverPage,
-    getDocumentAppearance,
     getDocumentCategoriesByDocumentId,
     getDocumentGroupsByPortalId,
     getDocumentPageTargets,
