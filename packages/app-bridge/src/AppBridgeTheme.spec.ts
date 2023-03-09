@@ -340,6 +340,6 @@ describe('AppBridgeThemeTest', () => {
         await appBridge.updateCoverPageSettings({ foo: 'bar' });
 
         expect(updateHub).toHaveBeenCalledOnce();
-        expect(updateHub).toHaveBeenCalledWith(PORTAL_ID, { foo: 'bar', i18n: '' });
+        expect(updateHub).toHaveBeenCalledWith(PORTAL_ID, { foo: 'bar' });
     });
 });
