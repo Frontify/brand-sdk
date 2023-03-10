@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { HttpClient, convertObjectCase } from '../utilities';
-import type { Document, DocumentApi, DocumentLinkSettings } from '../types';
+import type { Document, DocumentApi, DocumentLinkSettings, DocumentLinkSettingsApi } from '../types';
 
 export const getUngroupedDocumentsByProjectId = async (portalId: number): Promise<Document[]> => {
     const { result } = await HttpClient.get<DocumentApi[]>(
@@ -56,7 +56,7 @@ export const moveDocument = async (
 };
 
 export const getDocumentLinkSettings = async (documentId: number): Promise<DocumentLinkSettings> => {
-    const { result } = await HttpClient.get<{ linkSettings: DocumentLinkSettings }>(
+    const { result } = await HttpClient.get<{ link_settings: DocumentLinkSettingsApi }>(
         `/api/document/${documentId}/link-settings`,
     );
     return convertObjectCase(result.data, 'camel')?.linkSettings;
