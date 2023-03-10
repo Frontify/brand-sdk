@@ -17,6 +17,7 @@ import type { BrandportalLink } from './BrandportalLink';
 export type EmitterAction = 'add' | 'update' | 'delete';
 
 export type Emitter = MittEmitter<{
+    'AppBridge:PageTemplateSettingsUpdated': { pageTemplateSettings: Record<string, unknown> };
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
 
     'AppBridge:BlockAssetsUpdated': {

@@ -72,7 +72,11 @@ export type DocumentApi = Simplify<
             link_settings: Nullable<any>;
             view_count: Nullable<number>;
             mode: DocumentMode;
-            settings: any[];
+            settings: {
+                project?: number;
+                project_slug?: string;
+                facettes?: any[];
+            };
             appearance: Nullable<Record<string, any>>;
             logo_file_id: Nullable<string>;
             logo_settings: Nullable<any>;
@@ -86,6 +90,7 @@ export type DocumentApi = Simplify<
             change_comment_by: Nullable<string>;
             change_title: Nullable<string>;
             targets: Nullable<SingleTargetApi[]>;
+            token: Nullable<string>;
         } & (DocumentApiAsLink | DocumentApiAsNoneLink)
 >;
 
