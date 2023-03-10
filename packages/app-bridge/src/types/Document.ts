@@ -45,7 +45,7 @@ type DocumentApiAsNoneLink = {
     link_url: Nullable<never>;
 };
 
-type DocumentLinkSettingsApi = {
+export type DocumentLinkSettingsApi = {
     new_tab: boolean;
     display?: FormLinkStateType;
     icon_position?: FormLinkStateIconPosition;

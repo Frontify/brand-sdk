@@ -28,3 +28,5 @@ export * from './TargetsDummy';
 export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
 export * from './withAppBridgeThemeStubs';
+export * from './DocumentLinkSettingsApiDummy';
+export * from './DocumentLinkSettingsDummy';
