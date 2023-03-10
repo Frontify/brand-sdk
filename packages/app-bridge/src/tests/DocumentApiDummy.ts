@@ -30,7 +30,7 @@ export class DocumentApiDummy {
             view_count: 0,
             mode: 'DEFAULT',
             appearance: null,
-            settings: [],
+            settings: {},
             logo_file_id: null,
             logo_settings: [],
             background_file_id: null,
@@ -43,6 +43,7 @@ export class DocumentApiDummy {
             change_comment_by: null,
             change_title: null,
             targets: [],
+            token: 'a-dummy-token',
         };
     }
 }
