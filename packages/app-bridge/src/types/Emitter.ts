@@ -1,7 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Emitter as MittEmitter } from 'mitt';
-
 import type { BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
 import type { Asset } from './Asset';
@@ -16,7 +14,7 @@ import type { BrandportalLink } from './BrandportalLink';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
-export type Emitter = MittEmitter<{
+export type EmitterEvents = {
     'AppBridge:PageTemplateSettingsUpdated': { pageTemplateSettings: Record<string, unknown> };
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
 
@@ -133,4 +131,4 @@ export type Emitter = MittEmitter<{
     'AppBridge:ViewerOpened': {
         token: string;
     };
-}>;
+};

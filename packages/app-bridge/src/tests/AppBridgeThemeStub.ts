@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
 
-import { Emitter } from '../types/Emitter';
+import { EmitterEvents } from '../types/Emitter';
 import { AppBridgeTheme } from '../AppBridgeTheme';
 import { mergeDeep } from '../utilities';
 
@@ -64,7 +64,7 @@ export const getAppBridgeThemeStub = ({
     projectId = PROJECT_ID,
     pageSettings = {},
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
-    window.emitter = spy(mitt()) as unknown as Emitter;
+    window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     let localPageSettings = pageSettings;
 
@@ -134,6 +134,7 @@ export const getAppBridgeThemeStub = ({
         getDocumentTargets: Promise.resolve(DocumentTargetsDummy.with(DOCUMENT_ID_1)),
         getDocumentPageTargets: Promise.resolve(DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1)),
         getCoverPageSettings: Promise.resolve(localPageSettings),
+        getDocumentSettings: Promise.resolve(localPageSettings),
         createLink: Promise.resolve(DocumentDummy.with(1)),
         createLibrary: Promise.resolve(DocumentDummy.with(1)),
         createStandardDocument: Promise.resolve(DocumentDummy.with(1)),

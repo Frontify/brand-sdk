@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { CoverPage, CoverPageUpdate, Emitter } from '../types';
+import type { CoverPage, CoverPageUpdate, EmitterEvents } from '../types';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { useCoverPage } from './useCoverPage';
@@ -12,7 +12,7 @@ import { CoverPageDummy } from '../tests';
 
 describe('useCoverPage', () => {
     const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
-    let emitter: Emitter;
+    let emitter: Emitter<EmitterEvents>;
 
     beforeAll(() => {
         window.emitter = mitt();

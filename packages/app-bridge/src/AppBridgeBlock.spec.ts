@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Mock, afterEach, beforeAll, describe, expect, it, test, vi } from 'vitest';
+import type { Emitter } from 'mitt';
 import { AppBridgeBlock } from './AppBridgeBlock';
 import * as ColorPaletteRepository from './repositories/ColorPaletteRepository';
 import {
@@ -22,7 +23,7 @@ import {
     ColorPaletteDummy,
     ColorPatchDummy,
 } from './tests';
-import { Emitter, TerrificEvent } from './types';
+import { EmitterEvents, TerrificEvent } from './types';
 import { HttpClient } from './utilities/httpClient';
 
 const BLOCK_ID = 352;
@@ -533,7 +534,7 @@ describe('AppBridgeBlockTest', () => {
 
     test('openAssetViewer emits AppBridge:ViewerOpened event', () => {
         const emitterEmitStub = vi.fn();
-        window.emitter = { emit: emitterEmitStub } as unknown as Emitter;
+        window.emitter = { emit: emitterEmitStub } as unknown as Emitter<EmitterEvents>;
 
         const appBridge = new AppBridgeBlock(BLOCK_ID, SECTION_ID);
 

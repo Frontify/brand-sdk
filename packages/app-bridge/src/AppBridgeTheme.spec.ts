@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Mock, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import type { Emitter } from 'mitt';
 
 import { AppBridgeTheme } from './AppBridgeTheme';
 import {
@@ -27,7 +28,7 @@ import {
 } from './tests';
 import { HttpClient } from './utilities';
 import { getColorPalettesByProjectId, getColorsByColorPaletteId, getHub, updateHub } from './repositories';
-import { Emitter } from './types';
+import { EmitterEvents } from './types';
 
 const PORTAL_ID = 652;
 const PROJECT_ID = 453;
@@ -127,7 +128,7 @@ describe('AppBridgeThemeTest', () => {
 
     it('open the navigation manager', () => {
         const emitterEmitStub = vi.fn();
-        window.emitter = { emit: emitterEmitStub } as unknown as Emitter;
+        window.emitter = { emit: emitterEmitStub } as unknown as Emitter<EmitterEvents>;
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
         appBridge.openNavigationManager();

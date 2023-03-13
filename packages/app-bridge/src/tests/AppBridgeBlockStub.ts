@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { User } from '../types';
-import { Emitter } from '../types/Emitter';
+import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
@@ -39,7 +39,7 @@ export const getAppBridgeBlockStub = ({
     projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
-    window.emitter = spy(mitt()) as unknown as Emitter;
+    window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     window.blockSettings ??= {};
     window.blockSettings[blockId] = blockSettings;
