@@ -18,6 +18,7 @@ import {
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
     getCoverPage,
+    getDocumentAppearance,
     getDocumentCategoriesByDocumentId,
     getDocumentGroupsByPortalId,
     getDocumentPageTargets,
@@ -112,6 +113,10 @@ export class AppBridgeTheme {
 
     public async updateCoverPageSettings(settings: Record<string, unknown>): Promise<void> {
         await updateHub(this.getPortalId(), { ...settings });
+    }
+
+    public async getDocumentSettings<Settings>(documentId: number): Promise<Settings> {
+        return getDocumentAppearance(documentId) as Settings;
     }
 
     public async createLink(link: DocumentLinkCreate) {
