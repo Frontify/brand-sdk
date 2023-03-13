@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { getAppBridgeThemeStub } from '../tests';
 import { usePageTemplateSettings } from './usePageTemplateSettings';
 
+const DOCUMENT_ID = 3462;
 const HUB_API_SETTINGS_GET = {
     brandhome_settings: {
         document_appearance: {
@@ -32,6 +33,14 @@ const HUB_API_SETTINGS_GET = {
     myCustomSetting: 123,
 };
 
+const DOCUMENT_APPEARANCE_GET = {
+    myCustomSetting: 123,
+};
+
+const LIBRARY_APPEARANCE_GET = {
+    myCustomSetting: 123,
+};
+
 const MAPPED_HUB_SETTINGS = {
     'brandhome_appearance.grid.width': '34px',
     'brandhome_appearance.grid.margin': '35px',
@@ -55,36 +64,89 @@ describe('usePageTemplateSettings', () => {
     });
 
     const loadUsePageTemplateSettings = async (
-        template: Parameters<typeof usePageTemplateSettings>[1],
         pageSettings: Record<string, unknown>,
+        template: Parameters<typeof usePageTemplateSettings>[1],
+        documentId?: Parameters<typeof usePageTemplateSettings>[2],
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
             pageSettings,
         });
 
-        const { result } = renderHook(() => usePageTemplateSettings(appBridgeStub, template));
+        const { result } = renderHook(() => usePageTemplateSettings(appBridgeStub, template, documentId));
         return { result, appBridgeStub };
     };
 
     it('returns the page settings for cover page', async () => {
-        const { result } = await loadUsePageTemplateSettings('cover', HUB_API_SETTINGS_GET);
+        const { result } = await loadUsePageTemplateSettings(HUB_API_SETTINGS_GET, 'cover');
+
+        expect(result.current.isLoading).toEqual(true);
 
         await waitFor(() => {
-            expect(result.current[0]).toEqual(MAPPED_HUB_SETTINGS);
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(MAPPED_HUB_SETTINGS);
         });
     });
 
     it('updates the page settings for cover page', async () => {
-        const { result } = await loadUsePageTemplateSettings('cover', HUB_API_SETTINGS_GET);
+        const { result } = await loadUsePageTemplateSettings(HUB_API_SETTINGS_GET, 'cover');
+
+        expect(result.current.isLoading).toEqual(true);
 
         await waitFor(() => {
-            expect(result.current[0]).toEqual(MAPPED_HUB_SETTINGS);
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(MAPPED_HUB_SETTINGS);
         });
 
-        await result.current[1]({ myCustomSetting: 456 });
+        await result.current.updatePageTemplateSettings({ myCustomSetting: 456 });
+        expect(result.current.isLoading).toEqual(false);
 
         await waitFor(() => {
-            expect(result.current[0]).toEqual({ ...MAPPED_HUB_SETTINGS, myCustomSetting: 456 });
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual({ ...MAPPED_HUB_SETTINGS, myCustomSetting: 456 });
+        });
+    });
+
+    it('returns the page settings for document page', async () => {
+        const { result } = await loadUsePageTemplateSettings(DOCUMENT_APPEARANCE_GET, 'document', DOCUMENT_ID);
+
+        expect(result.current.isLoading).toEqual(true);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(DOCUMENT_APPEARANCE_GET);
+        });
+    });
+
+    it('returns `null` for document page if no document id passed', async () => {
+        const { result } = await loadUsePageTemplateSettings(DOCUMENT_APPEARANCE_GET, 'document');
+
+        expect(result.current.isLoading).toEqual(false);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(null);
+        });
+    });
+
+    it('returns the page settings for library page', async () => {
+        const { result } = await loadUsePageTemplateSettings(LIBRARY_APPEARANCE_GET, 'library', DOCUMENT_ID);
+
+        expect(result.current.isLoading).toEqual(true);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(LIBRARY_APPEARANCE_GET);
+        });
+    });
+
+    it('returns `null` for library page if no document id passed', async () => {
+        const { result } = await loadUsePageTemplateSettings(LIBRARY_APPEARANCE_GET, 'library');
+
+        expect(result.current.isLoading).toEqual(false);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(null);
         });
     });
 });

@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { Emitter } from '../types';
+import type { EmitterEvents } from '../types';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { useBrandportalLink } from './useBrandportalLink';
@@ -12,7 +12,7 @@ import { BrandportalLinkDummy } from '../tests';
 
 describe('useBrandportalLink', () => {
     const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
-    let emitter: Emitter;
+    let emitter: Emitter<EmitterEvents>;
 
     beforeAll(() => {
         window.emitter = mitt();

@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Emitter, EmitterAction, TerrificComponent, TerrificEvent } from './types';
-
-type AddUpdateEmitterAction = Omit<EmitterAction, 'delete'>;
+import type { Emitter } from 'mitt';
+import type { EmitterEvents, TerrificComponent, TerrificEvent } from './types';
 
 declare global {
     interface Window {
@@ -50,13 +49,13 @@ declare global {
             };
         };
         blockSettings: Record<number, Record<string, unknown>>;
-        emitter: Emitter;
+        emitter: Emitter<EmitterEvents>;
     }
 }
 
 declare namespace Cypress {
     interface AUTWindow {
-        emitter: Emitter;
+        emitter: Emitter<EmitterEvents>;
     }
 }
 

@@ -54,3 +54,14 @@ export const moveDocument = async (
 
     return convertObjectCase(result.data, 'camel') as Document;
 };
+
+/**
+ * @deprecated
+ */
+export const getDocumentAppearance = async (documentId: number): Promise<Record<string, unknown>> => {
+    const { result } = await HttpClient.get(`/api/document/appearance/${documentId}`);
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    return result.appearance;
+};
