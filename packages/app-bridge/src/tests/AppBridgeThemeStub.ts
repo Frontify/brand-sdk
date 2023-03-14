@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
 
-import { Emitter } from '../types/Emitter';
+import { EmitterEvents } from '../types/Emitter';
 import { AppBridgeTheme } from '../AppBridgeTheme';
+import { mergeDeep } from '../utilities';
 
 import {
     BrandportalLinkDummy,
@@ -54,20 +55,24 @@ export type getAppBridgeThemeStubProps = {
     editorState?: boolean;
     portalId?: number;
     projectId?: number;
+    pageSettings?: Record<string, unknown>;
 };
 
 export const getAppBridgeThemeStub = ({
     editorState = false,
     portalId = PORTAL_ID,
     projectId = PROJECT_ID,
+    pageSettings = {},
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
-    window.emitter = spy(mitt()) as unknown as Emitter;
+    window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
-    return createStubInstance(AppBridgeTheme, {
+    let localPageSettings = pageSettings;
+
+    const appBridgeTheme = createStubInstance(AppBridgeTheme, {
         getPortalId: portalId,
         getProjectId: projectId,
         getEditorState: editorState,
-        getCoverPage: Promise.resolve(CoverPageDummy.with(123)),
+        getCoverPage: Promise.resolve(CoverPageDummy.with(PORTAL_ID)),
         getAllDocuments: Promise.resolve([
             DocumentDummy.with(DOCUMENT_ID_1),
             DocumentDummy.with(DOCUMENT_ID_2),
@@ -128,6 +133,8 @@ export const getAppBridgeThemeStub = ({
         duplicateDocumentPage: Promise.resolve(DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1)),
         getDocumentTargets: Promise.resolve(DocumentTargetsDummy.with(DOCUMENT_ID_1)),
         getDocumentPageTargets: Promise.resolve(DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1)),
+        getCoverPageSettings: Promise.resolve(localPageSettings),
+        getDocumentSettings: Promise.resolve(localPageSettings),
         createLink: Promise.resolve(DocumentDummy.with(1)),
         createLibrary: Promise.resolve(DocumentDummy.with(1)),
         createStandardDocument: Promise.resolve(DocumentDummy.with(1)),
@@ -145,4 +152,10 @@ export const getAppBridgeThemeStub = ({
         updateLegacyCoverPage: Promise.resolve(CoverPageDummy.withLegacy(1)),
         updateBrandportalLink: Promise.resolve(BrandportalLinkDummy.with()),
     });
+
+    appBridgeTheme.updateCoverPageSettings.callsFake(async (pageSettingsUpdate) => {
+        localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+    });
+
+    return appBridgeTheme;
 };

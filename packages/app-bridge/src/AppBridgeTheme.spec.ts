@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Mock, afterEach, beforeAll, describe, expect, it, test, vi } from 'vitest';
+import { Mock, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import type { Emitter } from 'mitt';
 
 import { AppBridgeTheme } from './AppBridgeTheme';
 import {
@@ -26,8 +27,8 @@ import {
     UpdateTargetsApiDummy,
 } from './tests';
 import { HttpClient } from './utilities';
-import { getColorPalettesByProjectId, getColorsByColorPaletteId } from './repositories';
-import { Emitter } from './types';
+import { getColorPalettesByProjectId, getColorsByColorPaletteId, getHub, updateHub } from './repositories';
+import { EmitterEvents } from './types';
 
 const PORTAL_ID = 652;
 const PROJECT_ID = 453;
@@ -67,19 +68,34 @@ describe('AppBridgeThemeTest', () => {
             },
         };
 
-        vi.mock('./repositories/ColorPaletteRepository', async () => ({
-            getColorPalettesByProjectId: vi.fn(),
-        }));
+        vi.mock('./repositories/ColorPaletteRepository', async (originalImplementation) => {
+            const mod = await originalImplementation();
 
-        vi.mock('./repositories/ColorRepository', async () => ({
-            getColorsByColorPaletteId: vi.fn(),
-        }));
+            return { ...(mod as object), getColorPalettesByProjectId: vi.fn() };
+        });
+
+        vi.mock('./repositories/ColorRepository', async (originalImplementation) => {
+            const mod = await originalImplementation();
+
+            return { ...(mod as object), getColorsByColorPaletteId: vi.fn() };
+        });
+
+        vi.mock('./repositories/HubRepository', async (originalImplementation) => {
+            const mod = await originalImplementation();
+
+            return {
+                ...(mod as object),
+                getHub: vi.fn(),
+                updateHub: vi.fn(),
+            };
+        });
 
         setTranslationLanguage('');
     });
 
     afterEach(() => {
         document.body.innerHTML = '';
+        vi.restoreAllMocks();
     });
 
     it('should be instantiable', () => {
@@ -112,7 +128,7 @@ describe('AppBridgeThemeTest', () => {
 
     it('open the navigation manager', () => {
         const emitterEmitStub = vi.fn();
-        window.emitter = { emit: emitterEmitStub } as unknown as Emitter;
+        window.emitter = { emit: emitterEmitStub } as unknown as Emitter<EmitterEvents>;
 
         const appBridge = new AppBridgeTheme(PORTAL_ID);
         appBridge.openNavigationManager();
@@ -227,7 +243,7 @@ describe('AppBridgeThemeTest', () => {
         expect(result).toEqual(mappedDocumentSections);
     });
 
-    test('getColorPalettes with success', () => {
+    it('getColorPalettes with success', () => {
         const colorPalettes = [ColorPaletteDummy.with(1)];
 
         (getColorPalettesByProjectId as Mock).mockReturnValue(colorPalettes);
@@ -239,7 +255,7 @@ describe('AppBridgeThemeTest', () => {
         expect(result).resolves.toEqual(colorPalettes);
     });
 
-    test('getColorsByColorPaletteId with success', () => {
+    it('getColorsByColorPaletteId with success', () => {
         const colors = [ColorDummy.red()];
 
         (getColorsByColorPaletteId as Mock).mockReturnValue(colors);
@@ -305,10 +321,26 @@ describe('AppBridgeThemeTest', () => {
         expect(result).toEqual(apiUpdateDocumentPageTargets);
     });
 
-    test('returns the translation language', () => {
+    it('returns the translation language', () => {
         setTranslationLanguage('de');
 
         const appBridge = new AppBridgeTheme(PROJECT_ID);
         expect(appBridge.getTranslationLanguage()).toBe('de');
+    });
+
+    it('return the cover page settings', async () => {
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        await appBridge.getCoverPageSettings();
+
+        expect(getHub).toHaveBeenCalledOnce();
+        expect(getHub).toHaveBeenCalledWith(PORTAL_ID);
+    });
+
+    it('update the cover page settings', async () => {
+        const appBridge = new AppBridgeTheme(PORTAL_ID);
+        await appBridge.updateCoverPageSettings({ foo: 'bar' });
+
+        expect(updateHub).toHaveBeenCalledOnce();
+        expect(updateHub).toHaveBeenCalledWith(PORTAL_ID, { foo: 'bar' });
     });
 });

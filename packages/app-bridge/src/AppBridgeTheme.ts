@@ -18,12 +18,14 @@ import {
     getColorPalettesByProjectId,
     getColorsByColorPaletteId,
     getCoverPage,
+    getDocumentAppearance,
     getDocumentCategoriesByDocumentId,
     getDocumentGroupsByPortalId,
     getDocumentPageTargets,
     getDocumentPagesByDocumentId,
     getDocumentSectionsByDocumentPageId,
     getDocumentTargets,
+    getHub,
     getUncategorizedPagesByDocumentId,
     getUngroupedDocumentsByProjectId,
     moveDocument,
@@ -39,6 +41,7 @@ import {
     updateDocumentPage,
     updateDocumentPageTargets,
     updateDocumentTargets,
+    updateHub,
     updateLegacyCoverPage,
 } from './repositories';
 
@@ -102,6 +105,18 @@ export class AppBridgeTheme {
 
     public getTranslationLanguage(): string {
         return getDatasetByElement<{ translationLanguage?: string }>(document.body).translationLanguage ?? '';
+    }
+
+    public async getCoverPageSettings<Settings>(): Promise<Settings> {
+        return getHub(this.getPortalId()) as Settings;
+    }
+
+    public async updateCoverPageSettings(settings: Record<string, unknown>): Promise<void> {
+        await updateHub(this.getPortalId(), { ...settings });
+    }
+
+    public async getDocumentSettings<Settings>(documentId: number): Promise<Settings> {
+        return getDocumentAppearance(documentId) as Settings;
     }
 
     public async createLink(link: DocumentLinkCreate) {

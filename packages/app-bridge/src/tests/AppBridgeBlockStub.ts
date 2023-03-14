@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
+import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { User } from '../types';
-import { Emitter } from '../types/Emitter';
+import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
@@ -14,6 +14,7 @@ import { ColorDummy } from './ColorDummy';
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
+const PROJECT_ID = 345214;
 
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
@@ -23,6 +24,7 @@ export type getAppBridgeBlockStubProps = {
     closeAssetChooser?: () => void;
     blockId?: number;
     sectionId?: number;
+    projectId?: number;
     user?: User;
 };
 
@@ -34,9 +36,10 @@ export const getAppBridgeBlockStub = ({
     closeAssetChooser = () => null,
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
+    projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
-    window.emitter = spy(mitt()) as unknown as Emitter;
+    window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     window.blockSettings ??= {};
     window.blockSettings[blockId] = blockSettings;
@@ -47,6 +50,7 @@ export const getAppBridgeBlockStub = ({
     const appBridgeBlock = createStubInstance(AppBridgeBlock, {
         getBlockId: blockId,
         getSectionId: sectionId,
+        getProjectId: projectId,
         getEditorState: editorState,
         getBlockSettings: Promise.resolve(window.blockSettings),
         getAvailablePalettes: Promise.resolve([
