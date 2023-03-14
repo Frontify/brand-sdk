@@ -14,8 +14,6 @@ import {
     DocumentDummy,
     DocumentGroupApiDummy,
     DocumentGroupDummy,
-    DocumentLinkSettingsApiDummy,
-    DocumentLinkSettingsDummy,
     DocumentPageApiDummy,
     DocumentPageDummy,
     DocumentPageTargetsApiDummy,
@@ -312,33 +310,5 @@ describe('AppBridgeThemeTest', () => {
 
         const appBridge = new AppBridgeTheme(PROJECT_ID);
         expect(appBridge.getTranslationLanguage()).toBe('de');
-    });
-
-    it('returns document link settings for screenId', async () => {
-        const documentLinkSettingsApi = DocumentLinkSettingsApiDummy.withScreenId(45);
-        const documentLinkSettings = DocumentLinkSettingsDummy.withScreenId(45);
-
-        const mockHttpClientGet = vi.fn().mockReturnValue({ result: { data: documentLinkSettingsApi } });
-
-        HttpClient.get = mockHttpClientGet;
-
-        const appBridge = new AppBridgeTheme(PORTAL_ID);
-        const result = await appBridge.getDocumentLinkSettings(DOCUMENT_ID);
-
-        expect(result).toEqual(documentLinkSettings);
-    });
-
-    it('returns document link settings for fileId', async () => {
-        const documentLinkSettingsApi = DocumentLinkSettingsApiDummy.withFileId('ABCDEF');
-        const documentLinkSettings = DocumentLinkSettingsDummy.withFileId('ABCDEF');
-
-        const mockHttpClientGet = vi.fn().mockReturnValue({ result: { data: documentLinkSettingsApi } });
-
-        HttpClient.get = mockHttpClientGet;
-
-        const appBridge = new AppBridgeTheme(PORTAL_ID);
-        const result = await appBridge.getDocumentLinkSettings(DOCUMENT_ID);
-
-        expect(result).toEqual(documentLinkSettings);
     });
 });

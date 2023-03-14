@@ -20,7 +20,6 @@ import {
     getCoverPage,
     getDocumentCategoriesByDocumentId,
     getDocumentGroupsByPortalId,
-    getDocumentLinkSettings,
     getDocumentPageTargets,
     getDocumentPagesByDocumentId,
     getDocumentSectionsByDocumentPageId,
@@ -63,7 +62,6 @@ import {
     DocumentLibraryUpdate,
     DocumentLink,
     DocumentLinkCreate,
-    DocumentLinkSettings,
     DocumentLinkUpdate,
     DocumentPage,
     DocumentPageCreate,
@@ -333,9 +331,5 @@ export class AppBridgeTheme {
 
     public async updateDocumentPageTargets(targetIds: number[], documentPageIds: number[]): Promise<TargetsUpdate> {
         return updateDocumentPageTargets(targetIds, documentPageIds);
-    }
-
-    public async getDocumentLinkSettings(documentId: number): Promise<DocumentLinkSettings> {
-        return getDocumentLinkSettings(documentId);
     }
 }
