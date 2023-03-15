@@ -47,8 +47,8 @@ type DocumentApiAsNoneLink = {
 
 export type DocumentLinkSettingsApi = {
     new_tab: boolean;
-    display?: FormLinkStateType;
-    icon_position?: FormLinkStateIconPosition;
+    display?: LinkSettingsDisplay;
+    icon_position?: LinkSettingsIconPosition;
     file_id?: string;
     screen_id?: number;
     icon_url?: string;
@@ -116,15 +116,15 @@ export type DocumentStandard = Simplify<Document & DocumentAsNoneLink>;
 
 export type DocumentLinkSettings = CamelCasedPropertiesDeep<DocumentLinkSettingsApi>;
 
-export enum FormLinkStateType {
-    textAndIcon = 'ICON_TEXT',
-    iconOnly = 'ICON',
-    textOnly = 'TEXT',
+export enum LinkSettingsDisplay {
+    TextAndIcon = 'ICON_TEXT',
+    IconOnly = 'ICON',
+    TextOnly = 'TEXT',
 }
 
-export enum FormLinkStateIconPosition {
-    right = 'RIGHT',
-    left = 'LEFT',
+export enum LinkSettingsIconPosition {
+    Right = 'RIGHT',
+    Left = 'LEFT',
 }
 
 type DocumentLinkRequest = {
