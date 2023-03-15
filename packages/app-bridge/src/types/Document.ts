@@ -45,6 +45,16 @@ type DocumentApiAsNoneLink = {
     link_url: Nullable<never>;
 };
 
+export type DocumentLinkSettingsApi = {
+    new_tab: boolean;
+    display?: LinkSettingsDisplay;
+    icon_position?: LinkSettingsIconPosition;
+    file_id?: string;
+    screen_id?: number;
+    icon_url?: string;
+    icon_file_name?: string;
+};
+
 type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
 type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
 
@@ -69,7 +79,7 @@ export type DocumentApi = Simplify<
             logo: Nullable<string>;
             sort: Nullable<number>;
             lazy: Nullable<boolean>;
-            link_settings: Nullable<any>;
+            link_settings: Nullable<DocumentLinkSettingsApi>;
             view_count: Nullable<number>;
             mode: DocumentMode;
             settings: {
@@ -96,7 +106,7 @@ export type DocumentApi = Simplify<
 
 export type Document = CamelCasedPropertiesDeep<DocumentApi>;
 
-export type DocumentLink = Simplify<Document & DocumentAsLink & { linkSettings: { newTab: boolean } }>;
+export type DocumentLink = Simplify<Document & DocumentAsLink>;
 
 export type DocumentLibrary = Simplify<
     Document & DocumentAsNoneLink & { settings?: { project: number }; mode: DocumentLibraryMode }
@@ -104,15 +114,27 @@ export type DocumentLibrary = Simplify<
 
 export type DocumentStandard = Simplify<Document & DocumentAsNoneLink>;
 
+export type DocumentLinkSettings = CamelCasedPropertiesDeep<DocumentLinkSettingsApi>;
+
+export enum LinkSettingsDisplay {
+    TextAndIcon = 'ICON_TEXT',
+    IconOnly = 'ICON',
+    TextOnly = 'TEXT',
+}
+
+export enum LinkSettingsIconPosition {
+    Right = 'RIGHT',
+    Left = 'LEFT',
+}
+
 type DocumentLinkRequest = {
     id: number;
     title: string;
     linkUrl: string;
-    linkSettings: {
-        newTab: boolean;
-    };
+    linkSettings: DocumentLinkSettings;
     documentGroupId?: number;
 };
+
 type DocumentLibraryRequest = {
     id: number;
     mode: DocumentLibraryMode;
