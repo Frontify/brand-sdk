@@ -3,15 +3,23 @@
 import { HttpClient, convertObjectCase } from '../utilities';
 import type { DocumentPage, DocumentPageApi, DocumentPageDuplicate, DocumentPageDuplicateApi } from '../types';
 
-export const getDocumentPagesByDocumentId = async (documentId: number): Promise<DocumentPage[]> => {
-    const { result } = await HttpClient.get<DocumentPageApi[]>(`/api/document-page?document_id=${documentId}`);
+export const getDocumentPagesByDocumentId = async (documentId: number, language = ''): Promise<DocumentPage[]> => {
+    const languageQuery = language.length > 0 ? `&language=${language}` : '';
+
+    const { result } = await HttpClient.get<DocumentPageApi[]>(
+        `/api/document-page?document_id=${documentId}${languageQuery}`,
+    );
+
     return convertObjectCase(result.data, 'camel');
 };
 
-export const getUncategorizedPagesByDocumentId = async (documentId: number): Promise<DocumentPage[]> => {
+export const getUncategorizedPagesByDocumentId = async (documentId: number, language = ''): Promise<DocumentPage[]> => {
+    const languageQuery = language.length > 0 ? `&language=${language}` : '';
+
     const { result } = await HttpClient.get<DocumentPageApi[]>(
-        `/api/document-page?document_id=${documentId}&exclude_categorized`,
+        `/api/document-page?document_id=${documentId}&exclude_categorized${languageQuery}`,
     );
+
     return convertObjectCase(result.data, 'camel');
 };
 
@@ -20,11 +28,11 @@ export const createDocumentPage = async (page: DocumentPage) => {
     return convertObjectCase(result.data, 'camel');
 };
 
-export const updateDocumentPage = async (page: DocumentPage): Promise<DocumentPage> => {
-    const { result } = await HttpClient.patch<DocumentPageApi>(
-        `/api/document-page/${page.id}`,
-        convertObjectCase(page, 'snake'),
-    );
+export const updateDocumentPage = async (page: DocumentPage, language = ''): Promise<DocumentPage> => {
+    const { result } = await HttpClient.patch<DocumentPageApi>(`/api/document-page/${page.id}`, {
+        ...convertObjectCase(page, 'snake'),
+        ...(language && { language }),
+    });
 
     return convertObjectCase(result.data, 'camel');
 };
