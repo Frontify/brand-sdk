@@ -128,7 +128,7 @@ export class AppBridgeTheme {
     }
 
     public async updateLink(link: DocumentLinkUpdate) {
-        return updateDocument<DocumentLink>(link as DocumentLink);
+        return updateDocument<DocumentLink>(link as DocumentLink, this.getTranslationLanguage());
     }
 
     public async deleteLink(id: number) {
@@ -161,7 +161,7 @@ export class AppBridgeTheme {
     }
 
     public async updateLibrary(library: DocumentLibraryUpdate) {
-        return updateDocument<DocumentLibrary>(library as DocumentLibrary);
+        return updateDocument<DocumentLibrary>(library as DocumentLibrary, this.getTranslationLanguage());
     }
 
     public async deleteLibrary(id: number) {
@@ -173,7 +173,7 @@ export class AppBridgeTheme {
     }
 
     public async updateStandardDocument(document: DocumentStandardUpdate) {
-        return updateDocument<Document>(document as Document);
+        return updateDocument<Document>(document as Document, this.getTranslationLanguage());
     }
 
     public async deleteStandardDocument(id: number) {
@@ -189,7 +189,7 @@ export class AppBridgeTheme {
     }
 
     public async updateDocumentGroup(documentGroup: DocumentGroupUpdate) {
-        return updateDocumentGroup(documentGroup as DocumentGroup);
+        return updateDocumentGroup(documentGroup as DocumentGroup, this.getTranslationLanguage());
     }
 
     public async deleteDocumentGroup(id: number) {
@@ -205,7 +205,7 @@ export class AppBridgeTheme {
     }
 
     public async updateDocumentCategory(category: DocumentCategoryUpdate) {
-        return updateDocumentCategory(category as DocumentCategory);
+        return updateDocumentCategory(category as DocumentCategory, this.getTranslationLanguage());
     }
 
     public async deleteDocumentCategory(id: number) {
@@ -239,10 +239,13 @@ export class AppBridgeTheme {
      * @property  linkUrl - Indicates whether the page is link or not.
      */
     public async updateDocumentPage(documentPage: DocumentPageUpdate) {
-        return updateDocumentPage({
-            ...documentPage,
-            ...(documentPage.linkUrl && { linkType: LinkType.External }),
-        } as DocumentPage);
+        return updateDocumentPage(
+            {
+                ...documentPage,
+                ...(documentPage.linkUrl && { linkType: LinkType.External }),
+            } as DocumentPage,
+            this.getTranslationLanguage(),
+        );
     }
 
     public async deleteDocumentPage(id: number) {
@@ -297,27 +300,27 @@ export class AppBridgeTheme {
     }
 
     public getUngroupedDocuments(): Promise<Document[]> {
-        return getUngroupedDocumentsByProjectId(this.getPortalId());
+        return getUngroupedDocumentsByProjectId(this.getPortalId(), this.getTranslationLanguage());
     }
 
     public getAllDocuments(): Promise<Document[]> {
-        return getAllDocumentsByProjectId(this.getPortalId());
+        return getAllDocumentsByProjectId(this.getPortalId(), this.getTranslationLanguage());
     }
 
     public getDocumentGroups(): Promise<DocumentGroup[]> {
-        return getDocumentGroupsByPortalId(this.getPortalId());
+        return getDocumentGroupsByPortalId(this.getPortalId(), this.getTranslationLanguage());
     }
 
     public getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]> {
-        return getDocumentPagesByDocumentId(documentId);
+        return getDocumentPagesByDocumentId(documentId, this.getTranslationLanguage());
     }
 
     public getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]> {
-        return getDocumentCategoriesByDocumentId(documentId);
+        return getDocumentCategoriesByDocumentId(documentId, this.getTranslationLanguage());
     }
 
     public getUncategorizedPagesByDocumentId(documentId: number): Promise<DocumentPage[]> {
-        return getUncategorizedPagesByDocumentId(documentId);
+        return getUncategorizedPagesByDocumentId(documentId, this.getTranslationLanguage());
     }
 
     public getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]> {

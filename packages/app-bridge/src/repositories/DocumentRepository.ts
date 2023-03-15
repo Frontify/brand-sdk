@@ -3,15 +3,21 @@
 import { HttpClient, convertObjectCase } from '../utilities';
 import type { Document, DocumentApi } from '../types';
 
-export const getUngroupedDocumentsByProjectId = async (portalId: number): Promise<Document[]> => {
+export const getUngroupedDocumentsByProjectId = async (portalId: number, language = ''): Promise<Document[]> => {
+    const languageQuery = language.length > 0 ? `&language=${language}` : '';
+
     const { result } = await HttpClient.get<DocumentApi[]>(
-        `/api/document?portal_id=${portalId}&exclude_grouped_documents`,
+        `/api/document?portal_id=${portalId}&exclude_grouped_documents${languageQuery}`,
     );
+
     return convertObjectCase(result.data, 'camel');
 };
 
-export const getAllDocumentsByProjectId = async (portalId: number): Promise<Document[]> => {
-    const { result } = await HttpClient.get<DocumentApi[]>(`/api/document?portal_id=${portalId}`);
+export const getAllDocumentsByProjectId = async (portalId: number, language = ''): Promise<Document[]> => {
+    const languageQuery = language.length > 0 ? `&language=${language}` : '';
+
+    const { result } = await HttpClient.get<DocumentApi[]>(`/api/document?portal_id=${portalId}${languageQuery}`);
+
     return convertObjectCase(result.data, 'camel');
 };
 
@@ -21,11 +27,11 @@ export const createDocument = async <D extends Document>(document: D): Promise<D
     return convertObjectCase(result.data, 'camel') as D;
 };
 
-export const updateDocument = async <D extends Document>(document: D): Promise<Document> => {
-    const { result } = await HttpClient.patch<DocumentApi>(
-        `/api/document/${document.id}`,
-        convertObjectCase(document, 'snake'),
-    );
+export const updateDocument = async <D extends Document>(document: D, language = ''): Promise<Document> => {
+    const { result } = await HttpClient.patch<DocumentApi>(`/api/document/${document.id}`, {
+        ...convertObjectCase(document, 'snake'),
+        ...(language && { language }),
+    });
 
     return convertObjectCase(result.data, 'camel') as D;
 };

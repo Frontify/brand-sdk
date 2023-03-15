@@ -17,8 +17,12 @@ const mutateDocumentGroups = (documentGroups: DocumentGroupApi[]): DocumentGroup
     return groups;
 };
 
-export const getDocumentGroupsByPortalId = async (portalId: number): Promise<DocumentGroup[]> => {
-    const { result } = await HttpClient.get<DocumentGroupApi[]>(`/api/document-group?portal_id=${portalId}`);
+export const getDocumentGroupsByPortalId = async (portalId: number, language = ''): Promise<DocumentGroup[]> => {
+    const languageQuery = language.length > 0 ? `&language=${language}` : '';
+
+    const { result } = await HttpClient.get<DocumentGroupApi[]>(
+        `/api/document-group?portal_id=${portalId}${languageQuery}`,
+    );
 
     return mutateDocumentGroups(result.data);
 };
@@ -36,11 +40,12 @@ export const createDocumentGroup = async (documentGroup: DocumentGroup): Promise
 
 export const updateDocumentGroup = async (
     documentGroup: RequireExactlyOne<DocumentGroup, 'id'>,
+    language = '',
 ): Promise<DocumentGroup> => {
-    const { result } = await HttpClient.put<DocumentGroupApi>(
-        `/api/document-group/${documentGroup.id}`,
-        convertObjectCase(documentGroup, 'snake'),
-    );
+    const { result } = await HttpClient.put<DocumentGroupApi>(`/api/document-group/${documentGroup.id}`, {
+        ...convertObjectCase(documentGroup, 'snake'),
+        ...(language && { language }),
+    });
 
     return {
         ...convertObjectCase(result.data, 'camel'),

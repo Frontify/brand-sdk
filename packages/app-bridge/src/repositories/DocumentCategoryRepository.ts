@@ -16,9 +16,14 @@ const mutateDocumentCategories = (documentCategories: DocumentCategoryApi[]): Do
     return categories;
 };
 
-export const getDocumentCategoriesByDocumentId = async (documentId: number): Promise<DocumentCategory[]> => {
+export const getDocumentCategoriesByDocumentId = async (
+    documentId: number,
+    language = '',
+): Promise<DocumentCategory[]> => {
+    const languageQuery = language.length > 0 ? `&language=${language}` : '';
+
     const { result } = await HttpClient.get<DocumentCategoryApi[]>(
-        `/api/document-page-category?document_id=${documentId}`,
+        `/api/document-page-category?document_id=${documentId}${languageQuery}`,
     );
 
     return mutateDocumentCategories(result.data);
@@ -36,11 +41,11 @@ export const createDocumentCategory = async (category: DocumentCategory): Promis
     };
 };
 
-export const updateDocumentCategory = async (category: DocumentCategory): Promise<DocumentCategory> => {
-    const { result } = await HttpClient.patch<DocumentCategoryApi>(
-        `/api/document-page-category/${category.id}`,
-        convertObjectCase(category, 'snake'),
-    );
+export const updateDocumentCategory = async (category: DocumentCategory, language = ''): Promise<DocumentCategory> => {
+    const { result } = await HttpClient.patch<DocumentCategoryApi>(`/api/document-page-category/${category.id}`, {
+        ...convertObjectCase(category, 'snake'),
+        ...(language && { language }),
+    });
 
     return {
         ...convertObjectCase(result.data, 'camel'),
