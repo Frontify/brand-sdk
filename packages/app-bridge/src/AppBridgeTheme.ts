@@ -276,7 +276,7 @@ export class AppBridgeTheme {
      * @deprecated legacy method, should be removed once new endpoint is available
      */
     public async updateLegacyCoverPage(coverPage: CoverPageUpdateLegacy) {
-        return updateLegacyCoverPage({ ...coverPage, portalId: this.getPortalId() });
+        return updateLegacyCoverPage({ ...coverPage, portalId: this.getPortalId() }, this.getTranslationLanguage());
     }
 
     public async deleteCoverPage() {
@@ -292,7 +292,7 @@ export class AppBridgeTheme {
     }
 
     public getCoverPage(): Promise<CoverPage> {
-        return getCoverPage(this.getPortalId());
+        return getCoverPage(this.getPortalId(), this.getTranslationLanguage());
     }
 
     public getBrandportalLink(): Promise<BrandportalLink> {
