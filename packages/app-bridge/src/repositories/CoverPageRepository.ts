@@ -44,17 +44,20 @@ export const updateLegacyCoverPage = async (
     coverPage: CoverPageUpdateLegacy & {
         portalId: number;
     },
+    language = '',
 ): Promise<CoverPageUpdateLegacy> => {
-    const { result } = await HttpClient.post<CoverPageUpdateLegacy>(
-        `/api/hub/settings/${coverPage.portalId}`,
-        coverPage,
-    );
+    const { result } = await HttpClient.post<CoverPageUpdateLegacy>(`/api/hub/settings/${coverPage.portalId}`, {
+        ...coverPage,
+        ...(language && { language }),
+    });
 
     return result as unknown as CoverPageUpdateLegacy;
 };
 
-export const getCoverPage = async (hubId: number): Promise<CoverPage> => {
-    const { result } = await HttpClient.get<CoverPageApi>(`/api/document/navigation/${hubId}`);
+export const getCoverPage = async (hubId: number, language = ''): Promise<CoverPage> => {
+    const languageQuery = language.length > 0 ? `?language=${language}` : '';
+
+    const { result } = await HttpClient.get<CoverPageApi>(`/api/document/navigation/${hubId}${languageQuery}`);
 
     return mapToCoverPage(<CoverPageApi>(<unknown>result));
 };
