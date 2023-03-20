@@ -272,7 +272,7 @@ export class AppBridgeBlock {
             throw new Error('Could not get the block settings');
         }
 
-        return responseJson.settings as T;
+        return (responseJson.data?.settings ?? responseJson.settings) as T;
     }
 
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
