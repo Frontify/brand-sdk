@@ -11,7 +11,10 @@ export enum NotificationStyleType {
 
 export type Link = {
     label?: string;
-    href: string;
+    replace?: string;
+    href?: string;
+    type?: 'internal' | 'external';
+    event?: 'sidebar.open';
     target?: '_self' | '_blank';
 };
 
