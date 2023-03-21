@@ -252,27 +252,18 @@ export class AppBridgeBlock {
         return `/api/color/export/${blockReferenceToken}/zip/${selectedColorPalettes.join(',')}`;
     }
 
-    // TODO: add tests (https://app.clickup.com/t/2qagxm6)
     public async getBlockSettings<T = Record<string, unknown>>(): Promise<T> {
         const translationLanguage = this.getTranslationLanguage();
         const translationLanguageSuffix = translationLanguage ? `&lang=${translationLanguage}` : '';
-        const response = await window.fetch(
+        const { result } = await HttpClient.get<{ settings: T }>(
             `/api/document/block/${this.blockId}?settings_only=true${translationLanguageSuffix}`,
-            {
-                headers: {
-                    'x-csrf-token': (document.getElementsByName('x-csrf-token')[0] as HTMLMetaElement).content,
-                    'Content-Type': 'application/json',
-                },
-            },
         );
 
-        const responseJson = await response.json();
-
-        if (!responseJson.success) {
+        if (!result.success) {
             throw new Error('Could not get the block settings');
         }
 
-        return (responseJson.data?.settings ?? responseJson.settings) as T;
+        return result.data.settings;
     }
 
     // TODO: add tests (https://app.clickup.com/t/2qagxm6)
