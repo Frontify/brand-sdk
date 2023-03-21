@@ -26,7 +26,8 @@ export type DocumentLibraryMode =
     | 'DOCUMENTLIBRARY'
     | 'TEMPLATELIBRARY'
     | 'TEXTLIBRARY'
-    | 'PATTERNLIBRARY';
+    | 'PATTERNLIBRARY'
+    | 'BRANDUPDATELIBRARY';
 
 export type DocumentMode = Simplify<'DEFAULT' | DocumentLibraryMode>;
 
