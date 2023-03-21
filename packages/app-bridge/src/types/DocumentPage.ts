@@ -65,7 +65,7 @@ export type DocumentPageCreate = Omit<SetRequired<DocumentPageRequest, 'title' |
 
 export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
-    'title' | 'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
+    'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
 >;
 
 export type DocumentPageDuplicateApi = {
