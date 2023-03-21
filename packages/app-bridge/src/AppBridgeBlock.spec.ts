@@ -543,4 +543,34 @@ describe('AppBridgeBlockTest', () => {
 
         expect(emitterEmitStub).toHaveBeenCalledWith('AppBridge:ViewerOpened', { token: asset.token });
     });
+
+    it('should returns the block settings', async () => {
+        const settings = { foo: 'bar', bar: { foo: 1 } };
+        const mockHttpClientGet = vi.fn().mockReturnValue({
+            result: {
+                success: true,
+                data: { settings },
+            },
+        });
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeBlock(BLOCK_ID, SECTION_ID);
+        const result = await appBridge.getBlockSettings();
+
+        expect(result).toEqual(settings);
+    });
+
+    it('should throw if it can not get the block settings', async () => {
+        const mockHttpClientGet = vi.fn().mockReturnValue({
+            result: {
+                success: false,
+                data: 'das ist kaputt',
+            },
+        });
+        HttpClient.get = mockHttpClientGet;
+
+        const appBridge = new AppBridgeBlock(BLOCK_ID, SECTION_ID);
+
+        await expect(() => appBridge.getBlockSettings()).rejects.toThrowError();
+    });
 });
