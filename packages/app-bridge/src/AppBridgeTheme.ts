@@ -256,8 +256,8 @@ export class AppBridgeTheme {
         return moveDocumentPage(id, documentId, position, category);
     }
 
-    public async moveDocumentPageBetweenDocuments(id: number, sourceDocumentId: number, targetDocumentId: number) {
-        return moveDocumentPageBetweenDocuments(id, sourceDocumentId, targetDocumentId);
+    public async moveDocumentPageBetweenDocuments(id: number, targetDocumentId: number) {
+        return moveDocumentPageBetweenDocuments(id, targetDocumentId);
     }
 
     public async duplicateDocumentPage(id: number) {

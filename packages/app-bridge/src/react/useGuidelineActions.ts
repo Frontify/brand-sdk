@@ -276,7 +276,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         async (documentPage: DocumentPageUpdate) => {
             const result = await appBridge.updateDocumentPage(documentPage);
 
-            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentPage.documentId}`, {
+            window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${result.documentId}`, {
                 documentPage: result,
                 action: 'update',
             });
@@ -503,7 +503,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const moveDocumentPageBetweenDocuments = useCallback(
         async (id: number, sourceDocumentId: number, targetDocumentId: number) => {
-            await appBridge.moveDocumentPageBetweenDocuments(id, sourceDocumentId, targetDocumentId);
+            await appBridge.moveDocumentPageBetweenDocuments(id, targetDocumentId);
 
             window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${sourceDocumentId}`, {
                 documentPage: { id, documentId: sourceDocumentId } as DocumentPage,

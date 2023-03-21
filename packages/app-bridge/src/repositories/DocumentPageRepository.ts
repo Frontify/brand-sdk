@@ -59,14 +59,9 @@ export const moveDocumentPage = async (
     }
 };
 
-export const moveDocumentPageBetweenDocuments = async (
-    id: number,
-    sourceDocumentId: number,
-    targetDocumentId: number,
-): Promise<void> => {
-    const { result } = await HttpClient.patch(`/api/document/page/${sourceDocumentId}`, {
-        page: id,
-        document: targetDocumentId,
+export const moveDocumentPageBetweenDocuments = async (id: number, targetDocumentId: number): Promise<void> => {
+    const { result } = await HttpClient.patch(`/api/document-page/${id}`, {
+        document_id: targetDocumentId,
     });
 
     if (!result.success) {
