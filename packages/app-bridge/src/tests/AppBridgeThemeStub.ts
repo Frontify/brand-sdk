@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mitt, { Emitter } from 'mitt';
-import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
+import { SinonStubbedInstance, spy, stub } from 'sinon';
 
 import { EmitterEvents } from '../types/Emitter';
 import { AppBridgeTheme } from '../AppBridgeTheme';
@@ -20,8 +20,10 @@ import {
     DocumentPageTargetsDummy,
     DocumentSectionDummy,
     DocumentTargetsDummy,
+    UpdateTargetsDummy,
 } from '.';
 
+const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
 const PORTAL_ID = 7777;
 const DOCUMENT_GROUP_ID_1 = 5332;
@@ -50,30 +52,37 @@ const DOCUMENT_SECTION_ID_1 = 3421;
 const DOCUMENT_SECTION_ID_2 = 65725;
 const DOCUMENT_SECTION_ID_3 = 95934;
 const DOCUMENT_PAGE_DUPLICATE_ID_1 = 2341;
+const TARGET_ID_1 = 653543;
+const TARGET_ID_2 = 23411;
+const TARGET_ID_3 = 56657;
 
 export type getAppBridgeThemeStubProps = {
     editorState?: boolean;
+    brandId?: number;
     portalId?: number;
     projectId?: number;
     pageSettings?: Record<string, unknown>;
+    language?: string;
 };
 
 export const getAppBridgeThemeStub = ({
     editorState = false,
+    brandId = BRAND_ID,
     portalId = PORTAL_ID,
     projectId = PROJECT_ID,
     pageSettings = {},
+    language = 'en',
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     let localPageSettings = pageSettings;
 
-    const appBridgeTheme = createStubInstance(AppBridgeTheme, {
-        getPortalId: portalId,
-        getProjectId: projectId,
-        getEditorState: editorState,
-        getCoverPage: Promise.resolve(CoverPageDummy.with(PORTAL_ID)),
-        getAllDocuments: Promise.resolve([
+    return {
+        getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
+        getProjectId: stub<Parameters<AppBridgeTheme['getProjectId']>>().returns(projectId),
+        getEditorState: stub<Parameters<AppBridgeTheme['getEditorState']>>().returns(editorState),
+        getCoverPage: stub<Parameters<AppBridgeTheme['getCoverPage']>>().resolves(CoverPageDummy.with(PORTAL_ID)),
+        getAllDocuments: stub<Parameters<AppBridgeTheme['getAllDocuments']>>().resolves([
             DocumentDummy.with(DOCUMENT_ID_1),
             DocumentDummy.with(DOCUMENT_ID_2),
             DocumentDummy.with(GROUPED_DOCUMENT_ID_1),
@@ -84,19 +93,19 @@ export const getAppBridgeThemeStub = ({
             DocumentDummy.with(DOCUMENT_ID_5),
             DocumentDummy.with(GROUPED_DOCUMENT_ID_4),
         ]),
-        getUngroupedDocuments: Promise.resolve([
+        getUngroupedDocuments: stub<Parameters<AppBridgeTheme['getUngroupedDocuments']>>().resolves([
             DocumentDummy.with(DOCUMENT_ID_1),
             DocumentDummy.with(DOCUMENT_ID_2),
             DocumentDummy.with(DOCUMENT_ID_3),
             DocumentDummy.with(DOCUMENT_ID_4),
             DocumentDummy.with(DOCUMENT_ID_5),
         ]),
-        getDocumentGroups: Promise.resolve([
+        getDocumentGroups: stub<Parameters<AppBridgeTheme['getDocumentGroups']>>().resolves([
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, [DOCUMENT_ID_1, DOCUMENT_ID_2, DOCUMENT_ID_3]),
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, []),
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, [DOCUMENT_ID_4, DOCUMENT_ID_5]),
         ]),
-        getDocumentPagesByDocumentId: Promise.resolve([
+        getDocumentPagesByDocumentId: stub<Parameters<AppBridgeTheme['getDocumentPagesByDocumentId']>>().resolves([
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_2),
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_1),
@@ -105,57 +114,117 @@ export const getAppBridgeThemeStub = ({
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_4),
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_3),
         ]),
-        getDocumentCategoriesByDocumentId: Promise.resolve([
+        getDocumentCategoriesByDocumentId: stub<
+            Parameters<AppBridgeTheme['getDocumentCategoriesByDocumentId']>
+        >().resolves([
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1, [DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2]),
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_2, []),
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_3, [DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]),
         ]),
-        getUncategorizedPagesByDocumentId: Promise.resolve([
+        getUncategorizedPagesByDocumentId: stub<
+            Parameters<AppBridgeTheme['getUncategorizedPagesByDocumentId']>
+        >().resolves([
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_1),
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_2),
             DocumentPageDummy.with(UNCATEGORIZED_DOCUMENT_PAGE_ID_3),
         ]),
-        getDocumentSectionsByDocumentPageId: Promise.resolve([
+        getDocumentSectionsByDocumentPageId: stub<
+            Parameters<AppBridgeTheme['getDocumentSectionsByDocumentPageId']>
+        >().resolves([
             DocumentSectionDummy.with(DOCUMENT_SECTION_ID_1),
             DocumentSectionDummy.with(DOCUMENT_SECTION_ID_2),
             DocumentSectionDummy.with(DOCUMENT_SECTION_ID_3),
         ]),
-        getColorPalettes: Promise.resolve([
+        getColorPalettes: stub<Parameters<AppBridgeTheme['getColorPalettes']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        getColorsByColorPaletteId: Promise.resolve([
+        getColorsByColorPaletteId: stub<Parameters<AppBridgeTheme['getColorsByColorPaletteId']>>().resolves([
             ColorDummy.red(9834),
             ColorDummy.green(342),
             ColorDummy.yellow(9314),
         ]),
-        duplicateDocumentPage: Promise.resolve(DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1)),
-        getDocumentTargets: Promise.resolve(DocumentTargetsDummy.with(DOCUMENT_ID_1)),
-        getDocumentPageTargets: Promise.resolve(DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1)),
-        getCoverPageSettings: Promise.resolve(localPageSettings),
-        getDocumentSettings: Promise.resolve(localPageSettings),
-        createLink: Promise.resolve(DocumentDummy.with(1)),
-        createLibrary: Promise.resolve(DocumentDummy.with(1)),
-        createStandardDocument: Promise.resolve(DocumentDummy.with(1)),
-        createDocumentPage: Promise.resolve(DocumentPageDummy.with(1)),
-        createDocumentGroup: Promise.resolve(DocumentGroupDummy.with(1, [])),
-        createDocumentCategory: Promise.resolve(DocumentCategoryDummy.with(1, [])),
-        createCoverPage: Promise.resolve(CoverPageDummy.with(1)),
-        updateLink: Promise.resolve(DocumentDummy.with(1)),
-        updateLibrary: Promise.resolve(DocumentDummy.with(1)),
-        updateStandardDocument: Promise.resolve(DocumentDummy.with(1)),
-        updateDocumentPage: Promise.resolve(DocumentPageDummy.with(1)),
-        updateDocumentGroup: Promise.resolve(DocumentGroupDummy.with(1, [])),
-        updateDocumentCategory: Promise.resolve(DocumentCategoryDummy.with(1, [])),
-        updateCoverPage: Promise.resolve(CoverPageDummy.with(1)),
-        updateLegacyCoverPage: Promise.resolve(CoverPageDummy.withLegacy(1)),
-        updateBrandportalLink: Promise.resolve(BrandportalLinkDummy.with()),
-    });
-
-    appBridgeTheme.updateCoverPageSettings.callsFake(async (pageSettingsUpdate) => {
-        localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
-    });
-
-    return appBridgeTheme;
+        duplicateDocumentPage: stub<Parameters<AppBridgeTheme['duplicateDocumentPage']>>().resolves(
+            DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1),
+        ),
+        getDocumentTargets: stub<Parameters<AppBridgeTheme['getDocumentTargets']>>().resolves(
+            DocumentTargetsDummy.with(DOCUMENT_ID_1),
+        ),
+        getDocumentPageTargets: stub<Parameters<AppBridgeTheme['getDocumentPageTargets']>>().resolves(
+            DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1),
+        ),
+        getCoverPageSettings: stub<Parameters<AppBridgeTheme['getCoverPageSettings']>>().resolves(localPageSettings),
+        getDocumentSettings: stub<Parameters<AppBridgeTheme['getDocumentSettings']>>().resolves(localPageSettings),
+        createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
+        createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
+        createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
+            DocumentDummy.with(1),
+        ),
+        createDocumentPage: stub<Parameters<AppBridgeTheme['createDocumentPage']>>().resolves(
+            DocumentPageDummy.with(1),
+        ),
+        createDocumentGroup: stub<Parameters<AppBridgeTheme['createDocumentGroup']>>().resolves(
+            DocumentGroupDummy.with(1, []),
+        ),
+        createDocumentCategory: stub<Parameters<AppBridgeTheme['createDocumentCategory']>>().resolves(
+            DocumentCategoryDummy.with(1, []),
+        ),
+        createCoverPage: stub<Parameters<AppBridgeTheme['createCoverPage']>>().resolves(CoverPageDummy.with(1)),
+        updateLink: stub<Parameters<AppBridgeTheme['updateLink']>>().resolves(DocumentDummy.with(1)),
+        updateLibrary: stub<Parameters<AppBridgeTheme['updateLibrary']>>().resolves(DocumentDummy.with(1)),
+        updateStandardDocument: stub<Parameters<AppBridgeTheme['updateStandardDocument']>>().resolves(
+            DocumentDummy.with(1),
+        ),
+        updateDocumentPage: stub<Parameters<AppBridgeTheme['updateDocumentPage']>>().resolves(
+            DocumentPageDummy.with(1),
+        ),
+        updateDocumentGroup: stub<Parameters<AppBridgeTheme['updateDocumentGroup']>>().resolves(
+            DocumentGroupDummy.with(1, []),
+        ),
+        updateDocumentCategory: stub<Parameters<AppBridgeTheme['updateDocumentCategory']>>().resolves(
+            DocumentCategoryDummy.with(1, []),
+        ),
+        updateCoverPage: stub<Parameters<AppBridgeTheme['updateCoverPage']>>().resolves(CoverPageDummy.with(1)),
+        updateLegacyCoverPage: stub<Parameters<AppBridgeTheme['updateLegacyCoverPage']>>().resolves(
+            CoverPageDummy.withLegacy(1),
+        ),
+        updateBrandportalLink: stub<Parameters<AppBridgeTheme['updateBrandportalLink']>>().resolves(
+            BrandportalLinkDummy.with(),
+        ),
+        updateCoverPageSettings: stub<Parameters<AppBridgeTheme['updateCoverPageSettings']>>().callsFake(
+            async (pageSettingsUpdate) => {
+                localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+            },
+        ),
+        deleteCoverPage: stub<Parameters<AppBridgeTheme['deleteCoverPage']>>().resolves(),
+        deleteDocumentCategory: stub<Parameters<AppBridgeTheme['deleteDocumentCategory']>>().resolves(),
+        deleteDocumentGroup: stub<Parameters<AppBridgeTheme['deleteDocumentGroup']>>().resolves(),
+        deleteDocumentPage: stub<Parameters<AppBridgeTheme['deleteDocumentPage']>>().resolves(),
+        deleteLibrary: stub<Parameters<AppBridgeTheme['deleteLibrary']>>().resolves(),
+        deleteLink: stub<Parameters<AppBridgeTheme['deleteLink']>>().resolves(),
+        deleteStandardDocument: stub<Parameters<AppBridgeTheme['deleteStandardDocument']>>().resolves(),
+        getBrandId: stub<Parameters<AppBridgeTheme['getBrandId']>>().returns(brandId),
+        getBrandportalLink: stub<Parameters<AppBridgeTheme['getBrandportalLink']>>().resolves(
+            BrandportalLinkDummy.with(),
+        ),
+        getTranslationLanguage: stub<Parameters<AppBridgeTheme['getTranslationLanguage']>>().returns(language),
+        moveDocument: stub<Parameters<AppBridgeTheme['moveDocument']>>().resolves(DocumentDummy.with(DOCUMENT_ID_1)),
+        moveDocumentCategory: stub<Parameters<AppBridgeTheme['moveDocumentCategory']>>().resolves(
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1, []),
+        ),
+        moveDocumentGroup: stub<Parameters<AppBridgeTheme['moveDocumentGroup']>>().resolves(
+            DocumentGroupDummy.with(DOCUMENT_CATEGORY_ID_1, []),
+        ),
+        moveDocumentPage: stub<Parameters<AppBridgeTheme['moveDocumentPage']>>().resolves(),
+        moveDocumentPageBetweenDocuments:
+            stub<Parameters<AppBridgeTheme['moveDocumentPageBetweenDocuments']>>().resolves(),
+        openNavigationManager: stub<Parameters<AppBridgeTheme['openNavigationManager']>>(),
+        updateDocumentPageTargets: stub<Parameters<AppBridgeTheme['updateDocumentPageTargets']>>().resolves(
+            UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3]),
+        ),
+        updateDocumentTargets: stub<Parameters<AppBridgeTheme['updateDocumentTargets']>>().resolves(
+            UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3]),
+        ),
+    };
 };

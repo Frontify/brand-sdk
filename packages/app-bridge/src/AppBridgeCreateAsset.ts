@@ -1,10 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetApi, OauthTokens, PostExternalAssetParams } from './types';
+import type { AssetApi, NotifyData, OauthTokens, PostExternalAssetParams } from './types';
 import { Topic } from './types';
-import { generateRandomString } from './utilities/hash';
-import { NotifyData, notify } from './utilities/notify';
-import { subscribe } from './utilities/subscribe';
+import { generateRandomString, notify, subscribe } from './utilities';
 
 const PUBSUB_TOKEN = generateRandomString();
 const DEFAULT_TIMEOUT = 3 * 1000;
