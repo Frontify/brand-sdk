@@ -669,10 +669,13 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updatePage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
-                documentPage: DocumentPageDummy.with(1),
-                action: 'update',
-            });
+            expect(emitSpy).toHaveBeenCalledWith(
+                `AppBridge:GuidelineDocumentPageAction:${DocumentPageDummy.with(1).documentId}`,
+                {
+                    documentPage: DocumentPageDummy.with(1),
+                    action: 'update',
+                },
+            );
         });
     });
 
