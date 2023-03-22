@@ -6,6 +6,7 @@ export * from './AssetApiDummy';
 export * from './AssetDummy';
 export * from './BrandportalLinkApiDummy';
 export * from './BrandportalLinkDummy';
+export * from './BulkDownloadApiDummy';
 export * from './ColorApiDummy';
 export * from './ColorDummy';
 export * from './ColorPaletteApiDummy';

@@ -2,6 +2,7 @@
 
 export * from './Asset';
 export * from './BrandportalLink';
+export * from './BulkDownload';
 export * from './Color';
 export * from './ColorPalette';
 export * from './CoverPage';
