@@ -1,6 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Asset } from './Asset';
+import { SnakeCasedPropertiesDeep } from 'type-fest';
+import type { Asset, AssetApi } from './Asset';
+
+export type DocumentBlockAssetApi = Omit<SnakeCasedPropertiesDeep<DocumentBlockAsset>, 'asset'> & { asset: AssetApi };
 
 export type DocumentBlockAsset = {
     id: number;

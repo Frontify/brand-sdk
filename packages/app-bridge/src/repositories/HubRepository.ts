@@ -1,23 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { HttpClient, rgbObjectToRgbString, rgbStringToRgbObject } from '../utilities';
-
-/**
- * @deprecated
- */
-export const getHub = async (portalId: number): Promise<Record<string, unknown>> => {
-    const { result } = await HttpClient.get(`/api/hub/settings/${portalId}`);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
-    return result.hub;
-};
-
-/**
- * @deprecated
- */
-export const updateHub = async (portalId: number, data: Record<string, unknown>): Promise<void> => {
-    await HttpClient.post(`/api/hub/settings/${portalId}`, data);
-};
+import { rgbObjectToRgbString, rgbStringToRgbObject } from '../utilities';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mapHubApiToFlatSettingsDottedNotation = (hubSettings: any) => ({

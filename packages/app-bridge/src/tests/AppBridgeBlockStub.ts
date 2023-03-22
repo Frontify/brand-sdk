@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mitt, { Emitter } from 'mitt';
-import { SinonStubbedInstance, createStubInstance, spy } from 'sinon';
+import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { User } from '../types';
+import { Template, User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
@@ -20,12 +20,13 @@ export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
     blockAssets?: Record<string, Asset[]>;
     editorState?: boolean;
-    openAssetChooser?: () => void;
+    openAssetChooser?: (callback: Parameters<AppBridgeBlock['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
     blockId?: number;
     sectionId?: number;
     projectId?: number;
     user?: User;
+    language?: string;
 };
 
 export const getAppBridgeBlockStub = ({
@@ -38,6 +39,7 @@ export const getAppBridgeBlockStub = ({
     sectionId = SECTION_ID,
     projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
+    language = 'en',
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
@@ -47,58 +49,96 @@ export const getAppBridgeBlockStub = ({
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
 
-    const appBridgeBlock = createStubInstance(AppBridgeBlock, {
-        getBlockId: blockId,
-        getSectionId: sectionId,
-        getProjectId: projectId,
-        getEditorState: editorState,
-        getBlockSettings: Promise.resolve(window.blockSettings),
-        getAvailablePalettes: Promise.resolve([
+    return {
+        getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
+        getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
+        getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
+        getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
+        getBlockSettings: stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
+        getAvailablePalettes: stub<Parameters<AppBridgeBlock['getAvailablePalettes']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        getColorPalettes: Promise.resolve([
+        getColorPalettes: stub<Parameters<AppBridgeBlock['getColorPalettes']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        getColorsByIds: Promise.resolve([ColorDummy.red(9834), ColorDummy.green(342), ColorDummy.yellow(9314)]),
-        getColorsByColorPaletteId: Promise.resolve([
+        createColorPalette: stub<Parameters<AppBridgeBlock['createColorPalette']>>().resolves(
+            ColorPaletteDummy.with(678),
+        ),
+        updateColorPalette: stub<Parameters<AppBridgeBlock['updateColorPalette']>>().resolves(
+            ColorPaletteDummy.with(678),
+        ),
+        getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
             ColorDummy.red(9834),
             ColorDummy.green(342),
             ColorDummy.yellow(9314),
         ]),
-        getColorPalettesWithColors: Promise.resolve([
+        getColorsByColorPaletteId: stub<Parameters<AppBridgeBlock['getColorsByColorPaletteId']>>().resolves([
+            ColorDummy.red(9834),
+            ColorDummy.green(342),
+            ColorDummy.yellow(9314),
+        ]),
+        getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        getAvailableColors: Promise.resolve([]),
-        getCurrentLoggedUser: Promise.resolve(user),
-        downloadColorKit: '/api/color/export/6/zip/678,427,679',
-    });
+        deleteColorPalette: stub<Parameters<AppBridgeBlock['deleteColorPalette']>>().resolves(),
+        getAvailableColors: stub<Parameters<AppBridgeBlock['getAvailableColors']>>().resolves([]),
+        getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
+        downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
+            `/api/color/export/${PROJECT_ID}/zip/500`,
+        ),
+        getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
+            Promise.resolve(AssetDummy.with(assetId)),
+        ),
+        closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
+            closeAssetChooser();
+        }),
+        openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
+            openAssetChooser(callback);
+        }),
+        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(async () => {
+            return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
+                const addedAssetIdsList = addedAssetIds[key] ?? [];
+                const deletedAssetIdsList = deletedAssetIds[key] ?? [];
+                assetsDiff[key] = [
+                    ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
+                    ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
+                ];
+                return assetsDiff;
+            }, {});
+        }),
+        addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
+            async (key, assetsIds) => {
+                addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
+            },
+        ),
+        deleteAssetIdsFromBlockAssetKey: stub<
+            Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>
+        >().callsFake(async (key, assetIds) => {
+            deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
+        }),
+        getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
+        getColors: stub<Parameters<AppBridgeBlock['getColors']>>().resolves([
+            ColorDummy.red(9834),
+            ColorDummy.green(342),
+            ColorDummy.yellow(9314),
+        ]),
+        updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
+            Promise.resolve(ColorDummy.red(colorId)),
+        ),
 
-    appBridgeBlock.getAssetById.callsFake((assetId) => Promise.resolve(AssetDummy.with(assetId)));
-    appBridgeBlock.closeAssetChooser.callsFake(closeAssetChooser);
-    appBridgeBlock.openAssetChooser.callsFake(openAssetChooser);
-    appBridgeBlock.getBlockAssets.callsFake(async () => {
-        return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
-            const addedAssetIdsList = addedAssetIds[key] ?? [];
-            const deletedAssetIdsList = deletedAssetIds[key] ?? [];
-            assetsDiff[key] = [
-                ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
-                ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
-            ];
-            return assetsDiff;
-        }, {});
-    });
-    appBridgeBlock.addAssetIdsToBlockAssetKey.callsFake(async (key, assetsIds) => {
-        addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
-    });
-    appBridgeBlock.deleteAssetIdsFromBlockAssetKey.callsFake(async (key, assetIds) => {
-        deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
-    });
-
-    return appBridgeBlock;
+        // TODO: Stub the following methods
+        closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
+        openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
+        createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
+        deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
+        getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as Template),
+        openAssetViewer: stub<Parameters<AppBridgeBlock['openAssetViewer']>>(),
+        updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
+    };
 };
