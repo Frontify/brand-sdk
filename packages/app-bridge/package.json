@@ -54,7 +54,7 @@
         "@vitest/ui": "0.28.5",
         "eslint": "8.34.0",
         "eslint-plugin-notice": "^0.9.10",
-        "happy-dom": "8.7.0",
+        "happy-dom": "8.9.0",
         "mitt": "3.0.0",
         "msw": "1.0.1",
         "prettier": "2.8.4",
