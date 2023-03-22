@@ -119,11 +119,7 @@ export interface AppBridgeTheme {
         documentCategoryId?: number,
     ): Promise<void>;
 
-    moveDocumentPageBetweenDocuments(
-        documentPageId: number,
-        sourceDocumentId: number,
-        targetDocumentId: number,
-    ): Promise<void>;
+    moveDocumentPageBetweenDocuments(id: number, targetDocumentId: number): Promise<void>;
 
     duplicateDocumentPage(documentPageId: number): Promise<DocumentPageDuplicate>;
 
