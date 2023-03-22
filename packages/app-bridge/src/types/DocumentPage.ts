@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep, RequireAtLeastOne } from 'type-fest';
+import type { CamelCasedPropertiesDeep, RequireAtLeastOne, SetRequired } from 'type-fest';
 
 import { LinkType } from './Document';
 import { SingleTargetApi } from './Targets';
@@ -54,18 +54,18 @@ export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
 
 type DocumentPageRequest = {
     id: number;
-    title: string;
-    documentId: number;
+    title?: string;
+    documentId?: number;
     linkUrl?: string | null;
     categoryId?: number | null;
     visibility?: DocumentPageVisibility;
 };
 
-export type DocumentPageCreate = Omit<DocumentPageRequest, 'id'>;
+export type DocumentPageCreate = Omit<SetRequired<DocumentPageRequest, 'title' | 'documentId'>, 'id'>;
 
 export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
-    'categoryId' | 'linkUrl' | 'title' | 'visibility'
+    'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
 >;
 
 export type DocumentPageDuplicateApi = {
