@@ -11,6 +11,8 @@ import type {
     ColorPatch,
     Template,
     User,
+    GenerateBulkDownloadTokenRequest,
+    BulkDownload,
 } from './types';
 
 export interface AppBridgeBlock {
@@ -83,4 +85,10 @@ export interface AppBridgeBlock {
     closeTemplateChooser(): void;
 
     getCurrentLoggedUser(): Promise<User>;
+
+    generateBulkDownloadToken(data: GenerateBulkDownloadTokenRequest): Promise<string>;
+
+    generateBulkDownloadRequest(token: string): Promise<string>;
+
+    getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 }
