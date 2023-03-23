@@ -21,11 +21,9 @@ import type {
     DocumentPage,
     DocumentPageCreate,
     DocumentPageDuplicate,
-    DocumentPageTargets,
     DocumentPageUpdate,
     DocumentStandardCreate,
     DocumentStandardUpdate,
-    DocumentTargets,
     TargetsUpdate,
 } from './types';
 
