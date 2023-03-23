@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-
-import { AppBridgeTheme } from '../AppBridgeTheme';
 import { DocumentPageTargets } from '../types';
+
+import type { AppBridgeBase } from '../AppBridgeBase';
 
 export type UseDocumentPageTargetsReturnType = {
     documentPageTargets: Nullable<DocumentPageTargets>;
@@ -18,7 +18,7 @@ export type DocumentPageTargetEvent = {
     };
 };
 
-export const useDocumentPageTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentPageTargetsReturnType => {
+export const useDocumentPageTargets = (appBridge: AppBridgeBase, id: number): UseDocumentPageTargetsReturnType => {
     const [documentPageTargets, setDocumentPageTargets] = useState<Nullable<DocumentPageTargets>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

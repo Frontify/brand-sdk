@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { AppBridgeTheme } from '../AppBridgeTheme';
-import { DocumentTargets } from '../types';
+import type { DocumentTargets } from '../types';
+import type { AppBridgeBase } from '../AppBridgeBase';
 
 export type UseDocumentTargetsReturnType = {
     documentTargets: Nullable<DocumentTargets>;
@@ -18,7 +18,7 @@ type DocumentTargetEvent = {
     };
 };
 
-export const useDocumentTargets = (appBridge: AppBridgeTheme, id: number): UseDocumentTargetsReturnType => {
+export const useDocumentTargets = (appBridge: AppBridgeBase, id: number): UseDocumentTargetsReturnType => {
     const [documentTargets, setDocumentTargets] = useState<Nullable<DocumentTargets>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

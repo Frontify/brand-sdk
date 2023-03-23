@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { AppBridgeBase } from '../AppBridgeBase';
 import type { DocumentSection } from '../types';
 
-export const useDocumentSection = (appBridge: AppBridgeTheme, documentPageId: number) => {
+export const useDocumentSection = (appBridge: AppBridgeBase, documentPageId: number) => {
     const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
 
     useEffect(() => {
