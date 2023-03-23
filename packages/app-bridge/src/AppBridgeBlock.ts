@@ -3,16 +3,16 @@
 import type {
     Asset,
     AssetChooserOptions,
+    BulkDownload,
     Color,
     ColorCreate,
     ColorPalette,
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    GenerateBulkDownloadTokenRequestApi,
     Template,
     User,
-    GenerateBulkDownloadTokenRequest,
-    BulkDownload,
 } from './types';
 
 export interface AppBridgeBlock {
@@ -86,9 +86,9 @@ export interface AppBridgeBlock {
 
     getCurrentLoggedUser(): Promise<User>;
 
-    generateBulkDownloadToken(data: GenerateBulkDownloadTokenRequest): Promise<string>;
+    getBulkDownloadToken(data: GenerateBulkDownloadTokenRequestApi): Promise<string>;
 
-    generateBulkDownloadRequest(token: string): Promise<string>;
+    getBulkDownloadByToken(token: string): Promise<string>;
 
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 }

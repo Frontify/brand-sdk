@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { BulkDownload } from '../types';
+import { BulkDownloadApi } from '../types';
 
-export class BulkDownloadApiDummy {
-    static with(): BulkDownload {
+export class BulkDownloadDummy {
+    static with(): BulkDownloadApi {
         return {
             download_url: 'dummy-url',
             signature: 'dummy-signature',
