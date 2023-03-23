@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { DocumentPageTargets } from '../types';
 
-import type { AppBridgeBase } from '../AppBridgeBase';
+import type { AppBridgeBlock } from '../AppBridgeBlock';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 export type UseDocumentPageTargetsReturnType = {
     documentPageTargets: Nullable<DocumentPageTargets>;
@@ -18,7 +19,10 @@ export type DocumentPageTargetEvent = {
     };
 };
 
-export const useDocumentPageTargets = (appBridge: AppBridgeBase, id: number): UseDocumentPageTargetsReturnType => {
+export const useDocumentPageTargets = (
+    appBridge: AppBridgeBlock | AppBridgeTheme,
+    id: number,
+): UseDocumentPageTargetsReturnType => {
     const [documentPageTargets, setDocumentPageTargets] = useState<Nullable<DocumentPageTargets>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

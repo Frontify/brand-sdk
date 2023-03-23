@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import type { AppBridgeBase } from '../AppBridgeBase';
+import type { AppBridgeBlock } from '../AppBridgeBlock';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentCategory, EmitterAction } from '../types';
 
 type DocumentPageEvent = {
@@ -12,7 +13,7 @@ type DocumentPageEvent = {
 
 const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocumentCategories = (appBridge: AppBridgeBase, documentId: number) => {
+export const useDocumentCategories = (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const [documentCategories, setDocumentCategories] = useState<Map<number, DocumentCategory>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -133,7 +134,7 @@ const actionHandlers = {
     default: (categories: Map<number, DocumentCategory>) => categories,
 };
 
-const fetchDocumentCategories = async (appBridge: AppBridgeBase, documentId: number) => {
+const fetchDocumentCategories = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const categories = await appBridge.getDocumentCategoriesByDocumentId(documentId);
 
     return new Map(categories.map((category) => [category.id, category]));

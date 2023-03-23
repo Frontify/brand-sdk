@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import type { AppBridgeBase } from '../AppBridgeBase';
+import type { AppBridgeBlock } from '../AppBridgeBlock';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document } from '../types';
 
 const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocuments = (appBridge: AppBridgeBase) => {
+export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme) => {
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -63,7 +64,7 @@ export const useDocuments = (appBridge: AppBridgeBase) => {
     return { documents, getUngroupedDocuments, getGroupedDocuments, refetch, isLoading };
 };
 
-const fetchDocuments = async (appBridge: AppBridgeBase) => {
+const fetchDocuments = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
     const [groups, documents] = await Promise.all([appBridge.getDocumentGroups(), appBridge.getAllDocuments()]);
 
     // TODO: has to be done like this as BE does not support returning documentGroupId in documents. Remove it once it is supported
