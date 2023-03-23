@@ -44,7 +44,7 @@
         "type-fest": "3.6.0"
     },
     "devDependencies": {
-        "@frontify/eslint-config-react": "0.15.5",
+        "@frontify/eslint-config-react": "0.15.7",
         "@testing-library/react": "14.0.0",
         "@types/lodash-es": "4.17.6",
         "@types/react": "18.0.28",
