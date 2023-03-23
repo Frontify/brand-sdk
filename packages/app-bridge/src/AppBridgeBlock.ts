@@ -10,7 +10,7 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
-    GenerateBulkDownloadTokenRequestApi,
+    GetBulkDownloadTokenApi,
     Template,
     User,
 } from './types';
@@ -86,9 +86,9 @@ export interface AppBridgeBlock {
 
     getCurrentLoggedUser(): Promise<User>;
 
-    getBulkDownloadToken(data: GenerateBulkDownloadTokenRequestApi): Promise<string>;
+    getBulkDownloadToken(data: GetBulkDownloadTokenApi): Promise<string>;
 
-    getBulkDownloadByToken(token: string): Promise<string>;
+    getBulkDownloadByToken(token: string): Promise<BulkDownload>;
 
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 }
