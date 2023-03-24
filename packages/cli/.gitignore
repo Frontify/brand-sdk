@@ -3,3 +3,5 @@ dist
 .idea
 coverage
 .DS_Store
+templates/**/node_modules
+templates/**/package-lock.json
