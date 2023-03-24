@@ -52,7 +52,7 @@ describe('useBulkDownload', () => {
     });
 
     it('should set status to error if getBulkDownloadByToken throws an error', async () => {
-        appBridgeStub.getBulkDownloadToken.rejects(appBridgeError);
+        appBridgeStub.getBulkDownloadByToken.rejects(appBridgeError);
         const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
         result.current.generateBulkDownload();
         await waitFor(() => {
