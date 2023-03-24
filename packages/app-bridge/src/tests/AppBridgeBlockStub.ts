@@ -135,10 +135,10 @@ export const getAppBridgeBlockStub = ({
 
         getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
-            BulkDownloadDummy.with(),
+            BulkDownloadDummy.default(),
         ),
         getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
-            BulkDownloadDummy.with(),
+            BulkDownloadDummy.default(),
         ),
 
         // TODO: Stub the following methods

@@ -20,7 +20,7 @@ export const useBulkDownload = (appBridge: AppBridgeBlock, assetIds: number[], s
 
     const generateBulkDownload = async () => {
         try {
-            const token = await appBridge.getBulkDownloadToken({ assetIds, setIds, language });
+            const token = await appBridge.getBulkDownloadToken(assetIds, setIds);
             setToken(token);
             setStatus(BulkDownloadStatus.Started);
         } catch (error) {
@@ -61,9 +61,6 @@ export const useBulkDownload = (appBridge: AppBridgeBlock, assetIds: number[], s
                     console.error(error);
                 }
             }, 2500);
-        }
-        if (status === BulkDownloadStatus.Ready && bulkDownload?.downloadUrl) {
-            //window.open(bulkDownload.downloadUrl, '_blank');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);

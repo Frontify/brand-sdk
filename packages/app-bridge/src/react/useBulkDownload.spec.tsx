@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, it } from 'vitest';
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
+import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import sinon from 'sinon';
 import { getAppBridgeBlockStub } from '../tests';
 import { BulkDownloadStatus, useBulkDownload } from './useBulkDownload';
@@ -13,7 +13,7 @@ describe('useBulkDownload', () => {
         cleanup();
     });
 
-    it('inital state should be init', () => {
+    it('should have init as initial state', () => {
         const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2], [], 'en'));
         expect(result.current.status).toBe(BulkDownloadStatus.Init);
     });
@@ -21,11 +21,7 @@ describe('useBulkDownload', () => {
     it('should set token and after generateBulkDownload resolves', async () => {
         const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], 'en'));
         result.current.generateBulkDownload();
-        sinon.assert.calledOnceWithExactly(appBridgeStub.getBulkDownloadToken, {
-            assetIds: [1, 2, 3],
-            setIds: [],
-            language: 'en',
-        });
+        sinon.assert.calledOnceWithExactly(appBridgeStub.getBulkDownloadToken, [1, 2, 3], []);
 
         await waitFor(() => {
             expect(result.current.token).toBe('token');
