@@ -21,7 +21,7 @@ export const createNewContentBlock = (contentBlockName: string, template = 'tail
     Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);
     const blockNameInBlue = pc.blue(`./${contentBlockName}`);
     Logger.defaultInfo(`${Logger.spacer(4)}cd ${blockNameInBlue}`);
-    Logger.defaultInfo(`${Logger.spacer(4)}npm ci`);
+    Logger.defaultInfo(`${Logger.spacer(4)}npm i`);
     Logger.defaultInfo(`${Logger.spacer(4)}npm run serve`);
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}Happy hacking!`);
