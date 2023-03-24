@@ -3,12 +3,14 @@
 import type {
     Asset,
     AssetChooserOptions,
+    BulkDownload,
     Color,
     ColorCreate,
     ColorPalette,
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    GetBulkDownloadToken,
     Template,
     User,
 } from './types';
@@ -83,4 +85,10 @@ export interface AppBridgeBlock {
     closeTemplateChooser(): void;
 
     getCurrentLoggedUser(): Promise<User>;
+
+    getBulkDownloadToken(data: GetBulkDownloadToken): Promise<string>;
+
+    getBulkDownloadByToken(token: string): Promise<BulkDownload>;
+
+    getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 }
