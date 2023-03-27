@@ -14,7 +14,7 @@ export type LinkEvent = 'sidebar.open';
 export type Link = {
     label?: string;
     replace?: string;
-} & ({ href: string; target?: '_self' | '_blank'; } | { event: LinkEvent; });
+} & ({ href: string; target?: '_self' | '_blank' } | { event: LinkEvent });
 
 export enum NotificationBlockDividerPosition {
     Top = 'Top',
