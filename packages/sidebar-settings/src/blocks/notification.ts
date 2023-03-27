@@ -9,14 +9,12 @@ export enum NotificationStyleType {
     Info = 'Info',
 }
 
+export type LinkEvent = 'sidebar.open';
+
 export type Link = {
     label?: string;
     replace?: string;
-    href?: string;
-    type?: 'internal' | 'external';
-    event?: 'sidebar.open';
-    target?: '_self' | '_blank';
-};
+} & ({ href: string; target?: '_self' | '_blank'; } | { event: LinkEvent; });
 
 export enum NotificationBlockDividerPosition {
     Top = 'Top',
