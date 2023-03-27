@@ -50,7 +50,7 @@ export const useBulkDownload = (appBridge: AppBridgeBlock, assetIds: number[], s
 
                     if (download.downloadUrl) {
                         setStatus(BulkDownloadState.Ready);
-                        //clearInterval(interval);
+                        clearInterval(interval);
                     }
                 } catch (error) {
                     setStatus(BulkDownloadState.Error);

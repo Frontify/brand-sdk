@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, renderHook, waitFor, act } from '@testing-library/react';
+import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import sinon from 'sinon';
 import { getAppBridgeBlockStub } from '../tests';
 import { BulkDownloadState, useBulkDownload } from './useBulkDownload';
