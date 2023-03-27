@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, renderHook, waitFor, act } from '@testing-library/react';
 import sinon from 'sinon';
 import { getAppBridgeBlockStub } from '../tests';
 import { BulkDownloadState, useBulkDownload } from './useBulkDownload';
@@ -66,6 +66,56 @@ describe('useBulkDownload', () => {
         result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(BulkDownloadState.Pending);
+        });
+    });
+
+    it('should call getBulkDownloadBySignature three times till it resolves with downloadUrl', async () => {
+        vi.useFakeTimers();
+        appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
+        appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
+        appBridgeStub.getBulkDownloadBySignature.onCall(1).resolves({ downloadUrl: '', signature: 'signature' });
+
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        result.current.generateBulkDownload();
+
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(2500);
+        });
+
+        for (let i = 0; i < 3; i++) {
+            await vi.runOnlyPendingTimersAsync();
+        }
+
+        // use Real Timers again otherwise waitFor will fail, because it would use the fake timer internally
+        vi.useRealTimers();
+        await waitFor(() => {
+            sinon.assert.calledThrice(appBridgeStub.getBulkDownloadBySignature);
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+        });
+    });
+
+    it('should call getBulkDownloadBySignature two times, second call will be rejected, state should be Error', async () => {
+        vi.useFakeTimers();
+        appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
+        appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
+        appBridgeStub.getBulkDownloadBySignature.onCall(1).rejects(appBridgeError);
+
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        result.current.generateBulkDownload();
+
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(2500);
+        });
+
+        for (let i = 0; i < 2; i++) {
+            await vi.runOnlyPendingTimersAsync();
+        }
+
+        // use Real Timers again otherwise waitFor will fail, because its would use the fake timer internally
+        vi.useRealTimers();
+        await waitFor(() => {
+            sinon.assert.calledTwice(appBridgeStub.getBulkDownloadBySignature);
+            expect(result.current.status).toBe(BulkDownloadState.Error);
         });
     });
 });

@@ -47,11 +47,11 @@ export const useBulkDownload = (appBridge: AppBridgeBlock, assetIds: number[], s
             const interval = setInterval(async () => {
                 try {
                     const download = await appBridge.getBulkDownloadBySignature(signature);
-                    if (!download.downloadUrl) {
-                        return;
+
+                    if (download.downloadUrl) {
+                        setStatus(BulkDownloadState.Ready);
+                        //clearInterval(interval);
                     }
-                    setStatus(BulkDownloadState.Ready);
-                    clearInterval(interval);
                 } catch (error) {
                     setStatus(BulkDownloadState.Error);
                     console.error(error);
