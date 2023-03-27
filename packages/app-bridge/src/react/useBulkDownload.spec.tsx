@@ -15,17 +15,18 @@ describe('useBulkDownload', () => {
     });
     afterEach(() => {
         cleanup();
+        sinon.restore();
     });
 
     it('should have init as initial state', () => {
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2], [], ''));
         expect(result.current.status).toBe(BulkDownloadState.Init);
     });
 
     it('should call getBulkDownloadToken with the correct arguments', async () => {
         const assetIds = [1, 2, 3];
         const setIds = [4, 5, 6];
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, assetIds, setIds));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, assetIds, setIds, ''));
         result.current.generateBulkDownload();
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.getBulkDownloadToken, assetIds, setIds);
@@ -34,7 +35,7 @@ describe('useBulkDownload', () => {
 
     it('should set status to error if getBulkDownloadToken throws an error', async () => {
         appBridgeStub.getBulkDownloadToken.rejects(appBridgeError);
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], ''));
         result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(BulkDownloadState.Error);
@@ -42,7 +43,7 @@ describe('useBulkDownload', () => {
     });
 
     it('should set signature and set status to ready', async () => {
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], ''));
         result.current.generateBulkDownload();
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.getBulkDownloadByToken, 'token');
@@ -53,7 +54,7 @@ describe('useBulkDownload', () => {
 
     it('should set status to error if getBulkDownloadByToken throws an error', async () => {
         appBridgeStub.getBulkDownloadByToken.rejects(appBridgeError);
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], ''));
         result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(BulkDownloadState.Error);
@@ -62,7 +63,7 @@ describe('useBulkDownload', () => {
 
     it('should set status to pending if getBulkDownloadByToken doesnt return a signature', async () => {
         appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: '' });
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], ''));
         result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(BulkDownloadState.Pending);
@@ -75,7 +76,7 @@ describe('useBulkDownload', () => {
         appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
         appBridgeStub.getBulkDownloadBySignature.onCall(1).resolves({ downloadUrl: '', signature: 'signature' });
 
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], ''));
         result.current.generateBulkDownload();
 
         await act(async () => {
@@ -91,16 +92,17 @@ describe('useBulkDownload', () => {
         await waitFor(() => {
             sinon.assert.calledThrice(appBridgeStub.getBulkDownloadBySignature);
             expect(result.current.status).toBe(BulkDownloadState.Ready);
+            expect(result.current.download).toBe('dummy-url');
         });
     });
 
-    it('should call getBulkDownloadBySignature two times, second call will be rejected, state should be Error', async () => {
+    it('should call getBulkDownloadBySignature twice, second call will be rejected, state should be Error', async () => {
         vi.useFakeTimers();
         appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
         appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
         appBridgeStub.getBulkDownloadBySignature.onCall(1).rejects(appBridgeError);
 
-        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], ''));
         result.current.generateBulkDownload();
 
         await act(async () => {
@@ -116,6 +118,32 @@ describe('useBulkDownload', () => {
         await waitFor(() => {
             sinon.assert.calledTwice(appBridgeStub.getBulkDownloadBySignature);
             expect(result.current.status).toBe(BulkDownloadState.Error);
+        });
+    });
+
+    it('should call getBulkDownloadBySignature once, if initialised with signature', async () => {
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], 'signature'));
+        result.current.generateBulkDownload();
+
+        await waitFor(() => {
+            sinon.assert.calledOnce(appBridgeStub.getBulkDownloadBySignature);
+            sinon.assert.notCalled(appBridgeStub.getBulkDownloadByToken);
+            sinon.assert.notCalled(appBridgeStub.getBulkDownloadToken);
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+            expect(result.current.download).toBe('dummy-url');
+            expect(result.current.signature).toBe('signature');
+        });
+    });
+
+    it('should call getBulkDownloadBySignature once, if initialised with signature and token', async () => {
+        appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], 'signature'));
+        result.current.generateBulkDownload();
+
+        await waitFor(() => {
+            sinon.assert.calledTwice(appBridgeStub.getBulkDownloadBySignature);
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+            expect(result.current.download).toBe('dummy-url');
         });
     });
 });
