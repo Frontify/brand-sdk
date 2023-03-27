@@ -39,17 +39,17 @@ export const useBulkDownload = (
     };
 
     const generateBulkDownload = async () => {
-        if (signature !== '') {
+        if (signature) {
             getDownloadUrl();
-            return;
-        }
-        try {
-            const token = await appBridge.getBulkDownloadToken(assetIds, setIds);
-            setToken(token);
-            setStatus(BulkDownloadState.Started);
-        } catch (error) {
-            setStatus(BulkDownloadState.Error);
-            console.error(error);
+        } else {
+            try {
+                const token = await appBridge.getBulkDownloadToken(assetIds, setIds);
+                setToken(token);
+                setStatus(BulkDownloadState.Started);
+            } catch (error) {
+                setStatus(BulkDownloadState.Error);
+                console.error(error);
+            }
         }
     };
 

@@ -146,4 +146,16 @@ describe('useBulkDownload', () => {
             expect(result.current.download).toBe('dummy-url');
         });
     });
+
+    it('should call getBulkDownloadBySignature once, if initialised with signature, but signature is invalid', async () => {
+        appBridgeStub.getBulkDownloadBySignature.onCall(0).rejects(appBridgeError);
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], [], 'invalid-signature'));
+        result.current.generateBulkDownload();
+
+        await waitFor(() => {
+            sinon.assert.calledTwice(appBridgeStub.getBulkDownloadBySignature);
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+            expect(result.current.download).toBe('dummy-url');
+        });
+    });
 });
