@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import sinon from 'sinon';
 import { getAppBridgeBlockStub } from '../tests';
@@ -57,6 +57,15 @@ describe('useBulkDownload', () => {
         result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(BulkDownloadState.Error);
+        });
+    });
+
+    it('should set status to pending if getBulkDownloadByToken doesnt return a signature', async () => {
+        appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: '' });
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub, [1, 2, 3], []));
+        result.current.generateBulkDownload();
+        await waitFor(() => {
+            expect(result.current.status).toBe(BulkDownloadState.Pending);
         });
     });
 });
