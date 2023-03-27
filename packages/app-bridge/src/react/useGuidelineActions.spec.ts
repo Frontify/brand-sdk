@@ -655,6 +655,7 @@ describe('useGuidelineActions hook', () => {
     });
 
     it('should update a page and emit an event', async () => {
+        const documentPage = DocumentPageDummy.with(1);
         const updatePage = vi.spyOn(useGuidelineActionsStub, 'updatePage');
 
         const page: DocumentPageUpdate = {
@@ -669,9 +670,9 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updatePage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
-                documentPage: DocumentPageDummy.with(1),
+            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${documentPage.documentId}`, {
                 action: 'update',
+                documentPage,
             });
         });
     });

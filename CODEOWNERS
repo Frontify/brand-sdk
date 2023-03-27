@@ -1,0 +1,4 @@
+* @Frontify/guidelines-navigation-themes
+**/package.json
+packages/cli/templates/**/package-lock.json
+pnpm-lock.yaml

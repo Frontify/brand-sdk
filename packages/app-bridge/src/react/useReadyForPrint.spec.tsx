@@ -5,7 +5,7 @@ import { afterEach, describe, expect, test } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import { useReadyForPrint } from './useReadyForPrint';
-import { AppBridgeBlock } from '../AppBridgeBlock';
+import { getAppBridgeBlockStub } from '../tests';
 
 const IS_READY_CONTAINER = 'is-ready-container';
 const SET_TO_FALSE_BUTTON = 'set-to-false-button';
@@ -15,7 +15,7 @@ const IS_NOT_READY_FOR_PRINT = 'is not ready for print';
 const BLOCK_ID = 345;
 
 const ReadyForPrintDummy = () => {
-    const appBridge = new AppBridgeBlock(BLOCK_ID);
+    const appBridge = getAppBridgeBlockStub({ blockId: BLOCK_ID });
     const { isReadyForPrint, setIsReadyForPrint } = useReadyForPrint(appBridge);
 
     return (

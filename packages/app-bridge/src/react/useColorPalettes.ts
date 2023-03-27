@@ -77,9 +77,7 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
     };
 
     const downloadColorKit = (selectedColorPalettes: number[]) => {
-        const downloadColorPalettesLink = appBridge.downloadColorKit(selectedColorPalettes);
-
-        return downloadColorPalettesLink;
+        return appBridge.downloadColorKit(selectedColorPalettes);
     };
 
     return {
