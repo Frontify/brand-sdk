@@ -67,6 +67,7 @@ export const useBulkDownload = (appBridge: AppBridgeBlock) => {
             }, 2500);
             return () => clearInterval(interval);
         }
+        return;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
