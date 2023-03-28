@@ -1,6 +1,11 @@
 {
     "name": "root",
     "private": true,
+    "engines": {
+        "node": ">=18",
+        "pnpm": ">=8.0.0",
+        "npm": "<=0"
+    },
     "scripts": {
         "build": "pnpm build:app-bridge && pnpm build:sidebar-settings && pnpm build:guideline-packages && pnpm build:cli",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
