@@ -4,6 +4,7 @@ import { act, renderHook } from '@testing-library/react';
 import mitt from 'mitt';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { DocumentTargetsDummy } from '../tests';
@@ -12,7 +13,7 @@ import { useDocumentTargets } from './useDocumentTargets';
 const DOCUMENT_ID = 92341;
 
 describe('useDocumentTargets', () => {
-    const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
+    const appBridge: AppBridgeBlock | AppBridgeTheme = {} as AppBridgeBlock | AppBridgeTheme;
 
     beforeEach(() => {
         window.emitter = mitt();

@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { AppBridgeBase } from './AppBridgeBase';
 import type {
     BrandportalLink,
-    Color,
-    ColorPalette,
     CoverPage,
     CoverPageCreate,
     CoverPageUpdate,
@@ -22,27 +21,18 @@ import type {
     DocumentPage,
     DocumentPageCreate,
     DocumentPageDuplicate,
-    DocumentPageTargets,
     DocumentPageUpdate,
-    DocumentSection,
     DocumentStandardCreate,
     DocumentStandardUpdate,
-    DocumentTargets,
     TargetsUpdate,
 } from './types';
 
-export interface AppBridgeTheme {
+export interface AppBridgeTheme extends AppBridgeBase {
     getPortalId(): number;
-
-    getProjectId(): number;
 
     getBrandId(): number;
 
-    getEditorState(): boolean;
-
     openNavigationManager(): void;
-
-    getTranslationLanguage(): string;
 
     getCoverPageSettings<Settings>(): Promise<Settings>;
 
@@ -142,27 +132,7 @@ export interface AppBridgeTheme {
 
     getUngroupedDocuments(): Promise<Document[]>;
 
-    getAllDocuments(): Promise<Document[]>;
-
-    getDocumentGroups(): Promise<DocumentGroup[]>;
-
-    getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
-
-    getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]>;
-
-    getUncategorizedPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
-
-    getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
-
-    getColorPalettes(): Promise<ColorPalette[]>;
-
-    getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
-
-    getDocumentTargets(documentId: number): Promise<DocumentTargets>;
-
     updateDocumentTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate>;
-
-    getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 
     updateDocumentPageTargets(targetIds: number[], documentPageIds: number[]): Promise<TargetsUpdate>;
 }
