@@ -13,13 +13,13 @@ export enum BulkDownloadState {
 
 export const useBulkDownload = (appBridge: AppBridgeBlock) => {
     const [status, setStatus] = useState<BulkDownloadState>(BulkDownloadState.Init);
-    const [token, setToken] = useState<string>('');
-    const [signature, setSignature] = useState<string>('');
-    const [download, setDownload] = useState<string>('');
+    const [token, setToken] = useState<Nullable<string>>(null);
+    const [signature, setSignature] = useState<Nullable<string>>(null);
+    const [downloadUrl, setDownloadUrl] = useState<Nullable<string>>(null);
 
     const generateBulkDownload = async (assetIds: number[], setIds?: number[]) => {
         try {
-            const token = await appBridge.getBulkDownloadToken(assetIds, setIds ?? []);
+            const token = await appBridge.getBulkDownloadToken(assetIds, setIds);
             setToken(token);
             setStatus(BulkDownloadState.Started);
         } catch (error) {
@@ -29,18 +29,20 @@ export const useBulkDownload = (appBridge: AppBridgeBlock) => {
     };
 
     const startDownload = async () => {
-        try {
-            const download = await appBridge.getBulkDownloadByToken(token);
-            download.signature && setSignature(download.signature);
-            if (download.downloadUrl) {
-                setDownload(download.downloadUrl);
-                setStatus(BulkDownloadState.Ready);
-            } else {
-                setStatus(BulkDownloadState.Pending);
+        if (token) {
+            try {
+                const download = await appBridge.getBulkDownloadByToken(token);
+                download.signature && setSignature(download.signature);
+                if (download.downloadUrl) {
+                    setDownloadUrl(download.downloadUrl);
+                    setStatus(BulkDownloadState.Ready);
+                } else {
+                    setStatus(BulkDownloadState.Pending);
+                }
+            } catch (error) {
+                setStatus(BulkDownloadState.Error);
+                console.error(error);
             }
-        } catch (error) {
-            setStatus(BulkDownloadState.Error);
-            console.error(error);
         }
     };
 
@@ -49,14 +51,15 @@ export const useBulkDownload = (appBridge: AppBridgeBlock) => {
             startDownload();
         }
 
+        let interval: number;
         if (status === BulkDownloadState.Pending && signature) {
-            const interval = setInterval(async () => {
+            interval = window.setInterval(async () => {
                 try {
                     const download = await appBridge.getBulkDownloadBySignature(signature);
                     download.signature && setSignature(download.signature);
                     if (download.downloadUrl) {
                         setStatus(BulkDownloadState.Ready);
-                        setDownload(download.downloadUrl);
+                        setDownloadUrl(download.downloadUrl);
                         clearInterval(interval);
                     }
                 } catch (error) {
@@ -65,11 +68,11 @@ export const useBulkDownload = (appBridge: AppBridgeBlock) => {
                     clearInterval(interval);
                 }
             }, 2500);
-            return () => clearInterval(interval);
         }
-        return;
+
+        return () => clearInterval(interval);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
-    return { generateBulkDownload, status, download };
+    return { generateBulkDownload, status, downloadUrl };
 };
