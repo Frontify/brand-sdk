@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { MultiInputLayout } from '.';
+import type { MultiInputLayout } from '@frontify/fondue';
 import type { BaseBlock } from './base';
 import type { ColorInputBlock } from './colorInput';
 import type { DropdownBlock } from './dropdown';
@@ -11,11 +11,6 @@ export type MultiInputBlock<AppBridge> = {
      * The setting type.
      */
     type: 'multiInput';
-
-    /**
-     * The layout of the multi input.
-     */
-    layout: MultiInputLayout;
 
     /**
      * The list of blocks that make up the multi-input.
@@ -32,4 +27,21 @@ export type MultiInputBlock<AppBridge> = {
      * Whether the last item should expand to full width or not.
      */
     lastItemFullWidth?: boolean;
-} & BaseBlock<AppBridge>;
+} & (
+    | {
+          /**
+           * The layout of the multi input.
+           * @default 'columns'
+           */
+          layout?: 'columns' | 'spider';
+      }
+    | {
+          /**
+           * The layout of the multi input.
+           * @default 'columns'
+           * @deprecated Use string values instead.
+           */
+          layout?: MultiInputLayout;
+      }
+) &
+    BaseBlock<AppBridge>;

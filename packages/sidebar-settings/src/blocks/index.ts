@@ -11,7 +11,7 @@ import { LinkChooserBlock } from './linkChooser';
 import { MultiInputBlock } from './multiInput';
 import { NotificationBlock } from './notification';
 import { SectionHeadingBlock } from './sectionHeading';
-import { SliderBlock } from './slider';
+import { SegmentedControlsBlock } from './segmentedControls';
 import { SwitchBlock } from './switch';
 import { TemplateInputBlock } from './templateInput';
 import { TextareaBlock } from './textarea';
@@ -32,7 +32,7 @@ export * from './linkChooser';
 export * from './multiInput';
 export * from './notification';
 export * from './sectionHeading';
-export * from './slider';
+export * from './segmentedControls';
 export * from './switch';
 export * from './templateInput';
 export * from './textarea';
@@ -43,15 +43,7 @@ export {
     FileExtension,
     FileExtensionSets,
 } from '@frontify/app-bridge';
-export {
-    AssetInputSize,
-    DropdownSize,
-    IconEnum,
-    MultiInputLayout,
-    SwitchSize,
-    TextInputType,
-    Validation,
-} from '@frontify/fondue';
+export { IconEnum, Validation } from '@frontify/fondue';
 
 export type SimpleSettingBlock<AppBridge> =
     | AssetInputBlock<AppBridge>
@@ -65,7 +57,7 @@ export type SimpleSettingBlock<AppBridge> =
     | MultiInputBlock<AppBridge>
     | NotificationBlock<AppBridge>
     | SectionHeadingBlock<AppBridge>
-    | SliderBlock<AppBridge>
+    | SegmentedControlsBlock<AppBridge>
     | SwitchBlock<AppBridge>
     | TemplateInputBlock<AppBridge>
     | TextareaBlock<AppBridge>;

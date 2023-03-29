@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetChooserObjectType, AssetChooserProjectType, AssetInputSize, FileExtension } from '.';
+import type { AssetInputSize } from '@frontify/fondue';
+import type { AssetChooserObjectType, AssetChooserProjectType, FileExtension } from '.';
 import type { BaseBlock } from './base';
 
 export enum LegacyAssetInputSource {
@@ -26,5 +27,19 @@ export type LegacyAssetInputBlock<AppBridge> = {
     projectTypes?: AssetChooserProjectType[];
     objectTypes?: AssetChooserObjectType[];
     mode?: LegacyAssetInputMode;
-    size?: AssetInputSize;
-} & BaseBlock<AppBridge, LegacyAssetInputValue | LegacyAssetInputValue['value']>;
+} & (
+    | {
+          /**
+           * The size of the input.
+           */
+          size?: 'small' | 'large';
+      }
+    | {
+          /**
+           * The size of the input.
+           * @deprecated Use string values instead.
+           */
+          size?: AssetInputSize;
+      }
+) &
+    BaseBlock<AppBridge, LegacyAssetInputValue | LegacyAssetInputValue['value']>;

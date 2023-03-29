@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetChooserObjectType, AssetChooserProjectType, AssetInputSize, FileExtension } from '.';
+import type { AssetInputSize } from '@frontify/fondue';
+import type { AssetChooserObjectType, AssetChooserProjectType, FileExtension } from '.';
 import type { BaseBlock } from './base';
 
 export enum AssetInputSource {
@@ -48,11 +49,6 @@ export type AssetInputBlock<AppBridge> = {
     mode?: AssetInputMode;
 
     /**
-     * The size of the input.
-     */
-    size?: AssetInputSize;
-
-    /**
      * The allowed file extensions to be uploaded.
      */
     extensions?: (FileExtension | string)[];
@@ -66,4 +62,19 @@ export type AssetInputBlock<AppBridge> = {
      * Whether the file extension should be hidden or not.
      */
     hideExtension?: boolean;
-} & BaseBlock<AppBridge, AssetInputValue | AssetInputValue['value']>;
+} & (
+    | {
+          /**
+           * The size of the input.
+           */
+          size?: 'small' | 'large';
+      }
+    | {
+          /**
+           * The size of the input.
+           * @deprecated Use string values instead.
+           */
+          size?: AssetInputSize;
+      }
+) &
+    BaseBlock<AppBridge, AssetInputValue | AssetInputValue['value']>;

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Rule } from '../helpers/rules/Rule';
+import type { Rule } from '../helpers/rules';
 import type { BaseBlock } from './base';
 
 export type TextareaBlock<AppBridge> = {

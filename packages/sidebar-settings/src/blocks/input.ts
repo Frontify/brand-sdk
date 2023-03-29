@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Rule } from '../helpers/rules/Rule';
+import type { Rule } from '../helpers/rules';
 import type { BaseBlock } from './base';
-import type { IconEnum, TextInputType } from '.';
+import type { IconEnum } from '.';
+import type { TextInputType } from '@frontify/fondue';
 
 export type InputBlock<AppBridge> = {
     /**
@@ -18,11 +19,6 @@ export type InputBlock<AppBridge> = {
     icon?: IconEnum | keyof typeof IconEnum;
 
     /**
-     * The type of input (text, number, etc.).
-     */
-    inputType?: TextInputType;
-
-    /**
      * The placeholder text for the input.
      */
     placeholder?: string;
@@ -36,4 +32,19 @@ export type InputBlock<AppBridge> = {
      * The list of validation rules for the input.
      */
     rules?: Rule<string>[];
-} & BaseBlock<AppBridge, string>;
+} & (
+    | {
+          /**
+           * The type of input (text, number, etc.).
+           */
+          inputType?: 'text' | 'password' | 'number';
+      }
+    | {
+          /**
+           * The type of input (text, number, etc.).
+           * @deprecated Use string values instead.
+           */
+          inputType?: TextInputType;
+      }
+) &
+    BaseBlock<AppBridge, string>;

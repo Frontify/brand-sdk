@@ -42,24 +42,50 @@ export type NotificationBlock<AppBridge> = {
      * The link associated with the notification.
      */
     link?: Link;
+} & (
+    | {
+          /**
+           * Customization of the notification setting.
+           */
+          styles?: {
+              /**
+               * The type of notification.
+               */
+              type?: 'info' | 'warning' | 'negative' | 'positive';
 
-    /**
-     * Customization of the notification setting.
-     */
-    styles: {
-        /**
-         * The type of notification.
-         */
-        type: NotificationStyleType;
+              /**
+               * Indicates if the notification should include an icon.
+               */
+              icon?: boolean;
 
-        /**
-         * Indicates if the notification should include an icon.
-         */
-        icon?: boolean;
+              /**
+               * The position of the divider in the notification.
+               */
+              divider?: 'top' | 'bottom' | 'both' | 'none';
+          };
+      }
+    | {
+          /**
+           * Customization of the notification setting.
+           */
+          styles?: {
+              /**
+               * The type of notification.
+               * @deprecated Use string values instead.
+               */
+              type?: NotificationStyleType;
 
-        /**
-         * The position of the divider in the notification.
-         */
-        divider?: NotificationBlockDividerPosition;
-    };
-} & BaseBlock<AppBridge>;
+              /**
+               * Indicates if the notification should include an icon.
+               */
+              icon?: boolean;
+
+              /**
+               * The position of the divider in the notification.
+               * @deprecated Use string values instead.
+               */
+              divider?: NotificationBlockDividerPosition;
+          };
+      }
+) &
+    BaseBlock<AppBridge>;
