@@ -4,6 +4,7 @@ import { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
     AssetChooserOptions,
+    BulkDownload,
     Color,
     ColorCreate,
     ColorPalette,
@@ -74,4 +75,10 @@ export interface AppBridgeBlock extends AppBridgeBase {
     closeTemplateChooser(): void;
 
     getCurrentLoggedUser(): Promise<User>;
+
+    getBulkDownloadToken(assetIds: number[], setIds?: number[]): Promise<string>;
+
+    getBulkDownloadByToken(token: string): Promise<BulkDownload>;
+
+    getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 }

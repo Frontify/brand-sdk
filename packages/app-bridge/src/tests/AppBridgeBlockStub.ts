@@ -10,6 +10,7 @@ import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
+import { BulkDownloadDummy } from './BulkDownloadDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -130,6 +131,14 @@ export const getAppBridgeBlockStub = ({
         ]),
         updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
             Promise.resolve(ColorDummy.red(colorId)),
+        ),
+
+        getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
+        getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
+            BulkDownloadDummy.default(),
+        ),
+        getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
+            BulkDownloadDummy.default(),
         ),
 
         // TODO: Stub the following methods
