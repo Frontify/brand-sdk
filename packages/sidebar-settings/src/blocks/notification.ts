@@ -9,12 +9,27 @@ export enum NotificationStyleType {
     Info = 'Info',
 }
 
-export type LinkEvent = 'sidebar.open';
+export type NotificationLinkEvent = 'design-settings.open';
 
-export type Link = {
-    label?: string;
-    replace?: string;
-} & ({ href: string; target?: '_self' | '_blank' } | { event: LinkEvent });
+type LinkOrEvent = { href: string; target?: '_self' | '_blank' } | { event: NotificationLinkEvent };
+
+export declare type Link<Label extends string> = {
+    label?: Label;
+} & (
+    | LinkOrEvent
+    | { replace?: ExtractVariables<Label> extends never ? never : Record<ExtractVariables<Label>, LinkOrEvent> }
+);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type ExtractVariables<T extends string> = T extends `${infer _Start}[${infer Variable}]${infer Rest}`
+    ? Variable extends string
+        ? Rest extends string
+            ? `${Variable}` | ExtractVariables<Rest>
+            : `${Variable}`
+        : never
+    : never;
+
+export const createLink = <Label extends string>(link: Link<Label>) => link as Link<string>;
 
 export enum NotificationBlockDividerPosition {
     Top = 'Top',
@@ -42,7 +57,7 @@ export type NotificationBlock<AppBridge> = {
     /**
      * The link associated with the notification.
      */
-    link?: Link;
+    link?: ReturnType<typeof createLink> | (LinkOrEvent & { label?: string });
 
     /**
      * Customization of the notification setting.
