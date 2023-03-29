@@ -124,4 +124,59 @@ describe('useBulkDownload', () => {
             expect(result.current.status).toBe(BulkDownloadState.Error);
         });
     });
+
+    it('should download the first asset set and after change the second asset set', async () => {
+        const appBridgeStub = getAppBridgeBlockStub();
+        appBridgeStub.getBulkDownloadByToken
+            .onCall(1)
+            .resolves({ downloadUrl: 'changed-dummy-url', signature: 'signature' });
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub));
+        result.current.generateBulkDownload([1, 2, 3]);
+
+        await waitFor(() => {
+            expect(result.current.downloadUrl).toBe('dummy-url');
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+        });
+
+        result.current.generateBulkDownload([4, 5, 6]);
+
+        await waitFor(() => {
+            expect(result.current.downloadUrl).toBe('changed-dummy-url');
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+        });
+    });
+
+    it('should download the first asset set and after change the second asset set and get by signature', async () => {
+        const appBridgeStub = getAppBridgeBlockStub();
+
+        appBridgeStub.getBulkDownloadByToken.onCall(1).resolves({ downloadUrl: '', signature: 'signature' });
+        appBridgeStub.getBulkDownloadBySignature
+            .onCall(0)
+            .resolves({ downloadUrl: 'change-dummy-url', signature: 'signature' });
+
+        const { result } = renderHook(() => useBulkDownload(appBridgeStub));
+        result.current.generateBulkDownload([1, 2, 3]);
+
+        await waitFor(() => {
+            expect(result.current.downloadUrl).toBe('dummy-url');
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+        });
+
+        vi.useFakeTimers();
+
+        result.current.generateBulkDownload([4, 5, 6]);
+
+        await act(async () => {
+            await vi.advanceTimersByTimeAsync(2500);
+        });
+
+        await vi.runOnlyPendingTimersAsync();
+
+        // use Real Timers again otherwise waitFor will fail, because its would use the fake timer internally
+        vi.useRealTimers();
+        await waitFor(() => {
+            expect(result.current.downloadUrl).toBe('change-dummy-url');
+            expect(result.current.status).toBe(BulkDownloadState.Ready);
+        });
+    });
 });

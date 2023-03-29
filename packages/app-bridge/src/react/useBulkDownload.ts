@@ -21,6 +21,8 @@ export const useBulkDownload = (appBridge: AppBridgeBlock) => {
         try {
             const token = await appBridge.getBulkDownloadToken(assetIds, setIds);
             setToken(token);
+            setDownloadUrl(null);
+            setSignature(null);
             setStatus(BulkDownloadState.Started);
         } catch (error) {
             setStatus(BulkDownloadState.Error);
