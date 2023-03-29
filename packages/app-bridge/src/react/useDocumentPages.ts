@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentPage, EmitterAction } from '../types';
 import { DocumentPageTargetEvent } from './useDocumentPageTargets';
+
+import type { DocumentPage, EmitterAction } from '../types';
+import type { AppBridgeBlock } from '../AppBridgeBlock';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 export type DocumentPageEvent = {
     action: EmitterAction;
@@ -13,7 +14,7 @@ export type DocumentPageEvent = {
 
 const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) => {
+export const useDocumentPages = (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const [pages, setPages] = useState<Map<number, DocumentPage>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -77,7 +78,7 @@ export const useDocumentPages = (appBridge: AppBridgeTheme, documentId: number) 
     return { pages, getCategorizedPages, getUncategorizedPages, refetch, isLoading };
 };
 
-const fetchDocumentPages = async (appBridge: AppBridgeTheme, documentId: number) => {
+const fetchDocumentPages = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const pages = await appBridge.getDocumentPagesByDocumentId(documentId);
 
     return new Map(pages.map((page) => [page.id, page]));

@@ -140,5 +140,16 @@ export const getAppBridgeBlockStub = ({
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as Template),
         openAssetViewer: stub<Parameters<AppBridgeBlock['openAssetViewer']>>(),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
+        getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
+        getDocumentGroups: stub<Parameters<AppBridgeBlock['getDocumentGroups']>>().resolves(),
+        getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
+        getDocumentCategoriesByDocumentId:
+            stub<Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>>().resolves(),
+        getUncategorizedPagesByDocumentId:
+            stub<Parameters<AppBridgeBlock['getUncategorizedPagesByDocumentId']>>().resolves(),
+        getDocumentSectionsByDocumentPageId:
+            stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
+        getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
+        getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
     };
 };
