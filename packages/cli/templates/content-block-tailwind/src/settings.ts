@@ -21,7 +21,7 @@ export const settings = defineSettings({
         {
             id: 'color',
             label: 'Text Color',
-            type: 'segmentedControls',
+            type: 'slider',
             defaultValue: 'violet',
             choices: [
                 { label: 'Violet', value: 'violet' },
