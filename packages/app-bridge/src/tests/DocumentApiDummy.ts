@@ -44,7 +44,7 @@ export class DocumentApiDummy {
             change_title: null,
             targets: [],
             token: 'a-dummy-token',
-            permanent_link: '/r/document-1234',
+            permanent_link: `/r/document-${id}`,
         };
     }
 }
