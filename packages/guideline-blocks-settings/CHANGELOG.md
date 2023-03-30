@@ -1,5 +1,20 @@
 # @frontify/guideline-blocks-settings
 
+## 0.26.0
+
+### Minor Changes
+
+- [#382](https://github.com/Frontify/brand-sdk/pull/382) [`6a31872`](https://github.com/Frontify/brand-sdk/commit/6a31872fbe0cc426f1f2f384fab52e48dbaad557) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Renamed `slider` to `segmentedControls`
+
+- [#382](https://github.com/Frontify/brand-sdk/pull/382) [`6a31872`](https://github.com/Frontify/brand-sdk/commit/6a31872fbe0cc426f1f2f384fab52e48dbaad557) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Inline enums to union types to have less Fondue breakage
+
+### Patch Changes
+
+- [`440e463`](https://github.com/Frontify/brand-sdk/commit/440e463326fb55dabc28dba346e1ec2e6ee03450) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- Updated dependencies [[`6a31872`](https://github.com/Frontify/brand-sdk/commit/6a31872fbe0cc426f1f2f384fab52e48dbaad557), [`6a31872`](https://github.com/Frontify/brand-sdk/commit/6a31872fbe0cc426f1f2f384fab52e48dbaad557), [`440e463`](https://github.com/Frontify/brand-sdk/commit/440e463326fb55dabc28dba346e1ec2e6ee03450)]:
+  - @frontify/sidebar-settings@0.1.0
+
 ## 0.25.12
 
 ### Patch Changes
