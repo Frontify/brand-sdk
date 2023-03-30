@@ -43,15 +43,8 @@ export {
     FileExtension,
     FileExtensionSets,
 } from '@frontify/app-bridge';
-export {
-    AssetInputSize,
-    DropdownSize,
-    IconEnum,
-    MultiInputLayout,
-    SwitchSize,
-    TextInputType,
-    Validation,
-} from '@frontify/fondue';
+export { AssetInputSize, DropdownSize, IconEnum, MultiInputLayout, TextInputType, Validation } from '@frontify/fondue';
+export type { SwitchSize } from '@frontify/fondue';
 
 export type SimpleSettingBlock<AppBridge> =
     | AssetInputBlock<AppBridge>
