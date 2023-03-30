@@ -30,7 +30,7 @@ export class DocumentPageApiDummy {
             change_comment_by: null,
             change_title: null,
             targets: null,
-            permanent_link: '/r/document-page-1234',
+            permanent_link: `/r/document-page-${id}`,
         };
     }
 }

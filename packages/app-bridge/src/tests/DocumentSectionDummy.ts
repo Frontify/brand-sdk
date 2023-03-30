@@ -9,7 +9,7 @@ export class DocumentSectionDummy {
             title: `Document Section Dummy ${id}`,
             slug: `document-section-dummy-${id}`,
             sort: 1,
-            permanentLink: '/r/document-section-1234',
+            permanentLink: `/r/document-section-${id}`,
         };
     }
 }
