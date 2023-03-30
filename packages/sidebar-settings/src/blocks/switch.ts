@@ -15,6 +15,11 @@ export type SwitchBlock<AppBridge> = {
     switchLabel?: string;
 
     /**
+     * The size of the switch.
+     */
+    size?: 'small' | 'medium' | SwitchSize;
+
+    /**
      * The list of blocks to show when the switch is active.
      */
     on?: SettingBlock<AppBridge>[];
@@ -23,19 +28,4 @@ export type SwitchBlock<AppBridge> = {
      * The list of blocks to show when the switch is inactive.
      */
     off?: SettingBlock<AppBridge>[];
-} & (
-    | {
-          /**
-           * The size of the switch.
-           */
-          size?: 'small' | 'medium';
-      }
-    | {
-          /**
-           * The size of the switch.
-           * @deprecated Use string values instead.
-           */
-          size?: SwitchSize;
-      }
-) &
-    BaseBlock<AppBridge, boolean>;
+} & BaseBlock<AppBridge, boolean>;

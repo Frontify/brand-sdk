@@ -41,6 +41,11 @@ export type AssetInputBlock<AppBridge> = {
     objectTypes?: AssetChooserObjectType[];
 
     /**
+     * The size of the input.
+     */
+    size?: 'small' | 'large' | AssetInputSize;
+
+    /**
      * The mode of the asset input.
      *
      * It allows to restrict usage of upload and asset chooser.
@@ -61,19 +66,4 @@ export type AssetInputBlock<AppBridge> = {
      * Whether the file extension should be hidden or not.
      */
     hideExtension?: boolean;
-} & (
-    | {
-          /**
-           * The size of the input.
-           */
-          size?: 'small' | 'large';
-      }
-    | {
-          /**
-           * The size of the input.
-           * @deprecated Use string values instead.
-           */
-          size?: AssetInputSize;
-      }
-) &
-    BaseBlock<AppBridge, AssetInputValue | AssetInputValue['value']>;
+} & BaseBlock<AppBridge, AssetInputValue | AssetInputValue['value']>;

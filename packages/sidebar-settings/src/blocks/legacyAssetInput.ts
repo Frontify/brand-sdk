@@ -22,23 +22,9 @@ export type LegacyAssetInputValue = {
 export type LegacyAssetInputBlock<AppBridge> = {
     type: 'legacyAssetInput';
     multiSelection?: boolean;
+    size?: 'small' | 'large' | AssetInputSize;
     extensions?: (FileExtension | string)[];
     projectTypes?: AssetChooserProjectType[];
     objectTypes?: AssetChooserObjectType[];
     mode?: LegacyAssetInputMode;
-} & (
-    | {
-          /**
-           * The size of the input.
-           */
-          size?: 'small' | 'large';
-      }
-    | {
-          /**
-           * The size of the input.
-           * @deprecated Use string values instead.
-           */
-          size?: AssetInputSize;
-      }
-) &
-    BaseBlock<AppBridge, LegacyAssetInputValue | LegacyAssetInputValue['value']>;
+} & BaseBlock<AppBridge, LegacyAssetInputValue | LegacyAssetInputValue['value']>;

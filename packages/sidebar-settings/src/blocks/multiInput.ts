@@ -13,6 +13,12 @@ export type MultiInputBlock<AppBridge> = {
     type: 'multiInput';
 
     /**
+     * The layout of the multi input.
+     * @default 'columns'
+     */
+    layout?: 'columns' | 'spider' | MultiInputLayout;
+
+    /**
      * The list of blocks that make up the multi-input.
      *
      * The currently supported blocks are `input`, `colorInput` or `dropdown`.
@@ -27,21 +33,4 @@ export type MultiInputBlock<AppBridge> = {
      * Whether the last item should expand to full width or not.
      */
     lastItemFullWidth?: boolean;
-} & (
-    | {
-          /**
-           * The layout of the multi input.
-           * @default 'columns'
-           */
-          layout?: 'columns' | 'spider';
-      }
-    | {
-          /**
-           * The layout of the multi input.
-           * @default 'columns'
-           * @deprecated Use string values instead.
-           */
-          layout?: MultiInputLayout;
-      }
-) &
-    BaseBlock<AppBridge>;
+} & BaseBlock<AppBridge>;

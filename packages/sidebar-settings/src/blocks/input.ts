@@ -28,22 +28,12 @@ export type InputBlock<AppBridge> = {
     clearable?: boolean;
 
     /**
+     * The type of input (text, number, etc.).
+     */
+    inputType?: 'text' | 'password' | 'number' | TextInputType;
+
+    /**
      * The list of validation rules for the input.
      */
     rules?: Rule<string>[];
-} & (
-    | {
-          /**
-           * The type of input (text, number, etc.).
-           */
-          inputType?: 'text' | 'password' | 'number';
-      }
-    | {
-          /**
-           * The type of input (text, number, etc.).
-           * @deprecated Use string values instead.
-           */
-          inputType?: TextInputType;
-      }
-) &
-    BaseBlock<AppBridge, string>;
+} & BaseBlock<AppBridge, string>;
