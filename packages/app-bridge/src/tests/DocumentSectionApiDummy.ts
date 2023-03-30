@@ -18,6 +18,7 @@ export class DocumentSectionApiDummy {
             title: `Document Section Dummy ${id}`,
             slug: `document-section-dummy-${id}`,
             sort: 1,
+            permanent_link: '/r/document-section-1234',
         };
     }
 }
