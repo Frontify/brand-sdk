@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Rule } from '../helpers/rules/Rule';
+import type { Rule } from '../helpers';
 import type { BaseBlock } from './base';
 import type { IconEnum, TextInputType } from '.';
 
@@ -20,7 +20,7 @@ export type InputBlock<AppBridge> = {
     /**
      * The type of input (text, number, etc.).
      */
-    inputType?: TextInputType;
+    inputType?: 'text' | 'password' | 'number' | TextInputType;
 
     /**
      * The placeholder text for the input.
