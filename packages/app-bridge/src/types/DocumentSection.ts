@@ -14,6 +14,7 @@ export type DocumentSectionApi = {
     modified: Nullable<string>;
     valid_from: string;
     valid_to: Nullable<string>;
+    permanent_link: string;
 };
 
 export type DocumentSection = {
@@ -21,4 +22,5 @@ export type DocumentSection = {
     title: string;
     slug: string;
     sort: number;
+    permanentLink: string;
 };

@@ -48,6 +48,7 @@ export type DocumentPageApi = {
     parent_document?: Nullable<Record<string, unknown>>;
     parent_portal?: Nullable<Record<string, unknown>>;
     translations?: Nullable<Record<string, unknown>>;
+    permanent_link: string;
 } & (DocumentPageApiAsLink | DocumentPageApiAsNoneLink);
 
 export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;

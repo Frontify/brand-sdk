@@ -102,6 +102,7 @@ export type DocumentApi = Simplify<
             change_title: Nullable<string>;
             targets: Nullable<SingleTargetApi[]>;
             token: Nullable<string>;
+            permanent_link: string;
         } & (DocumentApiAsLink | DocumentApiAsNoneLink)
 >;
 
