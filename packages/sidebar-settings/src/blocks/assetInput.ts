@@ -41,16 +41,16 @@ export type AssetInputBlock<AppBridge> = {
     objectTypes?: AssetChooserObjectType[];
 
     /**
-     * The size of the input.
-     */
-    size?: 'small' | 'large' | AssetInputSize;
-
-    /**
      * The mode of the asset input.
      *
      * It allows to restrict usage of upload and asset chooser.
      */
     mode?: AssetInputMode;
+
+    /**
+     * The size of the input.
+     */
+    size?: 'small' | 'large' | AssetInputSize;
 
     /**
      * The allowed file extensions to be uploaded.

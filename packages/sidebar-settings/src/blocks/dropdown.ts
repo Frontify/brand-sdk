@@ -10,11 +10,6 @@ export type DropdownBlock<AppBridge> = {
     type: 'dropdown';
 
     /**
-     * The size of the dropdown.
-     */
-    size?: 'small' | 'large' | DropdownSize;
-
-    /**
      * Whether the dropdown should be disabled or not.
      */
     disabled?: boolean;
@@ -23,6 +18,11 @@ export type DropdownBlock<AppBridge> = {
      * The placeholder to be shown in the dropdown.
      */
     placeholder?: string;
+
+    /**
+     * The size of the dropdown.
+     */
+    size?: 'small' | 'large' | DropdownSize;
 
     /**
      * Whether the dropdown value should be clearable or not.

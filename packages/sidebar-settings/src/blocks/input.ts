@@ -18,6 +18,11 @@ export type InputBlock<AppBridge> = {
     icon?: IconEnum | keyof typeof IconEnum;
 
     /**
+     * The type of input (text, number, etc.).
+     */
+    inputType?: 'text' | 'password' | 'number' | TextInputType;
+
+    /**
      * The placeholder text for the input.
      */
     placeholder?: string;
@@ -26,11 +31,6 @@ export type InputBlock<AppBridge> = {
      * Whether the input can be cleared or not.
      */
     clearable?: boolean;
-
-    /**
-     * The type of input (text, number, etc.).
-     */
-    inputType?: 'text' | 'password' | 'number' | TextInputType;
 
     /**
      * The list of validation rules for the input.
