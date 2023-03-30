@@ -46,11 +46,11 @@ export type NotificationBlock<AppBridge> = {
     /**
      * Customization of the notification setting.
      */
-    styles: {
+    styles?: {
         /**
          * The type of notification.
          */
-        type: NotificationStyleType;
+        type?: 'info' | 'warning' | 'negative' | 'positive' | NotificationStyleType;
 
         /**
          * Indicates if the notification should include an icon.
@@ -60,6 +60,6 @@ export type NotificationBlock<AppBridge> = {
         /**
          * The position of the divider in the notification.
          */
-        divider?: NotificationBlockDividerPosition;
+        divider?: 'top' | 'bottom' | 'both' | 'none' | NotificationBlockDividerPosition;
     };
 } & BaseBlock<AppBridge>;

@@ -26,5 +26,5 @@ export type LegacyAssetInputBlock<AppBridge> = {
     projectTypes?: AssetChooserProjectType[];
     objectTypes?: AssetChooserObjectType[];
     mode?: LegacyAssetInputMode;
-    size?: AssetInputSize;
+    size?: 'small' | 'large' | AssetInputSize;
 } & BaseBlock<AppBridge, LegacyAssetInputValue | LegacyAssetInputValue['value']>;
