@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetInputSize } from '@frontify/fondue';
-import type { AssetChooserObjectType, AssetChooserProjectType, FileExtension } from '.';
+import type { AssetChooserObjectType, AssetChooserProjectType, AssetInputSize, FileExtension } from '.';
 import type { BaseBlock } from './base';
 
 export enum AssetInputSource {

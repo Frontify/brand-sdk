@@ -1,15 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { BaseBlock } from './base';
-import type { SettingBlock } from './index';
-
-/**
- * @deprecated
- */
-enum SwitchSize {
-    Small = 'Small',
-    Medium = 'Medium',
-}
+import type { SettingBlock, SwitchSize } from './index';
 
 export type SwitchBlock<AppBridge> = {
     /**

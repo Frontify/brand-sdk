@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { MultiInputLayout } from '@frontify/fondue';
+import type { MultiInputLayout } from '.';
 import type { BaseBlock } from './base';
 import type { ColorInputBlock } from './colorInput';
 import type { DropdownBlock } from './dropdown';

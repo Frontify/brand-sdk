@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Rule } from '../helpers/rules';
+import type { Rule } from '../helpers';
 import type { BaseBlock } from './base';
-import type { IconEnum } from '.';
-import type { TextInputType } from '@frontify/fondue';
+import type { IconEnum, TextInputType } from '.';
 
 export type InputBlock<AppBridge> = {
     /**

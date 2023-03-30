@@ -45,6 +45,47 @@ export {
 } from '@frontify/app-bridge';
 export { IconEnum } from '@frontify/fondue';
 
+/**
+ * @deprecated
+ */
+export enum AssetInputSize {
+    Small = 'Small',
+    Large = 'Large',
+}
+
+/**
+ * @deprecated
+ */
+export enum SwitchSize {
+    Small = 'Small',
+    Medium = 'Medium',
+}
+
+/**
+ * @deprecated
+ */
+export enum MultiInputLayout {
+    Columns = 'Columns',
+    Spider = 'Spider',
+}
+
+/**
+ * @deprecated
+ */
+export enum DropdownSize {
+    Small = 'Small',
+    Large = 'Large',
+}
+
+/**
+ * @deprecated
+ */
+export enum TextInputType {
+    Text = 'text',
+    Password = 'password',
+    Number = 'number',
+}
+
 export type SimpleSettingBlock<AppBridge> =
     | AssetInputBlock<AppBridge>
     | ChecklistBlock<AppBridge>
