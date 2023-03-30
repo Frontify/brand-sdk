@@ -43,7 +43,7 @@ export {
     FileExtension,
     FileExtensionSets,
 } from '@frontify/app-bridge';
-export { IconEnum, Validation } from '@frontify/fondue';
+export { IconEnum } from '@frontify/fondue';
 
 export type SimpleSettingBlock<AppBridge> =
     | AssetInputBlock<AppBridge>
