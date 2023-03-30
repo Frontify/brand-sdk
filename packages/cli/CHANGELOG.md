@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 5.3.10
+
+### Patch Changes
+
+- [`c38bfa8`](https://github.com/Frontify/brand-sdk/commit/c38bfa8fa65170ea56d078abcfecbadc2167b39b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update deps template and remove lock file
+
+- [`c38bfa8`](https://github.com/Frontify/brand-sdk/commit/c38bfa8fa65170ea56d078abcfecbadc2167b39b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix use correct package name
+
+- [`440e463`](https://github.com/Frontify/brand-sdk/commit/440e463326fb55dabc28dba346e1ec2e6ee03450) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 5.3.9
 
 ### Patch Changes
