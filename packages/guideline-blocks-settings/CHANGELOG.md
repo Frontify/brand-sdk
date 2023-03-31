@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.26.1
+
+### Patch Changes
+
+- [`0ed6221`](https://github.com/Frontify/brand-sdk/commit/0ed62215b22410d12b028eed0cc5c74c0f8453b2) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix issue with version of sidebar-settings
+
 ## 0.26.0
 
 ### Minor Changes
