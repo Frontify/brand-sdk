@@ -9,11 +9,11 @@ export enum NotificationStyleType {
     Info = 'Info',
 }
 
-export type NotificationLinkEvent = 'design-settings.open';
+export type NotificationFooterEvent = 'design-settings.open';
 
-type LinkOrEvent = { href: string; target?: '_self' | '_blank' } | { event: NotificationLinkEvent };
+type LinkOrEvent = { href: string; target?: '_self' | '_blank' } | { event: NotificationFooterEvent };
 
-export declare type Link<Label extends string> = {
+export declare type Footer<Label extends string> = {
     label?: Label;
 } & (
     | LinkOrEvent
@@ -29,7 +29,7 @@ type ExtractVariables<T extends string> = T extends `${infer _Start}[${infer Var
         : never
     : never;
 
-export const createLink = <Label extends string>(link: Link<Label>) => link as Link<string>;
+export const createFooter = <Label extends string>(footer: Footer<Label>) => footer as Footer<string>;
 
 export enum NotificationBlockDividerPosition {
     Top = 'Top',
@@ -62,7 +62,7 @@ export type NotificationBlock<AppBridge> = {
     /**
      * The footer associated with the notification.
      */
-    footer?: ReturnType<typeof createLink> | (LinkOrEvent & { label?: string });
+    footer?: ReturnType<typeof createFooter> | (LinkOrEvent & { label?: string });
 
     /**
      * Customization of the notification setting.
