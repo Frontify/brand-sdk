@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.2.0
+
+### Minor Changes
+
+- [#374](https://github.com/Frontify/brand-sdk/pull/374) [`366ca28`](https://github.com/Frontify/brand-sdk/commit/366ca280e754cf875d91026ee0a3cf8e767b05ab) Thanks [@celine-s](https://github.com/celine-s)! - Updated types of notification setting block
+
 ## 0.1.0
 
 ### Minor Changes
