@@ -55,9 +55,14 @@ export type NotificationBlock<AppBridge> = {
     text?: string;
 
     /**
-     * The link associated with the notification.
+     * @deprecated Use `footer` instead
      */
-    link?: ReturnType<typeof createLink> | (LinkOrEvent & { label?: string });
+    link?: LinkOrEvent & { label?: string };
+
+    /**
+     * The footer associated with the notification.
+     */
+    footer?: ReturnType<typeof createLink> | (LinkOrEvent & { label?: string });
 
     /**
      * Customization of the notification setting.
