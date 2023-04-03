@@ -9,11 +9,27 @@ export enum NotificationStyleType {
     Info = 'Info',
 }
 
-export type Link = {
-    label?: string;
-    href: string;
-    target?: '_self' | '_blank';
-};
+export type NotificationFooterEvent = 'design-settings.open';
+
+type LinkOrEvent = { href: string; target?: '_self' | '_blank' } | { event: NotificationFooterEvent };
+
+export declare type Footer<Label extends string> = {
+    label?: Label;
+} & (
+    | LinkOrEvent
+    | { replace?: ExtractVariables<Label> extends never ? never : Record<ExtractVariables<Label>, LinkOrEvent> }
+);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type ExtractVariables<T extends string> = T extends `${infer _Start}[${infer Variable}]${infer Rest}`
+    ? Variable extends string
+        ? Rest extends string
+            ? `${Variable}` | ExtractVariables<Rest>
+            : `${Variable}`
+        : never
+    : never;
+
+export const createFooter = <Label extends string>(footer: Footer<Label>) => footer as Footer<string>;
 
 export enum NotificationBlockDividerPosition {
     Top = 'Top',
@@ -39,9 +55,14 @@ export type NotificationBlock<AppBridge> = {
     text?: string;
 
     /**
-     * The link associated with the notification.
+     * @deprecated Use `footer` instead
      */
-    link?: Link;
+    link?: LinkOrEvent & { label?: string };
+
+    /**
+     * The footer associated with the notification.
+     */
+    footer?: ReturnType<typeof createFooter> | (LinkOrEvent & { label?: string });
 
     /**
      * Customization of the notification setting.
