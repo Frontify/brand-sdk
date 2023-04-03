@@ -25,10 +25,12 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme) => {
 
         window.emitter.on('AppBridge:GuidelineDocumentAction', refetch);
         window.emitter.on('AppBridge:GuidelineDocumentTargetsAction', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', refetch);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentAction', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentTargetsAction', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', refetch);
         };
     }, [refetch]);
 

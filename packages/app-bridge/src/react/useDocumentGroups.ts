@@ -28,9 +28,11 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme) =>
         refetch();
 
         window.emitter.on('AppBridge:GuidelineDocumentGroupAction', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentAction', refetch);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroupAction', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentAction', refetch);
         };
     }, [refetch]);
 
