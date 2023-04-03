@@ -2,9 +2,7 @@
     "name": "root",
     "private": true,
     "engines": {
-        "node": ">=18",
-        "pnpm": ">=8.0.0",
-        "npm": "<=0"
+        "node": ">=18"
     },
     "packageManager": "pnpm@8.0.0",
     "scripts": {
