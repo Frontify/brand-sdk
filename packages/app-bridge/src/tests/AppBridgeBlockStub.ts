@@ -10,6 +10,7 @@ import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
+import { BulkDownloadDummy } from './BulkDownloadDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -132,6 +133,14 @@ export const getAppBridgeBlockStub = ({
             Promise.resolve(ColorDummy.red(colorId)),
         ),
 
+        getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
+        getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
+            BulkDownloadDummy.default(),
+        ),
+        getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
+            BulkDownloadDummy.default(),
+        ),
+
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
         openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
@@ -140,5 +149,16 @@ export const getAppBridgeBlockStub = ({
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as Template),
         openAssetViewer: stub<Parameters<AppBridgeBlock['openAssetViewer']>>(),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
+        getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
+        getDocumentGroups: stub<Parameters<AppBridgeBlock['getDocumentGroups']>>().resolves(),
+        getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
+        getDocumentCategoriesByDocumentId:
+            stub<Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>>().resolves(),
+        getUncategorizedPagesByDocumentId:
+            stub<Parameters<AppBridgeBlock['getUncategorizedPagesByDocumentId']>>().resolves(),
+        getDocumentSectionsByDocumentPageId:
+            stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
+        getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
+        getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
     };
 };

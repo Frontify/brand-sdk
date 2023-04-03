@@ -14,8 +14,9 @@ export type MultiInputBlock<AppBridge> = {
 
     /**
      * The layout of the multi input.
+     * @default 'columns'
      */
-    layout: MultiInputLayout;
+    layout?: 'columns' | 'spider' | MultiInputLayout;
 
     /**
      * The list of blocks that make up the multi-input.

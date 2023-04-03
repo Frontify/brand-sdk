@@ -22,7 +22,7 @@ export type DropdownBlock<AppBridge> = {
     /**
      * The size of the dropdown.
      */
-    size?: DropdownSize;
+    size?: 'small' | 'large' | DropdownSize;
 
     /**
      * Whether the dropdown value should be clearable or not.

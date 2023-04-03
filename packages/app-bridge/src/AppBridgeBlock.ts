@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
     AssetChooserOptions,
+    BulkDownload,
     Color,
     ColorCreate,
     ColorPalette,
@@ -13,16 +15,10 @@ import type {
     User,
 } from './types';
 
-export interface AppBridgeBlock {
+export interface AppBridgeBlock extends AppBridgeBase {
     getBlockId(): number;
 
     getSectionId(): number | undefined;
-
-    getProjectId(): number;
-
-    getTranslationLanguage(): string;
-
-    getEditorState(): boolean;
 
     getBlockAssets(): Promise<Record<string, Asset[]>>;
 
@@ -50,11 +46,7 @@ export interface AppBridgeBlock {
      */
     getAvailablePalettes(): Promise<ColorPalette[]>;
 
-    getColorPalettes(): Promise<ColorPalette[]>;
-
     getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
-
-    getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
 
     createColorPalette(colorPaletteCreate: ColorPaletteCreate): Promise<ColorPalette>;
 
@@ -83,4 +75,10 @@ export interface AppBridgeBlock {
     closeTemplateChooser(): void;
 
     getCurrentLoggedUser(): Promise<User>;
+
+    getBulkDownloadToken(assetIds: number[], setIds?: number[]): Promise<string>;
+
+    getBulkDownloadByToken(token: string): Promise<BulkDownload>;
+
+    getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 }

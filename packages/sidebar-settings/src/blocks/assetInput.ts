@@ -50,7 +50,7 @@ export type AssetInputBlock<AppBridge> = {
     /**
      * The size of the input.
      */
-    size?: AssetInputSize;
+    size?: 'small' | 'large' | AssetInputSize;
 
     /**
      * The allowed file extensions to be uploaded.
