@@ -4,10 +4,6 @@ import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { EmitterEvents } from '../types';
-import {
-    mapFlatSettingsDottedNotationToHubApi,
-    mapHubApiToFlatSettingsDottedNotation,
-} from '../repositories/HubRepository';
 
 export const usePageTemplateSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
@@ -27,10 +23,7 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
 
             if (template === 'cover') {
                 const coverPageSettings = await appBridge.getCoverPageSettings<T>();
-                setPageTemplateSettings({
-                    ...mapHubApiToFlatSettingsDottedNotation(coverPageSettings),
-                    ...coverPageSettings,
-                });
+                setPageTemplateSettings(coverPageSettings);
             } else if (template === 'document') {
                 if (documentId === undefined) {
                     console.error('Document ID is required for document page template settings');
@@ -62,10 +55,7 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
     const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<T>) => {
         try {
             if (template === 'cover') {
-                await appBridge.updateCoverPageSettings({
-                    ...mapFlatSettingsDottedNotationToHubApi(pageTemplateSettingsUpdate),
-                    ...pageTemplateSettingsUpdate,
-                });
+                await appBridge.updateCoverPageSettings(pageTemplateSettingsUpdate);
             } else if (template === 'document') {
                 if (documentId === undefined) {
                     console.error('Document ID is required for document page template settings');
