@@ -11,6 +11,7 @@ import type { CoverPage } from './CoverPage';
 import type { DocumentGroup } from './DocumentGroup';
 import type { DocumentCategory } from './DocumentCategory';
 import type { BrandportalLink } from './BrandportalLink';
+import { GuidelineAssetsSettings } from './GuidelineAssetSettings';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
@@ -69,6 +70,8 @@ export type EmitterEvents = {
         brandportalLink: BrandportalLink;
         action: 'update';
     };
+
+    'AppBridge:GuidelineAssetsSettingsChanged': GuidelineAssetsSettings;
 
     'AppBridge:OpenNavigationManager': void;
 
