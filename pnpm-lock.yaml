@@ -151,8 +151,8 @@ importers:
         specifier: 18.15.7
         version: 18.15.7
       '@types/prompts':
-        specifier: 2.4.3
-        version: 2.4.3
+        specifier: 2.4.4
+        version: 2.4.4
       '@types/ws':
         specifier: 8.5.4
         version: 8.5.4
@@ -194,7 +194,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: ^12 || ^12.0.0-beta
-        version: 12.0.0-beta-16(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0)
+        version: 12.0.0-beta-16(@types/react@18.0.28)(postcss@8.4.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@frontify/sidebar-settings':
         specifier: ^0.2.0
         version: link:../sidebar-settings
@@ -240,7 +240,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: ^12 || ^12.0.0-beta
-        version: 12.0.0-beta-16(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0)
+        version: 12.0.0-beta-16(@types/react@18.0.28)(postcss@8.4.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
     devDependencies:
       '@frontify/eslint-config-typescript':
         specifier: 0.15.7
@@ -1138,22 +1138,22 @@ packages:
       - supports-color
     dev: true
 
-  /@frontify/fondue-tokens@3.2.1:
+  /@frontify/fondue-tokens@3.2.1(postcss@8.4.21):
     resolution: {integrity: sha512-EAXgbiy1+Yg2panx4XVOUvJ97wyOe0HeRiqGujDdxa2c4nACkK2Q+dQmSAe/aEiZupRGIjkmpiMFcKHbNFlnew==}
     dependencies:
-      postcss: 8.4.21
       tailwindcss: 3.2.4(postcss@8.4.21)
     transitivePeerDependencies:
+      - postcss
       - ts-node
     dev: false
 
-  /@frontify/fondue@12.0.0-beta-16(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0):
+  /@frontify/fondue@12.0.0-beta-16(@types/react@18.0.28)(postcss@8.4.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0):
     resolution: {integrity: sha512-ehigaTNfEtAX+HMr+K2gGx3YfGkvnWyG0NcDlhNIU2U6vdtwvjIjisc4DwGYISGd2Pox9pqcmAjgLHTZwMJD/g==}
     peerDependencies:
       react: ^17.0.2
       react-dom: ^17.0.2
     dependencies:
-      '@frontify/fondue-tokens': 3.2.1
+      '@frontify/fondue-tokens': 3.2.1(postcss@8.4.21)
       '@popperjs/core': 2.11.6
       '@react-aria/accordion': 3.0.0-alpha.9(react@18.2.0)
       '@react-aria/aria-modal-polyfill': 3.6.2(@types/react@18.0.28)(react@18.2.0)
@@ -1203,7 +1203,6 @@ packages:
       react-is: 18.2.0
       react-popper: 2.3.0(@popperjs/core@2.11.6)(react-dom@18.2.0)(react@18.2.0)
       react-textarea-autosize: 8.4.0(@types/react@18.0.28)(react@18.2.0)
-      scheduler: 0.23.0
       slate: 0.78.0
       slate-history: 0.66.0(slate@0.78.0)
       slate-hyperscript: 0.77.0(slate@0.78.0)
@@ -1227,7 +1226,9 @@ packages:
       - jotai-valtio
       - jotai-xstate
       - jotai-zustand
+      - postcss
       - react-native
+      - scheduler
       - supports-color
       - ts-node
     dev: false
@@ -2779,8 +2780,8 @@ packages:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
     dev: true
 
-  /@types/prompts@2.4.3:
-    resolution: {integrity: sha512-qpzXlxoPv67TCtTCS+SwYmz1M+G5ARTrE5YVlrZPy/xBD36dzLqiJLDzOzsMXkcJYq6+6UkWqFwtLAOjsfec5Q==}
+  /@types/prompts@2.4.4:
+    resolution: {integrity: sha512-p5N9uoTH76lLvSAaYSZtBCdEXzpOOufsRjnhjVSrZGXikVGHX9+cc9ERtHRV4hvBKHyZb1bg4K+56Bd2TqUn4A==}
     dependencies:
       '@types/node': 18.15.7
       kleur: 3.0.3
