@@ -44,14 +44,6 @@ declare global {
                             id: number;
                         };
                         guideline: any;
-                        appearance: {
-                            privacy: {
-                                image: {
-                                    download: 'enable' | 'disable';
-                                };
-                            };
-                            asset_viewer_enabled: boolean;
-                        };
                     };
                 };
             };
