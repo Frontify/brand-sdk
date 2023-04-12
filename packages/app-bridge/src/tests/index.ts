@@ -31,5 +31,6 @@ export * from './TargetsDummy';
 export * from './TemplateDummy';
 export * from './TemplateApiDummy';
 export * from './UserDummy';
+export * from './UserApiDummy';
 export * from './withAppBridgeBlockStubs';
 export * from './withAppBridgeThemeStubs';
