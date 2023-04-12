@@ -3,6 +3,7 @@
 export * from './AppBridgeBlockStub';
 export * from './AppBridgeThemeStub';
 export * from './AssetApiDummy';
+export * from './AssetChooserOptionsDummy';
 export * from './AssetDummy';
 export * from './BrandportalLinkApiDummy';
 export * from './BrandportalLinkDummy';
@@ -26,6 +27,8 @@ export * from './DocumentSectionDummy';
 export * from './HttpUtilResponseDummy';
 export * from './TargetsApiDummy';
 export * from './TargetsDummy';
+export * from './TemplateDummy';
+export * from './TemplateApiDummy';
 export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
 export * from './withAppBridgeThemeStubs';
