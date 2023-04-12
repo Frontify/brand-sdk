@@ -4,6 +4,7 @@ export * from './AppBridgeBlockStub';
 export * from './AppBridgeThemeStub';
 export * from './AssetApiDummy';
 export * from './AssetChooserOptionsDummy';
+export * from './AssetChooserResultDummy';
 export * from './AssetDummy';
 export * from './BrandportalLinkApiDummy';
 export * from './BrandportalLinkDummy';
