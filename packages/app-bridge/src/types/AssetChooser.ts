@@ -4,7 +4,7 @@ import { AssetChooserObjectType } from './Terrific';
 
 export type AssetChooserFilter = {
     key: string;
-    values?: string[] | number[] | AssetChooserObjectType[] | undefined;
+    values?: string[] | number[] | AssetChooserObjectType[];
     inverted?: boolean;
     containsText?: string;
 };
