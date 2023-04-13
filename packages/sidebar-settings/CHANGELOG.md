@@ -1,5 +1,17 @@
 # @frontify/sidebar-settings
 
+## 0.3.0
+
+### Minor Changes
+
+- [#396](https://github.com/Frontify/brand-sdk/pull/396) [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add support of custom icon in the settings sidebar
+
+### Patch Changes
+
+- [`57228f5`](https://github.com/Frontify/brand-sdk/commit/57228f557c20f2a2a291ecabc560a8e7c1bb0e41) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update deps
+
+- [#396](https://github.com/Frontify/brand-sdk/pull/396) [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Unpin dev dependencies
+
 ## 0.2.0
 
 ### Minor Changes
