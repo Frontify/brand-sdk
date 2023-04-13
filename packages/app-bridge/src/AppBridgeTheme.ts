@@ -24,6 +24,7 @@ import type {
     DocumentPageUpdate,
     DocumentStandardCreate,
     DocumentStandardUpdate,
+    GuidelineSearchResult,
     TargetsUpdate,
 } from './types';
 
@@ -135,4 +136,11 @@ export interface AppBridgeTheme extends AppBridgeBase {
     updateDocumentTargets(targetIds: number[], documentIds: number[]): Promise<TargetsUpdate>;
 
     updateDocumentPageTargets(targetIds: number[], documentPageIds: number[]): Promise<TargetsUpdate>;
+
+    /**
+     * Search in the current Guideline for a given query.
+     * @param query - The query to search for.
+     * @param order - The order in which the results should be returned. Defaults to 'relevance'.
+     */
+    searchInGuideline(query: string, order?: 'relevance' | 'newest' | 'oldest'): Promise<GuidelineSearchResult[]>;
 }

@@ -22,6 +22,7 @@ import {
     DocumentTargetsDummy,
     UpdateTargetsDummy,
 } from '.';
+import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -226,5 +227,12 @@ export const getAppBridgeThemeStub = ({
         updateDocumentTargets: stub<Parameters<AppBridgeTheme['updateDocumentTargets']>>().resolves(
             UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3]),
         ),
+        searchInGuideline: stub<Parameters<AppBridgeTheme['searchInGuideline']>>().callsFake(async (query) => {
+            return Promise.resolve([
+                GuidelineSearchResultDummy.with(`${query}-1`),
+                GuidelineSearchResultDummy.with(`${query}-1`),
+                GuidelineSearchResultDummy.with(`${query}-3`),
+            ]);
+        }),
     };
 };
