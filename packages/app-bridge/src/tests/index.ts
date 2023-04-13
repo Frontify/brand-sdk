@@ -23,6 +23,8 @@ export * from './DocumentPageApiDummy';
 export * from './DocumentPageDummy';
 export * from './DocumentSectionApiDummy';
 export * from './DocumentSectionDummy';
+export * from './GuidelineSearchResultApiDummy';
+export * from './GuidelineSearchResultDummy';
 export * from './HttpUtilResponseDummy';
 export * from './TargetsApiDummy';
 export * from './TargetsDummy';
