@@ -15,7 +15,7 @@ export type GuidelineSearchResultApi = {
     document_slug: string;
     document_title: string;
     portal_id: number;
-    portal_token: string;
+    portal_token: string | null;
 };
 
 export type GuidelineSearchResult = CamelCasedPropertiesDeep<GuidelineSearchResultApi>;
