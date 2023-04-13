@@ -20,6 +20,7 @@ export * from './useEditorState';
 export * from './useFileInput';
 export * from './useFileUpload';
 export * from './useGuidelineActions';
+export * from './usePrivacySettings';
 export * from './useNavigationManager';
 export * from './usePageTemplateSettings';
 export * from './useReadyForPrint';

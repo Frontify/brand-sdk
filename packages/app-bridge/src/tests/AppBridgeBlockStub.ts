@@ -11,6 +11,7 @@ import { UserDummy } from './UserDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
+import { PrivacySettings } from '../types/PrivacySettings';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -28,6 +29,7 @@ export type getAppBridgeBlockStubProps = {
     projectId?: number;
     user?: User;
     language?: string;
+    privacySettings?: PrivacySettings;
 };
 
 export const getAppBridgeBlockStub = ({
@@ -41,6 +43,10 @@ export const getAppBridgeBlockStub = ({
     projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
     language = 'en',
+    privacySettings = {
+        assetViewerEnabled: false,
+        assetDownloadEnabled: false,
+    },
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
@@ -140,6 +146,7 @@ export const getAppBridgeBlockStub = ({
         getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
             BulkDownloadDummy.default(),
         ),
+        getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
 
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
