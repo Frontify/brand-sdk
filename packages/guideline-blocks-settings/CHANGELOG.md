@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.26.4
+
+### Patch Changes
+
+- [`3835898`](https://github.com/Frontify/brand-sdk/commit/38358988674acc7cad728357b146558ebba3964a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix Fondue dependency version issue
+
+- Updated dependencies [[`3835898`](https://github.com/Frontify/brand-sdk/commit/38358988674acc7cad728357b146558ebba3964a)]:
+  - @frontify/sidebar-settings@0.3.1
+
 ## 0.26.3
 
 ### Patch Changes
