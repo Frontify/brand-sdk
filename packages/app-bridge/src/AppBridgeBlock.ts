@@ -14,6 +14,7 @@ import type {
     Template,
     User,
 } from './types';
+import { PrivacySettings } from './types/PrivacySettings';
 
 export interface AppBridgeBlock extends AppBridgeBase {
     getBlockId(): number;
@@ -81,4 +82,6 @@ export interface AppBridgeBlock extends AppBridgeBase {
     getBulkDownloadByToken(token: string): Promise<BulkDownload>;
 
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
+
+    getPrivacySettings(): PrivacySettings;
 }
