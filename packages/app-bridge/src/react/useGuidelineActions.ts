@@ -493,10 +493,12 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 action: 'update',
             });
 
-            window.emitter.emit(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, {
-                documentPage: { id, categoryId: categoryId as number },
-                action: 'update',
-            });
+            if (categoryId) {
+                window.emitter.emit(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, {
+                    documentPage: { id, categoryId },
+                    action: 'update',
+                });
+            }
         },
         [appBridge],
     );
