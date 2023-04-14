@@ -61,7 +61,7 @@ export const useDocumentCategories = (appBridge: AppBridgeBlock | AppBridgeTheme
      */
     const getSortedCategories = useCallback(
         (
-            options: { sortBy?: (a: DocumentCategory, b: DocumentCategory) => any } = {
+            options: { sortBy?: (a: DocumentCategory, b: DocumentCategory) => number } = {
                 sortBy: sortDocumentCategories,
             },
         ) => Array.from(documentCategories.values()).sort(options.sortBy),
