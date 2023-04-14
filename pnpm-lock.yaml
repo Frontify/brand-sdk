@@ -192,9 +192,6 @@ importers:
       '@frontify/app-bridge':
         specifier: ^3.0.0-beta.61
         version: link:../app-bridge
-      '@frontify/fondue':
-        specifier: ^12.0.0-beta.170
-        version: 12.0.0-beta.170(@types/react@18.0.35)(@udecode/plate@19.7.0)(framer-motion@6.5.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.1)
       '@frontify/sidebar-settings':
         specifier: ^0.3.1
         version: link:../sidebar-settings
@@ -239,8 +236,8 @@ importers:
         specifier: ^3.0.0-beta.61
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: ^12.0.0-beta.170
-        version: 12.0.0-beta.170(@types/react@18.0.35)(@udecode/plate@19.7.0)(framer-motion@6.5.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.1)
+        specifier: 12.0.0-beta.177
+        version: 12.0.0-beta.177(@types/react@18.0.35)(@udecode/plate@19.7.0)(framer-motion@6.5.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.1)
     devDependencies:
       '@frontify/eslint-config-typescript':
         specifier: ^0.15.7
@@ -353,7 +350,7 @@ packages:
     resolution: {integrity: sha512-duORpUiYrEpzKIop6iNbjnwKLAKnJ47csTyRACyEmWj0QdUrm5aqNJGHSSEQSUAvNW0ojX0dOmK9dZduvkfeXA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.20.7
+      '@babel/types': 7.21.4
     dev: false
 
   /@babel/helper-compilation-targets@7.20.7(@babel/core@7.20.12):
@@ -1230,8 +1227,8 @@ packages:
       - ts-node
     dev: false
 
-  /@frontify/fondue@12.0.0-beta.170(@types/react@18.0.35)(@udecode/plate@19.7.0)(framer-motion@6.5.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.1):
-    resolution: {integrity: sha512-J8jJ4jm+RpPYAOL+vT8EXxpdl5ynExdQIp96lcbjTyJ39MMHGZh+Ckpr+WmaG/RyHfVlk1dTdeB+v4ae+0XdQw==}
+  /@frontify/fondue@12.0.0-beta.177(@types/react@18.0.35)(@udecode/plate@19.7.0)(framer-motion@6.5.1)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.1):
+    resolution: {integrity: sha512-a0N+1W9AaCXIDiAjQmjBH+IHPWyIVLxbDtHnppkl3TZShBlaHiBVaR0LSCh89SDdL2rS6rp+/U1tsP6I5D9ewQ==}
     engines: {node: '>=16', npm: <=0, pnpm: '>=8'}
     peerDependencies:
       '@udecode/plate': ^19.0.0
