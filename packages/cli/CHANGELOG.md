@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.3.11
+
+### Patch Changes
+
+- [`57228f5`](https://github.com/Frontify/brand-sdk/commit/57228f557c20f2a2a291ecabc560a8e7c1bb0e41) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update deps
+
 ## 5.3.10
 
 ### Patch Changes

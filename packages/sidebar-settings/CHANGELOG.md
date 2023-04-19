@@ -1,5 +1,29 @@
 # @frontify/sidebar-settings
 
+## 0.3.2
+
+### Patch Changes
+
+- [`f11eaef`](https://github.com/Frontify/brand-sdk/commit/f11eaef8b3a602562994460059e2c30ea307cda1) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix version of fondue dependency
+
+## 0.3.1
+
+### Patch Changes
+
+- [`3835898`](https://github.com/Frontify/brand-sdk/commit/38358988674acc7cad728357b146558ebba3964a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix Fondue dependency version issue
+
+## 0.3.0
+
+### Minor Changes
+
+- [#396](https://github.com/Frontify/brand-sdk/pull/396) [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add support of custom icon in the settings sidebar
+
+### Patch Changes
+
+- [`57228f5`](https://github.com/Frontify/brand-sdk/commit/57228f557c20f2a2a291ecabc560a8e7c1bb0e41) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update deps
+
+- [#396](https://github.com/Frontify/brand-sdk/pull/396) [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Unpin dev dependencies
+
 ## 0.2.0
 
 ### Minor Changes
