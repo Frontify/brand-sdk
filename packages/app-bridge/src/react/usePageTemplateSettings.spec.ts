@@ -59,7 +59,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns the page settings for document page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'document', DOCUMENT_ID);
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -70,7 +70,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns `null` for document page if no document id passed', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'document');
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage');
 
         expect(result.current.isLoading).toEqual(false);
 

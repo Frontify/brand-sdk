@@ -155,8 +155,12 @@ export const getAppBridgeThemeStub = ({
         getDocumentPageTargets: stub<Parameters<AppBridgeTheme['getDocumentPageTargets']>>().resolves(
             DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1),
         ),
-        getCoverPageSettings: stub<Parameters<AppBridgeTheme['getCoverPageSettings']>>().resolves(localPageSettings),
-        getDocumentSettings: stub<Parameters<AppBridgeTheme['getDocumentSettings']>>().resolves(localPageSettings),
+        getCoverPageTemplateSettings:
+            stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localPageSettings),
+        getDocumentPageTemplateSettings:
+            stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localPageSettings),
+        getLibraryTemplateSettings:
+            stub<Parameters<AppBridgeTheme['getLibraryTemplateSettings']>>().resolves(localPageSettings),
         createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
         createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
         createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
@@ -193,7 +197,17 @@ export const getAppBridgeThemeStub = ({
         updateBrandportalLink: stub<Parameters<AppBridgeTheme['updateBrandportalLink']>>().resolves(
             BrandportalLinkDummy.with(),
         ),
-        updateCoverPageSettings: stub<Parameters<AppBridgeTheme['updateCoverPageSettings']>>().callsFake(
+        updateCoverPageTemplateSettings: stub<
+            Parameters<AppBridgeTheme['updateCoverPageTemplateSettings']>
+        >().callsFake(async (pageSettingsUpdate) => {
+            localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+        }),
+        updateDocumentPageTemplateSettings: stub<
+            Parameters<AppBridgeTheme['updateDocumentPageTemplateSettings']>
+        >().callsFake(async (pageSettingsUpdate) => {
+            localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+        }),
+        updateLibraryTemplateSettings: stub<Parameters<AppBridgeTheme['updateLibraryTemplateSettings']>>().callsFake(
             async (pageSettingsUpdate) => {
                 localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
             },
