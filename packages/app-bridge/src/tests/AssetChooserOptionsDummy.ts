@@ -1,15 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    AssetChooserFilter,
-    AssetChooserObjectType,
-    AssetChooserOptions,
-    AssetChooserProjectType,
-    FileExtension,
-} from '../types';
+import { AssetChooserObjectType, AssetChooserOptions, AssetChooserProjectType, FileExtension } from '../types';
 
 export class AssetChooserOptionsDummy {
-    static default(): { brandId: number; filters: AssetChooserFilter[] } & AssetChooserOptions {
+    static default(): { brandId: number } & AssetChooserOptions {
         return {
             brandId: 1,
             projectTypes: [
@@ -28,11 +22,6 @@ export class AssetChooserOptionsDummy {
                 {
                     key: 'id',
                     values: [1, 2, 3],
-                    inverted: true,
-                },
-                {
-                    key: 'id2',
-                    values: [5, 6, 7],
                     inverted: true,
                 },
                 {
@@ -55,7 +44,7 @@ export class AssetChooserOptionsDummy {
         brandId: number,
         projectTypes: AssetChooserProjectType[],
         multiSelection: boolean,
-        filters: AssetChooserFilter[],
+        filters: AssetChooserOptions['filters'],
         objectTypes: AssetChooserObjectType[],
         extensions: FileExtension[],
     ): AssetChooserOptions {
@@ -64,6 +53,7 @@ export class AssetChooserOptionsDummy {
             objectTypes,
             multiSelection: true,
             extensions,
+            filters,
         };
     }
 }
