@@ -41,11 +41,11 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     getDocumentPageTemplateSettings<Settings>(documentPageId: number): Promise<Settings>;
 
-    updateDocumentPageTemplateSettings(settings: Record<string, unknown>): Promise<void>;
+    updateDocumentPageTemplateSettings(documentPageId: number, settings: Record<string, unknown>): Promise<void>;
 
-    getLibraryTemplateSettings<Settings>(documentId: number): Promise<Settings>;
+    getLibraryPageTemplateSettings<Settings>(documentId: number): Promise<Settings>;
 
-    updateLibraryTemplateSettings(settings: Record<string, unknown>): Promise<void>;
+    updateLibraryPageTemplateSettings(documentId: number, settings: Record<string, unknown>): Promise<void>;
 
     createLink(link: DocumentLinkCreate): Promise<Document>;
 

@@ -62,7 +62,7 @@ export type getAppBridgeThemeStubProps = {
     brandId?: number;
     portalId?: number;
     projectId?: number;
-    templateSettings?: Record<string, unknown>;
+    pageTemplateSettings?: Record<string, unknown>;
     language?: string;
 };
 
@@ -71,12 +71,12 @@ export const getAppBridgeThemeStub = ({
     brandId = BRAND_ID,
     portalId = PORTAL_ID,
     projectId = PROJECT_ID,
-    templateSettings = {},
+    pageTemplateSettings = {},
     language = 'en',
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
-    let localTemplateSettings = templateSettings;
+    let localPageTemplateSettings = pageTemplateSettings;
 
     return {
         getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
@@ -156,11 +156,11 @@ export const getAppBridgeThemeStub = ({
             DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1),
         ),
         getCoverPageTemplateSettings:
-            stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localTemplateSettings),
+            stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localPageTemplateSettings),
         getDocumentPageTemplateSettings:
-            stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localTemplateSettings),
-        getLibraryTemplateSettings:
-            stub<Parameters<AppBridgeTheme['getLibraryTemplateSettings']>>().resolves(localTemplateSettings),
+            stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localPageTemplateSettings),
+        getLibraryPageTemplateSettings:
+            stub<Parameters<AppBridgeTheme['getLibraryPageTemplateSettings']>>().resolves(localPageTemplateSettings),
         createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
         createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
         createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
@@ -199,19 +199,19 @@ export const getAppBridgeThemeStub = ({
         ),
         updateCoverPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateCoverPageTemplateSettings']>
-        >().callsFake(async (templateSettingsUpdate) => {
-            localTemplateSettings = mergeDeep(localTemplateSettings, templateSettingsUpdate);
+        >().callsFake(async (pageTemplateSettingsUpdate) => {
+            localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
         updateDocumentPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateDocumentPageTemplateSettings']>
-        >().callsFake(async (templateSettingsUpdate) => {
-            localTemplateSettings = mergeDeep(localTemplateSettings, templateSettingsUpdate);
+        >().callsFake(async (pageTemplateSettingsUpdate) => {
+            localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
-        updateLibraryTemplateSettings: stub<Parameters<AppBridgeTheme['updateLibraryTemplateSettings']>>().callsFake(
-            async (templateSettingsUpdate) => {
-                localTemplateSettings = mergeDeep(localTemplateSettings, templateSettingsUpdate);
-            },
-        ),
+        updateLibraryPageTemplateSettings: stub<
+            Parameters<AppBridgeTheme['updateLibraryPageTemplateSettings']>
+        >().callsFake(async (pageTemplateSettingsUpdate) => {
+            localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
+        }),
         deleteCoverPage: stub<Parameters<AppBridgeTheme['deleteCoverPage']>>().resolves(),
         deleteDocumentCategory: stub<Parameters<AppBridgeTheme['deleteDocumentCategory']>>().resolves(),
         deleteDocumentGroup: stub<Parameters<AppBridgeTheme['deleteDocumentGroup']>>().resolves(),

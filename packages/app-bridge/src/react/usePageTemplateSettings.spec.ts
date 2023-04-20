@@ -21,7 +21,7 @@ describe('usePageTemplateSettings', () => {
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
-            templateSettings,
+            pageTemplateSettings: templateSettings,
         });
 
         const { result } = renderHook(() => usePageTemplateSettings(appBridgeStub, template, documentId));

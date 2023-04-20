@@ -35,7 +35,7 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
                 if (documentId === undefined) {
                     console.error('Document ID is required for library template settings');
                 } else {
-                    const librarySettings = await appBridge.getLibraryTemplateSettings<T>(documentId);
+                    const librarySettings = await appBridge.getLibraryPageTemplateSettings<T>(documentId);
                     setPageTemplateSettings(librarySettings);
                 }
             }
@@ -62,14 +62,14 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
                     return;
                 }
 
-                await appBridge.updateDocumentPageTemplateSettings(pageTemplateSettingsUpdate);
+                await appBridge.updateDocumentPageTemplateSettings(documentId, pageTemplateSettingsUpdate);
             } else if (template === 'library') {
                 if (documentId === undefined) {
                     console.error('Document ID is required for library template settings');
                     return;
                 }
 
-                await appBridge.updateLibraryTemplateSettings(pageTemplateSettingsUpdate);
+                await appBridge.updateLibraryPageTemplateSettings(documentId, pageTemplateSettingsUpdate);
             }
 
             window.emitter.emit('AppBridge:PageTemplateSettingsUpdated', {
