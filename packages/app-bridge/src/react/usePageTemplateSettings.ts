@@ -8,7 +8,7 @@ import type { EmitterEvents } from '../types';
 export const usePageTemplateSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
     template: 'cover' | 'documentPage' | 'library',
-    documentId?: number,
+    documentOrDocumentPageId?: number,
 ) => {
     const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<T>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,17 +25,19 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
                 const coverPageSettings = await appBridge.getCoverPageTemplateSettings<T>();
                 setPageTemplateSettings(coverPageSettings);
             } else if (template === 'documentPage') {
-                if (documentId === undefined) {
+                if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for document page template settings');
                 } else {
-                    const documentSettings = await appBridge.getDocumentPageTemplateSettings<T>(documentId);
+                    const documentSettings = await appBridge.getDocumentPageTemplateSettings<T>(
+                        documentOrDocumentPageId,
+                    );
                     setPageTemplateSettings(documentSettings);
                 }
             } else if (template === 'library') {
-                if (documentId === undefined) {
+                if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for library template settings');
                 } else {
-                    const librarySettings = await appBridge.getLibraryPageTemplateSettings<T>(documentId);
+                    const librarySettings = await appBridge.getLibraryPageTemplateSettings<T>(documentOrDocumentPageId);
                     setPageTemplateSettings(librarySettings);
                 }
             }
@@ -50,26 +52,29 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
         return () => {
             window.emitter.off('AppBridge:PageTemplateSettingsUpdated', updateBlockSettingsFromEvent);
         };
-    }, [appBridge, documentId, template]);
+    }, [appBridge, documentOrDocumentPageId, template]);
 
     const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<T>) => {
         try {
             if (template === 'cover') {
                 await appBridge.updateCoverPageTemplateSettings(pageTemplateSettingsUpdate);
             } else if (template === 'documentPage') {
-                if (documentId === undefined) {
+                if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for document page template settings');
                     return;
                 }
 
-                await appBridge.updateDocumentPageTemplateSettings(documentId, pageTemplateSettingsUpdate);
+                await appBridge.updateDocumentPageTemplateSettings(
+                    documentOrDocumentPageId,
+                    pageTemplateSettingsUpdate,
+                );
             } else if (template === 'library') {
-                if (documentId === undefined) {
+                if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for library template settings');
                     return;
                 }
 
-                await appBridge.updateLibraryPageTemplateSettings(documentId, pageTemplateSettingsUpdate);
+                await appBridge.updateLibraryPageTemplateSettings(documentOrDocumentPageId, pageTemplateSettingsUpdate);
             }
 
             window.emitter.emit('AppBridge:PageTemplateSettingsUpdated', {
