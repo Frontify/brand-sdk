@@ -16,12 +16,12 @@ describe('usePageTemplateSettings', () => {
     });
 
     const loadUsePageTemplateSettings = async (
-        templateSettings: Record<string, unknown>,
+        pageTemplateSettings: Record<string, unknown>,
         template: Parameters<typeof usePageTemplateSettings>[1],
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
-            pageTemplateSettings: templateSettings,
+            pageTemplateSettings,
         });
 
         const { result } = renderHook(() => usePageTemplateSettings(appBridgeStub, template, documentId));
