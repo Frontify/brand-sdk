@@ -62,7 +62,7 @@ export type getAppBridgeThemeStubProps = {
     brandId?: number;
     portalId?: number;
     projectId?: number;
-    pageSettings?: Record<string, unknown>;
+    templateSettings?: Record<string, unknown>;
     language?: string;
 };
 
@@ -71,12 +71,12 @@ export const getAppBridgeThemeStub = ({
     brandId = BRAND_ID,
     portalId = PORTAL_ID,
     projectId = PROJECT_ID,
-    pageSettings = {},
+    templateSettings = {},
     language = 'en',
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
-    let localPageSettings = pageSettings;
+    let localTemplateSettings = templateSettings;
 
     return {
         getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
@@ -156,11 +156,11 @@ export const getAppBridgeThemeStub = ({
             DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1),
         ),
         getCoverPageTemplateSettings:
-            stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localPageSettings),
+            stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localTemplateSettings),
         getDocumentPageTemplateSettings:
-            stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localPageSettings),
+            stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localTemplateSettings),
         getLibraryTemplateSettings:
-            stub<Parameters<AppBridgeTheme['getLibraryTemplateSettings']>>().resolves(localPageSettings),
+            stub<Parameters<AppBridgeTheme['getLibraryTemplateSettings']>>().resolves(localTemplateSettings),
         createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
         createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
         createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
@@ -199,17 +199,17 @@ export const getAppBridgeThemeStub = ({
         ),
         updateCoverPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateCoverPageTemplateSettings']>
-        >().callsFake(async (pageSettingsUpdate) => {
-            localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+        >().callsFake(async (templateSettingsUpdate) => {
+            localTemplateSettings = mergeDeep(localTemplateSettings, templateSettingsUpdate);
         }),
         updateDocumentPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateDocumentPageTemplateSettings']>
-        >().callsFake(async (pageSettingsUpdate) => {
-            localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+        >().callsFake(async (templateSettingsUpdate) => {
+            localTemplateSettings = mergeDeep(localTemplateSettings, templateSettingsUpdate);
         }),
         updateLibraryTemplateSettings: stub<Parameters<AppBridgeTheme['updateLibraryTemplateSettings']>>().callsFake(
-            async (pageSettingsUpdate) => {
-                localPageSettings = mergeDeep(localPageSettings, pageSettingsUpdate);
+            async (templateSettingsUpdate) => {
+                localTemplateSettings = mergeDeep(localTemplateSettings, templateSettingsUpdate);
             },
         ),
         deleteCoverPage: stub<Parameters<AppBridgeTheme['deleteCoverPage']>>().resolves(),
