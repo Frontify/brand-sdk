@@ -122,6 +122,14 @@ export const getAppBridgeThemeStub = ({
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_2, []),
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_3, [DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]),
         ]),
+        getCategorizedPagesByCategoryId: stub<Parameters<AppBridgeTheme['getCategorizedPagesByCategoryId']>>().resolves(
+            [
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_2),
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_3),
+                DocumentPageDummy.with(DOCUMENT_PAGE_ID_4),
+            ],
+        ),
         getUncategorizedPagesByDocumentId: stub<
             Parameters<AppBridgeTheme['getUncategorizedPagesByDocumentId']>
         >().resolves([

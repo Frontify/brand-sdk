@@ -161,6 +161,8 @@ export const getAppBridgeBlockStub = ({
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
         getDocumentCategoriesByDocumentId:
             stub<Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>>().resolves(),
+        getCategorizedPagesByCategoryId:
+            stub<Parameters<AppBridgeBlock['getCategorizedPagesByCategoryId']>>().resolves(),
         getUncategorizedPagesByDocumentId:
             stub<Parameters<AppBridgeBlock['getUncategorizedPagesByDocumentId']>>().resolves(),
         getDocumentSectionsByDocumentPageId:

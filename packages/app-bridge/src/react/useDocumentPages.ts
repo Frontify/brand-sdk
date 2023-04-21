@@ -12,17 +12,38 @@ export type DocumentPageEvent = {
     documentPage: DocumentPage | { id: number };
 };
 
-const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sort ? a.sort - b.sort : 0);
-
-export const useDocumentPages = (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
+export const useDocumentPages = (
+    appBridge: AppBridgeBlock | AppBridgeTheme,
+    documentId?: number,
+    categoryId?: number,
+    allPages?: boolean,
+) => {
     const [pages, setPages] = useState<Map<number, DocumentPage>>(new Map([]));
+    const [categorizedPages, setCategorizedPages] = useState<Map<number, DocumentPage>>(new Map([]));
+    const [uncategorizedPages, setUncategorizedPages] = useState<Map<number, DocumentPage>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
         setIsLoading(true);
-        const pages = await fetchDocumentPages(appBridge, documentId);
 
-        setPages(pages);
+        if (categoryId) {
+            const categorizedPages = await fetchCategorizedDocumentPages(appBridge, categoryId);
+
+            setCategorizedPages(categorizedPages);
+        }
+
+        if (documentId) {
+            const uncategorizedPages = await fetchUncategorizedDocumentPages(appBridge, documentId);
+
+            setUncategorizedPages(uncategorizedPages);
+        }
+
+        if (documentId && allPages) {
+            const pages = await fetchDocumentPages(appBridge, documentId);
+
+            setPages(pages);
+        }
+
         setIsLoading(false);
     }, [appBridge, documentId]);
 
@@ -33,49 +54,34 @@ export const useDocumentPages = (appBridge: AppBridgeBlock | AppBridgeTheme, doc
     useEffect(() => {
         const refetchIfPageExistsInMap = (event: DocumentPageTargetEvent) => {
             for (const id of event.payload.pageIds) {
-                if (pages.has(id)) {
+                if ((pages || categorizedPages || uncategorizedPages).has(id)) {
                     refetch();
                 }
             }
         };
 
-        window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
+        documentId && window.emitter.on(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
         window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
 
         return () => {
-            window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
+            documentId && window.emitter.off(`AppBridge:GuidelineDocumentPageAction:${documentId}`, refetch);
             window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
         };
-    }, [documentId, refetch, pages]);
+    }, [documentId, refetch, pages, categorizedPages, uncategorizedPages]);
 
-    /**
-     * returns list of document pages that do not belong to any document category
-     */
-    const getUncategorizedPages = useCallback(
-        (options: { sortBy?: (a: DocumentPage, b: DocumentPage) => any } = { sortBy: sortDocumentPages }) =>
-            Array.from(pages.values())
-                .filter((page) => !page.categoryId)
-                .sort(options.sortBy),
-        [pages],
-    );
+    return { pages, categorizedPages, uncategorizedPages, refetch, isLoading };
+};
 
-    /**
-     * returns list of document pages of specific document category
-     * if documentGroupId is provided.
-     * Otherwise, it returns document pages for all document categories
-     */
-    const getCategorizedPages = useCallback(
-        (
-            documentCategoryId?: number,
-            options: { sortBy?: (a: DocumentPage, b: DocumentPage) => any } = { sortBy: sortDocumentPages },
-        ) =>
-            Array.from(pages.values())
-                .filter((page) => (documentCategoryId ? page.categoryId === documentCategoryId : page.categoryId))
-                .sort(options.sortBy),
-        [pages],
-    );
+const fetchCategorizedDocumentPages = async (appBridge: AppBridgeBlock | AppBridgeTheme, categoryId: number) => {
+    const pages = await appBridge.getCategorizedPagesByCategoryId(categoryId);
 
-    return { pages, getCategorizedPages, getUncategorizedPages, refetch, isLoading };
+    return new Map(pages.map((page) => [page.id, page]));
+};
+
+const fetchUncategorizedDocumentPages = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
+    const pages = await appBridge.getUncategorizedPagesByDocumentId(documentId);
+
+    return new Map(pages.map((page) => [page.id, page]));
 };
 
 const fetchDocumentPages = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
