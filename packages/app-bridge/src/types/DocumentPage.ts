@@ -43,7 +43,7 @@ export type DocumentPageApi = {
     change_comment: Nullable<string>;
     change_comment_by: Nullable<number>;
     change_title: Nullable<string>;
-    targets: Nullable<SingleTargetApi[]>;
+    targets: Nullable<SingleTargetApi['target'][]>;
     category?: Nullable<Record<string, unknown>>;
     parent_document?: Nullable<Record<string, unknown>>;
     parent_portal?: Nullable<Record<string, unknown>>;
