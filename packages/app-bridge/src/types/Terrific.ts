@@ -47,12 +47,6 @@ export type AssetChooserOptions = {
     multiSelection?: boolean;
     extensions?: (FileExtension | string)[];
     urlContains?: string;
-    filters?: {
-        key: 'id' | 'ext' | 'object_type' | 'external_url';
-        values?: (number | string)[];
-        inverted?: boolean;
-        containsText?: string;
-    }[];
 } & (
     | {
           selectedValueId?: number | string;

@@ -3,9 +3,8 @@
 import { AssetChooserObjectType, AssetChooserOptions, AssetChooserProjectType, FileExtension } from '../types';
 
 export class AssetChooserOptionsDummy {
-    static default(): { brandId: number } & AssetChooserOptions {
+    static default(): AssetChooserOptions {
         return {
-            brandId: 1,
             projectTypes: [
                 AssetChooserProjectType.MediaLibrary,
                 AssetChooserProjectType.LogoLibrary,
@@ -18,33 +17,12 @@ export class AssetChooserOptionsDummy {
             ],
             objectTypes: [AssetChooserObjectType.Canvas],
             multiSelection: true,
-            filters: [
-                {
-                    key: 'id',
-                    values: [1, 2, 3],
-                    inverted: true,
-                },
-                {
-                    key: 'ext',
-                    values: ['jpg', 'png', 'svg'],
-                },
-                {
-                    key: 'object_type',
-                    values: ['abc'],
-                },
-                {
-                    key: 'external_url',
-                    containsText: 'xyz',
-                },
-            ],
         };
     }
 
     static with(
-        brandId: number,
         projectTypes: AssetChooserProjectType[],
         multiSelection: boolean,
-        filters: AssetChooserOptions['filters'],
         objectTypes: AssetChooserObjectType[],
         extensions: FileExtension[],
     ): AssetChooserOptions {
@@ -53,7 +31,6 @@ export class AssetChooserOptionsDummy {
             objectTypes,
             multiSelection: true,
             extensions,
-            filters,
         };
     }
 }
