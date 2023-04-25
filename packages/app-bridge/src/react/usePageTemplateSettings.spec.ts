@@ -16,12 +16,12 @@ describe('usePageTemplateSettings', () => {
     });
 
     const loadUsePageTemplateSettings = async (
-        pageSettings: Record<string, unknown>,
+        pageTemplateSettings: Record<string, unknown>,
         template: Parameters<typeof usePageTemplateSettings>[1],
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
-            pageSettings,
+            pageTemplateSettings,
         });
 
         const { result } = renderHook(() => usePageTemplateSettings(appBridgeStub, template, documentId));
@@ -59,7 +59,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns the page settings for document page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'document', DOCUMENT_ID);
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -70,7 +70,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns `null` for document page if no document id passed', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'document');
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage');
 
         expect(result.current.isLoading).toEqual(false);
 

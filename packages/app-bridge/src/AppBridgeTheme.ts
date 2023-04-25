@@ -35,11 +35,17 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     openNavigationManager(): void;
 
-    getCoverPageSettings<Settings>(): Promise<Settings>;
+    getCoverPageTemplateSettings<Settings>(): Promise<Settings>;
 
-    updateCoverPageSettings(settings: Record<string, unknown>): Promise<void>;
+    updateCoverPageTemplateSettings(settings: Record<string, unknown>): Promise<void>;
 
-    getDocumentSettings<Settings>(documentId: number): Promise<Settings>;
+    getDocumentPageTemplateSettings<Settings>(documentPageId: number): Promise<Settings>;
+
+    updateDocumentPageTemplateSettings(documentPageId: number, settings: Record<string, unknown>): Promise<void>;
+
+    getLibraryPageTemplateSettings<Settings>(documentId: number): Promise<Settings>;
+
+    updateLibraryPageTemplateSettings(documentId: number, settings: Record<string, unknown>): Promise<void>;
 
     createLink(link: DocumentLinkCreate): Promise<Document>;
 
