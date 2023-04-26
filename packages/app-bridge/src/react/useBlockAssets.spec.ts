@@ -2,13 +2,19 @@
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import { SinonStub } from 'sinon';
-import { Mock, afterEach, describe, expect, it, vi } from 'vitest';
+import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 import { useBlockAssets } from './useBlockAssets';
 
 describe('useBlockAssets hook', () => {
+    beforeEach(() => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        vi.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
     afterEach(() => {
+        vi.restoreAllMocks();
         cleanup();
     });
 
@@ -69,6 +75,8 @@ describe('useBlockAssets hook', () => {
         await waitFor(async () => {
             expect(result.current.blockAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
         });
+
+        expect(console.error).toHaveBeenCalledOnce();
     });
 
     it('should notify about updated assets on delete', async () => {

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getAppBridgeThemeStub } from '../tests';
 import { usePageTemplateSettings } from './usePageTemplateSettings';
 
@@ -11,7 +11,13 @@ const PAGE_SETTINGS = {
 };
 
 describe('usePageTemplateSettings', () => {
+    beforeEach(() => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        vi.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
     afterEach(() => {
+        vi.restoreAllMocks();
         cleanup();
     });
 
@@ -69,7 +75,7 @@ describe('usePageTemplateSettings', () => {
         });
     });
 
-    it('returns `null` for document page if no document id passed', async () => {
+    it('returns `null` for document page if no document page id passed', async () => {
         const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage');
 
         expect(result.current.isLoading).toEqual(false);
@@ -78,6 +84,8 @@ describe('usePageTemplateSettings', () => {
             expect(result.current.isLoading).toEqual(false);
             expect(result.current.pageTemplateSettings).toEqual(null);
         });
+
+        expect(console.error).toHaveBeenCalledOnce();
     });
 
     it('returns the page settings for library page', async () => {
@@ -100,5 +108,7 @@ describe('usePageTemplateSettings', () => {
             expect(result.current.isLoading).toEqual(false);
             expect(result.current.pageTemplateSettings).toEqual(null);
         });
+
+        expect(console.error).toHaveBeenCalledOnce();
     });
 });

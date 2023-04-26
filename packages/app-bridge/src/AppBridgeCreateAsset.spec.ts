@@ -1,7 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-const TOKEN = 'AjY34F87Dsat^J';
-
 import { afterEach, beforeAll, describe, expect, it, test, vi } from 'vitest';
 import { AppBridgeCreateAsset } from './AppBridgeCreateAsset';
 import { Topic } from './types';
@@ -9,6 +7,7 @@ import { notify } from './utilities/notify';
 import { subscribe } from './utilities/subscribe';
 import { generateRandomString } from './utilities/hash';
 
+const TOKEN = 'AjY34F87Dsat^J';
 const EXPECTED_RESULT = { test: 'passed' };
 
 const DEFAULT_TIMEOUT = 3 * 1000;
@@ -18,13 +17,13 @@ describe('AppBridgeCreateAssetTest', () => {
     beforeAll(() => {
         vi.mock('./utilities/subscribe', () => {
             return {
-                subscribe: vi.fn(() => Promise.resolve(EXPECTED_RESULT)),
+                subscribe: vi.fn().mockResolvedValue({ test: 'passed' }),
             };
         });
 
         vi.mock('./utilities/hash', () => {
             return {
-                generateRandomString: vi.fn(() => TOKEN),
+                generateRandomString: vi.fn().mockReturnValue('AjY34F87Dsat^J'),
             };
         });
 
@@ -35,7 +34,7 @@ describe('AppBridgeCreateAssetTest', () => {
         });
 
         expect(generateRandomString).toHaveBeenCalledTimes(1);
-        expect(generateRandomString).toHaveReturnedWith(TOKEN);
+        expect(generateRandomString).toHaveReturnedWith('AjY34F87Dsat^J');
     });
 
     afterEach(() => {

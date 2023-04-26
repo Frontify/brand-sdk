@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import sinon from 'sinon';
 import { getAppBridgeBlockStub } from '../tests';
@@ -9,7 +9,13 @@ import { BulkDownloadState, useBulkDownload } from './';
 const appBridgeError = new Error('Something went wrong');
 
 describe('useBulkDownload', () => {
+    beforeEach(() => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        vi.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
     afterEach(() => {
+        vi.restoreAllMocks();
         cleanup();
         sinon.restore();
     });

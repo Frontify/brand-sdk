@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { HttpClient } from '../utilities';
+import { HttpClient } from '../utilities/httpClient';
 import { AssetApiDummy, AssetDummy, HttpUtilResponseDummy } from '../tests';
 import { createAssetByFileId, mapAssetApiToAsset } from './AssetRepository';
 
