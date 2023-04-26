@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 5.3.12
+
+### Patch Changes
+
+- [`caecf03`](https://github.com/Frontify/brand-sdk/commit/caecf03ffd52a07cd1c846f4a99f9736fef76b76) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`4c88c23`](https://github.com/Frontify/brand-sdk/commit/4c88c23a261e3cd1837cdd70d9e96062ce1a5a4b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies in templates
+
+- [`2179c95`](https://github.com/Frontify/brand-sdk/commit/2179c95e787d89d1e75671d394b4dde61673638d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update App Bridge
+
 ## 5.3.11
 
 ### Patch Changes
