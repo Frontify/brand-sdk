@@ -36,7 +36,7 @@
         "vite-plugin-dts": "^2.3.0"
     },
     "dependencies": {
-        "@frontify/app-bridge": "^3.0.0-beta.65",
+        "@frontify/app-bridge": "^3.0.0-beta.66",
         "@frontify/sidebar-settings": "^0.3.2"
     },
     "peerDependencies": {
