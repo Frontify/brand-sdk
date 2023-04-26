@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AssetApi } from './Asset';
-import type { TemplateApi } from './Template';
 import type { FileExtension } from './FileExtension';
+import type { TemplateApi } from './Template';
 
 export enum TerrificEvent {
     OpenModal = 'onOpenModal',
