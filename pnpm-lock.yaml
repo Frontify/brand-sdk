@@ -190,7 +190,7 @@ importers:
   packages/guideline-blocks-settings:
     dependencies:
       '@frontify/app-bridge':
-        specifier: ^3.0.0-beta.65
+        specifier: ^3.0.0-beta.66
         version: link:../app-bridge
       '@frontify/sidebar-settings':
         specifier: ^0.3.2
@@ -233,7 +233,7 @@ importers:
   packages/sidebar-settings:
     dependencies:
       '@frontify/app-bridge':
-        specifier: ^3.0.0-beta.65
+        specifier: ^3.0.0-beta.66
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: ^12.0.0-beta.190
