@@ -5,32 +5,27 @@ import { AssetChooserObjectType, AssetChooserOptions, AssetChooserProjectType, F
 export class AssetChooserOptionsDummy {
     static default(): AssetChooserOptions {
         return {
-            projectTypes: [
-                AssetChooserProjectType.MediaLibrary,
-                AssetChooserProjectType.LogoLibrary,
-                AssetChooserProjectType.IconLibrary,
-                AssetChooserProjectType.DocumentLibrary,
-                AssetChooserProjectType.TemplateLibrary,
-                AssetChooserProjectType.PatternLibrary,
-                AssetChooserProjectType.Styleguide,
-                AssetChooserProjectType.Workspace,
-            ],
+            projectTypes: Object.values(AssetChooserProjectType),
             objectTypes: [AssetChooserObjectType.Canvas],
+            extensions: [FileExtension.Jpg, FileExtension.Png, FileExtension.Svg],
             multiSelection: true,
+            urlContains: 'abc.xyz',
         };
     }
 
-    static with(
-        projectTypes: AssetChooserProjectType[],
-        multiSelection: boolean,
-        objectTypes: AssetChooserObjectType[],
-        extensions: FileExtension[],
-    ): AssetChooserOptions {
+    static withSingleSelectedValue(selectedValueId?: number): AssetChooserOptions {
         return {
-            projectTypes,
-            objectTypes,
+            ...this.default(),
+            multiSelection: false,
+            selectedValueId,
+        };
+    }
+
+    static withMultiSelectedValues(selectedValueIds?: number[]): AssetChooserOptions {
+        return {
+            ...this.default(),
             multiSelection: true,
-            extensions,
+            selectedValueIds,
         };
     }
 }

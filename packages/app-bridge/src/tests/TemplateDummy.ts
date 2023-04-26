@@ -6,7 +6,7 @@ export class TemplateDummy {
     static with(id: number): Template {
         return {
             id,
-            title: 'A title',
+            title: 'A template',
             description: 'A description',
             previewUrl: 'https://preview.url',
             projectId: 23,
