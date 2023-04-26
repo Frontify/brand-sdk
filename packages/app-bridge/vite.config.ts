@@ -2,7 +2,7 @@
 
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
-import copy from 'rollup-plugin-copy';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitest/config';
 import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
 
@@ -17,9 +17,8 @@ export const globals = {
 export default defineConfig({
     plugins: [
         dts({ insertTypesEntry: true, rollupTypes: true }),
-        copy({
-            targets: [{ src: './src/workers/upload.worker.js', dest: './dist' }],
-            hook: 'writeBundle',
+        viteStaticCopy({
+            targets: [{ src: './src/workers/upload.worker.js', dest: '.' }],
         }),
     ],
     build: {
