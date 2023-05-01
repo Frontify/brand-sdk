@@ -65,12 +65,7 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     deleteStandardDocument(id: number): Promise<void>;
 
-    moveDocument(
-        documentId: number,
-        position: number,
-        newDocumentGroupId?: number,
-        oldDocumentGroupId?: number,
-    ): Promise<Document>;
+    moveDocument(documentId: number, position: number, newDocumentGroupId?: number): Promise<Document>;
 
     createDocumentGroup(documentGroup: DocumentGroupCreate): Promise<DocumentGroup>;
 
