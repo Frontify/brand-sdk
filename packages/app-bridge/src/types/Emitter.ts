@@ -1,16 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BlockSettingsUpdateEvent } from '../react/useBlockSettings';
-
 import type { Asset } from './Asset';
+import { BlockSettingsUpdateEvent } from './BlockSettings';
+import type { BrandportalLink } from './BrandportalLink';
 import type { Color } from './Color';
-import type { Document } from './Document';
-import type { DocumentPage } from './DocumentPage';
 import type { ColorPalette } from './ColorPalette';
 import type { CoverPage } from './CoverPage';
-import type { DocumentGroup } from './DocumentGroup';
+import type { Document } from './Document';
 import type { DocumentCategory } from './DocumentCategory';
-import type { BrandportalLink } from './BrandportalLink';
+import type { DocumentGroup } from './DocumentGroup';
+import type { DocumentPage } from './DocumentPage';
 import type { PrivacySettings } from './PrivacySettings';
 
 export type EmitterAction = 'add' | 'update' | 'delete';

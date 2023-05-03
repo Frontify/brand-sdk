@@ -1,14 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-
-import { mergeDeep } from '../utilities/object';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
+import { notifyBlockSettingsUpdated, offBlockSettingsUpdated, onBlockSettingsUpdated } from '../events';
+import { BlockSettingsUpdateEvent } from '../types';
 
-export type BlockSettingsUpdateEvent<T = Record<string, unknown>> = {
-    blockId: number;
-    blockSettings: T;
-};
+import { mergeDeep } from '../utilities';
 
 export const useBlockSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeBlock,
@@ -24,17 +21,17 @@ export const useBlockSettings = <T = Record<string, unknown>>(
             }
         };
 
-        window.emitter.on('AppBridge:BlockSettingsUpdated', updateBlockSettingsFromEvent);
+        onBlockSettingsUpdated(updateBlockSettingsFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:BlockSettingsUpdated', updateBlockSettingsFromEvent);
+            offBlockSettingsUpdated(updateBlockSettingsFromEvent);
         };
     }, [blockId]);
 
     const updateBlockSettings = async (blockSettingsUpdate: Partial<T>) => {
         try {
             await appBridge.updateBlockSettings(blockSettingsUpdate);
-            window.emitter.emit('AppBridge:BlockSettingsUpdated', {
+            notifyBlockSettingsUpdated({
                 blockId,
                 blockSettings: mergeDeep(blockSettings, blockSettingsUpdate),
             });
