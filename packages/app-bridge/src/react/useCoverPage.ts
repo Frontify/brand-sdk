@@ -10,20 +10,31 @@ export type UseCoverPageReturnType = {
     isLoading: boolean;
 };
 
-export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType => {
+type Options = {
+    /**
+     * Whether it should fetch on mount.
+     */
+    enabled?: boolean;
+};
+
+export const useCoverPage = (
+    appBridge: AppBridgeTheme,
+    options: Options = { enabled: true },
+): UseCoverPageReturnType => {
     const [coverPage, setCoverPage] = useState<Nullable<CoverPage>>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchCoverPage = async () => {
+            setIsLoading(true);
             setCoverPage(await appBridge.getCoverPage());
+            setIsLoading(false);
         };
 
-        if (isLoading) {
+        if (options.enabled) {
             fetchCoverPage();
-            setIsLoading(false);
         }
-    }, [appBridge, isLoading]);
+    }, [appBridge, options.enabled]);
 
     useEffect(() => {
         const updateCoverPageFromEvent = (event: { action: EmitterAction; coverPage?: CoverPage }) => {

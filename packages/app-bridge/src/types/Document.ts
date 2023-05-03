@@ -5,20 +5,6 @@
 import type { CamelCasedPropertiesDeep, RequireAtLeastOne, SetOptional, Simplify } from 'type-fest';
 import { SingleTargetApi } from './Targets';
 
-/**
- * @deprecated fields that are not used anymore
- */
-type DocumentApiDeprecatedFields = {
-    layout: Nullable<string>;
-};
-
-/**
- * virtual fields of Document that wont be returned by API
- */
-type DocumentApiVirtualFields = {
-    document_group_id?: Nullable<number>;
-};
-
 export type DocumentLibraryMode =
     | 'MEDIALIBRARY'
     | 'ICONLIBRARY'
@@ -60,50 +46,54 @@ type DocumentAsLink = CamelCasedPropertiesDeep<DocumentApiAsLink>;
 type DocumentAsNoneLink = CamelCasedPropertiesDeep<DocumentApiAsNoneLink>;
 
 export type DocumentApi = Simplify<
-    DocumentApiDeprecatedFields &
-        DocumentApiVirtualFields & {
-            id: number;
-            creator: number;
-            created: string;
-            modifier: Nullable<number>;
-            modified: Nullable<string>;
-            project_id: number;
-            valid_from: string;
-            valid_to: Nullable<string>;
-            visibility: Nullable<string>;
-            portal_id: Nullable<number>;
-            title: string;
-            slug: Nullable<string>;
-            heading: Nullable<string>;
-            subheading: Nullable<string>;
-            description: Nullable<string>;
-            logo: Nullable<string>;
-            sort: Nullable<number>;
-            lazy: Nullable<boolean>;
-            link_settings: Nullable<DocumentLinkSettingsApi>;
-            view_count: Nullable<number>;
-            mode: DocumentMode;
-            settings: {
-                project?: number;
-                project_slug?: string;
-                facettes?: any[];
-            };
-            appearance: Nullable<Record<string, any>>;
-            logo_file_id: Nullable<string>;
-            logo_settings: Nullable<any>;
-            background_file_id: Nullable<string>;
-            background_settings: Nullable<any>;
-            change_processed: Nullable<string>;
-            change_processed_by: Nullable<string>;
-            change_skipped: Nullable<string>;
-            change_skipped_by: Nullable<string>;
-            change_comment: Nullable<string>;
-            change_comment_by: Nullable<string>;
-            change_title: Nullable<string>;
-            targets: Nullable<SingleTargetApi['target'][]>;
-            token: Nullable<string>;
-            permanent_link: string;
-        } & (DocumentApiAsLink | DocumentApiAsNoneLink)
+    {
+        id: number;
+        creator: number;
+        created: string;
+        modifier: Nullable<number>;
+        modified: Nullable<string>;
+        project_id: number;
+        document_group_id?: Nullable<number>;
+        valid_from: string;
+        valid_to: Nullable<string>;
+        visibility: Nullable<string>;
+        portal_id: Nullable<number>;
+        title: string;
+        slug: Nullable<string>;
+        heading: Nullable<string>;
+        subheading: Nullable<string>;
+        description: Nullable<string>;
+        logo: Nullable<string>;
+        sort: Nullable<number>;
+        lazy: Nullable<boolean>;
+        link_settings: Nullable<DocumentLinkSettingsApi>;
+        view_count: Nullable<number>;
+        mode: DocumentMode;
+        settings: {
+            project?: number;
+            project_slug?: string;
+            facettes?: any[];
+        };
+        appearance: Nullable<Record<string, any>>;
+        logo_file_id: Nullable<string>;
+        logo_settings: Nullable<any>;
+        background_file_id: Nullable<string>;
+        background_settings: Nullable<any>;
+        change_processed: Nullable<string>;
+        change_processed_by: Nullable<string>;
+        change_skipped: Nullable<string>;
+        change_skipped_by: Nullable<string>;
+        change_comment: Nullable<string>;
+        change_comment_by: Nullable<string>;
+        change_title: Nullable<string>;
+        targets: Nullable<SingleTargetApi['target'][]>;
+        token: Nullable<string>;
+        permanent_link: string;
+
+        // Enriched fields
+        number_of_document_categories: number;
+        number_of_uncategorized_document_pages: number;
+    } & (DocumentApiAsLink | DocumentApiAsNoneLink)
 >;
 
 export type Document = CamelCasedPropertiesDeep<DocumentApi>;

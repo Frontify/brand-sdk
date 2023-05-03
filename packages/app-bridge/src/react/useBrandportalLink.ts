@@ -13,18 +13,32 @@ const defaultState: BrandportalLink = {
 
 export type UseBrandportalLinkReturnType = {
     brandportalLink: Nullable<BrandportalLink>;
+    isLoading: boolean;
 };
 
-export const useBrandportalLink = (appBridge: AppBridgeTheme): UseBrandportalLinkReturnType => {
+type Options = {
+    /**
+     * Whether it should fetch on mount.
+     */
+    enabled?: boolean;
+};
+
+export const useBrandportalLink = (
+    appBridge: AppBridgeTheme,
+    options: Options = { enabled: true },
+): UseBrandportalLinkReturnType => {
     const [brandportalLink, setBrandportalLink] = useState<Nullable<BrandportalLink>>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchBrandportalLink = async () => {
+            setIsLoading(true);
             setBrandportalLink(await appBridge.getBrandportalLink());
+            setIsLoading(false);
         };
 
-        fetchBrandportalLink();
-    }, [appBridge]);
+        options.enabled && fetchBrandportalLink();
+    }, [appBridge, options.enabled]);
 
     useEffect(() => {
         const updateBrandportalLinkFromEvent = (event: {
@@ -47,5 +61,5 @@ export const useBrandportalLink = (appBridge: AppBridgeTheme): UseBrandportalLin
         };
     }, [appBridge]);
 
-    return { brandportalLink };
+    return { brandportalLink, isLoading };
 };

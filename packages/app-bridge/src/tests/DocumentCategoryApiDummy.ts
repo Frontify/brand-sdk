@@ -19,6 +19,7 @@ export class DocumentCategoryApiDummy {
             slug: `document-category-dummy-${id}`,
             sort: 1,
             document_pages: document_pages.map((page) => DocumentPageApiDummy.with(page)),
+            number_of_document_pages: document_pages.length,
         };
     }
 }

@@ -10,19 +10,27 @@ type DocumentEvent = {
     action: EmitterAction;
     document: { id: number; documentGroupId?: number | null };
 };
+
+type Options = {
+    /**
+     * Whether it should fetch on mount.
+     */
+    enabled?: boolean;
+};
+
 const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme) => {
+export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, options: Options = { enabled: true }) => {
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
-        setIsLoading(true);
-        const pages = await fetchDocumentGroups(appBridge);
-
-        setDocumentGroups(pages);
-        setIsLoading(false);
-    }, [appBridge]);
+        if (options.enabled) {
+            setIsLoading(true);
+            setDocumentGroups(await fetchDocumentGroups(appBridge));
+            setIsLoading(false);
+        }
+    }, [appBridge, options.enabled]);
 
     useEffect(() => {
         refetch();
@@ -64,7 +72,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme) =>
      */
     const getSortedDocumentGroups = useCallback(
         (
-            options: { sortBy?: (a: DocumentGroup, b: DocumentGroup) => any } = {
+            options: { sortBy?: (a: DocumentGroup, b: DocumentGroup) => number } = {
                 sortBy: sortDocumentGroups,
             },
         ) => Array.from(documentGroups.values()).sort(options.sortBy),
@@ -136,16 +144,12 @@ const deleteDocument = (groups: Map<number, DocumentGroup>, documentToDelete: Do
 
 const actionHandlers = {
     'add-document': addDocument,
-
     'update-document': updateDocument,
-
     'delete-document': deleteDocument,
-
     default: (groups: Map<number, DocumentGroup>) => groups,
 };
 
 const fetchDocumentGroups = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
     const documentGroups = await appBridge.getDocumentGroups();
-
     return new Map(documentGroups.map((group) => [group.id, group]));
 };

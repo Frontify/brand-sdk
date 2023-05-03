@@ -11,9 +11,20 @@ type DocumentPageEvent = {
     documentPage: { id: number; categoryId?: number | null };
 };
 
+type Options = {
+    /**
+     * Whether it should fetch on mount.
+     */
+    enabled?: boolean;
+};
+
 const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocumentCategories = (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
+export const useDocumentCategories = (
+    appBridge: AppBridgeBlock | AppBridgeTheme,
+    documentId: number,
+    options: Options = { enabled: true },
+) => {
     const [documentCategories, setDocumentCategories] = useState<Map<number, DocumentCategory>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -26,13 +37,15 @@ export const useDocumentCategories = (appBridge: AppBridgeBlock | AppBridgeTheme
     }, [appBridge, documentId]);
 
     useEffect(() => {
-        refetch();
-    }, [refetch]);
+        if (options.enabled) {
+            refetch();
+        }
+    }, [refetch, options.enabled]);
 
     useEffect(() => {
         const handlePageEventUpdates = (event: DocumentPageEvent) => {
             setDocumentCategories((previousState) => {
-                const action: 'add-page' | 'delete-page' | 'update-page' = `${event.action}-page`;
+                const action = `${event.action}-page` as const;
 
                 const handler = actionHandlers[action] || actionHandlers.default;
 
@@ -126,11 +139,8 @@ const deletePage = (categories: Map<number, DocumentCategory>, pageToDelete: Doc
 
 const actionHandlers = {
     'add-page': addPage,
-
     'update-page': updatePage,
-
     'delete-page': deletePage,
-
     default: (categories: Map<number, DocumentCategory>) => categories,
 };
 
