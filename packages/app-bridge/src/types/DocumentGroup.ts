@@ -15,7 +15,7 @@ export type DocumentGroupApi = {
     valid_to: Nullable<string>;
     project_id: number;
     portal_id: number;
-    documents: Nullable<DocumentApi[]>;
+    number_of_documents: Nullable<DocumentApi[]>;
 };
 
 export type DocumentGroup = Merge<CamelCasedPropertiesDeep<DocumentGroupApi>, { documents: number[] }>;
