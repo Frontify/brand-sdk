@@ -37,7 +37,13 @@ export const useBrandportalLink = (
             setIsLoading(false);
         };
 
-        options.enabled && fetchBrandportalLink();
+        if (options.enabled) {
+            try {
+                fetchBrandportalLink();
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }, [appBridge, options.enabled]);
 
     useEffect(() => {
