@@ -10,6 +10,10 @@ export class DocumentDummy {
         return convertObjectCase(DocumentApiDummy.with(id), 'camel');
     }
 
+    static withDocumentGroupId(id: number, documentGroupId: number): Document {
+        return { ...convertObjectCase(DocumentApiDummy.with(id), 'camel'), documentGroupId };
+    }
+
     static withFields(fields: Document): Document {
         return {
             ...fields,
