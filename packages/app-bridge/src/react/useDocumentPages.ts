@@ -12,19 +12,30 @@ export type DocumentPageEvent = {
     documentPage: DocumentPage | { id: number };
 };
 
+type Options = {
+    /**
+     * Whether it should fetch on mount.
+     */
+    enabled?: boolean;
+};
+
 const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocumentPages = (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
+export const useDocumentPages = (
+    appBridge: AppBridgeBlock | AppBridgeTheme,
+    documentId: number,
+    options: Options = { enabled: true },
+) => {
     const [pages, setPages] = useState<Map<number, DocumentPage>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
-        setIsLoading(true);
-        const pages = await fetchDocumentPages(appBridge, documentId);
-
-        setPages(pages);
-        setIsLoading(false);
-    }, [appBridge, documentId]);
+        if (options.enabled) {
+            setIsLoading(true);
+            setPages(await fetchDocumentPages(appBridge, documentId));
+            setIsLoading(false);
+        }
+    }, [appBridge, documentId, options.enabled]);
 
     useEffect(() => {
         refetch();
@@ -52,7 +63,7 @@ export const useDocumentPages = (appBridge: AppBridgeBlock | AppBridgeTheme, doc
      * returns list of document pages that do not belong to any document category
      */
     const getUncategorizedPages = useCallback(
-        (options: { sortBy?: (a: DocumentPage, b: DocumentPage) => any } = { sortBy: sortDocumentPages }) =>
+        (options: { sortBy?: (a: DocumentPage, b: DocumentPage) => number } = { sortBy: sortDocumentPages }) =>
             Array.from(pages.values())
                 .filter((page) => !page.categoryId)
                 .sort(options.sortBy),
@@ -67,7 +78,7 @@ export const useDocumentPages = (appBridge: AppBridgeBlock | AppBridgeTheme, doc
     const getCategorizedPages = useCallback(
         (
             documentCategoryId?: number,
-            options: { sortBy?: (a: DocumentPage, b: DocumentPage) => any } = { sortBy: sortDocumentPages },
+            options: { sortBy?: (a: DocumentPage, b: DocumentPage) => number } = { sortBy: sortDocumentPages },
         ) =>
             Array.from(pages.values())
                 .filter((page) => (documentCategoryId ? page.categoryId === documentCategoryId : page.categoryId))

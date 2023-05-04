@@ -1,36 +1,25 @@
+// @vitest-environment happy-dom
+
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt, { Emitter } from 'mitt';
-import { act, renderHook } from '@testing-library/react';
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { CoverPage, CoverPageUpdate, EmitterEvents } from '../types';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { CoverPage, CoverPageUpdate } from '../types';
 
 import { useCoverPage } from './useCoverPage';
-import { CoverPageDummy } from '../tests';
+import { CoverPageDummy, getAppBridgeThemeStub } from '../tests';
 
 describe('useCoverPage', () => {
-    const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
-    let emitter: Emitter<EmitterEvents>;
-
-    beforeAll(() => {
-        window.emitter = mitt();
-    });
-
-    beforeEach(() => {
-        emitter = mitt();
-        vi.spyOn(window, 'emitter', 'get').mockReturnValue(emitter);
-    });
-
     afterEach(() => {
         vi.restoreAllMocks();
     });
 
     it('should return the cover page from appBridge', async () => {
-        const coverPage = CoverPageDummy.with(1);
+        const appBridge = getAppBridgeThemeStub();
 
-        appBridge.getCoverPage = vi.fn().mockResolvedValue(coverPage);
+        const coverPage = CoverPageDummy.with(1);
+        appBridge.getCoverPage.resolves(coverPage);
 
         const { result } = renderHook(() => useCoverPage(appBridge));
 
@@ -43,7 +32,27 @@ describe('useCoverPage', () => {
         expect(result.current.coverPage).toEqual(coverPage);
     });
 
+    it('should create the cover page when an event is emitted', async () => {
+        const appBridge = getAppBridgeThemeStub();
+
+        const coverPage = CoverPageDummy.with(243);
+        appBridge.getCoverPage.resolves(coverPage);
+
+        const { result } = renderHook(() => useCoverPage(appBridge));
+
+        act(() => {
+            window.emitter.emit('AppBridge:GuidelineCoverPageAction', {
+                action: 'add',
+                coverPage,
+            });
+        });
+
+        await waitFor(() => expect(result.current.coverPage).toEqual(coverPage));
+    });
+
     it('should update the cover page when an event is emitted', () => {
+        const appBridge = getAppBridgeThemeStub();
+
         const { result } = renderHook(() => useCoverPage(appBridge));
 
         const updatedCoverPage: CoverPageUpdate = { id: 1, title: 'Updated Cover Page' };
@@ -59,6 +68,8 @@ describe('useCoverPage', () => {
     });
 
     it('should set the cover page to null when an event to delete it is emitted', () => {
+        const appBridge = getAppBridgeThemeStub();
+
         const { result } = renderHook(() => useCoverPage(appBridge));
 
         result.current.coverPage = null;
@@ -71,6 +82,8 @@ describe('useCoverPage', () => {
     });
 
     it('should not update the cover page when an event with an invalid action is emitted', () => {
+        const appBridge = getAppBridgeThemeStub();
+
         const { result } = renderHook(() => useCoverPage(appBridge));
 
         result.current.coverPage = CoverPageDummy.with(1);
@@ -81,5 +94,32 @@ describe('useCoverPage', () => {
         });
 
         expect(result.current.coverPage).toEqual(CoverPageDummy.with(1));
+    });
+
+    it('should start fetching only when it is enabled', () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getCoverPage');
+
+        let enabled = false;
+
+        const { rerender } = renderHook(() => useCoverPage(appBridge, { enabled }));
+
+        expect(spy).not.toBeCalled();
+
+        enabled = true;
+        rerender();
+
+        expect(spy).toBeCalled();
+    });
+
+    it('should unregister when unmounted', () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(window.emitter, 'off');
+
+        const { unmount } = renderHook(() => useCoverPage(appBridge));
+
+        unmount();
+
+        expect(spy).toBeCalledWith('AppBridge:GuidelineCoverPageAction', expect.any(Function));
     });
 });
