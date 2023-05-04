@@ -21,7 +21,6 @@ export class DocumentApiDummy {
             subheading: 'Document Dummy subHeading',
             description: null,
             logo: null,
-            layout: null,
             sort: 5,
             lazy: true,
             link_type: LinkType.Internal,
@@ -45,6 +44,8 @@ export class DocumentApiDummy {
             targets: [],
             token: 'a-dummy-token',
             permanent_link: `/r/document-${id}`,
+            number_of_document_page_categories: 0,
+            number_of_uncategorized_document_pages: 0,
         };
     }
 }

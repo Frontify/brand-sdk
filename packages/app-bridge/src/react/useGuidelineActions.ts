@@ -64,16 +64,16 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const deleteLink = useCallback(
-        async (id: number) => {
-            await appBridge.deleteLink(id);
+        async (documentId: number) => {
+            await appBridge.deleteLink(documentId);
 
             window.emitter.emit('AppBridge:GuidelineDocumentAction', {
-                document: { id },
+                document: { id: documentId },
                 action: 'delete',
             });
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroupDocumentAction', {
-                document: { id },
+                document: { id: documentId },
                 action: 'delete',
             });
         },
@@ -122,16 +122,16 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const deleteLibrary = useCallback(
-        async (id: number) => {
-            await appBridge.deleteLibrary(id);
+        async (documentId: number) => {
+            await appBridge.deleteLibrary(documentId);
 
             window.emitter.emit('AppBridge:GuidelineDocumentAction', {
-                document: { id },
+                document: { id: documentId },
                 action: 'delete',
             });
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroupDocumentAction', {
-                document: { id },
+                document: { id: documentId },
                 action: 'delete',
             });
         },
@@ -180,16 +180,16 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const deleteStandardDocument = useCallback(
-        async (id: number) => {
-            await appBridge.deleteStandardDocument(id);
+        async (documentId: number) => {
+            await appBridge.deleteStandardDocument(documentId);
 
             window.emitter.emit('AppBridge:GuidelineDocumentAction', {
-                document: { id },
+                document: { id: documentId },
                 action: 'delete',
             });
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroupDocumentAction', {
-                document: { id },
+                document: { id: documentId },
                 action: 'delete',
             });
         },
@@ -225,11 +225,11 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const deleteDocumentGroup = useCallback(
-        async (id: number) => {
-            await appBridge.deleteDocumentGroup(id);
+        async (documentGroupId: number) => {
+            await appBridge.deleteDocumentGroup(documentGroupId);
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroupAction', {
-                documentGroup: { id },
+                documentGroup: { id: documentGroupId },
                 action: 'delete',
             });
         },
@@ -440,12 +440,12 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocument = useCallback(
-        async (id: number, position: number, newGroupId?: number, oldGroupId?: number) => {
-            await appBridge.moveDocument(id, position, newGroupId, oldGroupId);
+        async (documentId: number, position: number, newGroupId?: number) => {
+            await appBridge.moveDocument(documentId, position, newGroupId);
 
             window.emitter.emit('AppBridge:GuidelineDocumentAction', {
                 document: {
-                    id,
+                    id: documentId,
                     sort: position,
                     documentGroupId: newGroupId,
                 } as Document,
@@ -453,7 +453,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             });
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroupDocumentAction', {
-                document: { id, documentGroupId: newGroupId as number },
+                document: { id: documentId, documentGroupId: newGroupId as number },
                 action: 'update',
             });
         },
@@ -473,11 +473,11 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocumentCategory = useCallback(
-        async (id: number, documentId: number, position: number) => {
-            await appBridge.moveDocumentCategory(id, documentId, position);
+        async (documentCategoryId: number, documentId: number, position: number) => {
+            await appBridge.moveDocumentCategory(documentCategoryId, documentId, position);
 
             window.emitter.emit(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, {
-                documentCategory: { id, documentId, sort: position } as DocumentCategory,
+                documentCategory: { id: documentCategoryId, documentId, sort: position } as DocumentCategory,
                 action: 'update',
             });
         },
@@ -485,17 +485,17 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocumentPage = useCallback(
-        async (id: number, documentId: number, position: number, categoryId?: number) => {
-            await appBridge.moveDocumentPage(id, documentId, position, categoryId);
+        async (documentPageId: number, documentId: number, position: number, categoryId?: number) => {
+            await appBridge.moveDocumentPage(documentPageId, documentId, position, categoryId);
 
             window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${documentId}`, {
-                documentPage: { id, documentId, sort: position, categoryId } as DocumentPage,
+                documentPage: { id: documentPageId, documentId, sort: position, categoryId } as DocumentPage,
                 action: 'update',
             });
 
             if (categoryId) {
                 window.emitter.emit(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, {
-                    documentPage: { id, categoryId },
+                    documentPage: { id: documentPageId, categoryId },
                     action: 'update',
                 });
             }
@@ -504,16 +504,16 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocumentPageBetweenDocuments = useCallback(
-        async (id: number, sourceDocumentId: number, targetDocumentId: number) => {
-            await appBridge.moveDocumentPageBetweenDocuments(id, targetDocumentId);
+        async (documentPageId: number, sourceDocumentId: number, targetDocumentId: number) => {
+            await appBridge.moveDocumentPageBetweenDocuments(documentPageId, targetDocumentId);
 
             window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${sourceDocumentId}`, {
-                documentPage: { id, documentId: sourceDocumentId } as DocumentPage,
+                documentPage: { id: documentPageId, documentId: sourceDocumentId } as DocumentPage,
                 action: 'update',
             });
 
             window.emitter.emit(`AppBridge:GuidelineDocumentPageAction:${targetDocumentId}`, {
-                documentPage: { id, documentId: targetDocumentId } as DocumentPage,
+                documentPage: { id: documentPageId, documentId: targetDocumentId } as DocumentPage,
                 action: 'update',
             });
         },
@@ -521,11 +521,11 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const updateDocumentPageTargets = useCallback(
-        async (targets: number[], pageIds: number[]) => {
-            const result = await appBridge.updateDocumentPageTargets(targets, pageIds);
+        async (targets: number[], documentPageIds: number[]) => {
+            const result = await appBridge.updateDocumentPageTargets(targets, documentPageIds);
 
             window.emitter.emit('AppBridge:GuidelineDocumentPageTargetsAction', {
-                payload: { targets, pageIds },
+                payload: { targets, pageIds: documentPageIds },
                 action: 'update',
             });
 

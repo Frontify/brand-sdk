@@ -17,6 +17,7 @@ export type DocumentCategoryApi = {
     valid_from: string;
     valid_to: Nullable<string>;
     document_pages: Nullable<DocumentPageApi[]>;
+    number_of_document_pages: number;
 };
 
 type DocumentPageRequestFields = 'title' | 'documentId' | 'id';

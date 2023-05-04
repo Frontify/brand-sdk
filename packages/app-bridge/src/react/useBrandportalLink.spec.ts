@@ -1,36 +1,23 @@
+// @vitest-environment happy-dom
+
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt, { Emitter } from 'mitt';
 import { act, renderHook } from '@testing-library/react';
-import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-
-import type { EmitterEvents } from '../types';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { useBrandportalLink } from './useBrandportalLink';
-import { BrandportalLinkDummy } from '../tests';
+import { BrandportalLinkDummy, getAppBridgeThemeStub } from '../tests';
 
 describe('useBrandportalLink', () => {
-    const appBridge: AppBridgeTheme = {} as AppBridgeTheme;
-    let emitter: Emitter<EmitterEvents>;
-
-    beforeAll(() => {
-        window.emitter = mitt();
-    });
-
-    beforeEach(() => {
-        emitter = mitt();
-        vi.spyOn(window, 'emitter', 'get').mockReturnValue(emitter);
-    });
-
     afterEach(() => {
         vi.restoreAllMocks();
     });
 
     it('should return the brandportal link from appBridge', async () => {
-        const brandportalLink = BrandportalLinkDummy.with();
+        const appBridge = getAppBridgeThemeStub();
 
-        appBridge.getBrandportalLink = vi.fn().mockResolvedValue(brandportalLink);
+        const brandportalLink = BrandportalLinkDummy.with();
+        appBridge.getBrandportalLink.resolves(brandportalLink);
 
         const { result } = renderHook(() => useBrandportalLink(appBridge));
 
@@ -44,6 +31,7 @@ describe('useBrandportalLink', () => {
     });
 
     it('should update the brandportal link when an event is emitted', () => {
+        const appBridge = getAppBridgeThemeStub();
         const { result } = renderHook(() => useBrandportalLink(appBridge));
 
         const updatedBrandportalLink = BrandportalLinkDummy.with({
@@ -61,6 +49,7 @@ describe('useBrandportalLink', () => {
     });
 
     it('should not update the brandportal link when an event with an invalid action is emitted', () => {
+        const appBridge = getAppBridgeThemeStub();
         const { result } = renderHook(() => useBrandportalLink(appBridge));
 
         result.current.brandportalLink = BrandportalLinkDummy.with();
@@ -74,5 +63,32 @@ describe('useBrandportalLink', () => {
         });
 
         expect(result.current.brandportalLink).toEqual(BrandportalLinkDummy.with());
+    });
+
+    it('should start fetching only when it is enabled', () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getBrandportalLink');
+
+        let enabled = false;
+
+        const { rerender } = renderHook(() => useBrandportalLink(appBridge, { enabled }));
+
+        expect(spy).not.toBeCalled();
+
+        enabled = true;
+        rerender();
+
+        expect(spy).toBeCalled();
+    });
+
+    it('should unregister when unmounted', () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(window.emitter, 'off');
+
+        const { unmount } = renderHook(() => useBrandportalLink(appBridge));
+
+        unmount();
+
+        expect(spy).toBeCalledWith('AppBridge:GuidelineBrandportalLinkAction', expect.any(Function));
     });
 });

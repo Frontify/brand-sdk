@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { CoverPage, EmitterAction } from '../types';
@@ -10,29 +10,40 @@ export type UseCoverPageReturnType = {
     isLoading: boolean;
 };
 
-export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType => {
+type Options = {
+    /**
+     * Whether it should fetch on mount.
+     */
+    enabled?: boolean;
+};
+
+export const useCoverPage = (
+    appBridge: AppBridgeTheme,
+    options: Options = { enabled: true },
+): UseCoverPageReturnType => {
     const [coverPage, setCoverPage] = useState<Nullable<CoverPage>>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchCoverPage = async () => {
-            setCoverPage(await appBridge.getCoverPage());
-        };
+    const fetchCoverPage = useCallback(async () => {
+        setIsLoading(true);
+        setCoverPage(await appBridge.getCoverPage());
+        setIsLoading(false);
+    }, [appBridge]);
 
-        if (isLoading) {
-            fetchCoverPage();
-            setIsLoading(false);
+    useEffect(() => {
+        if (options.enabled) {
+            fetchCoverPage().catch(console.error);
         }
-    }, [appBridge, isLoading]);
+    }, [appBridge, fetchCoverPage, options.enabled]);
 
     useEffect(() => {
         const updateCoverPageFromEvent = (event: { action: EmitterAction; coverPage?: CoverPage }) => {
-            setCoverPage((previousState) => {
-                if (event.action === 'add') {
-                    setIsLoading(true);
-                    return previousState;
-                }
+            if (event.action === 'add') {
+                fetchCoverPage().catch(console.error);
+                return;
+            }
 
+            setCoverPage((previousState) => {
                 if (event.action === 'delete') {
                     return null;
                 }
@@ -50,7 +61,7 @@ export const useCoverPage = (appBridge: AppBridgeTheme): UseCoverPageReturnType 
         return () => {
             window.emitter.off('AppBridge:GuidelineCoverPageAction', updateCoverPageFromEvent);
         };
-    }, [appBridge]);
+    }, [appBridge, fetchCoverPage]);
 
     return { coverPage, isLoading };
 };
