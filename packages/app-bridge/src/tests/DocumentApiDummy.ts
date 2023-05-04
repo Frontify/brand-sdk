@@ -44,7 +44,7 @@ export class DocumentApiDummy {
             targets: [],
             token: 'a-dummy-token',
             permanent_link: `/r/document-${id}`,
-            number_of_document_categories: 0,
+            number_of_document_page_categories: 0,
             number_of_uncategorized_document_pages: 0,
         };
     }

@@ -91,7 +91,7 @@ export type DocumentApi = Simplify<
         permanent_link: string;
 
         // Enriched fields
-        number_of_document_categories: number;
+        number_of_document_page_categories: number;
         number_of_uncategorized_document_pages: number;
     } & (DocumentApiAsLink | DocumentApiAsNoneLink)
 >;
