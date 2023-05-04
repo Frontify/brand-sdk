@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { CoverPage, EmitterAction } from '../types';
@@ -24,26 +24,26 @@ export const useCoverPage = (
     const [coverPage, setCoverPage] = useState<Nullable<CoverPage>>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchCoverPage = async () => {
-            setIsLoading(true);
-            setCoverPage(await appBridge.getCoverPage());
-            setIsLoading(false);
-        };
+    const fetchCoverPage = useCallback(async () => {
+        setIsLoading(true);
+        setCoverPage(await appBridge.getCoverPage());
+        setIsLoading(false);
+    }, [appBridge]);
 
+    useEffect(() => {
         if (options.enabled) {
             fetchCoverPage().catch(console.error);
         }
-    }, [appBridge, options.enabled]);
+    }, [appBridge, fetchCoverPage, options.enabled]);
 
     useEffect(() => {
         const updateCoverPageFromEvent = (event: { action: EmitterAction; coverPage?: CoverPage }) => {
-            setCoverPage((previousState) => {
-                if (event.action === 'add') {
-                    setIsLoading(true);
-                    return previousState;
-                }
+            if (event.action === 'add') {
+                fetchCoverPage().catch(console.error);
+                return;
+            }
 
+            setCoverPage((previousState) => {
                 if (event.action === 'delete') {
                     return null;
                 }
@@ -61,7 +61,7 @@ export const useCoverPage = (
         return () => {
             window.emitter.off('AppBridge:GuidelineCoverPageAction', updateCoverPageFromEvent);
         };
-    }, [appBridge]);
+    }, [appBridge, fetchCoverPage]);
 
     return { coverPage, isLoading };
 };

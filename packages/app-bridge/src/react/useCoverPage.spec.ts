@@ -2,7 +2,7 @@
 
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { CoverPage, CoverPageUpdate } from '../types';
@@ -30,6 +30,24 @@ describe('useCoverPage', () => {
         });
 
         expect(result.current.coverPage).toEqual(coverPage);
+    });
+
+    it('should create the cover page when an event is emitted', async () => {
+        const appBridge = getAppBridgeThemeStub();
+
+        const coverPage = CoverPageDummy.with(243);
+        appBridge.getCoverPage.resolves(coverPage);
+
+        const { result } = renderHook(() => useCoverPage(appBridge));
+
+        act(() => {
+            window.emitter.emit('AppBridge:GuidelineCoverPageAction', {
+                action: 'add',
+                coverPage,
+            });
+        });
+
+        await waitFor(() => expect(result.current.coverPage).toEqual(coverPage));
     });
 
     it('should update the cover page when an event is emitted', () => {
