@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { DocumentGroupApi } from '../types';
+
 import { DocumentApiDummy } from './DocumentApiDummy';
 
 export class DocumentGroupApiDummy {
-    static with(id: number, documents: number[] = []) {
+    static with(id: number, documents: number[] = []): DocumentGroupApi {
         return {
             id,
             creator: 9,
@@ -16,6 +18,7 @@ export class DocumentGroupApiDummy {
             name: `Document Group Dummy ${id}`,
             sort: 1,
             documents: documents.map((document) => DocumentApiDummy.with(document)),
+            number_of_documents: documents.length,
         };
     }
 }
