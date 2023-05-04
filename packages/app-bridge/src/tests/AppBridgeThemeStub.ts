@@ -86,13 +86,13 @@ export const getAppBridgeThemeStub = ({
         getAllDocuments: stub<Parameters<AppBridgeTheme['getAllDocuments']>>().resolves([
             DocumentDummy.with(DOCUMENT_ID_1),
             DocumentDummy.with(DOCUMENT_ID_2),
-            DocumentDummy.with(GROUPED_DOCUMENT_ID_1),
             DocumentDummy.with(DOCUMENT_ID_3),
-            DocumentDummy.with(GROUPED_DOCUMENT_ID_2),
             DocumentDummy.with(DOCUMENT_ID_4),
-            DocumentDummy.with(GROUPED_DOCUMENT_ID_3),
             DocumentDummy.with(DOCUMENT_ID_5),
-            DocumentDummy.with(GROUPED_DOCUMENT_ID_4),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
         ]),
         getUngroupedDocuments: stub<Parameters<AppBridgeTheme['getUngroupedDocuments']>>().resolves([
             DocumentDummy.with(DOCUMENT_ID_1),
