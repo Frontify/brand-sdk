@@ -93,4 +93,15 @@ describe('useCoverPage', () => {
 
         expect(spy).toBeCalled();
     });
+
+    it('should unregister when unmounted', () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(window.emitter, 'off');
+
+        const { unmount } = renderHook(() => useCoverPage(appBridge));
+
+        unmount();
+
+        expect(spy).toBeCalledWith('AppBridge:GuidelineCoverPageAction', expect.any(Function));
+    });
 });
