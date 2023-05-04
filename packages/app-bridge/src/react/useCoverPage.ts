@@ -32,11 +32,7 @@ export const useCoverPage = (
         };
 
         if (options.enabled) {
-            try {
-                fetchCoverPage();
-            } catch (error) {
-                console.error(error);
-            }
+            fetchCoverPage().catch(console.error);
         }
     }, [appBridge, options.enabled]);
 

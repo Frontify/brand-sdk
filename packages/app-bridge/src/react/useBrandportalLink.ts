@@ -38,11 +38,7 @@ export const useBrandportalLink = (
         };
 
         if (options.enabled) {
-            try {
-                fetchBrandportalLink();
-            } catch (error) {
-                console.error(error);
-            }
+            fetchBrandportalLink().catch(console.error);
         }
     }, [appBridge, options.enabled]);
 
