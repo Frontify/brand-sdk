@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentCategory, EmitterAction } from '../types';
+import type { DocumentCategory, EmitterAction, EmitterEvents } from '../types';
 
 type DocumentPageEvent = {
     action: EmitterAction;
@@ -30,9 +30,7 @@ export const useDocumentCategories = (
 
     const refetch = useCallback(async () => {
         setIsLoading(true);
-        const pages = await fetchDocumentCategories(appBridge, documentId);
-
-        setDocumentCategories(pages);
+        setDocumentCategories(await fetchDocumentCategories(appBridge, documentId));
         setIsLoading(false);
     }, [appBridge, documentId]);
 
@@ -43,7 +41,11 @@ export const useDocumentCategories = (
     }, [refetch, options.enabled]);
 
     useEffect(() => {
-        const handlePageEventUpdates = (event: DocumentPageEvent) => {
+        const handlePageEventUpdates = (event: EmitterEvents['AppBridge:GuidelineDocumentCategoryPageAction']) => {
+            if (event.documentPage.documentId !== documentId) {
+                return;
+            }
+
             setDocumentCategories((previousState) => {
                 const action = `${event.action}-page` as const;
 
@@ -53,99 +55,71 @@ export const useDocumentCategories = (
             });
         };
 
-        window.emitter.on(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, refetch);
-        window.emitter.on(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, handlePageEventUpdates);
+        const handler = ({ action, documentCategory }: EmitterEvents['AppBridge:GuidelineDocumentCategoryAction']) => {
+            if (
+                documentCategory.documentId === documentId &&
+                (documentCategories.has(documentCategory.id) || action === 'add')
+            ) {
+                refetch();
+            }
+        };
+
+        window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', handler);
+        window.emitter.on('AppBridge:GuidelineDocumentCategoryPageAction', handlePageEventUpdates);
 
         return () => {
-            window.emitter.off(`AppBridge:GuidelineDocumentCategoryAction:${documentId}`, refetch);
-            window.emitter.off(`AppBridge:GuidelineDocumentCategoryPageAction:${documentId}`, handlePageEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentCategoryAction', handler);
+            window.emitter.off('AppBridge:GuidelineDocumentCategoryPageAction', handlePageEventUpdates);
         };
-    }, [documentId, refetch]);
+    }, [documentCategories, documentId, refetch]);
 
-    /**
-     * Returns a sorted list of document categories.
-     *
-     * The returned list is sorted based on the `sortBy` option provided. By default, it uses the `sort` property to sort the list.
-     *
-     * @param options An object with the following properties:
-     *   - sortBy: (optional) A function used to sort the list of document categories. It should take two document category objects as arguments and return a value that represents their sort order.
-     *
-     * @returns An array of sorted document categories.
-     */
-    const getSortedCategories = useCallback(
-        (
-            options: { sortBy?: (a: DocumentCategory, b: DocumentCategory) => number } = {
-                sortBy: sortDocumentCategories,
-            },
-        ) => Array.from(documentCategories.values()).sort(options.sortBy),
-        [documentCategories],
-    );
-
-    return { documentCategories, getSortedCategories, refetch, isLoading };
+    return { documentCategories: Array.from(documentCategories.values()), refetch, isLoading };
 };
 
-const getCategoryWithPage = (categories: Map<number, DocumentCategory>, pageId: number) =>
-    Array.from(categories.values()).find((category) => category.documentPages?.includes(pageId));
-
-const addPage = (categories: Map<number, DocumentCategory>, pageToAdd: DocumentPageEvent['documentPage']) => {
-    const category = categories.get(pageToAdd.categoryId as number);
-
-    if (!category) {
-        console.error(`Can not add page to category, category with id ${pageToAdd.categoryId} does not exist`);
-        return categories;
+const addDocumentPage = (
+    documentCategories: Map<number, DocumentCategory>,
+    documentPageToAdd: DocumentPageEvent['documentPage'],
+) => {
+    if (!documentPageToAdd.categoryId) {
+        return documentCategories;
     }
 
-    category.documentPages = [pageToAdd.id, ...category.documentPages];
+    const documentCategory = documentCategories.get(documentPageToAdd.categoryId);
+    if (!documentCategory) {
+        return documentCategories;
+    }
 
-    return new Map(categories.set(category.id, category));
+    documentCategory.numberOfDocumentPages += 1;
+
+    return documentCategories.set(documentCategory.id, documentCategory);
 };
 
-const updatePage = (categories: Map<number, DocumentCategory>, page: DocumentPageEvent['documentPage']) => {
-    const currentCategory = getCategoryWithPage(categories, page.id);
-    let updatedCategories = new Map(categories);
-
-    const shouldAddPageToCategory = !currentCategory && page.categoryId !== null;
-
-    const pageMovedToDifferentCategory =
-        currentCategory && page.categoryId !== null && currentCategory.id !== page.categoryId;
-
-    const pageMovedToUncategorized = currentCategory && page.categoryId === null;
-
-    if (pageMovedToDifferentCategory || pageMovedToUncategorized) {
-        updatedCategories = deletePage(categories, page);
+const deleteDocumentPage = (
+    documentCategories: Map<number, DocumentCategory>,
+    documentPageToDelete: DocumentPageEvent['documentPage'],
+) => {
+    if (!documentPageToDelete.categoryId) {
+        return documentCategories;
     }
 
-    if (pageMovedToDifferentCategory || shouldAddPageToCategory) {
-        updatedCategories = addPage(categories, page);
+    const documentCategory = documentCategories.get(documentPageToDelete.categoryId);
+    if (!documentCategory) {
+        return documentCategories;
     }
 
-    return updatedCategories;
-};
+    documentCategory.numberOfDocumentPages -= 1;
 
-const deletePage = (categories: Map<number, DocumentCategory>, pageToDelete: DocumentPageEvent['documentPage']) => {
-    const category = getCategoryWithPage(categories, pageToDelete.id);
-
-    if (!category) {
-        console.error(
-            `Can not delete page from category, category that has page with id ${pageToDelete.id} does not exist`,
-        );
-        return categories;
-    }
-
-    category.documentPages = category.documentPages?.filter((pageId) => pageId !== pageToDelete.id);
-
-    return new Map(categories.set(category.id, category));
+    return documentCategories.set(documentCategory.id, documentCategory);
 };
 
 const actionHandlers = {
-    'add-page': addPage,
-    'update-page': updatePage,
-    'delete-page': deletePage,
-    default: (categories: Map<number, DocumentCategory>) => categories,
+    'add-page': addDocumentPage,
+    'delete-page': deleteDocumentPage,
+    default: (documentCategories: Map<number, DocumentCategory>) => documentCategories,
 };
 
 const fetchDocumentCategories = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const categories = await appBridge.getDocumentCategoriesByDocumentId(documentId);
 
-    return new Map(categories.map((category) => [category.id, category]));
+    return new Map(categories.sort(sortDocumentCategories).map((category) => [category.id, category]));
 };

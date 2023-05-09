@@ -2,8 +2,6 @@
 
 import type { DocumentCategoryApi } from '../types';
 
-import { DocumentPageApiDummy } from './DocumentPageApiDummy';
-
 export class DocumentCategoryApiDummy {
     static with(id: number, document_pages: number[] = []): DocumentCategoryApi {
         return {
@@ -18,8 +16,19 @@ export class DocumentCategoryApiDummy {
             title: `Document Category Dummy ${id}`,
             slug: `document-category-dummy-${id}`,
             sort: 1,
-            document_pages: document_pages.map((page) => DocumentPageApiDummy.with(page)),
             number_of_document_pages: document_pages.length,
+        };
+    }
+
+    static withDocumentIdAndNumberOfDocumentPages(
+        id: number,
+        documentId: number,
+        numberOfDocumentPages: number,
+    ): DocumentCategoryApi {
+        return {
+            ...DocumentCategoryApiDummy.with(id),
+            document_id: documentId,
+            number_of_document_pages: numberOfDocumentPages,
         };
     }
 }

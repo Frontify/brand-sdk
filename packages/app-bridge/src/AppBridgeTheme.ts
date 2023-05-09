@@ -109,9 +109,9 @@ export interface AppBridgeTheme extends AppBridgeBase {
         documentId: number,
         position: number,
         documentCategoryId?: number,
-    ): Promise<void>;
+    ): Promise<DocumentPage>;
 
-    moveDocumentPageBetweenDocuments(id: number, targetDocumentId: number): Promise<void>;
+    moveDocumentPageBetweenDocuments(id: number, targetDocumentId: number): Promise<DocumentPage>;
 
     duplicateDocumentPage(documentPageId: number): Promise<DocumentPageDuplicate>;
 

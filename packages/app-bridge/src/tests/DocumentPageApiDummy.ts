@@ -33,6 +33,25 @@ export class DocumentPageApiDummy {
             permanent_link: `/r/document-page-${id}`,
         };
     }
+
+    static withDocumentAndDocumentCategoryId(
+        id: number,
+        documentId: number,
+        documentCategoryId: number | null,
+    ): DocumentPageApi {
+        return {
+            ...DocumentPageApiDummy.with(id),
+            document_id: documentId,
+            category_id: documentCategoryId,
+        };
+    }
+
+    static withDocumentCategoryId(id: number, documentCategoryId: number | null): DocumentPageApi {
+        return {
+            ...DocumentPageApiDummy.with(id),
+            category_id: documentCategoryId,
+        };
+    }
 }
 
 export class DocumentPageDuplicateApiDummy {

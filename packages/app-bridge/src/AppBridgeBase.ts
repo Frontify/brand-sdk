@@ -29,9 +29,11 @@ export interface AppBridgeBase {
 
     getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
 
+    getDocumentPagesByDocumentCategoryId(documentCategoryId: number): Promise<DocumentPage[]>;
+
     getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]>;
 
-    getUncategorizedPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
+    getUncategorizedDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
 
     getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
 

@@ -75,35 +75,30 @@ export type EmitterEvents = {
 
     'AppBridge:OpenNavigationManager': void;
 
-    [key: `AppBridge:GuidelineDocumentPageAction:${number}`]:
+    'AppBridge:GuidelineDocumentPageAction':
         | {
               documentPage: DocumentPage;
               action: 'add' | 'update';
           }
         | {
-              documentPage: { id: number };
+              documentPage: { id: number; documentId: number; categoryId: number | null };
               action: 'delete';
           };
 
-    [key: `AppBridge:GuidelineDocumentCategoryAction:${number}`]:
+    'AppBridge:GuidelineDocumentCategoryAction':
         | {
               documentCategory: DocumentCategory;
               action: 'add' | 'update';
           }
         | {
-              documentCategory: { id: number };
+              documentCategory: { id: number; documentId: number };
               action: 'delete';
           };
 
-    [key: `AppBridge:GuidelineDocumentCategoryPageAction:${number}`]:
-        | {
-              documentPage: { id: number; categoryId: number };
-              action: 'add' | 'update';
-          }
-        | {
-              documentPage: { id: number };
-              action: 'delete';
-          };
+    'AppBridge:GuidelineDocumentCategoryPageAction': {
+        documentPage: { id: number; documentId: number; categoryId: number };
+        action: 'add' | 'delete';
+    };
 
     'AppBridge:GuidelineDocumentGroupDocumentAction':
         | {
