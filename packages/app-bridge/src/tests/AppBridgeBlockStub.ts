@@ -87,9 +87,9 @@ export const getAppBridgeBlockStub = ({
     };
 
     const dispatchCallStub = stub<Parameters<AppBridgeBlock['dispatch']>>();
-    for (const action of DISPATCH_CALL_ACTIONS) {
-        dispatchCallStub.withArgs(action).set(dispatchReturnStubs[action]);
-    }
+    // for (const action of DISPATCH_CALL_ACTIONS) {
+    //     dispatchCallStub.withArgs(action).set(dispatchReturnStubs[action]);
+    // }
 
     return {
         dispatch: dispatchCallStub,
