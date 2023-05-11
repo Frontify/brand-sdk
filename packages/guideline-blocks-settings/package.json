@@ -37,7 +37,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge": "^3.0.0-beta.66",
-        "@frontify/sidebar-settings": "^0.3.3"
+        "@frontify/sidebar-settings": "^0.3.4"
     },
     "peerDependencies": {
         "react": "^18",
