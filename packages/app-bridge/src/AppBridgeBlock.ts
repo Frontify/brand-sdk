@@ -14,9 +14,12 @@ import type {
     Template,
     User,
 } from './types';
-import { PrivacySettings } from './types/PrivacySettings';
+import { PrivacySettings } from './types';
+import { DispatchActions, DispatchPayload, EventResponse } from './types/AppBridgeBlock';
 
 export interface AppBridgeBlock extends AppBridgeBase {
+    dispatch(eventName: DispatchActions, payload?: DispatchPayload): EventResponse;
+
     getBlockId(): number;
 
     getSectionId(): number | undefined;

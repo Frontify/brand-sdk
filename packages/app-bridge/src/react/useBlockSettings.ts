@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-
-import { mergeDeep } from '../utilities/object';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
+
+import { mergeDeep } from '../utilities';
 
 export type BlockSettingsUpdateEvent<T = Record<string, unknown>> = {
     blockId: number;

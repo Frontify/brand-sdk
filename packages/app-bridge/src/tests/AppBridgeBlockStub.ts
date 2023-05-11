@@ -3,20 +3,27 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Template, User } from '../types';
-import { EmitterEvents } from '../types/Emitter';
-import type { Asset } from '../types/Asset';
+import type { Asset } from '../types';
+import { EmitterEvents, PrivacySettings, Template, User } from '../types';
+import { DispatchActions } from '../types/AppBridgeBlock';
 import { AssetDummy } from './AssetDummy';
-import { UserDummy } from './UserDummy';
-import { ColorPaletteDummy } from './ColorPaletteDummy';
-import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
-import { PrivacySettings } from '../types/PrivacySettings';
+import { ColorDummy } from './ColorDummy';
+import { ColorPaletteDummy } from './ColorPaletteDummy';
+import { UserDummy } from './UserDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
+const DISPATCH_CALL_ACTIONS: DispatchActions[] = [
+    'openAssetChooser',
+    'closeAssetChooser',
+    'getBlockAssets',
+    'AppBridge:OnBlockSettingsUpdated',
+    'AppBridge:OffBlockSettingsUpdated',
+    'AppBridge:BlockSettingsUpdated',
+];
 
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
@@ -56,7 +63,33 @@ export const getAppBridgeBlockStub = ({
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
 
+    const dispatchReturnStubs = {
+        openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
+            openAssetChooser(callback);
+        }),
+        closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
+            closeAssetChooser();
+        }),
+        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(async () => {
+            return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
+                const addedAssetIdsList = addedAssetIds[key] ?? [];
+                const deletedAssetIdsList = deletedAssetIds[key] ?? [];
+                assetsDiff[key] = [
+                    ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
+                    ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
+                ];
+                return assetsDiff;
+            }, {});
+        }),
+    };
+
+    const dispatchCallStub = stub<Parameters<AppBridgeBlock['dispatch']>>();
+    for (const action of DISPATCH_CALL_ACTIONS) {
+        dispatchCallStub.withArgs(action).set(dispatchReturnStubs[action]);
+    }
+
     return {
+        dispatch: dispatchCallStub,
         getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
         getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
@@ -102,23 +135,9 @@ export const getAppBridgeBlockStub = ({
         getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
             Promise.resolve(AssetDummy.with(assetId)),
         ),
-        closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
-            closeAssetChooser();
-        }),
-        openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
-            openAssetChooser(callback);
-        }),
-        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(async () => {
-            return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
-                const addedAssetIdsList = addedAssetIds[key] ?? [];
-                const deletedAssetIdsList = deletedAssetIds[key] ?? [];
-                assetsDiff[key] = [
-                    ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
-                    ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
-                ];
-                return assetsDiff;
-            }, {});
-        }),
+        closeAssetChooser: dispatchReturnStubs.closeAssetChooser,
+
+        getBlockAssets: dispatchReturnStubs.getBlockAssets,
         addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
             async (key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
@@ -138,7 +157,7 @@ export const getAppBridgeBlockStub = ({
         updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
             Promise.resolve(ColorDummy.red(colorId)),
         ),
-
+        openAssetChooser: dispatchReturnStubs.openAssetChooser,
         getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
