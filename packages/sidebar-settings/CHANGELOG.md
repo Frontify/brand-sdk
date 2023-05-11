@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.3.4
+
+### Patch Changes
+
+- [#416](https://github.com/Frontify/brand-sdk/pull/416) [`6ae4bfd`](https://github.com/Frontify/brand-sdk/commit/6ae4bfd76c9eb9bd546fea6398cf173531e67f1f) Thanks [@triggertoo](https://github.com/triggertoo)! - Update fondue version to support React 18
+
 ## 0.3.3
 
 ### Patch Changes
