@@ -107,11 +107,9 @@ export interface AppBridgeTheme extends AppBridgeBase {
     moveDocumentPage(
         documentPageId: number,
         documentId: number,
-        position: number,
+        position?: number,
         documentCategoryId?: number,
     ): Promise<DocumentPage>;
-
-    moveDocumentPageBetweenDocuments(id: number, targetDocumentId: number): Promise<DocumentPage>;
 
     duplicateDocumentPage(documentPageId: number): Promise<DocumentPageDuplicate>;
 

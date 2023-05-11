@@ -1,10 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
+import { produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { Document } from '../types';
+import type { Document, EmitterEvents } from '../types';
+
+type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 
 type Options = {
     /**
@@ -31,15 +34,35 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
         if (options.enabled) {
             refetch();
         }
+    }, [options.enabled, refetch]);
 
-        window.emitter.on('AppBridge:GuidelineDocumentAction', refetch);
-        window.emitter.on('AppBridge:GuidelineDocumentTargetsAction', refetch);
+    useEffect(() => {
+        const handleDocumentPageEvent = (event: EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction']) => {
+            if (!documents.has(event.documentPage.documentId)) {
+                return;
+            }
+
+            setDocuments(
+                produce((draft) => {
+                    const action = `${event.action}-page` as const;
+
+                    const handler = actionHandlers[action] || actionHandlers.default;
+
+                    return handler(draft, event.documentPage);
+                }),
+            );
+        };
+
+        window.emitter.on('AppBridge:GuidelineDocument:Action', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
+        window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentAction', refetch);
-            window.emitter.off('AppBridge:GuidelineDocumentTargetsAction', refetch);
+            window.emitter.off('AppBridge:GuidelineDocument:Action', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
+            window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         };
-    }, [options.enabled, refetch]);
+    }, [documents, options.enabled, refetch]);
 
     /**
      * returns list of documents that do not belong to any document group
@@ -71,6 +94,36 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
     );
 
     return { documents, getUngroupedDocuments, getGroupedDocuments, refetch, isLoading };
+};
+
+const addDocumentPage = (documents: Map<number, Document>, documentPageToAdd: DocumentPageEvent['documentPage']) => {
+    const document = documents.get(documentPageToAdd.documentId);
+    if (!document) {
+        return documents;
+    }
+
+    document.numberOfUncategorizedDocumentPages += 1;
+
+    return documents.set(document.id, document);
+};
+
+const deleteDocumentPage = (
+    documents: Map<number, Document>,
+    documentPageToDelete: DocumentPageEvent['documentPage'],
+) => {
+    const document = documents.get(documentPageToDelete.documentId);
+    if (!document) {
+        return documents;
+    }
+
+    document.numberOfUncategorizedDocumentPages -= 1;
+
+    return documents.set(document.id, document);
+};
+const actionHandlers = {
+    'add-page': addDocumentPage,
+    'delete-page': deleteDocumentPage,
+    default: (documents: Map<number, Document>) => documents,
 };
 
 const fetchDocuments = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {

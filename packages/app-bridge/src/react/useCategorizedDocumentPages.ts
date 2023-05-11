@@ -1,11 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { DocumentPageTargetEvent } from './useDocumentPageTargets';
+import { produce } from 'immer';
 
 import type { DocumentPage, EmitterEvents } from '../types';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
+
+import { DocumentPageTargetEvent } from './useDocumentPageTargets';
 
 type Options = {
     /**
@@ -45,21 +47,27 @@ export const useCategorizedDocumentPages = (
             }
         };
 
-        const handler = ({ action, documentPage }: EmitterEvents['AppBridge:GuidelineDocumentPageAction']) => {
+        const handler = ({ action, documentPage }: EmitterEvents['AppBridge:GuidelineDocumentPage:Action']) => {
             if (
-                documentPage.categoryId === documentCategoryId &&
-                (documentPages.has(documentPage.id) || action === 'add')
+                (action === 'update' && documentPages.has(documentPage.id)) ||
+                (action === 'add' && documentPage.categoryId === documentCategoryId)
             ) {
                 refetch();
+            } else if (action === 'delete' && documentPages.has(documentPage.id)) {
+                setDocumentPages(
+                    produce((draft) => {
+                        draft.delete(documentPage.id);
+                    }),
+                );
             }
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentPageAction', handler);
-        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
+        window.emitter.on('AppBridge:GuidelineDocumentPage:Action', handler);
+        window.emitter.on('AppBridge:GuidelineDocumentPageTargets:Action', refetchIfPageExistsInMap);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentPageAction', handler);
-            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', refetchIfPageExistsInMap);
+            window.emitter.off('AppBridge:GuidelineDocumentPage:Action', handler);
+            window.emitter.off('AppBridge:GuidelineDocumentPageTargets:Action', refetchIfPageExistsInMap);
         };
     }, [documentCategoryId, refetch, documentPages]);
 

@@ -112,7 +112,7 @@ describe('useUncategorizedDocumentPages', () => {
         );
 
         // Trigger a "document page added" event in the current document
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'add',
             documentPage: DOCUMENT_PAGE,
         });
@@ -148,7 +148,7 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page added" event from another document
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'add',
             documentPage: DOCUMENT_PAGE,
         });
@@ -183,7 +183,7 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page added" event from a category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'add',
             documentPage: DOCUMENT_PAGE,
         });
@@ -217,16 +217,8 @@ describe('useUncategorizedDocumentPages', () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
-            ]),
-        );
-
         // Trigger a "document page deleted" event in the current document
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'delete',
             documentPage: {
                 id: DOCUMENT_PAGE.id,
@@ -237,7 +229,7 @@ describe('useUncategorizedDocumentPages', () => {
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledOnce();
         });
 
         expect(result.current.documentPages).toEqual([
@@ -251,7 +243,7 @@ describe('useUncategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_4,
             ANOTHER_DOCUMENT_ID,
             null,
         );
@@ -264,7 +256,7 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page deleted" event in the current document
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'delete',
             documentPage: {
                 id: DOCUMENT_PAGE.id,
@@ -290,7 +282,7 @@ describe('useUncategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_4,
             DOCUMENT_ID,
             DOCUMENT_CATEGORY_ID,
         );
@@ -303,7 +295,7 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page deleted" event from another category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'delete',
             documentPage: {
                 id: DOCUMENT_PAGE.id,
@@ -350,7 +342,7 @@ describe('useUncategorizedDocumentPages', () => {
         );
 
         // Trigger a "document page updated" event in the specified category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'update',
             documentPage: UPDATED_DOCUMENT_PAGE,
         });
@@ -385,7 +377,7 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page updated" event from a category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'update',
             documentPage: UPDATED_DOCUMENT_PAGE,
         });
@@ -420,7 +412,7 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page updated" event from a category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'update',
             documentPage: UPDATED_DOCUMENT_PAGE,
         });

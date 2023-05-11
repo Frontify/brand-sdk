@@ -41,7 +41,7 @@ describe('useCoverPage', () => {
         const { result } = renderHook(() => useCoverPage(appBridge));
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineCoverPageAction', {
+            window.emitter.emit('AppBridge:GuidelineCoverPage:Action', {
                 action: 'add',
                 coverPage,
             });
@@ -58,7 +58,7 @@ describe('useCoverPage', () => {
         const updatedCoverPage: CoverPageUpdate = { id: 1, title: 'Updated Cover Page' };
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineCoverPageAction', {
+            window.emitter.emit('AppBridge:GuidelineCoverPage:Action', {
                 action: 'update',
                 coverPage: updatedCoverPage as CoverPage,
             });
@@ -75,7 +75,7 @@ describe('useCoverPage', () => {
         result.current.coverPage = null;
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineCoverPageAction', { action: 'delete' });
+            window.emitter.emit('AppBridge:GuidelineCoverPage:Action', { action: 'delete' });
         });
 
         expect(result.current.coverPage).toBe(null);
@@ -90,7 +90,7 @@ describe('useCoverPage', () => {
 
         act(() => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            window.emitter.emit('AppBridge:GuidelineCoverPageAction', { action: 'invalid' as any });
+            window.emitter.emit('AppBridge:GuidelineCoverPage:Action', { action: 'invalid' as any });
         });
 
         expect(result.current.coverPage).toEqual(CoverPageDummy.with(1));
@@ -120,6 +120,6 @@ describe('useCoverPage', () => {
 
         unmount();
 
-        expect(spy).toBeCalledWith('AppBridge:GuidelineCoverPageAction', expect.any(Function));
+        expect(spy).toBeCalledWith('AppBridge:GuidelineCoverPage:Action', expect.any(Function));
     });
 });

@@ -43,10 +43,10 @@ export const useDocumentPageTargets = (
             }
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentPageTargets:Action', handleTargetEventUpdates);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentPageTargetsAction', handleTargetEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentPageTargets:Action', handleTargetEventUpdates);
         };
     }, [id]);
 

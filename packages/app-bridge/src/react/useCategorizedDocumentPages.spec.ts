@@ -113,7 +113,7 @@ describe('useCategorizedDocumentPages', () => {
         );
 
         // Trigger a "document page added" event in the specified category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'add',
             documentPage: DOCUMENT_PAGE,
         });
@@ -149,7 +149,7 @@ describe('useCategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page added" event from another category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'add',
             documentPage: DOCUMENT_PAGE,
         });
@@ -173,17 +173,8 @@ describe('useCategorizedDocumentPages', () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentPageDummy.withDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_CATEGORY_ID),
-                DocumentPageDummy.withDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_CATEGORY_ID),
-                DocumentPageDummy.withDocumentCategoryId(DOCUMENT_PAGE_ID_4, DOCUMENT_CATEGORY_ID),
-            ]),
-        );
-
         // Trigger a "document page deleted" event in the specified category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'delete',
             documentPage: {
                 id: DOCUMENT_PAGE.id,
@@ -194,7 +185,7 @@ describe('useCategorizedDocumentPages', () => {
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledOnce();
         });
 
         expect(result.current.documentPages).toEqual([
@@ -209,7 +200,7 @@ describe('useCategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_5,
             ANOTHER_DOCUMENT_CATEGORY_ID,
         );
 
@@ -221,7 +212,7 @@ describe('useCategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page deleted" event from another category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'delete',
             documentPage: {
                 id: DOCUMENT_PAGE.id,
@@ -270,7 +261,7 @@ describe('useCategorizedDocumentPages', () => {
         );
 
         // Trigger a "document page updated" event in the specified category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'update',
             documentPage: UPDATED_DOCUMENT_PAGE,
         });
@@ -293,7 +284,7 @@ describe('useCategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_5,
             ANOTHER_DOCUMENT_CATEGORY_ID,
         );
 
@@ -305,7 +296,7 @@ describe('useCategorizedDocumentPages', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document page updated" event from another category
-        window.emitter.emit('AppBridge:GuidelineDocumentPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
             action: 'update',
             documentPage: UPDATED_DOCUMENT_PAGE,
         });

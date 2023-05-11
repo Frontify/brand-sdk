@@ -1,15 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
+import { produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentCategory, EmitterAction, EmitterEvents } from '../types';
+import type { DocumentCategory, EmitterEvents } from '../types';
 
-type DocumentPageEvent = {
-    action: EmitterAction;
-    documentPage: { id: number; categoryId?: number | null };
-};
+type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocumentCategory:DocumentPageAction'];
 
 type Options = {
     /**
@@ -41,21 +39,25 @@ export const useDocumentCategories = (
     }, [refetch, options.enabled]);
 
     useEffect(() => {
-        const handlePageEventUpdates = (event: EmitterEvents['AppBridge:GuidelineDocumentCategoryPageAction']) => {
+        const handleDocumentPageEvent = (
+            event: EmitterEvents['AppBridge:GuidelineDocumentCategory:DocumentPageAction'],
+        ) => {
             if (event.documentPage.documentId !== documentId) {
                 return;
             }
 
-            setDocumentCategories((previousState) => {
-                const action = `${event.action}-page` as const;
+            setDocumentCategories(
+                produce((draft) => {
+                    const action = `${event.action}-page` as const;
 
-                const handler = actionHandlers[action] || actionHandlers.default;
+                    const handler = actionHandlers[action] || actionHandlers.default;
 
-                return handler(previousState, event.documentPage);
-            });
+                    return handler(draft, event.documentPage);
+                }),
+            );
         };
 
-        const handler = ({ action, documentCategory }: EmitterEvents['AppBridge:GuidelineDocumentCategoryAction']) => {
+        const handler = ({ action, documentCategory }: EmitterEvents['AppBridge:GuidelineDocumentCategory:Action']) => {
             if (
                 documentCategory.documentId === documentId &&
                 (documentCategories.has(documentCategory.id) || action === 'add')
@@ -64,12 +66,12 @@ export const useDocumentCategories = (
             }
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentCategoryAction', handler);
-        window.emitter.on('AppBridge:GuidelineDocumentCategoryPageAction', handlePageEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentCategory:Action', handler);
+        window.emitter.on('AppBridge:GuidelineDocumentCategory:DocumentPageAction', handleDocumentPageEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentCategoryAction', handler);
-            window.emitter.off('AppBridge:GuidelineDocumentCategoryPageAction', handlePageEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentCategory:Action', handler);
+            window.emitter.off('AppBridge:GuidelineDocumentCategory:DocumentPageAction', handleDocumentPageEvent);
         };
     }, [documentCategories, documentId, refetch]);
 

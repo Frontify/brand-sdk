@@ -35,10 +35,10 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
     useEffect(() => {
         refetch();
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', refetch);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
         };
     }, [refetch]);
 
@@ -53,10 +53,10 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
         };
     }, []);
 

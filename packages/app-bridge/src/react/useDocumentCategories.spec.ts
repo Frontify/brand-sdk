@@ -111,7 +111,7 @@ describe('useDocumentCategories', () => {
         );
 
         // Trigger a "document category added" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'add',
             documentCategory: DOCUMENT_CATEGORY,
         });
@@ -147,7 +147,7 @@ describe('useDocumentCategories', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document category added" event from another document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'add',
             documentCategory: DOCUMENT_CATEGORY,
         });
@@ -190,7 +190,7 @@ describe('useDocumentCategories', () => {
         );
 
         // Trigger a "document category delete" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'delete',
             documentCategory: {
                 id: DOCUMENT_CATEGORY_TO_DELETE.id,
@@ -227,7 +227,7 @@ describe('useDocumentCategories', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document category delete" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'delete',
             documentCategory: {
                 id: DOCUMENT_CATEGORY_TO_DELETE.id,
@@ -273,7 +273,7 @@ describe('useDocumentCategories', () => {
         );
 
         // Trigger a "document category update" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'update',
             documentCategory: DOCUMENT_CATEGORY_TO_UPDATE,
         });
@@ -311,7 +311,7 @@ describe('useDocumentCategories', () => {
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
         // Trigger a "document category update" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'update',
             documentCategory: DOCUMENT_CATEGORY_TO_UPDATE,
         });
@@ -345,7 +345,7 @@ describe('useDocumentCategories', () => {
         ]);
 
         // Trigger a "document page update" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'add',
             documentPage: { id: DOCUMENT_PAGE_ID, documentId: DOCUMENT_ID, categoryId: DOCUMENT_CATEGORY_ID_2 },
         });
@@ -379,7 +379,7 @@ describe('useDocumentCategories', () => {
         ]);
 
         // Trigger a "document page update" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'add',
             documentPage: { id: DOCUMENT_PAGE_ID, documentId: ANOTHER_DOCUMENT_ID, categoryId: DOCUMENT_CATEGORY_ID_2 },
         });
@@ -413,7 +413,7 @@ describe('useDocumentCategories', () => {
         ]);
 
         // Trigger a "document page update" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'delete',
             documentPage: { id: DOCUMENT_PAGE_ID, documentId: DOCUMENT_ID, categoryId: DOCUMENT_CATEGORY_ID_3 },
         });
@@ -447,7 +447,7 @@ describe('useDocumentCategories', () => {
         ]);
 
         // Trigger a "document page update" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategoryPageAction', {
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'delete',
             documentPage: { id: DOCUMENT_PAGE_ID, documentId: ANOTHER_DOCUMENT_ID, categoryId: DOCUMENT_CATEGORY_ID_2 },
         });

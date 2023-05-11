@@ -37,7 +37,7 @@ export type EmitterEvents = {
         prevColorPalettes: ColorPalette[];
     };
 
-    'AppBridge:GuidelineDocumentAction':
+    'AppBridge:GuidelineDocument:Action':
         | {
               document: Document;
               action: 'add' | 'update';
@@ -47,7 +47,7 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineDocumentGroupAction':
+    'AppBridge:GuidelineDocumentGroup:Action':
         | {
               documentGroup: DocumentGroup;
               action: 'add' | 'update';
@@ -57,7 +57,7 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineCoverPageAction':
+    'AppBridge:GuidelineCoverPage:Action':
         | {
               coverPage: CoverPage;
               action: 'add' | 'update';
@@ -66,7 +66,7 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineBrandportalLinkAction': {
+    'AppBridge:GuidelineBrandportalLink:Action': {
         brandportalLink: BrandportalLink;
         action: 'update';
     };
@@ -75,7 +75,7 @@ export type EmitterEvents = {
 
     'AppBridge:OpenNavigationManager': void;
 
-    'AppBridge:GuidelineDocumentPageAction':
+    'AppBridge:GuidelineDocumentPage:Action':
         | {
               documentPage: DocumentPage;
               action: 'add' | 'update';
@@ -85,7 +85,7 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineDocumentCategoryAction':
+    'AppBridge:GuidelineDocumentCategory:Action':
         | {
               documentCategory: DocumentCategory;
               action: 'add' | 'update';
@@ -95,12 +95,17 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineDocumentCategoryPageAction': {
+    'AppBridge:GuidelineDocumentCategory:DocumentPageAction': {
         documentPage: { id: number; documentId: number; categoryId: number };
         action: 'add' | 'delete';
     };
 
-    'AppBridge:GuidelineDocumentGroupDocumentAction':
+    'AppBridge:GuidelineDocument:DocumentPageAction': {
+        documentPage: { id: number; documentId: number };
+        action: 'add' | 'delete';
+    };
+
+    'AppBridge:GuidelineDocumentGroup:DocumentAction':
         | {
               document: { id: number; documentGroupId: number };
               action: 'add' | 'update';
@@ -110,7 +115,7 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineDocumentPageTargetsAction': {
+    'AppBridge:GuidelineDocumentPageTargets:Action': {
         action: 'update';
         payload: {
             targets: number[];
@@ -118,7 +123,7 @@ export type EmitterEvents = {
         };
     };
 
-    'AppBridge:GuidelineDocumentTargetsAction': {
+    'AppBridge:GuidelineDocumentTargets:Action': {
         payload: {
             targets: number[];
             documentIds: number[];
