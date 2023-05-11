@@ -193,7 +193,7 @@ importers:
         specifier: ^3.0.0-beta.66
         version: link:../app-bridge
       '@frontify/sidebar-settings':
-        specifier: ^0.3.3
+        specifier: ^0.3.4
         version: link:../sidebar-settings
     devDependencies:
       '@frontify/eslint-config-typescript':
