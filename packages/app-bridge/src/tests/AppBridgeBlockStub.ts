@@ -81,6 +81,9 @@ export const getAppBridgeBlockStub = ({
                 return assetsDiff;
             }, {});
         }),
+        'AppBridge:OnBlockSettingsUpdated': stub<Parameters<AppBridgeBlock['dispatch']>>(),
+        'AppBridge:OffBlockSettingsUpdated': stub<Parameters<AppBridgeBlock['dispatch']>>(),
+        'AppBridge:BlockSettingsUpdated': stub<Parameters<AppBridgeBlock['dispatch']>>(),
     };
 
     const dispatchCallStub = stub<Parameters<AppBridgeBlock['dispatch']>>();
