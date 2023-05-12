@@ -8,6 +8,7 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document, EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
+type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
 
 type Options = {
     /**
@@ -35,7 +36,7 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
     }, [options.enabled, refetch]);
 
     useEffect(() => {
-        const handleDocumentPageEvent = (event: EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction']) => {
+        const handleDocumentPageEvent = (event: DocumentPageEvent) => {
             if (!documents.has(event.documentPage.documentId)) {
                 return;
             }
@@ -43,10 +44,22 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
             setDocuments(
                 produce((draft) => {
                     const action = `${event.action}-page` as const;
-
                     const handler = actionHandlers[action] || actionHandlers.default;
-
                     return handler(draft, event.documentPage);
+                }),
+            );
+        };
+
+        const handleDocumentCategoryEvent = (event: DocumentCategoryEvent) => {
+            if (!documents.has(event.documentCategory.documentId)) {
+                return;
+            }
+
+            setDocuments(
+                produce((draft) => {
+                    const action = `${event.action}-category` as const;
+                    const handler = actionHandlers[action] || actionHandlers.default;
+                    return handler(draft, event.documentCategory);
                 }),
             );
         };
@@ -54,11 +67,13 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
         window.emitter.on('AppBridge:GuidelineDocument:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
+        window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
+            window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
         };
     }, [documents, options.enabled, refetch]);
 
@@ -118,9 +133,40 @@ const deleteDocumentPage = (
 
     return documents.set(document.id, document);
 };
+
+const addDocumentCategory = (
+    documents: Map<number, Document>,
+    documentCategoryToAdd: DocumentCategoryEvent['documentCategory'],
+) => {
+    const document = documents.get(documentCategoryToAdd.documentId);
+    if (!document) {
+        return documents;
+    }
+
+    document.numberOfDocumentPageCategories += 1;
+
+    return documents.set(document.id, document);
+};
+
+const deleteDocumentCategory = (
+    documents: Map<number, Document>,
+    documentCategoryToDelete: DocumentCategoryEvent['documentCategory'],
+) => {
+    const document = documents.get(documentCategoryToDelete.documentId);
+    if (!document) {
+        return documents;
+    }
+
+    document.numberOfDocumentPageCategories -= 1;
+
+    return documents.set(document.id, document);
+};
+
 const actionHandlers = {
     'add-page': addDocumentPage,
     'delete-page': deleteDocumentPage,
+    'add-category': addDocumentCategory,
+    'delete-category': deleteDocumentCategory,
     default: (documents: Map<number, Document>) => documents,
 };
 

@@ -105,6 +105,11 @@ export type EmitterEvents = {
         action: 'add' | 'delete';
     };
 
+    'AppBridge:GuidelineDocument:DocumentCategoryAction': {
+        documentCategory: { id: number; documentId: number };
+        action: 'add' | 'delete';
+    };
+
     'AppBridge:GuidelineDocumentGroup:DocumentAction':
         | {
               document: { id: number; documentGroupId: number };

@@ -339,7 +339,10 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 action: 'add',
             });
 
-            //TODO: increase document.numberOfDocumentCategories
+            window.emitter.emit('AppBridge:GuidelineDocument:DocumentCategoryAction', {
+                documentCategory: result,
+                action: 'add',
+            });
 
             return result;
         },
@@ -367,7 +370,10 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 action: 'delete',
             });
 
-            //TODO: decrease document.numberOfDocumentCategories
+            window.emitter.emit('AppBridge:GuidelineDocument:DocumentCategoryAction', {
+                documentCategory: { id, documentId },
+                action: 'delete',
+            });
         },
         [appBridge],
     );
