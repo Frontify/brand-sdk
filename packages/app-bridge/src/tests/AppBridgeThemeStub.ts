@@ -136,11 +136,13 @@ export const getAppBridgeThemeStub = ({
         ),
         getUncategorizedDocumentPagesByDocumentId: stub<
             Parameters<AppBridgeTheme['getUncategorizedDocumentPagesByDocumentId']>
-        >().callsFake((documentId) => [
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(UNCATEGORIZED_DOCUMENT_PAGE_ID_1, documentId, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(UNCATEGORIZED_DOCUMENT_PAGE_ID_2, documentId, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(UNCATEGORIZED_DOCUMENT_PAGE_ID_3, documentId, null),
-        ]),
+        >().callsFake((documentId) =>
+            Promise.resolve([
+                DocumentPageDummy.withDocumentAndDocumentCategoryId(UNCATEGORIZED_DOCUMENT_PAGE_ID_1, documentId, null),
+                DocumentPageDummy.withDocumentAndDocumentCategoryId(UNCATEGORIZED_DOCUMENT_PAGE_ID_2, documentId, null),
+                DocumentPageDummy.withDocumentAndDocumentCategoryId(UNCATEGORIZED_DOCUMENT_PAGE_ID_3, documentId, null),
+            ]),
+        ),
         getDocumentSectionsByDocumentPageId: stub<
             Parameters<AppBridgeTheme['getDocumentSectionsByDocumentPageId']>
         >().resolves([
