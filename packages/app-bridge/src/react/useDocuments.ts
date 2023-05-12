@@ -24,9 +24,7 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
 
     const refetch = useCallback(async () => {
         setIsLoading(true);
-        const documents = await fetchDocuments(appBridge);
-
-        setDocuments(documents);
+        setDocuments(await fetchDocuments(appBridge));
         setIsLoading(false);
     }, [appBridge]);
 
