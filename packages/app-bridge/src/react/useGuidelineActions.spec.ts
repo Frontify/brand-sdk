@@ -680,7 +680,7 @@ describe('useGuidelineActions hook', () => {
     it('should delete a page and emit an event', async () => {
         const deleteDocumentPage = vi.spyOn(useGuidelineActionsStub, 'deleteDocumentPage');
 
-        const page = { id: 1, documentId: 22, categoryId: null };
+        const page = { id: 1, documentId: 22 };
 
         act(() => {
             useGuidelineActionsStub.deleteDocumentPage(page);

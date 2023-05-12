@@ -364,7 +364,7 @@ describe('useUncategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
         const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_4,
             ANOTHER_DOCUMENT_ID,
             DOCUMENT_CATEGORY_ID,
         );
@@ -399,7 +399,7 @@ describe('useUncategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
         const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_4,
             DOCUMENT_ID,
             DOCUMENT_CATEGORY_ID,
         );

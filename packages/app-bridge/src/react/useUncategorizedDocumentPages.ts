@@ -49,7 +49,7 @@ export const useUncategorizedDocumentPages = (
 
         const handler = ({ action, documentPage }: EmitterEvents['AppBridge:GuidelineDocumentPage:Action']) => {
             if (
-                (action === 'update' && documentPages.has(documentPage.id) && !documentPage.categoryId) ||
+                (action === 'update' && documentPages.has(documentPage.id)) ||
                 (action === 'add' && documentPage.documentId === documentId && !documentPage.categoryId)
             ) {
                 refetch();
@@ -71,7 +71,7 @@ export const useUncategorizedDocumentPages = (
         };
     }, [documentId, refetch, documentPages]);
 
-    return { documentPages: Array.from(documentPages.values()).sort(sortDocumentPages), refetch, isLoading };
+    return { documentPages: Array.from(documentPages.values()), refetch, isLoading };
 };
 
 const fetchDocumentPagesByDocumentId = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {

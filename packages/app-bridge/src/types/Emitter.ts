@@ -81,7 +81,7 @@ export type EmitterEvents = {
               action: 'add' | 'update';
           }
         | {
-              documentPage: { id: number; documentId: number; categoryId: number | null };
+              documentPage: { id: number; documentId: number; categoryId: Nullable<number> };
               action: 'delete';
           };
 
@@ -96,7 +96,7 @@ export type EmitterEvents = {
           };
 
     'AppBridge:GuidelineDocumentCategory:DocumentPageAction': {
-        documentPage: { id: number; documentId: number; categoryId: number };
+        documentPage: { id: number; categoryId: number };
         action: 'add' | 'delete';
     };
 

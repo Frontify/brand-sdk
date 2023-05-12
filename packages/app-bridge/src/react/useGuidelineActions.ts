@@ -249,7 +249,6 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
                     documentPage: {
                         id: result.id,
-                        documentId: documentPage.documentId,
                         categoryId: documentPage.categoryId,
                     },
                     action: 'add',
@@ -291,17 +290,22 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const deleteDocumentPage = useCallback(
-        async ({ id, documentId, categoryId }: { id: number; documentId: number; categoryId: Nullable<number> }) => {
+        async ({ id, ...props }: { id: number; documentId: number; categoryId?: Nullable<number> }) => {
             await appBridge.deleteDocumentPage(id);
 
             window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
-                documentPage: { id, documentId, categoryId },
+                documentPage: { id, ...props, categoryId: props.categoryId ?? null },
                 action: 'delete',
             });
 
-            if (categoryId) {
+            if (props.categoryId) {
                 window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
-                    documentPage: { id, documentId, categoryId },
+                    documentPage: { id, categoryId: props.categoryId },
+                    action: 'delete',
+                });
+            } else {
+                window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
+                    documentPage: { id, documentId: props.documentId },
                     action: 'delete',
                 });
             }
@@ -320,7 +324,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
             if (categoryId) {
                 window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
-                    documentPage: { id: result.id, documentId, categoryId },
+                    documentPage: { id: result.id, categoryId },
                     action: 'add',
                 });
             }

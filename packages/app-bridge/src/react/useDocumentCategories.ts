@@ -42,7 +42,7 @@ export const useDocumentCategories = (
         const handleDocumentPageEvent = (
             event: EmitterEvents['AppBridge:GuidelineDocumentCategory:DocumentPageAction'],
         ) => {
-            if (event.documentPage.documentId !== documentId) {
+            if (!documentCategories.has(event.documentPage.categoryId)) {
                 return;
             }
 
