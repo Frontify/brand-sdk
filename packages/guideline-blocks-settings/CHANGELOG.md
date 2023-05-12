@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.26.7
+
+### Patch Changes
+
+- [#419](https://github.com/Frontify/brand-sdk/pull/419) [`ada3b73`](https://github.com/Frontify/brand-sdk/commit/ada3b73d4af947649b6135b26b8e5a1c26f79aad) Thanks [@triggertoo](https://github.com/triggertoo)! - Update @frontify/sidebar-settings to the latest version
+
 ## 0.26.6
 
 ### Patch Changes
