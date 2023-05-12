@@ -181,14 +181,6 @@ describe('useDocumentCategories', () => {
 
         await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
-            ]),
-        );
-
         // Trigger a "document category delete" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
             action: 'delete',
@@ -200,7 +192,7 @@ describe('useDocumentCategories', () => {
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledOnce();
         });
 
         expect(result.current.documentCategories).toEqual([
@@ -214,7 +206,7 @@ describe('useDocumentCategories', () => {
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY_TO_DELETE = DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
-            DOCUMENT_CATEGORY_ID_2,
+            DOCUMENT_CATEGORY_ID_4,
             ANOTHER_DOCUMENT_ID,
             5,
         );
@@ -296,7 +288,7 @@ describe('useDocumentCategories', () => {
 
         const DOCUMENT_CATEGORY_TO_UPDATE: DocumentCategory = {
             ...DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
-                DOCUMENT_CATEGORY_ID_2,
+                DOCUMENT_CATEGORY_ID_4,
                 ANOTHER_DOCUMENT_ID,
                 5,
             ),

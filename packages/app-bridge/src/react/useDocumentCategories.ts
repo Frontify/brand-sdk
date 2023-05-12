@@ -49,9 +49,7 @@ export const useDocumentCategories = (
             setDocumentCategories(
                 produce((draft) => {
                     const action = `${event.action}-page` as const;
-
                     const handler = actionHandlers[action] || actionHandlers.default;
-
                     return handler(draft, event.documentPage);
                 }),
             );
@@ -59,10 +57,16 @@ export const useDocumentCategories = (
 
         const handler = ({ action, documentCategory }: EmitterEvents['AppBridge:GuidelineDocumentCategory:Action']) => {
             if (
-                documentCategory.documentId === documentId &&
-                (documentCategories.has(documentCategory.id) || action === 'add')
+                (action === 'update' && documentCategories.has(documentCategory.id)) ||
+                (action === 'add' && documentCategory.documentId === documentId)
             ) {
                 refetch();
+            } else if (action === 'delete' && documentCategories.has(documentCategory.id)) {
+                setDocumentCategories(
+                    produce((draft) => {
+                        draft.delete(documentCategory.id);
+                    }),
+                );
             }
         };
 
