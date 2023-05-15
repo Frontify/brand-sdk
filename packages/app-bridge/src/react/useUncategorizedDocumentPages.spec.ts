@@ -35,9 +35,24 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.documentPages).toEqual([
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_1,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 1,
+                }),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_2,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 2,
+                }),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_3,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 3,
+                }),
             ]);
         });
     });
@@ -77,9 +92,24 @@ describe('useUncategorizedDocumentPages', () => {
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.documentPages).toEqual([
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_1,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 1,
+                }),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_2,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 2,
+                }),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_3,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 3,
+                }),
             ]);
         });
     });
@@ -88,11 +118,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_4,
-            DOCUMENT_ID,
-            null,
-        );
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_4,
+            documentId: DOCUMENT_ID,
+            categoryId: null,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -104,10 +134,22 @@ describe('useUncategorizedDocumentPages', () => {
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
             Promise.resolve([
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_4, DOCUMENT_ID, null),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_1,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                }),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_2,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                }),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_3,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, documentId: DOCUMENT_ID, categoryId: null }),
             ]),
         );
 
@@ -123,10 +165,22 @@ describe('useUncategorizedDocumentPages', () => {
         });
 
         expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_4, DOCUMENT_ID, null),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+            }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, documentId: DOCUMENT_ID, categoryId: null }),
         ]);
     });
 
@@ -134,11 +188,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
-            ANOTHER_DOCUMENT_ID,
-            null,
-        );
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: ANOTHER_DOCUMENT_ID,
+            categoryId: null,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -158,10 +212,10 @@ describe('useUncategorizedDocumentPages', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+        expect(result.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_2,
+            DOCUMENT_PAGE_ID_3,
         ]);
     });
 
@@ -169,11 +223,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
-            DOCUMENT_ID,
-            DOCUMENT_CATEGORY_ID,
-        );
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID,
+            categoryId: DOCUMENT_CATEGORY_ID,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -193,10 +247,10 @@ describe('useUncategorizedDocumentPages', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+        expect(result.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_2,
+            DOCUMENT_PAGE_ID_3,
         ]);
     });
 
@@ -204,11 +258,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_1,
-            DOCUMENT_ID,
-            null,
-        );
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID,
+            categoryId: null,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -233,8 +287,18 @@ describe('useUncategorizedDocumentPages', () => {
         });
 
         expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+                sort: 3,
+            }),
         ]);
     });
 
@@ -242,11 +306,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_4,
-            ANOTHER_DOCUMENT_ID,
-            null,
-        );
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_4,
+            documentId: ANOTHER_DOCUMENT_ID,
+            categoryId: null,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -270,10 +334,10 @@ describe('useUncategorizedDocumentPages', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+        expect(result.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_2,
+            DOCUMENT_PAGE_ID_3,
         ]);
     });
 
@@ -281,11 +345,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_4,
-            DOCUMENT_ID,
-            DOCUMENT_CATEGORY_ID,
-        );
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_4,
+            documentId: DOCUMENT_ID,
+            categoryId: DOCUMENT_CATEGORY_ID,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -309,10 +373,10 @@ describe('useUncategorizedDocumentPages', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+        expect(result.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_2,
+            DOCUMENT_PAGE_ID_3,
         ]);
     });
 
@@ -321,7 +385,12 @@ describe('useUncategorizedDocumentPages', () => {
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
         const UPDATED_DOCUMENT_PAGE: DocumentPage = {
-            ...DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
+            ...DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+                sort: 2,
+            }),
             title: 'Updated title',
         };
 
@@ -335,9 +404,19 @@ describe('useUncategorizedDocumentPages', () => {
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
             Promise.resolve([
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_1,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 1,
+                }),
                 UPDATED_DOCUMENT_PAGE,
-                DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+                DocumentPageDummy.withFields({
+                    id: DOCUMENT_PAGE_ID_3,
+                    documentId: DOCUMENT_ID,
+                    categoryId: null,
+                    sort: 3,
+                }),
             ]),
         );
 
@@ -353,9 +432,19 @@ describe('useUncategorizedDocumentPages', () => {
         });
 
         expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+                sort: 1,
+            }),
             UPDATED_DOCUMENT_PAGE,
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID,
+                categoryId: null,
+                sort: 3,
+            }),
         ]);
     });
 
@@ -363,11 +452,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_4,
-            ANOTHER_DOCUMENT_ID,
-            DOCUMENT_CATEGORY_ID,
-        );
+        const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_4,
+            documentId: ANOTHER_DOCUMENT_ID,
+            categoryId: DOCUMENT_CATEGORY_ID,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -387,10 +476,10 @@ describe('useUncategorizedDocumentPages', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+        expect(result.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_2,
+            DOCUMENT_PAGE_ID_3,
         ]);
     });
 
@@ -398,11 +487,11 @@ describe('useUncategorizedDocumentPages', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
 
-        const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withDocumentAndDocumentCategoryId(
-            DOCUMENT_PAGE_ID_4,
-            DOCUMENT_ID,
-            DOCUMENT_CATEGORY_ID,
-        );
+        const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_4,
+            documentId: DOCUMENT_ID,
+            categoryId: DOCUMENT_CATEGORY_ID,
+        });
 
         const { result } = renderHook(() => useUncategorizedDocumentPages(appBridge, DOCUMENT_ID));
 
@@ -422,10 +511,10 @@ describe('useUncategorizedDocumentPages', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        expect(result.current.documentPages).toEqual([
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_1, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_2, DOCUMENT_ID, null),
-            DocumentPageDummy.withDocumentAndDocumentCategoryId(DOCUMENT_PAGE_ID_3, DOCUMENT_ID, null),
+        expect(result.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+            DOCUMENT_PAGE_ID_1,
+            DOCUMENT_PAGE_ID_2,
+            DOCUMENT_PAGE_ID_3,
         ]);
     });
 });

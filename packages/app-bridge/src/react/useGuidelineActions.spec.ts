@@ -34,13 +34,29 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
 } from '../types';
+import { useUncategorizedDocumentPages } from './useUncategorizedDocumentPages';
+import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
+
+const DOCUMENT_ID_1 = 145;
+const DOCUMENT_ID_2 = 34532;
+const DOCUMENT_PAGE_ID_1 = 23442;
+const DOCUMENT_PAGE_ID_2 = 235345;
+const DOCUMENT_PAGE_ID_3 = 12352;
+const DOCUMENT_PAGE_ID_4 = 55221;
+const DOCUMENT_PAGE_ID_5 = 98324;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
+const DOCUMENT_CATEGORY_ID_1 = 147;
+const DOCUMENT_CATEGORY_ID_2 = 258;
 
 describe('useGuidelineActions hook', () => {
     let useGuidelineActionsStub: ReturnType<typeof useGuidelineActions>;
     let emitSpy: SpyInstance | null = null;
+    let appBridgeStub: ReturnType<typeof getAppBridgeThemeStub>;
 
     beforeEach(() => {
-        const appBridgeStub = getAppBridgeThemeStub();
+        appBridgeStub = getAppBridgeThemeStub();
         const { result } = renderHook(() => useGuidelineActions(appBridgeStub));
 
         useGuidelineActionsStub = result.current;
@@ -722,46 +738,6 @@ describe('useGuidelineActions hook', () => {
         });
     });
 
-    //TODO: fix
-    it.skip('should move a page between documents and emit all events', async () => {
-        const moveDocumentPage = vi.spyOn(useGuidelineActionsStub, 'moveDocumentPage');
-
-        const documentPageId = 23442;
-        const targetDocumentId = 22;
-
-        act(() => {
-            useGuidelineActionsStub.moveDocumentPage(documentPageId, targetDocumentId);
-        });
-
-        expect(moveDocumentPage).toHaveBeenCalledWith(documentPageId, targetDocumentId);
-
-        await waitFor(() => {
-            expect(emitSpy?.mock.calls).toEqual([
-                [
-                    'AppBridge:GuidelineDocumentPage:Action',
-                    {
-                        documentPage: { id: documentPageId, documentId: targetDocumentId, categoryId: null },
-                        action: 'delete',
-                    },
-                ],
-                [
-                    'AppBridge:GuidelineDocumentPage:Action',
-                    {
-                        documentPage: { id: documentPageId, documentId: targetDocumentId, categoryId: null },
-                        action: 'delete',
-                    },
-                ],
-                [
-                    'AppBridge:GuidelineDocumentPage:Action',
-                    {
-                        documentPage: DocumentPageDummy.with(documentPageId),
-                        action: 'update',
-                    },
-                ],
-            ]);
-        });
-    });
-
     it('should update document targets and emit all events', async () => {
         const updateDocumentTargets = vi.spyOn(useGuidelineActionsStub, 'updateDocumentTargets');
 
@@ -800,6 +776,1017 @@ describe('useGuidelineActions hook', () => {
                 payload: { targets, pageIds: documentPageIds },
                 action: 'update',
             });
+        });
+    });
+
+    it('should move an uncategorized document page within the same document', async () => {
+        const DOCUMENT_PAGE_1 = DocumentPageDummy.withFields({
+            id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...DOCUMENT_PAGE_1, sort: 2 });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: uncategorizedDocumentPages } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_1.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 1);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 2 }, action: 'move' },
+                ],
+                ['AppBridge:GuidelineDocument:DocumentPageAction', { documentPage: DOCUMENT_PAGE_1, action: 'delete' }],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 2 }, action: 'add' },
+                ],
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_1.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page within the same document category', async () => {
+        const DOCUMENT_PAGE_1 = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...DOCUMENT_PAGE_1, sort: 3 });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: categorizedDocumentPages } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_1.id,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 2, DOCUMENT_CATEGORY_ID_1);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3 }, action: 'move' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    { documentPage: DOCUMENT_PAGE_1, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3 }, action: 'add' },
+                ],
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_1.id,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page to uncategorized within the same document', async () => {
+        const DOCUMENT_PAGE_1 = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...DOCUMENT_PAGE_1, sort: 3, categoryId: null });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: categorizedDocumentPages } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+        const { result: uncategorizedDocumentPages } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_1.id,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValue([
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...DOCUMENT_PAGE_1, sort: 3, categoryId: null },
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 1 }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3, categoryId: null }, action: 'add' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    { documentPage: DOCUMENT_PAGE_1, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3, categoryId: null }, action: 'add' },
+                ],
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_1.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move an uncategorized document page to a document category within the same document', async () => {
+        const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 2, categoryId: DOCUMENT_CATEGORY_ID_1 });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: categorizedDocumentPages } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+        const { result: uncategorizedDocumentPages } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchCategorizedDocumentPagesSpy.mockResolvedValue([
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_1, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 1 }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 2 }),
+            { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 3, categoryId: DOCUMENT_CATEGORY_ID_1 },
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 4 }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 5 }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DOCUMENT_ID_1,
+            2,
+            DOCUMENT_CATEGORY_ID_1,
+        );
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchCategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 1, categoryId: null }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 2, categoryId: DOCUMENT_CATEGORY_ID_1 },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: UNCATEGORIZED_DOCUMENT_PAGE, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 2, categoryId: DOCUMENT_CATEGORY_ID_1 },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it('should move an uncategorized document page to another document as uncategorized', async () => {
+        const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+            sort: 1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...UNCATEGORIZED_DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: null,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        const { result: uncategorizedDocumentPagesInDocumentId1 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        const { result: uncategorizedDocumentPagesInDocumentId2 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_2),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: null, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(UNCATEGORIZED_DOCUMENT_PAGE, DOCUMENT_ID_2, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledTimes(2);
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: null,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_1 }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page to another document as uncategorized', async () => {
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_5,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+            sort: 5,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: null,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document category
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 4,
+            }),
+            DOCUMENT_PAGE,
+        ]);
+
+        const { result: categorizedDocumentPagesInDocumentCategoryId1 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+                DOCUMENT_PAGE.id,
+            ]);
+        });
+
+        const { result: uncategorizedDocumentPagesInDocumentId2 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_2),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: null, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE, DOCUMENT_ID_2, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 5,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move an uncategorized document page to another document as categorized', async () => {
+        const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_5,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+            sort: 1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...UNCATEGORIZED_DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        const { result: uncategorizedDocumentPagesInDocumentId1 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        const { result: categorizedDocumentPagesInDocumentId2 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: null, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 5,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DOCUMENT_ID_2,
+            2,
+            DOCUMENT_CATEGORY_ID_1,
+        );
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: null,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_1 }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(
+                categorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it.only('should move a categorized document page to another document as categorized', async () => {
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_5,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+            sort: 5,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: DOCUMENT_CATEGORY_ID_2,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document category
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 4,
+            }),
+            DOCUMENT_PAGE,
+        ]);
+
+        const { result: categorizedDocumentPagesInDocumentCategoryId1 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+                DOCUMENT_PAGE.id,
+            ]);
+        });
+
+        const { result: categorizedDocumentPagesInDocumentCategoryId2 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_2),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId2.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 2,
+            }),
+            { ...DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: DOCUMENT_CATEGORY_ID_2, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 4,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE, DOCUMENT_ID_2, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchCategorizedDocumentPagesSpy).toHaveBeenCalledTimes(2);
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 5,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_2,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_2,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId2.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE.id,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
         });
     });
 });

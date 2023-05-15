@@ -10,25 +10,11 @@ export class DocumentPageDummy {
         return convertObjectCase(DocumentPageApiDummy.with(id), 'camel');
     }
 
-    static withDocumentAndDocumentCategoryId(
-        id: number,
-        documentId: number,
-        documentCategoryId: number | null,
-    ): DocumentPage {
-        return convertObjectCase(
-            DocumentPageApiDummy.withDocumentAndDocumentCategoryId(id, documentId, documentCategoryId),
-            'camel',
-        );
-    }
-
-    static withDocumentCategoryId(id: number, documentCategoryId: number | null): DocumentPage {
-        return convertObjectCase(DocumentPageApiDummy.withDocumentCategoryId(id, documentCategoryId), 'camel');
-    }
-
-    static withFields(fields: DocumentPage): DocumentPage {
+    static withFields(fields: Partial<DocumentPage> & { id: number }): DocumentPage {
         return {
+            ...DocumentPageDummy.with(fields.id),
             ...fields,
-        };
+        } as DocumentPage;
     }
 }
 

@@ -502,30 +502,47 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
         [appBridge],
     );
 
-    //TODO: fix
     const moveDocumentPage = useCallback(
-        async (documentPageId: number, documentId: number, position?: number, categoryId?: number) => {
-            const oldDocumentPage = {} as DocumentPage;
-            const result = await appBridge.moveDocumentPage(documentPageId, documentId, position, categoryId);
+        async (
+            documentPage: { id: number; documentId: number; categoryId?: Nullable<number> },
+            documentId: number,
+            position?: number,
+            categoryId: Nullable<number> = null,
+        ) => {
+            const result = await appBridge.moveDocumentPage(
+                documentPage.id,
+                documentId,
+                position,
+                categoryId ?? undefined,
+            );
 
-            window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
-                documentPage: oldDocumentPage,
-                action: 'delete',
-            });
+            // Emits in `useCategorizedDocumentPages` and `useUncategorizedDocumentPages` hook
+            if (documentPage.categoryId === categoryId && documentPage.documentId === documentId) {
+                window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
+                    documentPage: { ...result, sort: position ? position + 1 : result.sort },
+                    action: 'move',
+                });
+            } else {
+                window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
+                    documentPage: { ...documentPage, categoryId: documentPage.categoryId ?? null },
+                    action: 'delete',
+                });
 
-            window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
-                documentPage: result,
-                action: 'add',
-            });
+                window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
+                    documentPage: result,
+                    action: 'add',
+                });
+            }
 
-            if (oldDocumentPage.categoryId) {
+            // Emits in `useDocumentCategories` and `useDocuments` hook
+            if (documentPage.categoryId) {
                 window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
-                    documentPage: { ...oldDocumentPage, categoryId: oldDocumentPage.categoryId },
+                    documentPage: { ...documentPage, categoryId: documentPage.categoryId },
                     action: 'delete',
                 });
             } else {
                 window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
-                    documentPage: oldDocumentPage,
+                    documentPage: { ...documentPage },
                     action: 'delete',
                 });
             }

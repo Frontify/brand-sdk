@@ -34,22 +34,10 @@ export class DocumentPageApiDummy {
         };
     }
 
-    static withDocumentAndDocumentCategoryId(
-        id: number,
-        documentId: number,
-        documentCategoryId: number | null,
-    ): DocumentPageApi {
+    static withFields(fields: Partial<DocumentPageApi> & { id: number }): DocumentPageApi {
         return {
-            ...DocumentPageApiDummy.with(id),
-            document_id: documentId,
-            category_id: documentCategoryId,
-        };
-    }
-
-    static withDocumentCategoryId(id: number, documentCategoryId: number | null): DocumentPageApi {
-        return {
-            ...DocumentPageApiDummy.with(id),
-            category_id: documentCategoryId,
+            ...DocumentPageApiDummy.with(fields.id),
+            ...fields,
         };
     }
 }

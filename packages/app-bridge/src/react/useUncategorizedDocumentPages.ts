@@ -8,6 +8,7 @@ import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { DocumentPageTargetEvent } from './useDocumentPageTargets';
+import { moveInArray } from '../utilities';
 
 type Options = {
     /**
@@ -53,10 +54,30 @@ export const useUncategorizedDocumentPages = (
                 (action === 'add' && documentPage.documentId === documentId && !documentPage.categoryId)
             ) {
                 refetch();
-            } else if (action === 'delete' && documentPages.has(documentPage.id)) {
+            } else if ((action === 'delete' || action === 'move') && documentPages.has(documentPage.id)) {
                 setDocumentPages(
                     produce((draft) => {
-                        draft.delete(documentPage.id);
+                        if (action === 'move') {
+                            const documentPagesAsArray: DocumentPage[] = [...draft.values()];
+
+                            const originalIndex = documentPagesAsArray.findIndex((dP) => dP.id === documentPage.id);
+                            if (originalIndex === -1) {
+                                return console.log('originalIndex not found');
+                            }
+
+                            const updatedDocumentPages = moveInArray(
+                                documentPagesAsArray,
+                                originalIndex,
+                                documentPage.sort - 1,
+                            );
+
+                            draft.clear();
+                            for (const documentPage of updatedDocumentPages) {
+                                draft.set(documentPage.id, documentPage);
+                            }
+                        } else if (action === 'delete') {
+                            draft.delete(documentPage.id);
+                        }
                     }),
                 );
             }

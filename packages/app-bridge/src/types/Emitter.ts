@@ -78,7 +78,7 @@ export type EmitterEvents = {
     'AppBridge:GuidelineDocumentPage:Action':
         | {
               documentPage: DocumentPage;
-              action: 'add' | 'update';
+              action: 'add' | 'update' | 'move';
           }
         | {
               documentPage: { id: number; documentId: number; categoryId: Nullable<number> };
