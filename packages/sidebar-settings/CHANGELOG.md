@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.3.5
+
+### Patch Changes
+
+- [#424](https://github.com/Frontify/brand-sdk/pull/424) [`2d38f02`](https://github.com/Frontify/brand-sdk/commit/2d38f027d5d609b8318fc4ba7bfb501a58812613) Thanks [@triggertoo](https://github.com/triggertoo)! - Fix @frontify/fondue due to semver
+
 ## 0.3.4
 
 ### Patch Changes
