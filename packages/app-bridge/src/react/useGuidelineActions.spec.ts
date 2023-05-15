@@ -1605,7 +1605,7 @@ describe('useGuidelineActions hook', () => {
         });
     });
 
-    it.only('should move a categorized document page to another document as categorized', async () => {
+    it('should move a categorized document page to another document as categorized', async () => {
         const DOCUMENT_PAGE = DocumentPageDummy.withFields({
             id: DOCUMENT_PAGE_ID_5,
             documentId: DOCUMENT_ID_1,
