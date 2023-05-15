@@ -47,6 +47,7 @@ const DOCUMENT_PAGE_ID_5 = 98324;
 const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
 const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
 const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_4 = 34563;
 const DOCUMENT_CATEGORY_ID_1 = 147;
 const DOCUMENT_CATEGORY_ID_2 = 258;
 
@@ -1091,7 +1092,7 @@ describe('useGuidelineActions hook', () => {
 
     it('should move an uncategorized document page to another document as uncategorized', async () => {
         const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
-            id: DOCUMENT_PAGE_ID_1,
+            id: UNCATEGORIZED_DOCUMENT_PAGE_ID_4,
             documentId: DOCUMENT_ID_1,
             categoryId: null,
             sort: 1,
