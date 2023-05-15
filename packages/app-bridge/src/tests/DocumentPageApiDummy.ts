@@ -38,7 +38,7 @@ export class DocumentPageApiDummy {
         return {
             ...DocumentPageApiDummy.with(fields.id),
             ...fields,
-        };
+        } as DocumentPageApi;
     }
 }
 
