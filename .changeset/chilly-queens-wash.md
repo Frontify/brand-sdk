@@ -1,13 +1,45 @@
 ---
-"@frontify/app-bridge": major
+"@frontify/app-bridge": patch
 ---
 
-split useDocumentPages hook into useCategorizedDocumentPages and useUncategorizedDocumentPages hooks
+### Breaking changes:
 
-Title: [Breaking Change] Removed useDocumentPages hook
+-   Split the `useDocumentPages` hook into `useCategorizedDocumentPages` and `useUncategorizedDocumentPages`
 
-Changeset:
-This changeset removes the useDocumentPages hook from our codebase and introduces two new hooks: useCategorizedDocumentPages and useUncategorizedDocumentPages.
+#### Usage:
 
-Breaking Change:
-useDocumentPages, which was previously available, has been removed due to redundant api calls (e.g., it was causing performance issues, it's no longer necessary because two additional hooks are added useCategorizedDocumentPages and useUncategorizedDocumentPages).
+##### Before
+
+`const { getCategorizedPages, getUncategorizedPages } = useDocumentPages(appBridge)`
+
+##### After
+
+`const { documentPages } = useCategorizedDocumentPages(appBridge, <DOCUMENT_CATEGORY_ID>)`
+
+`const { documentPages } = useUncategorizedDocumentPages(appBridge, <DOCUMENT_ID>)`
+
+-   Refactor `useDocumentCategories`:
+-   Removed `getSortedCategories` (documentCategories is now sorted)
+-   Removed `documentPages` from `DocumentCategory`
+-   Replaced `moveDocumentPageBetweenDocuments` by `moveDocumentPage`
+
+-   Rename event handler to remove :${number} where it was set
+
+-   Rename useGuidelineActions return functions:
+    | Old Name | New Name |
+    | -------------- | ---------------------- |
+    | createPage | createDocumentPage |
+    | updatePage | updateDocumentPage |
+    | deletePage | deleteDocumentPage |
+    | duplicatePage | duplicateDocumentPage |
+    | createCategory | createDocumentCategory |
+    | updateCategory | updateDocumentCategory |
+    | deleteCategory | deleteDocumentCategory |
+
+-   Renamed App Bridge Block and Theme `getUncategorizedPagesByDocumentId` to `getUncategorizedDocumentPagesByDocumentId`
+
+##### Other:
+
+-   Add return type to `moveDocumentPage` and `moveDocumentPageBetweenDocuments`
+
+-   Test coverage for `useDocumentCategories`, `useCategorizedDocumentPages` and `useUncategorizedDocumentPages`
