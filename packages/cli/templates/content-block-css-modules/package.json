@@ -10,17 +10,17 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@frontify/app-bridge": "^3.0.0-beta.66",
+        "@frontify/app-bridge": "^3.0.0-beta.69",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.15.7",
-        "@frontify/frontify-cli": "^5.3.11",
-        "@frontify/guideline-blocks-settings": "^0.26.5",
-        "@types/react": "^18.2.0",
-        "@types/react-dom": "^18.2.1",
-        "eslint": "^8.39.0",
+        "@frontify/frontify-cli": "^5.3.12",
+        "@frontify/guideline-blocks-settings": "^0.26.7",
+        "@types/react": "^18.2.6",
+        "@types/react-dom": "^18.2.4",
+        "eslint": "^8.40.0",
         "prettier": "^2.8.8",
         "typescript": "^5.0.4"
     }
