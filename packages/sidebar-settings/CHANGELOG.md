@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.4.0
+
+### Minor Changes
+
+- [#425](https://github.com/Frontify/brand-sdk/pull/425) [`b78b376`](https://github.com/Frontify/brand-sdk/commit/b78b3764d1c01e1c0cc81542fdea2d813bb62e33) Thanks [@celine-s](https://github.com/celine-s)! - Updated types of sectionHeading settings block
+
 ## 0.3.5
 
 ### Patch Changes
