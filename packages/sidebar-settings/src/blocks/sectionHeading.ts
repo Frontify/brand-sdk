@@ -13,4 +13,10 @@ export type SectionHeadingBlock<AppBridge> = {
      * The list of blocks that make up the section.
      */
     blocks: SettingBlock<AppBridge>[];
-} & BaseBlock<AppBridge>;
+
+    /**
+     * A switch which can toggle the blocks on and off.
+     * @default false
+     */
+    hasSwitch?: boolean;
+} & BaseBlock<AppBridge, boolean>;
