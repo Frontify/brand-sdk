@@ -807,7 +807,7 @@ describe('useGuidelineActions hook', () => {
             ]);
         });
 
-        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 1);
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 2);
 
         expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
 
@@ -860,7 +860,7 @@ describe('useGuidelineActions hook', () => {
             ]);
         });
 
-        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 2, DOCUMENT_CATEGORY_ID_1);
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 3, DOCUMENT_CATEGORY_ID_1);
 
         expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
 

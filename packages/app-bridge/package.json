@@ -39,7 +39,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "immer": "^10.0.2",
+        "immer": "10.0.2",
         "lodash-es": "4.17.21",
         "mitt": "3.0.0",
         "type-fest": "3.9.0"

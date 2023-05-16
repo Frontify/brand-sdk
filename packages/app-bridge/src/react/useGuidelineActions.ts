@@ -516,48 +516,37 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 categoryId ?? undefined,
             );
 
+            const channel = 'AppBridge:GuidelineDocumentPage:Action';
+
             // Emits in `useCategorizedDocumentPages` and `useUncategorizedDocumentPages` hook
             if (documentPage.categoryId === categoryId && documentPage.documentId === documentId) {
-                window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
-                    documentPage: { ...result, sort: position ? position + 1 : result.sort },
+                window.emitter.emit(channel, {
+                    documentPage: { ...result, sort: position ?? result.sort },
                     action: 'move',
                 });
             } else {
-                window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
+                window.emitter.emit(channel, {
                     documentPage: { ...documentPage, categoryId: documentPage.categoryId ?? null },
                     action: 'delete',
                 });
 
-                window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
+                window.emitter.emit(channel, {
                     documentPage: result,
                     action: 'add',
                 });
             }
 
             // Emits in `useDocumentCategories` and `useDocuments` hook
-            if (documentPage.categoryId) {
-                window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
-                    documentPage: { ...documentPage, categoryId: documentPage.categoryId },
-                    action: 'delete',
-                });
-            } else {
-                window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
-                    documentPage: { ...documentPage },
-                    action: 'delete',
-                });
-            }
+            const deleteChannel = documentPage.categoryId
+                ? 'AppBridge:GuidelineDocumentCategory:DocumentPageAction'
+                : 'AppBridge:GuidelineDocument:DocumentPageAction';
 
-            if (result.categoryId) {
-                window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
-                    documentPage: { ...result, categoryId: result.categoryId },
-                    action: 'add',
-                });
-            } else {
-                window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
-                    documentPage: result,
-                    action: 'add',
-                });
-            }
+            const addChannel = result.categoryId
+                ? 'AppBridge:GuidelineDocumentCategory:DocumentPageAction'
+                : 'AppBridge:GuidelineDocument:DocumentPageAction';
+
+            window.emitter.emit(deleteChannel, { documentPage, action: 'delete' });
+            window.emitter.emit(addChannel, { documentPage: result, action: 'add' });
         },
         [appBridge],
     );
