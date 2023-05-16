@@ -21,6 +21,7 @@ const GROUPED_DOCUMENT_ID_1 = 2434;
 const GROUPED_DOCUMENT_ID_2 = 552;
 const GROUPED_DOCUMENT_ID_3 = 1145;
 const GROUPED_DOCUMENT_ID_4 = 32345;
+const DOCUMENT_PAGE_ID = 234;
 
 describe('useDocument', () => {
     afterEach(() => {
@@ -373,8 +374,81 @@ describe('useDocument', () => {
         expect(result.current.getUngroupedDocuments()).toEqual([]);
     });
 
-    it('should update number of categorized page if an uncategorized document page is added', async () => {
-        // TODO: Implement
+    it('should update number of uncategorized pages if an uncategorized document page is added to ungrouped document', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getAllDocuments');
+
+        const { result } = renderHook(() => useDocuments(appBridge));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        expect(result.current.getUngroupedDocuments()).toEqual([
+            DocumentDummy.with(DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            DocumentDummy.with(DOCUMENT_ID_4),
+            DocumentDummy.with(DOCUMENT_ID_5),
+        ]);
+
+        // Trigger a "document page update" event in the specified document
+        window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
+            action: 'add',
+            documentPage: { id: DOCUMENT_PAGE_ID, documentId: DOCUMENT_ID_1 },
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
+
+        expect(result.current.getUngroupedDocuments()).toEqual([
+            DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_1), numberOfUncategorizedDocumentPages: 1 }),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            DocumentDummy.with(DOCUMENT_ID_4),
+            DocumentDummy.with(DOCUMENT_ID_5),
+        ]);
+    });
+
+    it('should update number of uncategorized pages if an uncategorized document page is added to grouped document', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getAllDocuments');
+
+        const { result } = renderHook(() => useDocuments(appBridge));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        expect(result.current.getGroupedDocuments()).toEqual([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
+        ]);
+
+        // Trigger a "document page update" event in the specified document
+        window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
+            action: 'add',
+            documentPage: { id: DOCUMENT_PAGE_ID, documentId: GROUPED_DOCUMENT_ID_1 },
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
+
+        expect(result.current.getGroupedDocuments()).toEqual([
+            DocumentDummy.withFields({
+                ...DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+                numberOfUncategorizedDocumentPages: 1,
+            }),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
+        ]);
     });
 
     it('should not update number of categorized page if a categorized document page is added', async () => {
@@ -389,7 +463,11 @@ describe('useDocument', () => {
         // TODO: Implement
     });
 
-    it('should update number of document category if added', async () => {
+    it('should update number of document page categories if a categorized document page is added to ungrouped document', async () => {
+        // TODO: Implement
+    });
+
+    it('should update number of document page categories if a categorized document page is added to grouped document', async () => {
         // TODO: Implement
     });
 
