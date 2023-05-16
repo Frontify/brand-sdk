@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.26.8
+
+### Patch Changes
+
+- [#426](https://github.com/Frontify/brand-sdk/pull/426) [`7729287`](https://github.com/Frontify/brand-sdk/commit/77292877e2bce6207196b5a8373711db94ab1716) Thanks [@triggertoo](https://github.com/triggertoo)! - Update @frontify/sidebar-settings to get react 18 support
+
+- Updated dependencies [[`b78b376`](https://github.com/Frontify/brand-sdk/commit/b78b3764d1c01e1c0cc81542fdea2d813bb62e33)]:
+  - @frontify/sidebar-settings@0.4.0
+
 ## 0.26.7
 
 ### Patch Changes
