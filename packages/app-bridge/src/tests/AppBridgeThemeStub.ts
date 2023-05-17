@@ -3,10 +3,6 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 
-import { EmitterEvents } from '../types/Emitter';
-import { AppBridgeTheme } from '../AppBridgeTheme';
-import { mergeDeep } from '../utilities';
-
 import {
     BrandportalLinkDummy,
     ColorDummy,
@@ -22,6 +18,10 @@ import {
     DocumentTargetsDummy,
     UpdateTargetsDummy,
 } from '.';
+import { AppBridgeTheme } from '../AppBridgeTheme';
+
+import { EmitterEvents } from '../types/Emitter';
+import { mergeDeep } from '../utilities';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 const BRAND_ID = 234551;
@@ -79,6 +79,7 @@ export const getAppBridgeThemeStub = ({
     let localPageTemplateSettings = pageTemplateSettings;
 
     return {
+        dispatch: stub<Parameters<AppBridgeTheme['dispatch']>>(),
         getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
         getProjectId: stub<Parameters<AppBridgeTheme['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeTheme['getEditorState']>>().returns(editorState),

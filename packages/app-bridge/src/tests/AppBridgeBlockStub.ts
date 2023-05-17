@@ -4,14 +4,14 @@ import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { Template, User } from '../types';
-import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
-import { AssetDummy } from './AssetDummy';
-import { UserDummy } from './UserDummy';
-import { ColorPaletteDummy } from './ColorPaletteDummy';
-import { ColorDummy } from './ColorDummy';
-import { BulkDownloadDummy } from './BulkDownloadDummy';
+import { EmitterEvents } from '../types/Emitter';
 import { PrivacySettings } from '../types/PrivacySettings';
+import { AssetDummy } from './AssetDummy';
+import { BulkDownloadDummy } from './BulkDownloadDummy';
+import { ColorDummy } from './ColorDummy';
+import { ColorPaletteDummy } from './ColorPaletteDummy';
+import { UserDummy } from './UserDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -57,6 +57,7 @@ export const getAppBridgeBlockStub = ({
     const addedAssetIds: Record<string, number[]> = {};
 
     return {
+        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>(),
         getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
         getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),

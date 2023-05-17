@@ -8,6 +8,7 @@ export * from './ColorPalette';
 export * from './CoverPage';
 export * from './CrossDocumentMessage';
 export * from './CrossDocumentMessageResponse';
+export * from './DispatchAction';
 export * from './Document';
 export * from './DocumentBlockAsset';
 export * from './DocumentCategory';
