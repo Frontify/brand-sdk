@@ -39,6 +39,9 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@apollo/client": "^3.7.14",
+        "@frontify/frontify-authenticator": "^2.0.0",
+        "graphql": "^16.6.0",
         "lodash-es": "4.17.21",
         "mitt": "3.0.0",
         "type-fest": "3.9.0"
