@@ -124,7 +124,7 @@ type DocumentLinkRequest = {
     title: string;
     linkUrl: string;
     linkSettings: DocumentLinkSettings;
-    documentGroupId?: number;
+    documentGroupId?: Nullable<number>;
 };
 
 type DocumentLibraryRequest = {
@@ -134,13 +134,13 @@ type DocumentLibraryRequest = {
     title: string;
     heading?: string;
     subheading?: string;
-    documentGroupId?: number;
+    documentGroupId?: Nullable<number>;
 };
 
 type DocumentStandardRequest = {
     id: number;
     title: string;
-    documentGroupId?: number;
+    documentGroupId?: Nullable<number>;
 };
 
 export type DocumentStandardCreate = Omit<DocumentStandardRequest, 'id'>;
