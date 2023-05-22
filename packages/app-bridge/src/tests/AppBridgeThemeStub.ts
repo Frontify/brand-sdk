@@ -102,9 +102,9 @@ export const getAppBridgeThemeStub = ({
             DocumentDummy.with(DOCUMENT_ID_5),
         ]),
         getDocumentGroups: stub<Parameters<AppBridgeTheme['getDocumentGroups']>>().resolves([
-            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, [DOCUMENT_ID_1, DOCUMENT_ID_2, DOCUMENT_ID_3]),
-            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, []),
-            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, [DOCUMENT_ID_4, DOCUMENT_ID_5]),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, 3),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, 0),
+            DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, 2),
         ]),
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeTheme['getDocumentPagesByDocumentId']>>().resolves([
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
@@ -199,7 +199,7 @@ export const getAppBridgeThemeStub = ({
             DocumentPageDummy.with(1),
         ),
         createDocumentGroup: stub<Parameters<AppBridgeTheme['createDocumentGroup']>>().resolves(
-            DocumentGroupDummy.with(1, []),
+            DocumentGroupDummy.with(1, 0),
         ),
         createDocumentCategory: stub<Parameters<AppBridgeTheme['createDocumentCategory']>>().resolves(
             DocumentCategoryDummy.with(1),
@@ -214,7 +214,7 @@ export const getAppBridgeThemeStub = ({
             DocumentPageDummy.with(1),
         ),
         updateDocumentGroup: stub<Parameters<AppBridgeTheme['updateDocumentGroup']>>().resolves(
-            DocumentGroupDummy.with(1, []),
+            DocumentGroupDummy.with(1, 0),
         ),
         updateDocumentCategory: stub<Parameters<AppBridgeTheme['updateDocumentCategory']>>().resolves(
             DocumentCategoryDummy.with(1),
@@ -258,7 +258,7 @@ export const getAppBridgeThemeStub = ({
             DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1),
         ),
         moveDocumentGroup: stub<Parameters<AppBridgeTheme['moveDocumentGroup']>>().resolves(
-            DocumentGroupDummy.with(DOCUMENT_CATEGORY_ID_1, []),
+            DocumentGroupDummy.with(DOCUMENT_CATEGORY_ID_1, 0),
         ),
         moveDocumentPage: stub<Parameters<AppBridgeTheme['moveDocumentPage']>>().resolves(
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),

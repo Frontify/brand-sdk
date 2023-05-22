@@ -336,7 +336,7 @@ describe('useDocumentCategories', () => {
             DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
         ]);
 
-        // Trigger a "document page update" event in the specified document
+        // Trigger a "document page add" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'add',
             documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_2 },
@@ -370,7 +370,7 @@ describe('useDocumentCategories', () => {
             DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
         ]);
 
-        // Trigger a "document page update" event in the specified document
+        // Trigger a "document page add" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'add',
             documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_4 },
@@ -404,7 +404,7 @@ describe('useDocumentCategories', () => {
             DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
         ]);
 
-        // Trigger a "document page update" event in the specified document
+        // Trigger a "document page delete" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'delete',
             documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_3 },
@@ -438,7 +438,7 @@ describe('useDocumentCategories', () => {
             DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
         ]);
 
-        // Trigger a "document page update" event in the specified document
+        // Trigger a "document page delete" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'delete',
             documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_4 },

@@ -55,10 +55,10 @@ export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
 
 type DocumentPageRequest = {
     id: number;
-    title?: string;
-    documentId?: number;
-    linkUrl?: string | null;
-    categoryId?: number | null;
+    title: Nullable<string>;
+    documentId: number;
+    linkUrl?: Nullable<string>;
+    categoryId?: Nullable<number>;
     visibility?: DocumentPageVisibility;
 };
 
@@ -68,6 +68,8 @@ export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
     'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
 >;
+
+export type DocumentPageDelete = Pick<DocumentPageRequest, 'id' | 'documentId' | 'categoryId'>;
 
 export type DocumentPageDuplicateApi = {
     page: {

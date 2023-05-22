@@ -45,6 +45,7 @@ export const useCategorizedDocumentPages = (
             for (const id of event.payload.pageIds) {
                 if (documentPages.has(id)) {
                     refetch();
+                    break;
                 }
             }
         };

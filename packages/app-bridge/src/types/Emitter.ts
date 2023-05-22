@@ -81,7 +81,7 @@ export type EmitterEvents = {
               action: 'add' | 'update' | 'move';
           }
         | {
-              documentPage: { id: number; documentId: number; categoryId: Nullable<number> };
+              documentPage: { id: number; documentId: number; categoryId?: Nullable<number> };
               action: 'delete';
           };
 
@@ -110,15 +110,10 @@ export type EmitterEvents = {
         action: 'add' | 'delete';
     };
 
-    'AppBridge:GuidelineDocumentGroup:DocumentAction':
-        | {
-              document: { id: number; documentGroupId: number };
-              action: 'add' | 'update';
-          }
-        | {
-              document: { id: number };
-              action: 'delete';
-          };
+    'AppBridge:GuidelineDocumentGroup:DocumentAction': {
+        document: { id: number; documentGroupId: number };
+        action: 'add' | 'delete';
+    };
 
     'AppBridge:GuidelineDocumentPageTargets:Action': {
         action: 'update';

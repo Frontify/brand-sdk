@@ -145,6 +145,7 @@ type DocumentStandardRequest = {
 
 export type DocumentStandardCreate = Omit<DocumentStandardRequest, 'id'>;
 export type DocumentStandardUpdate = RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>;
+export type DocumentStandardDelete = Pick<DocumentStandardRequest, 'documentGroupId' | 'id'>;
 
 export type DocumentLibraryCreate = SetOptional<
     Omit<DocumentLibraryRequest, 'id'>,
@@ -154,9 +155,11 @@ export type DocumentLibraryUpdate = RequireAtLeastOne<
     DocumentLibraryRequest,
     'documentGroupId' | 'heading' | 'mode' | 'settings' | 'subheading' | 'title'
 >;
+export type DocumentLibraryDelete = Pick<DocumentLibraryRequest, 'id' | 'documentGroupId'>;
 
 export type DocumentLinkCreate = Omit<DocumentLinkRequest, 'id'>;
 export type DocumentLinkUpdate = RequireAtLeastOne<
     DocumentLinkRequest,
     'title' | 'linkUrl' | 'linkSettings' | 'documentGroupId'
 >;
+export type DocumentLinkDelete = Pick<DocumentLinkRequest, 'id' | 'documentGroupId'>;

@@ -392,7 +392,7 @@ describe('useDocument', () => {
             DocumentDummy.with(DOCUMENT_ID_5),
         ]);
 
-        // Trigger a "document page update" event in the specified document
+        // Trigger a "document page add" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
             action: 'add',
             documentPage: { id: DOCUMENT_PAGE_ID, documentId: DOCUMENT_ID_1 },
