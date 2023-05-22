@@ -5,12 +5,12 @@ import { Token, authorize } from '@frontify/frontify-authenticator';
 import {
     ApolloClient,
     ApolloQueryResult,
-    DocumentNode,
     FetchResult,
     InMemoryCache,
     NormalizedCacheObject,
     OperationVariables,
     createHttpLink,
+    gql,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
@@ -44,7 +44,7 @@ interface PlatformAppBridge {
      * with seamless authentication
      * @param query
      */
-    get<T>(query: DocumentNode): Promise<ApolloQueryResult<T>>;
+    get<T>(query: string): Promise<ApolloQueryResult<T>>;
 
     /**
      * Run a mutation against the Public Api
@@ -52,7 +52,7 @@ interface PlatformAppBridge {
      * @param mutation
      * @param variables
      */
-    mutate<T>(mutation: DocumentNode, variables: OperationVariables): Promise<FetchResult<T>>;
+    mutate<T>(mutation: string, variables: OperationVariables): Promise<FetchResult<T>>;
 
     /**
      * Get information about where the app is currently displayed, that depends on the type of the feature
@@ -92,15 +92,21 @@ export class AppBridgePlatformApp implements PlatformAppBridge {
         return Object.fromEntries(new URLSearchParams(window.location.search)) as unknown as AppContextProps;
     }
 
-    public async get<T>(query: DocumentNode) {
-        return await this.client?.query<T>({ query });
+    public async get<T>(query: string) {
+        const queryNode = gql`
+            ${query}
+        `;
+        return await this.client?.query<T>({ query: queryNode });
     }
 
-    public async mutate<T>(mutation: DocumentNode, variables: OperationVariables) {
+    public async mutate<T>(mutation: string, variables: OperationVariables) {
+        const mutationQuery = gql`
+            ${mutation}
+        `;
         const { mutate } = this.client;
 
         return await mutate<T>({
-            mutation,
+            mutation: mutationQuery,
             variables,
         });
     }
