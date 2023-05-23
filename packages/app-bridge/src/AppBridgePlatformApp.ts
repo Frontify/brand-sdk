@@ -14,29 +14,42 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-// Define all the different screens with their props
+// Define all the different App types with their props
 type AppContextProps =
     | {
-          assetId: number;
-          projectId: number;
-          screen: 'ASSET_ACTION';
+          assetId: string;
+          projectId: string; // either library project
+          type: 'ASSET_ACTION';
+          clientId: string;
+          scopes: string; // JSON stringify
+          domain: string;
+          directory: string; // JSON stringify
       }
     | {
           downloadUrl: string;
           projectId: number;
-          screen: 'DOWNLOAD_ACTION';
+          type: 'ASSET_CREATION';
+          clientId: string;
       };
 
 // Define all different commands with the needed parameters
 type CommandProps =
     | {
-          type: 'OPEN_DRPODOWN';
+          type: 'OPEN_DROPDOWN';
           params: { id: number; value: string };
       }
     | {
           type: 'CLOSE_DROPDOWN';
           params: { id: number; type: string };
       };
+
+type oAuthClient = {
+    clientId?: string;
+    domain?: string;
+    scopes?: string;
+};
+
+type OAuthClientEntries = Array<[keyof oAuthClient, oAuthClient[keyof oAuthClient]]>;
 
 interface PlatformAppBridge {
     /**
@@ -80,7 +93,7 @@ export class AppBridgePlatformApp implements PlatformAppBridge {
 
     constructor() {
         // TODO: Impl passing of token
-        this.initialize().catch(() => console.warn('error'));
+        this.initialize().catch((error) => console.warn('error', error));
     }
 
     public command(command: CommandProps) {
@@ -116,14 +129,19 @@ export class AppBridgePlatformApp implements PlatformAppBridge {
         const token = localStorage.getItem('token');
 
         if (!token) {
-            // Workaround: lets query the token once
-            this.token = await authorize({
-                domain: 'dev.frontify.test',
-                clientId: 'client-bakhbfmtbzu4aw36',
-                scopes: ['basic:read', 'basic:write'],
-            });
+            const queryStrings = Object.fromEntries(
+                new URLSearchParams(window.location.search) as unknown as OAuthClientEntries,
+            ) as oAuthClient;
 
-            localStorage.setItem('token', JSON.stringify(this.token));
+            if (!!queryStrings.clientId && !!queryStrings.domain && !!queryStrings.scopes) {
+                // Workaround: lets query the token once
+                this.token = await authorize({
+                    domain: queryStrings.domain,
+                    clientId: queryStrings.clientId,
+                    scopes: JSON.parse(queryStrings.scopes),
+                });
+                localStorage.setItem('token', JSON.stringify(this.token));
+            }
         } else {
             this.token = JSON.parse(token);
         }
