@@ -9,7 +9,6 @@ import type {
     CoverPageCreate,
     CoverPageUpdate,
     CoverPageUpdateLegacy,
-    Document,
     DocumentCategory,
     DocumentCategoryCreate,
     DocumentCategoryDelete,

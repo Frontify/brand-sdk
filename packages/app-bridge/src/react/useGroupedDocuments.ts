@@ -6,7 +6,6 @@ import { produce } from 'immer';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document, EmitterEvents } from '../types';
-import { moveInArray } from '../utilities';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
