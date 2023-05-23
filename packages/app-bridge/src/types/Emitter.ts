@@ -40,10 +40,10 @@ export type EmitterEvents = {
     'AppBridge:GuidelineDocument:Action':
         | {
               document: Document;
-              action: 'add' | 'update';
+              action: 'add' | 'update' | 'move';
           }
         | {
-              document: { id: number };
+              document: { id: number; documentGroupId?: Nullable<number> };
               action: 'delete';
           };
 

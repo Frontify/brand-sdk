@@ -6,6 +6,7 @@ import { produce } from 'immer';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { Document, EmitterEvents } from '../types';
+import { moveInArray } from '../utilities';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
@@ -19,13 +20,16 @@ type Options = {
 
 const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options: Options = { enabled: true }) => {
+export const useUngroupedDocuments = (
+    appBridge: AppBridgeBlock | AppBridgeTheme,
+    options: Options = { enabled: true },
+) => {
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
         setIsLoading(true);
-        setDocuments(await fetchDocuments(appBridge));
+        setDocuments(await fetchUngroupedDocuments(appBridge));
         setIsLoading(false);
     }, [appBridge]);
 
@@ -64,49 +68,37 @@ export const useDocuments = (appBridge: AppBridgeBlock | AppBridgeTheme, options
             );
         };
 
-        window.emitter.on('AppBridge:GuidelineDocument:Action', refetch);
+        const handler = ({ action, document }: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
+            if (
+                ((action === 'update' || action === 'move') && documents.has(document.id)) ||
+                (action === 'add' && !document.documentGroupId)
+            ) {
+                refetch();
+            } else if (action === 'delete' && documents.has(document.id)) {
+                setDocuments(
+                    produce((draft) => {
+                        if (action === 'delete') {
+                            draft.delete(document.id);
+                        }
+                    }),
+                );
+            }
+        };
+
+        window.emitter.on('AppBridge:GuidelineDocument:Action', handler);
         window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocument:Action', refetch);
+            window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
         };
     }, [documents, options.enabled, refetch]);
 
-    /**
-     * returns list of documents that do not belong to any document group
-     */
-    const getUngroupedDocuments = useCallback(
-        (options: { sortBy?: (a: Document, b: Document) => number } = { sortBy: sortDocuments }) =>
-            Array.from(documents.values())
-                .filter((document) => !document.documentGroupId)
-                .sort(options.sortBy),
-        [documents],
-    );
-
-    /**
-     * returns list of documents of specific group
-     * if documentGroupId is provided.
-     * Otherwise, it returns documents for all groups
-     */
-    const getGroupedDocuments = useCallback(
-        (
-            documentGroupId?: number,
-            options: { sortBy?: (a: Document, b: Document) => number } = { sortBy: sortDocuments },
-        ) =>
-            Array.from(documents.values())
-                .filter((document) =>
-                    documentGroupId ? document.documentGroupId === documentGroupId : document.documentGroupId,
-                )
-                .sort(options.sortBy),
-        [documents],
-    );
-
-    return { documents, getUngroupedDocuments, getGroupedDocuments, refetch, isLoading };
+    return { documents: Array.from(documents.values()), refetch, isLoading };
 };
 
 const addDocumentPage = (documents: Map<number, Document>, documentPageToAdd: DocumentPageEvent['documentPage']) => {
@@ -170,7 +162,7 @@ const actionHandlers = {
     default: (documents: Map<number, Document>) => documents,
 };
 
-const fetchDocuments = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
-    const documents = await appBridge.getAllDocuments();
-    return new Map(documents.map((document) => [document.id, document]));
+const fetchUngroupedDocuments = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
+    const documents = await appBridge.getUngroupedDocuments();
+    return new Map(documents.sort(sortDocuments).map((document) => [document.id, document]));
 };

@@ -64,7 +64,7 @@ export type DocumentApi = Simplify<
         subheading: Nullable<string>;
         description: Nullable<string>;
         logo: Nullable<string>;
-        sort: Nullable<number>;
+        sort: number;
         lazy: Nullable<boolean>;
         link_settings: Nullable<DocumentLinkSettingsApi>;
         view_count: Nullable<number>;

@@ -31,6 +31,7 @@ import type {
     DocumentStandardCreate,
     DocumentStandardDelete,
     DocumentStandardUpdate,
+    EmitterEvents,
 } from '../types';
 
 export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
@@ -469,27 +470,24 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const moveDocument = useCallback(
         async (document: { id: number; documentGroupId?: Nullable<number> }, position: number, newGroupId?: number) => {
-            await appBridge.moveDocument(document.id, position, newGroupId);
+            const result = await appBridge.moveDocument(document.id, position, newGroupId);
 
-            window.emitter.emit('AppBridge:GuidelineDocument:Action', {
-                document: {
-                    id: document.id,
-                    sort: position,
-                    documentGroupId: newGroupId,
-                } as Document,
-                action: 'update',
-            });
+            const channel: keyof EmitterEvents = 'AppBridge:GuidelineDocument:Action';
 
-            if (document.documentGroupId !== newGroupId) {
-                if (document.documentGroupId) {
-                    window.emitter.emit('AppBridge:GuidelineDocumentGroup:DocumentAction', {
-                        document: { id: document.id, documentGroupId: document.documentGroupId },
-                        action: 'delete',
-                    });
-                }
+            // Emits in `useDocumentGroups` hook
+            if (document.documentGroupId === newGroupId) {
+                window.emitter.emit(channel, {
+                    document: { ...result, sort: position },
+                    action: 'move',
+                });
+            } else {
+                window.emitter.emit(channel, {
+                    document,
+                    action: 'delete',
+                });
 
-                window.emitter.emit('AppBridge:GuidelineDocumentGroup:DocumentAction', {
-                    document: { id: document.id, documentGroupId: newGroupId as number },
+                window.emitter.emit(channel, {
+                    document: result,
                     action: 'add',
                 });
             }
@@ -535,9 +533,9 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
                 categoryId ?? undefined,
             );
 
-            const channel = 'AppBridge:GuidelineDocumentPage:Action';
+            const channel: keyof EmitterEvents = 'AppBridge:GuidelineDocumentPage:Action';
 
-            // Emits in `useCategorizedDocumentPages` and `useUncategorizedDocumentPages` hook
+            // Emits in `useCategorizedDocumentPages` and `useUncategorizedDocumentPages` hooks
             if (documentPage.categoryId === categoryId && documentPage.documentId === documentId) {
                 window.emitter.emit(channel, {
                     documentPage: { ...result, sort: position ?? result.sort },

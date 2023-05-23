@@ -101,6 +101,12 @@ export const getAppBridgeThemeStub = ({
             DocumentDummy.with(DOCUMENT_ID_4),
             DocumentDummy.with(DOCUMENT_ID_5),
         ]),
+        getDocumentsByDocumentGroupId: stub<Parameters<AppBridgeTheme['getDocumentsByDocumentGroupId']>>().resolves([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
+        ]),
         getDocumentGroups: stub<Parameters<AppBridgeTheme['getDocumentGroups']>>().resolves([
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, 3),
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, 0),

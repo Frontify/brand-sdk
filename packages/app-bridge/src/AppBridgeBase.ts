@@ -25,6 +25,10 @@ export interface AppBridgeBase {
 
     getAllDocuments(): Promise<Document[]>;
 
+    getUngroupedDocuments(): Promise<Document[]>;
+
+    getDocumentsByDocumentGroupId(documentGroupId: number): Promise<Document[]>;
+
     getDocumentGroups(): Promise<DocumentGroup[]>;
 
     getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
