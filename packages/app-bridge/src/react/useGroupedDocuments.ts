@@ -96,7 +96,7 @@ export const useGroupedDocuments = (
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
         };
-    }, [documents, options.enabled, refetch]);
+    }, [documentGroupId, documents, options.enabled, refetch]);
 
     return { documents: Array.from(documents.values()), refetch, isLoading };
 };
