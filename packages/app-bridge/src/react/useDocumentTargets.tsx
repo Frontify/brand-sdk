@@ -43,9 +43,9 @@ export const useDocumentTargets = (
             }
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentTargetsAction', handleTargetEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', handleTargetEventUpdates);
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentTargetsAction', handleTargetEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', handleTargetEventUpdates);
         };
     }, [id]);
 

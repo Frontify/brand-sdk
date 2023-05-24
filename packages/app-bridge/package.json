@@ -39,9 +39,10 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "lodash-es": "4.17.21",
-        "mitt": "3.0.0",
-        "type-fest": "3.9.0"
+        "immer": "^10.0.2",
+        "lodash-es": "^4.17.21",
+        "mitt": "^3.0.0",
+        "type-fest": "^3.10.0"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "0.15.7",

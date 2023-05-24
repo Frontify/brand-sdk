@@ -4,12 +4,9 @@ import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentGroup, EmitterAction } from '../types';
+import type { DocumentGroup, EmitterEvents } from '../types';
 
-type DocumentEvent = {
-    action: EmitterAction;
-    document: { id: number; documentGroupId?: number | null };
-};
+type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
 
 type Options = {
     /**
@@ -25,131 +22,75 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
-        if (options.enabled) {
-            setIsLoading(true);
-            setDocumentGroups(await fetchDocumentGroups(appBridge));
-            setIsLoading(false);
-        }
-    }, [appBridge, options.enabled]);
+        setIsLoading(true);
+        setDocumentGroups(await fetchDocumentGroups(appBridge));
+        setIsLoading(false);
+    }, [appBridge]);
 
     useEffect(() => {
-        refetch();
-
-        window.emitter.on('AppBridge:GuidelineDocumentGroupAction', refetch);
-
-        return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupAction', refetch);
-        };
-    }, [refetch]);
+        if (options.enabled) {
+            refetch();
+        }
+    }, [options.enabled, refetch]);
 
     useEffect(() => {
         const handleDocumentEventUpdates = (event: DocumentEvent) => {
             setDocumentGroups((previousState) => {
-                const action: 'add-document' | 'delete-document' | 'update-document' = `${event.action}-document`;
-
+                const action = `${event.action}-document` as const;
                 const handler = actionHandlers[action] || actionHandlers.default;
-
                 return handler(previousState, event.document);
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentGroupDocumentAction', handleDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
         };
-    }, []);
+    }, [refetch]);
 
-    /**
-     * Returns a sorted list of document groups.
-     *
-     * The returned list is sorted based on the `sortBy` option provided. By default, it uses the `sort` property to sort the list.
-     *
-     * @param options An object with the following properties:
-     *   - sortBy: (optional) A function used to sort the list of document groups. It should take two document group objects as arguments and return a value that represents their sort order.
-     *
-     * @returns An array of sorted document groups.
-     */
-    const getSortedDocumentGroups = useCallback(
-        (
-            options: { sortBy?: (a: DocumentGroup, b: DocumentGroup) => number } = {
-                sortBy: sortDocumentGroups,
-            },
-        ) => Array.from(documentGroups.values()).sort(options.sortBy),
-        [documentGroups],
-    );
-
-    return { documentGroups, getSortedDocumentGroups, refetch, isLoading };
+    return { documentGroups: Array.from(documentGroups.values()), refetch, isLoading };
 };
 
-const getGroupWithDocument = (groups: Map<number, DocumentGroup>, documentId: number) =>
-    Array.from(groups.values()).find((group) => group.documents?.includes(documentId));
-
-const addDocument = (groups: Map<number, DocumentGroup>, documentToAdd: DocumentEvent['document']) => {
-    const group = groups.get(documentToAdd.documentGroupId as number);
-
-    if (!group) {
-        console.error(
-            `Can not add document to document group, document group with id ${documentToAdd.documentGroupId} does not exist`,
-        );
-        return groups;
+const addDocument = (documentGroups: Map<number, DocumentGroup>, documentToAdd: DocumentEvent['document']) => {
+    if (!documentToAdd.documentGroupId) {
+        return documentGroups;
     }
 
-    group.documents = [documentToAdd.id, ...group.documents];
+    const documentCategory = documentGroups.get(documentToAdd.documentGroupId);
+    if (!documentCategory) {
+        return documentGroups;
+    }
 
-    return new Map(groups.set(group.id, group));
+    documentCategory.numberOfDocuments += 1;
+
+    return documentGroups.set(documentCategory.id, documentCategory);
 };
 
-const updateDocument = (groups: Map<number, DocumentGroup>, document: DocumentEvent['document']) => {
-    const currentGroup = getGroupWithDocument(groups, document.id);
-    let updatedGroups = new Map(groups);
-
-    const shouldAddDocumentToGroup =
-        !currentGroup && document.documentGroupId !== null && document.documentGroupId !== undefined;
-
-    const documentMovedToDifferentGroup =
-        currentGroup &&
-        document.documentGroupId !== null &&
-        document.documentGroupId !== undefined &&
-        currentGroup.id !== document.documentGroupId;
-
-    const documentMovedToUngrouped =
-        currentGroup && (document.documentGroupId === null || document.documentGroupId === undefined);
-
-    if (documentMovedToDifferentGroup || documentMovedToUngrouped) {
-        updatedGroups = deleteDocument(groups, document);
+const deleteDocument = (documentGroups: Map<number, DocumentGroup>, documentToDelete: DocumentEvent['document']) => {
+    if (!documentToDelete.documentGroupId) {
+        return documentGroups;
     }
 
-    if (documentMovedToDifferentGroup || shouldAddDocumentToGroup) {
-        updatedGroups = addDocument(groups, document);
+    const documentCategory = documentGroups.get(documentToDelete.documentGroupId);
+    if (!documentCategory) {
+        return documentGroups;
     }
 
-    return updatedGroups;
-};
+    documentCategory.numberOfDocuments -= 1;
 
-const deleteDocument = (groups: Map<number, DocumentGroup>, documentToDelete: DocumentEvent['document']) => {
-    const group = getGroupWithDocument(groups, documentToDelete.id);
-
-    if (!group) {
-        console.error(
-            `Can not delete document from document group, document group that has document with id ${documentToDelete.id} does not exist`,
-        );
-        return groups;
-    }
-
-    group.documents = group.documents.filter((documentId) => documentId !== documentToDelete.id);
-
-    return new Map(groups.set(group.id, group));
+    return documentGroups.set(documentCategory.id, documentCategory);
 };
 
 const actionHandlers = {
     'add-document': addDocument,
-    'update-document': updateDocument,
     'delete-document': deleteDocument,
     default: (groups: Map<number, DocumentGroup>) => groups,
 };
 
 const fetchDocumentGroups = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
     const documentGroups = await appBridge.getDocumentGroups();
-    return new Map(documentGroups.map((group) => [group.id, group]));
+    return new Map(documentGroups.sort(sortDocumentGroups).map((group) => [group.id, group]));
 };
