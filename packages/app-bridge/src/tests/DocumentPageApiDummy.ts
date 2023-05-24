@@ -33,6 +33,13 @@ export class DocumentPageApiDummy {
             permanent_link: `/r/document-page-${id}`,
         };
     }
+
+    static withFields(fields: Partial<DocumentPageApi> & { id: number }): DocumentPageApi {
+        return {
+            ...DocumentPageApiDummy.with(fields.id),
+            ...fields,
+        } as DocumentPageApi;
+    }
 }
 
 export class DocumentPageDuplicateApiDummy {

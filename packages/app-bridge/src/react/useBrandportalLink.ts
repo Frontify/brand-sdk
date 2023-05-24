@@ -56,10 +56,10 @@ export const useBrandportalLink = (
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineBrandportalLinkAction', updateBrandportalLinkFromEvent);
+        window.emitter.on('AppBridge:GuidelineBrandportalLink:Action', updateBrandportalLinkFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineBrandportalLinkAction', updateBrandportalLinkFromEvent);
+            window.emitter.off('AppBridge:GuidelineBrandportalLink:Action', updateBrandportalLinkFromEvent);
         };
     }, [appBridge]);
 
