@@ -7,8 +7,6 @@ import type { DocumentPage, EmitterEvents } from '../types';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 
-import { moveInArray } from '../utilities';
-
 import { DocumentPageTargetEvent } from './useDocumentPageTargets';
 
 type Options = {
@@ -62,20 +60,17 @@ export const useCategorizedDocumentPages = (
                         if (action === 'move') {
                             const documentPagesAsArray: DocumentPage[] = [...draft.values()];
 
-                            const originalIndex = documentPagesAsArray.findIndex((dP) => dP.id === documentPage.id);
-                            if (originalIndex === -1) {
-                                return console.log('originalIndex not found');
-                            }
-
-                            const updatedDocumentPages = moveInArray(
-                                documentPagesAsArray,
-                                originalIndex,
-                                documentPage.sort - 1,
-                            );
-
                             draft.clear();
-                            for (const documentPage of updatedDocumentPages) {
-                                draft.set(documentPage.id, documentPage);
+
+                            for (const currentDocumentPage of documentPagesAsArray) {
+                                if (currentDocumentPage.id === documentPage.id) {
+                                    continue;
+                                }
+                                if (draft.size === documentPage.sort - 1) {
+                                    draft.set(documentPage.id, documentPage);
+                                }
+
+                                draft.set(currentDocumentPage.id, currentDocumentPage);
                             }
                         } else if (action === 'delete') {
                             draft.delete(documentPage.id);
