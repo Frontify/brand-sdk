@@ -7,7 +7,7 @@ import { DocumentCategoryApiDummy } from './DocumentCategoryApiDummy';
 
 export class DocumentCategoryDummy {
     static with(id: number): DocumentCategory {
-        return { ...convertObjectCase(DocumentCategoryApiDummy.with(id), 'camel') };
+        return convertObjectCase(DocumentCategoryApiDummy.with(id), 'camel');
     }
 
     static withDocumentIdAndNumberOfDocumentPages(
@@ -15,11 +15,9 @@ export class DocumentCategoryDummy {
         documentId: number,
         numberOfDocumentPages: number,
     ): DocumentCategory {
-        return {
-            ...convertObjectCase(
-                DocumentCategoryApiDummy.withDocumentIdAndNumberOfDocumentPages(id, documentId, numberOfDocumentPages),
-                'camel',
-            ),
-        };
+        return convertObjectCase(
+            DocumentCategoryApiDummy.withDocumentIdAndNumberOfDocumentPages(id, documentId, numberOfDocumentPages),
+            'camel',
+        );
     }
 }

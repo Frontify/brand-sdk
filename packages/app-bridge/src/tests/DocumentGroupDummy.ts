@@ -7,6 +7,6 @@ import { DocumentGroupApiDummy } from './DocumentGroupApiDummy';
 
 export class DocumentGroupDummy {
     static with(id: number, numberOfDocuments = 0): DocumentGroup {
-        return { ...convertObjectCase(DocumentGroupApiDummy.with(id), 'camel'), numberOfDocuments };
+        return convertObjectCase(DocumentGroupApiDummy.with(id, numberOfDocuments), 'camel');
     }
 }
