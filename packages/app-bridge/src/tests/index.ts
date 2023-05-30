@@ -32,6 +32,7 @@ export * from './TargetsApiDummy';
 export * from './TargetsDummy';
 export * from './TemplateApiLegacyDummy';
 export * from './TemplateLegacyDummy';
+export * from './TemplateDummy';
 export * from './UserApiDummy';
 export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
