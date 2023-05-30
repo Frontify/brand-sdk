@@ -34,7 +34,7 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     getBlockTemplates(): Promise<Record<string, Template[]>>;
 
-    addTemplateIdsToBlockTemplateKey(key: string, templateIds: number[]): Promise<void>;
+    addTemplateIdsToBlockTemplateKey(key: string, templateIds: number[]): Promise<Record<string, Template[]>>;
 
     deleteTemplateIdsFromBlockTemplateKey(key: string, templateIds: number[]): Promise<void>;
 
