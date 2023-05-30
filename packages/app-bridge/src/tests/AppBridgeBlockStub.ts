@@ -3,7 +3,7 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Template, User } from '../types';
+import { TemplateLegacy, User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
@@ -153,7 +153,7 @@ export const getAppBridgeBlockStub = ({
         openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
         createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
         deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
-        getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as Template),
+        getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         openAssetViewer: stub<Parameters<AppBridgeBlock['openAssetViewer']>>(),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),

@@ -1,32 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export type TemplateApi = {
-    asset_created: string;
-    asset_modified: string;
-    categories: unknown[];
-    description: string;
-    height: number;
-    id: number;
-    name: string;
-    preview: string;
-    project: number;
-    project_name: string;
-    project_type: string;
-    published: number;
-    screen_id: number;
-    sector: string;
-    token: string;
-    unit: string;
-    width: number;
-};
-
 export type Template = {
     id: number;
-    title: string;
-    description: Nullable<string>;
-    previewUrl: string;
+    name: string;
+    description: string;
     projectId: number;
-    height: number;
+    previewUrl: string;
+    pages: TemplatePage[];
+};
+
+export type TemplatePage = {
+    preview_url: string;
     width: number;
-    published: boolean;
+    height: number;
 };

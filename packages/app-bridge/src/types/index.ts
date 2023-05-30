@@ -26,6 +26,7 @@ export * from './PrivacySettings';
 export * from './PostExternalAssetParams';
 export * from './Project';
 export * from './Targets';
+export * from './TemplateLegacy';
 export * from './Template';
 export * from './Terrific';
 export * from './Topic';

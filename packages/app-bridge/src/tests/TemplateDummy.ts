@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Template } from '../types';
+import type { TemplateLegacy } from '../types';
 
 export class TemplateDummy {
-    static with(id: number): Template {
+    static with(id: number): TemplateLegacy {
         return {
             id,
             title: 'A template',
