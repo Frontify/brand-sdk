@@ -2,7 +2,7 @@
 
 import type { TemplateApiLegacy } from '../types';
 
-export class TemplateApiDummy {
+export class TemplateApiLegacyDummy {
     static with(id: number): TemplateApiLegacy {
         return {
             asset_created: '2022-04-06',

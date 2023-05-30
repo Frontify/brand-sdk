@@ -10,7 +10,7 @@ export type Template = {
 };
 
 export type TemplatePage = {
-    preview_url: string;
+    preview_url: string; // TODO: fix name inconsistency (Template.previewUrl)
     width: number;
     height: number;
 };
