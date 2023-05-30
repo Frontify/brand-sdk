@@ -10,6 +10,7 @@ export * from './CrossDocumentMessage';
 export * from './CrossDocumentMessageResponse';
 export * from './Document';
 export * from './DocumentBlockAsset';
+export * from './DocumentBlockTemplate';
 export * from './DocumentCategory';
 export * from './DocumentGroup';
 export * from './DocumentPage';
