@@ -32,7 +32,7 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     openAssetViewer(token: string): void;
 
-    getBlockTemplates(): Promise<Record<string, Template>>;
+    getBlockTemplates(): Promise<Record<string, Template[]>>;
 
     addTemplateIdsToBlockTemplateKey(key: string, templateIds: number[]): Promise<void>;
 
