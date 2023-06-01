@@ -58,27 +58,7 @@ export const useUncategorizedDocumentPages = (
                 setDocumentPages(
                     produce((draft) => {
                         if (action === 'move') {
-                            const documentPagesAsArray: DocumentPage[] = [...draft.values()];
-                            let isPageOnLastPosition = true;
-
-                            draft.clear();
-
-                            for (const currentDocumentPage of documentPagesAsArray) {
-                                if (currentDocumentPage.id === documentPage.id) {
-                                    continue;
-                                }
-
-                                if (draft.size === documentPage.sort - 1) {
-                                    draft.set(documentPage.id, documentPage);
-                                    isPageOnLastPosition = false;
-                                }
-
-                                draft.set(currentDocumentPage.id, currentDocumentPage);
-                            }
-
-                            if (isPageOnLastPosition) {
-                                draft.set(documentPage.id, documentPage);
-                            }
+                            draft = moveDocumentPage(draft, documentPage);
                         } else if (action === 'delete') {
                             draft.delete(documentPage.id);
                         }
@@ -97,6 +77,32 @@ export const useUncategorizedDocumentPages = (
     }, [documentId, refetch, documentPages]);
 
     return { documentPages: Array.from(documentPages.values()), refetch, isLoading };
+};
+
+const moveDocumentPage = (draft: Map<number, DocumentPage>, documentPage: DocumentPage) => {
+    const documentPagesAsArray: DocumentPage[] = [...draft.values()];
+    let isPageOnLastPosition = true;
+
+    draft.clear();
+
+    for (const currentDocumentPage of documentPagesAsArray) {
+        if (currentDocumentPage.id === documentPage.id) {
+            continue;
+        }
+
+        if (draft.size === documentPage.sort - 1) {
+            draft.set(documentPage.id, documentPage);
+            isPageOnLastPosition = false;
+        }
+
+        draft.set(currentDocumentPage.id, currentDocumentPage);
+    }
+
+    if (isPageOnLastPosition) {
+        draft.set(documentPage.id, documentPage);
+    }
+
+    return draft;
 };
 
 const fetchDocumentPagesByDocumentId = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
