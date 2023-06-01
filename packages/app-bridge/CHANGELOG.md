@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.0.0
+
+### Patch Changes
+
+- [#432](https://github.com/Frontify/brand-sdk/pull/432) [`a0cc57a`](https://github.com/Frontify/brand-sdk/commit/a0cc57a9525198725d710accf115102567efe633) Thanks [@anxobotana](https://github.com/anxobotana)! - chore: fix sort groupedDocuments
+
 ## 3.0.0-beta.32
 
 ### Patch Changes
