@@ -59,6 +59,7 @@ export const useUncategorizedDocumentPages = (
                     produce((draft) => {
                         if (action === 'move') {
                             const documentPagesAsArray: DocumentPage[] = [...draft.values()];
+                            let isPageOnLastPosition = true;
 
                             draft.clear();
 
@@ -66,11 +67,17 @@ export const useUncategorizedDocumentPages = (
                                 if (currentDocumentPage.id === documentPage.id) {
                                     continue;
                                 }
+
                                 if (draft.size === documentPage.sort - 1) {
                                     draft.set(documentPage.id, documentPage);
+                                    isPageOnLastPosition = false;
                                 }
 
                                 draft.set(currentDocumentPage.id, currentDocumentPage);
+                            }
+
+                            if (isPageOnLastPosition) {
+                                draft.set(documentPage.id, documentPage);
                             }
                         } else if (action === 'delete') {
                             draft.delete(documentPage.id);
@@ -94,5 +101,5 @@ export const useUncategorizedDocumentPages = (
 
 const fetchDocumentPagesByDocumentId = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const pages = await appBridge.getUncategorizedDocumentPagesByDocumentId(documentId);
-    return new Map(pages.sort(sortDocumentPages).map((page) => [page.id, page]));
+    return new Map([...pages].sort(sortDocumentPages).map((page) => [page.id, page]));
 };
