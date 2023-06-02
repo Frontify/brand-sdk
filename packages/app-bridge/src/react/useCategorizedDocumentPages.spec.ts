@@ -319,4 +319,49 @@ describe('useCategorizedDocumentPages', () => {
             DOCUMENT_PAGE_ID_4,
         ]);
     });
+
+    it('should update document pages if a page is moved in the category', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+
+        const UPDATED_DOCUMENT_PAGE: DocumentPage = {
+            ...DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: DOCUMENT_CATEGORY_ID }),
+            sort: 4,
+        };
+
+        const { result } = renderHook(() => useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        // Mock the response of the second call
+        spy.mockImplementationOnce(() =>
+            Promise.resolve([
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_1, categoryId: DOCUMENT_CATEGORY_ID, sort: 1 }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: DOCUMENT_CATEGORY_ID, sort: 2 }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: DOCUMENT_CATEGORY_ID, sort: 3 }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: DOCUMENT_CATEGORY_ID, sort: 4 }),
+            ]),
+        );
+
+        // Trigger a "document page updated" event in the specified category
+        window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
+            action: 'move',
+            documentPage: UPDATED_DOCUMENT_PAGE,
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
+
+        expect(result.current.documentPages).toEqual([
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_1, categoryId: DOCUMENT_CATEGORY_ID, sort: 1 }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: DOCUMENT_CATEGORY_ID, sort: 3 }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: DOCUMENT_CATEGORY_ID, sort: 4 }),
+            UPDATED_DOCUMENT_PAGE,
+        ]);
+    });
 });
