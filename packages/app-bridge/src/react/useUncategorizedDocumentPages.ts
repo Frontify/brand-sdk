@@ -55,14 +55,15 @@ export const useUncategorizedDocumentPages = (
             ) {
                 refetch();
             } else if ((action === 'delete' || action === 'move') && documentPages.has(documentPage.id)) {
-                setDocumentPages((previousState) => {
-                    if (action === 'move') {
-                        return moveDocumentPage(previousState, documentPage);
-                    } else if (action === 'delete') {
-                        previousState.delete(documentPage.id);
-                    }
-                    return previousState;
-                });
+                setDocumentPages(
+                    produce((draft) => {
+                        if (action === 'move') {
+                            moveDocumentPage(draft, documentPage);
+                        } else if (action === 'delete') {
+                            draft.delete(documentPage.id);
+                        }
+                    }),
+                );
             }
         };
 
