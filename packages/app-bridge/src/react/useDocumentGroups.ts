@@ -92,5 +92,5 @@ const actionHandlers = {
 
 const fetchDocumentGroups = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
     const documentGroups = await appBridge.getDocumentGroups();
-    return new Map(documentGroups.sort(sortDocumentGroups).map((group) => [group.id, group]));
+    return new Map([...documentGroups].sort(sortDocumentGroups).map((group) => [group.id, group]));
 };

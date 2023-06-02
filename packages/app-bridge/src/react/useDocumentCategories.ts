@@ -126,5 +126,5 @@ const actionHandlers = {
 
 const fetchDocumentCategories = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
     const categories = await appBridge.getDocumentCategoriesByDocumentId(documentId);
-    return new Map(categories.sort(sortDocumentCategories).map((category) => [category.id, category]));
+    return new Map([...categories].sort(sortDocumentCategories).map((category) => [category.id, category]));
 };

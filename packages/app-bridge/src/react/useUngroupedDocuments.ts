@@ -163,5 +163,5 @@ const actionHandlers = {
 
 const fetchUngroupedDocuments = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
     const documents = await appBridge.getUngroupedDocuments();
-    return new Map(documents.sort(sortDocuments).map((document) => [document.id, document]));
+    return new Map([...documents].sort(sortDocuments).map((document) => [document.id, document]));
 };
