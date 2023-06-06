@@ -2,7 +2,7 @@
 
 import mitt from 'mitt';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { SpyInstance, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { SpyInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
     BrandportalLinkDummy,
@@ -34,19 +34,33 @@ import {
     DocumentStandardCreate,
     DocumentStandardUpdate,
 } from '../types';
+import { useUncategorizedDocumentPages } from './useUncategorizedDocumentPages';
+import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
+
+const DOCUMENT_ID_1 = 145;
+const DOCUMENT_ID_2 = 34532;
+const DOCUMENT_PAGE_ID_1 = 23442;
+const DOCUMENT_PAGE_ID_2 = 235345;
+const DOCUMENT_PAGE_ID_3 = 12352;
+const DOCUMENT_PAGE_ID_4 = 55221;
+const DOCUMENT_PAGE_ID_5 = 98324;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_4 = 34563;
+const DOCUMENT_CATEGORY_ID_1 = 147;
+const DOCUMENT_CATEGORY_ID_2 = 258;
 
 describe('useGuidelineActions hook', () => {
     let useGuidelineActionsStub: ReturnType<typeof useGuidelineActions>;
     let emitSpy: SpyInstance | null = null;
+    let appBridgeStub: ReturnType<typeof getAppBridgeThemeStub>;
 
-    beforeAll(() => {
-        const appBridgeStub = getAppBridgeThemeStub();
+    beforeEach(() => {
+        appBridgeStub = getAppBridgeThemeStub();
         const { result } = renderHook(() => useGuidelineActions(appBridgeStub));
 
         useGuidelineActionsStub = result.current;
-    });
-
-    beforeEach(() => {
         window.emitter = mitt();
         emitSpy = vi.spyOn(window.emitter, 'emit');
     });
@@ -84,16 +98,16 @@ describe('useGuidelineActions hook', () => {
         ).resolves.not.toThrow();
     });
 
-    it('should not throw createCategory', async () => {
-        const createCategoryMock = vi.fn(useGuidelineActionsStub.createCategory);
+    it('should not throw createDocumentCategory', async () => {
+        const createDocumentCategoryMock = vi.fn(useGuidelineActionsStub.createDocumentCategory);
 
-        expect(createCategoryMock({ title: 'testCategory', documentId: 4 })).resolves.not.toThrow();
+        expect(createDocumentCategoryMock({ title: 'testCategory', documentId: 4 })).resolves.not.toThrow();
     });
 
-    it('should not throw createPage', async () => {
-        const createPageMock = vi.fn(useGuidelineActionsStub.createPage);
+    it('should not throw createDocumentPage', async () => {
+        const createDocumentPageMock = vi.fn(useGuidelineActionsStub.createDocumentPage);
 
-        expect(createPageMock({ title: 'testPage', documentId: 5 })).resolves.not.toThrow();
+        expect(createDocumentPageMock({ title: 'testPage', documentId: 5 })).resolves.not.toThrow();
     });
 
     it('should not throw createCoverPage', async () => {
@@ -126,16 +140,20 @@ describe('useGuidelineActions hook', () => {
         expect(updateLinkMock({ id: 1, title: 'updateLinkTest' })).resolves.not.toThrow();
     });
 
-    it('should not throw updateCategory', async () => {
-        const updateCategoryMock = vi.fn(useGuidelineActionsStub.updateCategory);
+    it('should not throw updateDocumentCategory', async () => {
+        const updateDocumentCategoryMock = vi.fn(useGuidelineActionsStub.updateDocumentCategory);
 
-        expect(updateCategoryMock({ id: 1, title: 'updateCategoryTest', documentId: 20 })).resolves.not.toThrow();
+        expect(
+            updateDocumentCategoryMock({ id: 1, title: 'updateDocumentCategoryTest', documentId: 20 }),
+        ).resolves.not.toThrow();
     });
 
-    it('should not throw updatePage', async () => {
-        const updatePageMock = vi.fn(useGuidelineActionsStub.updatePage);
+    it('should not throw updateDocumentPage', async () => {
+        const updateDocumentPageMock = vi.fn(useGuidelineActionsStub.updateDocumentPage);
 
-        expect(updatePageMock({ id: 1, title: 'updatePageTest', documentId: 20 })).resolves.not.toThrow();
+        expect(
+            updateDocumentPageMock({ id: 1, title: 'updateDocumentPageTest', documentId: 20 }),
+        ).resolves.not.toThrow();
     });
 
     it('should not throw updateLegacyCoverPage', async () => {
@@ -159,37 +177,37 @@ describe('useGuidelineActions hook', () => {
     it('should not throw deleteDocument', async () => {
         const deleteDocumentMock = vi.fn(useGuidelineActionsStub.deleteDocument);
 
-        expect(deleteDocumentMock(1)).resolves.not.toThrow();
+        expect(deleteDocumentMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteLibrary', async () => {
         const deleteLibraryMock = vi.fn(useGuidelineActionsStub.deleteLibrary);
 
-        expect(deleteLibraryMock(1)).resolves.not.toThrow();
+        expect(deleteLibraryMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteLink', async () => {
         const deleteLinkMock = vi.fn(useGuidelineActionsStub.deleteLink);
 
-        expect(deleteLinkMock(1)).resolves.not.toThrow();
+        expect(deleteLinkMock({ id: 1 })).resolves.not.toThrow();
     });
 
-    it('should not throw deletePage', async () => {
-        const deletePageMock = vi.fn(useGuidelineActionsStub.deletePage);
+    it('should not throw deleteDocumentPage', async () => {
+        const deleteDocumentPageMock = vi.fn(useGuidelineActionsStub.deleteDocumentPage);
 
-        expect(deletePageMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
+        expect(deleteDocumentPageMock({ id: 1, documentId: 10, categoryId: null })).resolves.not.toThrow();
     });
 
     it('should not throw deleteDocumentGroup', async () => {
         const deleteDocumentGroupMock = vi.fn(useGuidelineActionsStub.deleteDocumentGroup);
 
-        expect(deleteDocumentGroupMock(1)).resolves.not.toThrow();
+        expect(deleteDocumentGroupMock({ id: 1 })).resolves.not.toThrow();
     });
 
-    it('should not throw deleteCategory', async () => {
-        const deleteCategoryMock = vi.fn(useGuidelineActionsStub.deleteCategory);
+    it('should not throw deleteDocumentCategory', async () => {
+        const deleteDocumentCategoryMock = vi.fn(useGuidelineActionsStub.deleteDocumentCategory);
 
-        expect(deleteCategoryMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
+        expect(deleteDocumentCategoryMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteCoverPage', async () => {
@@ -198,10 +216,10 @@ describe('useGuidelineActions hook', () => {
         expect(deleteCoverPageMock()).resolves.not.toThrow();
     });
 
-    it('should not throw duplicatePage', async () => {
-        const duplicatePageMock = vi.fn(useGuidelineActionsStub.duplicatePage);
+    it('should not throw duplicateDocumentPage', async () => {
+        const duplicateDocumentPageMock = vi.fn(useGuidelineActionsStub.duplicateDocumentPage);
 
-        expect(duplicatePageMock({ id: 1, documentId: 5 })).resolves.not.toThrow();
+        expect(duplicateDocumentPageMock({ id: 1, documentId: 5 })).resolves.not.toThrow();
     });
 
     it('should not throw updateDocumentTargets', async () => {
@@ -232,7 +250,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createLink).toHaveBeenCalledWith(link);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
                 document: { ...DocumentDummy.with(1), documentGroupId: link.documentGroupId },
                 action: 'add',
             });
@@ -254,7 +272,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateLink).toHaveBeenCalledWith(link);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
                 document: { ...DocumentDummy.with(1), documentGroupId: link.documentGroupId },
                 action: 'update',
             });
@@ -264,16 +282,16 @@ describe('useGuidelineActions hook', () => {
     it('should delete a link and emit an event', async () => {
         const deleteLink = vi.spyOn(useGuidelineActionsStub, 'deleteLink');
 
-        const id = 1;
+        const documentId = 1;
 
         act(() => {
-            useGuidelineActionsStub.deleteLink(id);
+            useGuidelineActionsStub.deleteLink({ id: documentId });
         });
 
         await waitFor(() => {
-            expect(deleteLink).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
-                document: { id },
+            expect(deleteLink).toHaveBeenCalledWith({ id: documentId });
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
+                document: { id: documentId },
                 action: 'delete',
             });
         });
@@ -297,7 +315,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createLibrary).toHaveBeenCalledWith(library);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
                 document: { ...DocumentDummy.with(1), documentGroupId: library.documentGroupId },
                 action: 'add',
             });
@@ -319,7 +337,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateLibrary).toHaveBeenCalledWith(library);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
                 document: { ...DocumentDummy.with(1), documentGroupId: library.documentGroupId },
                 action: 'update',
             });
@@ -329,16 +347,16 @@ describe('useGuidelineActions hook', () => {
     it('should delete a library and emit an event', async () => {
         const deleteLibrary = vi.spyOn(useGuidelineActionsStub, 'deleteLibrary');
 
-        const id = 1;
+        const documentId = 1;
 
         act(() => {
-            useGuidelineActionsStub.deleteLibrary(id);
+            useGuidelineActionsStub.deleteLibrary({ id: documentId });
         });
 
         await waitFor(() => {
-            expect(deleteLibrary).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
-                document: { id },
+            expect(deleteLibrary).toHaveBeenCalledWith({ id: documentId });
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
+                document: { id: documentId },
                 action: 'delete',
             });
         });
@@ -347,19 +365,19 @@ describe('useGuidelineActions hook', () => {
     it('should create a standard document and emit an event', async () => {
         const createStandardDocument = vi.spyOn(useGuidelineActionsStub, 'createDocument');
 
-        const document: DocumentStandardCreate = {
+        const documentCreationParameters: DocumentStandardCreate = {
             title: 'Test Standard Document',
             documentGroupId: 1,
         };
 
         act(() => {
-            useGuidelineActionsStub.createDocument(document);
+            useGuidelineActionsStub.createDocument(documentCreationParameters);
         });
 
         await waitFor(() => {
-            expect(createStandardDocument).toHaveBeenCalledWith(document);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
-                document: { ...DocumentDummy.with(1), documentGroupId: document.documentGroupId },
+            expect(createStandardDocument).toHaveBeenCalledWith(documentCreationParameters);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
+                document: { ...DocumentDummy.with(1), documentGroupId: documentCreationParameters.documentGroupId },
                 action: 'add',
             });
         });
@@ -380,7 +398,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateStandardDocument).toHaveBeenCalledWith(document);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
                 document: { ...DocumentDummy.with(1), documentGroupId: document.documentGroupId },
                 action: 'update',
             });
@@ -390,16 +408,16 @@ describe('useGuidelineActions hook', () => {
     it('should delete a standard document and emit an event', async () => {
         const deleteStandardDocument = vi.spyOn(useGuidelineActionsStub, 'deleteDocument');
 
-        const id = 1;
+        const documentId = 1;
 
         act(() => {
-            useGuidelineActionsStub.deleteDocument(id);
+            useGuidelineActionsStub.deleteDocument({ id: documentId });
         });
 
         await waitFor(() => {
-            expect(deleteStandardDocument).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentAction', {
-                document: { id },
+            expect(deleteStandardDocument).toHaveBeenCalledWith({ id: documentId });
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocument:Action', {
+                document: { id: documentId },
                 action: 'delete',
             });
         });
@@ -419,7 +437,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createCoverPage).toHaveBeenCalledWith(coverPage);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPageAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPage:Action', {
                 coverPage: CoverPageDummy.with(1),
                 action: 'add',
             });
@@ -441,7 +459,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateCoverPage).toHaveBeenCalledWith(coverPage);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPageAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPage:Action', {
                 coverPage: CoverPageDummy.with(1),
                 action: 'update',
             });
@@ -463,7 +481,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateLegacyCoverPage).toHaveBeenCalledWith(legacyCoverPage);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPageAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPage:Action', {
                 coverPage: legacyCoverPage,
                 action: 'update',
             });
@@ -479,7 +497,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(deleteCoverPage).toHaveBeenCalled();
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPageAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineCoverPage:Action', {
                 action: 'delete',
             });
         });
@@ -500,7 +518,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateBrandportalLink).toHaveBeenCalledWith(brandportalLink);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineBrandportalLinkAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineBrandportalLink:Action', {
                 brandportalLink: BrandportalLinkDummy.with(),
                 action: 'update',
             });
@@ -520,8 +538,8 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(createDocumentGroup).toHaveBeenCalledWith(group);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroupAction', {
-                documentGroup: DocumentGroupDummy.with(1, []),
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroup:Action', {
+                documentGroup: DocumentGroupDummy.with(1),
                 action: 'add',
             });
         });
@@ -530,22 +548,21 @@ describe('useGuidelineActions hook', () => {
     it('should update a document group and emit an event', async () => {
         const updateDocumentGroup = vi.spyOn(useGuidelineActionsStub, 'updateDocumentGroup');
 
-        const group: DocumentGroupUpdate = {
+        const documentGroupUpdate: DocumentGroupUpdate = {
             id: 1,
             name: 'Updated Document Group',
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { documents, ...restOfDocumentGroup } = DocumentGroupDummy.with(1, []);
+        const documentGroup = DocumentGroupDummy.with(1);
 
         act(() => {
-            useGuidelineActionsStub.updateDocumentGroup(group);
+            useGuidelineActionsStub.updateDocumentGroup(documentGroupUpdate);
         });
 
         await waitFor(() => {
-            expect(updateDocumentGroup).toHaveBeenCalledWith(group);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroupAction', {
-                documentGroup: restOfDocumentGroup,
+            expect(updateDocumentGroup).toHaveBeenCalledWith(documentGroupUpdate);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroup:Action', {
+                documentGroup,
                 action: 'update',
             });
         });
@@ -557,12 +574,12 @@ describe('useGuidelineActions hook', () => {
         const id = 1;
 
         act(() => {
-            useGuidelineActionsStub.deleteDocumentGroup(id);
+            useGuidelineActionsStub.deleteDocumentGroup({ id });
         });
 
         await waitFor(() => {
-            expect(deleteDocumentGroup).toHaveBeenCalledWith(id);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroupAction', {
+            expect(deleteDocumentGroup).toHaveBeenCalledWith({ id });
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentGroup:Action', {
                 documentGroup: { id },
                 action: 'delete',
             });
@@ -570,71 +587,70 @@ describe('useGuidelineActions hook', () => {
     });
 
     it('should create a document category and emit an event', async () => {
-        const createDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'createCategory');
+        const createDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'createDocumentCategory');
 
-        const category: DocumentCategoryCreate = {
+        const documentCategoryCreationParameters: DocumentCategoryCreate = {
             title: 'Test Document Category',
             documentId: 1,
         };
 
         act(() => {
-            useGuidelineActionsStub.createCategory(category);
+            useGuidelineActionsStub.createDocumentCategory(documentCategoryCreationParameters);
         });
 
         await waitFor(() => {
-            expect(createDocumentCategory).toHaveBeenCalledWith(category);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentCategoryAction:${category.documentId}`, {
-                documentCategory: DocumentCategoryDummy.with(1, []),
+            expect(createDocumentCategory).toHaveBeenCalledWith(documentCategoryCreationParameters);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategory:Action', {
+                documentCategory: DocumentCategoryDummy.with(1),
                 action: 'add',
             });
         });
     });
 
     it('should update a document category and emit an event', async () => {
-        const updateDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'updateCategory');
+        const updateDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'updateDocumentCategory');
 
-        const category: DocumentCategoryUpdate = {
+        const updatedDocumentCategory: DocumentCategoryUpdate = {
             id: 1,
             title: 'Updated Document Category',
             documentId: 15,
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { documentPages, ...categoryWithoutPages } = DocumentCategoryDummy.with(1, []);
+        const documentCategory = DocumentCategoryDummy.with(1);
 
         act(() => {
-            useGuidelineActionsStub.updateCategory(category);
+            useGuidelineActionsStub.updateDocumentCategory(updatedDocumentCategory);
         });
 
         await waitFor(() => {
-            expect(updateDocumentCategory).toHaveBeenCalledWith(category);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentCategoryAction:${category.documentId}`, {
-                documentCategory: categoryWithoutPages,
+            expect(updateDocumentCategory).toHaveBeenCalledWith(updatedDocumentCategory);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategory:Action', {
+                documentCategory,
                 action: 'update',
             });
         });
     });
 
     it('should delete a document category and emit an event', async () => {
-        const deleteDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'deleteCategory');
+        const deleteDocumentCategory = vi.spyOn(useGuidelineActionsStub, 'deleteDocumentCategory');
 
-        const category = { id: 1, documentId: 16 };
+        const documentCategory = { id: 1, documentId: 16 };
 
         act(() => {
-            useGuidelineActionsStub.deleteCategory(category);
+            useGuidelineActionsStub.deleteDocumentCategory(documentCategory);
         });
 
         await waitFor(() => {
-            expect(deleteDocumentCategory).toHaveBeenCalledWith(category);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentCategoryAction:${category.documentId}`, {
-                documentCategory: { id: category.id },
+            expect(deleteDocumentCategory).toHaveBeenCalledWith(documentCategory);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentCategory:Action', {
+                documentCategory: { id: documentCategory.id, documentId: 16 },
                 action: 'delete',
             });
         });
     });
 
     it('should create a page and emit an event', async () => {
-        const createPage = vi.spyOn(useGuidelineActionsStub, 'createPage');
+        const createDocumentPage = vi.spyOn(useGuidelineActionsStub, 'createDocumentPage');
 
         const page: DocumentPageCreate = {
             title: 'Test Page',
@@ -642,12 +658,12 @@ describe('useGuidelineActions hook', () => {
         };
 
         act(() => {
-            useGuidelineActionsStub.createPage(page);
+            useGuidelineActionsStub.createDocumentPage(page);
         });
 
         await waitFor(() => {
-            expect(createPage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
+            expect(createDocumentPage).toHaveBeenCalledWith(page);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPage:Action', {
                 documentPage: DocumentPageDummy.with(1),
                 action: 'add',
             });
@@ -656,7 +672,7 @@ describe('useGuidelineActions hook', () => {
 
     it('should update a page and emit an event', async () => {
         const documentPage = DocumentPageDummy.with(1);
-        const updatePage = vi.spyOn(useGuidelineActionsStub, 'updatePage');
+        const updateDocumentPage = vi.spyOn(useGuidelineActionsStub, 'updateDocumentPage');
 
         const page: DocumentPageUpdate = {
             id: 1,
@@ -665,12 +681,12 @@ describe('useGuidelineActions hook', () => {
         };
 
         act(() => {
-            useGuidelineActionsStub.updatePage(page);
+            useGuidelineActionsStub.updateDocumentPage(page);
         });
 
         await waitFor(() => {
-            expect(updatePage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${documentPage.documentId}`, {
+            expect(updateDocumentPage).toHaveBeenCalledWith(page);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPage:Action', {
                 action: 'update',
                 documentPage,
             });
@@ -678,25 +694,25 @@ describe('useGuidelineActions hook', () => {
     });
 
     it('should delete a page and emit an event', async () => {
-        const deletePage = vi.spyOn(useGuidelineActionsStub, 'deletePage');
+        const deleteDocumentPage = vi.spyOn(useGuidelineActionsStub, 'deleteDocumentPage');
 
         const page = { id: 1, documentId: 22 };
 
         act(() => {
-            useGuidelineActionsStub.deletePage(page);
+            useGuidelineActionsStub.deleteDocumentPage(page);
         });
 
         await waitFor(() => {
-            expect(deletePage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
-                documentPage: { id: page.id },
+            expect(deleteDocumentPage).toHaveBeenCalledWith(page);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPage:Action', {
+                documentPage: { id: page.id, documentId: 22, categoryId: null },
                 action: 'delete',
             });
         });
     });
 
     it('should duplicate a page and emit an event', async () => {
-        const duplicatePage = vi.spyOn(useGuidelineActionsStub, 'duplicatePage');
+        const duplicateDocumentPage = vi.spyOn(useGuidelineActionsStub, 'duplicateDocumentPage');
 
         const page = {
             id: 2341,
@@ -704,14 +720,14 @@ describe('useGuidelineActions hook', () => {
         };
 
         act(() => {
-            useGuidelineActionsStub.duplicatePage(page);
+            useGuidelineActionsStub.duplicateDocumentPage(page);
         });
 
         const documentPageDuplicateDummy = DocumentPageDuplicateDummy.with(2341);
 
         await waitFor(() => {
-            expect(duplicatePage).toHaveBeenCalledWith(page);
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.documentId}`, {
+            expect(duplicateDocumentPage).toHaveBeenCalledWith(page);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPage:Action', {
                 documentPage: {
                     ...documentPageDuplicateDummy,
                     title: documentPageDuplicateDummy.name,
@@ -722,37 +738,7 @@ describe('useGuidelineActions hook', () => {
         });
     });
 
-    it('should move a page between documents and emit all events', async () => {
-        const moveDocumentPageBetweenDocuments = vi.spyOn(useGuidelineActionsStub, 'moveDocumentPageBetweenDocuments');
-
-        const page = { id: 1, sourceDocumentId: 22, targetDocumentId: 33 };
-
-        act(() => {
-            useGuidelineActionsStub.moveDocumentPageBetweenDocuments(
-                page.id,
-                page.sourceDocumentId,
-                page.targetDocumentId,
-            );
-        });
-
-        await waitFor(() => {
-            expect(moveDocumentPageBetweenDocuments).toHaveBeenCalledWith(
-                page.id,
-                page.sourceDocumentId,
-                page.targetDocumentId,
-            );
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.sourceDocumentId}`, {
-                documentPage: { id: page.id, documentId: page.sourceDocumentId },
-                action: 'update',
-            });
-            expect(emitSpy).toHaveBeenCalledWith(`AppBridge:GuidelineDocumentPageAction:${page.targetDocumentId}`, {
-                documentPage: { id: page.id, documentId: page.targetDocumentId },
-                action: 'update',
-            });
-        });
-    });
-
-    it('should udpate document targets and emit all events', async () => {
+    it('should update document targets and emit all events', async () => {
         const updateDocumentTargets = vi.spyOn(useGuidelineActionsStub, 'updateDocumentTargets');
 
         const targets = [1, 2, 3];
@@ -764,7 +750,7 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(updateDocumentTargets).toHaveBeenCalledWith(targets, documentIds);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentTargetsAction', {
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentTargets:Action', {
                 payload: {
                     targets,
                     documentIds,
@@ -774,22 +760,1033 @@ describe('useGuidelineActions hook', () => {
         });
     });
 
-    it('should udpate document page targets and emit all events', async () => {
+    it('should update document page targets and emit all events', async () => {
         const updateDocumentPageTargets = vi.spyOn(useGuidelineActionsStub, 'updateDocumentPageTargets');
 
         const targets = [1, 2, 3];
-        const pageIds = [204];
+        const documentPageIds = [204];
 
         act(() => {
-            useGuidelineActionsStub.updateDocumentPageTargets(targets, pageIds);
+            useGuidelineActionsStub.updateDocumentPageTargets(targets, documentPageIds);
         });
 
         await waitFor(() => {
-            expect(updateDocumentPageTargets).toHaveBeenCalledWith(targets, pageIds);
-            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageTargetsAction', {
-                payload: { targets, pageIds },
+            expect(updateDocumentPageTargets).toHaveBeenCalledWith(targets, documentPageIds);
+            expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPageTargets:Action', {
+                payload: { targets, pageIds: documentPageIds },
                 action: 'update',
             });
+        });
+    });
+
+    it('should move an uncategorized document page within the same document', async () => {
+        const DOCUMENT_PAGE_1 = DocumentPageDummy.withFields({
+            id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...DOCUMENT_PAGE_1, sort: 2 });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: uncategorizedDocumentPages } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_1.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 2);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 2 }, action: 'move' },
+                ],
+                ['AppBridge:GuidelineDocument:DocumentPageAction', { documentPage: DOCUMENT_PAGE_1, action: 'delete' }],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 2 }, action: 'add' },
+                ],
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_1.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page within the same document category', async () => {
+        const DOCUMENT_PAGE_1 = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...DOCUMENT_PAGE_1, sort: 3 });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: categorizedDocumentPages } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_1.id,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 3, DOCUMENT_CATEGORY_ID_1);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3 }, action: 'move' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    { documentPage: DOCUMENT_PAGE_1, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3 }, action: 'add' },
+                ],
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_1.id,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page to uncategorized within the same document', async () => {
+        const DOCUMENT_PAGE_1 = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...DOCUMENT_PAGE_1, sort: 3, categoryId: null });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: categorizedDocumentPages } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+        const { result: uncategorizedDocumentPages } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_1.id,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValue([
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...DOCUMENT_PAGE_1, sort: 3, categoryId: null },
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE_1, DOCUMENT_ID_1, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 1 }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3, categoryId: null }, action: 'add' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    { documentPage: DOCUMENT_PAGE_1, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...DOCUMENT_PAGE_1, sort: 3, categoryId: null }, action: 'add' },
+                ],
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_1.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move an uncategorized document page to a document category within the same document', async () => {
+        const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi
+            .spyOn(appBridge, 'moveDocumentPage')
+            .mockResolvedValueOnce({ ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 2, categoryId: DOCUMENT_CATEGORY_ID_1 });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const { result: categorizedDocumentPages } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+        const { result: uncategorizedDocumentPages } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchCategorizedDocumentPagesSpy.mockResolvedValue([
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_1, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 1 }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 2 }),
+            { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 3, categoryId: DOCUMENT_CATEGORY_ID_1 },
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 4 }),
+            DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: DOCUMENT_CATEGORY_ID_1, sort: 5 }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DOCUMENT_ID_1,
+            2,
+            DOCUMENT_CATEGORY_ID_1,
+        );
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchCategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 1, categoryId: null }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 2, categoryId: DOCUMENT_CATEGORY_ID_1 },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: UNCATEGORIZED_DOCUMENT_PAGE, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 2, categoryId: DOCUMENT_CATEGORY_ID_1 },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(uncategorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(categorizedDocumentPages.current.documentPages.map((documentPage) => documentPage.id)).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it('should move an uncategorized document page to another document as uncategorized', async () => {
+        const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: UNCATEGORIZED_DOCUMENT_PAGE_ID_4,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+            sort: 1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...UNCATEGORIZED_DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: null,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        const { result: uncategorizedDocumentPagesInDocumentId1 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        const { result: uncategorizedDocumentPagesInDocumentId2 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_2),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: null, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(UNCATEGORIZED_DOCUMENT_PAGE, DOCUMENT_ID_2, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledTimes(2);
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: null,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_1 }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page to another document as uncategorized', async () => {
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_5,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+            sort: 5,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: null,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document category
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 4,
+            }),
+            DOCUMENT_PAGE,
+        ]);
+
+        const { result: categorizedDocumentPagesInDocumentCategoryId1 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+                DOCUMENT_PAGE.id,
+            ]);
+        });
+
+        const { result: uncategorizedDocumentPagesInDocumentId2 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_2),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: null, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE, DOCUMENT_ID_2, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 5,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: null,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+    });
+
+    it('should move an uncategorized document page to another document as categorized', async () => {
+        const UNCATEGORIZED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_5,
+            documentId: DOCUMENT_ID_1,
+            categoryId: null,
+            sort: 1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchUncategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getUncategorizedDocumentPagesByDocumentId');
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...UNCATEGORIZED_DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document
+        fetchUncategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: null,
+                sort: 4,
+            }),
+        ]);
+
+        const { result: uncategorizedDocumentPagesInDocumentId1 } = renderHook(() =>
+            useUncategorizedDocumentPages(appBridge, DOCUMENT_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+        });
+
+        const { result: categorizedDocumentPagesInDocumentId2 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 2,
+            }),
+            { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: null, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 4,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_2,
+                categoryId: null,
+                sort: 5,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(
+            UNCATEGORIZED_DOCUMENT_PAGE,
+            DOCUMENT_ID_2,
+            2,
+            DOCUMENT_CATEGORY_ID_1,
+        );
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchUncategorizedDocumentPagesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: null,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:DocumentPageAction',
+                    { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, documentId: DOCUMENT_ID_1 }, action: 'delete' },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                uncategorizedDocumentPagesInDocumentId1.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+            ]);
+
+            expect(
+                categorizedDocumentPagesInDocumentId2.current.documentPages.map((documentPage) => documentPage.id),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                UNCATEGORIZED_DOCUMENT_PAGE.id,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it('should move a categorized document page to another document as categorized', async () => {
+        const DOCUMENT_PAGE = DocumentPageDummy.withFields({
+            id: DOCUMENT_PAGE_ID_5,
+            documentId: DOCUMENT_ID_1,
+            categoryId: DOCUMENT_CATEGORY_ID_1,
+            sort: 5,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchCategorizedDocumentPagesSpy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocumentPage').mockResolvedValueOnce({
+            ...DOCUMENT_PAGE,
+            documentId: DOCUMENT_ID_2,
+            categoryId: DOCUMENT_CATEGORY_ID_2,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document category
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 2,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 3,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_1,
+                categoryId: DOCUMENT_CATEGORY_ID_1,
+                sort: 4,
+            }),
+            DOCUMENT_PAGE,
+        ]);
+
+        const { result: categorizedDocumentPagesInDocumentCategoryId1 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_1),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+                DOCUMENT_PAGE.id,
+            ]);
+        });
+
+        const { result: categorizedDocumentPagesInDocumentCategoryId2 } = renderHook(() =>
+            useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID_2),
+        );
+
+        await waitFor(() => {
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId2.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+        });
+
+        // Mock the response of the add in uncategorized hook call
+        fetchCategorizedDocumentPagesSpy.mockResolvedValueOnce([
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_1,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 1,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_2,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 2,
+            }),
+            { ...DOCUMENT_PAGE, documentId: DOCUMENT_ID_2, categoryId: DOCUMENT_CATEGORY_ID_2, sort: 3 },
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_3,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 4,
+            }),
+            DocumentPageDummy.withFields({
+                id: DOCUMENT_PAGE_ID_4,
+                documentId: DOCUMENT_ID_2,
+                categoryId: DOCUMENT_CATEGORY_ID_2,
+                sort: 4,
+            }),
+        ]);
+
+        guidelineActions.current.moveDocumentPage(DOCUMENT_PAGE, DOCUMENT_ID_2, 2, null);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(fetchCategorizedDocumentPagesSpy).toHaveBeenCalledTimes(2);
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 5,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentPage:Action',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_2,
+                        },
+                        action: 'add',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:DocumentPageAction',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 2,
+                            documentId: DOCUMENT_ID_2,
+                            categoryId: DOCUMENT_CATEGORY_ID_2,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId1.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([DOCUMENT_PAGE_ID_1, DOCUMENT_PAGE_ID_2, DOCUMENT_PAGE_ID_3, DOCUMENT_PAGE_ID_4]);
+
+            expect(
+                categorizedDocumentPagesInDocumentCategoryId2.current.documentPages.map(
+                    (documentPage) => documentPage.id,
+                ),
+            ).toEqual([
+                DOCUMENT_PAGE_ID_1,
+                DOCUMENT_PAGE_ID_2,
+                DOCUMENT_PAGE.id,
+                DOCUMENT_PAGE_ID_3,
+                DOCUMENT_PAGE_ID_4,
+            ]);
         });
     });
 });

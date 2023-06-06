@@ -1,8 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep, Merge, RequireAtLeastOne } from 'type-fest';
-
-import type { DocumentPageApi } from './DocumentPage';
+import type { CamelCasedPropertiesDeep, RequireAtLeastOne } from 'type-fest';
 
 export type DocumentCategoryApi = {
     id: number;
@@ -16,14 +14,15 @@ export type DocumentCategoryApi = {
     modified: Nullable<string>;
     valid_from: string;
     valid_to: Nullable<string>;
-    document_pages: Nullable<DocumentPageApi[]>;
     number_of_document_pages: number;
 };
 
 type DocumentPageRequestFields = 'title' | 'documentId' | 'id';
 
-export type DocumentCategory = Merge<CamelCasedPropertiesDeep<DocumentCategoryApi>, { documentPages: number[] }>;
+export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
 
 export type DocumentCategoryCreate = Pick<DocumentCategory, 'title' | 'documentId'>;
 
 export type DocumentCategoryUpdate = RequireAtLeastOne<Pick<DocumentCategory, DocumentPageRequestFields>, 'title'>;
+
+export type DocumentCategoryDelete = Pick<DocumentCategory, 'id' | 'documentId'>;

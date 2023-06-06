@@ -56,10 +56,10 @@ export const useCoverPage = (
             });
         };
 
-        window.emitter.on('AppBridge:GuidelineCoverPageAction', updateCoverPageFromEvent);
+        window.emitter.on('AppBridge:GuidelineCoverPage:Action', updateCoverPageFromEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineCoverPageAction', updateCoverPageFromEvent);
+            window.emitter.off('AppBridge:GuidelineCoverPage:Action', updateCoverPageFromEvent);
         };
     }, [appBridge, fetchCoverPage]);
 

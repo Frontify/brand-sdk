@@ -2,7 +2,11 @@
 
 import { configure } from '@testing-library/react';
 import { beforeAll } from 'vitest';
+import { enableMapSet } from 'immer';
+
 import { TerrificComponent } from './types';
+
+enableMapSet();
 
 window.application = Object.assign(window.application ?? {}, {
     connectors: {

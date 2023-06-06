@@ -39,7 +39,7 @@ describe('useBrandportalLink', () => {
         });
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineBrandportalLinkAction', {
+            window.emitter.emit('AppBridge:GuidelineBrandportalLink:Action', {
                 action: 'update',
                 brandportalLink: updatedBrandportalLink,
             });
@@ -55,7 +55,7 @@ describe('useBrandportalLink', () => {
         result.current.brandportalLink = BrandportalLinkDummy.with();
 
         act(() => {
-            window.emitter.emit('AppBridge:GuidelineBrandportalLinkAction', {
+            window.emitter.emit('AppBridge:GuidelineBrandportalLink:Action', {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 action: 'invalid' as any,
                 brandportalLink: { enabled: false, label: '', url: '' },
@@ -89,6 +89,6 @@ describe('useBrandportalLink', () => {
 
         unmount();
 
-        expect(spy).toBeCalledWith('AppBridge:GuidelineBrandportalLinkAction', expect.any(Function));
+        expect(spy).toBeCalledWith('AppBridge:GuidelineBrandportalLink:Action', expect.any(Function));
     });
 });
