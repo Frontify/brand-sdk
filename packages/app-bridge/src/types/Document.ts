@@ -64,7 +64,7 @@ export type DocumentApi = Simplify<
         subheading: Nullable<string>;
         description: Nullable<string>;
         logo: Nullable<string>;
-        sort: Nullable<number>;
+        sort: number;
         lazy: Nullable<boolean>;
         link_settings: Nullable<DocumentLinkSettingsApi>;
         view_count: Nullable<number>;
@@ -124,7 +124,7 @@ type DocumentLinkRequest = {
     title: string;
     linkUrl: string;
     linkSettings: DocumentLinkSettings;
-    documentGroupId?: number;
+    documentGroupId?: Nullable<number>;
 };
 
 type DocumentLibraryRequest = {
@@ -134,17 +134,18 @@ type DocumentLibraryRequest = {
     title: string;
     heading?: string;
     subheading?: string;
-    documentGroupId?: number;
+    documentGroupId?: Nullable<number>;
 };
 
 type DocumentStandardRequest = {
     id: number;
     title: string;
-    documentGroupId?: number;
+    documentGroupId?: Nullable<number>;
 };
 
 export type DocumentStandardCreate = Omit<DocumentStandardRequest, 'id'>;
 export type DocumentStandardUpdate = RequireAtLeastOne<DocumentStandardRequest, 'documentGroupId' | 'title'>;
+export type DocumentStandardDelete = Pick<DocumentStandardRequest, 'documentGroupId' | 'id'>;
 
 export type DocumentLibraryCreate = SetOptional<
     Omit<DocumentLibraryRequest, 'id'>,
@@ -154,9 +155,11 @@ export type DocumentLibraryUpdate = RequireAtLeastOne<
     DocumentLibraryRequest,
     'documentGroupId' | 'heading' | 'mode' | 'settings' | 'subheading' | 'title'
 >;
+export type DocumentLibraryDelete = Pick<DocumentLibraryRequest, 'id' | 'documentGroupId'>;
 
 export type DocumentLinkCreate = Omit<DocumentLinkRequest, 'id'>;
 export type DocumentLinkUpdate = RequireAtLeastOne<
     DocumentLinkRequest,
     'title' | 'linkUrl' | 'linkSettings' | 'documentGroupId'
 >;
+export type DocumentLinkDelete = Pick<DocumentLinkRequest, 'id' | 'documentGroupId'>;

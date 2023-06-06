@@ -2,10 +2,8 @@
 
 import type { DocumentGroupApi } from '../types';
 
-import { DocumentApiDummy } from './DocumentApiDummy';
-
 export class DocumentGroupApiDummy {
-    static with(id: number, documents: number[] = []): DocumentGroupApi {
+    static with(id: number, numberOfDocuments = 0): DocumentGroupApi {
         return {
             id,
             creator: 9,
@@ -17,8 +15,7 @@ export class DocumentGroupApiDummy {
             portal_id: 175,
             name: `Document Group Dummy ${id}`,
             sort: 1,
-            documents: documents.map((document) => DocumentApiDummy.with(document)),
-            number_of_documents: documents.length,
+            number_of_documents: numberOfDocuments,
         };
     }
 }

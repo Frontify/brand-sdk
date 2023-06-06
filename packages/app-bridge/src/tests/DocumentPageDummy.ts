@@ -10,10 +10,11 @@ export class DocumentPageDummy {
         return convertObjectCase(DocumentPageApiDummy.with(id), 'camel');
     }
 
-    static withFields(fields: DocumentPage): DocumentPage {
+    static withFields(fields: Partial<DocumentPage> & { id: number }): DocumentPage {
         return {
+            ...DocumentPageDummy.with(fields.id),
             ...fields,
-        };
+        } as DocumentPage;
     }
 }
 
