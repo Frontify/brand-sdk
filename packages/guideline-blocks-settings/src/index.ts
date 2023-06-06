@@ -75,7 +75,7 @@ export type BlockSettingsStructureExport = {
 export type BlockProps = {
     /**
      * The Frontify App Bridge provides an interface to the Frontify app internals.
-     * {@link https://developer.frontify.com/document/1366#/details-concepts/content-blocks/introducing-the-appbridge}
+     * {@link https://developer.frontify.com/d/XFPCrGNrXQQM/content-blocks#/details-concepts-1/content-blocks/introducing-the-app-bridge}
      */
     appBridge: AppBridgeBlock;
 };
@@ -83,18 +83,18 @@ export type BlockProps = {
 export type BlockConfigExport = {
     /**
      * Block component to render.
-     * {@link https://developer.frontify.com/document/1366#/details-concepts/content-blocks}
+     * {@link https://developer.frontify.com/d/XFPCrGNrXQQM/content-blocks#/details-concepts-1/content-blocks}
      */
     block: FC<BlockProps>;
     /**
      * Contains the block settings and its structure.
-     * {@link https://developer.frontify.com/document/1366#/details-concepts/block-settings}
+     * {@link https://developer.frontify.com/d/XFPCrGNrXQQM/content-blocks#/details-concepts-1/block-settings-1}
      */
     settings: ReturnType<typeof defineSettings>;
     /**
      * Block lifecycle hook ran before the block gets added in the Guideline.
      * The hook support both synchronous or asynchronous execution.
-     * {@link https://developer.frontify.com/document/1366#/details-concepts/new-block-lifecycle/on-block-creation}
+     * {@link https://developer.frontify.com/d/XFPCrGNrXQQM/content-blocks#/details-concepts-1/block-lifecycle/on-block-creation}
      */
     onBlockCreated?:
         | (({ appBridge }: { appBridge: AppBridgeBlock }) => void)
@@ -102,7 +102,7 @@ export type BlockConfigExport = {
     /**
      * Block lifecycle hook ran before the block gets deleted from the Guideline.
      * The hook support both synchronous or asynchronous execution.
-     * {@link https://developer.frontify.com/document/1366#/details-concepts/new-block-lifecycle/on-block-deletion}
+     * {@link https://developer.frontify.com/d/XFPCrGNrXQQM/content-blocks#/details-concepts-1/block-lifecycle/on-block-deletion}
      */
     onBlockDeleted?:
         | (({ appBridge }: { appBridge: AppBridgeBlock }) => void)
