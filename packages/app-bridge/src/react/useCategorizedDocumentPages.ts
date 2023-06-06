@@ -58,20 +58,7 @@ export const useCategorizedDocumentPages = (
                 setDocumentPages(
                     produce((draft) => {
                         if (action === 'move') {
-                            const documentPagesAsArray: DocumentPage[] = [...draft.values()];
-
-                            draft.clear();
-
-                            for (const currentDocumentPage of documentPagesAsArray) {
-                                if (currentDocumentPage.id === documentPage.id) {
-                                    continue;
-                                }
-                                if (draft.size === documentPage.sort - 1) {
-                                    draft.set(documentPage.id, documentPage);
-                                }
-
-                                draft.set(currentDocumentPage.id, currentDocumentPage);
-                            }
+                            moveDocumentPage(draft, documentPage);
                         } else if (action === 'delete') {
                             draft.delete(documentPage.id);
                         }
@@ -92,10 +79,35 @@ export const useCategorizedDocumentPages = (
     return { documentPages: Array.from(documentPages.values()), refetch, isLoading };
 };
 
+const moveDocumentPage = (draft: Map<number, DocumentPage>, documentPage: DocumentPage) => {
+    const documentPagesAsArray: DocumentPage[] = [...draft.values()];
+    let isPageOnLastPosition = true;
+
+    draft.clear();
+
+    for (const currentDocumentPage of documentPagesAsArray) {
+        if (currentDocumentPage.id === documentPage.id) {
+            continue;
+        }
+        if (draft.size === documentPage.sort - 1) {
+            draft.set(documentPage.id, documentPage);
+            isPageOnLastPosition = false;
+        }
+
+        draft.set(currentDocumentPage.id, currentDocumentPage);
+    }
+
+    if (isPageOnLastPosition) {
+        draft.set(documentPage.id, documentPage);
+    }
+
+    return draft;
+};
+
 const fetchDocumentPagesByDocumentCategoryId = async (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     documentCategoryId: number,
 ) => {
     const pages = await appBridge.getDocumentPagesByDocumentCategoryId(documentCategoryId);
-    return new Map(pages.sort(sortDocumentPages).map((page) => [page.id, page]));
+    return new Map([...pages].sort(sortDocumentPages).map((page) => [page.id, page]));
 };
