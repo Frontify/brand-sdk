@@ -14,7 +14,7 @@ import type {
     Template,
     User,
 } from './types';
-import { PrivacySettings } from './types/PrivacySettings';
+import { PrivacySettings } from './types';
 
 export interface AppBridgeBlock extends AppBridgeBase {
     getBlockId(): number;
@@ -29,6 +29,10 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
+    /**
+     * @deprecated Use dispatch(`openAssetViewer`) command instead
+     * This will be removed in version 4.0.0 of @frontify/app-bridge
+     */
     openAssetViewer(token: string): void;
 
     getTemplateById(templateId: number): Promise<Template>;
