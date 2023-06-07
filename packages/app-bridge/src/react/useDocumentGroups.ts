@@ -64,9 +64,12 @@ const addDocument = (documentGroups: Map<number, DocumentGroup>, documentToAdd: 
         return documentGroups;
     }
 
-    documentCategory.numberOfDocuments += 1;
+    const newDocumentCategory = {
+        ...documentCategory,
+        numberOfDocuments: documentCategory.numberOfDocuments + 1,
+    };
 
-    return documentGroups.set(documentCategory.id, documentCategory);
+    return documentGroups.set(documentCategory.id, newDocumentCategory);
 };
 
 const deleteDocument = (documentGroups: Map<number, DocumentGroup>, documentToDelete: DocumentEvent['document']) => {
@@ -79,9 +82,12 @@ const deleteDocument = (documentGroups: Map<number, DocumentGroup>, documentToDe
         return documentGroups;
     }
 
-    documentCategory.numberOfDocuments -= 1;
+    const newDocumentCategory = {
+        ...documentCategory,
+        numberOfDocuments: documentCategory.numberOfDocuments - 1,
+    };
 
-    return documentGroups.set(documentCategory.id, documentCategory);
+    return documentGroups.set(documentCategory.id, newDocumentCategory);
 };
 
 const actionHandlers = {
