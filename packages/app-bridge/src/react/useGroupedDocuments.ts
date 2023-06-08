@@ -107,9 +107,12 @@ const addDocumentPage = (documents: Map<number, Document>, documentPageToAdd: Do
         return documents;
     }
 
-    document.numberOfUncategorizedDocumentPages += 1;
+    const newDocument = {
+        ...document,
+        numberOfUncategorizedDocumentPages: document.numberOfUncategorizedDocumentPages + 1,
+    };
 
-    return documents.set(document.id, document);
+    return documents.set(document.id, newDocument);
 };
 
 const deleteDocumentPage = (
@@ -121,9 +124,12 @@ const deleteDocumentPage = (
         return documents;
     }
 
-    document.numberOfUncategorizedDocumentPages -= 1;
+    const newDocument = {
+        ...document,
+        numberOfUncategorizedDocumentPages: document.numberOfUncategorizedDocumentPages - 1,
+    };
 
-    return documents.set(document.id, document);
+    return documents.set(document.id, newDocument);
 };
 
 const addDocumentCategory = (
@@ -135,9 +141,12 @@ const addDocumentCategory = (
         return documents;
     }
 
-    document.numberOfDocumentPageCategories += 1;
+    const newDocument = {
+        ...document,
+        numberOfDocumentPageCategories: document.numberOfDocumentPageCategories + 1,
+    };
 
-    return documents.set(document.id, document);
+    return documents.set(document.id, newDocument);
 };
 
 const deleteDocumentCategory = (
@@ -149,9 +158,12 @@ const deleteDocumentCategory = (
         return documents;
     }
 
-    document.numberOfDocumentPageCategories -= 1;
+    const newDocument = {
+        ...document,
+        numberOfDocumentPageCategories: document.numberOfDocumentPageCategories - 1,
+    };
 
-    return documents.set(document.id, document);
+    return documents.set(document.id, newDocument);
 };
 
 const actionHandlers = {

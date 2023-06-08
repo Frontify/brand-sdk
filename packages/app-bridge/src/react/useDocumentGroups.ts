@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
+import { produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -35,11 +36,13 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
 
     useEffect(() => {
         const handleDocumentEventUpdates = (event: DocumentEvent) => {
-            setDocumentGroups((previousState) => {
-                const action = `${event.action}-document` as const;
-                const handler = actionHandlers[action] || actionHandlers.default;
-                return handler(previousState, event.document);
-            });
+            setDocumentGroups(
+                produce((draft) => {
+                    const action = `${event.action}-document` as const;
+                    const handler = actionHandlers[action] || actionHandlers.default;
+                    return handler(draft, event.document);
+                }),
+            );
         };
 
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', refetch);
@@ -59,14 +62,17 @@ const addDocument = (documentGroups: Map<number, DocumentGroup>, documentToAdd: 
         return documentGroups;
     }
 
-    const documentCategory = documentGroups.get(documentToAdd.documentGroupId);
-    if (!documentCategory) {
+    const documentGroup = documentGroups.get(documentToAdd.documentGroupId);
+    if (!documentGroup) {
         return documentGroups;
     }
 
-    documentCategory.numberOfDocuments += 1;
+    const newDocumentGroup = {
+        ...documentGroup,
+        numberOfDocuments: documentGroup.numberOfDocuments + 1,
+    };
 
-    return documentGroups.set(documentCategory.id, documentCategory);
+    return documentGroups.set(documentGroup.id, newDocumentGroup);
 };
 
 const deleteDocument = (documentGroups: Map<number, DocumentGroup>, documentToDelete: DocumentEvent['document']) => {
@@ -74,14 +80,17 @@ const deleteDocument = (documentGroups: Map<number, DocumentGroup>, documentToDe
         return documentGroups;
     }
 
-    const documentCategory = documentGroups.get(documentToDelete.documentGroupId);
-    if (!documentCategory) {
+    const documentGroup = documentGroups.get(documentToDelete.documentGroupId);
+    if (!documentGroup) {
         return documentGroups;
     }
 
-    documentCategory.numberOfDocuments -= 1;
+    const newDocumentGroup = {
+        ...documentGroup,
+        numberOfDocuments: documentGroup.numberOfDocuments - 1,
+    };
 
-    return documentGroups.set(documentCategory.id, documentCategory);
+    return documentGroups.set(documentGroup.id, newDocumentGroup);
 };
 
 const actionHandlers = {
