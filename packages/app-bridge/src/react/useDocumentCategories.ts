@@ -95,9 +95,12 @@ const addDocumentPage = (
         return documentCategories;
     }
 
-    documentCategory.numberOfDocumentPages += 1;
+    const newDocumentCategory = {
+        ...documentCategory,
+        numberOfDocumentPages: documentCategory.numberOfDocumentPages + 1,
+    };
 
-    return documentCategories.set(documentCategory.id, documentCategory);
+    return documentCategories.set(documentCategory.id, newDocumentCategory);
 };
 
 const deleteDocumentPage = (
@@ -113,9 +116,12 @@ const deleteDocumentPage = (
         return documentCategories;
     }
 
-    documentCategory.numberOfDocumentPages -= 1;
+    const newDocumentCategory = {
+        ...documentCategory,
+        numberOfDocumentPages: documentCategory.numberOfDocumentPages - 1,
+    };
 
-    return documentCategories.set(documentCategory.id, documentCategory);
+    return documentCategories.set(documentCategory.id, newDocumentCategory);
 };
 
 const actionHandlers = {
