@@ -79,7 +79,6 @@ export const getAppBridgeThemeStub = ({
     let localPageTemplateSettings = pageTemplateSettings;
 
     return {
-        dispatch: stub<Parameters<AppBridgeTheme['dispatch']>>(),
         getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
         getProjectId: stub<Parameters<AppBridgeTheme['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeTheme['getEditorState']>>().returns(editorState),

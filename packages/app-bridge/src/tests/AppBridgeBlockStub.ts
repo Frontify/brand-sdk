@@ -57,7 +57,6 @@ export const getAppBridgeBlockStub = ({
     const addedAssetIds: Record<string, number[]> = {};
 
     return {
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>(),
         getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
         getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
