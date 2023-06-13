@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.27.0
+
+### Minor Changes
+
+- [#447](https://github.com/Frontify/brand-sdk/pull/447) [`86d8e33`](https://github.com/Frontify/brand-sdk/commit/86d8e333896642ca076aab4aeec3620f2d6d20b3) Thanks [@julianiff](https://github.com/julianiff)! - Allow function return (sync or async) for `defineSettings`
+
+### Patch Changes
+
+- Updated dependencies [[`3eabb89`](https://github.com/Frontify/brand-sdk/commit/3eabb8959c2b68be50ab1bcef3996100ed877864), [`33e0a8f`](https://github.com/Frontify/brand-sdk/commit/33e0a8f49de433aca8cc06bafed6e5515b755dd2)]:
+  - @frontify/sidebar-settings@0.5.0
+
 ## 0.26.8
 
 ### Patch Changes
