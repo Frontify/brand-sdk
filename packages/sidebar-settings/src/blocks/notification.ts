@@ -9,7 +9,7 @@ export enum NotificationStyleType {
     Info = 'Info',
 }
 
-export type NotificationFooterEvent = 'design-settings.open';
+export type NotificationFooterEvent = 'design-settings.open' | 'general-settings.open';
 
 type LinkOrEvent = { href: string; target?: '_self' | '_blank' } | { event: NotificationFooterEvent };
 
