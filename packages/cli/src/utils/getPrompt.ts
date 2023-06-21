@@ -25,7 +25,9 @@ export async function generatePrompt(description: string, githubAccessKey: strin
         files,
         'The new settings should have the following properties (only those and not more!):',
         description,
-        'Use the existing examples as references for the implementation. Please only return code and look that you have the same structure than the examples.',
+        'Use the existing examples as references for the implementation. Please return code only! (dont explain what you did) and look that you have the same structure than the examples.',
+        'Please only import from packages. e.g. @frontify/fondue or others.',
+        "I'm looking forward to your results.",
     ];
     return prompts.join('\n\n');
 }

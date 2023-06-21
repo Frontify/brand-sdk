@@ -190,7 +190,7 @@ cli.command(
             {
                 type: 'text',
                 name: 'basicsDescription',
-                message: 'Enter the description for basics',
+                message: 'Enter the description for basics (leave empty if not needed)',
                 initial: '',
             },
         ]);
@@ -208,7 +208,7 @@ cli.command(
             {
                 type: 'text',
                 name: 'layoutDescription',
-                message: 'Enter the description for layout',
+                message: 'Enter the description for layout (leave empty if not needed)',
                 initial: '',
             },
         ]);
@@ -217,7 +217,7 @@ cli.command(
             {
                 type: 'text',
                 name: 'styleDescription',
-                message: 'Enter the description for style',
+                message: 'Enter the description for style (leave empty if not needed)',
                 initial: '',
             },
         ]);
@@ -226,7 +226,7 @@ cli.command(
             {
                 type: 'text',
                 name: 'securityDescription',
-                message: 'Enter the description for security',
+                message: 'Enter the description for security (leave empty if not needed)',
                 initial: '',
             },
         ]);
