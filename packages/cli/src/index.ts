@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cac } from 'cac';
-import prompts from 'prompts';
-import { exit } from 'node:process';
 import { join } from 'node:path';
+import { exit } from 'node:process';
+import prompts from 'prompts';
 
+import pkg from '../package.json';
+import { generateSettings } from './commands/generateSettings.js';
 import {
     createDeployment,
     createDevelopmentServer,
@@ -13,7 +15,6 @@ import {
     logoutUser,
 } from './commands/index.js';
 import { getValidInstanceUrl, isValidName } from './utils/index.js';
-import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -147,6 +148,29 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     }
 
     createNewContentBlock(promptedAppName, stylingFramework);
+});
+
+cli.command('generateSettings [description]', 'generate settings').action(async (appName: string) => {
+    const { description } = await prompts([
+        {
+            type: 'text',
+            name: 'description',
+            message: 'What should be within the settings',
+            validate: (value: string) => {
+                if (value.trim() === '') {
+                    return 'You need to enter a description.';
+                }
+
+                return isValidName(value);
+            },
+        },
+    ]);
+
+    if (!description) {
+        exit(0);
+    }
+
+    generateSettings(description);
 });
 
 /**
