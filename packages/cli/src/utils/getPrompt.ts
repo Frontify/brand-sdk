@@ -23,7 +23,7 @@ export async function generatePrompt(description: string, githubAccessKey: strin
         basicPromptInfo,
         'These are the example settings:',
         files,
-        'The new settings should only have the following properties:',
+        'The new settings should have the following properties (only those and not more!):',
         description,
         'Use the existing examples as references for the implementation. Please only return code and look that you have the same structure than the examples.',
     ];

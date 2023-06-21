@@ -150,42 +150,110 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     createNewContentBlock(promptedAppName, stylingFramework);
 });
 
-cli.command('generateSettings [description] [openAiKey] [githubAccessKey]', 'generate settings').action(
-    async (description: string, openAiKey: string, githubAccessKey: string) => {
-        const { promptedDescription } = await prompts([
+cli.command(
+    'generateSettings [openAiKey] [githubAccessKey] [separateSettings] [defaultDescription]',
+    'generate settings',
+).action(async (openAiKey: string, githubAccessKey: string, defaultDescription: string) => {
+    const { promptedOpenAiKey } = await prompts([
+        {
+            type: 'text',
+            name: 'promptedOpenAiKey',
+            message: 'Enter your open AI key',
+            initial: openAiKey || 'Your open AI key',
+        },
+    ]);
+
+    const { promptedGithubAccessKey } = await prompts([
+        {
+            type: 'text',
+            name: 'promptedGithubAccessKey',
+            message: 'Enter your Personal Github Access key',
+            initial: githubAccessKey || 'Your Personal Github Access key',
+        },
+    ]);
+
+    const { splittedDescription } = await prompts([
+        {
+            type: 'toggle',
+            name: 'splittedDescription',
+            active: 'yes',
+            inactive: 'no',
+            initial: 'yes',
+            message: 'Do you want to specify for each setting (basic, style, layout) separately a description?',
+        },
+    ]);
+
+    let promptedDescription: string = defaultDescription;
+
+    if (splittedDescription) {
+        const { basicsDescription } = await prompts([
             {
                 type: 'text',
-                name: 'promptedDescription',
-                message: 'What should be within the settings',
-                initial: description || 'Your description of the block settings',
+                name: 'basicsDescription',
+                message: 'Enter the description for basics',
+                initial: '',
             },
         ]);
 
-        const { promptedOpenAiKey } = await prompts([
+        const { mainDescription } = await prompts([
             {
                 type: 'text',
-                name: 'promptedOpenAiKey',
-                message: 'Enter your open AI key',
-                initial: openAiKey || 'Your open AI key',
+                name: 'mainDescription',
+                message: 'Enter the description for main (leave empty if not needed)',
+                initial: '',
             },
         ]);
 
-        const { promptedGithubAccessKey } = await prompts([
+        const { layoutDescription } = await prompts([
             {
                 type: 'text',
-                name: 'promptedGithubAccessKey',
-                message: 'Enter your Personal Github Access key',
-                initial: githubAccessKey || 'Your Personal Github Access key',
+                name: 'layoutDescription',
+                message: 'Enter the description for layout',
+                initial: '',
             },
         ]);
 
-        if (!promptedDescription && !promptedOpenAiKey && !promptedGithubAccessKey) {
-            exit(0);
-        }
+        const { styleDescription } = await prompts([
+            {
+                type: 'text',
+                name: 'styleDescription',
+                message: 'Enter the description for style',
+                initial: '',
+            },
+        ]);
 
-        generateSettings(promptedDescription, promptedOpenAiKey, promptedGithubAccessKey);
-    },
-);
+        const { securityDescription } = await prompts([
+            {
+                type: 'text',
+                name: 'securityDescription',
+                message: 'Enter the description for security',
+                initial: '',
+            },
+        ]);
+        const emptySetting = "don't add any settings here";
+        promptedDescription = `basics: ${basicsDescription || emptySetting}, main: ${
+            mainDescription || emptySetting
+        }, layout: ${layoutDescription || emptySetting}, style: ${styleDescription || emptySetting}, security: ${
+            securityDescription || emptySetting
+        }`;
+    } else {
+        const { description } = await prompts([
+            {
+                type: 'text',
+                name: 'description',
+                message: 'Enter the description for the block settings',
+                initial: defaultDescription || 'Your description of the block settings',
+            },
+        ]);
+        promptedDescription = description;
+    }
+
+    if (!promptedDescription && !promptedOpenAiKey && !promptedGithubAccessKey) {
+        exit(0);
+    }
+
+    generateSettings(promptedDescription, promptedOpenAiKey, promptedGithubAccessKey);
+});
 
 /**
  * @deprecated `block create` and `theme create` will be removed in version 4.0 in favour of `create`
