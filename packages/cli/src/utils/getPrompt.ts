@@ -14,23 +14,34 @@ export async function generatePrompt(description: string, githubAccessKey: strin
         'packages/text-block/src/settings.ts',
     ];
     const files = await generateFilePrompt(owner, repo, settingsFiles, githubAccessKey);
-    const typesSettings = await generateFilePrompt(
+
+    /*const typesSettings = await generateFilePrompt(
         owner,
         'brand-sdk',
-        ['packages/packages/guideline-blocks-settings/src/index.ts'],
+        ['packages/guideline-blocks-settings/src/index.ts'],
         githubAccessKey,
     );
-    const blocksUsedForSettings = await listFolderContents(owner, 'brand-sdk', 'packages/sidebar-settings/src/blocks');
+
+    console.log(typesSettings);
+
+    const blocksUsedForSettings = await listFolderContents(
+        owner,
+        'brand-sdk',
+        'packages/sidebar-settings/src/blocks',
+        githubAccessKey,
+    );
+
+    console.log(blocksUsedForSettings, 'blocksUsedForSettings');*/
 
     const prompts = [
         basicPromptInfo,
         'these are the example settings files:',
         files,
         'these are the explanations of the settings properties',
-        typesSettings,
+        /*typesSettings,
         'these are the blocks which are used in the settings',
         blocksUsedForSettings,
-        'The new settings should have the following properties:',
+        'The new settings should have the following properties:',*/
         description,
         'Use the existing examples and types as references for the implementation.',
     ];
