@@ -3,6 +3,7 @@
 import { askOpenAi } from '../utils/askOpenAi.js';
 import { generatePrompt } from '../utils/getPrompt.js';
 import { Logger } from '../utils/index.js';
+import fs from 'fs';
 
 export const generateSettings = async (
     description: string,
@@ -18,6 +19,8 @@ export const generateSettings = async (
 
         Logger.info('Settings generated successfully!');
         Logger.info(openAiResponse ?? 'No response from Open AI');
+        const outputPath = '../newSettings.ts';
+        openAiResponse && fs.writeFileSync(outputPath, openAiResponse);
 
         Logger.defaultInfo(`\n${Logger.spacer(11)}Happy hacking!`);
     } catch (error) {

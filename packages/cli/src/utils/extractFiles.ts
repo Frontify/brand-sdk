@@ -63,11 +63,9 @@ export async function listFolderContents(
 
     if (response.ok) {
         const contents = await response.json();
-        console.log('contents', contents);
 
         if (Array.isArray(contents)) {
-            const fileNames: string[] = contents.map((file) => file.name);
-            //console.log('fileNames', fileNames);
+            const fileNames: string[] = contents.map((file) => `${folderPath}/${file.name}`);
             return generateFilePrompt(owner, repo, fileNames, githubAccessKey);
         }
     } else if (response.status === 404) {
