@@ -4,12 +4,16 @@ import { askOpenAi } from '../utils/askOpenAi.js';
 import { generatePrompt } from '../utils/getPrompt.js';
 import { Logger } from '../utils/index.js';
 
-export const generateSettings = async (description: string, openAiKey: string): Promise<void> => {
+export const generateSettings = async (
+    description: string,
+    openAiKey: string,
+    githubAccessKey: string,
+): Promise<void> => {
     Logger.info('Generating settings...');
     Logger.info(description);
 
     try {
-        const prompt = await generatePrompt(description);
+        const prompt = await generatePrompt(description, githubAccessKey);
         const openAiResponse = await askOpenAi(prompt, openAiKey);
 
         Logger.info('Settings generated successfully!');

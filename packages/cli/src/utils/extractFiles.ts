@@ -3,9 +3,17 @@
 import fetch from 'node-fetch';
 import { Base64 } from 'js-base64';
 
-async function createPromptFile(owner: string, repo: string, filePath: string): Promise<string | undefined> {
+async function createPromptFile(
+    owner: string,
+    repo: string,
+    filePath: string,
+    githubAccessKey,
+): Promise<string | undefined> {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
-    const headers = { Accept: 'application/vnd.github.v3+json' };
+    const headers = {
+        Accept: 'application/vnd.github.v3+json',
+        Authorization: githubAccessKey,
+    };
     const response = await fetch(url, { headers });
 
     if (response.ok) {
@@ -22,11 +30,16 @@ async function createPromptFile(owner: string, repo: string, filePath: string): 
     }
 }
 
-export async function generateFilePrompt(owner: string, repo: string, files: string[]): Promise<string> {
+export async function generateFilePrompt(
+    owner: string,
+    repo: string,
+    files: string[],
+    githubAccessKey: string,
+): Promise<string> {
     const prompts: string[] = [];
 
     for (const file of files) {
-        const fileContent = await createPromptFile(owner, repo, file);
+        const fileContent = await createPromptFile(owner, repo, file, githubAccessKey);
         if (typeof fileContent === 'string') {
             prompts.push(fileContent);
         } else {

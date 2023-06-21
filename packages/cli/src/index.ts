@@ -14,7 +14,7 @@ import {
     loginUser,
     logoutUser,
 } from './commands/index.js';
-import { getValidInstanceUrl, isValidDescription, isValidName } from './utils/index.js';
+import { getValidInstanceUrl, isValidName } from './utils/index.js';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -150,8 +150,8 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     createNewContentBlock(promptedAppName, stylingFramework);
 });
 
-cli.command('generateSettings [description] [openAiKey]', 'generate settings').action(
-    async (description: string, openAiKey: string) => {
+cli.command('generateSettings [description] [openAiKey] [githubAccessKey]', 'generate settings').action(
+    async (description: string, openAiKey: string, githubAccessKey: string) => {
         const { promptedDescription } = await prompts([
             {
                 type: 'text',
@@ -170,11 +170,20 @@ cli.command('generateSettings [description] [openAiKey]', 'generate settings').a
             },
         ]);
 
-        if (!promptedDescription && !promptedOpenAiKey) {
+        const { promptedGithubAccessKey } = await prompts([
+            {
+                type: 'text',
+                name: 'promptedGithubAccessKey',
+                message: 'Enter your Personal Github Access key',
+                initial: githubAccessKey || 'Your Personal Github Access key',
+            },
+        ]);
+
+        if (!promptedDescription && !promptedOpenAiKey && !promptedGithubAccessKey) {
             exit(0);
         }
 
-        generateSettings(promptedDescription, promptedOpenAiKey);
+        generateSettings(promptedDescription, promptedOpenAiKey, promptedGithubAccessKey);
     },
 );
 
