@@ -12,7 +12,7 @@ async function createPromptFile(
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
     const headers = {
         Accept: 'application/vnd.github.v3+json',
-        Authorization: githubAccessKey,
+        Authorization: `Bearer ${githubAccessKey}`,
     };
     const response = await fetch(url, { headers });
 
