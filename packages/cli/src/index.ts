@@ -150,24 +150,33 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     createNewContentBlock(promptedAppName, stylingFramework);
 });
 
-cli.command('generateSettings [description]', 'generate settings').action(async () => {
-    const { description } = await prompts([
-        {
-            type: 'text',
-            name: 'description',
-            message: 'What should be within the settings',
-            validate: (value: string) => {
-                return isValidDescription(value);
+cli.command('generateSettings [description] [openAiKey]', 'generate settings').action(
+    async (description: string, openAiKey: string) => {
+        const { promptedDescription } = await prompts([
+            {
+                type: 'text',
+                name: 'promptedDescription',
+                message: 'What should be within the settings',
+                initial: description || 'Your description of the block settings',
             },
-        },
-    ]);
+        ]);
 
-    if (!description) {
-        exit(0);
-    }
+        const { promptedOpenAiKey } = await prompts([
+            {
+                type: 'text',
+                name: 'promptedOpenAiKey',
+                message: 'Enter your open AI key',
+                initial: openAiKey || 'Your open AI key',
+            },
+        ]);
 
-    generateSettings(description);
-});
+        if (!promptedDescription && !promptedOpenAiKey) {
+            exit(0);
+        }
+
+        generateSettings(promptedDescription, promptedOpenAiKey);
+    },
+);
 
 /**
  * @deprecated `block create` and `theme create` will be removed in version 4.0 in favour of `create`
