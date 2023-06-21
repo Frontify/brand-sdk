@@ -50,29 +50,3 @@ export async function generateFilePrompt(
     const prompt = prompts.join('\n\n');
     return prompt;
 }
-
-export async function listFolderContents(
-    owner: string,
-    repo: string,
-    folderPath: string,
-    githubAccessKey: string,
-): Promise<string | undefined> {
-    const url = `https://api.github.com/repos/${owner}/${repo}/contents/${folderPath}`;
-    const headers = { Accept: 'application/vnd.github.v3+json', Authorization: githubAccessKey };
-    const response = await fetch(url, { headers });
-
-    if (response.ok) {
-        const contents = await response.json();
-
-        if (Array.isArray(contents)) {
-            const fileNames: string[] = contents.map((file) => `${folderPath}/${file.name}`);
-            return generateFilePrompt(owner, repo, fileNames, githubAccessKey);
-        }
-    } else if (response.status === 404) {
-        console.error(`Folder "${folderPath}" not found in the repository.`);
-    } else {
-        console.error(`Error retrieving folder contents: ${response.statusText}`);
-    }
-
-    return undefined;
-}
