@@ -4,7 +4,7 @@ import { generateFilePrompt } from './extractFiles.js';
 
 export async function generatePrompt(description: string, githubAccessKey: string): Promise<string> {
     const basicPromptInfo =
-        'I would like you to generate a settings code for me. I have a software that consists of different components called blocks, and each block can have its own settings. I will provide you with a few examples of how these settings can be structured, along with comments to help you understand their functionality. And i will also provide you with some type definitions for the settings. After that, I will provide you with a user description that outlines the desired settings. Your task will be to read and understand the user description, determine the required settings, and generate the code of a example setting based on the provided examples. Please only respond with a valid typescript content that contains the required settings.';
+        'I would like you to generate a settings code for me. I have a software that consists of different components called blocks, and each block can have its own settings. I will provide you with a few examples of how these settings can be structured, along with comments to help you understand their functionality. After that, I will provide you with a description that outlines the desired settings. Your task will be to read and understand the user description, determine the required settings, and generate the code of the newly wanted settings based on the provided examples. Important note the settings always needs to be structured the same way (main, basics, layout, style, security, target), so that the software can read them.';
     const owner = 'frontify';
     const repo = 'guideline-blocks';
     const settingsFiles = [
@@ -23,9 +23,9 @@ export async function generatePrompt(description: string, githubAccessKey: strin
         basicPromptInfo,
         'These are the example settings:',
         files,
-        'The new settings should have the following properties:',
+        'The new settings should only have the following properties:',
         description,
-        'Use the existing examples and types as references for the implementation. Please only return code and look that you have the same strucure than the examples.',
+        'Use the existing examples as references for the implementation. Please only return code and look that you have the same structure than the examples.',
     ];
     return prompts.join('\n\n');
 }
