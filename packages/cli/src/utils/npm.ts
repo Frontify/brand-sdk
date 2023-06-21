@@ -28,3 +28,10 @@ export const isValidName = (folderName: string): true | string => {
         return true;
     }
 };
+
+export const isValidDescription = (description: string): true | string => {
+    if (!description || description.trim() === '') {
+        return 'The description cannot be empty.';
+    }
+    return true;
+};

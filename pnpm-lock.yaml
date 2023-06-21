@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -129,6 +129,9 @@ importers:
       glob-to-regexp:
         specifier: 0.4.1
         version: 0.4.1
+      js-base64:
+        specifier: ^3.7.5
+        version: 3.7.5
       node-fetch:
         specifier: 3.3.1
         version: 3.3.1
@@ -8888,6 +8891,10 @@ packages:
         optional: true
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /js-base64@3.7.5:
+    resolution: {integrity: sha512-3MEt5DTINKqfScXKfJFrRbxkrnk2AxPWGBL/ycjz4dK8iqiSJ06UxD8jh8xuh6p10TX4t2+7FsBYVxxQbMg+qA==}
     dev: false
 
   /js-cookie@2.2.1:

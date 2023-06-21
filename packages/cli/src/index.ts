@@ -14,7 +14,7 @@ import {
     loginUser,
     logoutUser,
 } from './commands/index.js';
-import { getValidInstanceUrl, isValidName } from './utils/index.js';
+import { getValidInstanceUrl, isValidDescription, isValidName } from './utils/index.js';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -150,18 +150,14 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     createNewContentBlock(promptedAppName, stylingFramework);
 });
 
-cli.command('generateSettings [description]', 'generate settings').action(async (appName: string) => {
+cli.command('generateSettings [description]', 'generate settings').action(async () => {
     const { description } = await prompts([
         {
             type: 'text',
             name: 'description',
             message: 'What should be within the settings',
             validate: (value: string) => {
-                if (value.trim() === '') {
-                    return 'You need to enter a description.';
-                }
-
-                return isValidName(value);
+                return isValidDescription(value);
             },
         },
     ]);
