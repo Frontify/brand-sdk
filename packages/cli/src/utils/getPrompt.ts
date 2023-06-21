@@ -12,9 +12,9 @@ export async function generatePrompt(description: string, githubAccessKey: strin
         'packages/image-block/src/settings.ts',
         'packages/quote-block/src/settings.ts',
         'packages/thumbnail-grid-block/src/settings.ts',
-        'packages/audio-block/src/settings.ts',
+        /*'packages/audio-block/src/settings.ts',
         'packages/brand-positioning-block/src/settings.ts',
-        'packages/compare-slider-block/src/settings.ts',
+        'packages/compare-slider-block/src/settings.ts',*/
     ];
 
     const files = await generateFilePrompt(owner, repo, settingsFiles, githubAccessKey);
