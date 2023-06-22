@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { Template } from '../types';
+import { convertObjectCase } from '../utilities';
 
 export class TemplateDummy {
     static with(id: number): Template {
@@ -12,9 +13,14 @@ export class TemplateDummy {
             projectId: 23,
             pages: [
                 {
-                    preview_url: 'https://preview.url',
-                    width: 1024,
-                    height: 768,
+                    ...convertObjectCase(
+                        {
+                            preview_url: 'https://preview.url',
+                            width: 1024,
+                            height: 768,
+                        },
+                        'camel',
+                    ),
                 },
             ],
         };
