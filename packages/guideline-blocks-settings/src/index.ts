@@ -115,7 +115,14 @@ export type BlockConfigExport = {
 export const defineBlock = (config: BlockConfigExport): BlockConfigExport => config;
 
 /**
- * Type helper to make it easier to export block's settings structure, accepts a direct {@link BlockSettingsStructureExport} object.
+ * Type helper to make it easier to export block's settings structure, accepts a direct {@link BlockSettingsStructureExport} object
+ * or a function return a direct {@link BlockSettingsStructureExport} or a function returning a Promise of {@link BlockSettingsStructureExport}.
  */
-export const defineSettings = (settingsStructure: BlockSettingsStructureExport): BlockSettingsStructureExport =>
-    settingsStructure;
+export const defineSettings = <
+    T extends
+        | BlockSettingsStructureExport
+        | (() => Promise<BlockSettingsStructureExport>)
+        | (() => BlockSettingsStructureExport)
+>(
+    settingsStructure: T
+): T => settingsStructure;

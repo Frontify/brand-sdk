@@ -1,5 +1,15 @@
 # @frontify/sidebar-settings
 
+## 0.5.0
+
+### Minor Changes
+
+- [#450](https://github.com/Frontify/brand-sdk/pull/450) [`33e0a8f`](https://github.com/Frontify/brand-sdk/commit/33e0a8f49de433aca8cc06bafed6e5515b755dd2) Thanks [@celine-s](https://github.com/celine-s)! - Add footer event 'general-settings.open' to notification block
+
+### Patch Changes
+
+- [#448](https://github.com/Frontify/brand-sdk/pull/448) [`3eabb89`](https://github.com/Frontify/brand-sdk/commit/3eabb8959c2b68be50ab1bcef3996100ed877864) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(\*): bump fondue
+
 ## 0.4.0
 
 ### Minor Changes

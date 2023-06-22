@@ -1,6 +1,6 @@
 {
     "name": "@frontify/sidebar-settings",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "description": "Provides types and helpers for the settings sidebar",
     "sideEffects": false,
     "main": "dist/index.umd.js",
@@ -40,7 +40,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge": "^3.0.0-beta.66",
-        "@frontify/fondue": "12.0.0-beta.213"
+        "@frontify/fondue": "12.0.0-beta.245"
     },
     "peerDependencies": {
         "react": "^18",
