@@ -110,13 +110,6 @@ export type EmitterEvents = {
         action: 'add' | 'delete';
     };
 
-    'AppBridge:GuidelineDocument:MoveEvent': {
-        document: Document | { id: number; documentGroupId?: Nullable<number> };
-        position: number;
-        newGroupId?: Nullable<number>;
-        action: 'movePreview';
-    };
-
     'AppBridge:GuidelineDocumentGroup:DocumentAction': {
         document: { id: number; documentGroupId: number };
         action: 'add' | 'delete';
@@ -140,5 +133,33 @@ export type EmitterEvents = {
 
     'AppBridge:ViewerOpened': {
         token: string;
+    };
+
+    'AppBridge:GuidelineDocumentPage:MoveEvent': {
+        documentPage: DocumentPage | { id: number; sort?: Nullable<number> };
+        documentId: number;
+        categoryId?: Nullable<number>;
+        position?: number;
+        action: 'movePreview';
+    };
+
+    'AppBridge:GuidelineDocumentCategory:MoveEvent': {
+        documentCategory: DocumentCategory | { id: number; sort?: Nullable<number> };
+        documentId: number;
+        position: number;
+        action: 'movePreview';
+    };
+
+    'AppBridge:GuidelineDocument:MoveEvent': {
+        document: Document | { id: number; sort?: Nullable<number>; documentGroupId?: Nullable<number> };
+        position: number;
+        newGroupId?: Nullable<number>;
+        action: 'movePreview';
+    };
+
+    'AppBridge:GuidelineDocumentGroup:MoveEvent': {
+        documentGroup: DocumentGroup | { id: number; sort?: Nullable<number> };
+        position: number;
+        action: 'movePreview';
     };
 };

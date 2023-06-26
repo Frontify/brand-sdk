@@ -468,10 +468,13 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocument = useCallback(
-        async (document: { id: number; documentGroupId?: Nullable<number> }, position: number, newGroupId?: number) => {
-            const fastUpdateChannel: keyof EmitterEvents = 'AppBridge:GuidelineDocument:MoveEvent';
-
-            window.emitter.emit(fastUpdateChannel, {
+        async (
+            document: { id: number; sort?: Nullable<number>; documentGroupId?: Nullable<number> },
+            position: number,
+            newGroupId?: number,
+        ) => {
+            const previewUpdateChannel: keyof EmitterEvents = 'AppBridge:GuidelineDocument:MoveEvent';
+            window.emitter.emit(previewUpdateChannel, {
                 document,
                 position,
                 newGroupId,
@@ -504,7 +507,14 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocumentGroup = useCallback(
-        async (documentGroup: { id: number }, position: number) => {
+        async (documentGroup: { id: number; sort?: Nullable<number> }, position: number) => {
+            const previewUpdateChannel: keyof EmitterEvents = 'AppBridge:GuidelineDocumentGroup:MoveEvent';
+            window.emitter.emit(previewUpdateChannel, {
+                documentGroup,
+                position,
+                action: 'movePreview',
+            });
+
             await appBridge.moveDocumentGroup(documentGroup.id, position);
 
             window.emitter.emit('AppBridge:GuidelineDocumentGroup:Action', {
@@ -516,7 +526,15 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
     );
 
     const moveDocumentCategory = useCallback(
-        async (documentCategory: { id: number }, documentId: number, position: number) => {
+        async (documentCategory: { id: number; sort?: Nullable<number> }, documentId: number, position: number) => {
+            const previewUpdateChannel: keyof EmitterEvents = 'AppBridge:GuidelineDocumentCategory:MoveEvent';
+            window.emitter.emit(previewUpdateChannel, {
+                documentCategory,
+                documentId,
+                position,
+                action: 'movePreview',
+            });
+
             await appBridge.moveDocumentCategory(documentCategory.id, documentId, position);
 
             window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
@@ -529,11 +547,25 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const moveDocumentPage = useCallback(
         async (
-            documentPage: { id: number; documentId: number; categoryId?: Nullable<number> },
+            documentPage: {
+                id: number;
+                documentId: number;
+                sort?: Nullable<number>;
+                categoryId?: Nullable<number>;
+            },
             documentId: number,
             position?: number,
             categoryId: Nullable<number> = null,
         ) => {
+            const previewUpdateChannel: keyof EmitterEvents = 'AppBridge:GuidelineDocumentPage:MoveEvent';
+            window.emitter.emit(previewUpdateChannel, {
+                documentPage,
+                documentId,
+                position,
+                categoryId,
+                action: 'movePreview',
+            });
+
             const result = await appBridge.moveDocumentPage(
                 documentPage.id,
                 documentId,
