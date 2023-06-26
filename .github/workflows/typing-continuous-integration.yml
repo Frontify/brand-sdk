@@ -3,7 +3,7 @@ name: Typing packages CI
 on:
     pull_request:
         paths:
-            - packages/guideline-blocks/**
+            - packages/guideline-blocks-settings/**
             - packages/sidebar-settings/**
 
 # Ensures that only one workflow per branch will run at a time.
