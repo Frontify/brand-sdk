@@ -9,6 +9,7 @@ import type { Document, EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
+type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:Action'];
 
 type Options = {
     /**
@@ -67,6 +68,13 @@ export const useUngroupedDocuments = (
             );
         };
 
+        // handles when a document group is moved, refetches for updated positioning
+        const handleDocumentGroupUpdateEvent = (event: DocumentEvent) => {
+            if (event?.action === 'update' && documents.size > 0) {
+                refetch();
+            }
+        };
+
         const handler = ({ action, document }: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
             if (
                 ((action === 'update' || action === 'move') && documents.has(document.id)) ||
@@ -88,12 +96,14 @@ export const useUngroupedDocuments = (
         window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
         };
     }, [documents, options.enabled, refetch]);
 
