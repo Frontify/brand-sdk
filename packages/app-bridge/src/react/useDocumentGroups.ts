@@ -7,7 +7,8 @@ import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentGroup, EmitterEvents } from '../types';
 
-type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
+type DocumentGroupDocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
+type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocument:Action'];
 
 type Options = {
     /**
@@ -35,7 +36,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
     }, [options.enabled, refetch]);
 
     useEffect(() => {
-        const handleDocumentEventUpdates = (event: DocumentEvent) => {
+        const handleDocumentEventUpdates = (event: DocumentGroupDocumentEvent) => {
             setDocumentGroups(
                 produce((draft) => {
                     const action = `${event.action}-document` as const;
@@ -45,19 +46,35 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             );
         };
 
+        // handles when a document is moved from/outside a document group, refetches for updated positioning
+        const handlerDocumentMoveEvent = (event: DocumentEvent) => {
+            if (
+                (event?.action === 'move' || event?.action === 'add') &&
+                documentGroups.size > 0 &&
+                event?.document?.documentGroupId === null
+            ) {
+                refetch();
+            }
+        };
+
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
+        window.emitter.on('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
+            window.emitter.off('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
         };
-    }, [refetch]);
+    }, [documentGroups.size, refetch]);
 
     return { documentGroups: Array.from(documentGroups.values()), refetch, isLoading };
 };
 
-const addDocument = (documentGroups: Map<number, DocumentGroup>, documentToAdd: DocumentEvent['document']) => {
+const addDocument = (
+    documentGroups: Map<number, DocumentGroup>,
+    documentToAdd: DocumentGroupDocumentEvent['document'],
+) => {
     if (!documentToAdd.documentGroupId) {
         return documentGroups;
     }
@@ -75,7 +92,10 @@ const addDocument = (documentGroups: Map<number, DocumentGroup>, documentToAdd: 
     return documentGroups.set(documentGroup.id, newDocumentGroup);
 };
 
-const deleteDocument = (documentGroups: Map<number, DocumentGroup>, documentToDelete: DocumentEvent['document']) => {
+const deleteDocument = (
+    documentGroups: Map<number, DocumentGroup>,
+    documentToDelete: DocumentGroupDocumentEvent['document'],
+) => {
     if (!documentToDelete.documentGroupId) {
         return documentGroups;
     }
