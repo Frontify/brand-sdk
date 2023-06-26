@@ -2,7 +2,8 @@
 
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
-import { EmitterEvents } from '../types';
+
+import { EmitterEvents } from '../types/Emitter';
 import { AppBridgeTheme } from '../AppBridgeTheme';
 import { mergeDeep } from '../utilities';
 
