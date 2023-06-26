@@ -3,8 +3,8 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { EmitterEvents } from '../types/Emitter';
+import { AppBridgeTheme } from '../AppBridgeTheme';
 import { mergeDeep } from '../utilities';
-import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 import {
     BrandportalLinkDummy,
@@ -21,7 +21,7 @@ import {
     DocumentTargetsDummy,
     UpdateTargetsDummy,
 } from '.';
-import { AppBridgeTheme } from '../AppBridgeTheme';
+import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;

@@ -2,7 +2,7 @@
 
 import type { CommandResponse } from '../types';
 
-export interface AssetViewer {
+export type AssetViewer = {
     dispatch(command: 'AssetViewer'): CommandResponse['AssetViewer'];
     dispatch(command: 'assetChooser'): CommandResponse['AssetChooser'];
-}
+};
