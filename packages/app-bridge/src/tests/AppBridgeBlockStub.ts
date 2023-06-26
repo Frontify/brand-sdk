@@ -3,12 +3,15 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Asset, EmitterEvents, PrivacySettings, Template, User } from '../types';
+import { Template, User } from '../types';
+import { EmitterEvents } from '../types/Emitter';
+import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
+import { PrivacySettings } from '../types/PrivacySettings';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
