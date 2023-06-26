@@ -2,8 +2,6 @@
 
 import { Asset } from './Asset';
 
-export type Command = 'AssetViewer' | 'AssetChooser';
-
 export enum CommandEvents {
     AssetViewerOpened = 'assetViewerOpened',
     AssetViewerClosed = 'assetViewerClosed',
