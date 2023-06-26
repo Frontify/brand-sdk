@@ -4,5 +4,5 @@ import type { CommandResponse } from '../types';
 
 export type AssetViewer = {
     dispatch(command: 'AssetViewer'): CommandResponse['AssetViewer'];
-    dispatch(command: 'assetChooser'): CommandResponse['AssetChooser'];
+    dispatch(command: 'AssetChooser'): CommandResponse['AssetChooser'];
 };
