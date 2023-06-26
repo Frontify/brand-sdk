@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { produce } from 'immer';
+import { current, produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -10,6 +10,7 @@ import type { Document, EmitterEvents } from '../types';
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
 type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:Action'];
+type DocumentMoveEvent = EmitterEvents['AppBridge:GuidelineDocument:MoveEvent'];
 
 type Options = {
     /**
@@ -75,6 +76,12 @@ export const useUngroupedDocuments = (
             }
         };
 
+        const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
+            setDocuments(
+                produce((draft) => previewDocumentSort(draft, event?.document, event.position, event.newGroupId)),
+            );
+        };
+
         const handler = ({ action, document }: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
             if (
                 ((action === 'update' || action === 'move') && documents.has(document.id)) ||
@@ -97,6 +104,7 @@ export const useUngroupedDocuments = (
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
+        window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
@@ -104,10 +112,49 @@ export const useUngroupedDocuments = (
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
+            window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
         };
     }, [documents, options.enabled, refetch]);
 
     return { documents: Array.from(documents.values()), refetch, isLoading };
+};
+
+const previewDocumentSort = (
+    documents: Map<number, Document>,
+    document: DocumentMoveEvent['document'],
+    newPosition: DocumentMoveEvent['position'],
+    newGroupId: DocumentMoveEvent['newGroupId'],
+) => {
+    console.log('previewDocumentSort - pre', document.id, current(documents), newPosition, newGroupId);
+    if (newGroupId) {
+        return documents;
+    }
+
+    const documentssAsArray: Document[] = [...documents.values()];
+
+    documents.clear();
+
+    for (const currentDocument of documentssAsArray) {
+        if (currentDocument.id === document.id) {
+            const newDocument = { ...currentDocument, sort: newPosition };
+            documents.set(currentDocument.id, newDocument);
+            continue;
+        }
+
+        const oldPosition = currentDocument.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition < oldPosition) {
+            positionIncrease = 1;
+        } else if (newPosition === oldPosition) {
+            positionIncrease = -1;
+        }
+
+        const newDocument = { ...currentDocument, sort: oldPosition + positionIncrease };
+        documents.set(currentDocument.id, newDocument);
+    }
+
+    console.log('previewDocumentSort - post', current(documents), newPosition, newGroupId);
+    return documents;
 };
 
 const addDocumentPage = (documents: Map<number, Document>, documentPageToAdd: DocumentPageEvent['documentPage']) => {

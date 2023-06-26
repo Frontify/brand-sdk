@@ -469,6 +469,15 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const moveDocument = useCallback(
         async (document: { id: number; documentGroupId?: Nullable<number> }, position: number, newGroupId?: number) => {
+            const fastUpdateChannel: keyof EmitterEvents = 'AppBridge:GuidelineDocument:MoveEvent';
+
+            window.emitter.emit(fastUpdateChannel, {
+                document,
+                position,
+                newGroupId,
+                action: 'movePreview',
+            });
+
             const result = await appBridge.moveDocument(document.id, position, newGroupId);
 
             const channel: keyof EmitterEvents = 'AppBridge:GuidelineDocument:Action';

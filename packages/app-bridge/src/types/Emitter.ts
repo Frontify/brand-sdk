@@ -110,6 +110,13 @@ export type EmitterEvents = {
         action: 'add' | 'delete';
     };
 
+    'AppBridge:GuidelineDocument:MoveEvent': {
+        document: Document | { id: number; documentGroupId?: Nullable<number> };
+        position: number;
+        newGroupId?: Nullable<number>;
+        action: 'movePreview';
+    };
+
     'AppBridge:GuidelineDocumentGroup:DocumentAction': {
         document: { id: number; documentGroupId: number };
         action: 'add' | 'delete';

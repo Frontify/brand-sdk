@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { produce } from 'immer';
+import { current, produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -9,6 +9,7 @@ import type { DocumentGroup, EmitterEvents } from '../types';
 
 type DocumentGroupDocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
 type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocument:Action'];
+type DocumentMoveEvent = EmitterEvents['AppBridge:GuidelineDocument:MoveEvent'];
 
 type Options = {
     /**
@@ -57,18 +58,55 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             }
         };
 
+        const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
+            setDocumentGroups(produce((draft) => previewDocumentGroupsSort(draft, event.position, event.newGroupId)));
+        };
+
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
+        window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
+            window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
         };
     }, [documentGroups.size, refetch]);
 
     return { documentGroups: Array.from(documentGroups.values()), refetch, isLoading };
+};
+
+const previewDocumentGroupsSort = (
+    documentGroups: Map<number, DocumentGroup>,
+    newPosition: DocumentMoveEvent['position'],
+    newGroupId: DocumentMoveEvent['newGroupId'],
+) => {
+    console.log('previewDocumentGroupsSort - pre', current(documentGroups), newPosition, newGroupId);
+    if (newGroupId) {
+        return documentGroups;
+    }
+
+    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()];
+
+    documentGroups.clear();
+
+    for (const documentGroup of documentGroupsAsArray) {
+        const oldPosition = documentGroup.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition < oldPosition) {
+            positionIncrease = 1;
+        } else if (newPosition === oldPosition) {
+            positionIncrease = -1;
+        }
+
+        const newDocumentGroup = { ...documentGroup, sort: oldPosition + positionIncrease };
+        documentGroups.set(documentGroup.id, newDocumentGroup);
+    }
+
+    console.log('previewDocumentGroupsSort - post', current(documentGroups), newPosition, newGroupId);
+    return documentGroups;
 };
 
 const addDocument = (
