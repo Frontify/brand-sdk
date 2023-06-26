@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Command, CommandResponse } from '../types';
+import type { CommandResponse } from '../types';
 
 export interface AssetViewer {
-    dispatch(command: Command): CommandResponse[Command.AssetViewer];
+    dispatch(command: 'AssetViewer'): CommandResponse['AssetViewer'];
+    dispatch(command: 'assetChooser'): CommandResponse['AssetChooser'];
 }

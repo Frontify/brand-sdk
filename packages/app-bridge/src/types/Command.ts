@@ -2,10 +2,7 @@
 
 import { Asset } from './Asset';
 
-export enum Command {
-    AssetViewer = 'AssetViewer',
-    AssetChooser = 'assetChooser',
-}
+export type Command = 'AssetViewer' | 'AssetChooser';
 
 export enum CommandEvents {
     AssetViewerOpened = 'assetViewerOpened',
@@ -15,11 +12,11 @@ export enum CommandEvents {
 }
 
 export type CommandResponse = {
-    [Command.AssetViewer]: {
+    AssetViewer: {
         on(event: CommandEvents.AssetViewerOpened, callback: () => void): void;
         on(event: CommandEvents.AssetViewerClosed, callback: () => void): void;
     };
-    [Command.AssetChooser]: {
+    AssetChooser: {
         on(event: CommandEvents.AssetChooserOpened, callback: (selectedAssets: Asset[]) => void): void;
         on(event: CommandEvents.AssetChooserClosed, callback: () => void): void;
     };

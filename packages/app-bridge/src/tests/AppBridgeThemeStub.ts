@@ -2,6 +2,9 @@
 
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
+import { EmitterEvents } from '../types/Emitter';
+import { mergeDeep } from '../utilities';
+import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 import {
     BrandportalLinkDummy,
@@ -19,10 +22,6 @@ import {
     UpdateTargetsDummy,
 } from '.';
 import { AppBridgeTheme } from '../AppBridgeTheme';
-
-import { EmitterEvents } from '../types/Emitter';
-import { mergeDeep } from '../utilities';
-import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -129,7 +128,7 @@ export const getAppBridgeThemeStub = ({
                 DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: documentCategoryId, sort: 2 }),
                 DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: documentCategoryId, sort: 3 }),
                 DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: documentCategoryId, sort: 4 }),
-            ]),
+            ])
         ),
         getDocumentCategoriesByDocumentId: stub<
             Parameters<AppBridgeTheme['getDocumentCategoriesByDocumentId']>
@@ -138,7 +137,7 @@ export const getAppBridgeThemeStub = ({
                 DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, documentId, 2),
                 DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, documentId, 0),
                 DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, documentId, 2),
-            ]),
+            ])
         ),
         getUncategorizedDocumentPagesByDocumentId: stub<
             Parameters<AppBridgeTheme['getUncategorizedDocumentPagesByDocumentId']>
@@ -162,7 +161,7 @@ export const getAppBridgeThemeStub = ({
                     categoryId: null,
                     sort: 3,
                 }),
-            ]),
+            ])
         ),
         getDocumentSectionsByDocumentPageId: stub<
             Parameters<AppBridgeTheme['getDocumentSectionsByDocumentPageId']>
@@ -182,13 +181,13 @@ export const getAppBridgeThemeStub = ({
             ColorDummy.yellow(9314),
         ]),
         duplicateDocumentPage: stub<Parameters<AppBridgeTheme['duplicateDocumentPage']>>().resolves(
-            DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1),
+            DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1)
         ),
         getDocumentTargets: stub<Parameters<AppBridgeTheme['getDocumentTargets']>>().resolves(
-            DocumentTargetsDummy.with(DOCUMENT_ID_1),
+            DocumentTargetsDummy.with(DOCUMENT_ID_1)
         ),
         getDocumentPageTargets: stub<Parameters<AppBridgeTheme['getDocumentPageTargets']>>().resolves(
-            DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1),
+            DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1)
         ),
         getCoverPageTemplateSettings:
             stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localPageTemplateSettings),
@@ -199,38 +198,38 @@ export const getAppBridgeThemeStub = ({
         createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
         createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
         createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
-            DocumentDummy.with(1),
+            DocumentDummy.with(1)
         ),
         createDocumentPage: stub<Parameters<AppBridgeTheme['createDocumentPage']>>().resolves(
-            DocumentPageDummy.with(1),
+            DocumentPageDummy.with(1)
         ),
         createDocumentGroup: stub<Parameters<AppBridgeTheme['createDocumentGroup']>>().resolves(
-            DocumentGroupDummy.with(1, 0),
+            DocumentGroupDummy.with(1, 0)
         ),
         createDocumentCategory: stub<Parameters<AppBridgeTheme['createDocumentCategory']>>().resolves(
-            DocumentCategoryDummy.with(1),
+            DocumentCategoryDummy.with(1)
         ),
         createCoverPage: stub<Parameters<AppBridgeTheme['createCoverPage']>>().resolves(CoverPageDummy.with(1)),
         updateLink: stub<Parameters<AppBridgeTheme['updateLink']>>().resolves(DocumentDummy.with(1)),
         updateLibrary: stub<Parameters<AppBridgeTheme['updateLibrary']>>().resolves(DocumentDummy.with(1)),
         updateStandardDocument: stub<Parameters<AppBridgeTheme['updateStandardDocument']>>().resolves(
-            DocumentDummy.with(1),
+            DocumentDummy.with(1)
         ),
         updateDocumentPage: stub<Parameters<AppBridgeTheme['updateDocumentPage']>>().resolves(
-            DocumentPageDummy.with(1),
+            DocumentPageDummy.with(1)
         ),
         updateDocumentGroup: stub<Parameters<AppBridgeTheme['updateDocumentGroup']>>().resolves(
-            DocumentGroupDummy.with(1, 0),
+            DocumentGroupDummy.with(1, 0)
         ),
         updateDocumentCategory: stub<Parameters<AppBridgeTheme['updateDocumentCategory']>>().resolves(
-            DocumentCategoryDummy.with(1),
+            DocumentCategoryDummy.with(1)
         ),
         updateCoverPage: stub<Parameters<AppBridgeTheme['updateCoverPage']>>().resolves(CoverPageDummy.with(1)),
         updateLegacyCoverPage: stub<Parameters<AppBridgeTheme['updateLegacyCoverPage']>>().resolves(
-            CoverPageDummy.withLegacy(1),
+            CoverPageDummy.withLegacy(1)
         ),
         updateBrandportalLink: stub<Parameters<AppBridgeTheme['updateBrandportalLink']>>().resolves(
-            BrandportalLinkDummy.with(),
+            BrandportalLinkDummy.with()
         ),
         updateCoverPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateCoverPageTemplateSettings']>
@@ -256,25 +255,25 @@ export const getAppBridgeThemeStub = ({
         deleteStandardDocument: stub<Parameters<AppBridgeTheme['deleteStandardDocument']>>().resolves(),
         getBrandId: stub<Parameters<AppBridgeTheme['getBrandId']>>().returns(brandId),
         getBrandportalLink: stub<Parameters<AppBridgeTheme['getBrandportalLink']>>().resolves(
-            BrandportalLinkDummy.with(),
+            BrandportalLinkDummy.with()
         ),
         getTranslationLanguage: stub<Parameters<AppBridgeTheme['getTranslationLanguage']>>().returns(language),
         moveDocument: stub<Parameters<AppBridgeTheme['moveDocument']>>().resolves(DocumentDummy.with(DOCUMENT_ID_1)),
         moveDocumentCategory: stub<Parameters<AppBridgeTheme['moveDocumentCategory']>>().resolves(
-            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1),
+            DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1)
         ),
         moveDocumentGroup: stub<Parameters<AppBridgeTheme['moveDocumentGroup']>>().resolves(
-            DocumentGroupDummy.with(DOCUMENT_CATEGORY_ID_1, 0),
+            DocumentGroupDummy.with(DOCUMENT_CATEGORY_ID_1, 0)
         ),
         moveDocumentPage: stub<Parameters<AppBridgeTheme['moveDocumentPage']>>().resolves(
-            DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
+            DocumentPageDummy.with(DOCUMENT_PAGE_ID_1)
         ),
         openNavigationManager: stub<Parameters<AppBridgeTheme['openNavigationManager']>>(),
         updateDocumentPageTargets: stub<Parameters<AppBridgeTheme['updateDocumentPageTargets']>>().resolves(
-            UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3]),
+            UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3])
         ),
         updateDocumentTargets: stub<Parameters<AppBridgeTheme['updateDocumentTargets']>>().resolves(
-            UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3]),
+            UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3])
         ),
         searchInGuideline: stub<Parameters<AppBridgeTheme['searchInGuideline']>>().callsFake(async (query) => {
             return Promise.resolve([
