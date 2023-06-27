@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { current, produce } from 'immer';
+import { produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -95,7 +95,6 @@ const previewDocumentSort = (
     newPosition: DocumentMoveEvent['position'],
     newGroupId: DocumentMoveEvent['newGroupId'],
 ) => {
-    console.log('previewDocumentSort - pre', current(documentGroups), newPosition, newGroupId);
     if (newGroupId || !document.sort) {
         return documentGroups;
     }
@@ -106,16 +105,20 @@ const previewDocumentSort = (
     documentGroups.clear();
 
     for (const currentDocumentGroup of documentGroupsAsArray) {
-        const oldPosition = currentDocumentGroup.sort ?? 0;
+        const currentPosition = currentDocumentGroup.sort ?? 0;
         let positionIncrease = 0;
-        if (newPosition <= oldPosition) {
-            positionIncrease = previousPosition > oldPosition ? 1 : 0;
+        if (newPosition < currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : 0;
+        } else if (newPosition === currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : -1;
         }
 
-        documentGroups.set(currentDocumentGroup.id, { ...currentDocumentGroup, sort: oldPosition + positionIncrease });
+        documentGroups.set(currentDocumentGroup.id, {
+            ...currentDocumentGroup,
+            sort: currentPosition + positionIncrease,
+        });
     }
 
-    console.log('previewDocumentSort - post', current(documentGroups), newPosition, newGroupId);
     return documentGroups;
 };
 
@@ -124,7 +127,6 @@ const previewDocumentGroupsSort = (
     documentGroup: DocumentGroupMoveEvent['documentGroup'],
     newPosition: DocumentGroupMoveEvent['position'],
 ) => {
-    console.log('Groups previewDocumentGroupsSort - pre', current(documentGroups), newPosition, documentGroup);
     if (!documentGroup.sort) {
         return documentGroups;
     }
@@ -140,16 +142,18 @@ const previewDocumentGroupsSort = (
             continue;
         }
 
-        const oldPosition = currentDocumentGroup.sort ?? 0;
+        const currentPosition = currentDocumentGroup.sort ?? 0;
         let positionIncrease = 0;
-        if (newPosition <= oldPosition) {
-            positionIncrease = previousPosition > oldPosition ? 1 : 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : 0;
         }
 
-        documentGroups.set(currentDocumentGroup.id, { ...currentDocumentGroup, sort: oldPosition + positionIncrease });
+        documentGroups.set(currentDocumentGroup.id, {
+            ...currentDocumentGroup,
+            sort: currentPosition + positionIncrease,
+        });
     }
 
-    console.log('Groups previewDocumentGroupsSort - post', current(documentGroups), newPosition, documentGroup);
     return documentGroups;
 };
 

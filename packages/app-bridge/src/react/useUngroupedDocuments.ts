@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { current, produce } from 'immer';
+import { produce } from 'immer';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
@@ -78,8 +78,12 @@ export const useUngroupedDocuments = (
         };
 
         const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
+            if (!documents.has(event.document.id)) {
+                return;
+            }
+
             setDocuments(
-                produce((draft) => previewDocumentSort(draft, event?.document, event.position, event.newGroupId)),
+                produce((draft) => previewDocumentSort(draft, event.document, event.position, event.newGroupId)),
             );
         };
 
@@ -132,8 +136,7 @@ const previewDocumentSort = (
     newPosition: DocumentMoveEvent['position'],
     newGroupId: DocumentMoveEvent['newGroupId'],
 ) => {
-    console.log('documents previewDocumentSort - pre', document, current(documents), newPosition, newGroupId);
-    if (newGroupId || !document.sort) {
+    if (!document.sort) {
         return documents;
     }
 
@@ -143,21 +146,24 @@ const previewDocumentSort = (
     documents.clear();
 
     for (const currentDocument of documentsAsArray) {
+        if (currentDocument.documentGroupId || newGroupId) {
+            continue;
+        }
+
         if (currentDocument.id === document.id) {
             documents.set(currentDocument.id, { ...currentDocument, sort: newPosition });
             continue;
         }
 
-        const oldPosition = currentDocument.sort ?? 0;
+        const currentPosition = currentDocument.sort ?? 0;
         let positionIncrease = 0;
-        if (newPosition <= oldPosition) {
-            positionIncrease = previousPosition > oldPosition ? 1 : 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
         }
 
-        documents.set(currentDocument.id, { ...currentDocument, sort: oldPosition + positionIncrease });
+        documents.set(currentDocument.id, { ...currentDocument, sort: currentPosition + positionIncrease });
     }
 
-    console.log('documents previewDocumentSort - post', current(documents), newPosition, newGroupId);
     return documents;
 };
 
@@ -166,7 +172,6 @@ const previewDocumentGroupSort = (
     documentGroup: DocumentGroupMoveEvent['documentGroup'],
     newPosition: DocumentGroupMoveEvent['position'],
 ) => {
-    console.log('documents previewDocumentGroupSort - pre', current(documents), newPosition, documentGroup);
     if (!documentGroup.sort) {
         return documents;
     }
@@ -177,16 +182,15 @@ const previewDocumentGroupSort = (
     documents.clear();
 
     for (const currentDocument of documentsAsArray) {
-        const oldPosition = currentDocument.sort ?? 0;
+        const currentPosition = currentDocument.sort ?? 0;
         let positionIncrease = 0;
-        if (newPosition <= oldPosition) {
-            positionIncrease = previousPosition > oldPosition ? 1 : 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : 0;
         }
 
-        documents.set(currentDocument.id, { ...currentDocument, sort: oldPosition + positionIncrease });
+        documents.set(currentDocument.id, { ...currentDocument, sort: currentPosition + positionIncrease });
     }
 
-    console.log('documents previewDocumentGroupSort - post', current(documents), newPosition, documentGroup);
     return documents;
 };
 
