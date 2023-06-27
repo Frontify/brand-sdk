@@ -50,11 +50,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
 
         // handles when a document is moved from/outside a document group, refetches for updated positioning
         const handlerDocumentMoveEvent = (event: DocumentEvent) => {
-            if (
-                (event?.action === 'move' || event?.action === 'add') &&
-                documentGroups.size > 0 &&
-                event?.document?.documentGroupId === null
-            ) {
+            if ((event?.action === 'move' || event?.action === 'add') && documentGroups.size > 0) {
                 refetch();
             }
         };
@@ -109,8 +105,6 @@ const previewDocumentSort = (
         let positionIncrease = 0;
         if (newPosition < currentPosition) {
             positionIncrease = previousPosition > currentPosition ? 1 : 0;
-        } else if (newPosition === currentPosition) {
-            positionIncrease = previousPosition > currentPosition ? 1 : -1;
         }
 
         documentGroups.set(currentDocumentGroup.id, {

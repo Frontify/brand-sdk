@@ -78,13 +78,11 @@ export const useUngroupedDocuments = (
         };
 
         const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
-            if (!documents.has(event.document.id)) {
+            if (!documents.has(event.document.id) || event.newGroupId) {
                 return;
             }
 
-            setDocuments(
-                produce((draft) => previewDocumentSort(draft, event.document, event.position, event.newGroupId)),
-            );
+            setDocuments(produce((draft) => previewDocumentSort(draft, event.document, event.position)));
         };
 
         const handlerDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
@@ -134,9 +132,8 @@ const previewDocumentSort = (
     documents: Map<number, Document>,
     document: DocumentMoveEvent['document'],
     newPosition: DocumentMoveEvent['position'],
-    newGroupId: DocumentMoveEvent['newGroupId'],
 ) => {
-    if (!document.sort) {
+    if (!document.sort || !newPosition) {
         return documents;
     }
 
@@ -146,10 +143,6 @@ const previewDocumentSort = (
     documents.clear();
 
     for (const currentDocument of documentsAsArray) {
-        if (currentDocument.documentGroupId || newGroupId) {
-            continue;
-        }
-
         if (currentDocument.id === document.id) {
             documents.set(currentDocument.id, { ...currentDocument, sort: newPosition });
             continue;

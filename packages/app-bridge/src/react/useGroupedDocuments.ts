@@ -70,7 +70,7 @@ export const useGroupedDocuments = (
         };
 
         const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
-            if (!documents.has(event.document.id)) {
+            if (!documents.has(event.document.id) || event.newGroupId !== documentGroupId) {
                 return;
             }
 
