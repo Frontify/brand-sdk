@@ -12,7 +12,8 @@
         "test": "pnpm --stream --filter {packages/**} --parallel test",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
         "prepare": "is-ci || husky install",
-        "ci:publish": "pnpm build && pnpm publish -r --access public"
+        "ci:publish": "pnpm build && pnpm publish -r --access public",
+        "ci": "pnpm install --frozen-lockfile"
     },
     "devDependencies": {
         "@changesets/changelog-github": "0.4.8",
