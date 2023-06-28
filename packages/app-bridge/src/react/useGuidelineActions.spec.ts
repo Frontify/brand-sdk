@@ -813,6 +813,20 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
                 [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE_1,
+                            sort: 1,
+                            categoryId: null,
+                        },
+                        categoryId: null,
+                        documentId: DOCUMENT_ID_1,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
                     'AppBridge:GuidelineDocumentPage:Action',
                     { documentPage: { ...DOCUMENT_PAGE_1, sort: 2 }, action: 'move' },
                 ],
@@ -865,6 +879,19 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE_1,
+                            sort: 1,
+                        },
+                        categoryId: DOCUMENT_CATEGORY_ID_1,
+                        documentId: DOCUMENT_ID_1,
+                        position: 3,
+                        action: 'movePreview',
+                    },
+                ],
                 [
                     'AppBridge:GuidelineDocumentPage:Action',
                     { documentPage: { ...DOCUMENT_PAGE_1, sort: 3 }, action: 'move' },
@@ -958,6 +985,19 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
                 [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE_1,
+                            sort: 1,
+                        },
+                        categoryId: null,
+                        documentId: DOCUMENT_ID_1,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
                     'AppBridge:GuidelineDocumentPage:Action',
                     { documentPage: { ...DOCUMENT_PAGE_1, sort: 1 }, action: 'delete' },
                 ],
@@ -1050,6 +1090,21 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: null,
+                        },
+                        categoryId: DOCUMENT_CATEGORY_ID_1,
+                        documentId: DOCUMENT_ID_1,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
                 [
                     'AppBridge:GuidelineDocumentPage:Action',
                     { documentPage: { ...UNCATEGORIZED_DOCUMENT_PAGE, sort: 1, categoryId: null }, action: 'delete' },
@@ -1192,6 +1247,21 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: null,
+                        },
+                        categoryId: null,
+                        documentId: DOCUMENT_ID_2,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
                 [
                     'AppBridge:GuidelineDocumentPage:Action',
                     {
@@ -1366,6 +1436,20 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 5,
+                            documentId: DOCUMENT_ID_1,
+                        },
+                        categoryId: null,
+                        documentId: DOCUMENT_ID_2,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
                 [
                     'AppBridge:GuidelineDocumentPage:Action',
                     {
@@ -1544,6 +1628,20 @@ describe('useGuidelineActions hook', () => {
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
                 [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...UNCATEGORIZED_DOCUMENT_PAGE,
+                            sort: 1,
+                            documentId: DOCUMENT_ID_1,
+                        },
+                        categoryId: DOCUMENT_CATEGORY_ID_1,
+                        documentId: DOCUMENT_ID_2,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
                     'AppBridge:GuidelineDocumentPage:Action',
                     {
                         documentPage: {
@@ -1721,6 +1819,21 @@ describe('useGuidelineActions hook', () => {
 
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentPage:MoveEvent',
+                    {
+                        documentPage: {
+                            ...DOCUMENT_PAGE,
+                            sort: 5,
+                            documentId: DOCUMENT_ID_1,
+                            categoryId: DOCUMENT_CATEGORY_ID_1,
+                        },
+                        categoryId: null,
+                        documentId: DOCUMENT_ID_2,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
                 [
                     'AppBridge:GuidelineDocumentPage:Action',
                     {
