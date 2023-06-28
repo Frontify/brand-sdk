@@ -48,7 +48,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             );
         };
 
-        // handles when a document is moved from/outside a document group, refetches for updated positioning
+        // handles when a document is moved from/in a document group, refetches for updated positioning
         const handlerDocumentMoveEvent = (event: DocumentEvent) => {
             if ((event?.action === 'move' || event?.action === 'add') && documentGroups.size > 0) {
                 refetch();
