@@ -51,13 +51,13 @@ export const useCategorizedDocumentPages = (
         };
 
         const handleDocumentPageMoveEvent = (event: DocumentPagesMoveEvent) => {
-            if (!documentPages.has(event.documentPage.id)) {
+            if (!documentPages.has(event.documentPage.id) || !event.categoryId) {
                 return;
             }
 
             setDocumentPages(
                 produce((draft) => {
-                    previewDocumentPagesSort(draft, event.documentPage, event.categoryId, event.position);
+                    previewDocumentPagesSort(draft, event.documentPage, event.position);
                 }),
             );
         };
@@ -98,7 +98,6 @@ export const useCategorizedDocumentPages = (
 const previewDocumentPagesSort = (
     documentPages: Map<number, DocumentPage>,
     documentPage: DocumentPagesMoveEvent['documentPage'],
-    categoryId: DocumentPagesMoveEvent['categoryId'],
     newPosition: DocumentPagesMoveEvent['position'],
 ) => {
     if (!documentPage.sort || !newPosition) {
@@ -111,10 +110,6 @@ const previewDocumentPagesSort = (
     documentPages.clear();
 
     for (const currentDocumentPage of documentPagesAsArray) {
-        if (currentDocumentPage.categoryId !== categoryId) {
-            continue;
-        }
-
         if (currentDocumentPage.id === documentPage.id) {
             documentPages.set(currentDocumentPage.id, { ...currentDocumentPage, sort: newPosition });
             continue;

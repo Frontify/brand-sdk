@@ -51,7 +51,7 @@ export const useUncategorizedDocumentPages = (
         };
 
         const handleDocumentPageMoveEvent = (event: DocumentPagesMoveEvent) => {
-            if (!documentPages.has(event.documentPage.id)) {
+            if (!documentPages.has(event.documentPage.id) || event.categoryId) {
                 return;
             }
 
@@ -111,10 +111,6 @@ const previewDocumentPagesSort = (
     documentPages.clear();
 
     for (const currentDocumentPage of documentPagesAsArray) {
-        if (currentDocumentPage.documentId !== documentId) {
-            continue;
-        }
-
         if (currentDocumentPage.id === documentPage.id) {
             documentPages.set(currentDocumentPage.id, { ...currentDocumentPage, sort: newPosition });
             continue;
