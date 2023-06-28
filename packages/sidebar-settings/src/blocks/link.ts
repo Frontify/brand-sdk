@@ -5,11 +5,11 @@ import type { BaseBlock } from './base';
 
 export type SearchResult = SearchResultFondue;
 
-export type LinkChooserBlock<AppBridge> = {
+export type LinkBlock<AppBridge> = {
     /**
-     * @deprecated Use `type: 'link'` instead.
+     * The setting type.
      */
-    type: 'linkChooser';
+    type: 'link';
 
     /**
      * The placeholder text for the link chooser.
@@ -22,14 +22,13 @@ export type LinkChooserBlock<AppBridge> = {
     openInNewTab?: boolean;
 
     /**
-     * Whether the link chooser is disabled or not.
-     */
-    disabled?: boolean;
-
-    /**
      * Whether the link chooser can be cleared or not.
      */
     clearable?: boolean;
 
-    required?: boolean;
-} & BaseBlock<AppBridge, { link: SearchResult | null; openInNewTab: boolean | null }>;
+    /**
+     * Whether the internal link chooser is hidden.
+     * @default false
+     */
+    hideInternalLinkButton?: boolean;
+} & BaseBlock<AppBridge, { link: string | null; openInNewTab: boolean | null }>;
