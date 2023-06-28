@@ -3,7 +3,7 @@
 import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { renderHook, waitFor } from '@testing-library/react';
 
-import { beforeAll, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { useAttachments } from './useAttachments';
 
 const MOCK_SETTINGS_ID = 'attachments';
@@ -13,10 +13,6 @@ const MOCK_SETTINGS_ID = 'attachments';
  */
 
 describe('useAttachments', () => {
-    beforeAll(() => {
-        global.structuredClone = (val: unknown) => val;
-    });
-
     it('should have 1 attachment if attachment is added', async () => {
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,

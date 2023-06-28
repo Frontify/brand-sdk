@@ -17,6 +17,7 @@ export default defineConfig({
         deps: {
             inline: ['clsx', '@juggle/resize-observer'],
         },
+        setupFiles: ['setupTests.ts'],
     },
     build: {
         lib: {
