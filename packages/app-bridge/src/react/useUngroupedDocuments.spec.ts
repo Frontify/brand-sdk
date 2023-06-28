@@ -337,4 +337,62 @@ describe('useUngroupedDocuments', () => {
             NEW_DOCUMENT,
         ]);
     });
+
+    it('should update document sorting if a document is moved', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getUngroupedDocuments');
+
+        const DOCUMENT_1 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_1),
+            sort: 1,
+        });
+        const DOCUMENT_2 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_2),
+            sort: 2,
+        });
+        const NEW_DOCUMENT_2 = DocumentDummy.withFields({
+            ...DOCUMENT_2,
+            sort: 3,
+        });
+        const DOCUMENT_3 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_3),
+            sort: 3,
+        });
+        const NEW_DOCUMENT_3 = DocumentDummy.withFields({
+            ...DOCUMENT_3,
+            sort: 4,
+        });
+        const DOCUMENT_4 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_4),
+            sort: 4,
+        });
+        const NEW_DOCUMENT_4 = DocumentDummy.withFields({
+            ...DOCUMENT_4,
+            sort: 2,
+        });
+
+        // Mock the response of the first call
+        spy.mockImplementationOnce(() => Promise.resolve([DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4]));
+
+        const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        // Trigger a "document category added" event in the specified document
+        window.emitter.emit('AppBridge:GuidelineDocument:MoveEvent', {
+            action: 'movePreview',
+            position: 2,
+            newGroupId: null,
+            document: { id: DOCUMENT_ID_4, sort: 4, documentGroupId: null },
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+        });
+
+        expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_2, NEW_DOCUMENT_3, NEW_DOCUMENT_4]);
+    });
 });
