@@ -8,7 +8,7 @@ import { Unit } from './types';
  *
  * @param {Bundle} bundle Sidebar bundle object
  * @param {string} settingId Setting id
- * @param {('px'|'em'|'rem'|'%')} [unit='px'] Unit
+ * @param {('px'|'em'|'rem'|'%'|'s'|'ms')} [unit='px'] Unit
  * @returns {string} Set block value to string with unit
  */
 export const appendUnit = <AppBridge = unknown>(
