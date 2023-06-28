@@ -9,6 +9,8 @@ import type { DocumentGroup, EmitterEvents } from '../types';
 
 type DocumentGroupDocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
 type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocument:Action'];
+type DocumentMoveEvent = EmitterEvents['AppBridge:GuidelineDocument:MoveEvent'];
+type DocumentGroupMoveEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:MoveEvent'];
 
 type Options = {
     /**
@@ -46,29 +48,107 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             );
         };
 
-        // handles when a document is moved from/outside a document group, refetches for updated positioning
+        // handles when a document is moved from/in a document group, refetches for updated positioning
         const handlerDocumentMoveEvent = (event: DocumentEvent) => {
-            if (
-                (event?.action === 'move' || event?.action === 'add') &&
-                documentGroups.size > 0 &&
-                event?.document?.documentGroupId === null
-            ) {
+            if ((event?.action === 'move' || event?.action === 'add') && documentGroups.size > 0) {
                 refetch();
             }
+        };
+
+        const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
+            setDocumentGroups(
+                produce((draft) => previewDocumentSort(draft, event.document, event.position, event.newGroupId)),
+            );
+        };
+
+        const handlerDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
+            setDocumentGroups(
+                produce((draft) => previewDocumentGroupsSort(draft, event.documentGroup, event.position)),
+            );
         };
 
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
+        window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
+            window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
         };
     }, [documentGroups.size, refetch]);
 
     return { documentGroups: Array.from(documentGroups.values()), refetch, isLoading };
+};
+
+const previewDocumentSort = (
+    documentGroups: Map<number, DocumentGroup>,
+    document: DocumentMoveEvent['document'],
+    newPosition: DocumentMoveEvent['position'],
+    newGroupId: DocumentMoveEvent['newGroupId'],
+) => {
+    if (newGroupId || !document.sort) {
+        return documentGroups;
+    }
+
+    const previousPosition = document.sort;
+    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()];
+
+    documentGroups.clear();
+
+    for (const currentDocumentGroup of documentGroupsAsArray) {
+        const currentPosition = currentDocumentGroup.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition < currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : 0;
+        }
+
+        documentGroups.set(currentDocumentGroup.id, {
+            ...currentDocumentGroup,
+            sort: currentPosition + positionIncrease,
+        });
+    }
+
+    return documentGroups;
+};
+
+const previewDocumentGroupsSort = (
+    documentGroups: Map<number, DocumentGroup>,
+    documentGroup: DocumentGroupMoveEvent['documentGroup'],
+    newPosition: DocumentGroupMoveEvent['position'],
+) => {
+    if (!documentGroup.sort) {
+        return documentGroups;
+    }
+
+    const previousPosition = documentGroup.sort;
+    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()];
+
+    documentGroups.clear();
+
+    for (const currentDocumentGroup of documentGroupsAsArray) {
+        if (currentDocumentGroup.id === documentGroup.id) {
+            documentGroups.set(currentDocumentGroup.id, { ...currentDocumentGroup, sort: newPosition });
+            continue;
+        }
+
+        const currentPosition = currentDocumentGroup.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : 0;
+        }
+
+        documentGroups.set(currentDocumentGroup.id, {
+            ...currentDocumentGroup,
+            sort: currentPosition + positionIncrease,
+        });
+    }
+
+    return documentGroups;
 };
 
 const addDocument = (
