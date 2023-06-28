@@ -2,10 +2,10 @@
     "name": "root",
     "private": true,
     "scripts": {
-        "build": "pnpm build:app-bridge && pnpm build:sidebar-settings && pnpm build:guideline-packages && pnpm build:cli",
+        "build": "pnpm build:app-bridge && pnpm build:sidebar-settings && pnpm build:guideline-blocks && pnpm build:cli",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
         "build:sidebar-settings": "pnpm --stream --filter {packages/sidebar-settings} build",
-        "build:guideline-packages": "pnpm --stream --filter {packages/guideline-*} --parallel build",
+        "build:guideline-blocks": "pnpm --stream --filter {packages/guideline-blocks} build",
         "build:cli": "pnpm --stream --filter {packages/cli} build",
         "lint": "pnpm --stream --filter {packages/**} --parallel lint",
         "lint:fix": "pnpm --stream --filter {packages/**} --parallel lint:fix",

@@ -1,9 +1,8 @@
-name: Typing packages CI
+name: Sidebar Settings CI
 
 on:
     pull_request:
         paths:
-            - packages/guideline-blocks-settings/**
             - packages/sidebar-settings/**
 
 # Ensures that only one workflow per branch will run at a time.
@@ -16,7 +15,7 @@ env:
     CI: true
 
 jobs:
-    typing-packages-ci:
+    sidebar-settings-ci:
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -45,7 +44,7 @@ jobs:
               run: pnpm build:app-bridge
 
             - name: Lint code
-              run: pnpm --stream --filter {packages/guideline-blocks} --filter {packages/sidebar-settings} lint
+              run: pnpm --stream --filter {packages/sidebar-settings} lint
 
-            - name: Build packages (+ typechecking)
-              run: pnpm build:sidebar-settings && pnpm build:guideline-packages
+            - name: Build package (+ typechecking)
+              run: pnpm build:sidebar-settings
