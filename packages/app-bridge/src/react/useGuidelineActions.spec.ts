@@ -36,9 +36,13 @@ import {
 } from '../types';
 import { useUncategorizedDocumentPages } from './useUncategorizedDocumentPages';
 import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
+import { useUngroupedDocuments } from './useUngroupedDocuments';
 
 const DOCUMENT_ID_1 = 145;
 const DOCUMENT_ID_2 = 34532;
+const DOCUMENT_ID_3 = 2414;
+const DOCUMENT_ID_4 = 2342;
+const DOCUMENT_ID_5 = 2343445;
 const DOCUMENT_PAGE_ID_1 = 23442;
 const DOCUMENT_PAGE_ID_2 = 235345;
 const DOCUMENT_PAGE_ID_3 = 12352;
@@ -1899,6 +1903,72 @@ describe('useGuidelineActions hook', () => {
                 DOCUMENT_PAGE.id,
                 DOCUMENT_PAGE_ID_3,
                 DOCUMENT_PAGE_ID_4,
+            ]);
+        });
+    });
+
+    it('should sort a document', async () => {
+        const DOCUMENT = DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_5), sort: 5 });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchDocumentsSpy = vi.spyOn(appBridge, 'getUngroupedDocuments');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocument').mockResolvedValueOnce({
+            ...DOCUMENT,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        // Mock the response to add an extra category to the document category
+        fetchDocumentsSpy.mockResolvedValueOnce([
+            DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_1), sort: 1 }),
+            DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_2), sort: 2 }),
+            DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_3), sort: 3 }),
+            DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_4), sort: 4 }),
+            DOCUMENT,
+        ]);
+
+        const { result: ungroupedDocuments } = renderHook(() => useUngroupedDocuments(appBridge));
+
+        await waitFor(() => {
+            expect(ungroupedDocuments.current.documents.map((document) => document.id)).toEqual([
+                DOCUMENT_ID_1,
+                DOCUMENT_ID_2,
+                DOCUMENT_ID_3,
+                DOCUMENT_ID_4,
+                DOCUMENT_ID_5,
+            ]);
+        });
+
+        guidelineActions.current.moveDocument(DOCUMENT, 2);
+
+        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocument:MoveEvent',
+                    {
+                        document: {
+                            ...DOCUMENT,
+                            sort: 5,
+                        },
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:Action',
+                    {
+                        document: {
+                            ...DOCUMENT,
+                            sort: 2,
+                        },
+                        action: 'move',
+                    },
+                ],
             ]);
         });
     });
