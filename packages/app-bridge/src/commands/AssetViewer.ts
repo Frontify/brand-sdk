@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetViewerEvent, AssetViewerOnMethod } from '../types';
+import type { CommandResponse } from '../types';
 
-export interface AssetViewer {
-    dispatch(command: AssetViewerEvent): void;
-    on: AssetViewerOnMethod['AssetViewerOpen'];
-    off: AssetViewerOnMethod['AssetViewerOpen'];
-}
+export type AssetViewer = {
+    dispatch(command: 'AssetViewer'): CommandResponse['AssetViewer'];
+    dispatch(command: 'AssetChooser'): CommandResponse['AssetChooser'];
+};

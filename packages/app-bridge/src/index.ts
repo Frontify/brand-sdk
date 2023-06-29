@@ -13,5 +13,3 @@ export * from './react';
 export * from './tests';
 export * from './types';
 export * from './utilities';
-export * from './commands/AssetChooser';
-export * from './commands/AssetViewer';
