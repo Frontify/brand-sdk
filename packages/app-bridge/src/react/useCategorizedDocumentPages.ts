@@ -9,6 +9,8 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { DocumentPageTargetEvent } from './useDocumentPageTargets';
 
+type DocumentPagesMoveEvent = EmitterEvents['AppBridge:GuidelineDocumentPage:MoveEvent'];
+
 type Options = {
     /**
      * Whether it should fetch on mount.
@@ -48,6 +50,18 @@ export const useCategorizedDocumentPages = (
             }
         };
 
+        const handleDocumentPageMoveEvent = (event: DocumentPagesMoveEvent) => {
+            if (!documentPages.has(event.documentPage.id) || !event.categoryId) {
+                return;
+            }
+
+            setDocumentPages(
+                produce((draft) => {
+                    previewDocumentPagesSort(draft, event.documentPage, event.position);
+                }),
+            );
+        };
+
         const handler = ({ action, documentPage }: EmitterEvents['AppBridge:GuidelineDocumentPage:Action']) => {
             if (
                 (action === 'update' && documentPages.has(documentPage.id)) ||
@@ -69,14 +83,51 @@ export const useCategorizedDocumentPages = (
 
         window.emitter.on('AppBridge:GuidelineDocumentPage:Action', handler);
         window.emitter.on('AppBridge:GuidelineDocumentPageTargets:Action', refetchIfPageExistsInMap);
+        window.emitter.on('AppBridge:GuidelineDocumentPage:MoveEvent', handleDocumentPageMoveEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentPage:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentPageTargets:Action', refetchIfPageExistsInMap);
+            window.emitter.off('AppBridge:GuidelineDocumentPage:MoveEvent', handleDocumentPageMoveEvent);
         };
     }, [documentCategoryId, refetch, documentPages]);
 
     return { documentPages: Array.from(documentPages.values()), refetch, isLoading };
+};
+
+const previewDocumentPagesSort = (
+    documentPages: Map<number, DocumentPage>,
+    documentPage: DocumentPagesMoveEvent['documentPage'],
+    newPosition: DocumentPagesMoveEvent['position'],
+) => {
+    if (!documentPage.sort || !newPosition) {
+        return documentPages;
+    }
+
+    const previousPosition = documentPage.sort;
+    const documentPagesAsArray: DocumentPage[] = [...documentPages.values()];
+
+    documentPages.clear();
+
+    for (const currentDocumentPage of documentPagesAsArray) {
+        if (currentDocumentPage.id === documentPage.id) {
+            documentPages.set(currentDocumentPage.id, { ...currentDocumentPage, sort: newPosition });
+            continue;
+        }
+
+        const currentPosition = currentDocumentPage.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
+        }
+
+        documentPages.set(currentDocumentPage.id, {
+            ...currentDocumentPage,
+            sort: currentPosition + positionIncrease,
+        });
+    }
+
+    return documentPages;
 };
 
 const moveDocumentPage = (draft: Map<number, DocumentPage>, documentPage: DocumentPage) => {

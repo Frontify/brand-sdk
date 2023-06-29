@@ -9,6 +9,9 @@ import type { Document, EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
+type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:Action'];
+type DocumentMoveEvent = EmitterEvents['AppBridge:GuidelineDocument:MoveEvent'];
+type DocumentGroupMoveEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:MoveEvent'];
 
 type Options = {
     /**
@@ -67,6 +70,25 @@ export const useUngroupedDocuments = (
             );
         };
 
+        // handles when a document group is moved, refetches for updated positioning
+        const handleDocumentGroupUpdateEvent = (event: DocumentEvent) => {
+            if (event?.action === 'update' && documents.size > 0) {
+                refetch();
+            }
+        };
+
+        const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
+            if (!documents.has(event.document.id) || event.newGroupId) {
+                return;
+            }
+
+            setDocuments(produce((draft) => previewDocumentSort(draft, event.document, event.position)));
+        };
+
+        const handlerDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
+            setDocuments(produce((draft) => previewDocumentGroupSort(draft, event?.documentGroup, event.position)));
+        };
+
         const handler = ({ action, document }: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
             if (
                 ((action === 'update' || action === 'move') && documents.has(document.id)) ||
@@ -88,16 +110,81 @@ export const useUngroupedDocuments = (
         window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
+        window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
+            window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
         };
     }, [documents, options.enabled, refetch]);
 
     return { documents: Array.from(documents.values()), refetch, isLoading };
+};
+
+const previewDocumentSort = (
+    documents: Map<number, Document>,
+    document: DocumentMoveEvent['document'],
+    newPosition: DocumentMoveEvent['position'],
+) => {
+    if (!document.sort || !newPosition) {
+        return documents;
+    }
+
+    const previousPosition = document.sort;
+    const documentsAsArray: Document[] = [...documents.values()];
+
+    documents.clear();
+
+    for (const currentDocument of documentsAsArray) {
+        if (currentDocument.id === document.id) {
+            documents.set(currentDocument.id, { ...currentDocument, sort: newPosition });
+            continue;
+        }
+
+        const currentPosition = currentDocument.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
+        }
+
+        documents.set(currentDocument.id, { ...currentDocument, sort: currentPosition + positionIncrease });
+    }
+
+    return documents;
+};
+
+const previewDocumentGroupSort = (
+    documents: Map<number, Document>,
+    documentGroup: DocumentGroupMoveEvent['documentGroup'],
+    newPosition: DocumentGroupMoveEvent['position'],
+) => {
+    if (!documentGroup.sort) {
+        return documents;
+    }
+
+    const previousPosition = documentGroup.sort;
+    const documentsAsArray: Document[] = [...documents.values()];
+
+    documents.clear();
+
+    for (const currentDocument of documentsAsArray) {
+        const currentPosition = currentDocument.sort ?? 0;
+        let positionIncrease = 0;
+        if (newPosition <= currentPosition) {
+            positionIncrease = previousPosition > currentPosition ? 1 : 0;
+        }
+
+        documents.set(currentDocument.id, { ...currentDocument, sort: currentPosition + positionIncrease });
+    }
+
+    return documents;
 };
 
 const addDocumentPage = (documents: Map<number, Document>, documentPageToAdd: DocumentPageEvent['documentPage']) => {
