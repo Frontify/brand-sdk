@@ -9,7 +9,7 @@ export type LegacyTemplateInputBlock<AppBridge> = {
     type: 'legacyTemplateInput';
 
     /**
-     * Whether multiple assets can be selected.
+     * Whether multiple templates can be selected.
      */
     multiSelection?: boolean;
 } & BaseBlock<AppBridge, number>;
