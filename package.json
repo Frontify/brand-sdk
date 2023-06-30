@@ -24,6 +24,7 @@
         "@vitejs/plugin-react": "^2.2.0",
         "cypress": "^12.9.0",
         "cypress-real-events": "^1.7.6",
+        "glob": "^10.3.1",
         "husky": "^8.0.3",
         "is-ci": "^3.0.1",
         "react": "^18.2.0",
@@ -33,6 +34,5 @@
         "typescript": "^5.0.4",
         "vite": "^4.3.2",
         "vitest": "^0.25.0"
-    },
-    "dependencies": {}
+    }
 }
