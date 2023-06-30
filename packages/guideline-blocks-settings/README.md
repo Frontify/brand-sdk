@@ -7,10 +7,9 @@ Provides the block settings types for the guideline-blocks.
 ```ts
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { BlockSettings, Bundle } from '@frontify/guideline-blocks-settings';
-import { IconEnum } from '@frontify/fondue';
+import { IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
 
-export const settings: BlockSettings = {
+export const settings = defineSettings({
     main: [
         {
             id: 'example',
@@ -29,7 +28,7 @@ export const settings: BlockSettings = {
                     label: 'Line',
                 },
             ],
-            onChange: (bundle: Bundle): void => {
+            onChange: (bundle): void => {
                 const blockWidth = Number(bundle.getBlock('widthCustom')?.value);
                 if (!Number.isNaN(blockWidth)) {
                     bundle.setBlockValue('widthCustom', `${blockWidth}%`);
@@ -37,33 +36,25 @@ export const settings: BlockSettings = {
             },
         },
     ],
-};
+});
 ```
 
-# Shared Package
+# Block development helpers
 
 ## Code Structure
 
--   `components` (React components which are reused across multiple guideline-blocks)
--   `utilities` (Shared functionality without business logic)
--   `helpers` (Shared functionality with business logic)
-
-You can get more informations in our [best practices guide](https://weare.frontify.com/auth/?referer=%2Fdocument%2F1405%23/getting-started/best-pratices).
-
-## Development
-
-Run `npm run build:watch` to make changes directly available to the linked packages.
+-   `components` (React components which are reused across multiple blocks)
+-   `utilities` (functionality without business logic)
+-   `helpers` (functionality with business logic)
 
 ## Using components
 
-To use React components you need to modify the `tailwind.config.js` inside the consumer package the following way:
+To use React components, you need to add the styles import from the `@frontify/guideline-blocks-settings` package:
 
 ```
-module.exports = {
-    presets: [require('@frontify/fondue/tailwind'), require('../shared/tailwind.config')],
-    content: ['src/**/*.{ts,tsx}', '../shared/src/**/*.{ts,tsx}'],
-    corePlugins: {
-        preflight: false,
-    },
-};
+import '@frontify/guideline-blocks-settings/styles';
 ```
+
+## Development
+
+Run `pnpm build` to make changes directly available to the linked packages.
