@@ -394,7 +394,7 @@ describe('useUngroupedDocuments', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_2, NEW_DOCUMENT_3, NEW_DOCUMENT_4]);
+        expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_4, NEW_DOCUMENT_2, NEW_DOCUMENT_3]);
     });
 
     it('should update document sorting if a document group is moved', async () => {

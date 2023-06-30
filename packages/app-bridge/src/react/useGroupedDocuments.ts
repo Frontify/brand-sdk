@@ -124,33 +124,33 @@ const previewDocumentSort = (
         return documents;
     }
 
-    const previousPosition = document.sort;
-    const documentsAsArray: Document[] = [...documents.values()];
+    const previousDocument = documents.get(document.id);
+    const documentsAsArray: Document[] = [...documents.values()].sort(sortDocuments);
 
     documents.clear();
 
+    let sort = 1;
+    let isOnLastPosition = true;
     for (const currentDocument of documentsAsArray) {
-        if (currentDocument.documentGroupId !== newGroupId) {
+        if (currentDocument.id === document.id || currentDocument.documentGroupId !== newGroupId) {
             continue;
         }
 
-        if (currentDocument.id === document.id) {
-            documents.set(currentDocument.id, { ...currentDocument, sort: newPosition });
-            continue;
-        }
-
-        const currentPosition = currentDocument.sort ?? 0;
-        let positionIncrease = 0;
-        if (newPosition < currentPosition) {
-            positionIncrease = previousPosition > currentPosition ? 1 : 0;
-        } else if (newPosition === currentPosition) {
-            positionIncrease = previousPosition > currentPosition ? 1 : -1;
+        if (previousDocument && sort === newPosition) {
+            documents.set(document.id, { ...previousDocument, sort: newPosition });
+            isOnLastPosition = false;
         }
 
         documents.set(currentDocument.id, {
             ...currentDocument,
-            sort: currentPosition + positionIncrease,
+            sort,
         });
+
+        sort++;
+    }
+
+    if (previousDocument && isOnLastPosition) {
+        documents.set(document.id, { ...previousDocument, sort });
     }
 
     return documents;
