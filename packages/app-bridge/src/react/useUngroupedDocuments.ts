@@ -78,7 +78,7 @@ export const useUngroupedDocuments = (
         };
 
         const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
-            if (!documents.has(event.document.id) || event.newGroupId) {
+            if (!documents.has(event.document.id) || event.newGroupId || event.document.documentGroupId) {
                 return;
             }
 
@@ -138,13 +138,14 @@ const previewDocumentSort = (
     }
 
     const previousPosition = document.sort;
-    const documentsAsArray: Document[] = [...documents.values()];
+    const documentsAsArray: Document[] = [...documents.values()].sort(sortDocuments);
+    const newDocuments: Document[] = [];
 
     documents.clear();
 
     for (const currentDocument of documentsAsArray) {
         if (currentDocument.id === document.id) {
-            documents.set(currentDocument.id, { ...currentDocument, sort: newPosition });
+            newDocuments.push({ ...currentDocument, sort: newPosition });
             continue;
         }
 
@@ -154,7 +155,12 @@ const previewDocumentSort = (
             positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
         }
 
-        documents.set(currentDocument.id, { ...currentDocument, sort: currentPosition + positionIncrease });
+        newDocuments.push({ ...currentDocument, sort: currentPosition + positionIncrease });
+    }
+
+    const sortedNewDocuments = [...newDocuments].sort(sortDocuments);
+    for (const currentDocument of sortedNewDocuments) {
+        documents.set(currentDocument.id, currentDocument);
     }
 
     return documents;
@@ -170,7 +176,8 @@ const previewDocumentGroupSort = (
     }
 
     const previousPosition = documentGroup.sort;
-    const documentsAsArray: Document[] = [...documents.values()];
+    const documentsAsArray: Document[] = [...documents.values()].sort(sortDocuments);
+    const newDocuments: Document[] = [];
 
     documents.clear();
 
@@ -181,7 +188,12 @@ const previewDocumentGroupSort = (
             positionIncrease = previousPosition > currentPosition ? 1 : 0;
         }
 
-        documents.set(currentDocument.id, { ...currentDocument, sort: currentPosition + positionIncrease });
+        newDocuments.push({ ...currentDocument, sort: currentPosition + positionIncrease });
+    }
+
+    const sortedNewDocuments = [...newDocuments].sort(sortDocuments);
+    for (const currentDocument of sortedNewDocuments) {
+        documents.set(currentDocument.id, currentDocument);
     }
 
     return documents;

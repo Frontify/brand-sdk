@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CamelCasedPropertiesDeep } from 'type-fest';
+
 export type Template = {
     id: number;
     name: string;
@@ -9,8 +11,10 @@ export type Template = {
     pages: TemplatePage[];
 };
 
-export type TemplatePage = {
-    preview_url: string; // TODO: fix name inconsistency (Template.previewUrl)
+export type TemplatePageApi = {
+    preview_url: string;
     width: number;
     height: number;
 };
+
+export type TemplatePage = CamelCasedPropertiesDeep<TemplatePageApi>;

@@ -104,27 +104,33 @@ const previewDocumentPagesSort = (
         return documentPages;
     }
 
-    const previousPosition = documentPage.sort;
-    const documentPagesAsArray: DocumentPage[] = [...documentPages.values()];
+    const previousDocumentPage = documentPages.get(documentPage.id);
+    const documentPagesAsArray: DocumentPage[] = [...documentPages.values()].sort(sortDocumentPages);
 
     documentPages.clear();
 
+    let sort = 1;
+    let isOnLastPosition = true;
     for (const currentDocumentPage of documentPagesAsArray) {
         if (currentDocumentPage.id === documentPage.id) {
-            documentPages.set(currentDocumentPage.id, { ...currentDocumentPage, sort: newPosition });
             continue;
         }
 
-        const currentPosition = currentDocumentPage.sort ?? 0;
-        let positionIncrease = 0;
-        if (newPosition <= currentPosition) {
-            positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
+        if (previousDocumentPage && sort === newPosition) {
+            documentPages.set(documentPage.id, { ...previousDocumentPage, sort: newPosition });
+            isOnLastPosition = false;
         }
 
         documentPages.set(currentDocumentPage.id, {
             ...currentDocumentPage,
-            sort: currentPosition + positionIncrease,
+            sort,
         });
+
+        sort++;
+    }
+
+    if (previousDocumentPage && isOnLastPosition) {
+        documentPages.set(documentPage.id, { ...previousDocumentPage, sort });
     }
 
     return documentPages;

@@ -325,36 +325,24 @@ describe('useGroupedDocument', () => {
             ...DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
             sort: 1,
         });
-
         const DOCUMENT_2 = DocumentDummy.withFields({
             ...DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
             sort: 2,
         });
-        const NEW_DOCUMENT_2 = DocumentDummy.withFields({
-            ...DOCUMENT_2,
-            sort: 3,
-        });
-
         const DOCUMENT_3 = DocumentDummy.withFields({
             ...DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
             sort: 3,
         });
-        const NEW_DOCUMENT_3 = DocumentDummy.withFields({
-            ...DOCUMENT_3,
-            sort: 4,
-        });
-
         const DOCUMENT_4 = DocumentDummy.withFields({
             ...DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
             sort: 4,
         });
-
         const NEW_DOCUMENT_4 = DocumentDummy.withFields({
             ...DOCUMENT_4,
             sort: 2,
         });
 
-        spy.mockImplementationOnce(() => Promise.resolve([DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4]));
+        spy.mockImplementationOnce(() => Promise.resolve([DOCUMENT_1, DOCUMENT_4, DOCUMENT_2, DOCUMENT_3]));
 
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: true }));
 
@@ -378,6 +366,6 @@ describe('useGroupedDocument', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_2, NEW_DOCUMENT_3, NEW_DOCUMENT_4]);
+        expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_4, DOCUMENT_2, DOCUMENT_3]);
     });
 });

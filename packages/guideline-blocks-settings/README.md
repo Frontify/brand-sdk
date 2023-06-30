@@ -7,10 +7,9 @@ Provides the block settings types for the guideline-blocks.
 ```ts
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { BlockSettings, Bundle } from '@frontify/guideline-blocks-settings';
-import { IconEnum } from '@frontify/fondue';
+import { IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
 
-export const settings: BlockSettings = {
+export const settings = defineSettings({
     main: [
         {
             id: 'example',
@@ -29,7 +28,7 @@ export const settings: BlockSettings = {
                     label: 'Line',
                 },
             ],
-            onChange: (bundle: Bundle): void => {
+            onChange: (bundle): void => {
                 const blockWidth = Number(bundle.getBlock('widthCustom')?.value);
                 if (!Number.isNaN(blockWidth)) {
                     bundle.setBlockValue('widthCustom', `${blockWidth}%`);
@@ -37,5 +36,25 @@ export const settings: BlockSettings = {
             },
         },
     ],
-};
+});
 ```
+
+# Block development helpers
+
+## Code Structure
+
+-   `components` (React components which are reused across multiple blocks)
+-   `utilities` (functionality without business logic)
+-   `helpers` (functionality with business logic)
+
+## Using components
+
+To use React components, you need to add the styles import from the `@frontify/guideline-blocks-settings` package:
+
+```
+import '@frontify/guideline-blocks-settings/styles';
+```
+
+## Development
+
+Run `pnpm build` to make changes directly available to the linked packages.
