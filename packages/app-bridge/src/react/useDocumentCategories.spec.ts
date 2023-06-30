@@ -468,10 +468,6 @@ describe('useDocumentCategories', () => {
             ...DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 2),
             sort: 2,
         });
-        const NEW_CATEGORY_2 = DocumentCategoryDummy.withFields({
-            ...CATEGORY_2,
-            sort: 3,
-        });
         const CATEGORY_3 = DocumentCategoryDummy.withFields({
             ...DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
             sort: 3,
@@ -502,6 +498,6 @@ describe('useDocumentCategories', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        expect(result.current.documentCategories).toEqual([CATEGORY_1, NEW_CATEGORY_2, NEW_CATEGORY_3]);
+        expect(result.current.documentCategories).toEqual([CATEGORY_1, NEW_CATEGORY_3, CATEGORY_2]);
     });
 });

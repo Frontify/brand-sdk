@@ -172,7 +172,7 @@ describe('usedDocumentGroups', () => {
         const GROUP_3 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, 2), sort: 3 });
         const NEW_GROUP_3 = DocumentGroupDummy.withFields({ ...GROUP_3, sort: 2 });
 
-        spy.mockImplementationOnce(() => Promise.resolve([GROUP_1, GROUP_2, GROUP_3]));
+        spy.mockImplementationOnce(() => Promise.resolve([GROUP_1, GROUP_3, GROUP_2]));
         const { result } = renderHook(() => useDocumentGroups(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
@@ -190,7 +190,7 @@ describe('usedDocumentGroups', () => {
             expect(result.current.isLoading).toBe(false);
         });
 
-        expect(result.current.documentGroups).toEqual([GROUP_1, NEW_GROUP_2, NEW_GROUP_3]);
+        expect(result.current.documentGroups).toEqual([GROUP_1, NEW_GROUP_3, NEW_GROUP_2]);
     });
 
     it('should update document group if a document is moved', async () => {
