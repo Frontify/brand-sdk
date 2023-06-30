@@ -282,6 +282,6 @@ export const getAppBridgeThemeStub = ({
                 GuidelineSearchResultDummy.with(`${query}-1`),
                 GuidelineSearchResultDummy.with(`${query}-3`),
             ]);
-        }),
+        }), dispatch: stub<Parameters<AppBridgeTheme['dispatch']>>().resolves(),
     };
 };

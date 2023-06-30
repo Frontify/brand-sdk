@@ -11,6 +11,7 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    CommandResponse,
     Template,
     User,
 } from './types';

@@ -2,7 +2,7 @@
 
 import {
     Color,
-    ColorPalette,
+    ColorPalette, CommandResponse,
     Document,
     DocumentCategory,
     DocumentGroup,
@@ -44,4 +44,6 @@ export interface AppBridgeBase {
     getDocumentTargets(documentId: number): Promise<DocumentTargets>;
 
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
+
+    dispatch<K extends keyof CommandResponse>(eventName: K): CommandResponse[K];
 }

@@ -3,7 +3,7 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Template, User } from '../types';
+import {AssetChooserOptions, CommandResponse, Template, User} from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
@@ -12,6 +12,8 @@ import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
+import {stubObject} from "lodash-es";
+import {Dispatch} from "react";
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -24,6 +26,10 @@ export type getAppBridgeBlockStubProps = {
     editorState?: boolean;
     openAssetChooser?: (callback: Parameters<AppBridgeBlock['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
+    dispatch?: (eventName: string)=> {
+        on(): void;
+        close: () => void;
+    };
     blockId?: number;
     sectionId?: number;
     projectId?: number;
@@ -38,6 +44,7 @@ export const getAppBridgeBlockStub = ({
     editorState = false,
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
+    dispatch = (eventName: string) => { return { on: stub(), close: stub()}},
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
     projectId = PROJECT_ID,
@@ -73,10 +80,10 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
         createColorPalette: stub<Parameters<AppBridgeBlock['createColorPalette']>>().resolves(
-            ColorPaletteDummy.with(678),
+            ColorPaletteDummy.with(678)
         ),
         updateColorPalette: stub<Parameters<AppBridgeBlock['updateColorPalette']>>().resolves(
-            ColorPaletteDummy.with(678),
+            ColorPaletteDummy.with(678)
         ),
         getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
             ColorDummy.red(9834),
@@ -97,10 +104,10 @@ export const getAppBridgeBlockStub = ({
         getAvailableColors: stub<Parameters<AppBridgeBlock['getAvailableColors']>>().resolves([]),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
-            `/api/color/export/${PROJECT_ID}/zip/500`,
+            `/api/color/export/${PROJECT_ID}/zip/500`
         ),
         getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
-            Promise.resolve(AssetDummy.with(assetId)),
+            Promise.resolve(AssetDummy.with(assetId))
         ),
         closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
             closeAssetChooser();
@@ -122,7 +129,7 @@ export const getAppBridgeBlockStub = ({
         addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
             async (key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
-            },
+            }
         ),
         deleteAssetIdsFromBlockAssetKey: stub<
             Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>
@@ -136,15 +143,15 @@ export const getAppBridgeBlockStub = ({
             ColorDummy.yellow(9314),
         ]),
         updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
-            Promise.resolve(ColorDummy.red(colorId)),
+            Promise.resolve(ColorDummy.red(colorId))
         ),
 
         getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
-            BulkDownloadDummy.default(),
+            BulkDownloadDummy.default()
         ),
         getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
-            BulkDownloadDummy.default(),
+            BulkDownloadDummy.default()
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
 
@@ -171,5 +178,6 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
+        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };
