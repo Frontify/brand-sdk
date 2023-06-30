@@ -12,6 +12,7 @@ import type {
     ColorPalettePatch,
     ColorPatch,
     Template,
+    TemplateLegacy,
     User,
 } from './types';
 import { PrivacySettings } from './types/PrivacySettings';
@@ -31,7 +32,13 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     openAssetViewer(token: string): void;
 
-    getTemplateById(templateId: number): Promise<Template>;
+    getBlockTemplates(): Promise<Record<string, Template[]>>;
+
+    addTemplateIdsToBlockTemplateKey(key: string, templateIds: number[]): Promise<Record<string, Template[]>>;
+
+    deleteTemplateIdsFromBlockTemplateKey(key: string, templateIds: number[]): Promise<void>;
+
+    getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
     getColorsByIds(colorIds: number[]): Promise<Color[]>;
 
@@ -71,7 +78,7 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     closeAssetChooser(): void;
 
-    openTemplateChooser(callback: (selectedTemplate: Template) => void): void;
+    openTemplateChooser(callback: (selectedTemplate: TemplateLegacy) => void): void;
 
     closeTemplateChooser(): void;
 

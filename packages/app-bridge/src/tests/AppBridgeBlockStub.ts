@@ -3,7 +3,7 @@
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Template, User } from '../types';
+import { Template, TemplateLegacy, User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
@@ -12,6 +12,7 @@ import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
+import { TemplateDummy } from './TemplateDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -30,6 +31,7 @@ export type getAppBridgeBlockStubProps = {
     user?: User;
     language?: string;
     privacySettings?: PrivacySettings;
+    blockTemplates?: Record<string, Template[]>;
 };
 
 export const getAppBridgeBlockStub = ({
@@ -47,6 +49,7 @@ export const getAppBridgeBlockStub = ({
         assetViewerEnabled: false,
         assetDownloadEnabled: false,
     },
+    blockTemplates = {},
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
@@ -55,6 +58,8 @@ export const getAppBridgeBlockStub = ({
 
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
+    const deletedTemplateIds: Record<string, number[]> = {};
+    const addedTemplateIds: Record<string, number[]> = {};
 
     return {
         getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
@@ -129,6 +134,30 @@ export const getAppBridgeBlockStub = ({
         >().callsFake(async (key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
+        getBlockTemplates: stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(async () => {
+            return Object.entries(blockTemplates).reduce<Record<string, Template[]>>(
+                (templatesDiff, [key, templates]) => {
+                    const addedTemplateIdsList = addedTemplateIds[key] ?? [];
+                    const deletedTemplateIdsList = deletedTemplateIds[key] ?? [];
+                    templatesDiff[key] = [
+                        ...templates.filter((template) => !deletedTemplateIdsList.includes(template.id)),
+                        ...addedTemplateIdsList.map((id) => TemplateDummy.with(id)),
+                    ];
+                    return templatesDiff;
+                },
+                {},
+            );
+        }),
+        addTemplateIdsToBlockTemplateKey: stub<
+            Parameters<AppBridgeBlock['addTemplateIdsToBlockTemplateKey']>
+        >().callsFake(async (key, templateIds) => {
+            addedTemplateIds[key] = [...(addedTemplateIds[key] ?? []), ...templateIds];
+        }),
+        deleteTemplateIdsFromBlockTemplateKey: stub<
+            Parameters<AppBridgeBlock['deleteTemplateIdsFromBlockTemplateKey']>
+        >().callsFake(async (key, templateIds) => {
+            deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
+        }),
         getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
         getColors: stub<Parameters<AppBridgeBlock['getColors']>>().resolves([
             ColorDummy.red(9834),
@@ -153,7 +182,7 @@ export const getAppBridgeBlockStub = ({
         openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
         createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
         deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
-        getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as Template),
+        getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         openAssetViewer: stub<Parameters<AppBridgeBlock['openAssetViewer']>>(),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),

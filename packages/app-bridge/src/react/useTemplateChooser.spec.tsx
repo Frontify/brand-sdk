@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { afterEach, describe, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 
-import { Template } from '../types/Template';
+import { TemplateLegacy } from '../types/TemplateLegacy';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { useTemplateChooser } from './useTemplateChooser';
 import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
@@ -18,7 +18,7 @@ const TemplateChooserDummy = ({
     onTemplateChosen,
 }: {
     appBridge: AppBridgeBlock;
-    onTemplateChosen?: (selectedTemplate: Template) => void;
+    onTemplateChosen?: (selectedTemplate: TemplateLegacy) => void;
 }) => {
     const { openTemplateChooser, closeTemplateChooser } = useTemplateChooser(appBridge);
 

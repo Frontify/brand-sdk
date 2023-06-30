@@ -12,6 +12,7 @@ import type { DocumentGroup } from './DocumentGroup';
 import type { DocumentCategory } from './DocumentCategory';
 import type { BrandportalLink } from './BrandportalLink';
 import type { PrivacySettings } from './PrivacySettings';
+import type { Template } from './Template';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
@@ -23,6 +24,12 @@ export type EmitterEvents = {
         blockId: number;
         blockAssets: Record<string, Asset[]>;
         prevBlockAssets: Record<string, Asset[]>;
+    };
+
+    'AppBridge:BlockTemplatesUpdated': {
+        blockId: number;
+        blockTemplates: Record<string, Template[]>;
+        prevBlockTemplates: Record<string, Template[]>;
     };
 
     'AppBridge:ColorsUpdated': {
