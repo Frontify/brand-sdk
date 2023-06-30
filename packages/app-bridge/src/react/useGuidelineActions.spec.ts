@@ -37,8 +37,11 @@ import {
 import { useUncategorizedDocumentPages } from './useUncategorizedDocumentPages';
 import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
 import { useUngroupedDocuments } from './useUngroupedDocuments';
+import { useGroupedDocuments } from './useGroupedDocuments';
+import { useDocumentGroups } from './useDocumentGroups';
+import { useDocumentCategories } from './useDocumentCategories';
 
-const DOCUMENT_ID_1 = 145;
+const DOCUMENT_ID_1 = 6456;
 const DOCUMENT_ID_2 = 34532;
 const DOCUMENT_ID_3 = 2414;
 const DOCUMENT_ID_4 = 2342;
@@ -54,6 +57,10 @@ const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
 const UNCATEGORIZED_DOCUMENT_PAGE_ID_4 = 34563;
 const DOCUMENT_CATEGORY_ID_1 = 147;
 const DOCUMENT_CATEGORY_ID_2 = 258;
+const DOCUMENT_CATEGORY_ID_3 = 678;
+const DOCUMENT_GROUP_ID_1 = 345;
+const DOCUMENT_GROUP_ID_2 = 95694;
+const DOCUMENT_GROUP_ID_3 = 345882;
 
 describe('useGuidelineActions hook', () => {
     let useGuidelineActionsStub: ReturnType<typeof useGuidelineActions>;
@@ -1907,14 +1914,14 @@ describe('useGuidelineActions hook', () => {
         });
     });
 
-    it('should sort a document', async () => {
+    it('should move an ungrouped document and emit 2 events', async () => {
         const DOCUMENT = DocumentDummy.withFields({ ...DocumentDummy.with(DOCUMENT_ID_5), sort: 5 });
 
         const appBridge = getAppBridgeThemeStub();
         const fetchDocumentsSpy = vi.spyOn(appBridge, 'getUngroupedDocuments');
         const emitSpy = vi.spyOn(window.emitter, 'emit');
 
-        const moveDocumentPageSpy = vi.spyOn(appBridge, 'moveDocument').mockResolvedValueOnce({
+        const moveDocumentSpy = vi.spyOn(appBridge, 'moveDocument').mockResolvedValueOnce({
             ...DOCUMENT,
             sort: 2,
         });
@@ -1944,7 +1951,7 @@ describe('useGuidelineActions hook', () => {
 
         guidelineActions.current.moveDocument(DOCUMENT, 2);
 
-        expect(moveDocumentPageSpy).toHaveBeenCalledOnce();
+        expect(moveDocumentSpy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(emitSpy.mock.calls).toEqual([
@@ -1967,6 +1974,204 @@ describe('useGuidelineActions hook', () => {
                             sort: 2,
                         },
                         action: 'move',
+                    },
+                ],
+            ]);
+        });
+    });
+
+    it('should move a document into a group and emit 3 events', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const DOCUMENT_1 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_1),
+            sort: 1,
+        });
+        const DOCUMENT_2 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_2),
+            sort: 2,
+        });
+        const DOCUMENT_3 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_3),
+            sort: 3,
+        });
+        const DOCUMENT_4 = DocumentDummy.withFields({
+            ...DocumentDummy.with(DOCUMENT_ID_4),
+            sort: 4,
+        });
+
+        const moveGroupSpy = spy.mockResolvedValueOnce([DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4]);
+        const moveGroupSpyAfter = spy.mockResolvedValueOnce([DOCUMENT_2, DOCUMENT_3, DOCUMENT_4]);
+
+        const { result: groupedDocuments } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1));
+
+        expect(moveGroupSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(groupedDocuments.current.documents.map((document) => document.id)).toEqual([
+                DOCUMENT_ID_1,
+                DOCUMENT_ID_2,
+                DOCUMENT_ID_3,
+                DOCUMENT_ID_4,
+            ]);
+        });
+
+        guidelineActions.current.moveDocument(DOCUMENT_1, 5, DOCUMENT_GROUP_ID_2);
+
+        expect(moveGroupSpyAfter).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocument:MoveEvent',
+                    {
+                        document: DOCUMENT_1,
+                        position: 5,
+                        newGroupId: DOCUMENT_GROUP_ID_2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:Action',
+                    {
+                        document: DOCUMENT_1,
+                        action: 'delete',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocument:Action',
+                    {
+                        document: {
+                            ...DOCUMENT_1,
+                            sort: 5,
+                        },
+                        action: 'add',
+                    },
+                ],
+            ]);
+        });
+    });
+
+    it('should move a document group and emit 2 events', async () => {
+        const DOCUMENT_GROUP_1 = DocumentGroupDummy.withFields({
+            ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1),
+            sort: 1,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const fetchDocumentGroupsSpy = vi.spyOn(appBridge, 'getDocumentGroups');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const moveDocumentGroupSpy = vi.spyOn(appBridge, 'moveDocumentGroup').mockResolvedValueOnce({
+            ...DOCUMENT_GROUP_1,
+            sort: 2,
+        });
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        fetchDocumentGroupsSpy.mockResolvedValueOnce([
+            DOCUMENT_GROUP_1,
+            DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2), sort: 2 }),
+            DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3), sort: 3 }),
+        ]);
+
+        const { result: documentGroups } = renderHook(() => useDocumentGroups(appBridge));
+
+        await waitFor(() => {
+            expect(documentGroups.current.documentGroups.map((documentGroup) => documentGroup.id)).toEqual([
+                DOCUMENT_GROUP_ID_1,
+                DOCUMENT_GROUP_ID_2,
+                DOCUMENT_GROUP_ID_3,
+            ]);
+        });
+
+        guidelineActions.current.moveDocumentGroup(DOCUMENT_GROUP_1, 2);
+
+        expect(moveDocumentGroupSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentGroup:MoveEvent',
+                    {
+                        documentGroup: DOCUMENT_GROUP_1,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentGroup:Action',
+                    {
+                        documentGroup: {
+                            ...DOCUMENT_GROUP_1,
+                            sort: 2,
+                        },
+                        action: 'update',
+                    },
+                ],
+            ]);
+        });
+    });
+
+    it('should move a document category and emit 2 events', async () => {
+        const CATEGORY_1 = DocumentCategoryDummy.withFields({
+            ...DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_1),
+            sort: 1,
+        });
+        const CATEGORY_2 = DocumentCategoryDummy.withFields({
+            ...DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_2),
+            sort: 2,
+        });
+        const CATEGORY_3 = DocumentCategoryDummy.withFields({
+            ...DocumentCategoryDummy.with(DOCUMENT_CATEGORY_ID_3),
+            sort: 3,
+        });
+
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
+        const emitSpy = vi.spyOn(window.emitter, 'emit');
+
+        const { result: guidelineActions } = renderHook(() => useGuidelineActions(appBridge));
+
+        const categoriesSpy = spy.mockResolvedValueOnce([CATEGORY_1, CATEGORY_2, CATEGORY_3]);
+
+        const { result: documentCategories } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID_1));
+
+        expect(categoriesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(
+                documentCategories.current.documentCategories.map((documentCategory) => documentCategory.id),
+            ).toEqual([DOCUMENT_CATEGORY_ID_1, DOCUMENT_CATEGORY_ID_2, DOCUMENT_CATEGORY_ID_3]);
+        });
+
+        guidelineActions.current.moveDocumentCategory(CATEGORY_1, DOCUMENT_ID_1, 2);
+        expect(categoriesSpy).toHaveBeenCalledOnce();
+
+        await waitFor(() => {
+            expect(emitSpy.mock.calls).toEqual([
+                [
+                    'AppBridge:GuidelineDocumentCategory:MoveEvent',
+                    {
+                        documentCategory: CATEGORY_1,
+                        documentId: DOCUMENT_ID_1,
+                        position: 2,
+                        action: 'movePreview',
+                    },
+                ],
+                [
+                    'AppBridge:GuidelineDocumentCategory:Action',
+                    {
+                        documentCategory: {
+                            ...CATEGORY_1,
+                            documentId: DOCUMENT_ID_1,
+                            sort: 2,
+                        },
+                        action: 'update',
                     },
                 ],
             ]);
