@@ -158,7 +158,8 @@ const previewDocumentSort = (
         newDocuments.push({ ...currentDocument, sort: currentPosition + positionIncrease });
     }
 
-    for (const currentDocument of newDocuments.sort(sortDocuments)) {
+    const sortedNewDocuments = [...newDocuments].sort(sortDocuments);
+    for (const currentDocument of sortedNewDocuments) {
         documents.set(currentDocument.id, currentDocument);
     }
 
@@ -190,7 +191,8 @@ const previewDocumentGroupSort = (
         newDocuments.push({ ...currentDocument, sort: currentPosition + positionIncrease });
     }
 
-    for (const currentDocument of newDocuments.sort(sortDocuments)) {
+    const sortedNewDocuments = [...newDocuments].sort(sortDocuments);
+    for (const currentDocument of sortedNewDocuments) {
         documents.set(currentDocument.id, currentDocument);
     }
 

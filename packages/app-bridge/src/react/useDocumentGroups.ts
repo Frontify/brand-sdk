@@ -116,7 +116,8 @@ const previewDocumentSort = (
         });
     }
 
-    for (const currentDocumentGroup of newDocumentGroups.sort(sortDocumentGroups)) {
+    const sortedNewDocumentGroups = [...newDocumentGroups].sort(sortDocumentGroups);
+    for (const currentDocumentGroup of sortedNewDocumentGroups) {
         documentGroups.set(currentDocumentGroup.id, currentDocumentGroup);
     }
 
@@ -156,7 +157,8 @@ const previewDocumentGroupsSort = (
         });
     }
 
-    for (const currentDocumentGroup of newDocumentGroups.sort(sortDocumentGroups)) {
+    const sortedNewDocumentGroups = [...newDocumentGroups].sort(sortDocumentGroups);
+    for (const currentDocumentGroup of sortedNewDocumentGroups) {
         documentGroups.set(currentDocumentGroup.id, currentDocumentGroup);
     }
 
