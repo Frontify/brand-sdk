@@ -26,7 +26,7 @@ export type getAppBridgeBlockStubProps = {
     editorState?: boolean;
     openAssetChooser?: (callback: Parameters<AppBridgeBlock['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
-    dispatch?: (eventName: string)=> {
+    dispatch?: {
         on(): void;
         close: () => void;
     };
@@ -44,7 +44,7 @@ export const getAppBridgeBlockStub = ({
     editorState = false,
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
-    dispatch = (eventName: string) => { return { on: stub(), close: stub()}},
+    dispatch = { on: stub(), close: stub()},
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
     projectId = PROJECT_ID,
@@ -178,6 +178,6 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
+        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().returns(dispatch),
     };
 };

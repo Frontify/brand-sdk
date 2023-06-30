@@ -45,5 +45,5 @@ export interface AppBridgeBase {
 
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 
-    dispatch<K extends keyof CommandResponse>(eventName: K): CommandResponse[K];
+    dispatch<K extends keyof CommandResponse>(eventName: K): Promise<CommandResponse[K]>;
 }

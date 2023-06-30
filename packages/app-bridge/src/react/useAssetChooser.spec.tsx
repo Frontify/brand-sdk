@@ -5,10 +5,10 @@ import sinon from 'sinon';
 import { afterEach, describe, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 
-import type { Asset } from '../types/Asset';
+import type { Asset } from '../types';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { useAssetChooser } from './useAssetChooser';
-import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+import { withAppBridgeBlockStubs } from '../tests';
 
 const OPEN_ASSET_CHOOSER_BUTTON_ID = 'open-asset-chooser';
 const CLOSE_ASSET_CHOOSER_BUTTON_ID = 'close-asset-chooser';
@@ -48,11 +48,10 @@ describe('useReadyForPrint hook', () => {
 
     it.skip('should close the asset chooser', () => {
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
-        const { close } = appBridge.dispatch('AssetChooser.Open');
         const { getByTestId } = render(<BlockWithStubs />);
         const openAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        const { close: closeStub } = appBridge.dispatch('AssetChooser.Open');
         openAssetChooserButton.click();
-        // @ts-ignore // Will be removed. Added atm for pushing the updates to PR
-        sinon.assert.calledOnce(close);
+        sinon.assert.calledOnce(closeStub);
     });
 });
