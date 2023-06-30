@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { TemplateApi } from '../types';
+import type { TemplateApiLegacy } from '../types';
 
-export class TemplateApiDummy {
-    static with(id: number): TemplateApi {
+export class TemplateApiLegacyDummy {
+    static with(id: number): TemplateApiLegacy {
         return {
             asset_created: '2022-04-06',
             asset_modified: '2022-04-06',
