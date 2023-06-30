@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import 'tailwindcss/tailwind.css';
+
 import type { FC } from 'react';
 import type { AppBridgeBlock } from '@frontify/app-bridge';
 import type {
@@ -126,3 +128,9 @@ export const defineSettings = <
 >(
     settingsStructure: T
 ): T => settingsStructure;
+
+export * from './components';
+export * from './helpers';
+export * from './hooks';
+export * from './settings';
+export * from './utilities';
