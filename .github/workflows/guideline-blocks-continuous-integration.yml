@@ -13,6 +13,7 @@ concurrency:
 env:
     NODE_VERSION: 18
     CI: true
+    NUMBER_OF_RUNNERS: 4
 
 jobs:
     lint-typecheck:
@@ -52,7 +53,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                containers: [0, 1, 2, 3, 4, 5, 6]
+                containers: [0, 1, 2, 3]
 
         steps:
             - name: Checkout current commit
