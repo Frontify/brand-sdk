@@ -96,7 +96,8 @@ const previewDocumentSort = (
     }
 
     const previousPosition = document.sort;
-    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()];
+    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()].sort(sortDocumentGroups);
+    const newDocumentGroups: DocumentGroup[] = [];
 
     documentGroups.clear();
 
@@ -104,13 +105,19 @@ const previewDocumentSort = (
         const currentPosition = currentDocumentGroup.sort ?? 0;
         let positionIncrease = 0;
         if (newPosition < currentPosition) {
-            positionIncrease = previousPosition > currentPosition ? 1 : 0;
+            positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
+        } else {
+            positionIncrease = previousPosition <= currentPosition ? -1 : 0;
         }
 
-        documentGroups.set(currentDocumentGroup.id, {
+        newDocumentGroups.push({
             ...currentDocumentGroup,
             sort: currentPosition + positionIncrease,
         });
+    }
+
+    for (const currentDocumentGroup of newDocumentGroups.sort(sortDocumentGroups)) {
+        documentGroups.set(currentDocumentGroup.id, currentDocumentGroup);
     }
 
     return documentGroups;
@@ -126,13 +133,14 @@ const previewDocumentGroupsSort = (
     }
 
     const previousPosition = documentGroup.sort;
-    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()];
+    const documentGroupsAsArray: DocumentGroup[] = [...documentGroups.values()].sort(sortDocumentGroups);
+    const newDocumentGroups: DocumentGroup[] = [];
 
     documentGroups.clear();
 
     for (const currentDocumentGroup of documentGroupsAsArray) {
         if (currentDocumentGroup.id === documentGroup.id) {
-            documentGroups.set(currentDocumentGroup.id, { ...currentDocumentGroup, sort: newPosition });
+            newDocumentGroups.push({ ...currentDocumentGroup, sort: newPosition });
             continue;
         }
 
@@ -142,10 +150,14 @@ const previewDocumentGroupsSort = (
             positionIncrease = previousPosition > currentPosition ? 1 : 0;
         }
 
-        documentGroups.set(currentDocumentGroup.id, {
+        newDocumentGroups.push({
             ...currentDocumentGroup,
             sort: currentPosition + positionIncrease,
         });
+    }
+
+    for (const currentDocumentGroup of newDocumentGroups.sort(sortDocumentGroups)) {
+        documentGroups.set(currentDocumentGroup.id, currentDocumentGroup);
     }
 
     return documentGroups;

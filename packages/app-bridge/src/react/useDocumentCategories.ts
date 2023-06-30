@@ -106,27 +106,33 @@ const previewDocumentCategorySort = (
         return documentCategories;
     }
 
-    const previousPosition = documentCategory.sort;
-    const documentCategoriessAsArray: DocumentCategory[] = [...documentCategories.values()];
+    const previousCategory = documentCategories.get(documentCategory.id);
+    const documentCategoriesAsArray: DocumentCategory[] = [...documentCategories.values()].sort(sortDocumentCategories);
 
     documentCategories.clear();
 
-    for (const currentDocumentCategory of documentCategoriessAsArray) {
+    let sort = 1;
+    let isOnLastPosition = true;
+    for (const currentDocumentCategory of documentCategoriesAsArray) {
         if (currentDocumentCategory.id === documentCategory.id) {
-            documentCategories.set(currentDocumentCategory.id, { ...currentDocumentCategory, sort: newPosition });
             continue;
         }
 
-        const currentPosition = currentDocumentCategory.sort ?? 0;
-        let positionIncrease = 0;
-        if (newPosition <= currentPosition) {
-            positionIncrease = previousPosition > currentPosition || previousPosition === 0 ? 1 : 0;
+        if (previousCategory && sort === newPosition) {
+            documentCategories.set(documentCategory.id, { ...previousCategory, sort: newPosition });
+            isOnLastPosition = false;
         }
 
         documentCategories.set(currentDocumentCategory.id, {
             ...currentDocumentCategory,
-            sort: currentPosition + positionIncrease,
+            sort,
         });
+
+        sort++;
+    }
+
+    if (previousCategory && isOnLastPosition) {
+        documentCategories.set(documentCategory.id, { ...previousCategory, sort });
     }
 
     return documentCategories;
