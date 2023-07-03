@@ -175,8 +175,8 @@ export const getAppBridgeBlockStub = ({
             switch(action) {
                 case "AssetChooser.Open":
                     return new Promise((resolve => resolve({
-                        on: spy(),
-                        off: spy(),
+                        on: stub(),
+                        close: stub(),
                     })));
             }
         }),

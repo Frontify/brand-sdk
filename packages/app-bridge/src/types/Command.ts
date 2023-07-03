@@ -5,7 +5,7 @@ import { AssetChooserOptions } from './Terrific';
 
 export type CommandResponse = {
     'AssetChooser.Open': {
-        on(event: 'assetsSelected', callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
+        on(event: 'AssetChooserAssetChosen', callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
         close: () => void;
     };
 };

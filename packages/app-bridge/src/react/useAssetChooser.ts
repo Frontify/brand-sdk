@@ -10,13 +10,7 @@ type UseAssetChooserType = {
 };
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
-    const [assetChooser, setAssetChooser] = useState<CommandResponse['AssetChooser.Open']>();
-
-    useEffect(() => {
-        if(assetChooser) {
-            console.log('assetChooser', assetChooser);
-        }
-    }, [assetChooser]);
+    const [assetChooser, setAssetChooser] = useState<CommandResponse['AssetChooser.Open'] | null>(null);
 
     return {
         openAssetChooser:  async () => {
