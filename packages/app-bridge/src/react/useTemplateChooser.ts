@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Template } from '../types/Template';
+import type { TemplateLegacy } from '../types/TemplateLegacy';
 
 type UseTemplateChooserType = {
-    openTemplateChooser: (callback: (selectedTemplate: Template) => void) => void;
+    openTemplateChooser: (callback: (selectedTemplate: TemplateLegacy) => void) => void;
     closeTemplateChooser: () => void;
 };
 

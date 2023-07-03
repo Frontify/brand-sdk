@@ -20,4 +20,10 @@ export class DocumentCategoryDummy {
             'camel',
         );
     }
+
+    static withFields(fields: DocumentCategory): DocumentCategory {
+        return {
+            ...fields,
+        };
+    }
 }

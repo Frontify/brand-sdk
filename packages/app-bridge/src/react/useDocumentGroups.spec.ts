@@ -161,4 +161,66 @@ describe('usedDocumentGroups', () => {
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, 2),
         ]);
     });
+
+    it('should update document group if a document group is moved', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getDocumentGroups');
+
+        const GROUP_1 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, 2), sort: 1 });
+        const GROUP_2 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, 2), sort: 2 });
+        const NEW_GROUP_2 = DocumentGroupDummy.withFields({ ...GROUP_2, sort: 3 });
+        const GROUP_3 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, 2), sort: 3 });
+        const NEW_GROUP_3 = DocumentGroupDummy.withFields({ ...GROUP_3, sort: 2 });
+
+        spy.mockImplementationOnce(() => Promise.resolve([GROUP_1, GROUP_3, GROUP_2]));
+        const { result } = renderHook(() => useDocumentGroups(appBridge, { enabled: true }));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        window.emitter.emit('AppBridge:GuidelineDocumentGroup:MoveEvent', {
+            action: 'movePreview',
+            documentGroup: { id: DOCUMENT_GROUP_ID_3, sort: 3 },
+            position: 2,
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+        });
+
+        expect(result.current.documentGroups).toEqual([GROUP_1, NEW_GROUP_3, NEW_GROUP_2]);
+    });
+
+    it('should update document group if a document is moved', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getDocumentGroups');
+
+        const GROUP_1 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_1, 2), sort: 1 });
+        const GROUP_2 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, 2), sort: 2 });
+        const GROUP_3 = DocumentGroupDummy.withFields({ ...DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, 2), sort: 3 });
+        const NEW_GROUP_3 = DocumentGroupDummy.withFields({ ...GROUP_3, sort: 4 });
+
+        spy.mockImplementationOnce(() => Promise.resolve([GROUP_1, GROUP_2, GROUP_3]));
+        const { result } = renderHook(() => useDocumentGroups(appBridge, { enabled: true }));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+        window.emitter.emit('AppBridge:GuidelineDocument:MoveEvent', {
+            action: 'movePreview',
+            document: { id: DOCUMENT_ID_1, sort: 4 },
+            newGroupId: null,
+            position: 2,
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+        });
+
+        expect(result.current.documentGroups).toEqual([GROUP_1, GROUP_2, NEW_GROUP_3]);
+    });
 });

@@ -455,4 +455,49 @@ describe('useDocumentCategories', () => {
             DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
         ]);
     });
+
+    it('should update document categories sort if a category is moved', async () => {
+        const appBridge = getAppBridgeThemeStub();
+        const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
+
+        const CATEGORY_1 = DocumentCategoryDummy.withFields({
+            ...DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
+            sort: 1,
+        });
+        const CATEGORY_2 = DocumentCategoryDummy.withFields({
+            ...DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 2),
+            sort: 2,
+        });
+        const CATEGORY_3 = DocumentCategoryDummy.withFields({
+            ...DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
+            sort: 3,
+        });
+        const NEW_CATEGORY_3 = DocumentCategoryDummy.withFields({
+            ...CATEGORY_3,
+            sort: 2,
+        });
+
+        spy.mockImplementationOnce(() => Promise.resolve([CATEGORY_1, CATEGORY_2, CATEGORY_3]));
+
+        const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
+
+        expect(result.current.isLoading).toBe(true);
+        expect(spy).toHaveBeenCalledOnce();
+
+        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        expect(result.current.documentCategories).toEqual([CATEGORY_1, CATEGORY_2, CATEGORY_3]);
+
+        window.emitter.emit('AppBridge:GuidelineDocumentCategory:MoveEvent', {
+            action: 'movePreview',
+            documentCategory: { id: DOCUMENT_CATEGORY_ID_3, documentId: DOCUMENT_ID, sort: 3 },
+            documentId: DOCUMENT_ID,
+            position: 2,
+        });
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+        });
+
+        expect(result.current.documentCategories).toEqual([CATEGORY_1, NEW_CATEGORY_3, CATEGORY_2]);
+    });
 });

@@ -9,6 +9,7 @@ import type { Document, EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
+type DocumentMoveEvent = EmitterEvents['AppBridge:GuidelineDocument:MoveEvent'];
 
 type Options = {
     /**
@@ -68,6 +69,16 @@ export const useGroupedDocuments = (
             );
         };
 
+        const handlerDocumentMoveEventPreview = (event: DocumentMoveEvent) => {
+            if (!documents.has(event.document.id) || event.newGroupId !== documentGroupId) {
+                return;
+            }
+
+            setDocuments(
+                produce((draft) => previewDocumentSort(draft, event.document, event.position, event.newGroupId)),
+            );
+        };
+
         const handler = ({ action, document }: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
             if (
                 ((action === 'update' || action === 'move') && documents.has(document.id)) ||
@@ -89,16 +100,60 @@ export const useGroupedDocuments = (
         window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
+        window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
+            window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
         };
     }, [documentGroupId, documents, options.enabled, refetch]);
 
     return { documents: Array.from(documents.values()), refetch, isLoading };
+};
+
+const previewDocumentSort = (
+    documents: Map<number, Document>,
+    document: DocumentMoveEvent['document'],
+    newPosition: DocumentMoveEvent['position'],
+    newGroupId: DocumentMoveEvent['newGroupId'],
+) => {
+    if (!document.sort) {
+        return documents;
+    }
+
+    const previousDocument = documents.get(document.id);
+    const documentsAsArray: Document[] = [...documents.values()].sort(sortDocuments);
+
+    documents.clear();
+
+    let sort = 1;
+    let isOnLastPosition = true;
+    for (const currentDocument of documentsAsArray) {
+        if (currentDocument.id === document.id || currentDocument.documentGroupId !== newGroupId) {
+            continue;
+        }
+
+        if (previousDocument && sort === newPosition) {
+            documents.set(document.id, { ...previousDocument, sort: newPosition });
+            isOnLastPosition = false;
+        }
+
+        documents.set(currentDocument.id, {
+            ...currentDocument,
+            sort,
+        });
+
+        sort++;
+    }
+
+    if (previousDocument && isOnLastPosition) {
+        documents.set(document.id, { ...previousDocument, sort });
+    }
+
+    return documents;
 };
 
 const addDocumentPage = (documents: Map<number, Document>, documentPageToAdd: DocumentPageEvent['documentPage']) => {

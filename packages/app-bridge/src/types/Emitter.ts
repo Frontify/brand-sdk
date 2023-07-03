@@ -12,6 +12,7 @@ import type { DocumentGroup } from './DocumentGroup';
 import type { DocumentCategory } from './DocumentCategory';
 import type { BrandportalLink } from './BrandportalLink';
 import type { PrivacySettings } from './PrivacySettings';
+import type { Template } from './Template';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
@@ -23,6 +24,12 @@ export type EmitterEvents = {
         blockId: number;
         blockAssets: Record<string, Asset[]>;
         prevBlockAssets: Record<string, Asset[]>;
+    };
+
+    'AppBridge:BlockTemplatesUpdated': {
+        blockId: number;
+        blockTemplates: Record<string, Template[]>;
+        prevBlockTemplates: Record<string, Template[]>;
     };
 
     'AppBridge:ColorsUpdated': {
@@ -133,5 +140,33 @@ export type EmitterEvents = {
 
     'AppBridge:ViewerOpened': {
         token: string;
+    };
+
+    'AppBridge:GuidelineDocumentPage:MoveEvent': {
+        documentPage: DocumentPage | { id: number; sort?: Nullable<number> };
+        documentId: number;
+        categoryId?: Nullable<number>;
+        position?: number;
+        action: 'movePreview';
+    };
+
+    'AppBridge:GuidelineDocumentCategory:MoveEvent': {
+        documentCategory: DocumentCategory | { id: number; sort?: Nullable<number> };
+        documentId: number;
+        position: number;
+        action: 'movePreview';
+    };
+
+    'AppBridge:GuidelineDocument:MoveEvent': {
+        document: Document | { id: number; sort?: Nullable<number>; documentGroupId?: Nullable<number> };
+        position: number;
+        newGroupId?: Nullable<number>;
+        action: 'movePreview';
+    };
+
+    'AppBridge:GuidelineDocumentGroup:MoveEvent': {
+        documentGroup: DocumentGroup | { id: number; sort?: Nullable<number> };
+        position: number;
+        action: 'movePreview';
     };
 };

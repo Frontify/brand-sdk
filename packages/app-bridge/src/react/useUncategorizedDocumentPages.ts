@@ -9,6 +9,8 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 
 import { DocumentPageTargetEvent } from './useDocumentPageTargets';
 
+type DocumentPagesMoveEvent = EmitterEvents['AppBridge:GuidelineDocumentPage:MoveEvent'];
+
 type Options = {
     /**
      * Whether it should fetch on mount.
@@ -48,6 +50,18 @@ export const useUncategorizedDocumentPages = (
             }
         };
 
+        const handleDocumentPageMoveEvent = (event: DocumentPagesMoveEvent) => {
+            if (!documentPages.has(event.documentPage.id) || event.categoryId) {
+                return;
+            }
+
+            setDocumentPages(
+                produce((draft) => {
+                    previewDocumentPagesSort(draft, event.documentPage, event.position);
+                }),
+            );
+        };
+
         const handler = ({ action, documentPage }: EmitterEvents['AppBridge:GuidelineDocumentPage:Action']) => {
             if (
                 (action === 'update' && documentPages.has(documentPage.id)) ||
@@ -69,14 +83,57 @@ export const useUncategorizedDocumentPages = (
 
         window.emitter.on('AppBridge:GuidelineDocumentPage:Action', handler);
         window.emitter.on('AppBridge:GuidelineDocumentPageTargets:Action', refetchIfPageExistsInMap);
+        window.emitter.on('AppBridge:GuidelineDocumentPage:MoveEvent', handleDocumentPageMoveEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentPage:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentPageTargets:Action', refetchIfPageExistsInMap);
+            window.emitter.off('AppBridge:GuidelineDocumentPage:MoveEvent', handleDocumentPageMoveEvent);
         };
     }, [documentId, refetch, documentPages]);
 
     return { documentPages: Array.from(documentPages.values()), refetch, isLoading };
+};
+
+const previewDocumentPagesSort = (
+    documentPages: Map<number, DocumentPage>,
+    documentPage: DocumentPagesMoveEvent['documentPage'],
+    newPosition: DocumentPagesMoveEvent['position'],
+) => {
+    if (!documentPage.sort || !newPosition) {
+        return documentPages;
+    }
+
+    const previousDocumentPage = documentPages.get(documentPage.id);
+    const documentPagesAsArray: DocumentPage[] = [...documentPages.values()].sort(sortDocumentPages);
+
+    documentPages.clear();
+
+    let sort = 1;
+    let isOnLastPosition = true;
+    for (const currentDocumentPage of documentPagesAsArray) {
+        if (currentDocumentPage.id === documentPage.id) {
+            continue;
+        }
+
+        if (previousDocumentPage && sort === newPosition) {
+            documentPages.set(documentPage.id, { ...previousDocumentPage, sort: newPosition });
+            isOnLastPosition = false;
+        }
+
+        documentPages.set(currentDocumentPage.id, {
+            ...currentDocumentPage,
+            sort,
+        });
+
+        sort++;
+    }
+
+    if (previousDocumentPage && isOnLastPosition) {
+        documentPages.set(documentPage.id, { ...previousDocumentPage, sort });
+    }
+
+    return documentPages;
 };
 
 const moveDocumentPage = (draft: Map<number, DocumentPage>, documentPage: DocumentPage) => {

@@ -8,6 +8,7 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentCategory, EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocumentCategory:DocumentPageAction'];
+type DocumentCategoryMoveEvent = EmitterEvents['AppBridge:GuidelineDocumentCategory:MoveEvent'];
 
 type Options = {
     /**
@@ -55,6 +56,18 @@ export const useDocumentCategories = (
             );
         };
 
+        const handleDocumentCategoryMoveEvent = (event: DocumentCategoryMoveEvent) => {
+            if (!documentCategories.has(event.documentCategory.id)) {
+                return;
+            }
+
+            setDocumentCategories(
+                produce((draft) => {
+                    previewDocumentCategorySort(draft, event.documentCategory, event.position);
+                }),
+            );
+        };
+
         const handler = ({ action, documentCategory }: EmitterEvents['AppBridge:GuidelineDocumentCategory:Action']) => {
             if (
                 (action === 'update' && documentCategories.has(documentCategory.id)) ||
@@ -72,14 +85,57 @@ export const useDocumentCategories = (
 
         window.emitter.on('AppBridge:GuidelineDocumentCategory:Action', handler);
         window.emitter.on('AppBridge:GuidelineDocumentCategory:DocumentPageAction', handleDocumentPageEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentCategory:MoveEvent', handleDocumentCategoryMoveEvent);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentCategory:Action', handler);
             window.emitter.off('AppBridge:GuidelineDocumentCategory:DocumentPageAction', handleDocumentPageEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentCategory:MoveEvent', handleDocumentCategoryMoveEvent);
         };
     }, [documentCategories, documentId, refetch]);
 
     return { documentCategories: Array.from(documentCategories.values()), refetch, isLoading };
+};
+
+const previewDocumentCategorySort = (
+    documentCategories: Map<number, DocumentCategory>,
+    documentCategory: DocumentCategoryMoveEvent['documentCategory'],
+    newPosition: DocumentCategoryMoveEvent['position'],
+) => {
+    if (!documentCategory.sort || !newPosition) {
+        return documentCategories;
+    }
+
+    const previousCategory = documentCategories.get(documentCategory.id);
+    const documentCategoriesAsArray: DocumentCategory[] = [...documentCategories.values()].sort(sortDocumentCategories);
+
+    documentCategories.clear();
+
+    let sort = 1;
+    let isOnLastPosition = true;
+    for (const currentDocumentCategory of documentCategoriesAsArray) {
+        if (currentDocumentCategory.id === documentCategory.id) {
+            continue;
+        }
+
+        if (previousCategory && sort === newPosition) {
+            documentCategories.set(documentCategory.id, { ...previousCategory, sort: newPosition });
+            isOnLastPosition = false;
+        }
+
+        documentCategories.set(currentDocumentCategory.id, {
+            ...currentDocumentCategory,
+            sort,
+        });
+
+        sort++;
+    }
+
+    if (previousCategory && isOnLastPosition) {
+        documentCategories.set(documentCategory.id, { ...previousCategory, sort });
+    }
+
+    return documentCategories;
 };
 
 const addDocumentPage = (
