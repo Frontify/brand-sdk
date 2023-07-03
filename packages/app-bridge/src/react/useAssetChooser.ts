@@ -5,16 +5,23 @@ import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions, CommandResponse } from '../types';
 
 type UseAssetChooserType = {
-    openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;
+    openAssetChooser: (options: AssetChooserOptions) => void;
     closeAssetChooser: () => void;
 };
 
-export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
+export const useAssetChooser = (
+    appBridge: AppBridgeBlock,
+    onAssetChosenCallback?: (selectedAssets: Asset[]) => void,
+): UseAssetChooserType => {
     const [assetChooser, setAssetChooser] = useState<CommandResponse['AssetChooser.Open'] | null>(null);
 
     return {
-        openAssetChooser: async () => {
-            const dispatchResponse = await appBridge.dispatch('AssetChooser.Open');
+        openAssetChooser: async (options: AssetChooserOptions) => {
+            const dispatchResponse = await appBridge.dispatch('AssetChooser.Open', { options });
+            dispatchResponse.on(
+                'AssetChooserAssetChosen',
+                onAssetChosenCallback ? { callback: onAssetChosenCallback } : undefined,
+            );
             setAssetChooser(dispatchResponse);
         },
         closeAssetChooser: async () => {

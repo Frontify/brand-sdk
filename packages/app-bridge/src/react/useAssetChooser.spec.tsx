@@ -20,14 +20,11 @@ const AssetChooserDummy = ({
     appBridge: AppBridgeBlock;
     onAssetChosen?: (selectedAssets: Asset[]) => void;
 }) => {
-    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge);
+    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge, onAssetChosen);
 
     return (
         <>
-            <button
-                data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID}
-                onClick={() => openAssetChooser(onAssetChosen ?? (() => null), {})}
-            />
+            <button data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID} onClick={() => openAssetChooser({})} />
             <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} />
         </>
     );
