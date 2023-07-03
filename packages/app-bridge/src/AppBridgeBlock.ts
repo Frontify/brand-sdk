@@ -32,10 +32,6 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
-    /**
-     * @deprecated Use dispatch(`openAssetViewer`) command instead
-     * This will be removed in version 4.0.0 of @frontify/app-bridge
-     */
     openAssetViewer(token: string): void;
 
     getBlockTemplates(): Promise<Record<string, Template[]>>;
@@ -80,8 +76,16 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;
 
+    /**
+     * @deprecated Use appBridge.dispatch(`AssetChooser.Open`) instead
+     * This will be removed in version 4.0.0 of @frontify/app-bridge
+     */
     openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
 
+    /**
+     * @deprecated Use appBridge.dispatch(`AssetChooser.Open`).close() instead
+     * This will be removed in version 4.0.0 of @frontify/app-bridge
+     */
     closeAssetChooser(): void;
 
     openTemplateChooser(callback: (selectedTemplate: TemplateLegacy) => void): void;
