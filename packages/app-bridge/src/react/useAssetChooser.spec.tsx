@@ -53,5 +53,6 @@ describe('useReadyForPrint hook', () => {
         const openAssetChooserCloseButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
         openAssetChooserCloseButton.click();
+        await sinon.assert.calledOnce(appBridge.dispatch);
     });
 });

@@ -89,4 +89,6 @@ export interface AppBridgeBlock extends AppBridgeBase {
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 
     getPrivacySettings(): PrivacySettings;
+
+    dispatch<K extends keyof CommandResponse>(eventName: K): Promise<CommandResponse[K]>;
 }
