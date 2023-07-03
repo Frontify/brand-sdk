@@ -5,29 +5,26 @@ import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions, BlockCommandResponse } from '../types';
 
 type UseAssetChooserType = {
-    openAssetChooser: (options: AssetChooserOptions) => void;
+    openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;
     closeAssetChooser: () => void;
 };
 
-export const useAssetChooser = (
-    appBridge: AppBridgeBlock,
-    onAssetChosenCallback?: (selectedAssets: Asset[]) => void,
-): UseAssetChooserType => {
+export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     const [assetChooser, setAssetChooser] = useState<BlockCommandResponse['AssetChooser.Open'] | null>(null);
 
     return {
-        openAssetChooser: async (options: AssetChooserOptions) => {
-            const dispatchResponse = await appBridge.dispatch('AssetChooser.Open', { options });
-            dispatchResponse.on(
-                'AssetChooserAssetChosen',
-                onAssetChosenCallback ? { callback: onAssetChosenCallback } : undefined,
-            );
-            setAssetChooser(dispatchResponse);
+        openAssetChooser: (callback, options) => {
+            appBridge
+                .dispatch('AssetChooser.Open', {
+                    options,
+                })
+                .then((registeredAssetChooser) => {
+                    registeredAssetChooser.on('AssetChosen', (selectedAssets) => callback(selectedAssets));
+                    setAssetChooser(registeredAssetChooser);
+                });
         },
-        closeAssetChooser: async () => {
-            if (assetChooser) {
-                assetChooser.close();
-            }
+        closeAssetChooser: () => {
+            assetChooser?.close();
         },
     };
 };

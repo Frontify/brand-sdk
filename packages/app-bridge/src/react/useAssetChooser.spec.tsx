@@ -20,11 +20,14 @@ const AssetChooserDummy = ({
     appBridge: AppBridgeBlock;
     onAssetChosen?: (selectedAssets: Asset[]) => void;
 }) => {
-    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge, onAssetChosen);
+    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge);
 
     return (
         <>
-            <button data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID} onClick={() => openAssetChooser({})} />
+            <button
+                data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID}
+                onClick={() => openAssetChooser(onAssetChosen ?? (() => null), {})}
+            />
             <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} />
         </>
     );
@@ -40,7 +43,7 @@ describe('useReadyForPrint hook', () => {
         const { getByTestId } = render(<BlockWithStubs />);
         const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
-        await sinon.assert.calledOnce(appBridge.dispatch);
+        sinon.assert.calledOnce(appBridge.dispatch);
     });
 
     it.skip('should close the asset chooser', async () => {
@@ -56,6 +59,6 @@ describe('useReadyForPrint hook', () => {
 
         closeAssetChooserButton.click();
 
-        await sinon.assert.calledOnce(closeSpy as SinonStub);
+        sinon.assert.calledOnce(closeSpy as SinonStub);
     });
 });

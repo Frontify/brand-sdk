@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mitt, { Emitter } from 'mitt';
-import { SinonStubbedInstance, spy, stub} from 'sinon';
+import { SinonStubbedInstance, spy, stub } from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { Template, TemplateLegacy, User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
@@ -78,10 +78,10 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
         createColorPalette: stub<Parameters<AppBridgeBlock['createColorPalette']>>().resolves(
-            ColorPaletteDummy.with(678)
+            ColorPaletteDummy.with(678),
         ),
         updateColorPalette: stub<Parameters<AppBridgeBlock['updateColorPalette']>>().resolves(
-            ColorPaletteDummy.with(678)
+            ColorPaletteDummy.with(678),
         ),
         getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
             ColorDummy.red(9834),
@@ -102,10 +102,10 @@ export const getAppBridgeBlockStub = ({
         getAvailableColors: stub<Parameters<AppBridgeBlock['getAvailableColors']>>().resolves([]),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
-            `/api/color/export/${PROJECT_ID}/zip/500`
+            `/api/color/export/${PROJECT_ID}/zip/500`,
         ),
         getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
-            Promise.resolve(AssetDummy.with(assetId))
+            Promise.resolve(AssetDummy.with(assetId)),
         ),
         closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
             closeAssetChooser();
@@ -127,7 +127,7 @@ export const getAppBridgeBlockStub = ({
         addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
             async (key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
-            }
+            },
         ),
         deleteAssetIdsFromBlockAssetKey: stub<
             Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>
@@ -165,15 +165,15 @@ export const getAppBridgeBlockStub = ({
             ColorDummy.yellow(9314),
         ]),
         updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
-            Promise.resolve(ColorDummy.red(colorId))
+            Promise.resolve(ColorDummy.red(colorId)),
         ),
 
         getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
-            BulkDownloadDummy.default()
+            BulkDownloadDummy.default(),
         ),
         getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
-            BulkDownloadDummy.default()
+            BulkDownloadDummy.default(),
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
 
@@ -201,12 +201,14 @@ export const getAppBridgeBlockStub = ({
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().callsFake(async (action) => {
-            switch(action) {
-                case "AssetChooser.Open":
-                    return new Promise((resolve => resolve({
-                        on: stub(),
-                        close: stub(),
-                    })));
+            switch (action) {
+                case 'AssetChooser.Open':
+                    return new Promise((resolve) =>
+                        resolve({
+                            on: stub(),
+                            close: stub(),
+                        }),
+                    );
             }
         }),
     };

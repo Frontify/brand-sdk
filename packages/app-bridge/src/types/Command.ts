@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { Asset } from './Asset';
 import { AssetChooserOptions } from './Terrific';
 
 export type BlockCommandPayload = {
@@ -10,7 +11,7 @@ export type BlockCommandPayload = {
 
 export type BlockCommandResponse = {
     'AssetChooser.Open': {
-        on(event: 'AssetChooserAssetChosen', payload?: BlockCommandPayload['AssetChooser.Open']): void;
+        on: (event: 'AssetChosen', callback: (selectedAssets: Asset[]) => void) => void;
         close: () => void;
     };
 };
