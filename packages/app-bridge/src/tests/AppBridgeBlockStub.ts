@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mitt, { Emitter } from 'mitt';
-import { SinonStubbedInstance, spy, stub } from 'sinon';
+import { SinonStubbedInstance, spy, stub} from 'sinon';
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import {AssetChooserOptions, CommandResponse, Template, User} from '../types';
+import { Template, User} from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
@@ -12,8 +12,6 @@ import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
-import {stubObject} from "lodash-es";
-import {Dispatch} from "react";
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -26,10 +24,6 @@ export type getAppBridgeBlockStubProps = {
     editorState?: boolean;
     openAssetChooser?: (callback: Parameters<AppBridgeBlock['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
-    dispatch?: {
-        on(): void;
-        close: () => void;
-    };
     blockId?: number;
     sectionId?: number;
     projectId?: number;
@@ -44,7 +38,6 @@ export const getAppBridgeBlockStub = ({
     editorState = false,
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
-    dispatch = { on: stub(), close: stub()},
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
     projectId = PROJECT_ID,
@@ -178,6 +171,14 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().returns(dispatch),
+        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().callsFake(async (action) => {
+            switch(action) {
+                case "AssetChooser.Open":
+                    return new Promise((resolve => resolve({
+                        on: spy(),
+                        off: spy(),
+                    })));
+            }
+        }),
     };
 };

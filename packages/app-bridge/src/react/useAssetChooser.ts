@@ -10,16 +10,23 @@ type UseAssetChooserType = {
 };
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
-    const [assetChooser, setAssetChooser] = useState<Promise<CommandResponse['AssetChooser.Open']>>();
+    const [assetChooser, setAssetChooser] = useState<CommandResponse['AssetChooser.Open']>();
+
+    useEffect(() => {
+        if(assetChooser) {
+            console.log('assetChooser', assetChooser);
+        }
+    }, [assetChooser]);
 
     return {
-        openAssetChooser:  () => {
-            setAssetChooser(appBridge.dispatch('AssetChooser.Open'));
+        openAssetChooser:  async () => {
+            const dispatchResponse = await appBridge.dispatch('AssetChooser.Open');
+            setAssetChooser(dispatchResponse);
         },
-        closeAssetChooser: () => {
-            assetChooser?.then((assetChooser) => {
+        closeAssetChooser: async () => {
+            if(assetChooser) {
                 assetChooser.close();
-            });
+            }
         },
     };
 };

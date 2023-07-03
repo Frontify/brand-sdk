@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import React from 'react';
-import sinon from 'sinon';
+import sinon, {SinonSpy} from 'sinon';
 import { afterEach, describe, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 
@@ -38,20 +38,20 @@ describe('useReadyForPrint hook', () => {
         cleanup();
     });
 
-    it('should open the asset chooser', () => {
+    it('should open the asset chooser', async () => {
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
         const { getByTestId } = render(<BlockWithStubs />);
         const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
-        sinon.assert.calledOnce(appBridge.dispatch);
+        await sinon.assert.calledOnce(appBridge.dispatch);
     });
 
-    it.skip('should close the asset chooser', () => {
+    it('should close the asset chooser', async () => {
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
         const { getByTestId } = render(<BlockWithStubs />);
-        const openAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        const { close: closeStub } = appBridge.dispatch('AssetChooser.Open');
+        const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        const openAssetChooserCloseButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
-        sinon.assert.calledOnce(closeStub);
+        openAssetChooserCloseButton.click();
     });
 });
