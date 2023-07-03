@@ -22,6 +22,7 @@ const PROJECT_ID = 345214;
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
     blockAssets?: Record<string, Asset[]>;
+    chosenAssets?: Asset[];
     editorState?: boolean;
     openAssetChooser?: (callback: Parameters<AppBridgeBlock['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
@@ -37,6 +38,7 @@ export type getAppBridgeBlockStubProps = {
 export const getAppBridgeBlockStub = ({
     blockSettings = {},
     blockAssets = {},
+    chosenAssets = [],
     editorState = false,
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
@@ -205,7 +207,13 @@ export const getAppBridgeBlockStub = ({
                 case 'AssetChooser.Open':
                     return new Promise((resolve) =>
                         resolve({
-                            on: stub(),
+                            on: stub().callsFake((event, callback) => {
+                                switch (event) {
+                                    case 'AssetChosen':
+                                        callback(chosenAssets);
+                                        break;
+                                }
+                            }),
                             close: stub(),
                         }),
                     );

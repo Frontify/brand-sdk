@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions, BlockCommandResponse } from '../types';
 
-type UseAssetChooserType = {
+export type UseAssetChooserType = {
     openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;
     closeAssetChooser: () => void;
 };

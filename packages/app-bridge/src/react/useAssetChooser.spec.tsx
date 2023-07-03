@@ -1,64 +1,31 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React from 'react';
-import sinon, { SinonStub } from 'sinon';
-import { afterEach, describe, it } from 'vitest';
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, renderHook } from '@testing-library/react';
+import sinon from 'sinon';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import type { Asset } from '../types';
 import { AppBridgeBlock } from '../AppBridgeBlock';
+import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 import { useAssetChooser } from './useAssetChooser';
-import { withAppBridgeBlockStubs } from '../tests';
 
-const OPEN_ASSET_CHOOSER_BUTTON_ID = 'open-asset-chooser';
-const CLOSE_ASSET_CHOOSER_BUTTON_ID = 'close-asset-chooser';
+describe('useAssetChooser hook', () => {
+    const chosenAssets = [AssetDummy.with(1), AssetDummy.with(2)];
+    let appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock>;
 
-const AssetChooserDummy = ({
-    appBridge,
-    onAssetChosen,
-}: {
-    appBridge: AppBridgeBlock;
-    onAssetChosen?: (selectedAssets: Asset[]) => void;
-}) => {
-    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge);
+    beforeEach(() => {
+        appBridgeStub = getAppBridgeBlockStub({ chosenAssets });
+    });
 
-    return (
-        <>
-            <button
-                data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID}
-                onClick={() => openAssetChooser(onAssetChosen ?? (() => null), {})}
-            />
-            <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} />
-        </>
-    );
-};
-
-describe('useReadyForPrint hook', () => {
     afterEach(() => {
+        sinon.restore();
         cleanup();
     });
 
-    it('should open the asset chooser', async () => {
-        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
-        const { getByTestId } = render(<BlockWithStubs />);
-        const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        openAssetChooserButton.click();
-        sinon.assert.calledOnce(appBridge.dispatch);
-    });
-
-    it.skip('should close the asset chooser', async () => {
-        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
-        const { getByTestId } = render(<BlockWithStubs />);
-        const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        const closeAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-
-        openAssetChooserButton.click();
-
-        const dispatchResponse = await appBridge.dispatch('AssetChooser.Open');
-        const closeSpy = dispatchResponse.close;
-
-        closeAssetChooserButton.click();
-
-        sinon.assert.calledOnce(closeSpy as SinonStub);
+    it('should dispatch "AssetChooser.Open" on "openAssetChooser"', () => {
+        const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        result.current.openAssetChooser(() => {}, {});
+        expect(appBridgeStub.dispatch.calledOnce).toBe(true);
+        expect(appBridgeStub.dispatch.calledWith('AssetChooser.Open')).toBe(true);
     });
 });
