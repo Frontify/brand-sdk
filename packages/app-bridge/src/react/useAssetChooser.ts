@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions, CommandResponse } from '../types';
 
@@ -13,12 +13,12 @@ export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType 
     const [assetChooser, setAssetChooser] = useState<CommandResponse['AssetChooser.Open'] | null>(null);
 
     return {
-        openAssetChooser:  async () => {
+        openAssetChooser: async () => {
             const dispatchResponse = await appBridge.dispatch('AssetChooser.Open');
             setAssetChooser(dispatchResponse);
         },
         closeAssetChooser: async () => {
-            if(assetChooser) {
+            if (assetChooser) {
                 assetChooser.close();
             }
         },

@@ -2,7 +2,7 @@
 
 import {
     Color,
-    ColorPalette, CommandResponse,
+    ColorPalette,
     Document,
     DocumentCategory,
     DocumentGroup,

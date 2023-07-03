@@ -11,6 +11,7 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    CommandPayload,
     CommandResponse,
     Template,
     User,
@@ -90,5 +91,5 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     getPrivacySettings(): PrivacySettings;
 
-    dispatch<K extends keyof CommandResponse>(eventName: K): Promise<CommandResponse[K]>;
+    dispatch<K extends keyof CommandResponse>(eventName: K, payload?: CommandPayload[K]): Promise<CommandResponse[K]>;
 }

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import React from 'react';
-import sinon, { SinonStub} from 'sinon';
+import sinon, { SinonStub } from 'sinon';
 import { afterEach, describe, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';
 
@@ -61,5 +61,4 @@ describe('useReadyForPrint hook', () => {
 
         await sinon.assert.calledOnce(closeSpy as SinonStub);
     });
-
 });
