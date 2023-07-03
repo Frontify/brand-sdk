@@ -7,9 +7,4 @@ export type TemplateInputBlock<AppBridge> = {
      * The setting type.
      */
     type: 'templateInput';
-
-    /**
-     * Whether multiple assets can be selected.
-     */
-    multiSelection?: boolean;
 } & BaseBlock<AppBridge, number>;
