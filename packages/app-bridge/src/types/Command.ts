@@ -2,15 +2,15 @@
 
 import { AssetChooserOptions } from './Terrific';
 
-export type CommandPayload = {
+export type BlockCommandPayload = {
     'AssetChooser.Open': {
         options: AssetChooserOptions;
     };
 };
 
-export type CommandResponse = {
+export type BlockCommandResponse = {
     'AssetChooser.Open': {
-        on(event: 'AssetChooserAssetChosen', payload?: CommandPayload['AssetChooser.Open']): void;
+        on(event: 'AssetChooserAssetChosen', payload?: BlockCommandPayload['AssetChooser.Open']): void;
         close: () => void;
     };
 };

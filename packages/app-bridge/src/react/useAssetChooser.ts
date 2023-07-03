@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Asset, AssetChooserOptions, CommandResponse } from '../types';
+import type { Asset, AssetChooserOptions, BlockCommandResponse } from '../types';
 
 type UseAssetChooserType = {
     openAssetChooser: (options: AssetChooserOptions) => void;
@@ -13,7 +13,7 @@ export const useAssetChooser = (
     appBridge: AppBridgeBlock,
     onAssetChosenCallback?: (selectedAssets: Asset[]) => void,
 ): UseAssetChooserType => {
-    const [assetChooser, setAssetChooser] = useState<CommandResponse['AssetChooser.Open'] | null>(null);
+    const [assetChooser, setAssetChooser] = useState<BlockCommandResponse['AssetChooser.Open'] | null>(null);
 
     return {
         openAssetChooser: async (options: AssetChooserOptions) => {
