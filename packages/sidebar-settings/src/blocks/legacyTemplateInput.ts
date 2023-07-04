@@ -2,9 +2,9 @@
 
 import type { BaseBlock } from './base';
 
-export type TemplateInputBlock<AppBridge> = {
+export type LegacyTemplateInputBlock<AppBridge> = {
     /**
      * The setting type.
      */
-    type: 'templateInput';
+    type: 'legacyTemplateInput';
 } & BaseBlock<AppBridge, number>;
