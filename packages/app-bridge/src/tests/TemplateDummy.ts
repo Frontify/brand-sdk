@@ -12,16 +12,14 @@ export class TemplateDummy {
             previewUrl: 'https://preview.url',
             projectId: 23,
             pages: [
-                {
-                    ...convertObjectCase(
-                        {
-                            preview_url: 'https://preview.url',
-                            width: 1024,
-                            height: 768,
-                        },
-                        'camel',
-                    ),
-                },
+                convertObjectCase(
+                    {
+                        preview_url: 'https://preview.url',
+                        width: 1024,
+                        height: 768,
+                    },
+                    'camel',
+                ),
             ],
         };
     }
