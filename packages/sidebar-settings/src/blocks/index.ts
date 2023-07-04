@@ -14,6 +14,7 @@ import { SectionHeadingBlock } from './sectionHeading';
 import { SegmentedControlsBlock } from './segmentedControls';
 import { SwitchBlock } from './switch';
 import { TemplateInputBlock } from './templateInput';
+import { LegacyTemplateInputBlock } from './legacyTemplateInput';
 import { TextareaBlock } from './textarea';
 
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
@@ -35,6 +36,7 @@ export * from './sectionHeading';
 export * from './segmentedControls';
 export * from './switch';
 export * from './templateInput';
+export * from './legacyTemplateInput';
 export * from './textarea';
 
 export {
@@ -101,6 +103,7 @@ export type SimpleSettingBlock<AppBridge> =
     | SegmentedControlsBlock<AppBridge>
     | SwitchBlock<AppBridge>
     | TemplateInputBlock<AppBridge>
+    | LegacyTemplateInputBlock<AppBridge>
     | TextareaBlock<AppBridge>;
 
 export type DynamicSupportedBlock<AppBridge> =
