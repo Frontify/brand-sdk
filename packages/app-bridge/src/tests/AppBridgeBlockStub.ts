@@ -203,21 +203,18 @@ export const getAppBridgeBlockStub = ({
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().callsFake(async (action) => {
-            switch (action) {
-                case 'AssetChooser.Open':
-                    return new Promise((resolve) =>
-                        resolve({
-                            on: stub().callsFake((event, callback) => {
-                                switch (event) {
-                                    case 'AssetChosen':
-                                        callback(chosenAssets);
-                                        break;
-                                }
-                            }),
-                            close: stub(),
-                        }),
-                    );
-            }
+            return {
+                'AssetChooser.Open': Promise.resolve({
+                    on: stub().callsFake((event: 'AssetChosen', callback: (chosenAssets: Asset[]) => void) => {
+                        return {
+                            AssetChosen: () => {
+                                callback(chosenAssets);
+                            },
+                        }[event];
+                    }),
+                    close: stub(),
+                }),
+            }[action];
         }),
     };
 };
