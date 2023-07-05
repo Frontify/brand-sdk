@@ -5,16 +5,15 @@ import sinon, { stub } from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { AssetChooserOptionsDummy, AssetDummy, getAppBridgeBlockStub } from '../tests';
+import { AssetChooserOptionsDummy, getAppBridgeBlockStub } from '../tests';
 import { useAssetChooser } from './useAssetChooser';
 
 describe('useAssetChooser hook', () => {
-    const chosenAssets = [AssetDummy.with(1), AssetDummy.with(2)];
     let appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock>;
     let assetChooserOpen: ReturnType<AppBridgeBlock['dispatch']>;
 
     beforeEach(() => {
-        appBridgeStub = getAppBridgeBlockStub({ chosenAssets });
+        appBridgeStub = getAppBridgeBlockStub();
         assetChooserOpen = {
             on: () => null,
             close: () => null,
