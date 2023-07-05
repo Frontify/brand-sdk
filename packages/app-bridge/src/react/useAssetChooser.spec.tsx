@@ -6,7 +6,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { AssetChooserOptionsDummy, AssetDummy, getAppBridgeBlockStub } from '../tests';
-import { Asset, AssetChooserOptions } from '../types';
 import { useAssetChooser } from './useAssetChooser';
 
 describe('useAssetChooser hook', () => {
@@ -31,7 +30,6 @@ describe('useAssetChooser hook', () => {
     });
 
     it('should register "AssetChosen" handler', async () => {
-        // stub object for AssetChooser.Open
         const assetChooserOpen: Awaited<ReturnType<AppBridgeBlock['dispatch']>> = {
             on: () => null,
             close: () => null,
