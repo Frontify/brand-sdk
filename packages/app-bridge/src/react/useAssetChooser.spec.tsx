@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { cleanup, renderHook } from '@testing-library/react';
+import { act, cleanup, renderHook } from '@testing-library/react';
 import sinon, { stub } from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -11,9 +11,15 @@ import { useAssetChooser } from './useAssetChooser';
 describe('useAssetChooser hook', () => {
     const chosenAssets = [AssetDummy.with(1), AssetDummy.with(2)];
     let appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock>;
+    let assetChooserOpen: ReturnType<AppBridgeBlock['dispatch']>;
 
     beforeEach(() => {
         appBridgeStub = getAppBridgeBlockStub({ chosenAssets });
+        assetChooserOpen = {
+            on: () => null,
+            close: () => null,
+        };
+        appBridgeStub.dispatch = stub<Parameters<AppBridgeBlock['dispatch']>>().returns(assetChooserOpen);
     });
 
     afterEach(() => {
@@ -24,25 +30,40 @@ describe('useAssetChooser hook', () => {
     it('should dispatch "AssetChooser.Open" on "openAssetChooser"', () => {
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
         const options = AssetChooserOptionsDummy.default();
-        result.current.openAssetChooser(vi.fn(), options);
+
+        act(() => {
+            result.current.openAssetChooser(vi.fn(), options);
+        });
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
         expect(appBridgeStub.dispatch.calledWith('AssetChooser.Open', { options })).toBe(true);
     });
 
-    it('should register "AssetChosen" handler', async () => {
-        const assetChooserOpen: Awaited<ReturnType<AppBridgeBlock['dispatch']>> = {
-            on: () => null,
-            close: () => null,
-        };
+    it('should register "AssetChosen" handler', () => {
         const spiedOn = vi.spyOn(assetChooserOpen, 'on');
-
-        appBridgeStub.dispatch = stub<Parameters<AppBridgeBlock['dispatch']>>().returns(assetChooserOpen);
-
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+        const { openAssetChooser } = result.current;
 
         const callback = vi.fn();
-        await result.current.openAssetChooser(callback, {});
+        act(() => {
+            openAssetChooser(callback, {});
+        });
         expect(spiedOn).toHaveBeenCalledOnce();
         expect(spiedOn).toHaveBeenCalledWith('AssetChosen', callback);
+    });
+
+    it('should close AssetChooser', () => {
+        const spiedClose = vi.spyOn(assetChooserOpen, 'close');
+        const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+        const { openAssetChooser, closeAssetChooser } = result.current;
+
+        act(() => {
+            openAssetChooser(vi.fn(), {});
+        });
+
+        act(() => {
+            closeAssetChooser();
+        });
+
+        expect(spiedClose).toHaveBeenCalledOnce();
     });
 });

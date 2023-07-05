@@ -105,5 +105,5 @@ export interface AppBridgeBlock extends AppBridgeBase {
     dispatch<Command extends keyof BlockCommandResponse>(
         command: Command,
         payload?: BlockCommandPayload[Command],
-    ): Promise<BlockCommandResponse[Command]>;
+    ): BlockCommandResponse[Command];
 }
