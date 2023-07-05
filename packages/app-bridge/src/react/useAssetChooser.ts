@@ -11,15 +11,15 @@ export type UseAssetChooserType = {
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     const [assetChooser, setAssetChooser] = useState<BlockCommandResponse['AssetChooser.Open'] | null>(null);
-    const [assetChooserToBeClosed, setAssetChooserToBeClosed] = useState(false);
+    const [shouldClose, setShouldClose] = useState(false);
 
     useEffect(() => {
-        if (assetChooser && assetChooserToBeClosed) {
+        if (assetChooser && shouldClose) {
             assetChooser.close();
-            setAssetChooserToBeClosed(false);
+            setShouldClose(false);
             setAssetChooser(null);
         }
-    }, [assetChooser, assetChooserToBeClosed]);
+    }, [assetChooser, shouldClose]);
 
     return {
         openAssetChooser: (callback, options) => {
@@ -28,7 +28,7 @@ export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType 
             setAssetChooser(registeredAssetChooser);
         },
         closeAssetChooser: () => {
-            setAssetChooserToBeClosed(true);
+            setShouldClose(true);
         },
     };
 };
