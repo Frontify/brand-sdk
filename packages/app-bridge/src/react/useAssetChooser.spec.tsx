@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, renderHook } from '@testing-library/react';
-import sinon from 'sinon';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import sinon, { stub } from 'sinon';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { AssetDummy, getAppBridgeBlockStub } from '../tests';
+import { AssetChooserOptionsDummy, AssetDummy, getAppBridgeBlockStub } from '../tests';
+import { Asset, AssetChooserOptions } from '../types';
 import { useAssetChooser } from './useAssetChooser';
 
 describe('useAssetChooser hook', () => {
@@ -23,9 +24,27 @@ describe('useAssetChooser hook', () => {
 
     it('should dispatch "AssetChooser.Open" on "openAssetChooser"', () => {
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        result.current.openAssetChooser(() => {}, {});
+        const options = AssetChooserOptionsDummy.default();
+        result.current.openAssetChooser(vi.fn(), options);
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
-        expect(appBridgeStub.dispatch.calledWith('AssetChooser.Open')).toBe(true);
+        expect(appBridgeStub.dispatch.calledWith('AssetChooser.Open', { options })).toBe(true);
+    });
+
+    it('should execute callback on "AssetChooser.AssetChosen"', async () => {
+        // stub object for AssetChooser.Open
+        const assetChooserOpen: Awaited<ReturnType<AppBridgeBlock['dispatch']>> = {
+            on: () => null,
+            close: () => null,
+        };
+        const spiedOn = vi.spyOn(assetChooserOpen, 'on');
+
+        appBridgeStub.dispatch = stub<Parameters<AppBridgeBlock['dispatch']>>().returns(assetChooserOpen);
+
+        const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+
+        const callback = vi.fn();
+        await result.current.openAssetChooser(callback, {});
+        expect(spiedOn).toHaveBeenCalledOnce();
+        expect(spiedOn).toHaveBeenCalledWith('AssetChosen', callback);
     });
 });

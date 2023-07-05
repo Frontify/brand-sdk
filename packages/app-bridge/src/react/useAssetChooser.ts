@@ -5,7 +5,7 @@ import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions, BlockCommandResponse } from '../types';
 
 export type UseAssetChooserType = {
-    openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;
+    openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => Promise<void>;
     closeAssetChooser: () => void;
 };
 
@@ -20,6 +20,7 @@ export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType 
         },
         closeAssetChooser: () => {
             assetChooser?.close();
+            setAssetChooser(null);
         },
     };
 };
