@@ -13,15 +13,10 @@ export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType 
     const [assetChooser, setAssetChooser] = useState<BlockCommandResponse['AssetChooser.Open'] | null>(null);
 
     return {
-        openAssetChooser: (callback, options) => {
-            appBridge
-                .dispatch('AssetChooser.Open', {
-                    options,
-                })
-                .then((registeredAssetChooser) => {
-                    registeredAssetChooser.on('AssetChosen', (selectedAssets) => callback(selectedAssets));
-                    setAssetChooser(registeredAssetChooser);
-                });
+        openAssetChooser: async (callback, options) => {
+            const registeredAssetChooser = await appBridge.dispatch('AssetChooser.Open', { options });
+            registeredAssetChooser.on('AssetChosen', callback);
+            setAssetChooser(registeredAssetChooser);
         },
         closeAssetChooser: () => {
             assetChooser?.close();

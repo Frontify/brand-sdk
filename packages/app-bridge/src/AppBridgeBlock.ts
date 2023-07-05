@@ -102,8 +102,8 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     getPrivacySettings(): PrivacySettings;
 
-    dispatch<K extends keyof BlockCommandResponse>(
-        eventName: K,
-        payload?: BlockCommandPayload[K],
-    ): Promise<BlockCommandResponse[K]>;
+    dispatch<Command extends keyof BlockCommandResponse>(
+        command: Command,
+        payload?: BlockCommandPayload[Command],
+    ): Promise<BlockCommandResponse[Command]>;
 }
