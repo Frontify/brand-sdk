@@ -24,6 +24,7 @@ export * from './FileType';
 export * from './GuidelineSearchResult';
 export * from './Notify';
 export * from './OauthTokens';
+export * from './PageTemplateAsset';
 export * from './PrivacySettings';
 export * from './PostExternalAssetParams';
 export * from './Project';
