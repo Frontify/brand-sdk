@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions, BlockCommandResponse } from '../types';
 
@@ -11,6 +11,15 @@ export type UseAssetChooserType = {
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     const [assetChooser, setAssetChooser] = useState<BlockCommandResponse['AssetChooser.Open'] | null>(null);
+    const [assetChooserToBeClosed, setAssetChooserToBeClosed] = useState(false);
+
+    useEffect(() => {
+        if (assetChooser && assetChooserToBeClosed) {
+            assetChooser.close();
+            setAssetChooserToBeClosed(false);
+            setAssetChooser(null);
+        }
+    }, [assetChooser, assetChooserToBeClosed]);
 
     return {
         openAssetChooser: async (callback, options) => {
@@ -19,8 +28,7 @@ export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType 
             setAssetChooser(registeredAssetChooser);
         },
         closeAssetChooser: () => {
-            assetChooser?.close();
-            setAssetChooser(null);
+            setAssetChooserToBeClosed(true);
         },
     };
 };
