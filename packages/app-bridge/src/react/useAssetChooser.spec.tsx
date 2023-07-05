@@ -30,7 +30,7 @@ describe('useAssetChooser hook', () => {
         expect(appBridgeStub.dispatch.calledWith('AssetChooser.Open', { options })).toBe(true);
     });
 
-    it('should execute callback on "AssetChooser.AssetChosen"', async () => {
+    it('should register "AssetChosen" handler', async () => {
         // stub object for AssetChooser.Open
         const assetChooserOpen: Awaited<ReturnType<AppBridgeBlock['dispatch']>> = {
             on: () => null,
