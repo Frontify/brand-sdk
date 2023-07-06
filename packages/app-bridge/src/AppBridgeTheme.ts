@@ -58,7 +58,7 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     getLibraryPageTemplateAssets(documentId: number): Promise<Record<string, Asset[]>>;
 
-    deleteAssetIdsFromLibraryPageTemplateAssetKey(documentId: string, key: string, assetIds: number[]): Promise<void>;
+    deleteAssetIdsFromLibraryPageTemplateAssetKey(documentId: number, key: string, assetIds: number[]): Promise<void>;
 
     addAssetIdsToDocumentPageTemplateAssetKey(
         documentPageId: number,
