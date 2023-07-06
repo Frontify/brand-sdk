@@ -44,31 +44,35 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     updateDocumentPageTemplateSettings(documentPageId: number, settings: Record<string, unknown>): Promise<void>;
 
-    createCoverPageTemplateAssets(settingId: string, assetIds: number[]): Promise<Record<string, Asset[]>>;
+    addAssetIdsToCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<Record<string, Asset[]>>;
 
     getCoverPageTemplateAssets(): Promise<Record<string, Asset[]>>;
 
-    deleteCoverPageTemplateAssets(settingId: string, assetIds: number[]): Promise<void>;
+    deleteAssetIdsFromCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<void>;
 
-    createLibraryPageTemplateAssets(
+    addAssetIdsToLibraryPageTemplateAssetKey(
         documentId: number,
-        settingId: string,
+        key: string,
         assetIds: number[],
     ): Promise<Record<string, Asset[]>>;
 
     getLibraryPageTemplateAssets(documentId: number): Promise<Record<string, Asset[]>>;
 
-    deleteLibraryPageTemplateAssets(documentId: string, settingId: string, assetIds: number[]): Promise<void>;
+    deleteAssetIdsFromLibraryPageTemplateAssetKey(documentId: string, key: string, assetIds: number[]): Promise<void>;
 
-    createDocumentPageTemplateAssets(
+    addAssetIdsToDocumentPageTemplateAssetKey(
         documentPageId: number,
-        settingId: string,
+        key: string,
         assetIds: number[],
     ): Promise<Record<string, Asset[]>>;
 
     getDocumentPageTemplateAssets(documentPageId: number): Promise<Record<string, Asset[]>>;
 
-    deleteDocumentPageTemplateAssets(documentPageId: number, settingId: string, assetIds: number[]): Promise<void>;
+    deleteAssetIdsFromDocumentPageTemplateAssetKey(
+        documentPageId: number,
+        key: string,
+        assetIds: number[],
+    ): Promise<void>;
 
     getLibraryPageTemplateSettings<Settings>(documentId: number): Promise<Settings>;
 
