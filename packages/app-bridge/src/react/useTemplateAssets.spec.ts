@@ -35,7 +35,7 @@ describe('useTemplateAssets hook', () => {
         );
 
         await act(async () => {
-            await rerender();
+            rerender();
         });
 
         return { result, appBridgeStub, asset };
