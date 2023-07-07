@@ -23,6 +23,7 @@ import {
     UpdateTargetsDummy,
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
+import { Asset } from '../types';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -63,6 +64,7 @@ export type getAppBridgeThemeStubProps = {
     portalId?: number;
     projectId?: number;
     pageTemplateSettings?: Record<string, unknown>;
+    pageTemplateAssets?: Record<string, Asset[]>;
     language?: string;
 };
 
@@ -72,6 +74,7 @@ export const getAppBridgeThemeStub = ({
     portalId = PORTAL_ID,
     projectId = PROJECT_ID,
     pageTemplateSettings = {},
+    pageTemplateAssets = {},
     language = 'en',
 }: getAppBridgeThemeStubProps = {}): SinonStubbedInstance<AppBridgeTheme> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
@@ -190,6 +193,26 @@ export const getAppBridgeThemeStub = ({
         getDocumentPageTargets: stub<Parameters<AppBridgeTheme['getDocumentPageTargets']>>().resolves(
             DocumentPageTargetsDummy.with(DOCUMENT_PAGE_ID_1),
         ),
+        addAssetIdsToCoverPageTemplateAssetKey:
+            stub<Parameters<AppBridgeTheme['addAssetIdsToCoverPageTemplateAssetKey']>>().resolves(pageTemplateAssets),
+        addAssetIdsToLibraryPageTemplateAssetKey:
+            stub<Parameters<AppBridgeTheme['addAssetIdsToLibraryPageTemplateAssetKey']>>().resolves(pageTemplateAssets),
+        addAssetIdsToDocumentPageTemplateAssetKey:
+            stub<Parameters<AppBridgeTheme['addAssetIdsToDocumentPageTemplateAssetKey']>>().resolves(
+                pageTemplateAssets,
+            ),
+        getCoverPageTemplateAssets:
+            stub<Parameters<AppBridgeTheme['getCoverPageTemplateAssets']>>().resolves(pageTemplateAssets),
+        getLibraryPageTemplateAssets:
+            stub<Parameters<AppBridgeTheme['getLibraryPageTemplateAssets']>>().resolves(pageTemplateAssets),
+        getDocumentPageTemplateAssets:
+            stub<Parameters<AppBridgeTheme['getDocumentPageTemplateAssets']>>().resolves(pageTemplateAssets),
+        deleteAssetIdsFromCoverPageTemplateAssetKey:
+            stub<Parameters<AppBridgeTheme['deleteAssetIdsFromCoverPageTemplateAssetKey']>>().resolves(),
+        deleteAssetIdsFromLibraryPageTemplateAssetKey:
+            stub<Parameters<AppBridgeTheme['deleteAssetIdsFromLibraryPageTemplateAssetKey']>>().resolves(),
+        deleteAssetIdsFromDocumentPageTemplateAssetKey:
+            stub<Parameters<AppBridgeTheme['deleteAssetIdsFromDocumentPageTemplateAssetKey']>>().resolves(),
         getCoverPageTemplateSettings:
             stub<Parameters<AppBridgeTheme['getCoverPageTemplateSettings']>>().resolves(localPageTemplateSettings),
         getDocumentPageTemplateSettings:
