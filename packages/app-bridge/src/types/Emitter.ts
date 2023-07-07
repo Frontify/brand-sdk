@@ -26,6 +26,14 @@ export type EmitterEvents = {
         prevBlockAssets: Record<string, Asset[]>;
     };
 
+    'AppBridge:TemplateAssetsUpdated': {
+        template?: 'documentPage' | 'library' | 'cover';
+        documentId?: number;
+        documentPageId?: number;
+        templateAssets: Record<string, Asset[]>;
+        prevTemplateAssets: Record<string, Asset[]>;
+    };
+
     'AppBridge:BlockTemplatesUpdated': {
         blockId: number;
         blockTemplates: Record<string, Template[]>;
