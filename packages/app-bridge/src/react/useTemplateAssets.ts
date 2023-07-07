@@ -31,7 +31,7 @@ export const useTemplateAssets = (
         }
     };
 
-    const getTemplateAssets = async (): Promise<Record<string, Asset[] | never>> => {
+    const getTemplateAssets = async (): Promise<Record<string, Asset[]>> => {
         if (template === 'cover') {
             return await appBridge.getCoverPageTemplateAssets();
         } else if (template === 'documentPage' && documentPageId) {
