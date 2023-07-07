@@ -13,7 +13,6 @@
         "test:components": "cypress run --component",
         "test:components:browser": "cypress open --component",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
-        "prepare": "is-ci || husky install",
         "ci:publish": "pnpm build && pnpm publish -r --access public"
     },
     "devDependencies": {
@@ -25,8 +24,6 @@
         "cypress": "^12.9.0",
         "cypress-real-events": "^1.7.6",
         "glob": "^10.3.1",
-        "husky": "^8.0.3",
-        "is-ci": "^3.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "tailwindcss": "^3.2.7",
