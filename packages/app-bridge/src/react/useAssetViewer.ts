@@ -5,7 +5,7 @@ import { Asset } from '../types';
 
 export const useAssetViewer = (appBridge: AppBridgeBlock) => {
     const open = async ({ token }: Asset) => {
-        appBridge.openAssetViewer(token);
+        appBridge.dispatch('AssetViewer.Open', { token });
     };
 
     return {

@@ -7,11 +7,17 @@ export type BlockCommandPayload = {
     'AssetChooser.Open': {
         options: AssetChooserOptions;
     };
+    'AssetViewer.Open': {
+        token: string;
+    };
 };
 
 export type BlockCommandResponse = {
     'AssetChooser.Open': {
         on: (event: 'AssetChosen', callback: (selectedAssets: Asset[]) => void) => void;
+        close: () => void;
+    };
+    'AssetViewer.Open': {
         close: () => void;
     };
 };

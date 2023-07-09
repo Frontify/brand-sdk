@@ -25,9 +25,9 @@ describe('useAssetViewer', () => {
         const { result, appBridgeStub, asset } = await loadUseAssetViewer();
         result.current.open(asset);
 
-        const call = appBridgeStub.openAssetViewer.getCall(0);
+        const call = appBridgeStub.dispatch.getCall(0);
         waitFor(() => {
-            expect(call.calledOnceWithExactly(asset.token)).toBe(true);
+            expect(call.calledOnceWithExactly('AssetViewer.Open')).toBe(true);
         });
     });
 });

@@ -32,6 +32,10 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
+    /**
+     * @deprecated Use appBridge.dispatch(`AssetViewer.Open`) instead
+     * This will be removed in version 4.0.0 of @frontify/app-bridge
+     */
     openAssetViewer(token: string): void;
 
     getBlockTemplates(): Promise<Record<string, Template[]>>;

@@ -200,6 +200,13 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
+        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>()
+            .withArgs('AssetChooser.Open')
+            .resolves({
+                on: stub(),
+                close: stub(),
+            })
+            .withArgs('AssetViewer.Open', { token: 'abc' })
+            .resolves(),
     };
 };
