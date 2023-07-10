@@ -26,6 +26,7 @@ export * from './useNavigationManager';
 export * from './usePageTemplateSettings';
 export * from './usePrivacySettings';
 export * from './useReadyForPrint';
+export * from './useTemplateAssets';
 export * from './useTemplateChooser';
 export * from './useUncategorizedDocumentPages';
 export * from './useUngroupedDocuments';
