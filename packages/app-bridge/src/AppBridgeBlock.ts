@@ -79,14 +79,15 @@ export interface AppBridgeBlock extends AppBridgeBase {
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;
 
     /**
-     * @deprecated Use appBridge.dispatch(`AssetChooser.Open`) instead
-     * This will be removed in version 4.0.0 of @frontify/app-bridge
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(openAssetChooser(options)) to open the asset chooser
+     * and appBridge.subscribe('AssetChooser.AssetChosen', callback) to subscribe to the asset chosen event
      */
     openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
 
     /**
-     * @deprecated Use appBridge.dispatch(`AssetChooser.Open`).close() instead
-     * This will be removed in version 4.0.0 of @frontify/app-bridge
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(closeAssetChooser()) instead
      */
     closeAssetChooser(): void;
 
