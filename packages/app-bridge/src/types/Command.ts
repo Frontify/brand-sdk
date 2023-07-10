@@ -5,7 +5,7 @@ import { AssetChooserOptions } from './Terrific';
 
 export type BlockCommandPayload = {
     'AssetChooser.Open': {
-        options: AssetChooserOptions;
+        options?: AssetChooserOptions;
     };
     'AssetViewer.Open': {
         token: string;
@@ -17,7 +17,7 @@ export type BlockCommandResponse = {
         on: (event: 'AssetChosen', callback: (selectedAssets: Asset[]) => void) => void;
         close: () => void;
     };
-    'AssetViewer.Open': {
-        close: () => void;
-    };
+    'AssetViewer.Open': void;
 };
+
+export type Command = keyof BlockCommandResponse;
