@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook } from '@testing-library/react';
-import sinon, { stub } from 'sinon';
+import sinon from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AppBridgeBlock } from '../AppBridgeBlock';
@@ -10,15 +10,9 @@ import { useAssetChooser } from './useAssetChooser';
 
 describe('useAssetChooser hook', () => {
     let appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock>;
-    let assetChooserOpen: ReturnType<AppBridgeBlock['dispatch']>;
 
     beforeEach(() => {
         appBridgeStub = getAppBridgeBlockStub();
-        assetChooserOpen = {
-            on: () => null,
-            close: () => null,
-        };
-        appBridgeStub.dispatch = stub<Parameters<AppBridgeBlock['dispatch']>>().returns(assetChooserOpen);
     });
 
     afterEach(() => {
@@ -34,11 +28,16 @@ describe('useAssetChooser hook', () => {
             result.current.openAssetChooser(vi.fn(), options);
         });
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
-        expect(appBridgeStub.dispatch.calledWith('AssetChooser.Open', { options })).toBe(true);
+        expect(
+            appBridgeStub.dispatch.calledWith({
+                commandName: 'AssetChooser.Open',
+                options,
+            }),
+        ).toBe(true);
     });
 
-    it('should register "AssetChosen" handler', () => {
-        const spiedOn = vi.spyOn(assetChooserOpen, 'on');
+    it('should subscribe to "AssetChooser.AssetChosen" handler', () => {
+        const spiedOn = vi.spyOn(appBridgeStub, 'subscribe');
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
         const { openAssetChooser } = result.current;
 
@@ -47,22 +46,21 @@ describe('useAssetChooser hook', () => {
             openAssetChooser(callback, {});
         });
         expect(spiedOn).toHaveBeenCalledOnce();
-        expect(spiedOn).toHaveBeenCalledWith('AssetChosen', callback);
+        expect(spiedOn).toHaveBeenCalledWith('AssetChooser.AssetChosen', callback);
     });
 
-    it('should close AssetChooser', () => {
-        const spiedClose = vi.spyOn(assetChooserOpen, 'close');
+    it('should dispatch AssetChooser.Close', () => {
+        const spiedClose = vi.spyOn(appBridgeStub, 'dispatch');
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
-        const { openAssetChooser, closeAssetChooser } = result.current;
-
-        act(() => {
-            openAssetChooser(vi.fn(), {});
-        });
+        const { closeAssetChooser } = result.current;
 
         act(() => {
             closeAssetChooser();
         });
 
         expect(spiedClose).toHaveBeenCalledOnce();
+        expect(spiedClose).toHaveBeenCalledWith({
+            commandName: 'AssetChooser.Close',
+        });
     });
 });

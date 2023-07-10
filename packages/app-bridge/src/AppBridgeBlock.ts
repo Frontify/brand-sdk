@@ -4,8 +4,6 @@ import { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
     AssetChooserOptions,
-    BlockCommandPayload,
-    BlockCommandResponse,
     BulkDownload,
     Color,
     ColorCreate,
@@ -13,6 +11,10 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    DispatchHandler,
+    DispatchOption,
+    Subscription,
+    SubscriptionCallback,
     Template,
     TemplateLegacy,
     User,
@@ -102,8 +104,10 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     getPrivacySettings(): PrivacySettings;
 
-    dispatch<Command extends keyof BlockCommandResponse>(
-        command: Command,
-        payload?: BlockCommandPayload[Command],
-    ): BlockCommandResponse[Command];
+    subscribe<SubscriptionName extends Subscription>(
+        eventName: SubscriptionName,
+        callback: SubscriptionCallback[SubscriptionName],
+    ): void;
+
+    dispatch<CommandName extends keyof DispatchOption>(dispatchHandler: DispatchHandler<CommandName>): void;
 }
