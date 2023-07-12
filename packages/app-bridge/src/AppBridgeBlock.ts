@@ -11,10 +11,6 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
-    DispatchHandler,
-    DispatchOption,
-    Subscription,
-    SubscriptionCallback,
     Template,
     TemplateLegacy,
     User,
@@ -104,11 +100,4 @@ export interface AppBridgeBlock extends AppBridgeBase {
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 
     getPrivacySettings(): PrivacySettings;
-
-    subscribe<SubscriptionName extends Subscription>(
-        eventName: SubscriptionName,
-        callback: SubscriptionCallback[SubscriptionName],
-    ): void;
-
-    dispatch<CommandName extends keyof DispatchOption>(dispatchHandler: DispatchHandler<CommandName>): void;
 }

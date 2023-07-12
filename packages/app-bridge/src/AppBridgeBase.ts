@@ -5,6 +5,8 @@ import {
     AssetChooserOptions,
     Color,
     ColorPalette,
+    DispatchHandler,
+    DispatchOption,
     Document,
     DocumentCategory,
     DocumentGroup,
@@ -12,6 +14,8 @@ import {
     DocumentPageTargets,
     DocumentSection,
     DocumentTargets,
+    Subscription,
+    SubscriptionCallback,
 } from './types';
 
 export interface AppBridgeBase {
@@ -50,4 +54,11 @@ export interface AppBridgeBase {
     openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
 
     closeAssetChooser(): void;
+
+    subscribe<SubscriptionName extends Subscription>(
+        eventName: SubscriptionName,
+        callback: SubscriptionCallback[SubscriptionName],
+    ): void;
+
+    dispatch<CommandName extends keyof DispatchOption>(dispatchHandler: DispatchHandler<CommandName>): void;
 }
