@@ -2,7 +2,7 @@
 
 import { AssetChooserOptions, DispatchHandler } from '../types';
 
-export const openAssetChooser = (options: AssetChooserOptions): DispatchHandler<'AssetChooser.Open'> => ({
+export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler<'AssetChooser.Open'> => ({
     commandName: 'AssetChooser.Open',
     options,
 });
