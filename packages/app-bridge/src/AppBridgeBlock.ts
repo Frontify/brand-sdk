@@ -29,8 +29,6 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
-    openAssetViewer(token: string): void;
-
     getBlockTemplates(): Promise<Record<string, Template[]>>;
 
     addTemplateIdsToBlockTemplateKey(key: string, templateIds: number[]): Promise<Record<string, Template[]>>;

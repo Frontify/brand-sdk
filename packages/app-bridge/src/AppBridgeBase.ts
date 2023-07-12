@@ -64,6 +64,12 @@ export interface AppBridgeBase {
      */
     closeAssetChooser(): void;
 
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(openAssetViewer()) instead
+     */
+    openAssetViewer(token: string): void;
+
     subscribe<SubscriptionName extends Subscription>(
         eventName: SubscriptionName,
         callback: SubscriptionCallback[SubscriptionName],
