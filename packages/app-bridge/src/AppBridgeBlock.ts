@@ -3,7 +3,6 @@
 import { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
-    AssetChooserOptions,
     BulkDownload,
     Color,
     ColorCreate,
@@ -73,10 +72,6 @@ export interface AppBridgeBlock extends AppBridgeBase {
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
 
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;
-
-    openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
-
-    closeAssetChooser(): void;
 
     openTemplateChooser(callback: (selectedTemplate: TemplateLegacy) => void): void;
 

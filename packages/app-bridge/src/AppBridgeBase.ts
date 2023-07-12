@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
+    Asset,
+    AssetChooserOptions,
     Color,
     ColorPalette,
     Document,
@@ -44,4 +46,8 @@ export interface AppBridgeBase {
     getDocumentTargets(documentId: number): Promise<DocumentTargets>;
 
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
+
+    openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
+
+    closeAssetChooser(): void;
 }

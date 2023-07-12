@@ -2,6 +2,7 @@
 
 import { AppBridgeBase } from './AppBridgeBase';
 import type {
+    Asset,
     BrandportalLink,
     CoverPage,
     CoverPageCreate,
@@ -42,6 +43,36 @@ export interface AppBridgeTheme extends AppBridgeBase {
     getDocumentPageTemplateSettings<Settings>(documentPageId: number): Promise<Settings>;
 
     updateDocumentPageTemplateSettings(documentPageId: number, settings: Record<string, unknown>): Promise<void>;
+
+    addAssetIdsToCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<Record<string, Asset[]>>;
+
+    getCoverPageTemplateAssets(): Promise<Record<string, Asset[]>>;
+
+    deleteAssetIdsFromCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<void>;
+
+    addAssetIdsToLibraryPageTemplateAssetKey(
+        documentId: number,
+        key: string,
+        assetIds: number[],
+    ): Promise<Record<string, Asset[]>>;
+
+    getLibraryPageTemplateAssets(documentId: number): Promise<Record<string, Asset[]>>;
+
+    deleteAssetIdsFromLibraryPageTemplateAssetKey(documentId: number, key: string, assetIds: number[]): Promise<void>;
+
+    addAssetIdsToDocumentPageTemplateAssetKey(
+        documentPageId: number,
+        key: string,
+        assetIds: number[],
+    ): Promise<Record<string, Asset[]>>;
+
+    getDocumentPageTemplateAssets(documentPageId: number): Promise<Record<string, Asset[]>>;
+
+    deleteAssetIdsFromDocumentPageTemplateAssetKey(
+        documentPageId: number,
+        key: string,
+        assetIds: number[],
+    ): Promise<void>;
 
     getLibraryPageTemplateSettings<Settings>(documentId: number): Promise<Settings>;
 
