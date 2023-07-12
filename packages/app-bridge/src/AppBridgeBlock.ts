@@ -3,7 +3,6 @@
 import { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
-    AssetChooserOptions,
     BulkDownload,
     Color,
     ColorCreate,
@@ -15,7 +14,7 @@ import type {
     TemplateLegacy,
     User,
 } from './types';
-import { PrivacySettings } from './types';
+import { PrivacySettings } from './types/PrivacySettings';
 
 export interface AppBridgeBlock extends AppBridgeBase {
     getBlockId(): number;
