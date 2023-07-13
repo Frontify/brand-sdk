@@ -13,7 +13,7 @@ export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType 
     return {
         openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => {
             appBridge.dispatch(openAssetChooser(options));
-            appBridge.subscribe('AssetChooser.AssetChosen', callback);
+            appBridge.subscribe('assetsChosen', callback);
         },
         closeAssetChooser: () => {
             appBridge.dispatch(closeAssetChooser());
