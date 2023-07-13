@@ -6,7 +6,7 @@ import { AssetChooserOptions } from './Terrific';
 export type DispatchOption = {
     'AssetChooser.Open': AssetChooserOptions;
     'AssetChooser.Close': void;
-    'Tracking.Send': {
+    'PlatformAnalyticsTracker.Track': {
         name: 'download asset';
         data: {
             asset: Asset;
