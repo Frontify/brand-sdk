@@ -10,6 +10,7 @@ export type DispatchOption = {
         name: 'download asset';
         data: {
             asset: Asset;
+            downloadType: string;
             via: string;
         };
     };
