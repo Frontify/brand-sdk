@@ -8,7 +8,10 @@ export type DispatchOption = {
     'AssetChooser.Close': void;
     'Tracking.Send': {
         name: 'download asset';
-        data: Asset;
+        data: {
+            asset: Asset;
+            via: string;
+        };
     };
 };
 
