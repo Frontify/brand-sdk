@@ -7,9 +7,10 @@ export type DispatchOption = {
     openAssetChooser: AssetChooserOptions;
     closeAssetChooser: void;
     trackPlatformAnalytics: {
-        name: 'download asset';
+        name: 'asset:download';
         data: {
             asset: Asset;
+            documentId?: number;
             downloadType: string;
         };
     };
