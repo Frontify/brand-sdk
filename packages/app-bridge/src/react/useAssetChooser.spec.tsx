@@ -20,7 +20,7 @@ describe('useAssetChooser hook', () => {
         cleanup();
     });
 
-    it('should dispatch "AssetChooser.Open" on "openAssetChooser"', () => {
+    it('should dispatch "openAssetChooser"', () => {
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
         const options = AssetChooserOptionsDummy.default();
 
@@ -30,13 +30,13 @@ describe('useAssetChooser hook', () => {
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
         expect(
             appBridgeStub.dispatch.calledWith({
-                commandName: 'AssetChooser.Open',
+                commandName: 'openAssetChooser',
                 options,
             }),
         ).toBe(true);
     });
 
-    it('should subscribe to "AssetChooser.AssetChosen" handler', () => {
+    it('should subscribe to "assetsChosen" handler', () => {
         const spiedOn = vi.spyOn(appBridgeStub, 'subscribe');
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
         const { openAssetChooser } = result.current;
@@ -46,7 +46,7 @@ describe('useAssetChooser hook', () => {
             openAssetChooser(callback, {});
         });
         expect(spiedOn).toHaveBeenCalledOnce();
-        expect(spiedOn).toHaveBeenCalledWith('AssetChooser.AssetChosen', callback);
+        expect(spiedOn).toHaveBeenCalledWith('assetsChosen', callback);
     });
 
     it('should dispatch AssetChooser.Close', () => {
@@ -60,7 +60,7 @@ describe('useAssetChooser hook', () => {
 
         expect(spiedClose).toHaveBeenCalledOnce();
         expect(spiedClose).toHaveBeenCalledWith({
-            commandName: 'AssetChooser.Close',
+            commandName: 'closeAssetChooser',
         });
     });
 });
