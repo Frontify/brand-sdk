@@ -4,8 +4,8 @@ import { Asset } from './Asset';
 import { AssetChooserOptions } from './Terrific';
 
 export type DispatchOption = {
-    'AssetChooser.Open': AssetChooserOptions;
-    'AssetChooser.Close': void;
+    openAssetChooser: AssetChooserOptions;
+    closeAssetChooser: void;
     trackPlatformAnalytics: {
         name: 'download asset';
         data: {

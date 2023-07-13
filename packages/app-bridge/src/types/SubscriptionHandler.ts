@@ -2,8 +2,8 @@
 
 import { Asset } from './Asset';
 
-export type Subscription = 'AssetChooser.AssetChosen';
+export type Subscription = 'assetsChosen';
 
 export type SubscriptionCallback = {
-    'AssetChooser.AssetChosen': (selectedAssets: Asset[]) => void;
+    assetsChosen: (selectedAssets: Asset[]) => void;
 };
