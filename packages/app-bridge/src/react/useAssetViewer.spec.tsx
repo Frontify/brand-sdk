@@ -29,7 +29,7 @@ describe('useAssetViewer', () => {
         waitFor(() => {
             expect(
                 call.calledOnceWithExactly({
-                    commandName: 'AssetViewer.Open',
+                    commandName: 'openAssetViewer',
                     options: {
                         token: asset.token,
                     },

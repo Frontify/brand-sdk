@@ -10,8 +10,3 @@ export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler
 export const closeAssetChooser = (): DispatchHandler<'closeAssetChooser'> => ({
     commandName: 'closeAssetChooser',
 });
-
-export const openAssetViewer = (token: string): DispatchHandler<'AssetViewer.Open'> => ({
-    commandName: 'AssetViewer.Open',
-    options: { token },
-});

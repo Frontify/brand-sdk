@@ -7,6 +7,7 @@ export type DispatchOption = {
     closeAssetChooser: void;
     openAssetViewer: { token: string };
     openTemplateChooser: void;
+    closeTemplateChooser: void;
 };
 
 export type DispatchHandler<CommandName extends keyof DispatchOption> = {
