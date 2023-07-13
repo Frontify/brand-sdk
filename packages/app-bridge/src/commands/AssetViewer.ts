@@ -2,6 +2,7 @@
 
 import { DispatchHandler } from '../types';
 
-export const openAssetViewer = (): DispatchHandler<'openAssetViewer'> => ({
+export const openAssetViewer = (token: string): DispatchHandler<'openAssetViewer'> => ({
     commandName: 'openAssetViewer',
+    options: { token },
 });
