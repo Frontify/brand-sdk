@@ -3,9 +3,9 @@
 import { Asset } from './Asset';
 import { TemplateLegacy } from './TemplateLegacy';
 
-export type Subscription = 'AssetChooser.AssetChosen';
+export type Subscription = 'assetsChosen';
 
 export type SubscriptionCallback = {
-    'AssetChooser.AssetChosen': (selectedAssets: Asset[]) => void;
-    'TemplateChooser.TemplateChosen': (selectedTemplate: TemplateLegacy) => void;
+    assetsChosen: (selectedAssets: Asset[]) => void;
+    templateChosen: (selectedTemplate: TemplateLegacy) => void;
 };

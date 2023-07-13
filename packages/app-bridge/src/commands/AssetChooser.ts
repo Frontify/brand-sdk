@@ -2,13 +2,13 @@
 
 import { AssetChooserOptions, DispatchHandler } from '../types';
 
-export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler<'AssetChooser.Open'> => ({
-    commandName: 'AssetChooser.Open',
+export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler<'openAssetChooser'> => ({
+    commandName: 'openAssetChooser',
     options,
 });
 
-export const closeAssetChooser = (): DispatchHandler<'AssetChooser.Close'> => ({
-    commandName: 'AssetChooser.Close',
+export const closeAssetChooser = (): DispatchHandler<'closeAssetChooser'> => ({
+    commandName: 'closeAssetChooser',
 });
 
 export const openAssetViewer = (token: string): DispatchHandler<'AssetViewer.Open'> => ({
