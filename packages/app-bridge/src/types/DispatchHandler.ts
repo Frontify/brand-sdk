@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetChooserOptions } from './Terrific';
+import type { AssetChooserOptions } from './Terrific';
 
 export type DispatchOption = {
     openAssetChooser: AssetChooserOptions;

@@ -121,7 +121,10 @@ export const loginUser = async (instanceUrl: string, port: number): Promise<void
 
         const loginUrl = authenticator.getLoginUrl();
 
-        Logger.info('Opening OAuth login page...');
+        Logger.info('Attempting to open OAuth login page...');
+        Logger.info(
+            `If a browser window doesn't automatically open, please open the following link manually: ${loginUrl}`,
+        );
         await open(loginUrl);
     } catch {
         Logger.error('You need to enter a valid Frontify instance URL.');

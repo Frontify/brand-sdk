@@ -85,7 +85,7 @@ export const useTemplateAssets = (
             componentMounted = false;
             window.emitter.off('AppBridge:TemplateAssetsUpdated', updateTemplateAssetsFromEvent);
         };
-    }, [appBridge]);
+    }, [appBridge, documentId, documentPageId]);
 
     const emitUpdatedTemplateAssets = async () => {
         window.emitter.emit('AppBridge:TemplateAssetsUpdated', {
