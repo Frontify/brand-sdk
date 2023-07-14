@@ -6,9 +6,9 @@ pnpm-lock.yaml
 # Specific paths
 
 # App Bridge
-packages/app-bridge/src/react/useAssetChooser.ts @Frontify/guidelines-one @SamuelAlev
-packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/guidelines-one @SamuelAlev
-packages/app-bridge/src/react/useAssetUpload.ts @Frontify/guidelines-one @SamuelAlev
+packages/app-bridge/src/react/useAssetChooser.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @SamuelAlev
+packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @SamuelAlev
+packages/app-bridge/src/react/useAssetUpload.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @SamuelAlev
 packages/app-bridge/src/react/useAssetViewer.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/react/useAssetViewer.spec.tsx @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/react/useBlockAssets.ts @Frontify/guidelines-one @SamuelAlev
@@ -19,7 +19,7 @@ packages/app-bridge/src/react/useBlockTemplates.ts @Frontify/guidelines-one @Sam
 packages/app-bridge/src/react/useBlockTemplates.spec.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/react/useBulkDownload.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/react/useBulkDownload.spec.ts @Frontify/guidelines-one @SamuelAlev
-packages/app-bridge/src/react/useEditorState.ts @Frontify/guidelines-one @SamuelAlev
+packages/app-bridge/src/react/useEditorState.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @SamuelAlev
 packages/app-bridge/src/react/usePrivacySettings.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/react/usePrivacySettings.spec.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/react/useReadyForPrint.ts @Frontify/guidelines-one @SamuelAlev
@@ -27,7 +27,7 @@ packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/guidelines-one
 packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/AppBridgeBlock.ts @Frontify/guidelines-one @SamuelAlev
-packages/app-bridge/src/AppBridgeBase.ts @Frontify/guidelines-one @SamuelAlev
+packages/app-bridge/src/AppBridgeBase.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @SamuelAlev
 
 # Guideline Blocks Settings
 packages/guideline-blocks-settings @Frontify/guidelines-one @SamuelAlev
