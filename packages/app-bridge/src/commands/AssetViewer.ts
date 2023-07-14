@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DispatchHandler } from '../types';
+import type { DispatchHandler } from '../types';
 
 export const openAssetViewer = (token: string): DispatchHandler<'openAssetViewer'> => ({
     commandName: 'openAssetViewer',
