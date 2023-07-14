@@ -2,7 +2,7 @@
 
 import { Asset } from './Asset';
 
-export type Subscription = 'assetsChosen';
+export type Subscription = keyof SubscriptionCallback;
 
 export type SubscriptionCallback = {
     assetsChosen: (selectedAssets: Asset[]) => void;
