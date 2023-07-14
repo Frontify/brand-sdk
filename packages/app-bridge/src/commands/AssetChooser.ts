@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetChooserOptions, DispatchHandler } from '../types';
+import type { AssetChooserOptions, DispatchHandler } from '../types';
 
 export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler<'openAssetChooser'> => ({
     commandName: 'openAssetChooser',
