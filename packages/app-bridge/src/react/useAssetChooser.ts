@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
+import type { Asset, AssetChooserOptions } from '../types';
 import { closeAssetChooser, openAssetChooser } from '../commands/AssetChooser';
-import { type Asset, type AssetChooserOptions } from '../types';
 
-export type UseAssetChooserType = {
+type UseAssetChooserType = {
     openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;
     closeAssetChooser: () => void;
 };

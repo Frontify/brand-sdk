@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Asset } from './Asset';
+import type { Asset } from './Asset';
 
 export type Subscription = keyof SubscriptionCallback;
 

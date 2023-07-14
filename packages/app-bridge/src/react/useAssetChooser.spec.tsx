@@ -49,7 +49,7 @@ describe('useAssetChooser hook', () => {
         expect(spiedOn).toHaveBeenCalledWith('assetsChosen', callback);
     });
 
-    it('should dispatch AssetChooser.Close', () => {
+    it('should dispatch "closeAssetChooser"', () => {
         const spiedClose = vi.spyOn(appBridgeStub, 'dispatch');
         const { result } = renderHook(() => useAssetChooser(appBridgeStub));
         const { closeAssetChooser } = result.current;
