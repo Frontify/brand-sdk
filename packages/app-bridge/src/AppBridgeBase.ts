@@ -5,6 +5,8 @@ import {
     AssetChooserOptions,
     Color,
     ColorPalette,
+    DispatchHandler,
+    DispatchOption,
     Document,
     DocumentCategory,
     DocumentGroup,
@@ -12,6 +14,8 @@ import {
     DocumentPageTargets,
     DocumentSection,
     DocumentTargets,
+    Subscription,
+    SubscriptionCallback,
 } from './types';
 
 export interface AppBridgeBase {
@@ -47,7 +51,23 @@ export interface AppBridgeBase {
 
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(openAssetChooser(options)) to open the asset chooser
+     * and appBridge.subscribe('assetsChosen', callback) to subscribe to the asset chosen event
+     */
     openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
 
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(closeAssetChooser()) instead
+     */
     closeAssetChooser(): void;
+
+    subscribe<SubscriptionName extends Subscription>(
+        eventName: SubscriptionName,
+        callback: SubscriptionCallback[SubscriptionName],
+    ): void;
+
+    dispatch<CommandName extends keyof DispatchOption>(dispatchHandler: DispatchHandler<CommandName>): void;
 }

@@ -352,5 +352,7 @@ export const getAppBridgeThemeStub = ({
         openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
             openAssetChooser(callback);
         }),
+        subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
+        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };
