@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
+import { openNavigationManager } from '../commands';
 
 export const useNavigationManager = (appBridge: AppBridgeTheme) => {
-    const { openNavigationManager } = appBridge;
+    const { dispatch } = appBridge;
 
     return {
-        openNavigationManager: () => openNavigationManager(),
+        openNavigationManager: () => dispatch(openNavigationManager()),
     };
 };
