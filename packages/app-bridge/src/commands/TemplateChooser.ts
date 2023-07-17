@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DispatchHandler } from '../types';
+import type { DispatchHandler } from '../types';
 
 export const openTemplateChooser = (): DispatchHandler<'openTemplateChooser'> => ({
-    commandName: 'openTemplateChooser',
+    name: 'openTemplateChooser',
 });
 
 export const closeTemplateChooser = (): DispatchHandler<'closeTemplateChooser'> => ({
-    commandName: 'closeTemplateChooser',
+    name: 'closeTemplateChooser',
 });

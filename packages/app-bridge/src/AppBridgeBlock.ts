@@ -31,7 +31,7 @@ export interface AppBridgeBlock extends AppBridgeBase {
 
     /**
      * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
-     * Use appBridge.dispatch(openAssetViewer()) instead
+     * Use appBridge.dispatch(openAssetViewer(token)) instead
      */
     openAssetViewer(token: string): void;
 

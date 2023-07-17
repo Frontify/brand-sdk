@@ -12,6 +12,6 @@ export type DispatchOption = {
 };
 
 export type DispatchHandler<CommandName extends keyof DispatchOption> = {
-    commandName: CommandName;
+    name: CommandName;
     options?: DispatchOption[CommandName];
 };
