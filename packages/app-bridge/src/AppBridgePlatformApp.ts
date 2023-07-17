@@ -17,17 +17,21 @@ export class AppBridgePlatformApp {
 
     public async initialize() {
         const queryParams = this.context();
-        return new Promise<void>((resolve, reject) => {
-            if (queryParams.token && !this.initialized) {
-                notify(Topic.Init, PUBSUB_CHECKSUM, { token: queryParams.token });
-                subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port }) => {
-                    this.messageBus = new MessageBus(port);
-                    this.initialized = true;
-                    console.debug('Connected and Initialized');
-                    resolve();
-                });
-            } else {
-                reject();
+        return new Promise<{ success: boolean }>((resolve, reject) => {
+            try {
+                if (queryParams.token && !this.initialized) {
+                    notify(Topic.Init, PUBSUB_CHECKSUM, { token: queryParams.token });
+                    subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port }) => {
+                        this.messageBus = new MessageBus(port);
+                        this.initialized = true;
+                        console.debug('Connected and Initialized');
+                        resolve({ success: true });
+                    });
+                } else {
+                    resolve({ success: false });
+                }
+            } catch (error) {
+                reject(error);
             }
         });
     }

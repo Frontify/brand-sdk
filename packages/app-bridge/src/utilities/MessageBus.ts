@@ -8,7 +8,7 @@ type ResponseEvent<T> = {
 };
 
 export interface IMessageBus {
-    post<T>(topic: string, data?: unknown): Promise<T>;
+    post<T>(methodName: string, data?: unknown): Promise<T>;
 }
 
 export class MessageBus implements IMessageBus {
@@ -32,7 +32,9 @@ export class MessageBus implements IMessageBus {
 }
 
 export class ErrorMessageBus implements IMessageBus {
-    post<T>(topic: string, data?: unknown): Promise<T> {
-        throw new Error(`Message Bus was not Instantiated! Topic: ${topic}, data: ${data}`);
+    post<T>(methodName: string, data?: unknown): Promise<T> {
+        throw new Error(
+            `AppBridge not initialized, first use await appBridge.initialize(). Called with: ${methodName}, ${data}`,
+        );
     }
 }
