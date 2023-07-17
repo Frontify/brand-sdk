@@ -35,3 +35,4 @@ export * from './Template';
 export * from './Terrific';
 export * from './Topic';
 export * from './User';
+export * from './PlatformAppPublicMethods';
