@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { Asset } from './Asset';
-import { TemplateLegacy } from './TemplateLegacy';
+import type { TemplateLegacy } from './TemplateLegacy';
 
 export type Subscription = keyof SubscriptionCallback;
 
