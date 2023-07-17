@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
+import { closeTemplateChooser, openTemplateChooser } from '../commands';
 import type { TemplateLegacy } from '../types/TemplateLegacy';
 
 type UseTemplateChooserType = {
@@ -10,7 +11,12 @@ type UseTemplateChooserType = {
 
 export const useTemplateChooser = (appBridge: AppBridgeBlock): UseTemplateChooserType => {
     return {
-        openTemplateChooser: appBridge.openTemplateChooser.bind(appBridge),
-        closeTemplateChooser: appBridge.closeTemplateChooser.bind(appBridge),
+        openTemplateChooser: (callback) => {
+            appBridge.dispatch(openTemplateChooser());
+            appBridge.subscribe('templateChosen', callback);
+        },
+        closeTemplateChooser: () => {
+            appBridge.dispatch(closeTemplateChooser());
+        },
     };
 };
