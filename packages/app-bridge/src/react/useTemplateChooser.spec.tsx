@@ -1,56 +1,56 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import React from 'react';
 import sinon from 'sinon';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { act, cleanup, renderHook } from '@testing-library/react';
+import { afterEach, describe, it } from 'vitest';
+import { cleanup, render } from '@testing-library/react';
 
-import { getAppBridgeBlockStub } from '../tests';
+import { TemplateLegacy } from '../types/TemplateLegacy';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { useTemplateChooser } from './useTemplateChooser';
+import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+
+const OPEN_TEMPLATE_CHOOSER_BUTTON_ID = 'open-template-chooser';
+const CLOSE_TEMPLATE_CHOOSER_BUTTON_ID = 'close-template-chooser';
+
+const TemplateChooserDummy = ({
+    appBridge,
+    onTemplateChosen,
+}: {
+    appBridge: AppBridgeBlock;
+    onTemplateChosen?: (selectedTemplate: TemplateLegacy) => void;
+}) => {
+    const { openTemplateChooser, closeTemplateChooser } = useTemplateChooser(appBridge);
+
+    return (
+        <>
+            <button
+                data-test-id={OPEN_TEMPLATE_CHOOSER_BUTTON_ID}
+                onClick={() => openTemplateChooser(onTemplateChosen ?? (() => null))}
+            />
+            <button data-test-id={CLOSE_TEMPLATE_CHOOSER_BUTTON_ID} onClick={() => closeTemplateChooser()} />
+        </>
+    );
+};
 
 describe('useReadyForPrint hook', () => {
-    let appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock>;
-
-    beforeEach(() => {
-        appBridgeStub = getAppBridgeBlockStub();
-    });
-
     afterEach(() => {
-        sinon.restore();
         cleanup();
     });
 
-    it('should dispatch openTemplateChooser and subscribe to callback', () => {
-        const { result } = renderHook(() => useTemplateChooser(appBridgeStub));
-        const callbackSpy = sinon.spy();
-
-        act(() => {
-            result.current.openTemplateChooser(callbackSpy);
-        });
-
-        expect(appBridgeStub.dispatch.calledOnce).toBe(true);
-        expect(
-            appBridgeStub.dispatch.calledWith({
-                commandName: 'openTemplateChooser',
-            }),
-        ).toBe(true);
-
-        expect(appBridgeStub.subscribe.calledOnce).toBe(true);
-        expect(appBridgeStub.subscribe.calledWith('templateChosen', callbackSpy)).toBe(true);
+    it('should open the template chooser', () => {
+        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(TemplateChooserDummy);
+        const { getByTestId } = render(<BlockWithStubs />);
+        const openTemplateChooserButton = getByTestId(OPEN_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openTemplateChooserButton.click();
+        sinon.assert.calledOnce(appBridge.openTemplateChooser);
     });
 
-    it('should dispatch closeTemplateChooser', () => {
-        const { result } = renderHook(() => useTemplateChooser(appBridgeStub));
-
-        act(() => {
-            result.current.closeTemplateChooser();
-        });
-
-        expect(appBridgeStub.dispatch.calledOnce).toBe(true);
-        expect(
-            appBridgeStub.dispatch.calledWith({
-                commandName: 'closeTemplateChooser',
-            }),
-        ).toBe(true);
+    it('should close the template chooser', () => {
+        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(TemplateChooserDummy);
+        const { getByTestId } = render(<BlockWithStubs />);
+        const openTemplateChooserButton = getByTestId(CLOSE_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openTemplateChooserButton.click();
+        sinon.assert.calledOnce(appBridge.closeTemplateChooser);
     });
 });
