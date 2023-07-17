@@ -3,7 +3,7 @@
 import type { AssetChooserOptions } from './Terrific';
 
 export type DispatchOption = {
-    openAssetChooser: AssetChooserOptions;
+    openAssetChooser?: AssetChooserOptions;
     closeAssetChooser: void;
     openAssetViewer: { token: string };
     openTemplateChooser: void;
@@ -13,5 +13,5 @@ export type DispatchOption = {
 
 export type DispatchHandler<CommandName extends keyof DispatchOption> = {
     name: CommandName;
-    options?: DispatchOption[CommandName];
+    options: DispatchOption[CommandName];
 };
