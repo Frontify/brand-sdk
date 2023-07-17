@@ -1,56 +1,66 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React from 'react';
+import { act, cleanup, renderHook } from '@testing-library/react';
 import sinon from 'sinon';
-import { afterEach, describe, it } from 'vitest';
-import { cleanup, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import type { Asset } from '../types/Asset';
 import { AppBridgeBlock } from '../AppBridgeBlock';
+import { AssetChooserOptionsDummy, getAppBridgeBlockStub } from '../tests';
 import { useAssetChooser } from './useAssetChooser';
-import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
 
-const OPEN_ASSET_CHOOSER_BUTTON_ID = 'open-asset-chooser';
-const CLOSE_ASSET_CHOOSER_BUTTON_ID = 'close-asset-chooser';
+describe('useAssetChooser hook', () => {
+    let appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock>;
 
-const AssetChooserDummy = ({
-    appBridge,
-    onAssetChosen,
-}: {
-    appBridge: AppBridgeBlock;
-    onAssetChosen?: (selectedAssets: Asset[]) => void;
-}) => {
-    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge);
+    beforeEach(() => {
+        appBridgeStub = getAppBridgeBlockStub();
+    });
 
-    return (
-        <>
-            <button
-                data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID}
-                onClick={() => openAssetChooser(onAssetChosen ?? (() => null), {})}
-            />
-            <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} />
-        </>
-    );
-};
-
-describe('useReadyForPrint hook', () => {
     afterEach(() => {
+        sinon.restore();
         cleanup();
     });
 
-    it('should open the asset chooser', () => {
-        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
-        const { getByTestId } = render(<BlockWithStubs />);
-        const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        openAssetChooserButton.click();
-        sinon.assert.calledOnce(appBridge.openAssetChooser);
+    it('should dispatch "openAssetChooser"', () => {
+        const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+        const options = AssetChooserOptionsDummy.default();
+
+        act(() => {
+            result.current.openAssetChooser(vi.fn(), options);
+        });
+        expect(appBridgeStub.dispatch.calledOnce).toBe(true);
+        expect(
+            appBridgeStub.dispatch.calledWith({
+                commandName: 'openAssetChooser',
+                options,
+            }),
+        ).toBe(true);
     });
 
-    it('should close the asset chooser', () => {
-        const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
-        const { getByTestId } = render(<BlockWithStubs />);
-        const openAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        openAssetChooserButton.click();
-        sinon.assert.calledOnce(appBridge.closeAssetChooser);
+    it('should subscribe to "assetsChosen" handler', () => {
+        const spiedOn = vi.spyOn(appBridgeStub, 'subscribe');
+        const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+        const { openAssetChooser } = result.current;
+
+        const callback = vi.fn();
+        act(() => {
+            openAssetChooser(callback, {});
+        });
+        expect(spiedOn).toHaveBeenCalledOnce();
+        expect(spiedOn).toHaveBeenCalledWith('assetsChosen', callback);
+    });
+
+    it('should dispatch AssetChooser.Close', () => {
+        const spiedClose = vi.spyOn(appBridgeStub, 'dispatch');
+        const { result } = renderHook(() => useAssetChooser(appBridgeStub));
+        const { closeAssetChooser } = result.current;
+
+        act(() => {
+            closeAssetChooser();
+        });
+
+        expect(spiedClose).toHaveBeenCalledOnce();
+        expect(spiedClose).toHaveBeenCalledWith({
+            commandName: 'closeAssetChooser',
+        });
     });
 });
