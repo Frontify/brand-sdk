@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetChooserOptions } from './Terrific';
+import type { AssetChooserOptions } from './Terrific';
 
 export type DispatchOption = {
     openAssetChooser: AssetChooserOptions;
@@ -12,6 +12,6 @@ export type DispatchOption = {
 };
 
 export type DispatchHandler<CommandName extends keyof DispatchOption> = {
-    commandName: CommandName;
+    name: CommandName;
     options?: DispatchOption[CommandName];
 };
