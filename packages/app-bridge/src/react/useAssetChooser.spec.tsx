@@ -30,7 +30,7 @@ describe('useAssetChooser hook', () => {
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
         expect(
             appBridgeStub.dispatch.calledWith({
-                commandName: 'openAssetChooser',
+                name: 'openAssetChooser',
                 options,
             }),
         ).toBe(true);
@@ -60,7 +60,7 @@ describe('useAssetChooser hook', () => {
 
         expect(spiedClose).toHaveBeenCalledOnce();
         expect(spiedClose).toHaveBeenCalledWith({
-            commandName: 'closeAssetChooser',
+            name: 'closeAssetChooser',
         });
     });
 });

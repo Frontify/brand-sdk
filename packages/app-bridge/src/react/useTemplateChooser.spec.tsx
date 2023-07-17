@@ -31,7 +31,7 @@ describe('useReadyForPrint hook', () => {
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
         expect(
             appBridgeStub.dispatch.calledWith({
-                commandName: 'openTemplateChooser',
+                name: 'openTemplateChooser',
             }),
         ).toBe(true);
 
@@ -49,7 +49,7 @@ describe('useReadyForPrint hook', () => {
         expect(appBridgeStub.dispatch.calledOnce).toBe(true);
         expect(
             appBridgeStub.dispatch.calledWith({
-                commandName: 'closeTemplateChooser',
+                name: 'closeTemplateChooser',
             }),
         ).toBe(true);
     });
