@@ -8,6 +8,7 @@ export * from './AppBridgeBase';
 export * from './AppBridgeBlock';
 export * from './AppBridgeCreateAsset';
 export * from './AppBridgeTheme';
+export * from './AppBridgePlatformApp';
 export * from './commands';
 export * from './errors';
 export * from './react';

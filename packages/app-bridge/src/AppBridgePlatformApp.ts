@@ -3,8 +3,8 @@
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { MethodsListKeys, PlatformAppMethods, Topic } from './types';
-import { PlatformAppContext } from './types/PlatformAppContext';
 import { InitializationError } from './errors/InitializationError';
+import { getQueryParameters } from './utilities/queryParams';
 
 const PUBSUB_CHECKSUM = generateRandomString();
 
@@ -19,7 +19,7 @@ export class AppBridgePlatformApp {
     public async initialize() {
         const queryParams = this.context();
         return new Promise<void>(async (resolve, reject) => {
-            if (queryParams.token && !this.initialized) {
+            if (queryParams?.token && !this.initialized) {
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: queryParams.token });
                 const { port } = await subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM);
                 this.messageBus = new MessageBus(port);
@@ -37,7 +37,7 @@ export class AppBridgePlatformApp {
         return await this.messageBus.post<Promise<PlatformAppMethods[Method['name']][1]>>(method.name);
     }
 
-    public context(): PlatformAppContext {
-        return Object.fromEntries(new URLSearchParams(window.location.search)) as unknown as PlatformAppContext;
+    public context() {
+        return getQueryParameters(window.location.href);
     }
 }
