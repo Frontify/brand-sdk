@@ -2,6 +2,7 @@
 
 import { TimeoutReachedError } from '../errors';
 import { SUBSCRIBE_TIMEOUT } from './subscribe';
+import { InitializationError } from '../errors/InitializationError';
 
 type ResponseEvent<T> = {
     data: PromiseLike<T>;
@@ -32,9 +33,7 @@ export class MessageBus implements IMessageBus {
 }
 
 export class ErrorMessageBus implements IMessageBus {
-    post<T>(methodName: string, data?: unknown): Promise<T> {
-        throw new Error(
-            `AppBridge not initialized, first use await appBridge.initialize(). Called with: ${methodName}, ${data}`,
-        );
+    post<T>(): Promise<T> {
+        throw new InitializationError('First use await appBridge.initialize()');
     }
 }
