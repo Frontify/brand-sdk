@@ -21,6 +21,7 @@ export type AssetApi = {
     project_name: Nullable<string>;
     project_type: Nullable<string>;
     token: string;
+    revision_id: number;
 };
 
 export type Asset = {
@@ -38,8 +39,10 @@ export type Asset = {
     previewUrl: string;
     originUrl: string;
     projectId: number;
+    projectType: Nullable<string>;
     fileSize: number;
     fileSizeHumanReadable: string;
     fileId: string;
     token: string;
+    revisionId: number;
 };
