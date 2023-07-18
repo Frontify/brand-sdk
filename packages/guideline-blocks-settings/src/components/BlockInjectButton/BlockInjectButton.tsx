@@ -14,11 +14,6 @@ import { joinClassNames } from '../../utilities/react/joinClassNames';
 import { BlockInjectButtonProps } from './types';
 import { FileExtension, FileExtensionSets } from '@frontify/app-bridge';
 
-const getBorderClassNames = (errorMsg?: string) =>
-    errorMsg
-        ? 'tw-border-dashed !tw-border-red-50 !tw-cursor-not-allowed'
-        : 'tw-bg-blank-state-shaded-inverse tw-text-blank-state-shaded tw-border-blank-state-line';
-
 export const BlockInjectButton = ({
     onDrop,
     label,
@@ -79,18 +74,21 @@ export const BlockInjectButton = ({
             ref={buttonRef}
             data-test-id="block-inject-button"
             className={joinClassNames([
-                ' tw-font-body tw-relative tw-text-[14px] tw-leading-4 tw-text-text-weak tw-border tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-gap-3 tw-w-full first:tw-rounded-tl last:tw-rounded-br',
+                'tw-font-body tw-relative tw-text-[14px] tw-leading-4 tw-border tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-gap-3 tw-w-full first:tw-rounded-tl last:tw-rounded-br',
                 verticalLayout
                     ? '[&:not(:first-child)]:tw-border-t-0 first:tw-rounded-tr last:tw-rounded-bl'
                     : '[&:not(:first-child)]:tw-border-l-0  first:tw-rounded-bl last:tw-rounded-tr',
-                !isLoading &&
-                    'hover:tw-text-blank-state-hover hover:tw-bg-blank-state-hover-inverse hover:tw-border-blank-state-line-hover active:tw-text-blank-state-pressed active:tw-bg-blank-state-pressed-inverse active:tw-border-blank-state-line-hover',
-                isDraggingOver && '[&>*]:tw-pointer-events-none',
-                isDraggingOver || !!menuPosition
-                    ? 'tw-text-blank-state-pressed tw-bg-blank-state-pressed-inverse tw-border-blank-state-line-hover'
-                    : getBorderClassNames(errorMsg),
                 fillParentContainer ? 'tw-h-full' : 'tw-h-[72px]',
-                isDraggingOver && !errorMsg && !isLoading ? 'tw-border-dashed' : 'tw-border-solid',
+                isDraggingOver && !isLoading ? 'tw-border-dashed' : 'tw-border-solid',
+                menuPosition && 'tw-bg-blank-state-pressed-inverse',
+                isDraggingOver && 'tw-bg-blank-state-weak-inverse',
+                errorMsg ? '!tw-border-red-50 !tw-cursor-not-allowed' : ' tw-border-blank-state-line',
+                isLoading || menuPosition || isDraggingOver || errorMsg
+                    ? ''
+                    : 'tw-text-text-weak hover:tw-text-blank-state-hover hover:tw-bg-blank-state-hover-inverse hover:tw-border-blank-state-line-hover active:tw-text-blank-state-pressed active:tw-bg-blank-state-pressed-inverse active:tw-border-blank-state-line-hover',
+                (isDraggingOver || !!menuPosition) && !errorMsg
+                    ? '[&>*]:tw-pointer-events-none tw-border-blank-state-line-hover'
+                    : 'tw-bg-blank-state-shaded-inverse tw-text-blank-state-shaded',
             ])}
             onDragEnter={
                 onDrop
@@ -100,7 +98,7 @@ export const BlockInjectButton = ({
                           if (validFileType === 'Images') {
                               for (const item of Array.from(event.dataTransfer.items)) {
                                   if (!item?.type?.startsWith('image/')) {
-                                      setErrorMsg('invalid');
+                                      setErrorMsg('Invalid');
                                   } else {
                                       setErrorMsg(undefined);
                                   }

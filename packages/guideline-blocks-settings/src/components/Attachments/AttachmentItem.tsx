@@ -92,6 +92,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
 
         return (
             <button
+                aria-label="Download attachment"
                 data-test-id="attachments-item"
                 onClick={() => download(item.genericUrl, item.fileName)}
                 ref={ref}
@@ -122,13 +123,14 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                     <div
                         data-test-id="attachments-actionbar"
                         className={joinClassNames([
-                            'tw-flex tw-gap-0.5 group-focus:tw-opacity-100 focus-visible:tw-opacity-100 focus-within:tw-opacity-100 group-hover:tw-opacity-100',
+                            'tw-flex tw-gap-0.5 group-focus:tw-opacity-100 [&:has(:focus-visible)]:tw-opacity-100  group-hover:tw-opacity-100',
                             isOverlay || selectedAsset?.id === item.id ? 'tw-opacity-100' : 'tw-opacity-0',
                         ])}
                     >
                         <button
                             {...focusProps}
                             {...draggableProps}
+                            aria-label="Drag attachment"
                             className={joinClassNames([
                                 ' tw-border-button-border tw-bg-button-background active:tw-bg-button-background-pressed tw-group tw-border tw-box-box tw-relative tw-flex tw-items-center tw-justify-center tw-outline-none tw-font-medium tw-rounded tw-h-9 tw-w-9 ',
                                 isDragging || isOverlay

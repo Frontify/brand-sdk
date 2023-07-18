@@ -131,90 +131,93 @@ export const Attachments = ({
         setDraggedAssetId(undefined);
     };
 
-    return isEditing || (internalItems?.length ?? 0) > 0 ? (
-        <Tooltip
-            withArrow
-            position={TooltipPosition.Top}
-            content="Attachments"
-            disabled={isFlyoutOpen}
-            enterDelay={500}
-            triggerElement={
-                <div className="-tw-mx-3" data-test-id="attachments-flyout-button">
-                    <Flyout
-                        placement={FlyoutPlacement.BottomRight}
-                        onOpenChange={(isOpen) => setIsFlyoutOpen(!!draggedItem ? true : isOpen)}
-                        isOpen={isFlyoutOpen}
-                        fitContent
-                        legacyFooter={false}
-                        trigger={
-                            <button className="tw-flex tw-text-[13px] tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed  tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-[1px] tw-p-1.5 tw-outline-line">
-                                <IconPaperclip16 />
-                                <div>{items.length > 0 ? items.length : 'Add'}</div>
-                                <IconCaretDown12 />
-                            </button>
-                        }
-                    >
-                        <div className="tw-w-[300px]">
-                            {internalItems.length > 0 && (
-                                <DndContext
-                                    sensors={sensors}
-                                    collisionDetection={closestCenter}
-                                    onDragStart={handleDragStart}
-                                    onDragEnd={handleDragEnd}
-                                    modifiers={[restrictToWindowEdges]}
-                                >
-                                    <SortableContext items={internalItems} strategy={rectSortingStrategy}>
-                                        <div className="tw-border-b tw-border-b-line">
-                                            {internalItems.map((item) => (
-                                                <SortableAttachmentItem
+    return (
+        (isEditing || (internalItems?.length ?? 0) > 0) && (
+            <Tooltip
+                withArrow
+                position={TooltipPosition.Top}
+                content="Attachments"
+                disabled={isFlyoutOpen}
+                enterDelay={500}
+                triggerElement={
+                    <div data-test-id="attachments-flyout-button">
+                        <Flyout
+                            placement={FlyoutPlacement.BottomRight}
+                            onOpenChange={(isOpen) => setIsFlyoutOpen(!!draggedItem ? true : isOpen)}
+                            isOpen={isFlyoutOpen}
+                            hug={false}
+                            fitContent
+                            legacyFooter={false}
+                            trigger={
+                                <div className="tw-flex tw-text-[13px] tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-[1px] tw-p-[6px] tw-outline-line">
+                                    <IconPaperclip16 />
+                                    <div>{items.length > 0 ? items.length : 'Add'}</div>
+                                    <IconCaretDown12 />
+                                </div>
+                            }
+                        >
+                            <div className="tw-w-[300px]">
+                                {internalItems.length > 0 && (
+                                    <DndContext
+                                        sensors={sensors}
+                                        collisionDetection={closestCenter}
+                                        onDragStart={handleDragStart}
+                                        onDragEnd={handleDragEnd}
+                                        modifiers={[restrictToWindowEdges]}
+                                    >
+                                        <SortableContext items={internalItems} strategy={rectSortingStrategy}>
+                                            <div className="tw-border-b tw-border-b-line">
+                                                {internalItems.map((item) => (
+                                                    <SortableAttachmentItem
+                                                        isEditing={isEditing}
+                                                        isLoading={assetIdsLoading.includes(item.id)}
+                                                        key={item.id}
+                                                        item={item}
+                                                        onDelete={() => onDelete(item)}
+                                                        onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
+                                                        onReplaceWithUpload={(uploadedAsset: Asset) =>
+                                                            onReplaceItemWithUpload(item, uploadedAsset)
+                                                        }
+                                                    />
+                                                ))}
+                                            </div>
+                                        </SortableContext>
+                                        <DragOverlay>
+                                            {draggedItem && (
+                                                <AttachmentItem
+                                                    isOverlay={true}
                                                     isEditing={isEditing}
-                                                    isLoading={assetIdsLoading.includes(item.id)}
-                                                    key={item.id}
-                                                    item={item}
-                                                    onDelete={() => onDelete(item)}
-                                                    onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
+                                                    key={draggedAssetId}
+                                                    item={draggedItem}
+                                                    isDragging={true}
+                                                    onDelete={() => onDelete(draggedItem)}
+                                                    onReplaceWithBrowse={() => onReplaceItemWithBrowse(draggedItem)}
                                                     onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                        onReplaceItemWithUpload(item, uploadedAsset)
+                                                        onReplaceItemWithUpload(draggedItem, uploadedAsset)
                                                     }
                                                 />
-                                            ))}
+                                            )}
+                                        </DragOverlay>
+                                    </DndContext>
+                                )}
+                                {isEditing && (
+                                    <div className="tw-px-5 tw-py-3">
+                                        <div className="tw-font-body tw-font-medium tw-text-text tw-text-s tw-my-4">
+                                            Add attachments
                                         </div>
-                                    </SortableContext>
-                                    <DragOverlay>
-                                        {draggedItem && (
-                                            <AttachmentItem
-                                                isOverlay={true}
-                                                isEditing={isEditing}
-                                                key={draggedAssetId}
-                                                item={draggedItem}
-                                                isDragging={true}
-                                                onDelete={() => onDelete(draggedItem)}
-                                                onReplaceWithBrowse={() => onReplaceItemWithBrowse(draggedItem)}
-                                                onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                    onReplaceItemWithUpload(draggedItem, uploadedAsset)
-                                                }
-                                            />
-                                        )}
-                                    </DragOverlay>
-                                </DndContext>
-                            )}
-                            {isEditing && (
-                                <div className="tw-px-5 tw-py-3">
-                                    <div className="tw-font-body tw-font-medium tw-text-text tw-text-s tw-my-4">
-                                        Add attachments
+                                        <AssetInput
+                                            isLoading={isUploadLoading}
+                                            size={AssetInputSize.Small}
+                                            onUploadClick={(fileList) => setSelectedFiles(fileList)}
+                                            onLibraryClick={onOpenAssetChooser}
+                                        />
                                     </div>
-                                    <AssetInput
-                                        isLoading={isUploadLoading}
-                                        size={AssetInputSize.Small}
-                                        onUploadClick={(fileList) => setSelectedFiles(fileList)}
-                                        onLibraryClick={onOpenAssetChooser}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    </Flyout>
-                </div>
-            }
-        />
-    ) : null;
+                                )}
+                            </div>
+                        </Flyout>
+                    </div>
+                }
+            />
+        )
+    );
 };

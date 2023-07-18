@@ -42,7 +42,7 @@ export const QuoteMarkupElementNode = ({ element, attributes, children, styles }
     return (
         <blockquote
             {...attributes}
-            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element), 'quote'])}
+            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element), 'a-quote'])}
         >
             <span style={styles}>{children}</span>
         </blockquote>

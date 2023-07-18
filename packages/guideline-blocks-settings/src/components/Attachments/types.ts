@@ -3,7 +3,7 @@
 import { AppBridgeBlock, Asset } from '@frontify/app-bridge';
 
 export type AttachmentsProps = {
-    items?: Asset[];
+    items: Asset[] | undefined;
     appBridge: AppBridgeBlock;
     onReplaceWithUpload: (attachmentToReplace: Asset, newAsset: Asset) => Promise<void>;
     onReplaceWithBrowse: (attachmentToReplace: Asset, newAsset: Asset) => Promise<void>;
