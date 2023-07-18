@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
-import { generateRandomString, notify, subscribe } from './utilities';
+import { SUBSCRIBE_TIMEOUT, generateRandomString, notify, subscribe } from './utilities';
 import { MethodsListKeys, PlatformAppMethods, Topic } from './types';
 import { PlatformAppContext } from './types/PlatformAppContext';
+import { TimeoutReachedError } from './errors';
 
 const PUBSUB_CHECKSUM = generateRandomString();
 
@@ -17,22 +18,23 @@ export class AppBridgePlatformApp {
 
     public async initialize() {
         const queryParams = this.context();
-        return new Promise<{ success: boolean }>((resolve, reject) => {
+        return new Promise<{ success: boolean }>(async (resolve, reject) => {
             try {
                 if (queryParams.token && !this.initialized) {
                     notify(Topic.Init, PUBSUB_CHECKSUM, { token: queryParams.token });
-                    subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port }) => {
-                        this.messageBus = new MessageBus(port);
-                        this.initialized = true;
-                        console.debug('Connected and Initialized');
-                        resolve({ success: true });
-                    });
+                    const { port } = await subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM);
+                    this.messageBus = new MessageBus(port);
+                    this.initialized = true;
+                    resolve({ success: true });
                 } else {
                     resolve({ success: false });
                 }
             } catch (error) {
                 reject(error);
             }
+            setTimeout(() => {
+                reject(new TimeoutReachedError('Initialization timeout reached'));
+            }, SUBSCRIBE_TIMEOUT);
         });
     }
 
