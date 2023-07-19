@@ -8,7 +8,7 @@ import { Color } from '@frontify/sidebar-settings';
  * Calculates if text should be in a light color depending on color (e.g. background-color)
  *
  * @param {Object} value Object of RGBA values
- * @param {Number} threshold Threshold for the brightness
+ * @param {Number|undefined} threshold Threshold for the brightness
  * @returns {Boolean} Return if the color is dark
  */
 

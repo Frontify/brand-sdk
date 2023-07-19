@@ -29,5 +29,5 @@ export const getSecurityDownloadableSetting = (options?: SecurityDownloadableSet
 };
 
 export const getSecurityGlobalControlId = (id?: string): string => {
-    return id ? id : 'security';
+    return id || 'security';
 };

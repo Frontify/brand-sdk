@@ -26,9 +26,9 @@ export const RichTextEditor = ({
     };
 
     useEffect(() => {
-        const unloadHandler = (e: BeforeUnloadEvent) => {
-            e.preventDefault();
-            return (e.returnValue = 'Unprocessed changes');
+        const unloadHandler = (event: BeforeUnloadEvent) => {
+            event.preventDefault();
+            return (event.returnValue = 'Unprocessed changes');
         };
 
         if (shouldPreventPageLeave) {

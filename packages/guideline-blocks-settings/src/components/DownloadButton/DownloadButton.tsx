@@ -25,7 +25,7 @@ export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
                 >
                     <span
                         data-test-id="download-button"
-                        className="tw-flex tw-text-[13px] tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-1 tw-p-1.5 tw-outline-line"
+                        className="tw-flex tw-text-xs tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-1 tw-p-1.5 tw-outline-line"
                     >
                         <IconArrowCircleDown16 />
                     </span>

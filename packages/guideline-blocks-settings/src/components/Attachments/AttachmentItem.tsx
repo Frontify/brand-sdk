@@ -123,7 +123,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                     <div
                         data-test-id="attachments-actionbar"
                         className={joinClassNames([
-                            'tw-flex tw-gap-0.5 group-focus:tw-opacity-100 [&:has(:focus-visible)]:tw-opacity-100  group-hover:tw-opacity-100',
+                            'tw-flex tw-gap-0.5 group-focus:tw-opacity-100 focus-visible:tw-opacity-100 focus-within:tw-opacity-100 group-hover:tw-opacity-100',
                             isOverlay || selectedAsset?.id === item.id ? 'tw-opacity-100' : 'tw-opacity-0',
                         ])}
                     >
