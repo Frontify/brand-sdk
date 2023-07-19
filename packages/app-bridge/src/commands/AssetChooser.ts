@@ -9,4 +9,5 @@ export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler
 
 export const closeAssetChooser = (): DispatchHandler<'closeAssetChooser'> => ({
     name: 'closeAssetChooser',
+    options: undefined,
 });

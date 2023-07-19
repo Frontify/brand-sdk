@@ -4,4 +4,5 @@ import type { DispatchHandler } from '../types';
 
 export const openNavigationManager = (): DispatchHandler<'openNavigationManager'> => ({
     name: 'openNavigationManager',
+    options: undefined,
 });
