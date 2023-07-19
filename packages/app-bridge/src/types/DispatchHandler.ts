@@ -11,7 +11,6 @@ export type DispatchOption = {
     openNavigationManager: void;
 };
 
-export type DispatchHandler<CommandName extends keyof DispatchOption> = {
-    name: CommandName;
-    options: DispatchOption[CommandName];
-};
+export type DispatchHandler<CommandName extends keyof DispatchOption> = DispatchOption[CommandName] extends void
+    ? { name: CommandName }
+    : { name: CommandName; options: DispatchOption[CommandName] };

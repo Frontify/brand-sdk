@@ -12,7 +12,7 @@ env:
     CI: true
 
 jobs:
-    unit-tests:
+    lint:
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -37,7 +37,54 @@ jobs:
             - name: Lint code
               run: pnpm lint
 
-            - name: Build the packages (+ typechecking)
+    typecheck:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout default branch
+              uses: actions/checkout@v3
+
+            - name: Use pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: latest
+
+            - name: Use Node.js ${{ env.NODE_VERSION }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: "pnpm"
+
+            - name: Install npm dependencies
+              run: pnpm i --frozen-lockfile
+
+            - name: Typecheck code
+              run: pnpm typecheck
+
+    unit-tests:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout default branch
+              uses: actions/checkout@v3
+
+            - name: Use pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: latest
+
+            - name: Use Node.js ${{ env.NODE_VERSION }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: "pnpm"
+
+            - name: Install npm dependencies
+              run: pnpm i --frozen-lockfile
+
+            - name: Build the packages
               run: pnpm build
 
             - name: Test code
