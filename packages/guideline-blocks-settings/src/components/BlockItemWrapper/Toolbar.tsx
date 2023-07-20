@@ -15,7 +15,7 @@ import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from './constants';
 const Toolbar = ({ items, flyoutItems, isFlyoutOpen, setIsFlyoutOpen, isDragging, isFlyoutDisabled }: ToolbarProps) => {
     return (
         <div data-test-id="block-item-wrapper-toolbar" className="tw-flex tw-justify-end">
-            <div className="tw-bg-white tw-text-box-selected-inverse tw-flex tw-flex-shrink-0 tw-gap-[2px] tw-px-[1px] tw-spacing tw-items-center tw-h-7 tw-self-start tw-border tw-border-box-selected-inverse tw-rounded">
+            <div className="tw-bg-white tw-text-box-selected-inverse tw-pointer-events-auto tw-flex tw-flex-shrink-0 tw-gap-[2px] tw-px-[1px] tw-spacing tw-items-center tw-h-7 tw-self-start tw-border tw-border-box-selected-inverse tw-rounded">
                 {items.map((item, i) =>
                     'draggableProps' in item ? (
                         <Tooltip

@@ -56,7 +56,7 @@ export const BlockItemWrapper = ({
                     bottom: `calc(100% - ${2 + outlineOffset}px)`,
                 }}
                 className={joinClassNames([
-                    'tw-absolute tw-bottom-[calc(100%-4px)] tw-right-[-3px] tw-w-full tw-opacity-0 tw-z-10',
+                    'tw-pointer-events-none tw-absolute tw-bottom-[calc(100%-4px)] tw-right-[-3px] tw-w-full tw-opacity-0 tw-z-10',
                     'group-hover:tw-opacity-100 group-focus:tw-opacity-100 focus-within:tw-opacity-100',
                     (isFlyoutOpen || shouldBeShown) && 'tw-opacity-100',
                 ])}
