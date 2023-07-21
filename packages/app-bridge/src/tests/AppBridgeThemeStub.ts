@@ -353,6 +353,8 @@ export const getAppBridgeThemeStub = ({
             openAssetChooser(callback);
         }),
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
+        // TODO
+        // @ts-expect-error - missing implementation
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };
