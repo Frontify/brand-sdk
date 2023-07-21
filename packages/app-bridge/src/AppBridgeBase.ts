@@ -6,7 +6,7 @@ import {
     Color,
     ColorPalette,
     DispatchHandler,
-    DispatchOption,
+    DispatchPayload,
     Document,
     DocumentCategory,
     DocumentGroup,
@@ -69,5 +69,5 @@ export interface AppBridgeBase {
         callback: SubscriptionCallback[SubscriptionName],
     ): void;
 
-    dispatch<CommandName extends keyof DispatchOption>(dispatchHandler: DispatchHandler<CommandName>): void;
+    dispatch<DispatchName extends keyof DispatchPayload>(dispatchHandler: DispatchHandler<DispatchName>): void;
 }

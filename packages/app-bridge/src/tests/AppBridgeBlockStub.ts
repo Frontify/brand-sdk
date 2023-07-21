@@ -201,6 +201,8 @@ export const getAppBridgeBlockStub = ({
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
+        // TODO
+        // @ts-expect-error - missing implementation
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };
