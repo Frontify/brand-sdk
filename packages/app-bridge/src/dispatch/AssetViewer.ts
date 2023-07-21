@@ -4,5 +4,5 @@ import type { DispatchHandler } from '../types';
 
 export const openAssetViewer = (token: string): DispatchHandler<'openAssetViewer'> => ({
     name: 'openAssetViewer',
-    options: { token },
+    payload: { token },
 });
