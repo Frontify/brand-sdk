@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+export * from './Analytics';
 export * from './Asset';
 export * from './BrandportalLink';
 export * from './BulkDownload';

@@ -1,19 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Asset } from './Asset';
+import { TrackAssetDownload } from './Analytics';
 import type { AssetChooserOptions } from './Terrific';
 
 export type DispatchPayload = {
     openAssetChooser?: AssetChooserOptions;
     closeAssetChooser: void;
-    trackPlatformAnalytics: {
-        name: 'asset:download';
-        data: {
-            asset: Asset;
-            documentId?: number;
-            downloadType: string;
-        };
-    };
+    trackPlatformAnalytics: TrackAssetDownload;
     openAssetViewer: { token: string };
     openTemplateChooser: void;
     closeTemplateChooser: void;
