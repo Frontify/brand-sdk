@@ -54,6 +54,7 @@ describe('Block Item Wrapper', () => {
         );
         cy.get(ToolbarButtonSelector).should('have.length', 2);
     });
+
     it('should render the flyout button with the right amount of menu items', () => {
         mount(
             <BlockItemWrapper
