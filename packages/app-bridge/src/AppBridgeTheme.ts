@@ -34,6 +34,10 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     getBrandId(): number;
 
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(openNavigationManager()) for opening the Navigation Manager
+     */
     openNavigationManager(): void;
 
     getCoverPageTemplateSettings<Settings>(): Promise<Settings>;
