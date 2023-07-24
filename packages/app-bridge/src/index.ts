@@ -9,7 +9,7 @@ export * from './AppBridgeBlock';
 export * from './AppBridgeCreateAsset';
 export * from './AppBridgeTheme';
 export * from './AppBridgePlatformApp';
-export * from './commands';
+export * from './dispatch';
 export * from './errors';
 export * from './react';
 export * from './tests';

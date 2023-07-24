@@ -4,7 +4,7 @@ import type { AssetChooserOptions, DispatchHandler } from '../types';
 
 export const openAssetChooser = (options?: AssetChooserOptions): DispatchHandler<'openAssetChooser'> => ({
     name: 'openAssetChooser',
-    options,
+    payload: options,
 });
 
 export const closeAssetChooser = (): DispatchHandler<'closeAssetChooser'> => ({
