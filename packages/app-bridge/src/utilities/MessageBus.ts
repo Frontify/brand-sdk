@@ -9,15 +9,15 @@ type ResponseEvent<T> = {
 };
 
 export interface IMessageBus {
-    post<T>(operation: string): Promise<T>;
+    post<T>(message: unknown): Promise<T>;
 }
 
 export class MessageBus implements IMessageBus {
     constructor(private port: MessagePort) {}
 
-    public post<T>(operation: string): Promise<T> {
+    public post<T>(message: unknown): Promise<T> {
         return new Promise<T>((resolve, reject) => {
-            this.port.postMessage({ operation });
+            this.port.postMessage(message);
 
             this.port.onmessage = (event: ResponseEvent<T>) => {
                 resolve(event.data);
@@ -26,7 +26,7 @@ export class MessageBus implements IMessageBus {
                 reject(error);
             };
             setTimeout(() => {
-                reject(new TimeoutReachedError(operation));
+                reject(new TimeoutReachedError('operation'));
             }, SUBSCRIBE_TIMEOUT);
         });
     }

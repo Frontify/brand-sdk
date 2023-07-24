@@ -33,8 +33,8 @@ export class AppBridgePlatformApp {
 
     public async api<Method extends PlatformAppMethods[MethodsListKeys][0]>(
         method: Method,
-    ): Promise<PlatformAppMethods[Method['name']][1]> {
-        return await this.messageBus.post<Promise<PlatformAppMethods[Method['name']][1]>>(method.name);
+    ): Promise<PlatformAppMethods[Method['operation']][1]> {
+        return await this.messageBus.post<Promise<PlatformAppMethods[Method['operation']][1]>>(method);
     }
 
     public context() {

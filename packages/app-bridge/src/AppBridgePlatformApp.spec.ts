@@ -47,7 +47,7 @@ describe('AppBridgePlatformApp', () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
-        await expect(() => platformApp.api({ name: 'currentUser' })).rejects.toThrow(
+        await expect(() => platformApp.api({ operation: 'currentUser' })).rejects.toThrow(
             new InitializationError('First use await appBridge.initialize()'),
         );
     });
