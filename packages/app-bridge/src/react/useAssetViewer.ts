@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AppBridgeBlock } from '../AppBridgeBlock';
-import { openAssetViewer } from '../commands';
+import { openAssetViewer } from '../dispatch';
 import { Asset } from '../types';
 
 export const useAssetViewer = (appBridge: AppBridgeBlock) => {

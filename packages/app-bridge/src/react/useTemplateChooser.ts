@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
-import { closeTemplateChooser, openTemplateChooser } from '../commands';
+import { closeTemplateChooser, openTemplateChooser } from '../dispatch';
 import type { TemplateLegacy } from '../types/TemplateLegacy';
 
 type UseTemplateChooserType = {
