@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 export type PlatformAppMethods = {
-    currentUser: [{ operation: 'currentUser' }, { id: string; name?: string | null; email: string; avatar: string }];
+    currentUser: [{ operation: 'currentUser' }, { id: string; name: string | null; email: string; avatar: string }];
 };
 
 export type MethodsListKeys = keyof PlatformAppMethods;
