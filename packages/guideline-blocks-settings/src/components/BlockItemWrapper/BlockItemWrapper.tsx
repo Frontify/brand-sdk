@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { joinClassNames } from '../../utilities';
-import Toolbar from './Toolbar';
+import { Toolbar } from './Toolbar';
 import { BlockItemWrapperProps, ToolbarItem } from './types';
 
 export const BlockItemWrapper = ({
