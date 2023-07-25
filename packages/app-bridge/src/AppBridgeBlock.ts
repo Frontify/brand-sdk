@@ -98,4 +98,6 @@ export interface AppBridgeBlock extends AppBridgeBase {
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 
     getPrivacySettings(): PrivacySettings;
+
+    downloadAsset(asset: Asset): void;
 }

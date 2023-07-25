@@ -204,5 +204,6 @@ export const getAppBridgeBlockStub = ({
         // TODO
         // @ts-expect-error - missing implementation
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
+        downloadAsset: stub<Parameters<AppBridgeBlock['downloadAsset']>>().resolves(),
     };
 };

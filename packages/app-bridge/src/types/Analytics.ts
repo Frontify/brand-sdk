@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Asset } from './Asset';
-import { FileExtension } from './FileExtension';
+import type { Asset, FileExtension } from './';
 
 export type AssetDownloadType = 'PRESSKIT';
 
@@ -10,9 +9,7 @@ export type TrackingEventName = 'asset:download';
 export type TrackAssetDownload = {
     name: TrackingEventName;
     data: {
-        asset: Asset;
-        documentId?: number;
-        downloadType: AssetDownloadType;
+        assets: Asset[];
     };
 };
 
