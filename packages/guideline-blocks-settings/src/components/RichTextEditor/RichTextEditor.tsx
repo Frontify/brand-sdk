@@ -21,7 +21,9 @@ export const RichTextEditor = ({
     const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
 
     const saveText = (newContent: string) => {
-        onTextChange && newContent !== value && onTextChange(newContent);
+        if (onTextChange && newContent !== value) {
+            onTextChange(newContent);
+        }
         setShouldPreventPageLeave(false);
     };
 
