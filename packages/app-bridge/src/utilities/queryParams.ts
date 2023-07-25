@@ -1,22 +1,24 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { ValidationError } from '../errors/ValidationError';
+
 export type QueryParams = { [key: string]: string };
 
-export const getQueryParameters = (url?: string | null): QueryParams => {
-    const params: QueryParams = {};
+export const getQueryParameters = (url: string): QueryParams => {
+    const paramsToObject = (entries: IterableIterator<[string, string]>) => {
+        const result: QueryParams = {};
 
-    const queryString = url?.split('?')[1];
-    if (!queryString) {
-        return params;
-    }
-
-    const keyValuePairs = queryString.split('&');
-    for (const pair of keyValuePairs) {
-        const [key, value] = pair.split('=');
-        if (key && value) {
-            params[key] = value;
+        for (const [key, value] of entries) {
+            result[key] = value;
         }
-    }
 
-    return params;
+        return result;
+    };
+
+    try {
+        const urlObject = new URL(url);
+        return paramsToObject(urlObject.searchParams.entries());
+    } catch {
+        throw new ValidationError(`"${url}" is not a valid url`);
+    }
 };

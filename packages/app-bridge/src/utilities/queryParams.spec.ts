@@ -13,18 +13,22 @@ describe('queryParams', () => {
     });
 
     it('should return empty object if url is empty', () => {
-        expect(getQueryParameters('')).toEqual({});
+        expect(() => getQueryParameters('')).toThrowError('Validation failed. "" is not a valid url');
     });
 
     it('should return empty object if url is undefined', () => {
-        expect(getQueryParameters(undefined)).toEqual({});
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        expect(() => getQueryParameters(undefined)).toThrowError('Validation failed. "undefined" is not a valid url');
     });
 
     it('should return empty object if url is null', () => {
-        expect(getQueryParameters(null)).toEqual({});
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        expect(() => getQueryParameters(null)).toThrowError('Validation failed. "null" is not a valid url');
     });
 
     it('should return objects of well formed query parameters', () => {
-        expect(getQueryParameters('https://www.frontify.com?foo=bar&baz')).toEqual({ foo: 'bar' });
+        expect(getQueryParameters('https://www.frontify.com?foo=bar&baz')).toEqual({ foo: 'bar', baz: '' });
     });
 });
