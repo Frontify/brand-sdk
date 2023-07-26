@@ -3,10 +3,10 @@
 import { AnalyticsActionApi, Asset, FileExtension } from '../types';
 
 export class AnalyticsActionsApiDummy {
-    static with(asset: Asset, brandId: number): AnalyticsActionApi {
+    static with(asset: Asset, brandId?: number): AnalyticsActionApi {
         return {
             type: 'asset:download',
-            brandId,
+            brandId: brandId ?? 1,
             properties: {
                 asset_ext: FileExtension.Png,
                 asset_id: asset.id,
@@ -16,7 +16,17 @@ export class AnalyticsActionsApiDummy {
                 revision_id: asset.revisionId,
                 via: 'STYLEGUIDE',
                 via_id: 652,
-                document_id: 1,
+            },
+        };
+    }
+
+    static withDocumentId(asset: Asset, documentId: number, brandId: number) {
+        return {
+            type: 'asset:download',
+            brandId,
+            properties: {
+                ...AnalyticsActionsApiDummy.with(asset, brandId).properties,
+                document_id: documentId,
             },
         };
     }

@@ -20,7 +20,7 @@ export type TrackAssetDownloadPayload = {
     asset_ext: FileExtension;
     via: 'STYLEGUIDE';
     via_id: number;
-    document_id: number;
+    document_id?: number;
     download_type: string;
     project_id: number;
     project_type: 'BROWSER' | 'NATIVE';
