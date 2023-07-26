@@ -10,6 +10,7 @@ export type TrackAssetDownload = {
     name: TrackingEventName;
     data: {
         assets: Asset[];
+        documentId?: number;
     };
 };
 
