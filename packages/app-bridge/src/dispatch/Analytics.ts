@@ -1,11 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { TrackAssetDownload, TrackingEventName } from '../types/Analytics';
+import { DispatchHandler } from '../types';
+import { TrackAssetDownload } from '../types/Analytics';
 
-export const trackPlatformAnalytics = <EventName extends TrackingEventName>(
-    eventName: EventName,
-    payload: TrackAssetDownload,
-) => {
+export const trackPlatformAnalytics = (payload: TrackAssetDownload): DispatchHandler<'trackPlatformAnalytics'> => {
     return {
         name: 'trackPlatformAnalytics',
         payload,

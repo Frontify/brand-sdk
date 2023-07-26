@@ -2,6 +2,7 @@
 
 export * from './AppBridgeBlockStub';
 export * from './AppBridgeThemeStub';
+export * from './AnalyticsActionApiDummy';
 export * from './AssetApiDummy';
 export * from './AssetChooserOptionsDummy';
 export * from './AssetChooserResultDummy';
