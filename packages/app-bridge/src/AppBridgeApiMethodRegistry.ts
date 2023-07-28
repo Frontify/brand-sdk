@@ -1,16 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { ApiMethodNameValidator } from './AppBridge';
+
 type CreateAssetPayload = {
     name: string;
 };
 
-type CurrentUserPayload = void;
+type GetCurrentUserPayload = void;
 
 type CreateAssetResponse = {
     jobId: string;
 };
 
-type CurrentUserResponse = {
+type GetCurrentUserResponse = {
     id: string;
     name: string | null;
     avatar: string;
@@ -25,8 +27,8 @@ type CreateAttachmentReponse = {
     attachmentId: string;
 };
 
-export type ApiMethodsRegistry = {
+export type ApiMethodRegistry = ApiMethodNameValidator<{
     createAsset: { payload: CreateAssetPayload; response: CreateAssetResponse };
-    createAttachemnt: { payload: CreateAttachmentPayload; response: CreateAttachmentReponse };
-    currentUser: { payload: CurrentUserPayload; response: CurrentUserResponse };
-};
+    createAttachment: { payload: CreateAttachmentPayload; response: CreateAttachmentReponse };
+    getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
+}>;

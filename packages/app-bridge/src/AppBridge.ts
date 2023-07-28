@@ -1,58 +1,103 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+type NameContextList = 'Command' | 'API Method' | 'Event';
+type WrongNamePattern<ApiMethodName, NameContext extends NameContextList> = ApiMethodName extends string
+    ? `The following ${NameContext} do not match the naming pattern: ${ApiMethodName}`
+    : never;
+
+type ObjectNameValidator<
+    NameObject,
+    PatternObject,
+    NameContext extends NameContextList,
+> = keyof NameObject extends keyof PatternObject
+    ? NameObject
+    : WrongNamePattern<
+          `${Exclude<Extract<keyof NameObject, string>, Extract<keyof PatternObject, string>>}`,
+          NameContext
+      >;
+
 type ApiVerb = 'get' | 'create' | 'update' | 'delete' | 'add' | 'remove' | 'set';
-type ApiMethodsPattern = Record<`${ApiVerb}${string}`, { payload: unknown; response: unknown }>;
+type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
+export type ApiMethodNameValidator<ApiMethodNameObject> = ObjectNameValidator<
+    ApiMethodNameObject,
+    ApiMethodNamePattern,
+    'API Method'
+>;
 
-type Asset = {};
-type OpenAssetChooserPayload = {};
+type CommandVerb = 'open' | 'close' | 'navigate';
+type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
+export type CommandNameValidator<CommandNameObject> = ObjectNameValidator<
+    CommandNameObject,
+    CommandNamePattern,
+    'Command'
+>;
 
-type DispatchPayload = {
-    openAssetChooser?: OpenAssetChooserPayload;
-};
+type EventVerb = 'chosen';
+type EventNamePattern = { [eventName: `${string}${Capitalize<EventVerb>}`]: unknown };
+export type EventNameValidator<EventNameObject> = ObjectNameValidator<EventNameObject, EventNamePattern, 'Event'>;
 
-type ApiHandler<ApiMethodName extends keyof ApiMethodsPattern> =
-    ApiMethodsPattern[ApiMethodName]['payload'] extends void
+type ApiHandler<ApiMethodName extends keyof ApiMethodNamePattern> =
+    ApiMethodNamePattern[ApiMethodName]['payload'] extends void
         ? { name: ApiMethodName }
-        : { name: ApiMethodName; payload: ApiMethodsPattern[ApiMethodName]['payload'] };
+        : { name: ApiMethodName; payload: ApiMethodNamePattern[ApiMethodName]['payload'] };
 
-type ApiHandlerResponse<ApiMethodName extends keyof ApiMethodsPattern> = ApiMethodsPattern[ApiMethodName]['response'];
+type ApiHandlerResponse<ApiMethodName extends keyof ApiMethodNamePattern> =
+    ApiMethodNamePattern[ApiMethodName]['response'];
 
-type DispatchHandler<DispatchName extends keyof DispatchPayload> = DispatchPayload[DispatchName] extends void
-    ? { name: DispatchName }
-    : { name: DispatchName; payload: DispatchPayload[DispatchName] };
+type DispatchHandler<CommandName extends keyof CommandNamePattern> = CommandNamePattern[CommandName] extends void
+    ? { name: CommandName }
+    : { name: CommandName; payload: CommandNamePattern[CommandName] };
 
-type UnsubscribeFunction = () => void;
+export type ApiHandlerParameter<ApiMethodName> = ApiMethodName extends keyof ApiMethodNamePattern
+    ? ApiHandler<ApiMethodName>
+    : WrongNamePattern<ApiMethodName, 'API Method'>;
 
-type SubscriptionCallback = {
-    assetsChosen?: (assets: Asset[]) => void;
+export type ApiReturn<ApiMethodName> = Promise<
+    ApiMethodName extends keyof ApiMethodNamePattern ? ApiHandlerResponse<ApiMethodName> : void
+>;
+
+export type DispatchHandlerParameter<CommandName> = CommandName extends keyof CommandNamePattern
+    ? DispatchHandler<CommandName>
+    : WrongNamePattern<CommandName, 'Command'>;
+
+export type EventNameParameter<EventName> = EventName extends keyof EventNamePattern
+    ? EventName
+    : WrongNamePattern<EventName, 'Event'>;
+
+export type EventCallbackParameter<EventName, Event> = EventName extends keyof Event
+    ? (eventReturn: Event[EventName]) => void
+    : () => void;
+
+export type EventUnsubscribeFunction = () => void;
+
+type StateReturn<States> = {
+    get(): Readonly<States>;
+    set(nextState: States): void;
+    subscribe(fn: (nextState: States, previousState: States) => void): EventUnsubscribeFunction;
 };
 
-// Should we enforce typing of StateResponse?
-type StateResponse = {};
-type ContextResponse = {};
-
-type StateName = 'settings' | 'assets';
-
-type State<StateResponse> = {
-    get(): Readonly<StateResponse>;
-    set(nextState: StateResponse): void;
-    subscribe(fn: (nextState: StateResponse, previousState: StateResponse) => void): UnsubscribeFunction;
+type ContextReturn<Context> = {
+    get(): Readonly<Context>;
+    subscribe(fn: (nextState: Context, previousState: Context) => void): EventUnsubscribeFunction;
 };
 
-type Context<ContextResponse> = {
-    get(): Readonly<ContextResponse>;
-    subscribe(fn: (nextState: ContextResponse, previousState: ContextResponse) => void): UnsubscribeFunction;
-};
+export interface AppBridge<
+    ApiMethod extends ApiMethodNamePattern,
+    Command extends CommandNamePattern,
+    Event extends EventNamePattern,
+    State extends Record<string, Record<string, unknown>>,
+    Context extends Record<string, unknown>,
+> {
+    api<ApiMethodName extends keyof ApiMethod>(
+        apiHandler: ApiHandlerParameter<ApiMethodName>,
+    ): ApiReturn<ApiMethodName>;
 
-export interface AppBridge<ApiMethods extends ApiMethodsPattern = ApiMethodsPattern> {
-    api<ApiMethodName extends keyof ApiMethods>(
-        apiHandler: ApiHandler<ApiMethodName>,
-    ): Promise<ApiHandlerResponse<ApiMethodName>>;
-    context(): Context<ContextResponse>;
-    state(): Record<StateName, State<StateResponse>>;
-    dispatch<DispatchName extends keyof DispatchPayload>(dispatchHandler: DispatchHandler<DispatchName>): Promise<void>;
-    subscribe<SubscriptionName extends keyof SubscriptionCallback>(
-        eventName: SubscriptionName,
-        callback: SubscriptionCallback[SubscriptionName],
-    ): UnsubscribeFunction;
+    dispatch<CommandName extends keyof Command>(dispatchHandler: DispatchHandlerParameter<CommandName>): Promise<void>;
+    subscribe<EventName extends keyof Event>(
+        eventName: EventNameParameter<EventName>,
+        callback: EventCallbackParameter<EventName, Event>,
+    ): EventUnsubscribeFunction;
+
+    state(): StateReturn<State>;
+    context(): ContextReturn<Context>;
 }
