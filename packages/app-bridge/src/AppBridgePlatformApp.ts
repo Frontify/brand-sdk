@@ -1,16 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type {
-    AppBridge,
-    ApiMethodNameValidator,
-    CommandNameValidator,
     ApiHandlerParameter,
+    ApiMethodNameValidator,
     ApiReturn,
+    AppBridge,
+    CommandNameValidator,
+    ContextReturn,
     DispatchHandlerParameter,
-    EventNameValidator,
-    EventNameParameter,
     EventCallbackParameter,
+    EventNameParameter,
+    EventNameValidator,
     EventUnsubscribeFunction,
+    StateReturn,
 } from './AppBridge';
 import type { ApiMethodRegistry } from './AppBridgeApiMethodRegistry';
 import type { CommandRegistry } from './AppBridgeCommandRegistry';
@@ -42,16 +44,16 @@ type Event = EventNameValidator<
     }
 >;
 
-type State = {
+type StateDefault = {
     settings: Record<string, unknown>;
     assets: Record<string, unknown>;
 };
 
-type Context = {
-    marketplaceServiceAppId: string;
-};
+export interface AppBridgePlaformApp<State extends StateDefault>
+    extends AppBridge<ApiMethod, Command, Event, State, Context> {
+    // private readonly subscribeMap: Record<string, Map<(eventReturn: unknown) => void, boolean>>;
+    // private readonly localState: State;
 
-export interface AppBridgePlaformApp extends AppBridge<ApiMethod, Command, Event, State, Context> {
     api<ApiMethodName extends keyof ApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName>,
     ): ApiReturn<ApiMethodName>;
@@ -59,18 +61,43 @@ export interface AppBridgePlaformApp extends AppBridge<ApiMethod, Command, Event
     dispatch<CommandName extends keyof ExtendedCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName>,
     ): Promise<void>;
+
+    subscribe<EventName extends keyof ExtendedEvent>(
+        eventName: EventNameParameter<EventName>,
+        callback: EventCallbackParameter<EventName, Event>,
+    ): EventUnsubscribeFunction;
+
+    state(key: keyof State | void): StateReturn<State, typeof key>;
+
+    context(): ContextReturn<{
+        marketplaceServiceAppId: string;
+    }>;
 }
 
 /**
  * WEB APP
  */
 
+type State = {
+    settings: Record<string, unknown>;
+    assets: Record<string, unknown>;
+    // banana: Record<string, unknown>;
+};
+
+type Context = {
+    marketplaceServiceAppId: string;
+};
+
 type ExtendedApiMethod = ApiMethodNameValidator<ApiMethod & { createPrivatedApiMethod: string }>;
 type ExtendedCommand = CommandNameValidator<Command & { openPrivateCommand: string }>;
 type ExtendedEvent = EventNameValidator<Event & { privateEntityChosen: string }>;
 
-class AppBridgePlaformAppTODO implements AppBridgePlaformApp {
-    private readonly subscribeMap: Record<string, Map<(eventReturn: unknwon) => void, boolean>> = {};
+class AppBridgePlaformAppTODO implements AppBridgePlaformApp<State> {
+    private readonly subscribeMap: Record<string, Map<(eventReturn: unknown) => void, boolean>> = {};
+    private localState: State = Object.preventExtensions({
+        settings: {},
+        assets: {},
+    });
 
     api<ApiMethodName extends keyof ExtendedApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName>,
@@ -144,14 +171,28 @@ class AppBridgePlaformAppTODO implements AppBridgePlaformApp {
         };
     }
 
-    state(): Record<
-        'settings' | 'assets',
-        {
-            get(): Readonly<{}>;
-            set(nextState: {}): void;
-            subscribe(fn: (nextState: {}, previousState: {}) => void): () => void;
-        }
-    > {}
+    state(key: keyof typeof this.localState | void): StateReturn<State, typeof key> {
+        return {
+            get: () => (key ? this.localState[key] : this.localState),
+            // @TODO extract nextState type
+            set: (
+                nextState: typeof key extends infer Key
+                    ? Key extends keyof typeof this.localState
+                        ? (typeof this.localState)[Key]
+                        : typeof this.localState
+                    : typeof this.localState,
+            ) => {
+                if (key && key in this.localState) {
+                    this.localState[key] = nextState;
+                } else {
+                    this.localState = nextState;
+                }
+            },
+            subscribe: (callback: (nextState: State, previousState: State) => void) => {
+                return this.subscribe(key ? `State.${key}` : 'State.*', callback);
+            },
+        };
+    }
 
     context(): { get(): Readonly<{}>; subscribe(fn: (nextState: {}, previousState: {}) => void): () => void } {}
 }
@@ -161,4 +202,8 @@ const fn = abc.subscribe('assetsChosen', (assets) => {
     console.log(assets);
 });
 
+abc.state().set({ settings: {}, assets: {} });
+abc.state('settings').get();
+abc.state('settings').set({});
+abc.state('assets').get();
 fn();

@@ -70,13 +70,13 @@ export type EventCallbackParameter<EventName, Event> = EventName extends keyof E
 
 export type EventUnsubscribeFunction = () => void;
 
-type StateReturn<States> = {
-    get(): Readonly<States>;
-    set(nextState: States): void;
-    subscribe(fn: (nextState: States, previousState: States) => void): EventUnsubscribeFunction;
+export type StateReturn<State, Key extends keyof State | void> = {
+    get(): Key extends keyof State ? Readonly<State[Key]> : Readonly<State>;
+    set(nextState: Key extends keyof State ? State[Key] : State): void;
+    subscribe(fn: (nextState: State, previousState: State) => void): EventUnsubscribeFunction;
 };
 
-type ContextReturn<Context> = {
+export type ContextReturn<Context> = {
     get(): Readonly<Context>;
     subscribe(fn: (nextState: Context, previousState: Context) => void): EventUnsubscribeFunction;
 };
@@ -98,6 +98,6 @@ export interface AppBridge<
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
-    state(): StateReturn<State>;
+    state(key: keyof State | void): StateReturn<State, typeof key>;
     context(): ContextReturn<Context>;
 }
