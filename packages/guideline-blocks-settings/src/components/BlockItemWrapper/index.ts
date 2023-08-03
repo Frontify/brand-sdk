@@ -2,3 +2,4 @@
 
 export * from './BlockItemWrapper';
 export * from './types';
+export * from './constants';
