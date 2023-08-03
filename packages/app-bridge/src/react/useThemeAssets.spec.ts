@@ -18,10 +18,10 @@ describe('useThemeAssets hook', () => {
         cleanup();
     });
 
-    const loadUseThemeAssets = async (existingAssets = [AssetDummy.with(1)]) => {
+    const loadUseThemeAssets = async (existingAssets = [AssetDummy.with(1)], keyName = 'key') => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeThemeStub({
-            pageTemplateAssets: { key: existingAssets },
+            pageTemplateAssets: { [keyName]: existingAssets },
         });
 
         const { result, rerender } = renderHook(() => useThemeAssets(appBridgeStub));
@@ -63,6 +63,24 @@ describe('useThemeAssets hook', () => {
             expect(addCall.firstArg).toEqual('key');
             expect(addCall.lastArg).toEqual([2, 1]);
             expect(result.current.themeAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+        });
+    });
+
+    it('should delete nothing if key does not exist', async () => {
+        const { result, appBridgeStub } = await loadUseThemeAssets(
+            [AssetDummy.with(1), AssetDummy.with(2)],
+            'non-existing-key',
+        );
+
+        await act(async () => {
+            await result.current.updateAssetIdsFromKey('key', [2, 1]);
+        });
+
+        const deleteCall = appBridgeStub.deleteAssetIdsFromThemeAssetKey.getCall(0);
+
+        await waitFor(async () => {
+            expect(deleteCall.firstArg).toEqual('key');
+            expect(deleteCall.lastArg).toEqual([]);
         });
     });
 
