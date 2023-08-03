@@ -220,6 +220,12 @@ export const getAppBridgeThemeStub = ({
             addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
             return pageTemplateAssets;
         }),
+        addAssetIdsToThemeAssetKey: stub<Parameters<AppBridgeTheme['addAssetIdsToThemeAssetKey']>>().callsFake(
+            async (key: string, assetsIds: number[]) => {
+                addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
+                return pageTemplateAssets;
+            },
+        ),
         addAssetIdsToLibraryPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['addAssetIdsToLibraryPageTemplateAssetKey']>
         >().callsFake(async (documentId: number, key: string, assetsIds: number[]) => {
@@ -234,12 +240,18 @@ export const getAppBridgeThemeStub = ({
         }),
         getCoverPageTemplateAssets:
             stub<Parameters<AppBridgeTheme['getCoverPageTemplateAssets']>>().callsFake(getTemplateAssets),
+        getThemeAssets: stub<Parameters<AppBridgeTheme['getThemeAssets']>>().callsFake(getTemplateAssets),
         getLibraryPageTemplateAssets:
             stub<Parameters<AppBridgeTheme['getLibraryPageTemplateAssets']>>().callsFake(getTemplateAssets),
         getDocumentPageTemplateAssets:
             stub<Parameters<AppBridgeTheme['getDocumentPageTemplateAssets']>>().callsFake(getTemplateAssets),
         deleteAssetIdsFromCoverPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['deleteAssetIdsFromCoverPageTemplateAssetKey']>
+        >().callsFake(async (key, assetIds) => {
+            deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
+        }),
+        deleteAssetIdsFromThemeAssetKey: stub<
+            Parameters<AppBridgeTheme['deleteAssetIdsFromThemeAssetKey']>
         >().callsFake(async (key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
