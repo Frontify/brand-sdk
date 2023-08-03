@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
-import { relativeUrlRegex } from './relativeUrlregex';
+import { relativeUrlRegex } from './relativeUrlRegex';
 
 describe('Regex values', () => {
     it('should only match internal documents starting with /r/ or /document/', () => {

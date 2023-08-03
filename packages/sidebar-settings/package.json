@@ -40,7 +40,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge": "^3.0.0-beta.66",
-        "@frontify/fondue": "12.0.0-beta.245"
+        "@frontify/fondue": "12.0.0-beta.287"
     },
     "peerDependencies": {
         "react": "^18",
