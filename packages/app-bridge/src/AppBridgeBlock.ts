@@ -10,6 +10,7 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    CreateNewPublicationOptions,
     Template,
     TemplateLegacy,
     User,
@@ -88,6 +89,12 @@ export interface AppBridgeBlock extends AppBridgeBase {
      * Use appBridge.dispatch(closeTemplateChooser()) instead
      */
     closeTemplateChooser(): void;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(createNewPublication()) instead
+     */
+    createNewPublication(options: CreateNewPublicationOptions): void;
 
     getCurrentLoggedUser(): Promise<User>;
 
