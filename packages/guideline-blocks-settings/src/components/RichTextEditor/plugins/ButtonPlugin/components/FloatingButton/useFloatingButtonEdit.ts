@@ -105,7 +105,7 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingBut
     return {
         style: {
             ...style,
-            zIndex: 1,
+            zIndex: 1000,
         },
         ...props,
         ref: useComposedRef<HTMLElement | null>(props.ref, floating),

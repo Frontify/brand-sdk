@@ -18,3 +18,16 @@ describe('isDark', () => {
         expect(isDark(color)).toBe(expected);
     });
 });
+
+describe('isDark with custom threshold', () => {
+    const data = [
+        { color: { red: 0, green: 0, blue: 0 }, threshold: 150, expected: true },
+        { color: { red: 255, green: 102, blue: 0 }, threshold: 150, expected: true },
+        { color: { red: 255, green: 147, blue: 73 }, threshold: 171, expected: true },
+        { color: { red: 255, green: 255, blue: 255 }, threshold: 150, expected: false },
+    ];
+
+    test.each(data)('validate values correctly', ({ color, threshold, expected }) => {
+        expect(isDark(color, threshold)).toBe(expected);
+    });
+});
