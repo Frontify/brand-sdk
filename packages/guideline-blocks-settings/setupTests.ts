@@ -1,14 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { randomFillSync } from 'node:crypto';
-import { afterEach, beforeEach, vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
-const mockGetRandomValues = vi
-    .fn()
-    .mockImplementation(randomFillSync as unknown as typeof window.crypto.getRandomValues);
-
-beforeEach(() => {
-    vi.spyOn(window.crypto, 'getRandomValues').mockImplementation(mockGetRandomValues);
+vi.stubGlobal('crypto', {
+    getRandomValues: vi.fn(),
 });
 
 afterEach(() => {
