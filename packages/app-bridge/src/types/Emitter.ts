@@ -34,6 +34,12 @@ export type EmitterEvents = {
         prevTemplateAssets: Record<string, Asset[]>;
     };
 
+    'AppBridge:ThemeAssetsUpdated': {
+        portalId: number;
+        themeAssets: Record<string, Asset[]>;
+        prevThemeAssets: Record<string, Asset[]>;
+    };
+
     'AppBridge:BlockTemplatesUpdated': {
         blockId: number;
         blockTemplates: Record<string, Template[]>;
