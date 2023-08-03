@@ -6,204 +6,108 @@ import type {
     ApiReturn,
     AppBridge,
     CommandNameValidator,
+    ContextAsEventName,
     ContextReturn,
     DispatchHandlerParameter,
     EventCallbackParameter,
     EventNameParameter,
     EventNameValidator,
     EventUnsubscribeFunction,
+    StateAsEventName,
     StateReturn,
 } from './AppBridge';
 import type { ApiMethodRegistry } from './AppBridgeApiMethodRegistry';
 import type { CommandRegistry } from './AppBridgeCommandRegistry';
-import { EventRegistry } from './AppBridgeEventRegistry';
+import type { EventRegistry } from './AppBridgeEventRegistry';
 
-type ApiMethod = ApiMethodNameValidator<
-    Pick<ApiMethodRegistry, 'createAsset' | 'createAttachment' | 'getCurrentUser'> & {
+export type PlatformAppApiMethod = ApiMethodNameValidator<
+    ApiMethodRegistry & {
         createPlatformAppSpecificApiMethod: { payload: void; response: void };
     }
 >;
 
-type Command = CommandNameValidator<
-    Pick<
-        CommandRegistry,
-        | 'closeAssetChooser'
-        | 'closeTemplateChooser'
-        | 'openAssetChooser'
-        | 'openAssetViewer'
-        | 'openNavigationManager'
-        | 'openTemplateChooser'
-    > & {
+export type PlatformAppCommand = CommandNameValidator<
+    CommandRegistry & {
         openPlatformAppSpecificCommand: string;
     }
 >;
 
-type Event = EventNameValidator<
-    Pick<EventRegistry, 'assetsChosen'> & {
-        platformAppSpecificEntityChosen: string;
-    }
->;
-
-type StateDefault = {
+export type PlatformAppState = {
     settings: Record<string, unknown>;
     assets: Record<string, unknown>;
 };
 
-export interface AppBridgePlaformApp<State extends StateDefault>
-    extends AppBridge<ApiMethod, Command, Event, State, Context> {
-    // private readonly subscribeMap: Record<string, Map<(eventReturn: unknown) => void, boolean>>;
-    // private readonly localState: State;
+export type PlatformAppContext = {
+    marketplaceServiceAppId: string;
+};
 
-    api<ApiMethodName extends keyof ApiMethod>(
+export type PlatformAppEvent = EventNameValidator<
+    Pick<EventRegistry, 'assetsChosen'> &
+        StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
+        ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }> & {
+            platformAppSpecificEntityChosen: string;
+        }
+>;
+
+export interface AppBridgePlatformApp<
+    State extends PlatformAppState,
+    Context extends PlatformAppContext,
+    Event extends PlatformAppEvent,
+> extends AppBridge<PlatformAppApiMethod, PlatformAppCommand, State, Context, Event> {
+    /**
+     * Makes a request to the Frontify platform with the given API method name
+     */
+    api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName>,
     ): ApiReturn<ApiMethodName>;
 
-    dispatch<CommandName extends keyof ExtendedCommand>(
+    /**
+     * Sends a command to the Frontify platform.
+     *
+     * @returns A promise that resolves to acknowledge the dispatch.
+     * The event will be triggered at a later stage and can be subscribed to with {@link AppBridgePlatformApp.subscribe}.
+     */
+    dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName>,
     ): Promise<void>;
 
-    subscribe<EventName extends keyof ExtendedEvent>(
+    /**
+     * Subscribes to an event with the given name and callback function.
+     * The event are fired from {@link AppBridgePlatformApp.dispatch}, {@link AppBridgePlatformApp.state} and {@link AppBridgePlatformApp.context}.
+     *
+     * @returns Function that can be used to unsubscribe from an event.
+     * When called, this function will remove the subscription to the event and prevent any further callbacks from being executed.
+     */
+    subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName>,
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
-    state(key: keyof State | void): StateReturn<State, typeof key>;
+    /**
+     * Returns a state utility object that can be used to get and set state values.
+     *
+     * @returns the state utility object.
+     */
+    state(): StateReturn<State, void>;
+    /**
+     * Returns a state utility object that can be used to get and set state values.
+     *
+     * @returns the state utility object focused on the given key is returned.
+     */
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state<Key extends keyof State>(key?: Key | void): unknown;
 
-    context(): ContextReturn<{
-        marketplaceServiceAppId: string;
-    }>;
+    /**
+     * Returns a context utility object that can be used to get context values.
+     *
+     * @returns the context utility object.
+     */
+    context(): ContextReturn<Context, void>;
+    /**
+     * Returns a context utility object that can be used to get context values.
+     *
+     * @returns the context utility object focused on the given key is returned.
+     */
+    context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+    context<Key extends keyof Context>(key?: Key | void): unknown;
 }
-
-/**
- * WEB APP
- */
-
-type State = {
-    settings: Record<string, unknown>;
-    assets: Record<string, unknown>;
-    // banana: Record<string, unknown>;
-};
-
-type Context = {
-    marketplaceServiceAppId: string;
-};
-
-type ExtendedApiMethod = ApiMethodNameValidator<ApiMethod & { createPrivatedApiMethod: string }>;
-type ExtendedCommand = CommandNameValidator<Command & { openPrivateCommand: string }>;
-type ExtendedEvent = EventNameValidator<Event & { privateEntityChosen: string }>;
-
-class AppBridgePlaformAppTODO implements AppBridgePlaformApp<State> {
-    private readonly subscribeMap: Record<string, Map<(eventReturn: unknown) => void, boolean>> = {};
-    private localState: State = Object.preventExtensions({
-        settings: {},
-        assets: {},
-    });
-
-    api<ApiMethodName extends keyof ExtendedApiMethod>(
-        apiHandler: ApiHandlerParameter<ApiMethodName>,
-    ): ApiReturn<ApiMethodName> {
-        switch (apiHandler.name) {
-            // Global to Bridges
-            case 'createAsset':
-                return {} as ApiReturn<ApiMethodName>;
-
-            case 'createAttachment':
-                return {} as ApiReturn<ApiMethodName>;
-
-            case 'getCurrentUser':
-                return {} as ApiReturn<ApiMethodName>;
-
-            // Specific to Bridge
-            case 'createPlatformAppSpecificApiMethod':
-                return {} as ApiReturn<ApiMethodName>;
-
-            // Private
-            case 'createPrivatedApiMethod':
-                return {} as ApiReturn<ApiMethodName>;
-        }
-    }
-
-    dispatch<CommandName extends keyof ExtendedCommand>(
-        dispatchHandler: DispatchHandlerParameter<CommandName>,
-    ): Promise<void> {
-        switch (dispatchHandler.name) {
-            // Global to Bridges
-            case 'closeAssetChooser':
-                return {} as Promise<void>;
-
-            case 'closeTemplateChooser':
-                return {} as Promise<void>;
-
-            case 'openAssetChooser':
-                return {} as Promise<void>;
-
-            case 'openAssetViewer':
-                return {} as Promise<void>;
-
-            case 'openNavigationManager':
-                return {} as Promise<void>;
-
-            case 'openTemplateChooser':
-                return {} as Promise<void>;
-
-            // Specific to Bridge
-            case 'openPlatformAppSpecificCommand':
-                return {} as Promise<void>;
-
-            // Private
-            case 'openPrivateCommand':
-                return {} as Promise<void>;
-        }
-    }
-
-    subscribe<EventName extends keyof ExtendedEvent>(
-        eventName: EventNameParameter<EventName>,
-        callback: EventCallbackParameter<EventName, Event>,
-    ): EventUnsubscribeFunction {
-        if (!(eventName in this.subscribeMap)) {
-            this.subscribeMap[eventName] = new Map();
-        }
-
-        this.subscribeMap[eventName].set(callback, true);
-
-        return () => {
-            this.subscribeMap[eventName].delete(callback);
-        };
-    }
-
-    state(key: keyof typeof this.localState | void): StateReturn<State, typeof key> {
-        return {
-            get: () => (key ? this.localState[key] : this.localState),
-            // @TODO extract nextState type
-            set: (
-                nextState: typeof key extends infer Key
-                    ? Key extends keyof typeof this.localState
-                        ? (typeof this.localState)[Key]
-                        : typeof this.localState
-                    : typeof this.localState,
-            ) => {
-                if (key && key in this.localState) {
-                    this.localState[key] = nextState;
-                } else {
-                    this.localState = nextState;
-                }
-            },
-            subscribe: (callback: (nextState: State, previousState: State) => void) => {
-                return this.subscribe(key ? `State.${key}` : 'State.*', callback);
-            },
-        };
-    }
-
-    context(): { get(): Readonly<{}>; subscribe(fn: (nextState: {}, previousState: {}) => void): () => void } {}
-}
-
-const abc = new AppBridgePlaformAppTODO();
-const fn = abc.subscribe('assetsChosen', (assets) => {
-    console.log(assets);
-});
-
-abc.state().set({ settings: {}, assets: {} });
-abc.state('settings').get();
-abc.state('settings').set({});
-abc.state('assets').get();
-fn();

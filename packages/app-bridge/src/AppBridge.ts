@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { Simplify } from 'type-fest';
+
 type NameContextList = 'Command' | 'API Method' | 'Event';
 type WrongNamePattern<ApiMethodName, NameContext extends NameContextList> = ApiMethodName extends string
     ? `The following ${NameContext} do not match the naming pattern: ${ApiMethodName}`
@@ -18,23 +20,15 @@ type ObjectNameValidator<
 
 type ApiVerb = 'get' | 'create' | 'update' | 'delete' | 'add' | 'remove' | 'set';
 type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
-export type ApiMethodNameValidator<ApiMethodNameObject> = ObjectNameValidator<
-    ApiMethodNameObject,
-    ApiMethodNamePattern,
-    'API Method'
+export type ApiMethodNameValidator<ApiMethodNameObject> = Simplify<
+    ObjectNameValidator<ApiMethodNameObject, ApiMethodNamePattern, 'API Method'>
 >;
 
 type CommandVerb = 'open' | 'close' | 'navigate';
 type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
-export type CommandNameValidator<CommandNameObject> = ObjectNameValidator<
-    CommandNameObject,
-    CommandNamePattern,
-    'Command'
+export type CommandNameValidator<CommandNameObject> = Simplify<
+    ObjectNameValidator<CommandNameObject, CommandNamePattern, 'Command'>
 >;
-
-type EventVerb = 'chosen';
-type EventNamePattern = { [eventName: `${string}${Capitalize<EventVerb>}`]: unknown };
-export type EventNameValidator<EventNameObject> = ObjectNameValidator<EventNameObject, EventNamePattern, 'Event'>;
 
 type ApiHandler<ApiMethodName extends keyof ApiMethodNamePattern> =
     ApiMethodNamePattern[ApiMethodName]['payload'] extends void
@@ -60,44 +54,123 @@ export type DispatchHandlerParameter<CommandName> = CommandName extends keyof Co
     ? DispatchHandler<CommandName>
     : WrongNamePattern<CommandName, 'Command'>;
 
+export type StateReturn<State, Key> = Key extends keyof State
+    ? {
+          /**
+           * Gets the current value of the state object at the given key.
+           */
+          get(): Readonly<State[Key]>;
+          /**
+           * Sets the value of the state object at the given key.
+           * The operation replaces the entire reference.
+           */
+          set(nextState: State[Key]): void;
+          /**
+           * Subscribes to changes in the state object at the given key.
+           */
+          subscribe(
+              callbackFunction: (nextState: State[Key], previousState: State[Key]) => void,
+          ): EventUnsubscribeFunction;
+      }
+    : {
+          /**
+           * Gets the current value of the state object.
+           */
+          get(): Readonly<State>;
+          /**
+           * Sets the value of the state object.
+           * The operation replaces the entire reference.
+           */
+          set(nextState: State): void;
+          /**
+           * Subscribes to changes in the state object.
+           */
+          subscribe(callbackFunction: (nextState: State, previousState: State) => void): EventUnsubscribeFunction;
+      };
+
+export type ContextReturn<Context, Key> = Key extends keyof Context
+    ? {
+          /**
+           * Gets the current value of the context object at the given key.
+           */
+          get(): Readonly<Context[Key]>;
+          /**
+           * Subscribes to changes in the context object at the given key.
+           */
+          subscribe(
+              callbackFunction: (nextContext: Context[Key], previousContext: Context[Key]) => void,
+          ): EventUnsubscribeFunction;
+      }
+    : {
+          /**
+           * Gets the current value of the context object.
+           */
+          get(): Readonly<Context>;
+          /**
+           * Subscribes to changes in the context object.
+           */
+          subscribe(
+              callbackFunction: (nextContext: Context, previousContext: Context) => void,
+          ): EventUnsubscribeFunction;
+      };
+
+type EventVerb = 'chosen';
+export type EventNamePattern = {
+    [eventName: `State.${string}` | `Context.${string}` | `${string}${Capitalize<EventVerb>}`]: unknown;
+};
+export type EventNameValidator<EventNameObject> = Simplify<
+    ObjectNameValidator<EventNameObject, EventNamePattern, 'Event'>
+>;
+
+export type StateAsEventName<State> = {
+    [StateKey in keyof State as StateKey extends string ? `State.${StateKey}` : never]: [
+        State[StateKey],
+        State[StateKey],
+    ];
+};
+
+export type ContextAsEventName<Context> = {
+    [ContextKey in keyof Context as ContextKey extends string ? `Context.${ContextKey}` : never]: [
+        Context[ContextKey],
+        Context[ContextKey],
+    ];
+};
+
 export type EventNameParameter<EventName> = EventName extends keyof EventNamePattern
     ? EventName
     : WrongNamePattern<EventName, 'Event'>;
 
 export type EventCallbackParameter<EventName, Event> = EventName extends keyof Event
-    ? (eventReturn: Event[EventName]) => void
+    ? Event[EventName] extends any[]
+        ? (...eventReturn: Event[EventName]) => void
+        : (eventReturn: Event[EventName]) => void
     : () => void;
 
 export type EventUnsubscribeFunction = () => void;
 
-export type StateReturn<State, Key extends keyof State | void> = {
-    get(): Key extends keyof State ? Readonly<State[Key]> : Readonly<State>;
-    set(nextState: Key extends keyof State ? State[Key] : State): void;
-    subscribe(fn: (nextState: State, previousState: State) => void): EventUnsubscribeFunction;
-};
-
-export type ContextReturn<Context> = {
-    get(): Readonly<Context>;
-    subscribe(fn: (nextState: Context, previousState: Context) => void): EventUnsubscribeFunction;
-};
-
 export interface AppBridge<
     ApiMethod extends ApiMethodNamePattern,
     Command extends CommandNamePattern,
-    Event extends EventNamePattern,
     State extends Record<string, Record<string, unknown>>,
     Context extends Record<string, unknown>,
+    Event extends EventNamePattern,
 > {
     api<ApiMethodName extends keyof ApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName>,
     ): ApiReturn<ApiMethodName>;
 
     dispatch<CommandName extends keyof Command>(dispatchHandler: DispatchHandlerParameter<CommandName>): Promise<void>;
+
+    state(): StateReturn<State, void>;
+    state(key: keyof State): StateReturn<State, keyof State>;
+    state(key?: void | keyof State): unknown;
+
+    context(): ContextReturn<Context, void>;
+    context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+    context<Key extends keyof Context>(key?: void | Key): unknown;
+
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName>,
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
-
-    state(key: keyof State | void): StateReturn<State, typeof key>;
-    context(): ContextReturn<Context>;
 }
