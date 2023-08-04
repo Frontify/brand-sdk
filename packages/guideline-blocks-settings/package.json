@@ -59,6 +59,7 @@
         "typescript": "^5.1.6",
         "vite": "^4.4.8",
         "vite-plugin-dts": "^3.5.0",
+        "vite-plugin-externals": "^0.6.2",
         "vitest": "^0.34.1"
     },
     "dependencies": {
@@ -67,7 +68,7 @@
         "@dnd-kit/modifiers": "^6.0.1",
         "@dnd-kit/sortable": "^7.0.2",
         "@frontify/app-bridge": "workspace:*",
-        "@frontify/fondue": "^12.0.0-beta.296",
+        "@frontify/fondue": "12.0.0-beta.296",
         "@frontify/sidebar-settings": "workspace:*",
         "@react-aria/focus": "^3.13.0",
         "@react-stately/overlays": "^3.6.0",

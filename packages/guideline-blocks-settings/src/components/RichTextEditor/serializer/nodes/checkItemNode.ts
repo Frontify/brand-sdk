@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
 import { merge } from '@frontify/fondue';
 import { TElement } from '@udecode/plate';
-import { CSSProperties } from 'react';
+
 import { reactCssPropsToCss } from '../utlis/reactCssPropsToCss';
 
 export const checkItemNode = (

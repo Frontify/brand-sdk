@@ -3,7 +3,7 @@
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import { Plugin, PluginProps } from '@frontify/fondue';
 import { RangeBeforeOptions, createPluginFactory } from '@udecode/plate';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { isValidUrl } from '../LinkPlugin/utils/url';
 import { ButtonMarkupElement } from './ButtonMarkupElement';
 import { ButtonButton } from './components/ButtonButton';
