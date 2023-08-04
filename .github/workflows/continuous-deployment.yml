@@ -138,7 +138,7 @@ jobs:
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
-        needs: [component-tests, unit-tests]
+        needs: [lint, typecheck, component-tests, unit-tests]
 
         steps:
             - name: Checkout default branch
