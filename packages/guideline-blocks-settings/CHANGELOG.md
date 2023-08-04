@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.28.2
+
+### Patch Changes
+
+- [`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix issues with styles export
+
+- Updated dependencies [[`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3)]:
+  - @frontify/sidebar-settings@0.6.1
+
 ## 0.28.1
 
 ### Patch Changes
