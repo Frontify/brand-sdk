@@ -124,9 +124,9 @@ export const defineSettings = <
     T extends
         | BlockSettingsStructureExport
         | (() => Promise<BlockSettingsStructureExport>)
-        | (() => BlockSettingsStructureExport)
+        | (() => BlockSettingsStructureExport),
 >(
-    settingsStructure: T
+    settingsStructure: T,
 ): T => settingsStructure;
 
 export * from './components';

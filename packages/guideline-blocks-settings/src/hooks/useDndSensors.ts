@@ -16,7 +16,7 @@ export const useDndSensors = (columnGap = 0, rowGap = 0) => {
         useSensor(KeyboardSensor, {
             coordinateGetter: customCoordinatesGetter,
             keyboardCodes,
-        })
+        }),
     );
 
     return sensors;

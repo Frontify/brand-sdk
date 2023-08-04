@@ -10,7 +10,7 @@ export const triggerFloatingButton = <V extends Value>(
         focused,
     }: {
         focused?: boolean;
-    } = {}
+    } = {},
 ) => {
     if (floatingButtonSelectors.mode() === 'edit') {
         triggerFloatingButtonEdit(editor);

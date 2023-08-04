@@ -62,7 +62,7 @@ describe('RichTextEditor', () => {
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
@@ -83,7 +83,7 @@ describe('RichTextEditor', () => {
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
@@ -102,7 +102,7 @@ describe('RichTextEditor', () => {
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
-            />
+            />,
         );
 
         cy.get(RichTextSelector).click();
@@ -122,7 +122,7 @@ describe('RichTextEditor', () => {
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
@@ -140,7 +140,7 @@ describe('RichTextEditor', () => {
             <RichTextEditor
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('mailto:info@frontify.com {enter}');
@@ -155,7 +155,7 @@ describe('RichTextEditor', () => {
             <RichTextEditor
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('list:{enter}');
@@ -171,7 +171,7 @@ describe('RichTextEditor', () => {
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
@@ -190,7 +190,7 @@ describe('RichTextEditor', () => {
                 isEditing={true}
                 plugins={new PluginComposer().setPlugin([new ButtonPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a button')}
-            />
+            />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');

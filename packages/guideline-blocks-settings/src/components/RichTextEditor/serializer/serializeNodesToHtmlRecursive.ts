@@ -57,7 +57,7 @@ type SerializeNodeToHtmlRecursiveOptions = {
 export const serializeNodeToHtmlRecursive = (
     node: TDescendant,
     styles: Record<string, CSSProperties & { hover?: CSSProperties }> | ButtonStylesType,
-    { mappedMentionable, nestingCount = {} }: SerializeNodeToHtmlRecursiveOptions
+    { mappedMentionable, nestingCount = {} }: SerializeNodeToHtmlRecursiveOptions,
 ): string => {
     if (isText(node)) {
         return serializeLeafToHtml(node);
@@ -90,7 +90,7 @@ export const serializeNodeToHtmlRecursive = (
             node,
             children,
             styles[node.type],
-            getClassNames(node.breakAfterColumn as string | undefined, node.align as string | undefined)
+            getClassNames(node.breakAfterColumn as string | undefined, node.align as string | undefined),
         );
     }
 };
@@ -109,12 +109,12 @@ const MapNodeTypesToHtml: { [key: string]: ({ ...args }: Arguments) => string } 
     [ELEMENT_OL]: ({ classNames, children, node, rootNestingCount }) => {
         const nestingLevel = Math.max(rootNestingCount - countNodesOfType([node], ELEMENT_OL), 0);
         return `<ol class="${getOrderedListClasses(nestingLevel)} ${classNames}" style="${reactCssPropsToCss(
-            OL_STYLES
+            OL_STYLES,
         )}">${children}</ol>`;
     },
     [ELEMENT_LI]: ({ classNames, children, node, styles }) =>
         `<li class="${classNames} ${LI_CLASSNAMES}" style="${reactCssPropsToCss(
-            getLiStyles(node, styles)
+            getLiStyles(node, styles),
         )}">${children}</li>`,
     [ELEMENT_LIC]: ({ classNames, children, node }) =>
         `<p class="${classNames} ${getLicElementClassNames(node)}"><span>${children}</span></p>`,

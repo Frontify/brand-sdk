@@ -37,6 +37,6 @@ describe('minimumNumericalOrPercentOrAutoRule', () => {
         ({ minimumValue, value, expected }) => {
             const rule = minimumNumericalOrPercentOrAutoRule(minimumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

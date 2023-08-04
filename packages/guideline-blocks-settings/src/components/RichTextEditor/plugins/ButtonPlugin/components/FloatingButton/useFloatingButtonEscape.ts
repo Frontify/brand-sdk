@@ -25,6 +25,6 @@ export const useFloatingButtonEscape = () => {
             enableOnFormTags: ['INPUT'],
             enableOnContentEditable: true,
         },
-        []
+        [],
     );
 };

@@ -11,7 +11,7 @@ export const linkNode = (
     node: TElement,
     children: string,
     defaultClassNames: string,
-    styles: Record<string, CSSProperties & { hover?: CSSProperties }>
+    styles: Record<string, CSSProperties & { hover?: CSSProperties }>,
 ) => {
     if (node.chosenLink) {
         const { chosenLink } = node as TLinkElement;

@@ -41,7 +41,7 @@ describe('getBorderSettings', () => {
         });
         expect((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1]).toHaveProperty(
             'id',
-            'borderWidth'
+            'borderWidth',
         );
         expect((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1]).toHaveProperty('type', 'input');
         expect((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[2]).toEqual({

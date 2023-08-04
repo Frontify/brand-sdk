@@ -72,7 +72,7 @@ export const Toolbar = ({
                                 </button>
                             }
                         />
-                    )
+                    ),
                 )}
                 {flyoutItems.length > 0 && (
                     <div className="tw-flex tw-flex-shrink-0 tw-flex-1 tw-h-6">

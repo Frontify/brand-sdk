@@ -55,7 +55,7 @@ export const upsertButton = <V extends Value>(
         insertTextInButton,
         insertNodesOptions,
         isUrl = getPluginOptions<ButtonPlugin, V>(editor, ELEMENT_BUTTON).isUrl,
-    }: UpsertButtonOptions<V>
+    }: UpsertButtonOptions<V>,
 ) => {
     const at = editor.selection;
     if (!at) {
@@ -136,7 +136,7 @@ export const upsertButton = <V extends Value>(
                 },
             ],
         },
-        insertNodesOptions
+        insertNodesOptions,
     );
     return true;
 };
@@ -151,7 +151,7 @@ function anchorAndFocusInButton<V extends Value>(
     url: string,
     buttonStyle?: RichTextButtonStyle,
     target?: string,
-    text?: string
+    text?: string,
 ) {
     if (buttonAbove) {
         unwrapButton(editor, {
@@ -178,7 +178,7 @@ function editButtonUrlAndTarget<V extends Value>(
     buttonAbove: TNodeEntry<TButtonElement>,
     target?: string,
     buttonStyle?: string,
-    text?: string
+    text?: string,
 ) {
     if (
         url !== buttonAbove[0]?.url ||
@@ -190,7 +190,7 @@ function editButtonUrlAndTarget<V extends Value>(
             { url, target, buttonStyle },
             {
                 at: buttonAbove[1],
-            }
+            },
         );
     }
 

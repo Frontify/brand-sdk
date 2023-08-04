@@ -94,7 +94,7 @@ describe('getBackgroundSettings', () => {
                 id: 'Test',
                 defaultValue: true,
                 defaultColor: { red: 0, green: 0, blue: 0, alpha: 1 },
-            })
+            }),
         ).toEqual({
             id: 'hasBackgroundTest',
             label: 'Background',
