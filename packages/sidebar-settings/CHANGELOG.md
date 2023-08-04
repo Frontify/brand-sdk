@@ -1,5 +1,13 @@
 # @frontify/sidebar-settings
 
+## 0.6.0
+
+### Minor Changes
+
+- [#446](https://github.com/Frontify/brand-sdk/pull/446) [`4105251`](https://github.com/Frontify/brand-sdk/commit/4105251969f8ae639014a013a2cbc88df8e4935d) Thanks [@ruslan-sazonov](https://github.com/ruslan-sazonov)! - Change signature of Template
+
+- [#444](https://github.com/Frontify/brand-sdk/pull/444) [`af49f65`](https://github.com/Frontify/brand-sdk/commit/af49f6572592522a550f970c98e3d8fd2d377cc3) Thanks [@lzurbriggen](https://github.com/lzurbriggen)! - add time unit types
+
 ## 0.5.0
 
 ### Minor Changes
