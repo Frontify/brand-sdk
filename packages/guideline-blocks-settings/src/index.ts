@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import 'tailwindcss/tailwind.css';
+import './styles.css';
 
 import type { FC } from 'react';
 import type { AppBridgeBlock } from '@frontify/app-bridge';
