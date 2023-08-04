@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { HTMLPropsAs, LinkRootProps, useElementProps } from '@udecode/plate';
-import { MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
 import { TLinkElement } from '../types';
 import { BlockStyles } from '../../styles';
 import { LINK_PLUGIN } from '../id';

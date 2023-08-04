@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
+import { merge } from '@frontify/fondue';
 import { TElement } from '@udecode/plate';
-import { CSSProperties } from 'react';
+
 import { TextStyles } from '../../plugins';
 import { reactCssPropsToCss } from '../utlis/reactCssPropsToCss';
-import { merge } from '@frontify/fondue';
 
 export const defaultNode = (node: TElement, children: string, styles: CSSProperties, defaultClassNames: string) => {
     const defaultStyles = reactCssPropsToCss(styles);

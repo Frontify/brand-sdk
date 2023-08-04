@@ -1,14 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import { Plugin, PluginProps } from '@frontify/fondue';
 import { createLinkPlugin as createPlateLinkPlugin, createPluginFactory } from '@udecode/plate';
+
 import { CustomFloatingLink } from './FloatingLink/CustomFloatingLink';
 import { LINK_PLUGIN } from './id';
 import { LinkButton } from './LinkButton';
 import { LinkMarkupElement } from './LinkMarkupElement';
 import { isValidUrl } from './utils/url';
-import { CSSProperties } from 'react';
 import { BlockStyles } from '../styles';
 
 export const createLinkPlugin = (appBridge: AppBridgeBlock) =>

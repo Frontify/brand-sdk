@@ -25,7 +25,7 @@ import {
 } from '@udecode/plate';
 import { serializeLeafToHtml } from './utlis/serializeLeafToHtml';
 import { reactCssPropsToCss } from './utlis/reactCssPropsToCss';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { ButtonStylesType, buttonNode } from './nodes/button';
 import { linkNode } from './nodes/link';
 import { defaultNode } from './nodes/default';
