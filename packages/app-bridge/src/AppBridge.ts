@@ -30,10 +30,12 @@ export type CommandNameValidator<CommandNameObject> = Simplify<
     ObjectNameValidator<CommandNameObject, CommandNamePattern, 'Command'>
 >;
 
-type ApiHandler<ApiMethodName extends keyof ApiMethodNamePattern> =
-    ApiMethodNamePattern[ApiMethodName]['payload'] extends void
-        ? { name: ApiMethodName }
-        : { name: ApiMethodName; payload: ApiMethodNamePattern[ApiMethodName]['payload'] };
+type ApiHandler<
+    ApiMethodName extends keyof ApiMethodNamePattern,
+    ApiMethod extends ApiMethodNamePattern,
+> = ApiMethod[ApiMethodName]['payload'] extends void
+    ? { name: ApiMethodName }
+    : { name: ApiMethodName; payload: ApiMethod[ApiMethodName]['payload'] };
 
 type ApiHandlerResponse<ApiMethodName extends keyof ApiMethodNamePattern> =
     ApiMethodNamePattern[ApiMethodName]['response'];
@@ -42,8 +44,11 @@ type DispatchHandler<CommandName extends keyof CommandNamePattern> = CommandName
     ? { name: CommandName }
     : { name: CommandName; payload: CommandNamePattern[CommandName] };
 
-export type ApiHandlerParameter<ApiMethodName> = ApiMethodName extends keyof ApiMethodNamePattern
-    ? ApiHandler<ApiMethodName>
+export type ApiHandlerParameter<
+    ApiMethodName,
+    ApiMethod extends ApiMethodNamePattern,
+> = ApiMethodName extends keyof ApiMethodNamePattern
+    ? ApiHandler<ApiMethodName, ApiMethod>
     : WrongNamePattern<ApiMethodName, 'API Method'>;
 
 export type ApiReturn<ApiMethodName> = Promise<
@@ -53,6 +58,10 @@ export type ApiReturn<ApiMethodName> = Promise<
 export type DispatchHandlerParameter<CommandName> = CommandName extends keyof CommandNamePattern
     ? DispatchHandler<CommandName>
     : WrongNamePattern<CommandName, 'Command'>;
+
+export type SubscribeMap<Event> = {
+    [EventName in keyof Event as EventName]: Map<EventCallbackParameter<keyof Event, Event>, boolean>;
+};
 
 export type StateReturn<State, Key> = Key extends keyof State
     ? {
@@ -155,20 +164,55 @@ export interface AppBridge<
     Context extends Record<string, unknown>,
     Event extends EventNamePattern,
 > {
+    /**
+     * Makes a request to the Frontify platform with the given API method name
+     */
     api<ApiMethodName extends keyof ApiMethod>(
-        apiHandler: ApiHandlerParameter<ApiMethodName>,
+        apiHandler: ApiHandlerParameter<ApiMethodName, ApiMethod>,
     ): ApiReturn<ApiMethodName>;
 
+    /**
+     * Sends a command to the Frontify platform.
+     *
+     * @returns A promise that resolves to acknowledge the dispatch.
+     * The event will be triggered at a later stage and can be subscribed to with {@link AppBridgePlatformApp.subscribe}.
+     */
     dispatch<CommandName extends keyof Command>(dispatchHandler: DispatchHandlerParameter<CommandName>): Promise<void>;
 
+    /**
+     * Returns a state utility object that can be used to get and set state values.
+     *
+     * @returns the state utility object.
+     */
     state(): StateReturn<State, void>;
-    state(key: keyof State): StateReturn<State, keyof State>;
-    state(key?: void | keyof State): unknown;
-
+    /**
+     * Returns a state utility object that can be used to get and set state values.
+     *
+     * @returns the state utility object focused on the given key is returned.
+     */
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state<Key extends keyof State>(key?: Key | void): unknown;
+    /**
+     * Returns a context utility object that can be used to get context values.
+     *
+     * @returns the context utility object.
+     */
     context(): ContextReturn<Context, void>;
+    /**
+     * Returns a context utility object that can be used to get context values.
+     *
+     * @returns the context utility object focused on the given key is returned.
+     */
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
     context<Key extends keyof Context>(key?: void | Key): unknown;
 
+    /**
+     * Subscribes to an event with the given name and callback function.
+     * The event are fired from {@link AppBridgePlatformApp.dispatch}, {@link AppBridgePlatformApp.state} and {@link AppBridgePlatformApp.context}.
+     *
+     * @returns Function that can be used to unsubscribe from an event.
+     * When called, this function will remove the subscription to the event and prevent any further callbacks from being executed.
+     */
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName>,
         callback: EventCallbackParameter<EventName, Event>,

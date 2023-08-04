@@ -14,6 +14,7 @@ import type {
     ContextReturn,
     ContextAsEventName,
     StateAsEventName,
+    SubscribeMap,
 } from './AppBridge';
 import type {
     AppBridgePlatformApp,
@@ -24,7 +25,9 @@ import type {
     PlatformAppContext,
 } from './AppBridgePlatformApp';
 
-type ExtendedApiMethod = ApiMethodNameValidator<PlatformAppApiMethod & { createPrivatedApiMethod: void }>;
+type ExtendedApiMethod = ApiMethodNameValidator<
+    PlatformAppApiMethod & { createPrivatedApiMethod: { payload: void; response: void } }
+>;
 type ExtendedCommand = CommandNameValidator<PlatformAppCommand & { openPrivateCommand: void }>;
 type ExtendedState = PlatformAppState & { privateStateValue: Record<string, { foo: 'bar' }> };
 type ExtendedContext = PlatformAppContext & { privateContextValue: string };
@@ -34,15 +37,10 @@ type ExtendedEvent = EventNameValidator<
         ContextAsEventName<ExtendedContext & { '*': ExtendedContext }> & { privateEntityChosen: void }
 >;
 
-type SubscribeMap = {
-    [EventName in keyof ExtendedEvent as EventName]: Map<
-        EventCallbackParameter<keyof ExtendedEvent, ExtendedEvent>,
-        boolean
-    >;
-};
+
 
 class AppBridgePlatformAppImpl implements AppBridgePlatformApp<ExtendedState, ExtendedContext, ExtendedEvent> {
-    private readonly subscribeMap: SubscribeMap = {
+    private readonly subscribeMap: SubscribeMap<ExtendedEvent> = {
         assetsChosen: new Map(),
         'State.*': new Map(),
         'State.assets': new Map(),
@@ -58,7 +56,7 @@ class AppBridgePlatformAppImpl implements AppBridgePlatformApp<ExtendedState, Ex
     constructor(private localState: ExtendedState, private localContext: ExtendedContext) {}
 
     api<ApiMethodName extends keyof ExtendedApiMethod>(
-        apiHandler: ApiHandlerParameter<ApiMethodName>,
+        apiHandler: ApiHandlerParameter<ApiMethodName, ExtendedApiMethod>,
     ): ApiReturn<ApiMethodName> {
         switch (apiHandler.name) {
             // Global to Bridges
@@ -178,6 +176,9 @@ const bridge = new AppBridgePlatformAppImpl(
     { settings: {}, assets: {}, privateStateValue: {} },
     { marketplaceServiceAppId: '123', privateContextValue: 'abc' },
 );
+
+bridge.api({ name: 'getCurrentUser' });
+bridge.api({ name: 'createAsset', payload: { name: 'foo' } });
 
 const subscribe1 = bridge.subscribe('assetsChosen', (assets) => {
     console.log(assets);
