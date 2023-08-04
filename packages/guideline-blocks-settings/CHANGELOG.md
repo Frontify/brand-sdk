@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.28.3
+
+### Patch Changes
+
+- [`07624cb`](https://github.com/Frontify/brand-sdk/commit/07624cb8fba8d9ede4e5ea5db43780658f69f0ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix react being bundled into the package
+
 ## 0.28.2
 
 ### Patch Changes
