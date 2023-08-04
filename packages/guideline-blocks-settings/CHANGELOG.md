@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.28.1
+
+### Patch Changes
+
+- [`382f7fb`](https://github.com/Frontify/brand-sdk/commit/382f7fbde444170f8f7b90d2ab655edbfd260692) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix build
+
 ## 0.28.0
 
 ### Minor Changes
