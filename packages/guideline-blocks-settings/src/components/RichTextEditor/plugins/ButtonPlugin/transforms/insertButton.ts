@@ -7,11 +7,11 @@ import { CreateButtonNodeOptions, createButtonNode } from '../utils/index';
 export const insertButton = <V extends Value>(
     editor: PlateEditor<V>,
     createButtonNodeOptions: CreateButtonNodeOptions,
-    options?: InsertNodesOptions<V>
+    options?: InsertNodesOptions<V>,
 ) => {
     insertNodes<TButtonElement | TText>(
         editor,
         [createButtonNode(editor, createButtonNodeOptions)],
-        options as InsertNodesOptions
+        options as InsertNodesOptions,
     );
 };

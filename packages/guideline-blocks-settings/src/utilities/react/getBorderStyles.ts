@@ -11,7 +11,7 @@ import { toRgbaString } from '../color';
 export const getBorderStyles = (
     style = BorderStyle.Solid,
     borderWidth = '1px',
-    color = BORDER_COLOR_DEFAULT_VALUE as Color
+    color = BORDER_COLOR_DEFAULT_VALUE as Color,
 ): CSSProperties => {
     return {
         borderStyle: borderStyleMap[style],

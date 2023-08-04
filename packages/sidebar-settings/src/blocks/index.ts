@@ -113,7 +113,7 @@ export type DynamicSupportedBlock<AppBridge> =
 
 export type DynamicSettingBlock<
     AppBridge,
-    T extends DynamicSupportedBlock<AppBridge> = DynamicSupportedBlock<AppBridge>
+    T extends DynamicSupportedBlock<AppBridge> = DynamicSupportedBlock<AppBridge>,
 > = UnionOmit<T, 'value'> & {
     value?: DynamicSupportedBlock<AppBridge>['value'][];
     dynamic: {

@@ -32,6 +32,6 @@ describe('maximumNumericalRule', () => {
         ({ maximumValue, value, expected }) => {
             const rule = maximumNumericalRule(maximumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

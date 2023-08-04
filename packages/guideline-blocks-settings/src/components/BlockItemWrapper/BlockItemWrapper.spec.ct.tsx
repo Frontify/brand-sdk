@@ -16,7 +16,7 @@ describe('Block Item Wrapper', () => {
         mount(
             <BlockItemWrapper toolbarFlyoutItems={[]} toolbarItems={[]}>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(BlockItemWrapperSelector).should('exist');
         cy.get(ChildSelector).should('exist');
@@ -26,7 +26,7 @@ describe('Block Item Wrapper', () => {
         mount(
             <BlockItemWrapper toolbarFlyoutItems={[]} toolbarItems={[]}>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(BlockItemWrapperSelector).should('have.class', 'hover:tw-outline');
     });
@@ -35,7 +35,7 @@ describe('Block Item Wrapper', () => {
         mount(
             <BlockItemWrapper toolbarFlyoutItems={[]} toolbarItems={[]} shouldHideWrapper>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(BlockItemWrapperSelector).should('not.exist');
     });
@@ -50,7 +50,7 @@ describe('Block Item Wrapper', () => {
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(ToolbarButtonSelector).should('have.length', 2);
     });
@@ -85,7 +85,7 @@ describe('Block Item Wrapper', () => {
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-mt-8 tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(ToolbarButtonSelector).eq(0).focus();
         cy.get(FlyoutSelector).should('exist');
@@ -103,7 +103,7 @@ describe('Block Item Wrapper', () => {
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(ToolbarButtonSelector).eq(0).focus();
         cy.get(BlockItemWrapperSelector).should('have.css', 'outline-style', 'solid');
@@ -120,7 +120,7 @@ describe('Block Item Wrapper', () => {
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(ToolbarButtonSelector).eq(0).focus();
         cy.get(ToolbarSelector).should('be.visible');
@@ -137,7 +137,7 @@ describe('Block Item Wrapper', () => {
                 shouldBeShown
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
-            </BlockItemWrapper>
+            </BlockItemWrapper>,
         );
         cy.get(ChildSelector).should('exist');
         cy.get(BlockItemWrapperSelector).should('have.css', 'outline-style', 'solid');

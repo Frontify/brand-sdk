@@ -15,7 +15,7 @@ export const presetCustomValue = <AppBridge = unknown>(
     bundle: Bundle<AppBridge>,
     segmentedControlsId: string,
     inputId: string,
-    map: Record<string, string>
+    map: Record<string, string>,
 ): void => {
     const segmentedControlsValue = bundle.getBlock(segmentedControlsId)?.value as string;
     const customValue = bundle.getBlock(inputId)?.value;

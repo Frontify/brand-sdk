@@ -95,7 +95,7 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingBut
         {
             enableOnContentEditable: true,
         },
-        []
+        [],
     );
 
     useFloatingButtonEnter();

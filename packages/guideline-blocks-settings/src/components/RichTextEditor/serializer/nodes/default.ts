@@ -36,13 +36,13 @@ export const defaultNode = (node: TElement, children: string, styles: CSSPropert
     if (node.type === TextStyles.imageTitle) {
         return `<p class="${merge([defaultClassNames, 'a-image-title'])}">${getStyledChild(
             children,
-            defaultStyles
+            defaultStyles,
         )}</p>`;
     }
     if (node.type === TextStyles.imageCaption) {
         return `<p class="${merge([defaultClassNames, 'a-image-caption'])}">${getStyledChild(
             children,
-            defaultStyles
+            defaultStyles,
         )}</p>`;
     }
 
