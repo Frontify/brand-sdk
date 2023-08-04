@@ -43,7 +43,7 @@
         "open": "^9.1.0",
         "picocolors": "^1.0.0",
         "prompts": "^2.4.2",
-        "vite": "^4.4.7",
+        "vite": "^4.3.9",
         "vite-plugin-externals": "^0.6.2"
     },
     "devDependencies": {
