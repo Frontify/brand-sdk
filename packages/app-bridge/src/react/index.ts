@@ -27,6 +27,7 @@ export * from './usePageTemplateSettings';
 export * from './usePrivacySettings';
 export * from './useReadyForPrint';
 export * from './useTemplateAssets';
+export * from './useThemeAssets';
 export * from './useTemplateChooser';
 export * from './useUncategorizedDocumentPages';
 export * from './useUngroupedDocuments';
