@@ -24,7 +24,6 @@ export type AssetChooserAssetChosenCallback = (selectedAsset: { screenData: Asse
 export type TemplateChooserTemplateChosenCallback = (selectedTemplate: { template: TemplateChooserResult }) => void;
 export type CreateNewPublicationOptions = {
     template: Template;
-    projectId: number;
 };
 
 export enum AssetChooserProjectType {
