@@ -11,7 +11,6 @@ import {
     CodePlugin,
     ItalicPlugin,
     OrderedListPlugin,
-    ParagraphPlugin,
     PluginComposer,
     ResetFormattingPlugin,
     SoftBreakPlugin,
@@ -24,11 +23,11 @@ import { ButtonPlugin, LinkPlugin, TextStylePluginsWithoutImage, TextStylesWitho
 
 export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {
     return new PluginComposer()
-        .setPlugin(new SoftBreakPlugin(), new ParagraphPlugin())
         .setPlugin(
+            new SoftBreakPlugin(),
             new TextStylePlugin({
                 textStyles: TextStylePluginsWithoutImage,
-            })
+            }),
         )
         .setPlugin(
             [
@@ -49,6 +48,6 @@ export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {
                 new CheckboxListPlugin(),
                 new OrderedListPlugin(),
                 new ResetFormattingPlugin(),
-            ]
+            ],
         );
 };

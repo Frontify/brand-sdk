@@ -1,15 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
 import { merge } from '@frontify/fondue';
 import { TElement } from '@udecode/plate';
-import { CSSProperties } from 'react';
+
 import { reactCssPropsToCss } from '../utlis/reactCssPropsToCss';
 
 export const checkItemNode = (
     node: TElement,
     children: string,
     defaultClassNames: string,
-    styles: Record<string, CSSProperties & { hover?: CSSProperties }>
+    styles: Record<string, CSSProperties & { hover?: CSSProperties }>,
 ) => {
     return `<div disabled class="tw-flex tw-flex-row tw-pb-2 first-of-type:tw-ml-0 ${defaultClassNames}" style="margin-left:${
         ((node.indent as number) ?? 0) * 24

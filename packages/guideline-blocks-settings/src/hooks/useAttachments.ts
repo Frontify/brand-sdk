@@ -24,7 +24,7 @@ export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
 
     const onAttachmentReplace = async (attachmentToReplace: Asset, newAsset: Asset) => {
         const newAssetIds = attachments.map((attachment) =>
-            attachment.id === attachmentToReplace.id ? newAsset.id : attachment.id
+            attachment.id === attachmentToReplace.id ? newAsset.id : attachment.id,
         );
 
         await updateAssetIdsFromKey(assetId, newAssetIds);

@@ -1,10 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { randomFillSync } from 'node:crypto';
+import { afterEach, vi } from 'vitest';
 
-//@ts-expect-error We are mocking the crypto object in tests
-window.crypto = {
-    getRandomValues: randomFillSync as unknown as typeof window.crypto.getRandomValues,
-};
+vi.stubGlobal('crypto', {
+    getRandomValues: vi.fn(),
+});
+
+afterEach(() => {
+    vi.restoreAllMocks();
+});
 
 globalThis.structuredClone = (data: unknown) => JSON.parse(JSON.stringify(data));

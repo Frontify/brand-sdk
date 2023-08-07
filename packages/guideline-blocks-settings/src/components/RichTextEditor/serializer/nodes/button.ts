@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
 import { TElement } from '@udecode/plate';
+
 import { reactCssPropsToCss } from '../utlis/reactCssPropsToCss';
-import { CSSProperties } from 'react';
 import { BUTTON_PLUGIN } from '../../plugins';
 
 export type ButtonStylesType = Record<string, Record<string, CSSProperties & { hover?: CSSProperties }>>;

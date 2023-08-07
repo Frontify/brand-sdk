@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import 'tailwindcss/tailwind.css';
+import './styles.css';
 
 import type { FC } from 'react';
 import type { AppBridgeBlock } from '@frontify/app-bridge';
@@ -124,9 +124,9 @@ export const defineSettings = <
     T extends
         | BlockSettingsStructureExport
         | (() => Promise<BlockSettingsStructureExport>)
-        | (() => BlockSettingsStructureExport)
+        | (() => BlockSettingsStructureExport),
 >(
-    settingsStructure: T
+    settingsStructure: T,
 ): T => settingsStructure;
 
 export * from './components';

@@ -13,7 +13,7 @@ const FloatingLinkInsertRoot = createComponentAs<FloatingLinkProps>((props) => {
     const htmlProps = useFloatingLinkInsert({
         ...props,
         floatingOptions: {
-            strategy: 'fixed',
+            strategy: 'absolute',
         },
     });
 
@@ -28,7 +28,7 @@ const FloatingLinkEditRoot = createComponentAs<FloatingLinkProps>((props) => {
     const htmlProps = useFloatingLinkEdit({
         ...props,
         floatingOptions: {
-            strategy: 'fixed',
+            strategy: 'absolute',
         },
     });
 

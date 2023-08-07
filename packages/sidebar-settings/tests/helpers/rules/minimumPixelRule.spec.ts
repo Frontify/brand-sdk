@@ -31,6 +31,6 @@ describe('minimumPixelRule', () => {
         ({ minimumValue, value, expected }) => {
             const rule = minimumPixelRule(minimumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

@@ -1,14 +1,30 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { defineConfig } from 'vitest/config';
-import { dependencies as dependenciesMap } from './package.json';
+import react from '@vitejs/plugin-react';
+import { PreRenderedAsset } from 'rollup';
+import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
 
 const dependencies = Object.keys(dependenciesMap);
+const peerDependencies = Object.keys(peerDependenciesMap);
+
+export const globals = {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    'react-dom/client': 'ReactDOM',
+};
+
+const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
+    if (chunkInfo.name === 'style.css') {
+        return 'styles.css';
+    }
+    return chunkInfo.name ?? 'UnknownFileName';
+};
 
 export default defineConfig({
-    plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
+    plugins: [dts({ insertTypesEntry: true, rollupTypes: true }), react()],
     resolve: {
         mainFields: ['module', 'main'],
     },
@@ -27,21 +43,27 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies],
+            external: [...dependencies, ...peerDependencies, 'react-dom/client', 'react/jsx-runtime'],
             output: [
                 {
                     name: 'GuidelineBlocksSettings',
                     format: 'es',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
+                    assetFileNames,
+                    globals,
                 },
                 {
                     name: 'GuidelineBlocksSettings',
                     format: 'umd',
+                    assetFileNames,
+                    globals,
                 },
                 {
                     name: 'GuidelineBlocksSettings',
                     format: 'cjs',
+                    assetFileNames,
+                    globals,
                 },
             ],
         },

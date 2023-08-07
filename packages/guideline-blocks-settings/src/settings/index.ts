@@ -10,4 +10,5 @@ export * from './marginExtended';
 export * from './padding';
 export * from './paddingExtended';
 export * from './types';
-export * from './security';
+export * from './securityDownloadable';
+export * from './securityGlobalControl';

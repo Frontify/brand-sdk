@@ -18,7 +18,7 @@ describe('Block Inject Button', () => {
                 icon={<IconAdobeCreativeCloud />}
                 secondaryLabel="second label"
                 withMenu={false}
-            />
+            />,
         );
         cy.get(BlockInjectButtonSelector)
             .should('exist')
@@ -34,7 +34,7 @@ describe('Block Inject Button', () => {
                 secondaryLabel="second label"
                 onAssetChooseClick={cy.stub().as('onClickOpenAssetChooser')}
                 onUploadClick={cy.stub().as('onClickonUploadClick')}
-            />
+            />,
         );
         cy.get(BlockInjectButtonSelector).click();
         cy.get(ActionMenuItemSelector).should('have.length', 2);

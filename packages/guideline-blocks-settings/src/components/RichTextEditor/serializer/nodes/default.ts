@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
+import { merge } from '@frontify/fondue';
 import { TElement } from '@udecode/plate';
-import { CSSProperties } from 'react';
+
 import { TextStyles } from '../../plugins';
 import { reactCssPropsToCss } from '../utlis/reactCssPropsToCss';
-import { merge } from '@frontify/fondue';
 
 export const defaultNode = (node: TElement, children: string, styles: CSSProperties, defaultClassNames: string) => {
     const defaultStyles = reactCssPropsToCss(styles);
@@ -36,13 +37,13 @@ export const defaultNode = (node: TElement, children: string, styles: CSSPropert
     if (node.type === TextStyles.imageTitle) {
         return `<p class="${merge([defaultClassNames, 'a-image-title'])}">${getStyledChild(
             children,
-            defaultStyles
+            defaultStyles,
         )}</p>`;
     }
     if (node.type === TextStyles.imageCaption) {
         return `<p class="${merge([defaultClassNames, 'a-image-caption'])}">${getStyledChild(
             children,
-            defaultStyles
+            defaultStyles,
         )}</p>`;
     }
 

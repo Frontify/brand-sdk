@@ -1,5 +1,43 @@
 # @frontify/guideline-blocks-settings
 
+## 0.28.3
+
+### Patch Changes
+
+- [`07624cb`](https://github.com/Frontify/brand-sdk/commit/07624cb8fba8d9ede4e5ea5db43780658f69f0ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix react being bundled into the package
+
+## 0.28.2
+
+### Patch Changes
+
+- [`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix issues with styles export
+
+- Updated dependencies [[`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3)]:
+  - @frontify/sidebar-settings@0.6.1
+
+## 0.28.1
+
+### Patch Changes
+
+- [`382f7fb`](https://github.com/Frontify/brand-sdk/commit/382f7fbde444170f8f7b90d2ab655edbfd260692) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix build
+
+## 0.28.0
+
+### Minor Changes
+
+- [#453](https://github.com/Frontify/brand-sdk/pull/453) [`0807349`](https://github.com/Frontify/brand-sdk/commit/0807349856fe972953493c253ac8e4ce352d3ede) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - Added components, helpers and utilities to simplify Blocks development
+
+- [#466](https://github.com/Frontify/brand-sdk/pull/466) [`9f81a23`](https://github.com/Frontify/brand-sdk/commit/9f81a2363cd3c842d0ac5c014e0b07c46a3a1cca) Thanks [@triggertoo](https://github.com/triggertoo)! - Remove downloadAsset helper since it's unrelated to the settings
+
+### Patch Changes
+
+- [#482](https://github.com/Frontify/brand-sdk/pull/482) [`6b18a74`](https://github.com/Frontify/brand-sdk/commit/6b18a74794612f61bd2e34ea8fdd4572ebb5274e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): update shared folder with latest changes
+
+- Updated dependencies [[`4105251`](https://github.com/Frontify/brand-sdk/commit/4105251969f8ae639014a013a2cbc88df8e4935d), [`af49f65`](https://github.com/Frontify/brand-sdk/commit/af49f6572592522a550f970c98e3d8fd2d377cc3)]:
+  - @frontify/sidebar-settings@0.6.0
+
 ## 0.27.0
 
 ### Minor Changes

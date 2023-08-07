@@ -1,17 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import type { CSSProperties } from 'react';
+import escapeHtml from 'escape-html';
 import { TElement } from '@udecode/plate';
+
 import { LINK_PLUGIN } from '../../plugins/LinkPlugin/id';
 import { TLinkElement } from '../../plugins/LinkPlugin/types';
 import { reactCssPropsToCss } from '../utlis/reactCssPropsToCss';
-import escapeHtml from 'escape-html';
-import { CSSProperties } from 'react';
 
 export const linkNode = (
     node: TElement,
     children: string,
     defaultClassNames: string,
-    styles: Record<string, CSSProperties & { hover?: CSSProperties }>
+    styles: Record<string, CSSProperties & { hover?: CSSProperties }>,
 ) => {
     if (node.chosenLink) {
         const { chosenLink } = node as TLinkElement;

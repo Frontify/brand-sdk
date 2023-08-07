@@ -19,7 +19,7 @@ export const triggerFloatingButtonInsert = <V extends Value>(
         focused,
     }: {
         focused?: boolean;
-    } = {}
+    } = {},
 ) => {
     if (floatingButtonSelectors.mode()) {
         return;

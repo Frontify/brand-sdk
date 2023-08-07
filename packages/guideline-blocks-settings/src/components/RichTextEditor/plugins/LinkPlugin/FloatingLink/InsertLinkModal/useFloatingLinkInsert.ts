@@ -38,7 +38,7 @@ export const useFloatingLinkInsert = ({ floatingOptions, ...props }: FloatingLin
         {
             enableOnContentEditable: true,
         },
-        [focused]
+        [focused],
     );
 
     const { update, style, floating } = useVirtualFloatingLink({
@@ -65,7 +65,7 @@ export const useFloatingLinkInsert = ({ floatingOptions, ...props }: FloatingLin
     return {
         style: {
             ...style,
-            zIndex: 1,
+            zIndex: 1000,
         },
         ...props,
         ref: useComposedRef<HTMLElement | null>(props.ref, floating),

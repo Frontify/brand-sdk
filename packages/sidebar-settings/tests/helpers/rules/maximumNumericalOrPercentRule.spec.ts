@@ -38,6 +38,6 @@ describe('maximumNumericalOrPercentRule', () => {
         ({ maximumValue, value, expected }) => {
             const rule = maximumNumericalOrPercentRule(maximumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

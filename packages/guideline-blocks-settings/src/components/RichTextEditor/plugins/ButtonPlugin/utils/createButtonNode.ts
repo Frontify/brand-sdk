@@ -14,7 +14,7 @@ export interface CreateButtonNodeOptions {
 
 export const createButtonNode = <V extends Value>(
     editor: PlateEditor<V>,
-    { url, text = '', buttonStyle = 'primary', target, children }: CreateButtonNodeOptions
+    { url, text = '', buttonStyle = 'primary', target, children }: CreateButtonNodeOptions,
 ): TButtonElement => {
     const type = getPluginType(editor, ELEMENT_BUTTON);
 

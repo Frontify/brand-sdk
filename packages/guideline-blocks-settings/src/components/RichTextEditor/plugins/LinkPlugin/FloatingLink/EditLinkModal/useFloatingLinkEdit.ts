@@ -95,7 +95,7 @@ export const useFloatingLinkEdit = ({ floatingOptions, ...props }: FloatingLinkP
         {
             enableOnContentEditable: true,
         },
-        []
+        [],
     );
 
     useFloatingLinkEnter();
@@ -105,7 +105,7 @@ export const useFloatingLinkEdit = ({ floatingOptions, ...props }: FloatingLinkP
     return {
         style: {
             ...style,
-            zIndex: 1,
+            zIndex: 1000,
         },
         ...props,
         ref: useComposedRef<HTMLElement | null>(props.ref, floating),

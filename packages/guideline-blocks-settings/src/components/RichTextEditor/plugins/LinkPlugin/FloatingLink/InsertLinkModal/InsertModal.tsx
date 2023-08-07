@@ -15,7 +15,7 @@ import { FC, ReactNode } from 'react';
 import { LinkSelector } from '../../../shared/LinkSelector';
 import { InsertModalStateProps } from './types';
 
-type Props = {
+type InsertModalProps = {
     state: InsertModalStateProps;
     onTextChange: (value: string) => void;
     onUrlChange: (value: string) => void;
@@ -29,7 +29,7 @@ type Props = {
     appBridge: AppBridgeBlock;
 };
 
-export const InsertModal: FC<Props> = ({
+export const InsertModal: FC<InsertModalProps> = ({
     state,
     onTextChange,
     onUrlChange,

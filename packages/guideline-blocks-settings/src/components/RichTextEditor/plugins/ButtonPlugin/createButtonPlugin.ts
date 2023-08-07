@@ -3,7 +3,7 @@
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import { Plugin, PluginProps } from '@frontify/fondue';
 import { RangeBeforeOptions, createPluginFactory } from '@udecode/plate';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { isValidUrl } from '../LinkPlugin/utils/url';
 import { ButtonMarkupElement } from './ButtonMarkupElement';
 import { ButtonButton } from './components/ButtonButton';
@@ -14,6 +14,7 @@ import { withButton } from './withButton';
 export const ELEMENT_BUTTON = 'button';
 export const BUTTON_PLUGIN = 'button-plugin';
 
+// eslint-disable-next-line
 export interface ButtonPlugin {
     forceSubmit?: boolean;
 
@@ -97,6 +98,7 @@ export type ButtonPluginProps = Omit<PluginProps, 'styles'> & {
     styles?: Record<string, CSSProperties & { hover?: CSSProperties }>;
 } & { appBridge: AppBridgeBlock };
 
+// eslint-disable-next-line
 export class ButtonPlugin extends Plugin {
     public styles: CSSProperties = {};
     private appBridge: AppBridgeBlock;
