@@ -18,6 +18,7 @@ import type {
     InputBlock as InputBlockSidebarSettings,
     LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
     LinkChooserBlock as LinkChooserBlockSidebarSettings,
+    LinkBlock as LinkBlockSidebarSettings,
     MultiInputBlock as MultiInputBlockSidebarSettings,
     NotificationBlock as NotificationBlockSidebarSettings,
     SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
@@ -46,6 +47,7 @@ export type FontInputBlock = FontInputBlockSidebarSettings<AppBridgeBlock>;
 export type InputBlock = InputBlockSidebarSettings<AppBridgeBlock>;
 export type LegacyAssetInputBlock = LegacyAssetInputBlockSidebarSettings<AppBridgeBlock>;
 export type LinkChooserBlock = LinkChooserBlockSidebarSettings<AppBridgeBlock>;
+export type LinkBlock = LinkBlockSidebarSettings<AppBridgeBlock>;
 export type MultiInputBlock = MultiInputBlockSidebarSettings<AppBridgeBlock>;
 export type NotificationBlock = NotificationBlockSidebarSettings<AppBridgeBlock>;
 export type SectionHeadingBlock = SectionHeadingBlockSidebarSettings<AppBridgeBlock>;
@@ -124,9 +126,9 @@ export const defineSettings = <
     T extends
         | BlockSettingsStructureExport
         | (() => Promise<BlockSettingsStructureExport>)
-        | (() => BlockSettingsStructureExport),
+        | (() => BlockSettingsStructureExport)
 >(
-    settingsStructure: T,
+    settingsStructure: T
 ): T => settingsStructure;
 
 export * from './components';

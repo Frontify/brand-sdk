@@ -4,7 +4,7 @@ import { AppBridgeBlock } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
 import { PageLinks } from './PageLinks';
 import { IconColorFan16, merge } from '@frontify/fondue';
-import { InitiallyExpandedItems } from '../../LinkPlugin/FloatingLink/InsertLinkModal/types';
+import { InitiallyExpandedItems } from '../';
 
 type DocumentLinkProps = {
     document: {

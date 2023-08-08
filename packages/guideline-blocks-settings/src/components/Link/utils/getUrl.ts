@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ELEMENT_LINK, PlateEditor, getAboveNode } from '@udecode/plate';
-import { TLinkElement } from '../types';
+import { TLinkElement } from '../../RichTextEditor/plugins/LinkPlugin/types';
 
 const getLinkNode = (editor: PlateEditor, cb: (link: TLinkElement) => string): string => {
     const linkNode = getAboveNode<TLinkElement>(editor, { match: { type: ELEMENT_LINK } });
@@ -23,8 +23,4 @@ export const getUrl = (editor: PlateEditor) => {
 
 export const getUrlFromLinkOrLegacyLink = (link: TLinkElement): string => {
     return link.url || link.chosenLink?.searchResult?.link || '';
-};
-
-export const getUrlFromEditor = (editor: PlateEditor) => {
-    return getLinkNode(editor, getUrlFromLinkOrLegacyLink);
 };

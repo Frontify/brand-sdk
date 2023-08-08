@@ -2,3 +2,4 @@
 
 export * from './getUrl';
 export * from './relativeUrlRegex';
+export * from './url';

@@ -9,7 +9,7 @@ export const serializeRawToHtmlAsync = async (
     raw: string,
     columns: SerializeNodesToHtmlOptions['columns'] = 1,
     columnGap: SerializeNodesToHtmlOptions['columnGap'] = 'normal',
-    plugins: PluginComposer = new PluginComposer(),
+    plugins: PluginComposer = new PluginComposer()
 ): Promise<string> => {
     const nodes = parseRawValue({ raw, plugins });
     const styles = plugins.getStyles;
@@ -18,7 +18,7 @@ export const serializeRawToHtmlAsync = async (
 
 export const serializeNodesToHtml = (
     nodes: TDescendant[],
-    { mentionable, columns = 1, columnGap = 'normal', styles = BlockStyles }: SerializeNodesToHtmlOptions = {},
+    { mentionable, columns = 1, columnGap = 'normal', styles = BlockStyles }: SerializeNodesToHtmlOptions = {}
 ): string => {
     const mappedMentionable = mentionable ? mapMentionable(mentionable) : new Map();
 

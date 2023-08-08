@@ -38,7 +38,7 @@ export const useFloatingLinkInsert = ({ floatingOptions, ...props }: FloatingLin
         {
             enableOnContentEditable: true,
         },
-        [focused],
+        [focused]
     );
 
     const { update, style, floating } = useVirtualFloatingLink({

@@ -11,7 +11,7 @@ import { getButtonStyle } from '../../../utils/getButtonStyle';
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import { CheckboxState } from '@frontify/fondue';
 import { addHttps } from '../../../../../../../helpers';
-import { isValidUrlOrEmpty } from '../../../../LinkPlugin/utils/url';
+import { isValidUrlOrEmpty } from '../../../../../../Link/utils/url';
 
 const initialState: InsertModalStateProps = {
     url: '',
@@ -125,7 +125,7 @@ export const useInsertModal = () => {
         {
             enableOnFormTags: ['INPUT'],
         },
-        [],
+        []
     );
 
     return {

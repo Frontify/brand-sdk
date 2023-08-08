@@ -3,7 +3,7 @@
 import { AppBridgeBlock, useDocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
-import { InitiallyExpandedItems } from '../../LinkPlugin/FloatingLink/InsertLinkModal/types';
+import { InitiallyExpandedItems } from '../';
 import { SectionLink } from './SectionLink';
 
 type DocumentLinkProps = {

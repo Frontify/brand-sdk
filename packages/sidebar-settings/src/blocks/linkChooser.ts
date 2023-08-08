@@ -7,7 +7,7 @@ export type SearchResult = SearchResultFondue;
 
 export type LinkChooserBlock<AppBridge> = {
     /**
-     * The setting type.
+     * @deprecated Use `type: 'link'` instead.
      */
     type: 'linkChooser';
 
