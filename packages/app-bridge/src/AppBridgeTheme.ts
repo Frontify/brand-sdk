@@ -16,9 +16,9 @@ import type {
     StateAsEventName,
     StateReturn,
 } from './AppBridge';
-import type { ApiMethodRegistry } from './api/ApiMethodRegistry';
-import type { CommandRegistry } from './commands/CommandRegistry';
-import type { EventRegistry } from './events/EventRegistry';
+import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
+import type { CommandRegistry } from './registries/commands/CommandRegistry';
+import type { EventRegistry } from './registries/events/EventRegistry';
 import type { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,

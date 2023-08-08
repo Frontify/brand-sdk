@@ -16,7 +16,7 @@ import type {
     StateAsEventName,
     StateReturn,
 } from './AppBridge';
-import type { ApiMethodRegistry } from './api/ApiMethodRegistry';
+import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
 

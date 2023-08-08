@@ -2,6 +2,8 @@
 
 import type { Simplify } from 'type-fest';
 
+import type { ApiVerb, CommandVerb, EventVerb } from './registries/verbs';
+
 type NameContextList = 'Command' | 'API Method' | 'Event';
 type WrongNamePattern<ApiMethodName, NameContext extends NameContextList> = ApiMethodName extends string
     ? `The following ${NameContext} do not match the naming pattern: ${ApiMethodName}`
@@ -18,13 +20,11 @@ type ObjectNameValidator<
           NameContext
       >;
 
-type ApiVerb = 'get' | 'create' | 'update' | 'delete' | 'add' | 'remove' | 'set';
 type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
 export type ApiMethodNameValidator<ApiMethodNameObject> = Simplify<
     ObjectNameValidator<ApiMethodNameObject, ApiMethodNamePattern, 'API Method'>
 >;
 
-type CommandVerb = 'open' | 'close' | 'navigate';
 type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
 export type CommandNameValidator<CommandNameObject> = Simplify<
     ObjectNameValidator<CommandNameObject, CommandNamePattern, 'Command'>
@@ -129,7 +129,6 @@ export type ContextReturn<Context, Key> = Key extends keyof Context
           ): EventUnsubscribeFunction;
       };
 
-type EventVerb = 'chosen';
 export type EventNamePattern = {
     [eventName: `State.${string}` | `Context.${string}` | `${string}${Capitalize<EventVerb>}`]: unknown;
 };
