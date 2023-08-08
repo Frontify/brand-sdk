@@ -1,6 +1,25 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBase } from './AppBridgeBase';
+import type {
+    ApiHandlerParameter,
+    ApiMethodNameValidator,
+    ApiReturn,
+    AppBridge,
+    CommandNameValidator,
+    ContextAsEventName,
+    ContextReturn,
+    DispatchHandlerParameter,
+    EventCallbackParameter,
+    EventNameParameter,
+    EventNameValidator,
+    EventUnsubscribeFunction,
+    StateAsEventName,
+    StateReturn,
+} from './AppBridge';
+import type { ApiMethodRegistry } from './api/ApiMethodRegistry';
+import type { CommandRegistry } from './commands/CommandRegistry';
+import type { EventRegistry } from './events/EventRegistry';
+import type { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
     BulkDownload,
@@ -16,7 +35,71 @@ import type {
 } from './types';
 import { PrivacySettings } from './types/PrivacySettings';
 
-export interface AppBridgeBlock extends AppBridgeBase {
+export type BlockApiMethod = ApiMethodNameValidator<
+    ApiMethodRegistry & {
+        // Insert block specific api methods here
+        // createBlockSpecificApiMethod: { payload: void; response: void };
+    }
+>;
+
+export type BlockCommand = CommandNameValidator<
+    CommandRegistry & {
+        // Insert block specific commands here
+        // openBlockSpecificCommand: string;
+    }
+>;
+
+export type BlockState = {
+    settings: Record<string, unknown>;
+    assets: Record<string, unknown>;
+    // Insert block specific states here
+};
+
+export type BlockContext = {
+    marketplaceServiceAppId: string;
+    portalId: number;
+    brandId: number;
+    blockId: number;
+    sectionId?: number;
+    // Insert block specific context here
+};
+
+export type BlockEvent = EventNameValidator<
+    Pick<EventRegistry, 'assetsChosen'> &
+        StateAsEventName<BlockState & { '*': BlockState }> &
+        ContextAsEventName<BlockContext & { '*': BlockContext }> & {
+            // Insert block specific events here
+            // blockSpecificEntityChosen: string;
+        }
+>;
+
+export interface AppBridgeBlock<
+    State extends BlockState = BlockState,
+    Context extends BlockContext = BlockContext,
+    Event extends BlockEvent = BlockEvent,
+> extends AppBridge<BlockApiMethod, BlockCommand, State, Context, Event>,
+        AppBridgeBase {
+    api<ApiMethodName extends keyof BlockApiMethod>(
+        apiHandler: ApiHandlerParameter<ApiMethodName, BlockApiMethod>,
+    ): ApiReturn<ApiMethodName, BlockApiMethod>;
+
+    dispatch<CommandName extends keyof BlockCommand>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, BlockCommand>,
+    ): Promise<void>;
+
+    state(): StateReturn<State, void>;
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state<Key extends keyof State>(key?: Key | void): unknown;
+
+    context(): ContextReturn<Context, void>;
+    context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+    context<Key extends keyof Context>(key?: Key | void): unknown;
+
+    subscribe<EventName extends keyof Event>(
+        eventName: EventNameParameter<EventName, Event>,
+        callback: EventCallbackParameter<EventName, Event>,
+    ): EventUnsubscribeFunction;
+
     getBlockId(): number;
 
     getSectionId(): number | undefined;

@@ -5,8 +5,6 @@ import {
     AssetChooserOptions,
     Color,
     ColorPalette,
-    DispatchHandler,
-    DispatchPayload,
     Document,
     DocumentCategory,
     DocumentGroup,
@@ -14,8 +12,6 @@ import {
     DocumentPageTargets,
     DocumentSection,
     DocumentTargets,
-    Subscription,
-    SubscriptionCallback,
 } from './types';
 
 export interface AppBridgeBase {
@@ -63,11 +59,4 @@ export interface AppBridgeBase {
      * Use appBridge.dispatch(closeAssetChooser()) instead
      */
     closeAssetChooser(): void;
-
-    subscribe<SubscriptionName extends Subscription>(
-        eventName: SubscriptionName,
-        callback: SubscriptionCallback[SubscriptionName],
-    ): void;
-
-    dispatch<DispatchName extends keyof DispatchPayload>(dispatchHandler: DispatchHandler<DispatchName>): void;
 }

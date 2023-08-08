@@ -16,25 +16,14 @@ import type {
     StateAsEventName,
     StateReturn,
 } from './AppBridge';
-import type { ApiMethodRegistry } from './AppBridgeApiMethodRegistry';
-import type { CommandRegistry } from './AppBridgeCommandRegistry';
-import type { EventRegistry } from './AppBridgeEventRegistry';
+import type { ApiMethodRegistry } from './api/ApiMethodRegistry';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<
-    ApiMethodRegistry & {
-        createPlatformAppSpecificApiMethod: { payload: void; response: void };
-    }
->;
+export type PlatformAppApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
 
-export type PlatformAppCommand = CommandNameValidator<
-    CommandRegistry & {
-        openPlatformAppSpecificCommand: string;
-    }
->;
+export type PlatformAppCommand = CommandNameValidator<Record<never, never>>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
-    assets: Record<string, unknown>;
 };
 
 export type PlatformAppContext = {
@@ -42,24 +31,21 @@ export type PlatformAppContext = {
 };
 
 export type PlatformAppEvent = EventNameValidator<
-    Pick<EventRegistry, 'assetsChosen'> &
-        StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
-        ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }> & {
-            platformAppSpecificEntityChosen: string;
-        }
+    StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
+        ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }>
 >;
 
 export interface AppBridgePlatformApp<
-    State extends PlatformAppState,
-    Context extends PlatformAppContext,
-    Event extends PlatformAppEvent,
+    State extends PlatformAppState = PlatformAppState,
+    Context extends PlatformAppContext = PlatformAppContext,
+    Event extends PlatformAppEvent = PlatformAppEvent,
 > extends AppBridge<PlatformAppApiMethod, PlatformAppCommand, State, Context, Event> {
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
-    ): ApiReturn<ApiMethodName>;
+    ): ApiReturn<ApiMethodName, PlatformAppApiMethod>;
 
     dispatch<CommandName extends keyof PlatformAppCommand>(
-        dispatchHandler: DispatchHandlerParameter<CommandName>,
+        dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void>;
 
     state(): StateReturn<State, void>;
@@ -71,7 +57,7 @@ export interface AppBridgePlatformApp<
     context<Key extends keyof Context>(key?: Key | void): unknown;
 
     subscribe<EventName extends keyof Event>(
-        eventName: EventNameParameter<EventName>,
+        eventName: EventNameParameter<EventName, Event>,
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 }

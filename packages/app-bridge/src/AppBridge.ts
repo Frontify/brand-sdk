@@ -37,12 +37,10 @@ type ApiHandler<
     ? { name: ApiMethodName }
     : { name: ApiMethodName; payload: ApiMethod[ApiMethodName]['payload'] };
 
-type ApiHandlerResponse<ApiMethodName extends keyof ApiMethodNamePattern> =
-    ApiMethodNamePattern[ApiMethodName]['response'];
-
-type DispatchHandler<CommandName extends keyof CommandNamePattern> = CommandNamePattern[CommandName] extends void
-    ? { name: CommandName }
-    : { name: CommandName; payload: CommandNamePattern[CommandName] };
+type DispatchHandler<
+    CommandName extends keyof CommandNamePattern,
+    Command extends CommandNamePattern,
+> = Command[CommandName] extends void ? { name: CommandName } : { name: CommandName; payload: Command[CommandName] };
 
 export type ApiHandlerParameter<
     ApiMethodName,
@@ -51,12 +49,20 @@ export type ApiHandlerParameter<
     ? ApiHandler<ApiMethodName, ApiMethod>
     : WrongNamePattern<ApiMethodName, 'API Method'>;
 
-export type ApiReturn<ApiMethodName> = Promise<
-    ApiMethodName extends keyof ApiMethodNamePattern ? ApiHandlerResponse<ApiMethodName> : void
->;
+export type ApiReturn<
+    ApiMethodName extends keyof ApiMethod,
+    ApiMethod extends ApiMethodNamePattern,
+> = ApiMethodName extends keyof ApiMethod
+    ? ApiMethod[ApiMethodName] extends { response: infer Response }
+        ? Promise<Response>
+        : never
+    : never;
 
-export type DispatchHandlerParameter<CommandName> = CommandName extends keyof CommandNamePattern
-    ? DispatchHandler<CommandName>
+export type DispatchHandlerParameter<
+    CommandName,
+    Command extends CommandNamePattern,
+> = CommandName extends keyof CommandNamePattern
+    ? DispatchHandler<CommandName, Command>
     : WrongNamePattern<CommandName, 'Command'>;
 
 export type SubscribeMap<Event> = {
@@ -145,12 +151,14 @@ export type ContextAsEventName<Context> = {
     ];
 };
 
-export type EventNameParameter<EventName> = EventName extends keyof EventNamePattern
-    ? EventName
-    : WrongNamePattern<EventName, 'Event'>;
+export type EventNameParameter<
+    EventName,
+    EventNameParameter extends EventNamePattern,
+> = EventName extends keyof EventNameParameter ? EventName : WrongNamePattern<EventName, 'Event'>;
 
 export type EventCallbackParameter<EventName, Event> = EventName extends keyof Event
-    ? Event[EventName] extends any[]
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Event[EventName] extends any[]
         ? (...eventReturn: Event[EventName]) => void
         : (eventReturn: Event[EventName]) => void
     : () => void;
@@ -169,7 +177,7 @@ export interface AppBridge<
      */
     api<ApiMethodName extends keyof ApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, ApiMethod>,
-    ): ApiReturn<ApiMethodName>;
+    ): ApiReturn<ApiMethodName, ApiMethod>;
 
     /**
      * Sends a command to the Frontify platform.
@@ -177,7 +185,9 @@ export interface AppBridge<
      * @returns A promise that resolves to acknowledge the dispatch.
      * The event will be triggered at a later stage and can be subscribed to with {@link AppBridgePlatformApp.subscribe}.
      */
-    dispatch<CommandName extends keyof Command>(dispatchHandler: DispatchHandlerParameter<CommandName>): Promise<void>;
+    dispatch<CommandName extends keyof Command>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, Command>,
+    ): Promise<void>;
 
     /**
      * Returns a state utility object that can be used to get and set state values.
@@ -214,7 +224,7 @@ export interface AppBridge<
      * When called, this function will remove the subscription to the event and prevent any further callbacks from being executed.
      */
     subscribe<EventName extends keyof Event>(
-        eventName: EventNameParameter<EventName>,
+        eventName: EventNameParameter<EventName, Event>,
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 }

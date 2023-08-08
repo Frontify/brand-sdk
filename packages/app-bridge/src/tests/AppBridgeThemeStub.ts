@@ -25,7 +25,6 @@ import {
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 import { Asset } from '../types';
-import { AppBridgeBlock } from '../AppBridgeBlock';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -358,15 +357,16 @@ export const getAppBridgeThemeStub = ({
                 GuidelineSearchResultDummy.with(`${query}-3`),
             ]);
         }),
-        closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
+        closeAssetChooser: stub<Parameters<AppBridgeTheme['closeAssetChooser']>>().callsFake(() => {
             closeAssetChooser();
         }),
-        openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
+        openAssetChooser: stub<Parameters<AppBridgeTheme['openAssetChooser']>>().callsFake((callback) => {
             openAssetChooser(callback);
         }),
-        subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
-        // TODO
-        // @ts-expect-error - missing implementation
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
+        api: stub<Parameters<AppBridgeTheme['api']>>().resolves(),
+        state: stub<Parameters<AppBridgeTheme['state']>>().resolves(),
+        context: stub<Parameters<AppBridgeTheme['context']>>().resolves(),
+        subscribe: stub<Parameters<AppBridgeTheme['subscribe']>>().resolves(),
+        dispatch: stub<Parameters<AppBridgeTheme['dispatch']>>().resolves(),
     };
 };

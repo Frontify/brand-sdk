@@ -1,6 +1,25 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBase } from './AppBridgeBase';
+import type {
+    ApiHandlerParameter,
+    ApiMethodNameValidator,
+    ApiReturn,
+    AppBridge,
+    CommandNameValidator,
+    ContextAsEventName,
+    ContextReturn,
+    DispatchHandlerParameter,
+    EventCallbackParameter,
+    EventNameParameter,
+    EventNameValidator,
+    EventUnsubscribeFunction,
+    StateAsEventName,
+    StateReturn,
+} from './AppBridge';
+import type { ApiMethodRegistry } from './api/ApiMethodRegistry';
+import type { CommandRegistry } from './commands/CommandRegistry';
+import type { EventRegistry } from './events/EventRegistry';
+import type { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
     BrandportalLink,
@@ -29,7 +48,68 @@ import type {
     TargetsUpdate,
 } from './types';
 
-export interface AppBridgeTheme extends AppBridgeBase {
+export type ThemeApiMethod = ApiMethodNameValidator<
+    ApiMethodRegistry & {
+        // Insert theme specific api methods here
+        // createThemeSpecificApiMethod: { payload: void; response: void };
+    }
+>;
+
+export type ThemeCommand = CommandNameValidator<
+    CommandRegistry & {
+        // Insert theme specific commands here
+        // openThemeSpecificCommand: string;
+    }
+>;
+
+export type ThemeState = {
+    settings: Record<string, unknown>;
+    assets: Record<string, unknown>;
+};
+
+export type ThemeContext = {
+    marketplaceServiceAppId: string;
+    portalId: number;
+    brandId: number;
+    // Insert theme specific context here
+};
+
+export type ThemeEvent = EventNameValidator<
+    Pick<EventRegistry, 'assetsChosen'> &
+        StateAsEventName<ThemeState & { '*': ThemeState }> &
+        ContextAsEventName<ThemeContext & { '*': ThemeContext }> & {
+            // Insert theme specific events here
+            // ThemeSpecificEntityChosen: string;
+        }
+>;
+
+export interface AppBridgeTheme<
+    State extends ThemeState = ThemeState,
+    Context extends ThemeContext = ThemeContext,
+    Event extends ThemeEvent = ThemeEvent,
+> extends AppBridge<ThemeApiMethod, ThemeCommand, State, Context, Event>,
+        AppBridgeBase {
+    api<ApiMethodName extends keyof ThemeApiMethod>(
+        apiHandler: ApiHandlerParameter<ApiMethodName, ThemeApiMethod>,
+    ): ApiReturn<ApiMethodName, ThemeApiMethod>;
+
+    dispatch<CommandName extends keyof ThemeCommand>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, ThemeCommand>,
+    ): Promise<void>;
+
+    state(): StateReturn<State, void>;
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state<Key extends keyof State>(key?: Key | void): unknown;
+
+    context(): ContextReturn<Context, void>;
+    context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+    context<Key extends keyof Context>(key?: Key | void): unknown;
+
+    subscribe<EventName extends keyof Event>(
+        eventName: EventNameParameter<EventName, Event>,
+        callback: EventCallbackParameter<EventName, Event>,
+    ): EventUnsubscribeFunction;
+
     getPortalId(): number;
 
     getBrandId(): number;
