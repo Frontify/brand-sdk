@@ -28,4 +28,4 @@ export type LinkBlock<AppBridge> = {
      * @default false
      */
     hideInternalLinkButton?: boolean;
-} & BaseBlock<AppBridge, { link: string | null; openInNewTab: boolean | null }>;
+} & BaseBlock<AppBridge, { link: { link: string } | null; openInNewTab: boolean | null }>;
