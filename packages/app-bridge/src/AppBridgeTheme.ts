@@ -48,19 +48,9 @@ import type {
     TargetsUpdate,
 } from './types';
 
-export type ThemeApiMethod = ApiMethodNameValidator<
-    ApiMethodRegistry & {
-        // Insert theme specific api methods here
-        // createThemeSpecificApiMethod: { payload: void; response: void };
-    }
->;
+export type ThemeApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
 
-export type ThemeCommand = CommandNameValidator<
-    CommandRegistry & {
-        // Insert theme specific commands here
-        // openThemeSpecificCommand: string;
-    }
->;
+export type ThemeCommand = CommandNameValidator<CommandRegistry>;
 
 export type ThemeState = {
     settings: Record<string, unknown>;
@@ -68,19 +58,14 @@ export type ThemeState = {
 };
 
 export type ThemeContext = {
-    marketplaceServiceAppId: string;
     portalId: number;
     brandId: number;
-    // Insert theme specific context here
 };
 
 export type ThemeEvent = EventNameValidator<
     Pick<EventRegistry, 'assetsChosen'> &
         StateAsEventName<ThemeState & { '*': ThemeState }> &
-        ContextAsEventName<ThemeContext & { '*': ThemeContext }> & {
-            // Insert theme specific events here
-            // ThemeSpecificEntityChosen: string;
-        }
+        ContextAsEventName<ThemeContext & { '*': ThemeContext }>
 >;
 
 export interface AppBridgeTheme<

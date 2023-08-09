@@ -35,42 +35,26 @@ import type {
 } from './types';
 import { PrivacySettings } from './types/PrivacySettings';
 
-export type BlockApiMethod = ApiMethodNameValidator<
-    ApiMethodRegistry & {
-        // Insert block specific api methods here
-        // createBlockSpecificApiMethod: { payload: void; response: void };
-    }
->;
+export type BlockApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
 
-export type BlockCommand = CommandNameValidator<
-    CommandRegistry & {
-        // Insert block specific commands here
-        // openBlockSpecificCommand: string;
-    }
->;
+export type BlockCommand = CommandNameValidator<CommandRegistry>;
 
 export type BlockState = {
     settings: Record<string, unknown>;
     assets: Record<string, unknown>;
     templates: Record<string, unknown>;
-    // Insert block specific states here
 };
 
 export type BlockContext = {
-    marketplaceServiceAppId: string;
     portalId: number;
     blockId: number;
     sectionId?: number;
-    // Insert block specific context here
 };
 
 export type BlockEvent = EventNameValidator<
-    Pick<EventRegistry, 'assetsChosen'> &
+    Pick<EventRegistry, 'assetsChosen' | 'templateChosen'> &
         StateAsEventName<BlockState & { '*': BlockState }> &
-        ContextAsEventName<BlockContext & { '*': BlockContext }> & {
-            // Insert block specific events here
-            // blockSpecificEntityChosen: string;
-        }
+        ContextAsEventName<BlockContext & { '*': BlockContext }>
 >;
 
 export interface AppBridgeBlock<
