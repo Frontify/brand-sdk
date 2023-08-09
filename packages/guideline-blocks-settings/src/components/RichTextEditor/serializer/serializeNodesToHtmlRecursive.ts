@@ -105,19 +105,19 @@ type Arguments = {
 };
 
 const MapNodeTypesToHtml: { [key: string]: ({ ...args }: Arguments) => string } = {
-    [ELEMENT_UL]: (args) => `<ul class="${UL_CLASSES} ${args.classNames}">${args.children}</ul>`,
+    [ELEMENT_UL]: (args) => `<ul dir="auto" class="${UL_CLASSES} ${args.classNames}">${args.children}</ul>`,
     [ELEMENT_OL]: ({ classNames, children, node, rootNestingCount }) => {
         const nestingLevel = Math.max(rootNestingCount - countNodesOfType([node], ELEMENT_OL), 0);
-        return `<ol class="${getOrderedListClasses(nestingLevel)} ${classNames}" style="${reactCssPropsToCss(
+        return `<ol dir="auto" class="${getOrderedListClasses(nestingLevel)} ${classNames}" style="${reactCssPropsToCss(
             OL_STYLES,
         )}">${children}</ol>`;
     },
     [ELEMENT_LI]: ({ classNames, children, node, styles }) =>
-        `<li class="${classNames} ${LI_CLASSNAMES}" style="${reactCssPropsToCss(
+        `<li dir="auto" class="${classNames} ${LI_CLASSNAMES}" style="${reactCssPropsToCss(
             getLiStyles(node, styles),
         )}">${children}</li>`,
     [ELEMENT_LIC]: ({ classNames, children, node }) =>
-        `<p class="${classNames} ${getLicElementClassNames(node)}"><span>${children}</span></p>`,
+        `<p dir="auto" class="${classNames} ${getLicElementClassNames(node)}"><span>${children}</span></p>`,
     [ELEMENT_LINK]: ({ node, children, classNames, styles }) => linkNode(node, children, classNames, styles),
     [ELEMENT_BUTTON]: ({ node, children, classNames, styles }) =>
         buttonNode(node, children, classNames, styles as ButtonStylesType),

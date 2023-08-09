@@ -43,7 +43,7 @@ jobs:
               run: pnpm build:app-bridge && pnpm build:sidebar-settings
 
             - name: Build package (+ typechecking)
-              run: pnpm build:guideline-blocks
+              run: pnpm build:guideline-blocks-settings
 
     component-tests:
         runs-on: ubuntu-latest
