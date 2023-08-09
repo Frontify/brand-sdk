@@ -3,6 +3,7 @@
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import { ButtonSize, Checkbox, CheckboxState, FormControl, TextInput, TooltipPosition } from '@frontify/fondue';
 import { LinkSelector } from './LinkSelector';
+import { isValidUrlOrEmpty as internalIsValidUrlOrEmpty } from './utils';
 
 type LinkInputProps = {
     url?: string;
@@ -13,7 +14,7 @@ type LinkInputProps = {
     openInNewTab?: boolean;
     onUrlChange?: (value: string) => void;
     onToggleTab?: (checked: boolean) => void;
-    isValidUrlOrEmpty?: (url: string) => boolean | undefined;
+    isValidUrlOrEmpty?: (url: string) => boolean;
     appBridge: AppBridgeBlock;
     clearable?: boolean;
     placeholder?: string;
@@ -37,7 +38,7 @@ export const LinkInput = ({
     buttonSize,
     hideInternalLinkButton,
 }: LinkInputProps) => {
-    const isUrlValid = isValidUrlOrEmpty ? isValidUrlOrEmpty(url) : 'import';
+    const isUrlValid = isValidUrlOrEmpty ? isValidUrlOrEmpty(url) : internalIsValidUrlOrEmpty(url);
     const checkedState = newTab ?? (openInNewTab ? CheckboxState.Checked : CheckboxState.Unchecked);
     return (
         <div data-test-id="link-input">

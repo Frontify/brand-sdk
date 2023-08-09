@@ -22,7 +22,7 @@ type InsertModalProps = {
     onCancel: () => void;
     onSave: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent | undefined) => void;
     hasValues: boolean;
-    isValidUrlOrEmpty: (url: string) => boolean | undefined;
+    isValidUrlOrEmpty: (url: string) => boolean;
     testId?: string;
     children?: ReactNode;
     appBridge: AppBridgeBlock;

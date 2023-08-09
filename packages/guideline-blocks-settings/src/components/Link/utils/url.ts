@@ -10,12 +10,14 @@ export const isValidUrl = (url: string) => {
     try {
         const parsedUrl = new URL(url);
         const validProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
-        return validProtocols.includes(parsedUrl.protocol) && parsedUrl.pathname !== '';
+        return (
+            validProtocols.includes(parsedUrl.protocol) && parsedUrl.pathname !== '' && parsedUrl.hostname.includes('.')
+        );
     } catch (error) {
         return false;
     }
 };
 
-export const isValidUrlOrEmpty = (url: string) => {
+export const isValidUrlOrEmpty = (url: string): boolean => {
     return isValidUrl(addHttps(url)) || url === '';
 };

@@ -13,7 +13,12 @@ type LinkSelectorProps = {
     buttonSize?: ButtonSize;
 };
 
-export const LinkSelector = ({ appBridge, url, onUrlChange, buttonSize }: LinkSelectorProps): ReactElement => {
+export const LinkSelector = ({
+    appBridge,
+    url,
+    onUrlChange,
+    buttonSize = ButtonSize.Medium,
+}: LinkSelectorProps): ReactElement => {
     const { open: openLinkTree, isOpen: isLinkTreeOpen, close: closeLinkTree } = useOverlayTriggerState({});
     const [selectedUrl, setSelectedUrl] = useState<string>(url);
 
@@ -34,9 +39,7 @@ export const LinkSelector = ({ appBridge, url, onUrlChange, buttonSize }: LinkSe
     }, [url, selectedUrl]);
 
     const saveLink = () => {
-        if (onUrlChange) {
-            onUrlChange(selectedUrl);
-        }
+        onUrlChange?.(selectedUrl);
         closeLinkTree();
     };
 
@@ -44,7 +47,7 @@ export const LinkSelector = ({ appBridge, url, onUrlChange, buttonSize }: LinkSe
         <div data-test-id="internal-link-selector" onKeyDown={onPressEnter}>
             <Button
                 icon={<IconLink />}
-                size={buttonSize ?? ButtonSize.Medium}
+                size={buttonSize}
                 type={ButtonType.Button}
                 style={ButtonStyle.Default}
                 emphasis={ButtonEmphasis.Default}

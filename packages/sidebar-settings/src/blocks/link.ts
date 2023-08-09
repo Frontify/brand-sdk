@@ -15,11 +15,13 @@ export type LinkBlock<AppBridge> = {
 
     /**
      * Whether the link should be opened in a new tab or not.
+     * @default false
      */
     openInNewTab?: boolean;
 
     /**
      * Whether the link chooser can be cleared or not.
+     * @default false
      */
     clearable?: boolean;
 
