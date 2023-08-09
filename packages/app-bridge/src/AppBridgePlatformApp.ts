@@ -50,11 +50,11 @@ export interface AppBridgePlatformApp<
 
     state(): StateReturn<State, void>;
     state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
-    state<Key extends keyof State>(key?: Key | void): unknown;
+    state(key?: keyof State | void): unknown;
 
     context(): ContextReturn<Context, void>;
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
-    context<Key extends keyof Context>(key?: Key | void): unknown;
+    context(key?: keyof Context | void): unknown;
 
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName, Event>,

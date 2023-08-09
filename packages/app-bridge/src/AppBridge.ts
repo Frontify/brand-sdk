@@ -200,7 +200,7 @@ export interface AppBridge<
      * @returns the state utility object focused on the given key is returned.
      */
     state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
-    state<Key extends keyof State>(key?: Key | void): unknown;
+    state(key?: keyof State | void): unknown;
     /**
      * Returns a context utility object that can be used to get context values.
      *
@@ -213,7 +213,7 @@ export interface AppBridge<
      * @returns the context utility object focused on the given key is returned.
      */
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
-    context<Key extends keyof Context>(key?: void | Key): unknown;
+    context(key?: keyof Context | void): unknown;
 
     /**
      * Subscribes to an event with the given name and callback function.

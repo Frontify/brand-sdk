@@ -52,13 +52,13 @@ export type BlockCommand = CommandNameValidator<
 export type BlockState = {
     settings: Record<string, unknown>;
     assets: Record<string, unknown>;
+    templates: Record<string, unknown>;
     // Insert block specific states here
 };
 
 export type BlockContext = {
     marketplaceServiceAppId: string;
     portalId: number;
-    brandId: number;
     blockId: number;
     sectionId?: number;
     // Insert block specific context here
@@ -89,11 +89,11 @@ export interface AppBridgeBlock<
 
     state(): StateReturn<State, void>;
     state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
-    state<Key extends keyof State>(key?: Key | void): unknown;
+    state(key?: keyof State | void): unknown;
 
     context(): ContextReturn<Context, void>;
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
-    context<Key extends keyof Context>(key?: Key | void): unknown;
+    context(key?: keyof Context | void): unknown;
 
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName, Event>,
