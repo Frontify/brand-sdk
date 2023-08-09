@@ -11,7 +11,10 @@ export const defaultNode = (node: TElement, children: string, styles: CSSPropert
     const defaultStyles = reactCssPropsToCss(styles);
 
     if (node.type === TextStyles.heading1) {
-        return `<h1 dir="auto" class="${merge([defaultClassNames, 'a-h1'])}">${getStyledChild(children, defaultStyles)}</h1>`;
+        return `<h1 dir="auto" class="${merge([defaultClassNames, 'a-h1'])}">${getStyledChild(
+            children,
+            defaultStyles,
+        )}</h1>`;
     }
     if (node.type === TextStyles.heading2) {
         return `<h2 dir="auto" class="${defaultClassNames}">${getStyledChild(children, defaultStyles)}</h2>`;
@@ -23,16 +26,28 @@ export const defaultNode = (node: TElement, children: string, styles: CSSPropert
         return `<h4 dir="auto" class="${defaultClassNames}">${getStyledChild(children, defaultStyles)}</h4>`;
     }
     if (node.type === TextStyles.custom1) {
-        return `<p dir="auto" class="${merge([defaultClassNames, 'a-custom1'])}">${getStyledChild(children, defaultStyles)}</p>`;
+        return `<p dir="auto" class="${merge([defaultClassNames, 'a-custom1'])}">${getStyledChild(
+            children,
+            defaultStyles,
+        )}</p>`;
     }
     if (node.type === TextStyles.custom2) {
-        return `<p dir="auto" class="${merge([defaultClassNames, 'a-custom2'])}">${getStyledChild(children, defaultStyles)}</p>`;
+        return `<p dir="auto" class="${merge([defaultClassNames, 'a-custom2'])}">${getStyledChild(
+            children,
+            defaultStyles,
+        )}</p>`;
     }
     if (node.type === TextStyles.custom3) {
-        return `<p dir="auto" class="${merge([defaultClassNames, 'a-custom3'])}">${getStyledChild(children, defaultStyles)}</p>`;
+        return `<p dir="auto" class="${merge([defaultClassNames, 'a-custom3'])}">${getStyledChild(
+            children,
+            defaultStyles,
+        )}</p>`;
     }
     if (node.type === TextStyles.quote) {
-        return `<p dir="auto" class="${merge([defaultClassNames, 'a-quote'])}">${getStyledChild(children, defaultStyles)}</p>`;
+        return `<p dir="auto" class="${merge([defaultClassNames, 'a-quote'])}">${getStyledChild(
+            children,
+            defaultStyles,
+        )}</p>`;
     }
     if (node.type === TextStyles.imageTitle) {
         return `<p dir="auto" class="${merge([defaultClassNames, 'a-image-title'])}">${getStyledChild(
