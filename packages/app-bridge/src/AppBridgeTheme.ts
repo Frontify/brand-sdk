@@ -44,6 +44,10 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     updateCoverPageTemplateSettings(settings: Record<string, unknown>): Promise<void>;
 
+    getThemeSettings<ThemeSettings>(): Promise<ThemeSettings>;
+
+    updateThemeSettings<ThemeSettings extends Record<string, unknown>>(settings: ThemeSettings): Promise<ThemeSettings>;
+
     getDocumentPageTemplateSettings<Settings>(documentPageId: number): Promise<Settings>;
 
     updateDocumentPageTemplateSettings(documentPageId: number, settings: Record<string, unknown>): Promise<void>;
