@@ -67,6 +67,7 @@ export type getAppBridgeThemeStubProps = {
     projectId?: number;
     pageTemplateSettings?: Record<string, unknown>;
     pageTemplateAssets?: Record<string, Asset[]>;
+    themeSettings?: Record<string, unknown>;
     language?: string;
     openAssetChooser?: (callback: Parameters<AppBridgeTheme['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
@@ -79,6 +80,7 @@ export const getAppBridgeThemeStub = ({
     projectId = PROJECT_ID,
     pageTemplateSettings = {},
     pageTemplateAssets = {},
+    themeSettings = {},
     language = 'en',
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
@@ -86,6 +88,7 @@ export const getAppBridgeThemeStub = ({
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     let localPageTemplateSettings = pageTemplateSettings;
+    let localThemeSettings = themeSettings;
 
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
@@ -271,6 +274,7 @@ export const getAppBridgeThemeStub = ({
             stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localPageTemplateSettings),
         getLibraryPageTemplateSettings:
             stub<Parameters<AppBridgeTheme['getLibraryPageTemplateSettings']>>().resolves(localPageTemplateSettings),
+        getThemeSettings: stub<Parameters<AppBridgeTheme['getThemeSettings']>>().resolves(localThemeSettings),
         createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
         createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
         createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
@@ -322,6 +326,11 @@ export const getAppBridgeThemeStub = ({
         >().callsFake(async (pageTemplateSettingsUpdate) => {
             localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
+        updateThemeSettings: stub<Parameters<AppBridgeTheme['updateThemeSettings']>>().callsFake(
+            async (themeSettingsUpdate) => {
+                localThemeSettings = mergeDeep(localThemeSettings, themeSettingsUpdate);
+            },
+        ),
         deleteCoverPage: stub<Parameters<AppBridgeTheme['deleteCoverPage']>>().resolves(),
         deleteDocumentCategory: stub<Parameters<AppBridgeTheme['deleteDocumentCategory']>>().resolves(),
         deleteDocumentGroup: stub<Parameters<AppBridgeTheme['deleteDocumentGroup']>>().resolves(),
