@@ -22,6 +22,7 @@ import type { EventRegistry } from './registries/events/EventRegistry';
 import type { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
+    AssetChooserOptions,
     BrandportalLink,
     CoverPage,
     CoverPageCreate,
@@ -248,4 +249,17 @@ export interface AppBridgeTheme<
      * @param order - The order in which the results should be returned. Defaults to 'relevance'.
      */
     searchInGuideline(query: string, order?: 'relevance' | 'newest' | 'oldest'): Promise<GuidelineSearchResult[]>;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(openAssetChooser(options)) to open the asset chooser
+     * and appBridge.subscribe('assetsChosen', callback) to subscribe to the asset chosen event
+     */
+    openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(closeAssetChooser()) instead
+     */
+    closeAssetChooser(): void;
 }
