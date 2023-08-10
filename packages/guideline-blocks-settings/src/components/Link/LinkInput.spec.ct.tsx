@@ -58,7 +58,7 @@ describe('Link Input', () => {
                 onToggleTab={cy.stub().as('onToggleTab')}
                 url="https://frontify.com"
                 openInNewTab={false}
-            />
+            />,
         );
 
         cy.get(CHECKBOX_ID).should('not.be.checked');
@@ -82,7 +82,7 @@ describe('Link Input', () => {
                 onToggleTab={cy.stub().as('onToggleTab')}
                 url="https://frontify.com"
                 newTab={CheckboxState.Checked}
-            />
+            />,
         );
         cy.get(CHECKBOX_ID).should('be.checked');
         cy.get(CHECKBOX_ID).click({ force: true });
@@ -96,7 +96,7 @@ describe('Link Input', () => {
                 onToggleTab={cy.stub().as('onToggleTab')}
                 url="https://frontify.com"
                 newTab={CheckboxState.Unchecked}
-            />
+            />,
         );
         cy.get(CHECKBOX_ID).should('not.be.checked');
         cy.get(CHECKBOX_ID).click({ force: true });

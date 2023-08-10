@@ -9,4 +9,3 @@ export type InsertModalStateProps = {
     text: string;
     newTab: CheckboxState;
 };
-

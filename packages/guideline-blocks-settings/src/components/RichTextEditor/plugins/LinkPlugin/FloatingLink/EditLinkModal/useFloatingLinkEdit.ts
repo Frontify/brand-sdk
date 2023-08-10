@@ -95,7 +95,7 @@ export const useFloatingLinkEdit = ({ floatingOptions, ...props }: FloatingLinkP
         {
             enableOnContentEditable: true,
         },
-        []
+        [],
     );
 
     useFloatingLinkEnter();
