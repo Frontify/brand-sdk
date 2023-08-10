@@ -49,9 +49,11 @@ import type {
     TargetsUpdate,
 } from './types';
 
-export type ThemeApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
+export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
-export type ThemeCommand = CommandNameValidator<CommandRegistry>;
+export type ThemeCommand = CommandNameValidator<
+    Pick<CommandRegistry, 'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager'>
+>;
 
 export type ThemeState = {
     settings: Record<string, unknown>;

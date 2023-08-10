@@ -18,7 +18,7 @@ import type {
 } from './AppBridge';
 import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
+export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
 export type PlatformAppCommand = CommandNameValidator<Record<never, never>>;
 

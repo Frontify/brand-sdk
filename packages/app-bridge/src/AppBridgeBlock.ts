@@ -36,9 +36,14 @@ import type {
 } from './types';
 import { PrivacySettings } from './types/PrivacySettings';
 
-export type BlockApiMethod = ApiMethodNameValidator<ApiMethodRegistry>;
+export type BlockApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
-export type BlockCommand = CommandNameValidator<CommandRegistry>;
+export type BlockCommand = CommandNameValidator<
+    Pick<
+        CommandRegistry,
+        'closeAssetChooser' | 'closeTemplateChooser' | 'openAssetChooser' | 'openAssetViewer' | 'openTemplateChooser'
+    >
+>;
 
 export type BlockState = {
     settings: Record<string, unknown>;
