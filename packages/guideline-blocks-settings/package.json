@@ -35,7 +35,6 @@
         "@babel/core": "^7.22.9",
         "@frontify/eslint-config-typescript": "^0.16.1",
         "@testing-library/react": "^14.0.0",
-        "@types/escape-html": "^1.0.2",
         "@types/node": "^20.4.7",
         "@types/react": "^18.2.18",
         "@types/react-dom": "^18.2.7",
@@ -73,7 +72,6 @@
         "@react-aria/focus": "^3.13.0",
         "@react-stately/overlays": "^3.6.0",
         "@udecode/plate": "^21",
-        "escape-html": "^1.0.3",
         "slate": "^0.94.1",
         "slate-react": "^0.97.1"
     },
