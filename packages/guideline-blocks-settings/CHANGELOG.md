@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.28.4
+
+### Patch Changes
+
+- [#503](https://github.com/Frontify/brand-sdk/pull/503) [`c56e7e9`](https://github.com/Frontify/brand-sdk/commit/c56e7e9112e04ae0e9ae35e4b7a98c11665045f2) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(RTE): add dir to serializer
+
+- [`22684e3`](https://github.com/Frontify/brand-sdk/commit/22684e358fd2b073790a0959606c6a5d44e35c4e) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- Updated dependencies [[`22684e3`](https://github.com/Frontify/brand-sdk/commit/22684e358fd2b073790a0959606c6a5d44e35c4e)]:
+  - @frontify/sidebar-settings@0.6.2
+
 ## 0.28.3
 
 ### Patch Changes
