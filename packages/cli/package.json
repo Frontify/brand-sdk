@@ -11,7 +11,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/Frontify/brand-sdk",
-        "directory": "packages/app-bridge"
+        "directory": "packages/cli"
     },
     "files": [
         "dist",
@@ -43,14 +43,14 @@
         "open": "^9.1.0",
         "picocolors": "^1.0.0",
         "prompts": "^2.4.2",
-        "vite": "^4.4.8",
+        "vite": "^4.4.9",
         "vite-plugin-externals": "^0.6.2"
     },
     "devDependencies": {
         "@frontify/eslint-config-typescript": "^0.16.1",
         "@types/glob-to-regexp": "^0.4.1",
         "@types/mock-fs": "^4.13.1",
-        "@types/node": "^18.17.2",
+        "@types/node": "^18.17.4",
         "@types/prompts": "^2.4.4",
         "@types/ws": "8.5.5",
         "@vitest/coverage-c8": "^0.33.0",
