@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-feat(RTE): use fondue serializer
+refactor: use Fondue serializer instead of internal version
