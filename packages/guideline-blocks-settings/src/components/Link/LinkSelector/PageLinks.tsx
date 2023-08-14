@@ -30,7 +30,13 @@ export const PageLinks = ({
         appBridge
             .getDocumentPagesByDocumentId(documentId)
             .then((_pages) => {
-                setPages(_pages);
+                const pagesWithCategories = _pages
+                    .filter((page) => !!page.category)
+                    .sort((a, b) =>
+                        a.category.sort === b.category.sort ? a.sort - b.sort : a.category.sort - b.category.sort,
+                    );
+                const pagesWithoutCategories = _pages.filter((page) => !page.category).sort((a, b) => a.sort - b.sort);
+                setPages([...pagesWithCategories, ...pagesWithoutCategories]);
             })
             .finally(() => {
                 setIsLoading(false);
