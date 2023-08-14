@@ -25,7 +25,6 @@ import {
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 import { Asset } from '../types';
-import { AppBridgeBlock } from '../AppBridgeBlock';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -67,6 +66,7 @@ export type getAppBridgeThemeStubProps = {
     projectId?: number;
     pageTemplateSettings?: Record<string, unknown>;
     pageTemplateAssets?: Record<string, Asset[]>;
+    themeSettings?: Record<string, unknown>;
     language?: string;
     openAssetChooser?: (callback: Parameters<AppBridgeTheme['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
@@ -79,6 +79,7 @@ export const getAppBridgeThemeStub = ({
     projectId = PROJECT_ID,
     pageTemplateSettings = {},
     pageTemplateAssets = {},
+    themeSettings = {},
     language = 'en',
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
@@ -86,6 +87,7 @@ export const getAppBridgeThemeStub = ({
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     let localPageTemplateSettings = pageTemplateSettings;
+    let localThemeSettings = themeSettings;
 
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
@@ -271,6 +273,7 @@ export const getAppBridgeThemeStub = ({
             stub<Parameters<AppBridgeTheme['getDocumentPageTemplateSettings']>>().resolves(localPageTemplateSettings),
         getLibraryPageTemplateSettings:
             stub<Parameters<AppBridgeTheme['getLibraryPageTemplateSettings']>>().resolves(localPageTemplateSettings),
+        getThemeSettings: stub<Parameters<AppBridgeTheme['getThemeSettings']>>().resolves(localThemeSettings),
         createLink: stub<Parameters<AppBridgeTheme['createLink']>>().resolves(DocumentDummy.with(1)),
         createLibrary: stub<Parameters<AppBridgeTheme['createLibrary']>>().resolves(DocumentDummy.with(1)),
         createStandardDocument: stub<Parameters<AppBridgeTheme['createStandardDocument']>>().resolves(
@@ -322,6 +325,11 @@ export const getAppBridgeThemeStub = ({
         >().callsFake(async (pageTemplateSettingsUpdate) => {
             localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
+        updateThemeSettings: stub<Parameters<AppBridgeTheme['updateThemeSettings']>>().callsFake(
+            async (themeSettingsUpdate) => {
+                localThemeSettings = mergeDeep(localThemeSettings, themeSettingsUpdate);
+            },
+        ),
         deleteCoverPage: stub<Parameters<AppBridgeTheme['deleteCoverPage']>>().resolves(),
         deleteDocumentCategory: stub<Parameters<AppBridgeTheme['deleteDocumentCategory']>>().resolves(),
         deleteDocumentGroup: stub<Parameters<AppBridgeTheme['deleteDocumentGroup']>>().resolves(),
@@ -358,15 +366,16 @@ export const getAppBridgeThemeStub = ({
                 GuidelineSearchResultDummy.with(`${query}-3`),
             ]);
         }),
-        closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
+        closeAssetChooser: stub<Parameters<AppBridgeTheme['closeAssetChooser']>>().callsFake(() => {
             closeAssetChooser();
         }),
-        openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
+        openAssetChooser: stub<Parameters<AppBridgeTheme['openAssetChooser']>>().callsFake((callback) => {
             openAssetChooser(callback);
         }),
-        subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
-        // TODO
-        // @ts-expect-error - missing implementation
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
+        api: stub<Parameters<AppBridgeTheme['api']>>().resolves(),
+        state: stub<Parameters<AppBridgeTheme['state']>>().resolves(),
+        context: stub<Parameters<AppBridgeTheme['context']>>().resolves(),
+        subscribe: stub<Parameters<AppBridgeTheme['subscribe']>>().resolves(),
+        dispatch: stub<Parameters<AppBridgeTheme['dispatch']>>().resolves(),
     };
 };
