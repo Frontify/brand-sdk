@@ -20,7 +20,7 @@ export const unwrapButton = <V extends Value>(
     editor: PlateEditor<V>,
     options?: UnwrapNodesOptions & {
         split?: boolean;
-    }
+    },
 ) => {
     return withoutNormalizing(editor, () => {
         if (options?.split) {

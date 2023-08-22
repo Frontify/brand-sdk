@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 export * from './AppBridgeBlockStub';
+export * from './AppBridgePlatformAppStub';
 export * from './AppBridgeThemeStub';
 export * from './AssetApiDummy';
 export * from './AssetChooserOptionsDummy';

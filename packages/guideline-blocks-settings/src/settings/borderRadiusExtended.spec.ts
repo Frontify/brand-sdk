@@ -20,19 +20,19 @@ describe('getBorderRadiusExtendedSettings', () => {
 
         expect((extendedBorderRadiusSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[0]).toHaveProperty(
             'id',
-            'extendedRadiusTopLeft'
+            'extendedRadiusTopLeft',
         );
         expect((extendedBorderRadiusSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1]).toHaveProperty(
             'id',
-            'extendedRadiusTopRight'
+            'extendedRadiusTopRight',
         );
         expect((extendedBorderRadiusSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[2]).toHaveProperty(
             'id',
-            'extendedRadiusBottomLeft'
+            'extendedRadiusBottomLeft',
         );
         expect((extendedBorderRadiusSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[3]).toHaveProperty(
             'id',
-            'extendedRadiusBottomRight'
+            'extendedRadiusBottomRight',
         );
         expect(extendedBorderRadiusSettings.off?.[0]).toHaveProperty('id', 'extendedRadiusChoice');
         expect(extendedBorderRadiusSettings.off?.[0]).toHaveProperty('type', 'segmentedControls');

@@ -14,7 +14,7 @@ import { Unit } from './types';
 export const appendUnit = <AppBridge = unknown>(
     bundle: Bundle<AppBridge>,
     settingId: string,
-    unit: Unit = 'px'
+    unit: Unit = 'px',
 ): void => {
     const blockValue = bundle.getBlock(settingId)?.value;
     const numericValue = Number(blockValue);

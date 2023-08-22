@@ -40,7 +40,7 @@ export const useFloatingButtonInsert = ({ floatingOptions, ...props }: FloatingB
         {
             enableOnContentEditable: true,
         },
-        [focused]
+        [focused],
     );
 
     const { update, style, floating } = useVirtualFloatingButton({
@@ -63,7 +63,7 @@ export const useFloatingButtonInsert = ({ floatingOptions, ...props }: FloatingB
     return {
         style: {
             ...style,
-            zIndex: 1,
+            zIndex: 1000,
         },
         ...props,
         ref: useComposedRef<HTMLElement | null>(props.ref, floating),

@@ -96,7 +96,7 @@ describe('Attachments', () => {
             new Promise<void>((resolve) =>
                 setTimeout(() => {
                     resolve();
-                }, 2000)
+                }, 2000),
             );
 
         mount(
@@ -104,7 +104,7 @@ describe('Attachments', () => {
                 onReplaceWithBrowse={replaceStub}
                 items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]}
                 appBridge={appBridge}
-            />
+            />,
         );
 
         cy.get(FlyoutButtonSelector).click();
@@ -121,13 +121,12 @@ describe('Attachments', () => {
             <Attachments
                 appBridge={getAppBridgeBlockStub({ editorState: true })}
                 items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]}
-            />
+            />,
         );
         cy.get(FlyoutButtonSelector).click();
         cy.realPress('Tab');
         cy.realPress('Tab');
         cy.realPress('Tab');
-
         cy.get(FlyoutTriggerSelector).eq(0).should('have.class', 'focus-visible:tw-ring-blue');
         cy.get(FlyoutTriggerSelector).eq(0).type('{enter}');
         cy.get(MenuItemSelector).should('exist');
@@ -140,9 +139,10 @@ describe('Attachments', () => {
                 appBridge={getAppBridgeBlockStub({ editorState: true })}
                 items={[{ ...AssetDummy.with(1), title: 'Moved item' }, AssetDummy.with(2), AssetDummy.with(3)]}
                 onSorted={onSortStub}
-            />
+            />,
         );
         cy.get(FlyoutButtonSelector).click();
+        cy.realPress('Tab');
         cy.realPress('Tab');
         cy.realPress('Tab');
         cy.get(DragHandleSelector).eq(0).type(' {downarrow}{downarrow} ');

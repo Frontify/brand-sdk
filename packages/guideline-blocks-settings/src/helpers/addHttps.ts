@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { relativeUrlRegex } from './relativeUrlregex';
+import { relativeUrlRegex } from '../components/RichTextEditor/plugins/LinkPlugin/utils';
 
 export const addHttps = (url: string) => {
     if (relativeUrlRegex.test(url)) {

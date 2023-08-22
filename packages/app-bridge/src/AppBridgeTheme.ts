@@ -1,8 +1,28 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBase } from './AppBridgeBase';
+import type {
+    ApiHandlerParameter,
+    ApiMethodNameValidator,
+    ApiReturn,
+    AppBridge,
+    CommandNameValidator,
+    ContextAsEventName,
+    ContextReturn,
+    DispatchHandlerParameter,
+    EventCallbackParameter,
+    EventNameParameter,
+    EventNameValidator,
+    EventUnsubscribeFunction,
+    StateAsEventName,
+    StateReturn,
+} from './AppBridge';
+import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
+import type { CommandRegistry } from './registries/commands/CommandRegistry';
+import type { EventRegistry } from './registries/events/EventRegistry';
+import type { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
+    AssetChooserOptions,
     BrandportalLink,
     CoverPage,
     CoverPageCreate,
@@ -29,7 +49,55 @@ import type {
     TargetsUpdate,
 } from './types';
 
-export interface AppBridgeTheme extends AppBridgeBase {
+export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
+
+export type ThemeCommand = CommandNameValidator<
+    Pick<CommandRegistry, 'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager'>
+>;
+
+export type ThemeState = {
+    settings: Record<string, unknown>;
+    assets: Record<string, unknown>;
+};
+
+export type ThemeContext = {
+    portalId: number;
+    brandId: number;
+};
+
+export type ThemeEvent = EventNameValidator<
+    Pick<EventRegistry, 'assetsChosen'> &
+        StateAsEventName<ThemeState & { '*': ThemeState }> &
+        ContextAsEventName<ThemeContext & { '*': ThemeContext }>
+>;
+
+export interface AppBridgeTheme<
+    State extends ThemeState = ThemeState,
+    Context extends ThemeContext = ThemeContext,
+    Event extends ThemeEvent = ThemeEvent,
+> extends AppBridge<ThemeApiMethod, ThemeCommand, State, Context, Event>,
+        AppBridgeBase {
+    api<ApiMethodName extends keyof ThemeApiMethod>(
+        apiHandler: ApiHandlerParameter<ApiMethodName, ThemeApiMethod>,
+    ): ApiReturn<ApiMethodName, ThemeApiMethod>;
+
+    dispatch<CommandName extends keyof ThemeCommand>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, ThemeCommand>,
+    ): Promise<void>;
+
+    state(): StateReturn<State, void>;
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state(key?: keyof State | void): unknown;
+
+    context(): ContextReturn<Context, void>;
+    context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+    context(key?: keyof Context | void): unknown;
+
+    subscribe<EventName extends keyof Event>(
+        eventName: EventNameParameter<EventName, Event>,
+        callback: EventCallbackParameter<EventName, Event>,
+    ): EventUnsubscribeFunction;
+
     getPortalId(): number;
 
     getBrandId(): number;
@@ -44,6 +112,10 @@ export interface AppBridgeTheme extends AppBridgeBase {
 
     updateCoverPageTemplateSettings(settings: Record<string, unknown>): Promise<void>;
 
+    getThemeSettings<ThemeSettings>(): Promise<ThemeSettings>;
+
+    updateThemeSettings<ThemeSettings extends Record<string, unknown>>(settings: ThemeSettings): Promise<ThemeSettings>;
+
     getDocumentPageTemplateSettings<Settings>(documentPageId: number): Promise<Settings>;
 
     updateDocumentPageTemplateSettings(documentPageId: number, settings: Record<string, unknown>): Promise<void>;
@@ -53,6 +125,12 @@ export interface AppBridgeTheme extends AppBridgeBase {
     getCoverPageTemplateAssets(): Promise<Record<string, Asset[]>>;
 
     deleteAssetIdsFromCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<void>;
+
+    addAssetIdsToThemeAssetKey(key: string, assetIds: number[]): Promise<Record<string, Asset[]>>;
+
+    getThemeAssets(): Promise<Record<string, Asset[]>>;
+
+    deleteAssetIdsFromThemeAssetKey(key: string, assetIds: number[]): Promise<void>;
 
     addAssetIdsToLibraryPageTemplateAssetKey(
         documentId: number,
@@ -177,4 +255,17 @@ export interface AppBridgeTheme extends AppBridgeBase {
      * @param order - The order in which the results should be returned. Defaults to 'relevance'.
      */
     searchInGuideline(query: string, order?: 'relevance' | 'newest' | 'oldest'): Promise<GuidelineSearchResult[]>;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(openAssetChooser(options)) to open the asset chooser
+     * and appBridge.subscribe('assetsChosen', callback) to subscribe to the asset chosen event
+     */
+    openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+     * Use appBridge.dispatch(closeAssetChooser()) instead
+     */
+    closeAssetChooser(): void;
 }

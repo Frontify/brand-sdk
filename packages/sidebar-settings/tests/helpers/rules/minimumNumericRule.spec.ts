@@ -31,6 +31,6 @@ describe('minimumNumericRule', () => {
         ({ minimumValue, value, expected }) => {
             const rule = minimumNumericRule(minimumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

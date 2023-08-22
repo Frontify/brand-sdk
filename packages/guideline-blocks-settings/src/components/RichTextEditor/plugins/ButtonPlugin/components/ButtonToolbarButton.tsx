@@ -7,9 +7,9 @@ import {
     focusEditor,
     isRangeInSameBlock,
     someNode,
-    useEventPlateId,
-    usePlateEditorState,
+    useEditorRef,
 } from '@udecode/plate';
+
 import { triggerFloatingButton } from '../utils';
 
 export interface LinkToolbarButtonProps extends BlockToolbarButtonProps {
@@ -19,8 +19,8 @@ export interface LinkToolbarButtonProps extends BlockToolbarButtonProps {
     getLinkUrl?: (prevUrl: string | null) => Promise<string | null>;
 }
 
-export const ButtonToolbarButton = ({ id, type, ...props }: LinkToolbarButtonProps) => {
-    const editor = usePlateEditorState(useEventPlateId(id));
+export const ButtonToolbarButton = ({ type, ...props }: LinkToolbarButtonProps) => {
+    const editor = useEditorRef();
     const isEnabled = !!isRangeInSameBlock(editor, {
         at: editor.selection,
     });
@@ -32,7 +32,7 @@ export const ButtonToolbarButton = ({ id, type, ...props }: LinkToolbarButtonPro
             tooltip={getTooltip(
                 isEnabled
                     ? `Button\n${getHotkeyByPlatform('Ctrl+Shift+K')}`
-                    : 'Buttons can only be set for a single text block.'
+                    : 'Buttons can only be set for a single text block.',
             )}
             classNames={getButtonClassNames(isEnabled)}
             active={isLink}

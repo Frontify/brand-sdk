@@ -20,19 +20,19 @@ describe('getMarginExtendedSettings', () => {
 
         expect((extendedMarginSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[0]).toHaveProperty(
             'id',
-            'extendedMarginTop'
+            'extendedMarginTop',
         );
         expect((extendedMarginSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1]).toHaveProperty(
             'id',
-            'extendedMarginLeft'
+            'extendedMarginLeft',
         );
         expect((extendedMarginSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[2]).toHaveProperty(
             'id',
-            'extendedMarginRight'
+            'extendedMarginRight',
         );
         expect((extendedMarginSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[3]).toHaveProperty(
             'id',
-            'extendedMarginBottom'
+            'extendedMarginBottom',
         );
         expect(extendedMarginSettings.off?.[0]).toHaveProperty('id', 'extendedMarginChoice');
         expect(extendedMarginSettings.off?.[0]).toHaveProperty('type', 'segmentedControls');

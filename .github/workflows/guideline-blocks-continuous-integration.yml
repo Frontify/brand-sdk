@@ -43,7 +43,7 @@ jobs:
               run: pnpm build:app-bridge && pnpm build:sidebar-settings
 
             - name: Build package (+ typechecking)
-              run: pnpm build:guideline-blocks
+              run: pnpm build:guideline-blocks-settings
 
     component-tests:
         runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
                   node-version: ${{ env.NODE_VERSION }}
 
             - name: Use pnpm
-              uses: pnpm/action-setup@v2.2.4
+              uses: pnpm/action-setup@v2.4.0
               with:
                   version: latest
                   run_install: false

@@ -1,43 +1,63 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
-import { generateRandomString, notify, subscribe } from './utilities';
-import { MethodsListKeys, PlatformAppMethods, Topic } from './types';
-import { InitializationError } from './errors/InitializationError';
-import { getQueryParameters } from './utilities/queryParams';
+import type {
+    ApiHandlerParameter,
+    ApiMethodNameValidator,
+    ApiReturn,
+    AppBridge,
+    CommandNameValidator,
+    ContextAsEventName,
+    ContextReturn,
+    DispatchHandlerParameter,
+    EventCallbackParameter,
+    EventNameParameter,
+    EventNameValidator,
+    EventUnsubscribeFunction,
+    StateAsEventName,
+    StateReturn,
+} from './AppBridge';
+import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 
-const PUBSUB_CHECKSUM = generateRandomString();
+export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
-type InitializeEvent = {
-    port: MessagePort;
+export type PlatformAppCommand = CommandNameValidator<Record<never, never>>;
+
+export type PlatformAppState = {
+    settings: Record<string, unknown>;
 };
 
-export class AppBridgePlatformApp {
-    private messageBus: IMessageBus = new ErrorMessageBus();
-    private initialized = false;
+export type PlatformAppContext = {
+    marketplaceServiceAppId: string;
+};
 
-    public async initialize() {
-        const queryParams = this.context();
-        return new Promise<void>(async (resolve, reject) => {
-            if (queryParams?.token && !this.initialized) {
-                notify(Topic.Init, PUBSUB_CHECKSUM, { token: queryParams.token });
-                const { port } = await subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM);
-                this.messageBus = new MessageBus(port);
-                this.initialized = true;
-                resolve();
-            } else {
-                reject(new InitializationError());
-            }
-        });
-    }
+export type PlatformAppEvent = EventNameValidator<
+    StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
+        ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }>
+>;
 
-    public async api<Method extends PlatformAppMethods[MethodsListKeys][0]>(
-        method: Method,
-    ): Promise<PlatformAppMethods[Method['operation']][1]> {
-        return await this.messageBus.post<Promise<PlatformAppMethods[Method['operation']][1]>>(method);
-    }
+export interface AppBridgePlatformApp<
+    State extends PlatformAppState = PlatformAppState,
+    Context extends PlatformAppContext = PlatformAppContext,
+    Event extends PlatformAppEvent = PlatformAppEvent,
+> extends AppBridge<PlatformAppApiMethod, PlatformAppCommand, State, Context, Event> {
+    api<ApiMethodName extends keyof PlatformAppApiMethod>(
+        apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
+    ): ApiReturn<ApiMethodName, PlatformAppApiMethod>;
 
-    public context() {
-        return getQueryParameters(window.location.href);
-    }
+    dispatch<CommandName extends keyof PlatformAppCommand>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
+    ): Promise<void>;
+
+    state(): StateReturn<State, void>;
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state(key?: keyof State | void): unknown;
+
+    context(): ContextReturn<Context, void>;
+    context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+    context(key?: keyof Context | void): unknown;
+
+    subscribe<EventName extends keyof Event>(
+        eventName: EventNameParameter<EventName, Event>,
+        callback: EventCallbackParameter<EventName, Event>,
+    ): EventUnsubscribeFunction;
 }

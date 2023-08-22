@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { createPluginFactory } from '@udecode/plate';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import {
     MarkupElement,
     Plugin,
@@ -42,7 +42,7 @@ export const QuoteMarkupElementNode = ({ element, attributes, children, styles }
     return (
         <blockquote
             {...attributes}
-            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element), 'quote'])}
+            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element), 'a-quote'])}
         >
             <span style={styles}>{children}</span>
         </blockquote>

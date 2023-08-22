@@ -1,5 +1,25 @@
 # @frontify/frontify-cli
 
+## 5.3.16
+
+### Patch Changes
+
+- [`22684e3`](https://github.com/Frontify/brand-sdk/commit/22684e358fd2b073790a0959606c6a5d44e35c4e) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+## 5.3.15
+
+### Patch Changes
+
+- [`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+## 5.3.14
+
+### Patch Changes
+
+- [`af7d797`](https://github.com/Frontify/brand-sdk/commit/af7d797e12d66c8af60df70c8bf9505f3459cd1f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [#467](https://github.com/Frontify/brand-sdk/pull/467) [`7f4717f`](https://github.com/Frontify/brand-sdk/commit/7f4717f62cbb3a0904dfd91fcf809bb14e1e8b20) Thanks [@floriangaechter](https://github.com/floriangaechter)! - feat: add info message in case browser window couldn't be opened automatically
+
 ## 5.3.13
 
 ### Patch Changes

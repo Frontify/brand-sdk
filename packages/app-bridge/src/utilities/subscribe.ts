@@ -26,8 +26,11 @@ export function subscribe<T>(topic: Topic, token: string, options?: SubscribeOpt
 
         window.addEventListener('message', subscribeResponseCallback);
 
-        setTimeout(() => {
-            reject(new TimeoutReachedError(topic));
-        }, options?.timeout || SUBSCRIBE_TIMEOUT);
+        setTimeout(
+            () => {
+                reject(new TimeoutReachedError(topic));
+            },
+            options?.timeout || SUBSCRIBE_TIMEOUT,
+        );
     });
 }

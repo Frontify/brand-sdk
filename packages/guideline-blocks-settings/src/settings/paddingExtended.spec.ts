@@ -20,19 +20,19 @@ describe('getPaddingExtendedSettings', () => {
 
         expect((extendedPaddingSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[0]).toHaveProperty(
             'id',
-            'extendedPaddingTop'
+            'extendedPaddingTop',
         );
         expect((extendedPaddingSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1]).toHaveProperty(
             'id',
-            'extendedPaddingLeft'
+            'extendedPaddingLeft',
         );
         expect((extendedPaddingSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[2]).toHaveProperty(
             'id',
-            'extendedPaddingRight'
+            'extendedPaddingRight',
         );
         expect((extendedPaddingSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[3]).toHaveProperty(
             'id',
-            'extendedPaddingBottom'
+            'extendedPaddingBottom',
         );
         expect(extendedPaddingSettings.off?.[0]).toHaveProperty('id', 'extendedPaddingChoice');
         expect(extendedPaddingSettings.off?.[0]).toHaveProperty('type', 'segmentedControls');

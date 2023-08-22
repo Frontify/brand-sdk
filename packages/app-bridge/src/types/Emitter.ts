@@ -18,6 +18,7 @@ export type EmitterAction = 'add' | 'update' | 'delete';
 
 export type EmitterEvents = {
     'AppBridge:PageTemplateSettingsUpdated': { pageTemplateSettings: Record<string, unknown> };
+    'AppBridge:ThemeSettingsUpdated': { themeSettings: Record<string, unknown> };
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
 
     'AppBridge:BlockAssetsUpdated': {
@@ -32,6 +33,12 @@ export type EmitterEvents = {
         documentPageId?: number;
         templateAssets: Record<string, Asset[]>;
         prevTemplateAssets: Record<string, Asset[]>;
+    };
+
+    'AppBridge:ThemeAssetsUpdated': {
+        portalId: number;
+        themeAssets: Record<string, Asset[]>;
+        prevThemeAssets: Record<string, Asset[]>;
     };
 
     'AppBridge:BlockTemplatesUpdated': {

@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CSSProperties } from 'react';
-
-import { Color } from '@frontify/fondue';
+import type { CSSProperties } from 'react';
+import type { Color } from '@frontify/fondue';
 
 import { toRgbaString } from '../color';
 
