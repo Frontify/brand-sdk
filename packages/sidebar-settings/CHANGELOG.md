@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.6.3
+
+### Patch Changes
+
+- [#502](https://github.com/Frontify/brand-sdk/pull/502) [`d1a60e9`](https://github.com/Frontify/brand-sdk/commit/d1a60e9fabb2920d3fc716e18f58d8de1527ab26) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): add link block
+
 ## 0.6.2
 
 ### Patch Changes
