@@ -39,7 +39,7 @@
         "vitest": "^0.34.1"
     },
     "dependencies": {
-        "@frontify/app-bridge": "3.0.0-beta.87",
+        "@frontify/app-bridge": "3.0.0-beta.88",
         "@frontify/fondue": "12.0.0-beta.296"
     },
     "peerDependencies": {
