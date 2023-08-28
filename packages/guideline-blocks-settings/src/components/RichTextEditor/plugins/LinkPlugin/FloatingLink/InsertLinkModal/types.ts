@@ -9,8 +9,3 @@ export type InsertModalStateProps = {
     text: string;
     newTab: CheckboxState;
 };
-
-export type InitiallyExpandedItems = {
-    documentId: number | undefined;
-    pageId: number | undefined;
-};

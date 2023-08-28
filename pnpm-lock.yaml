@@ -18,8 +18,8 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5
       '@frontify/fondue':
-        specifier: 12.0.0-beta.296
-        version: 12.0.0-beta.296(@types/node@18.17.4)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1)
+        specifier: 12.0.0-beta.304
+        version: 12.0.0-beta.304(@types/node@18.17.4)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1)
       '@vitejs/plugin-react':
         specifier: ^4.0.4
         version: 4.0.4(vite@4.4.8)
@@ -52,7 +52,7 @@ importers:
         version: 4.4.8(@types/node@18.17.4)
       vitest:
         specifier: ^0.34.1
-        version: 0.34.1
+        version: 0.34.1(@vitest/ui@0.34.1)(happy-dom@10.9.0)
 
   packages/app-bridge:
     dependencies:
@@ -245,8 +245,8 @@ importers:
         specifier: workspace:*
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: 12.0.0-beta.296
-        version: 12.0.0-beta.296(@types/node@18.17.4)(@types/react@18.2.20)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1)
+        specifier: 12.0.0-beta.304
+        version: 12.0.0-beta.304(@types/node@18.17.4)(@types/react@18.2.20)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1)
       '@frontify/sidebar-settings':
         specifier: workspace:*
         version: link:../sidebar-settings
@@ -354,11 +354,11 @@ importers:
   packages/sidebar-settings:
     dependencies:
       '@frontify/app-bridge':
-        specifier: 3.0.0-beta.87
+        specifier: ^3.0.0-beta.86
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: 12.0.0-beta.296
-        version: 12.0.0-beta.296(@types/node@18.17.4)(@types/react@18.2.20)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1)
+        specifier: 12.0.0-beta.304
+        version: 12.0.0-beta.304(@types/node@18.17.4)(@types/react@18.2.20)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1)
     devDependencies:
       '@frontify/eslint-config-typescript':
         specifier: ^0.16.1
@@ -395,7 +395,7 @@ importers:
         version: 3.5.1(@types/node@18.17.4)(rollup@3.28.0)(typescript@5.1.6)(vite@4.4.9)
       vitest:
         specifier: ^0.34.1
-        version: 0.34.1
+        version: 0.34.1(@vitest/ui@0.34.1)(happy-dom@10.9.0)
 
 packages:
 
@@ -498,7 +498,7 @@ packages:
     resolution: {integrity: sha512-LvBTxu8bQSQkcyKOU+a1btnNFQ1dMAd0R6PyW3arXes06F6QLWLIrd681bxRPIXlrMGR3XYnW9JyML7dP3qgxg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.22.5
+      '@babel/types': 7.22.10
 
   /@babel/helper-compilation-targets@7.22.10:
     resolution: {integrity: sha512-JMSwHD4J7SLod0idLq5PKgI+6g/hLD/iuWBq08ZX49xE14VpVEojJ5rHWptpirV2j020MvypRLAXAO50igCJ5Q==}
@@ -699,6 +699,23 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@babel/traverse@7.22.10(supports-color@5.5.0):
+    resolution: {integrity: sha512-Q/urqV4pRByiNNpb/f5OSv28ZlGJiFiiTh+GAHktbIrkPhPbl90+uW6SmpoLyZqutrg9AEaEf3Q/ZBRHBXgxig==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/code-frame': 7.22.10
+      '@babel/generator': 7.22.10
+      '@babel/helper-environment-visitor': 7.22.5
+      '@babel/helper-function-name': 7.22.5
+      '@babel/helper-hoist-variables': 7.22.5
+      '@babel/helper-split-export-declaration': 7.22.6
+      '@babel/parser': 7.22.10
+      '@babel/types': 7.22.10
+      debug: 4.3.4(supports-color@5.5.0)
+      globals: 11.12.0
+    transitivePeerDependencies:
+      - supports-color
+
   /@babel/traverse@7.22.8:
     resolution: {integrity: sha512-y6LPR+wpM2I3qJrsheCTwhIinzkETbplIgPBbwvqPKc+uljeA5gP+3nP8irdYt1mjQaDnlIcG+dw8OjAco4GXw==}
     engines: {node: '>=6.9.0'}
@@ -712,23 +729,6 @@ packages:
       '@babel/parser': 7.22.7
       '@babel/types': 7.22.5
       debug: 4.3.4(supports-color@8.1.1)
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
-
-  /@babel/traverse@7.22.8(supports-color@5.5.0):
-    resolution: {integrity: sha512-y6LPR+wpM2I3qJrsheCTwhIinzkETbplIgPBbwvqPKc+uljeA5gP+3nP8irdYt1mjQaDnlIcG+dw8OjAco4GXw==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/code-frame': 7.22.5
-      '@babel/generator': 7.22.9
-      '@babel/helper-environment-visitor': 7.22.5
-      '@babel/helper-function-name': 7.22.5
-      '@babel/helper-hoist-variables': 7.22.5
-      '@babel/helper-split-export-declaration': 7.22.6
-      '@babel/parser': 7.22.7
-      '@babel/types': 7.22.5
-      debug: 4.3.4(supports-color@5.5.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -1024,7 +1024,7 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
-      tslib: 2.5.0
+      tslib: 2.6.1
 
   /@dnd-kit/core@6.0.8(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-lYaoP8yHTQSLlZe6Rr9qogouGUz9oRUj4AHhDQGQzq/hqaJRpFo65X+JKsdHf8oUFBzx5A+SJPUvxAwTF2OabA==}
@@ -1478,8 +1478,8 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.296(@types/node@18.17.4)(@types/react@18.2.20)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1):
-    resolution: {integrity: sha512-/rav/VHthV5G4MxwWeNRW381DIbXkiDvxiNHgfG7lwCXY8Un12pVT0XT46S3Ssk2yg+QMyKlBUN8o42TIrMH+Q==}
+  /@frontify/fondue@12.0.0-beta.304(@types/node@18.17.4)(@types/react@18.2.20)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1):
+    resolution: {integrity: sha512-/vwcLz4iMa15GqchzN4CyxO4g3aPK1eIHYBY65z7yPDuZF89NhN4N7+zU6o/cuu9pWojq4Jd2YgQ4fRDWJ5dWQ==}
     engines: {node: '>=16', npm: <=0, pnpm: '>=8'}
     peerDependencies:
       '@udecode/plate': ^21
@@ -1566,8 +1566,8 @@ packages:
       - ts-node
     dev: false
 
-  /@frontify/fondue@12.0.0-beta.296(@types/node@18.17.4)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1):
-    resolution: {integrity: sha512-/rav/VHthV5G4MxwWeNRW381DIbXkiDvxiNHgfG7lwCXY8Un12pVT0XT46S3Ssk2yg+QMyKlBUN8o42TIrMH+Q==}
+  /@frontify/fondue@12.0.0-beta.304(@types/node@18.17.4)(@udecode/plate@21.3.4)(framer-motion@10.12.12)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)(ts-node@10.9.1):
+    resolution: {integrity: sha512-/vwcLz4iMa15GqchzN4CyxO4g3aPK1eIHYBY65z7yPDuZF89NhN4N7+zU6o/cuu9pWojq4Jd2YgQ4fRDWJ5dWQ==}
     engines: {node: '>=16', npm: <=0, pnpm: '>=8'}
     peerDependencies:
       '@udecode/plate': ^21
@@ -3497,7 +3497,7 @@ packages:
   /@swc/helpers@0.5.1:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.1
 
   /@tailwindcss/forms@0.5.3(tailwindcss@3.3.3):
     resolution: {integrity: sha512-y5mb86JUoiUgBjY/o6FJSFZSEttfb3Q5gllE4xoKjAAD+vBrnIhE4dViwUuow3va8mpH4s9jyUbUbrRGoRdc2Q==}
@@ -14042,7 +14042,7 @@ packages:
   /rxjs@7.8.0:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.1
     dev: true
 
   /sade@1.8.1:
@@ -14544,7 +14544,7 @@ packages:
       react-is: '>= 16.8.0'
     dependencies:
       '@babel/helper-module-imports': 7.22.5
-      '@babel/traverse': 7.22.8(supports-color@5.5.0)
+      '@babel/traverse': 7.22.10(supports-color@5.5.0)
       '@emotion/is-prop-valid': 1.2.0
       '@emotion/stylis': 0.8.5
       '@emotion/unitless': 0.7.5
@@ -15216,28 +15216,6 @@ packages:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  /vite-node@0.34.1(@types/node@18.17.4):
-    resolution: {integrity: sha512-odAZAL9xFMuAg8aWd7nSPT+hU8u2r9gU3LRm9QKjxBEF2rRdWpMuqkrkjvyVQEdNFiBctqr2Gg4uJYizm5Le6w==}
-    engines: {node: '>=v14.18.0'}
-    hasBin: true
-    dependencies:
-      cac: 6.7.14
-      debug: 4.3.4(supports-color@8.1.1)
-      mlly: 1.4.0
-      pathe: 1.1.1
-      picocolors: 1.0.0
-      vite: 4.4.9(@types/node@18.17.4)
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
   /vite-node@0.34.1(@types/node@20.4.7):
     resolution: {integrity: sha512-odAZAL9xFMuAg8aWd7nSPT+hU8u2r9gU3LRm9QKjxBEF2rRdWpMuqkrkjvyVQEdNFiBctqr2Gg4uJYizm5Le6w==}
     engines: {node: '>=v14.18.0'}
@@ -15452,7 +15430,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest@0.34.1:
+  /vitest@0.34.1(@vitest/ui@0.34.1)(happy-dom@10.9.0):
     resolution: {integrity: sha512-G1PzuBEq9A75XSU88yO5G4vPT20UovbC/2osB2KEuV/FisSIIsw7m5y2xMdB7RsAGHAfg2lPmp2qKr3KWliVlQ==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -15490,71 +15468,6 @@ packages:
       '@vitest/runner': 0.34.1
       '@vitest/snapshot': 0.34.1
       '@vitest/spy': 0.34.1
-      '@vitest/utils': 0.34.1
-      acorn: 8.10.0
-      acorn-walk: 8.2.0
-      cac: 6.7.14
-      chai: 4.3.7
-      debug: 4.3.4(supports-color@8.1.1)
-      local-pkg: 0.4.3
-      magic-string: 0.30.1
-      pathe: 1.1.1
-      picocolors: 1.0.0
-      std-env: 3.3.3
-      strip-literal: 1.0.1
-      tinybench: 2.5.0
-      tinypool: 0.7.0
-      vite: 4.4.8(@types/node@20.4.7)
-      vite-node: 0.34.1(@types/node@20.4.7)
-      why-is-node-running: 2.2.2
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
-  /vitest@0.34.1(@vitest/ui@0.34.1)(happy-dom@10.9.0):
-    resolution: {integrity: sha512-G1PzuBEq9A75XSU88yO5G4vPT20UovbC/2osB2KEuV/FisSIIsw7m5y2xMdB7RsAGHAfg2lPmp2qKr3KWliVlQ==}
-    engines: {node: '>=v14.18.0'}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@vitest/browser': '*'
-      '@vitest/ui': '*'
-      happy-dom: '*'
-      jsdom: '*'
-      playwright: '*'
-      safaridriver: '*'
-      webdriverio: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@vitest/browser':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-      playwright:
-        optional: true
-      safaridriver:
-        optional: true
-      webdriverio:
-        optional: true
-    dependencies:
-      '@types/chai': 4.3.5
-      '@types/chai-subset': 1.3.3
-      '@types/node': 18.17.4
-      '@vitest/expect': 0.34.1
-      '@vitest/runner': 0.34.1
-      '@vitest/snapshot': 0.34.1
-      '@vitest/spy': 0.34.1
       '@vitest/ui': 0.34.1(vitest@0.34.1)
       '@vitest/utils': 0.34.1
       acorn: 8.10.0
@@ -15571,8 +15484,8 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.7.0
-      vite: 4.4.8(@types/node@18.17.4)
-      vite-node: 0.34.1(@types/node@18.17.4)
+      vite: 4.4.8(@types/node@20.4.7)
+      vite-node: 0.34.1(@types/node@20.4.7)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

@@ -9,10 +9,16 @@ import { DocumentLinks } from './DocumentLinks';
 type LinkSelectorProps = {
     appBridge: AppBridgeBlock;
     url: string;
-    onUrlChange: (value: string) => void;
+    onUrlChange?: (value: string) => void;
+    buttonSize?: ButtonSize;
 };
 
-export const LinkSelector = ({ appBridge, url, onUrlChange }: LinkSelectorProps): ReactElement => {
+export const LinkSelector = ({
+    appBridge,
+    url,
+    onUrlChange,
+    buttonSize = ButtonSize.Medium,
+}: LinkSelectorProps): ReactElement => {
     const { open: openLinkTree, isOpen: isLinkTreeOpen, close: closeLinkTree } = useOverlayTriggerState({});
     const [selectedUrl, setSelectedUrl] = useState<string>(url);
 
@@ -33,7 +39,7 @@ export const LinkSelector = ({ appBridge, url, onUrlChange }: LinkSelectorProps)
     }, [url, selectedUrl]);
 
     const saveLink = () => {
-        onUrlChange(selectedUrl);
+        onUrlChange?.(selectedUrl);
         closeLinkTree();
     };
 
@@ -41,7 +47,7 @@ export const LinkSelector = ({ appBridge, url, onUrlChange }: LinkSelectorProps)
         <div data-test-id="internal-link-selector" onKeyDown={onPressEnter}>
             <Button
                 icon={<IconLink />}
-                size={ButtonSize.Medium}
+                size={buttonSize}
                 type={ButtonType.Button}
                 style={ButtonStyle.Default}
                 emphasis={ButtonEmphasis.Default}

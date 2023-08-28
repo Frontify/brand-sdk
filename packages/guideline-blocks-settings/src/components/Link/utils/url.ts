@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { addHttps } from '../../../../../helpers';
+import { addHttps } from '../../../helpers';
 import { relativeUrlRegex } from './relativeUrlRegex';
 
 export const isValidUrl = (url: string) => {
@@ -16,6 +16,6 @@ export const isValidUrl = (url: string) => {
     }
 };
 
-export const isValidUrlOrEmpty = (url: string) => {
+export const isValidUrlOrEmpty = (url: string): boolean => {
     return isValidUrl(addHttps(url)) || url === '';
 };
