@@ -12,10 +12,10 @@ import {
     useHotkeys,
 } from '@udecode/plate';
 import { Dispatch, Reducer, useEffect, useReducer } from 'react';
-import { getLegacyUrl, getUrl } from '../../utils';
+import { getLegacyUrl, getUrl } from '../../../../../Link/utils';
 import { InsertModalDispatchType, InsertModalStateProps } from './types';
 import { addHttps } from '../../../../../../helpers';
-import { isValidUrlOrEmpty } from '../../utils/url';
+import { isValidUrlOrEmpty } from '../../../../../Link/utils/url';
 
 const initialState: InsertModalStateProps = {
     url: '',
