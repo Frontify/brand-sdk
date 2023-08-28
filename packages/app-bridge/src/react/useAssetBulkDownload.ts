@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 
-export enum BulkDownloadState {
+export enum AssetBulkDownloadState {
     Init = 'init',
     Started = 'started',
     Pending = 'pending',
@@ -13,19 +13,19 @@ export enum BulkDownloadState {
 
 export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
     const intervalId = useRef<number | null>(null);
-    const [status, setStatus] = useState<BulkDownloadState>(BulkDownloadState.Init);
+    const [status, setStatus] = useState<AssetBulkDownloadState>(AssetBulkDownloadState.Init);
     const [downloadUrl, setDownloadUrl] = useState<Nullable<string>>(null);
 
     const generateBulkDownload = async (settingIds?: string[]) => {
         try {
-            setStatus(BulkDownloadState.Started);
+            setStatus(AssetBulkDownloadState.Started);
 
             const token = await appBridge.getAssetBulkDownloadToken(settingIds);
 
             setDownloadUrl(null);
             startDownload(token);
         } catch (error) {
-            setStatus(BulkDownloadState.Error);
+            setStatus(AssetBulkDownloadState.Error);
             console.error(error);
         }
     };
@@ -36,13 +36,13 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
 
             if (download.downloadUrl) {
                 setDownloadUrl(download.downloadUrl);
-                setStatus(BulkDownloadState.Ready);
+                setStatus(AssetBulkDownloadState.Ready);
             } else {
-                setStatus(BulkDownloadState.Pending);
+                setStatus(AssetBulkDownloadState.Pending);
                 intervalId.current = listenForBulkDownloadReady(download.signature);
             }
         } catch (error) {
-            setStatus(BulkDownloadState.Error);
+            setStatus(AssetBulkDownloadState.Error);
             console.error(error);
         }
     };
@@ -53,12 +53,12 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
                 const download = await appBridge.getBulkDownloadBySignature(signature);
 
                 if (download.downloadUrl) {
-                    setStatus(BulkDownloadState.Ready);
+                    setStatus(AssetBulkDownloadState.Ready);
                     setDownloadUrl(download.downloadUrl);
                     intervalId.current && clearInterval(intervalId.current);
                 }
             } catch (error) {
-                setStatus(BulkDownloadState.Error);
+                setStatus(AssetBulkDownloadState.Error);
                 console.error(error);
                 intervalId.current && clearInterval(intervalId.current);
             }
