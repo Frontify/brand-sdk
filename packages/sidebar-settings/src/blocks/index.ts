@@ -8,6 +8,7 @@ import { FontInputBlock } from './fontInput';
 import { InputBlock } from './input';
 import { LegacyAssetInputBlock } from './legacyAssetInput';
 import { LinkChooserBlock } from './linkChooser';
+import { LinkBlock } from './link';
 import { MultiInputBlock } from './multiInput';
 import { NotificationBlock } from './notification';
 import { SectionHeadingBlock } from './sectionHeading';
@@ -38,6 +39,7 @@ export * from './switch';
 export * from './templateInput';
 export * from './legacyTemplateInput';
 export * from './textarea';
+export * from './link';
 
 export {
     AssetChooserObjectType,
@@ -97,6 +99,7 @@ export type SimpleSettingBlock<AppBridge> =
     | InputBlock<AppBridge>
     | LegacyAssetInputBlock<AppBridge>
     | LinkChooserBlock<AppBridge>
+    | LinkBlock<AppBridge>
     | MultiInputBlock<AppBridge>
     | NotificationBlock<AppBridge>
     | SectionHeadingBlock<AppBridge>
