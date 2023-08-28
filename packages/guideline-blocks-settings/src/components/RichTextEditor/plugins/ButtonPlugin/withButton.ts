@@ -101,6 +101,6 @@ export const withButton: WithOverride = (editor, { type }) => {
         editor,
         mockPlugin<AnyObject, Value, PlateEditor<Value>>({
             options: { types: type },
-        })
+        }),
     );
 };

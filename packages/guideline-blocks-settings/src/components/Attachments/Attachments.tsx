@@ -21,7 +21,7 @@ import {
     FlyoutPlacement,
     IconCaretDown12,
     IconPaperclip16,
-    Tooltip,
+    LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
 import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
@@ -87,7 +87,7 @@ export const Attachments = ({
             {
                 multiSelection: true,
                 selectedValueIds: internalItems.map((internalItem) => internalItem.id),
-            }
+            },
         );
     };
 
@@ -104,7 +104,7 @@ export const Attachments = ({
             {
                 multiSelection: false,
                 selectedValueIds: internalItems.map((internalItem) => internalItem.id),
-            }
+            },
         );
     };
 

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { createParagraphPlugin as createPlateParagraphPlugin, createPluginFactory } from '@udecode/plate';
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import {
     MarkupElement,
     Plugin,

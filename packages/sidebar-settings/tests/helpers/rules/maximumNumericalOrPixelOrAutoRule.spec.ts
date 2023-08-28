@@ -33,6 +33,6 @@ describe('maximumNumericalOrPixelOrAutoRule', () => {
         ({ maximumValue, value, expected }) => {
             const rule = maximumNumericalOrPixelOrAutoRule(maximumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

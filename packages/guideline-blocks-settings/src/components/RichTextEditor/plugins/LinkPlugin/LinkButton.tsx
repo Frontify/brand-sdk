@@ -22,7 +22,7 @@ export const LinkButton = ({ id, editorId }: PluginButtonProps) => {
                 tooltip={getTooltip(
                     isEnabled
                         ? `Link\n${getHotkeyByPlatform('Ctrl+K')}`
-                        : 'Links can only be set for a single text block.'
+                        : 'Links can only be set for a single text block.',
                 )}
                 icon={
                     <span className="tw-p-2 tw-h-8 tw-justify-center tw-items-center tw-flex">

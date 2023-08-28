@@ -4,12 +4,14 @@ import { enableMapSet } from 'immer';
 
 enableMapSet();
 
+export * from './AppBridge';
 export * from './AppBridgeBase';
 export * from './AppBridgeBlock';
 export * from './AppBridgeCreateAsset';
+export * from './AppBridgePlatformApp';
 export * from './AppBridgeTheme';
-export * from './dispatch';
 export * from './errors';
+export * from './registries';
 export * from './react';
 export * from './tests';
 export * from './types';

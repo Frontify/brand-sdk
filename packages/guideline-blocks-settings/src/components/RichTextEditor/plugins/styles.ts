@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { LINK_PLUGIN } from './LinkPlugin/id';
 import { BlockButtonStyles } from './ButtonPlugin';
 

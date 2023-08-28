@@ -40,7 +40,7 @@ export const useFloatingButtonInsert = ({ floatingOptions, ...props }: FloatingB
         {
             enableOnContentEditable: true,
         },
-        [focused]
+        [focused],
     );
 
     const { update, style, floating } = useVirtualFloatingButton({

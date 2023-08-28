@@ -27,7 +27,7 @@ export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {
             new SoftBreakPlugin(),
             new TextStylePlugin({
                 textStyles: TextStylePluginsWithoutImage,
-            })
+            }),
         )
         .setPlugin(
             [
@@ -48,6 +48,6 @@ export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {
                 new CheckboxListPlugin(),
                 new OrderedListPlugin(),
                 new ResetFormattingPlugin(),
-            ]
+            ],
         );
 };

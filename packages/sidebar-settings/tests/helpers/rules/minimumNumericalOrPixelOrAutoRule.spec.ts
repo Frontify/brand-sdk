@@ -31,6 +31,6 @@ describe('minimumNumericalOrPixelOrAutoRule', () => {
         ({ minimumValue, value, expected }) => {
             const rule = minimumNumericalOrPixelOrAutoRule(minimumValue);
             expect(rule.validate(value)).toBe(expected);
-        }
+        },
     );
 });

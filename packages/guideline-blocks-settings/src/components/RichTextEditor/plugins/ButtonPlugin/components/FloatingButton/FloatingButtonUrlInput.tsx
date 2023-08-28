@@ -25,6 +25,6 @@ export const useFloatingButtonUrlInput = (props: HTMLPropsAs<'input'>): HTMLProp
             onChange,
             defaultValue: floatingButtonSelectors.url(),
         },
-        { ...props, ref: useComposedRef<HTMLInputElement>(props.ref, ref) }
+        { ...props, ref: useComposedRef<HTMLInputElement>(props.ref, ref) },
     );
 };

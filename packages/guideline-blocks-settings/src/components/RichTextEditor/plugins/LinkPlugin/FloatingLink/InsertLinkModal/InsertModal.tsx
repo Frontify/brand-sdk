@@ -6,16 +6,15 @@ import {
     ButtonEmphasis,
     ButtonSize,
     ButtonStyle,
-    Checkbox,
     FormControl,
     IconCheckMark20,
     TextInput,
 } from '@frontify/fondue';
 import { FC, ReactNode } from 'react';
-import { LinkSelector } from '../../../shared/LinkSelector';
 import { InsertModalStateProps } from './types';
+import { LinkInput } from '../../../../../Link/LinkInput';
 
-type Props = {
+type InsertModalProps = {
     state: InsertModalStateProps;
     onTextChange: (value: string) => void;
     onUrlChange: (value: string) => void;
@@ -23,13 +22,13 @@ type Props = {
     onCancel: () => void;
     onSave: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent | undefined) => void;
     hasValues: boolean;
-    isValidUrlOrEmpty: (url: string) => boolean | undefined;
+    isValidUrlOrEmpty: (url: string) => boolean;
     testId?: string;
     children?: ReactNode;
     appBridge: AppBridgeBlock;
 };
 
-export const InsertModal: FC<Props> = ({
+export const InsertModal: FC<InsertModalProps> = ({
     state,
     onTextChange,
     onUrlChange,
@@ -55,31 +54,15 @@ export const InsertModal: FC<Props> = ({
 
         {children}
 
-        <div className="tw-pt-5">
-            <FormControl
-                label={{
-                    children: 'URL',
-                    htmlFor: 'url',
-                    required: true,
-                }}
-            >
-                <TextInput
-                    id="url"
-                    value={state.url}
-                    placeholder="https://example.com"
-                    focusOnMount
-                    onChange={onUrlChange}
-                />
-            </FormControl>
-            {!isValidUrlOrEmpty(state?.url) && <div className="tw-text-red-65 tw-mt-3">Please enter a valid URL.</div>}
-        </div>
-
-        <div className="tw-mt-3">
-            <LinkSelector url={state.url} appBridge={appBridge} onUrlChange={onUrlChange} />
-        </div>
-
-        <div className="tw-mt-3">
-            <Checkbox value="new-tab" label="Open in new tab" state={state.newTab} onChange={onToggleTab} />
+        <div className="tw-mt-5">
+            <LinkInput
+                url={state.url}
+                newTab={state.newTab}
+                onUrlChange={onUrlChange}
+                onToggleTab={onToggleTab}
+                isValidUrlOrEmpty={isValidUrlOrEmpty}
+                appBridge={appBridge}
+            />
         </div>
         <div className="tw-mt-3">
             <div className={'tw-pt-5 tw-flex tw-gap-x-3 tw-justify-end tw-border-t tw-border-t-black-10'}>

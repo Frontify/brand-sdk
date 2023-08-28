@@ -14,7 +14,7 @@ export interface WrapButtonOptions<V extends Value = Value> extends WrapNodesOpt
  */
 export const wrapButton = <V extends Value>(
     editor: PlateEditor<V>,
-    { url, buttonStyle, target, ...options }: WrapButtonOptions<V>
+    { url, buttonStyle, target, ...options }: WrapButtonOptions<V>,
 ) => {
     wrapNodes<TButtonElement, Value>(
         editor,
@@ -25,6 +25,6 @@ export const wrapButton = <V extends Value>(
             target,
             children: [],
         },
-        { split: true, ...options } as WrapNodesOptions
+        { split: true, ...options } as WrapNodesOptions,
     );
 };

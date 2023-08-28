@@ -55,7 +55,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
             onReplaceWithBrowse,
             onReplaceWithUpload,
         },
-        ref
+        ref,
     ) => {
         const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>();
         const [openFileDialog, { selectedFiles }] = useFileInput({ multiple: true, accept: 'image/*' });
@@ -227,7 +227,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                 )}
             </button>
         );
-    }
+    },
 );
 
 AttachmentItem.displayName = 'AttachmentItem';
