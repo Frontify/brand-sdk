@@ -45,7 +45,7 @@ const Custom2MarkupElementNode = ({ element, attributes, children, styles }: Tex
             className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element)])}
             style={styles}
         >
-            <span>{children}</span>
+            {children}
         </p>
     );
 };
