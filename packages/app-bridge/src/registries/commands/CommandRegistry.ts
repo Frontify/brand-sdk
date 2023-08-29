@@ -2,6 +2,7 @@
 
 import type { CommandNameValidator } from '../../AppBridge';
 import type { AssetChooserOptions } from '../../types';
+import type { OpenNewPublicationPayload } from '../../types';
 
 type OpenAssetChooserPayload = AssetChooserOptions;
 type CloseAssetChooserPayload = void;
@@ -17,4 +18,5 @@ export type CommandRegistry = CommandNameValidator<{
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
     openNavigationManager: OpenNavigationManager;
+    openNewPublication?: OpenNewPublicationPayload;
 }>;

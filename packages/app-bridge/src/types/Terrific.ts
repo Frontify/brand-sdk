@@ -22,7 +22,7 @@ export type TemplateChooserResult = TemplateApiLegacy;
 
 export type AssetChooserAssetChosenCallback = (selectedAsset: { screenData: AssetChooserResult[] }) => void;
 export type TemplateChooserTemplateChosenCallback = (selectedTemplate: { template: TemplateChooserResult }) => void;
-export type CreateNewPublicationOptions = {
+export type OpenNewPublicationPayload = {
     template: Template;
 };
 
