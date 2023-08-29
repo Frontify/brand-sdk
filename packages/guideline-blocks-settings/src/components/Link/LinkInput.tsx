@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
 import { ButtonSize, Checkbox, CheckboxState, FormControl, TextInput, TooltipPosition } from '@frontify/fondue';
 import { LinkSelector } from './LinkSelector';
 import { isValidUrlOrEmpty as internalIsValidUrlOrEmpty } from './utils';
@@ -15,7 +15,7 @@ type LinkInputProps = {
     onUrlChange?: (value: string) => void;
     onToggleTab?: (checked: boolean) => void;
     isValidUrlOrEmpty?: (url: string) => boolean;
-    appBridge: AppBridgeBlock;
+    appBridge: AppBridgeBlock | AppBridgeTheme;
     clearable?: boolean;
     placeholder?: string;
     buttonSize?: ButtonSize;
