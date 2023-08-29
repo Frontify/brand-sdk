@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.28.6
+
+### Patch Changes
+
+- [#522](https://github.com/Frontify/brand-sdk/pull/522) [`0fdb3c7`](https://github.com/Frontify/brand-sdk/commit/0fdb3c79590964ba0e66f0c95e2a30ea8a34836b) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.309
+
+- [#524](https://github.com/Frontify/brand-sdk/pull/524) [`c0b8cff`](https://github.com/Frontify/brand-sdk/commit/c0b8cff9b69f4cc5f83ebd150d3640fe50da501d) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(types): extend app bridge type
+
+- Updated dependencies [[`0fdb3c7`](https://github.com/Frontify/brand-sdk/commit/0fdb3c79590964ba0e66f0c95e2a30ea8a34836b)]:
+  - @frontify/sidebar-settings@0.6.4
+
 ## 0.28.5
 
 ### Patch Changes
