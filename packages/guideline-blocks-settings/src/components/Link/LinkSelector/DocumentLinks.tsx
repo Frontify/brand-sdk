@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
 import { LoadingCircle } from '@frontify/fondue';
 import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';

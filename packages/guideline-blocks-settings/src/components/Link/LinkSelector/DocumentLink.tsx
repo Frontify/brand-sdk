@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
 import { PageLinks } from './PageLinks';
 import { IconColorFan16, merge } from '@frontify/fondue';

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
 import { Button, ButtonEmphasis, ButtonSize, ButtonStyle, ButtonType, IconLink, Modal } from '@frontify/fondue';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import { KeyboardEvent, ReactElement, useEffect, useState } from 'react';

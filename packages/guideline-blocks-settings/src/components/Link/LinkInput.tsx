@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
 import { ButtonSize, Checkbox, CheckboxState, FormControl, TextInput, TooltipPosition } from '@frontify/fondue';
 import { LinkSelector } from './LinkSelector';
 import { isValidUrlOrEmpty as internalIsValidUrlOrEmpty } from './utils';
