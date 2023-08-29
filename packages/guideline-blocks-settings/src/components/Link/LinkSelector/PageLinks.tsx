@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, DocumentPage } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgeTheme, DocumentPage } from '@frontify/app-bridge';
 import { LoadingCircle } from '@frontify/fondue';
 import { ReactElement, useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { PageLink } from './PageLink';
 
 type PageLinksProps = {
-    appBridge: AppBridgeBlock;
+    appBridge: AppBridgeBlock | AppBridgeTheme;
     documentId: number;
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
