@@ -52,7 +52,10 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
     ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
-        return this.messageBus.post(apiHandler) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
+        return this.messageBus.post({
+            method: 'api',
+            parameter: apiHandler,
+        }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
     }
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
@@ -72,8 +75,12 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             } else {
                 throw new InitializationError();
             }
+        } else {
+            return this.messageBus.post({
+                method: 'dispatch',
+                parameter: dispatchHandler,
+            }) as Promise<void>;
         }
-        return Promise.resolve<void>(void 0);
     }
 
     context(): ContextReturn<PlatformAppContext, void>;

@@ -4,7 +4,7 @@ import { InitializationError, TimeoutReachedError } from '../errors';
 import { SUBSCRIBE_TIMEOUT } from './subscribe';
 
 export interface IMessageBus {
-    post(message: unknown): unknown;
+    post(message: { method: string; parameter: unknown }): unknown;
 }
 
 export class MessageBus implements IMessageBus {
