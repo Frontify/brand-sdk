@@ -3,7 +3,7 @@
 import { AppBridgeBlock, DocumentPage } from '@frontify/app-bridge';
 import { LoadingCircle } from '@frontify/fondue';
 import { ReactElement, useEffect, useState } from 'react';
-import { InitiallyExpandedItems } from '../../LinkPlugin/FloatingLink/InsertLinkModal/types';
+import { InitiallyExpandedItems } from '../';
 import { PageLink } from './PageLink';
 
 type PageLinksProps = {
@@ -30,7 +30,13 @@ export const PageLinks = ({
         appBridge
             .getDocumentPagesByDocumentId(documentId)
             .then((_pages) => {
-                setPages(_pages);
+                const pagesWithCategories = _pages
+                    .filter((page) => !!page.category)
+                    .sort((a, b) =>
+                        a.category.sort === b.category.sort ? a.sort - b.sort : a.category.sort - b.category.sort,
+                    );
+                const pagesWithoutCategories = _pages.filter((page) => !page.category).sort((a, b) => a.sort - b.sort);
+                setPages([...pagesWithCategories, ...pagesWithoutCategories]);
             })
             .finally(() => {
                 setIsLoading(false);

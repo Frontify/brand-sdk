@@ -200,9 +200,10 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
+        api: stub<Parameters<AppBridgeBlock['api']>>().resolves(),
+        state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
+        context: stub<Parameters<AppBridgeBlock['context']>>().resolves(),
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
-        // TODO
-        // @ts-expect-error - missing implementation
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };

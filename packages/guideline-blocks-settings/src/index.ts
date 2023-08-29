@@ -17,6 +17,7 @@ import type {
     FontInputBlock as FontInputBlockSidebarSettings,
     InputBlock as InputBlockSidebarSettings,
     LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
+    LinkBlock as LinkBlockSidebarSettings,
     LinkChooserBlock as LinkChooserBlockSidebarSettings,
     MultiInputBlock as MultiInputBlockSidebarSettings,
     NotificationBlock as NotificationBlockSidebarSettings,
@@ -45,6 +46,7 @@ export type DynamicSupportedBlock = DynamicSupportedBlockSidebarSettings<AppBrid
 export type FontInputBlock = FontInputBlockSidebarSettings<AppBridgeBlock>;
 export type InputBlock = InputBlockSidebarSettings<AppBridgeBlock>;
 export type LegacyAssetInputBlock = LegacyAssetInputBlockSidebarSettings<AppBridgeBlock>;
+export type LinkBlock = LinkBlockSidebarSettings<AppBridgeBlock>;
 export type LinkChooserBlock = LinkChooserBlockSidebarSettings<AppBridgeBlock>;
 export type MultiInputBlock = MultiInputBlockSidebarSettings<AppBridgeBlock>;
 export type NotificationBlock = NotificationBlockSidebarSettings<AppBridgeBlock>;

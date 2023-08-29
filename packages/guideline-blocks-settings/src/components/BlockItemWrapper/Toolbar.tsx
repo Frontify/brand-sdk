@@ -5,7 +5,7 @@ import {
     Flyout,
     IconDotsHorizontal16,
     MenuItemContentSize,
-    Tooltip,
+    LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
 import { ToolbarProps } from './types';

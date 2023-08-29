@@ -28,6 +28,7 @@ export * from './usePrivacySettings';
 export * from './useReadyForPrint';
 export * from './useTemplateAssets';
 export * from './useThemeAssets';
+export * from './useThemeSettings';
 export * from './useTemplateChooser';
 export * from './useUncategorizedDocumentPages';
 export * from './useUngroupedDocuments';
