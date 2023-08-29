@@ -75,11 +75,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             } else {
                 throw new InitializationError();
             }
-        } else {
-            return this.messageBus.post({
-                method: 'dispatch',
-                parameter: dispatchHandler,
-            }) as Promise<void>;
         }
     }
 
