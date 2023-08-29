@@ -5,4 +5,3 @@ export * from './AssetViewer';
 export * from './CommandRegistry';
 export * from './NavigationManager';
 export * from './TemplateChooser';
-export * from './CreateNewPublication';
