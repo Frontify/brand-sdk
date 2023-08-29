@@ -8,13 +8,12 @@ export type getAppBridgePlatformAppStubProps = {
     //
 };
 
-export const getAppBridgePlatformAppStub =
-    ({}: getAppBridgePlatformAppStubProps = {}): SinonStubbedInstance<IAppBridgePlatformApp> => {
-        return {
-            api: stub<Parameters<IAppBridgePlatformApp['api']>>().resolves(),
-            state: stub<Parameters<IAppBridgePlatformApp['state']>>().resolves(),
-            context: stub<Parameters<IAppBridgePlatformApp['context']>>().resolves(),
-            subscribe: stub<Parameters<IAppBridgePlatformApp['subscribe']>>().resolves(),
-            dispatch: stub<Parameters<IAppBridgePlatformApp['dispatch']>>().resolves(),
-        };
+export const getAppBridgePlatformAppStub = (): SinonStubbedInstance<IAppBridgePlatformApp> => {
+    return {
+        api: stub<Parameters<IAppBridgePlatformApp['api']>>().resolves(),
+        state: stub<Parameters<IAppBridgePlatformApp['state']>>().resolves(),
+        context: stub<Parameters<IAppBridgePlatformApp['context']>>().resolves(),
+        subscribe: stub<Parameters<IAppBridgePlatformApp['subscribe']>>().resolves(),
+        dispatch: stub<Parameters<IAppBridgePlatformApp['dispatch']>>().resolves(),
     };
+};
