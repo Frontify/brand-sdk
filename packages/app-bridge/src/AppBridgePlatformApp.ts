@@ -16,21 +16,21 @@ import type {
     StateAsEventName,
     StateReturn,
 } from './AppBridge';
-import type { ApiMethodRegistry } from './registries';
 import { Topic } from './types';
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
 import { PlatformAppContext } from './types/PlatformAppContext';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
 import { InitializationError } from './errors';
+import type { ApiMethodRegistry } from './registries';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
-export type CommandRegistry = CommandNameValidator<{
+export type PlatformAppCommandRegistry = CommandNameValidator<{
     openConnection: void;
 }>;
 
-export type PlatformAppCommand = CommandNameValidator<Pick<CommandRegistry, 'openConnection'>>;
+export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandRegistry, 'openConnection'>>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
