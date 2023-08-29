@@ -17,15 +17,15 @@ describe('queryParams', () => {
     });
 
     it('should return empty object if url is undefined', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        expect(() => getQueryParameters(undefined)).toThrowError('Validation failed. "undefined" is not a valid url');
+        expect(() => getQueryParameters(undefined as unknown as string)).toThrowError(
+            'Validation failed. "undefined" is not a valid url',
+        );
     });
 
     it('should return empty object if url is null', () => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        expect(() => getQueryParameters(null)).toThrowError('Validation failed. "null" is not a valid url');
+        expect(() => getQueryParameters(null as unknown as string)).toThrowError(
+            'Validation failed. "null" is not a valid url',
+        );
     });
 
     it('should return objects of well formed query parameters', () => {
