@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, useDocumentSection } from '@frontify/app-bridge';
+import { AppBridgeBlock, AppBridgeTheme, useDocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
@@ -14,7 +14,7 @@ type DocumentLinkProps = {
     };
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
-    appBridge: AppBridgeBlock;
+    appBridge: AppBridgeBlock | AppBridgeTheme;
     itemsToExpandInitially: InitiallyExpandedItems;
 };
 
