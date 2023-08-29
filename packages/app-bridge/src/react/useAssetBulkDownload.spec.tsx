@@ -29,7 +29,7 @@ describe('useAssetBulkDownload', () => {
     it('should call getAssetBulkDownloadToken with the correct arguments', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        const settingIds =['setting1', 'setting2'];
+        const settingIds = ['setting1', 'setting2'];
         result.current.generateBulkDownload(settingIds);
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.getAssetBulkDownloadToken, settingIds);

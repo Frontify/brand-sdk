@@ -36,7 +36,9 @@ import type {
 } from './types';
 import { PrivacySettings } from './types/PrivacySettings';
 
-export type BlockApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetBulkDownloadToken'>>;
+export type BlockApiMethod = ApiMethodNameValidator<
+    Pick<ApiMethodRegistry, 'getAssetBulkDownloadToken' | 'getCurrentUser'>
+>;
 
 export type BlockCommand = CommandNameValidator<
     Pick<
