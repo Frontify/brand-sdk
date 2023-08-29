@@ -79,11 +79,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     }
 
     context(): ContextReturn<PlatformAppContext, void>;
-    context<Key extends keyof PlatformAppContext>(key: Key): ContextReturn<PlatformAppContext, Key>;
-    context(key?: keyof PlatformAppContext | void): unknown;
-    context(): ContextReturn<PlatformAppContext, void>;
-    context<Key extends keyof PlatformAppContext>(key: Key): ContextReturn<PlatformAppContext, Key>;
-    context(key?: keyof PlatformAppContext | void): unknown;
     context(): unknown {
         return {
             get: () => getQueryParameters(window.location.href),
@@ -91,21 +86,11 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     }
 
     state(): StateReturn<PlatformAppState, void>;
-    state<Key extends keyof PlatformAppState>(key: Key): StateReturn<PlatformAppState, Key>;
-    state(key?: keyof PlatformAppState | void): unknown;
-    state(): StateReturn<PlatformAppState, void>;
-    state<Key extends keyof PlatformAppState>(key: Key): StateReturn<PlatformAppState, Key>;
-    state(key?: keyof PlatformAppState | void): unknown {
-        console.log(key);
+    state(): unknown {
         return undefined;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    subscribe<EventName extends keyof PlatformAppEvent>(
-        eventName: EventNameParameter<EventName, PlatformAppEvent>,
-        callback: EventCallbackParameter<EventName, PlatformAppEvent>,
-    ): EventUnsubscribeFunction {
-        console.log(eventName, callback);
+    subscribe(): EventUnsubscribeFunction {
         return () => void 0;
     }
 }

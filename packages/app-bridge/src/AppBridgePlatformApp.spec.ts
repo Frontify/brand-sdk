@@ -35,7 +35,7 @@ describe('AppBridgePlatformApp', () => {
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
-    it('should initialize correctly', async () => {
+    it('should openConnection correctly', async () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
@@ -48,5 +48,17 @@ describe('AppBridgePlatformApp', () => {
 
         const platformApp = new AppBridgePlatformApp();
         await expect(() => platformApp.api({ name: 'getCurrentUser' })).rejects.toThrow();
+    });
+
+    it('should return undefined state as it is not implemented', async () => {
+        const platformApp = new AppBridgePlatformApp();
+        const state = platformApp.state();
+        expect(state).toEqual(undefined);
+    });
+
+    it('should return undefined subscribe method as it is not implemented', async () => {
+        const platformApp = new AppBridgePlatformApp();
+        const subscribe = platformApp.subscribe();
+        expect(subscribe).toBeTypeOf('function');
     });
 });
