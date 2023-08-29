@@ -1,25 +1,20 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { TimeoutReachedError } from '../errors';
+import { InitializationError, TimeoutReachedError } from '../errors';
 import { SUBSCRIBE_TIMEOUT } from './subscribe';
-import { InitializationError } from '../errors/InitializationError';
-
-type ResponseEvent<T> = {
-    data: PromiseLike<T>;
-};
 
 export interface IMessageBus {
-    post<T>(message: unknown): Promise<T>;
+    post(message: unknown): unknown;
 }
 
 export class MessageBus implements IMessageBus {
     constructor(private port: MessagePort) {}
 
-    public post<T>(message: unknown): Promise<T> {
-        return new Promise<T>((resolve, reject) => {
+    public post(message: unknown) {
+        return new Promise((resolve, reject) => {
             this.port.postMessage(message);
 
-            this.port.onmessage = (event: ResponseEvent<T>) => {
+            this.port.onmessage = (event) => {
                 resolve(event.data);
             };
             this.port.onmessageerror = (error) => {
@@ -33,7 +28,7 @@ export class MessageBus implements IMessageBus {
 }
 
 export class ErrorMessageBus implements IMessageBus {
-    post<T>(): Promise<T> {
-        throw new InitializationError('First use await appBridge.initialize()');
+    post() {
+        throw new InitializationError('First use await platformApp.dispatch({ name: "openConnection" })');
     }
 }

@@ -2,6 +2,7 @@
 
 type AppBaseProps = {
     token: string;
+    marketplaceServiceAppId: string;
 };
 
 export type PlatformAppContext = AppBaseProps & {

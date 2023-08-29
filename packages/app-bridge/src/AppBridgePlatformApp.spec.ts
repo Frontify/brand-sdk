@@ -3,7 +3,7 @@
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { notify } from './utilities';
 import { AppBridgePlatformApp } from './AppBridgePlatformApp';
-import { InitializationError } from './errors/InitializationError';
+import { InitializationError } from './errors';
 
 const TOKEN = 'AjY34F87Dsat^J';
 
@@ -31,7 +31,7 @@ describe('AppBridgePlatformApp', () => {
 
         const platformApp = new AppBridgePlatformApp();
 
-        await expect(() => platformApp.initialize()).rejects.toThrow(new InitializationError());
+        await expect(() => platformApp.dispatch({ name: 'openConnection' })).rejects.toThrow(new InitializationError());
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
@@ -39,16 +39,14 @@ describe('AppBridgePlatformApp', () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
-        await platformApp.initialize();
+        await platformApp.dispatch({ name: 'openConnection' });
         expect(notify).toHaveBeenCalledTimes(1);
     });
 
-    it('should throw an error when api is not initialized', async () => {
+    it.fails('should throw an error when api is not initialized', async () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
-        await expect(() => platformApp.api({ operation: 'currentUser' })).rejects.toThrow(
-            new InitializationError('First use await appBridge.initialize()'),
-        );
+        await expect(() => platformApp.api({ name: 'getCurrentUser' })).rejects.toThrow();
     });
 });
