@@ -75,7 +75,7 @@
         "@udecode/plate": "^21",
         "escape-html": "^1.0.3",
         "slate": "^0.94.1",
-        "slate-react": "^0.97.1"
+        "slate-react": "^0.98.0"
     },
     "peerDependencies": {
         "react": "^18",
