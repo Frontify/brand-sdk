@@ -4,7 +4,7 @@ import { AppBridgeBlock } from '@frontify/app-bridge';
 import { Plugin, PluginProps } from '@frontify/fondue';
 import { RangeBeforeOptions, createPluginFactory } from '@udecode/plate';
 import type { CSSProperties } from 'react';
-import { isValidUrl } from '../LinkPlugin/utils/url';
+import { isValidUrl } from '../../../Link/utils/url';
 import { ButtonMarkupElement } from './ButtonMarkupElement';
 import { ButtonButton } from './components/ButtonButton';
 import { CustomFloatingButton } from './components/FloatingButton/CustomFloatingButton';
