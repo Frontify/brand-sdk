@@ -62,12 +62,12 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             const { get } = this.context();
 
             if (get().token && !this.initialized) {
+                this.initialized = true;
                 const PUBSUB_CHECKSUM = generateRandomString();
 
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: get().token });
                 const { port } = await subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM);
                 this.messageBus = new MessageBus(port);
-                this.initialized = true;
                 return Promise.resolve<void>(void 0);
             } else {
                 throw new InitializationError();
