@@ -24,7 +24,9 @@ import { getQueryParameters } from './utilities/queryParams';
 import { InitializationError } from './errors';
 import type { ApiMethodRegistry } from './registries';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
+export type PlatformAppApiMethod = ApiMethodNameValidator<
+    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceUrl'>
+>;
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{
     openConnection: void;
