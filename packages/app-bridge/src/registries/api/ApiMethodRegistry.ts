@@ -6,5 +6,5 @@ import { GetAssetResourceInfoPayload, GetAssetResourceInfoResponse } from './Get
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
-    getAssetResourceUrl: { payload: GetAssetResourceInfoPayload; response: GetAssetResourceInfoResponse };
+    getAssetResourceInfo: { payload: GetAssetResourceInfoPayload; response: GetAssetResourceInfoResponse };
 }>;

@@ -10,7 +10,7 @@ export type GetAssetResourceInfoResponse = {
     title?: string;
     previewUrl?: string;
     downloadUrl?: string;
-    filename?: string;
+    filename?: string | null;
     sourceUrl?: string;
     html?: string;
 };
