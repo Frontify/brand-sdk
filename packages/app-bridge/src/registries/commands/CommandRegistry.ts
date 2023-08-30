@@ -18,5 +18,5 @@ export type CommandRegistry = CommandNameValidator<{
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
     openNavigationManager: OpenNavigationManager;
-    openNewPublication?: OpenNewPublicationPayload;
+    openNewPublication: OpenNewPublicationPayload;
 }>;
