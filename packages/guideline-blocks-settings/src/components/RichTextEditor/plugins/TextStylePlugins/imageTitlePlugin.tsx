@@ -41,9 +41,10 @@ const ImageTitleMarkupElementNode = ({ element, attributes, children, styles }: 
     return (
         <p
             {...attributes}
-            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element), 'a-image-title'])}
+            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element)])}
+            style={styles}
         >
-            <span style={styles}>{children}</span>
+            {children}
         </p>
     );
 };

@@ -41,9 +41,10 @@ const Heading1MarkupElementNode = ({ element, attributes, children, styles }: Te
     return (
         <h1
             {...attributes}
-            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element), 'a-h1'])}
+            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element)])}
+            style={styles}
         >
-            <span style={styles}>{children}</span>
+            {children}
         </h1>
     );
 };
