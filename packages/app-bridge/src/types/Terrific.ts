@@ -3,6 +3,7 @@
 import type { AssetApi } from './Asset';
 import type { FileExtension } from './FileExtension';
 import type { TemplateApiLegacy } from './TemplateLegacy';
+import type { Template } from './Template';
 
 export enum TerrificEvent {
     OpenModal = 'onOpenModal',
@@ -21,6 +22,9 @@ export type TemplateChooserResult = TemplateApiLegacy;
 
 export type AssetChooserAssetChosenCallback = (selectedAsset: { screenData: AssetChooserResult[] }) => void;
 export type TemplateChooserTemplateChosenCallback = (selectedTemplate: { template: TemplateChooserResult }) => void;
+export type OpenNewPublicationPayload = {
+    template: Template;
+};
 
 export enum AssetChooserProjectType {
     MediaLibrary = 'MediaLibrary',

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetChooserOptions } from './Terrific';
+import type { AssetChooserOptions, OpenNewPublicationPayload } from './Terrific';
 
 export type DispatchPayload = {
     openAssetChooser?: AssetChooserOptions;
@@ -9,6 +9,7 @@ export type DispatchPayload = {
     openTemplateChooser: void;
     closeTemplateChooser: void;
     openNavigationManager: void;
+    openNewPublication: OpenNewPublicationPayload;
 };
 
 export type DispatchHandler<DispatchName extends keyof DispatchPayload> = DispatchPayload[DispatchName] extends void

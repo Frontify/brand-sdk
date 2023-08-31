@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { CommandNameValidator } from '../../AppBridge';
-import type { AssetChooserOptions } from '../../types';
+import type { AssetChooserOptions, OpenNewPublicationPayload } from '../../types';
 
 type OpenAssetChooserPayload = AssetChooserOptions;
 type CloseAssetChooserPayload = void;
@@ -17,4 +17,5 @@ export type CommandRegistry = CommandNameValidator<{
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
     openNavigationManager: OpenNavigationManager;
+    openNewPublication: OpenNewPublicationPayload;
 }>;
