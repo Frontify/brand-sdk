@@ -1,15 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
+import { serializeRawToHtmlAsync } from '@frontify/fondue';
 import { SerializedTextProps } from './types';
-import { serializeRawToHtmlAsync } from './serializer';
 
 export const SerializedText = ({ value = '', gap, columns, show = true, plugins }: SerializedTextProps) => {
     const [html, setHtml] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            setHtml(await serializeRawToHtmlAsync(value, columns, gap, plugins));
+            setHtml(await serializeRawToHtmlAsync(value, plugins, columns, gap));
         })();
     }, [value, columns, gap, plugins]);
 

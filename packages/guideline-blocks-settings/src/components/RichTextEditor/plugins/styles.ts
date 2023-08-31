@@ -19,7 +19,6 @@ export const enum TextStyles {
 }
 export const BlockStyles: Record<string, CSSProperties & { hover?: CSSProperties }> = {
     [TextStyles.heading1]: {
-        display: 'inline-block',
         fontSize: 'var(--f-theme-settings-heading1-font-size)',
         lineHeight: 'var(--f-theme-settings-heading1-line-height)',
         marginTop: 'var(--f-theme-settings-heading1-margin-top)',
