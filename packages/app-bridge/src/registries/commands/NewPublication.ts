@@ -4,8 +4,8 @@ import type { DispatchHandlerParameter } from '../../AppBridge';
 import type { CommandRegistry } from './CommandRegistry';
 
 export const openNewPublication = (
-    options: CommandRegistry['openNewPublication'],
+    payload: CommandRegistry['openNewPublication'],
 ): DispatchHandlerParameter<'openNewPublication', CommandRegistry> => ({
     name: 'openNewPublication',
-    payload: options,
+    payload,
 });
