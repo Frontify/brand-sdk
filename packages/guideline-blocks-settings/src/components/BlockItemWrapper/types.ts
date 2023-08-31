@@ -4,7 +4,7 @@ import { MenuItemStyle } from '@frontify/fondue';
 import { ReactElement } from 'react';
 
 export type BlockItemWrapperProps = {
-    children: ReactElement;
+    children: ReactNode;
     shouldHideWrapper?: boolean;
     shouldHideComponent?: boolean;
     toolbarItems: (ToolbarItem | undefined)[];
