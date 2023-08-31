@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react';
 import { LINK_PLUGIN } from './LinkPlugin/id';
 import { BlockButtonStyles } from './ButtonPlugin';
 
-export const enum TextStyles {
+export enum TextStyles {
     heading1 = 'heading1',
     heading2 = 'heading2',
     heading3 = 'heading3',
