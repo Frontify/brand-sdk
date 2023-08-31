@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { MenuItemStyle } from '@frontify/fondue';
+import { ReactElement } from 'react';
 
 export type BlockItemWrapperProps = {
+    children: ReactElement;
     shouldHideWrapper?: boolean;
     shouldHideComponent?: boolean;
     toolbarItems: (ToolbarItem | undefined)[];

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { joinClassNames } from '../../utilities';
 import { Toolbar } from './Toolbar';
 import { BlockItemWrapperProps, ToolbarItem } from './types';
@@ -15,7 +15,7 @@ export const BlockItemWrapper = ({
     shouldFillContainer,
     outlineOffset = 2,
     shouldBeShown = false,
-}: PropsWithChildren<BlockItemWrapperProps>) => {
+}: BlockItemWrapperProps) => {
     const [isFlyoutOpen, setIsFlyoutOpen] = useState(shouldBeShown);
     const [isFlyoutDisabled, setIsFlyoutDisabled] = useState(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
