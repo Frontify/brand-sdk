@@ -40,8 +40,12 @@ class Heading4MarkupElement extends MarkupElement {
 const Heading4MarkupElementNode = ({ element, attributes, children, styles }: TextStyleRenderElementProps) => {
     const align = element.align as string;
     return (
-        <h4 {...attributes} className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element)])}>
-            <span style={styles}>{children}</span>
+        <h4
+            {...attributes}
+            className={merge([align && alignmentClassnames[align], getColumnBreakClasses(element)])}
+            style={styles}
+        >
+            {children}
         </h4>
     );
 };
