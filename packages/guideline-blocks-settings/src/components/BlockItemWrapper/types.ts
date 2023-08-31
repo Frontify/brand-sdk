@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { MenuItemStyle } from '@frontify/fondue';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type BlockItemWrapperProps = {
     children: ReactNode;
