@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.0
+
+### Minor Changes
+
+- [#504](https://github.com/Frontify/brand-sdk/pull/504) [`b0d2b28`](https://github.com/Frontify/brand-sdk/commit/b0d2b28838e917a4fb3332a1f043ee29d8060752) Thanks [@ragi96](https://github.com/ragi96)! - refactor: use Fondue serializer instead of internal version
+
+### Patch Changes
+
+- [#504](https://github.com/Frontify/brand-sdk/pull/504) [`b0d2b28`](https://github.com/Frontify/brand-sdk/commit/b0d2b28838e917a4fb3332a1f043ee29d8060752) Thanks [@ragi96](https://github.com/ragi96)! - Update dependencies
+
+- Updated dependencies [[`b0d2b28`](https://github.com/Frontify/brand-sdk/commit/b0d2b28838e917a4fb3332a1f043ee29d8060752)]:
+  - @frontify/sidebar-settings@0.6.5
+
 ## 0.28.6
 
 ### Patch Changes
