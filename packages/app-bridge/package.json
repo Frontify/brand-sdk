@@ -64,7 +64,7 @@
         "sinon": "15.2.0",
         "typescript": "5.1.6",
         "vite": "4.4.9",
-        "vite-plugin-dts": "3.5.1",
+        "vite-plugin-dts": "3.5.3",
         "vite-plugin-static-copy": "0.17.0",
         "vitest": "0.34.1"
     },
