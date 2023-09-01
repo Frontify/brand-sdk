@@ -25,6 +25,7 @@ export class AssetChooserResultDummy {
             title: 'A title',
             width: 640,
             token: '--token--',
+            revision_id: 1,
         };
     }
 }

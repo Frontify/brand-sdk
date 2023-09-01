@@ -3,6 +3,7 @@
 export * from './AssetChooser';
 export * from './AssetViewer';
 export * from './CommandRegistry';
+export * from './DownloadAsset';
 export * from './NavigationManager';
 export * from './TemplateChooser';
 export * from './NewPublication';
