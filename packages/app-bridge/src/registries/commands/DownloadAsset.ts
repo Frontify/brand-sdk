@@ -3,9 +3,9 @@
 import { DispatchHandlerParameter } from '../../AppBridge';
 import { CommandRegistry } from './CommandRegistry';
 
-export const downloadAsset = ({
-    asset,
-}: CommandRegistry['downloadAsset']): DispatchHandlerParameter<'downloadAsset', CommandRegistry> => ({
+export const downloadAsset = (
+    asset: CommandRegistry['downloadAsset'],
+): DispatchHandlerParameter<'downloadAsset', CommandRegistry> => ({
     name: 'downloadAsset',
-    payload: { asset },
+    payload: asset,
 });

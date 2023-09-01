@@ -9,7 +9,7 @@ type OpenAssetViewerPayload = { token: string };
 type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
 type OpenNavigationManager = void;
-type DownloadAsset = { asset: Asset };
+type DownloadAsset = Asset;
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
