@@ -140,6 +140,17 @@ type DocumentLibraryRequest = {
 type DocumentStandardRequest = {
     id: number;
     title: string;
+    heading?: string;
+    subheading?: string;
+    visibility?: 'PUBLIC' | 'PRIVATE';
+    appearance?: {
+        header?: {
+            size: 's' | 'm' | 'l';
+        };
+        background?: {
+            color: string;
+        };
+    };
     documentGroupId?: Nullable<number>;
 };
 
