@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Color } from '@frontify/fondue';
-import tinycolor from '@ctrl/tinycolor';
+import { TinyColor } from '@ctrl/tinycolor';
 import { toShortRgba } from './toShortRgba';
 
 /**
@@ -11,4 +11,4 @@ import { toShortRgba } from './toShortRgba';
  * @returns {String} To be used as css value.
  */
 
-export const toRgbaString = (color: Color): string => tinycolor(toShortRgba(color)).toRgbString();
+export const toRgbaString = (color: Color): string => new TinyColor(toShortRgba(color)).toRgbString();

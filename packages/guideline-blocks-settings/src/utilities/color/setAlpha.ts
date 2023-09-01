@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import tinycolor from '@ctrl/tinycolor';
+import { TinyColor } from '@ctrl/tinycolor';
 
 /**
  * Sets alpha value and returns rgba string.
@@ -10,5 +10,5 @@ import tinycolor from '@ctrl/tinycolor';
  */
 
 export const setAlpha = (alpha: number, color?: string): string => {
-    return tinycolor(color).setAlpha(alpha).toRgbString();
+    return new TinyColor(color).setAlpha(alpha).toRgbString();
 };

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import tinycolor, { ColorInput } from '@ctrl/tinycolor';
+import { ColorInput, TinyColor } from '@ctrl/tinycolor';
 import { toShortRgba } from './toShortRgba';
 import { Color } from '@frontify/sidebar-settings';
 
@@ -19,7 +19,7 @@ const isRgbaLongFormat = (value: unknown): value is Color => {
 
 export const isDark = (color: unknown, threshold?: number): boolean => {
     const inputColor = isRgbaLongFormat(color) ? toShortRgba(color) : (color as ColorInput);
-    const parsedColor = tinycolor(inputColor);
+    const parsedColor = new TinyColor(inputColor);
 
     if (threshold) {
         return parsedColor.getBrightness() < threshold;
