@@ -141,7 +141,8 @@ jobs:
         needs: [lint, typecheck, component-tests, unit-tests]
 
         permissions:
-            contents: write
+            contents: write # to create release (changesets/action)
+            pull-requests: write # to create pull request (changesets/action)
 
         steps:
             - name: Checkout default branch
