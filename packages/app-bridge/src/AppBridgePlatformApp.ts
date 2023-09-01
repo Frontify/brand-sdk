@@ -16,18 +16,28 @@ import type {
     StateAsEventName,
     StateReturn,
 } from './AppBridge';
-import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
+import { Topic } from './types';
+import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
+import { PlatformAppContext } from './types/PlatformAppContext';
+import { generateRandomString, notify, subscribe } from './utilities';
+import { getQueryParameters } from './utilities/queryParams';
+import { InitializationError } from './errors';
+import type { ApiMethodRegistry } from './registries';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
-export type PlatformAppCommand = CommandNameValidator<Record<never, never>>;
+export type PlatformAppCommandRegistry = CommandNameValidator<{
+    openConnection: void;
+}>;
+
+export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandRegistry, 'openConnection'>>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
 };
 
-export type PlatformAppContext = {
-    marketplaceServiceAppId: string;
+type InitializeEvent = {
+    port: MessagePort;
 };
 
 export type PlatformAppEvent = EventNameValidator<
@@ -35,7 +45,57 @@ export type PlatformAppEvent = EventNameValidator<
         ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }>
 >;
 
-export interface AppBridgePlatformApp<
+export class AppBridgePlatformApp implements IAppBridgePlatformApp {
+    private messageBus: IMessageBus = new ErrorMessageBus();
+    private initialized: boolean = false;
+
+    api<ApiMethodName extends keyof PlatformAppApiMethod>(
+        apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
+    ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
+        return this.messageBus.post({
+            method: 'api',
+            parameter: apiHandler,
+        }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
+    }
+
+    async dispatch<CommandName extends keyof PlatformAppCommand>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
+    ): Promise<void> {
+        if (dispatchHandler.name === 'openConnection') {
+            const { get } = this.context();
+
+            if (get().token && !this.initialized) {
+                this.initialized = true;
+                const PUBSUB_CHECKSUM = generateRandomString();
+
+                notify(Topic.Init, PUBSUB_CHECKSUM, { token: get().token });
+                const { port } = await subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM);
+                this.messageBus = new MessageBus(port);
+                return Promise.resolve<void>(void 0);
+            } else {
+                throw new InitializationError();
+            }
+        }
+    }
+
+    context(): ContextReturn<PlatformAppContext, void>;
+    context(): unknown {
+        return {
+            get: () => getQueryParameters(window.location.href),
+        };
+    }
+
+    state(): StateReturn<PlatformAppState, void>;
+    state(): unknown {
+        return undefined;
+    }
+
+    subscribe(): EventUnsubscribeFunction {
+        return () => void 0;
+    }
+}
+
+export interface IAppBridgePlatformApp<
     State extends PlatformAppState = PlatformAppState,
     Context extends PlatformAppContext = PlatformAppContext,
     Event extends PlatformAppEvent = PlatformAppEvent,
