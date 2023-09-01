@@ -3,7 +3,7 @@
 import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
-import { SinonStub } from 'cypress/types/sinon';
+import type { SinonStub } from 'sinon';
 import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles } from '.';
 import { convertToRteValue } from '../../helpers';
 

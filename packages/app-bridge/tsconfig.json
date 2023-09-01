@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "module": "es2020",
-        "moduleResolution": "node",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "lib": ["es2020", "dom"],
         "sourceMap": true,

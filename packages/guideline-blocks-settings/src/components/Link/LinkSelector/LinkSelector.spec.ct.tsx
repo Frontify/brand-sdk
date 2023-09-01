@@ -9,7 +9,7 @@ import {
 } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
 import { LinkSelector } from './LinkSelector';
-import { SinonStub } from 'cypress/types/sinon';
+import type { SinonStub } from 'sinon';
 
 const LinkSelectorSelector = '[data-test-id="internal-link-selector"]';
 const LinkSelectorButtonSelector = '[data-test-id="internal-link-selector"] > button';
