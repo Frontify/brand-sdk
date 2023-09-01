@@ -6,7 +6,7 @@
         "alwaysStrict": true,
         "isolatedModules": true,
         "module": "ESNext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
