@@ -28,9 +28,8 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
                 if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for document page template settings');
                 } else {
-                    const documentSettings = await appBridge.getDocumentPageTemplateSettings<T>(
-                        documentOrDocumentPageId,
-                    );
+                    const documentSettings =
+                        await appBridge.getDocumentPageTemplateSettings<T>(documentOrDocumentPageId);
                     setPageTemplateSettings(documentSettings);
                 }
             } else if (template === 'library') {
