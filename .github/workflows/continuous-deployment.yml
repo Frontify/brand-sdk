@@ -140,6 +140,9 @@ jobs:
 
         needs: [lint, typecheck, component-tests, unit-tests]
 
+        permissions:
+            contents: write
+
         steps:
             - name: Checkout default branch
               uses: actions/checkout@v3
