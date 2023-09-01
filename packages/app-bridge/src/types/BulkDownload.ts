@@ -8,7 +8,12 @@ export type GetBulkDownloadTokenApi = {
     language: string;
 };
 
+export type GetAssetBulkDownloadTokenApi = {
+    setting_ids?: string[];
+};
+
 export type GetBulkDownloadToken = CamelCasedPropertiesDeep<GetBulkDownloadTokenApi>;
+export type GetAssetBulkDownloadToken = CamelCasedPropertiesDeep<GetAssetBulkDownloadTokenApi>;
 
 export type BulkDownloadApi = {
     download_url: string;

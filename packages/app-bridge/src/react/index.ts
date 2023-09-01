@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+export * from './useAssetBulkDownload';
 export * from './useAssetChooser';
 export * from './useAssetUpload';
 export * from './useAssetViewer';
