@@ -168,8 +168,6 @@ export interface AppBridgeBlock<
 
     getBulkDownloadToken(assetIds: number[], setIds?: number[]): Promise<string>;
 
-    getAssetBulkDownloadToken(settingIds?: string[]): Promise<string>;
-
     getBulkDownloadByToken(token: string): Promise<BulkDownload>;
 
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
