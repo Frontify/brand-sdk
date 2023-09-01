@@ -21,6 +21,7 @@ export type AssetApi = {
     project_name: Nullable<string>;
     project_type: Nullable<string>;
     token: string;
+    revision_id: Nullable<number>;
 };
 
 export type Asset = {
@@ -42,4 +43,6 @@ export type Asset = {
     fileSizeHumanReadable: string;
     fileId: string;
     token: string;
+    projectType: Nullable<string>;
+    revisionId: Nullable<number>;
 };
