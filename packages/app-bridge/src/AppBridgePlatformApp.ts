@@ -16,15 +16,16 @@ import type {
     StateAsEventName,
     StateReturn,
 } from './AppBridge';
-import { Topic } from './types';
+import { PlatformAppContext, Topic } from './types';
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
-import { PlatformAppContext } from './types/PlatformAppContext';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
 import { InitializationError } from './errors';
 import type { ApiMethodRegistry } from './registries';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
+export type PlatformAppApiMethod = ApiMethodNameValidator<
+    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInfo'>
+>;
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{
     openConnection: void;
@@ -109,13 +110,13 @@ export interface IAppBridgePlatformApp<
     ): Promise<void>;
 
     state(): StateReturn<State, void>;
+
     state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
     state(key?: keyof State | void): unknown;
-
     context(): ContextReturn<Context, void>;
+
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
     context(key?: keyof Context | void): unknown;
-
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName, Event>,
         callback: EventCallbackParameter<EventName, Event>,
