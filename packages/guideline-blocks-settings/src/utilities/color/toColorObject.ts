@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Color } from '@frontify/fondue';
-import tinycolor from '@ctrl/tinycolor';
+import { TinyColor } from '@ctrl/tinycolor';
 
 /**
  * Maps color strings to color objects.
@@ -11,6 +11,6 @@ import tinycolor from '@ctrl/tinycolor';
  */
 
 export const toColorObject = (colorString: string): Color => {
-    const { r, g, b, a } = tinycolor(colorString);
+    const { r, g, b, a } = new TinyColor(colorString);
     return { red: r, green: g, blue: b, alpha: a };
 };

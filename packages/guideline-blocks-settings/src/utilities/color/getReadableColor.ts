@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import tinycolor, { ColorInput, readability } from '@ctrl/tinycolor';
+import { ColorInput, TinyColor, readability } from '@ctrl/tinycolor';
 import { toShortRgba } from './toShortRgba';
 import { Color } from '@frontify/sidebar-settings';
 
@@ -22,8 +22,8 @@ export const getReadableColor = (textColor: unknown, backgroundColor: unknown): 
     const inputBackgroundColor = isRgbaLongFormat(backgroundColor)
         ? toShortRgba(backgroundColor)
         : (backgroundColor as ColorInput);
-    let parsedTextColor = tinycolor(inputTextColor);
-    const parsedBackgroundColor = tinycolor(inputBackgroundColor);
+    let parsedTextColor = new TinyColor(inputTextColor);
+    const parsedBackgroundColor = new TinyColor(inputBackgroundColor);
 
     //darken the text color until readability is good
     while (readability(parsedTextColor, parsedBackgroundColor) < 4.5) {
