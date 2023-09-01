@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge",
     "author": "Frontify Developers <developers@frontify.com>",
-    "version": "3.0.0-beta.88",
+    "version": "3.0.0-beta.89",
     "description": "Package to establish communication between Frontify and marketplace apps",
     "repository": {
         "type": "git",
