@@ -5,38 +5,42 @@ import { useEffect, useState } from 'react';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { EmitterEvents } from '../types';
 
-export const usePageTemplateSettings = <T = Record<string, unknown>>(
+export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
     template: 'cover' | 'documentPage' | 'library',
     documentOrDocumentPageId?: number,
 ) => {
-    const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<T>>(null);
+    const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<TPageTemplateSettings>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const updateBlockSettingsFromEvent = (event: EmitterEvents['AppBridge:PageTemplateSettingsUpdated']) => {
-            setPageTemplateSettings({ ...event.pageTemplateSettings } as T);
+            setPageTemplateSettings({ ...event.pageTemplateSettings } as TPageTemplateSettings);
         };
 
         const getInitialPageTemplateSettings = async () => {
             setIsLoading(true);
 
             if (template === 'cover') {
-                const coverPageSettings = await appBridge.getCoverPageTemplateSettings<T>();
+                const coverPageSettings = await appBridge.getCoverPageTemplateSettings<TPageTemplateSettings>();
                 setPageTemplateSettings(coverPageSettings);
             } else if (template === 'documentPage') {
                 if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for document page template settings');
                 } else {
                     const documentSettings =
-                        await appBridge.getDocumentPageTemplateSettings<T>(documentOrDocumentPageId);
+                        await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(
+                            documentOrDocumentPageId,
+                        );
+
                     setPageTemplateSettings(documentSettings);
                 }
             } else if (template === 'library') {
                 if (documentOrDocumentPageId === undefined) {
                     console.error('Document ID is required for library template settings');
                 } else {
-                    const librarySettings = await appBridge.getLibraryPageTemplateSettings<T>(documentOrDocumentPageId);
+                    const librarySettings =
+                        await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
                     setPageTemplateSettings(librarySettings);
                 }
             }
@@ -53,7 +57,7 @@ export const usePageTemplateSettings = <T = Record<string, unknown>>(
         };
     }, [appBridge, documentOrDocumentPageId, template]);
 
-    const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<T>) => {
+    const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<TPageTemplateSettings>) => {
         try {
             if (template === 'cover') {
                 await appBridge.updateCoverPageTemplateSettings(pageTemplateSettingsUpdate);
