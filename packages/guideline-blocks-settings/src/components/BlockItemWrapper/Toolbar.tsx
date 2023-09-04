@@ -98,7 +98,7 @@ export const Toolbar = ({
                                     triggerElement={
                                         <div
                                             data-test-id="block-item-wrapper-toolbar-flyout"
-                                            className="tw-bg-base hover:tw-bg-box-selected-hover active:tw-bg-box-selected-pressed tw-cursor-pointer tw-inline-flex  tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm tw-relative"
+                                            className="tw-bg-base hover:tw-bg-box-selected-hover active:tw-bg-box-selected-pressed tw-cursor-pointer tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm tw-relative"
                                         >
                                             <IconDotsHorizontal16 />
                                         </div>
