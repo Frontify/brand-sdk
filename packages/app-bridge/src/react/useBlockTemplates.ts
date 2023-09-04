@@ -22,6 +22,20 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         }
     };
 
+    const handleErrorMessage = (error: unknown) => {
+        let errorMessage;
+
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        } else if (typeof error === 'string') {
+            errorMessage = error;
+        } else {
+            errorMessage = String(error);
+        }
+
+        setErrorMessage(errorMessage);
+    };
+
     // Fetch the block templates on mount.
     // And add listener for block template updates.
     useEffect(() => {
@@ -37,12 +51,13 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
                         }
                     })
                     .catch((error) => {
-                        setErrorMessage(error as string);
+                        handleErrorMessage(error);
                     });
             };
 
-            mountingFetch();
-            window.emitter.on('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent);
+            mountingFetch().then(() =>
+                window.emitter.on('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent),
+            );
         }
 
         return () => {
@@ -57,7 +72,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         try {
             fetchedBlockTemplates = await appBridge.getBlockTemplates();
         } catch (error) {
-            setErrorMessage(error as string);
+            handleErrorMessage(error);
         }
 
         if (fetchedBlockTemplates) {
@@ -77,7 +92,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
             await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, oldTemplateIds);
             await appBridge.addTemplateIdsToBlockTemplateKey(key, newTemplateIds);
         } catch (error) {
-            setErrorMessage(error as string);
+            handleErrorMessage(error);
         }
 
         emitUpdatedBlockTemplates();
@@ -87,7 +102,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         try {
             await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, templateIds);
         } catch (error) {
-            setErrorMessage(error as string);
+            handleErrorMessage(error);
         }
 
         emitUpdatedBlockTemplates();
@@ -97,7 +112,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         try {
             await appBridge.addTemplateIdsToBlockTemplateKey(key, templateIds);
         } catch (error) {
-            setErrorMessage(error as string);
+            handleErrorMessage(error);
         }
 
         emitUpdatedBlockTemplates();
