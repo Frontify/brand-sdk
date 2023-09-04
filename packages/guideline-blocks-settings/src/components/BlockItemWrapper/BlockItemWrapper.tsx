@@ -28,7 +28,8 @@ export const BlockItemWrapper = ({
     }, [isFlyoutOpen]);
 
     if (shouldHideWrapper) {
-        return children;
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        return <>{children}</>;
     }
 
     const items = toolbarItems?.filter((item): item is ToolbarItem => item !== undefined);
