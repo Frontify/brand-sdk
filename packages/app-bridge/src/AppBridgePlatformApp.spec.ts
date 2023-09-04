@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { notify } from './utilities';
 import { AppBridgePlatformApp } from './AppBridgePlatformApp';
 import { InitializationError } from './errors';
@@ -8,15 +8,13 @@ import { InitializationError } from './errors';
 const TOKEN = 'AjY34F87Dsat^J';
 
 describe('AppBridgePlatformApp', () => {
-    beforeAll(() => {
-        vi.mock('./utilities/subscribe', () => ({
-            subscribe: vi.fn().mockResolvedValue({ test: 'passed' }),
-        }));
+    vi.mock('./utilities/subscribe', () => ({
+        subscribe: vi.fn().mockResolvedValue({ test: 'passed' }),
+    }));
 
-        vi.mock('./utilities/notify', () => ({
-            notify: vi.fn(),
-        }));
-    });
+    vi.mock('./utilities/notify', () => ({
+        notify: vi.fn(),
+    }));
 
     afterEach(() => {
         vi.clearAllMocks();
