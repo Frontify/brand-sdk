@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.6.6
+
+### Patch Changes
+
+- [`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 0.6.5
 
 ### Patch Changes

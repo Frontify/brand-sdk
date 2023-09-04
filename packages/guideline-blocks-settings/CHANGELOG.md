@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.1
+
+### Patch Changes
+
+- [`2df4a2e`](https://github.com/Frontify/brand-sdk/commit/2df4a2ef0830c7d4a72a5b77e86d0645e33ad757) Thanks [@ragi96](https://github.com/ragi96)! - fix: export TextStyles enum correctly
+
+- [`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`9199d24`](https://github.com/Frontify/brand-sdk/commit/9199d24dd1221640687d6d157897eedc40ed3d43) Thanks [@ragi96](https://github.com/ragi96)! - fix: BlockItemWrapper typing issue
+
+- Updated dependencies [[`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8)]:
+  - @frontify/sidebar-settings@0.6.6
+
 ## 0.29.0
 
 ### Minor Changes
