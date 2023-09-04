@@ -25,6 +25,6 @@ export const getUrlFromLinkOrLegacyLink = (link: TLinkElement): string => {
     return link.url || link.chosenLink?.searchResult?.link || '';
 };
 
-export const getLinkUrlFromEditor = (editor: PlateEditor) => {
+export const getLinkFromEditor = (editor: PlateEditor) => {
     return getLinkNode(editor, getUrlFromLinkOrLegacyLink);
 };
