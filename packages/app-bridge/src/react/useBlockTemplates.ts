@@ -10,6 +10,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
     const blockId = appBridge.getBlockId();
 
     const [blockTemplates, setBlockTemplates] = useState<Record<string, Template[]>>({});
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const updateBlockTemplatesFromEvent = (event: {
         blockId: number;
@@ -28,10 +29,16 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
 
         if (blockId) {
             const mountingFetch = async () => {
-                const allBlockTemplates = await appBridge.getBlockTemplates();
-                if (componentMounted) {
-                    setBlockTemplates(allBlockTemplates);
-                }
+                appBridge
+                    .getBlockTemplates()
+                    .then((result) => {
+                        if (componentMounted) {
+                            setBlockTemplates(result);
+                        }
+                    })
+                    .catch((error) => {
+                        setErrorMessage(error as string);
+                    });
             };
 
             mountingFetch();
@@ -45,11 +52,21 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
     }, [appBridge]);
 
     const emitUpdatedBlockTemplates = async () => {
-        window.emitter.emit('AppBridge:BlockTemplatesUpdated', {
-            blockId,
-            blockTemplates: await appBridge.getBlockTemplates(),
-            prevBlockTemplates: { ...blockTemplates },
-        });
+        let fetchedBlockTemplates;
+
+        try {
+            fetchedBlockTemplates = await appBridge.getBlockTemplates();
+        } catch (error) {
+            setErrorMessage(error as string);
+        }
+
+        if (fetchedBlockTemplates) {
+            window.emitter.emit('AppBridge:BlockTemplatesUpdated', {
+                blockId,
+                blockTemplates: fetchedBlockTemplates,
+                prevBlockTemplates: { ...blockTemplates },
+            });
+        }
     };
 
     const updateTemplateIdsFromKey = async (key: string, newTemplateIds: number[]) => {
@@ -60,19 +77,29 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
             await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, oldTemplateIds);
             await appBridge.addTemplateIdsToBlockTemplateKey(key, newTemplateIds);
         } catch (error) {
-            console.error(error);
+            setErrorMessage(error as string);
         }
 
         emitUpdatedBlockTemplates();
     };
 
     const deleteTemplateIdsFromKey = async (key: string, templateIds: number[]) => {
-        await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, templateIds);
+        try {
+            await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, templateIds);
+        } catch (error) {
+            setErrorMessage(error as string);
+        }
+
         emitUpdatedBlockTemplates();
     };
 
     const addTemplateIdsToKey = async (key: string, templateIds: number[]) => {
-        await appBridge.addTemplateIdsToBlockTemplateKey(key, templateIds);
+        try {
+            await appBridge.addTemplateIdsToBlockTemplateKey(key, templateIds);
+        } catch (error) {
+            setErrorMessage(error as string);
+        }
+
         emitUpdatedBlockTemplates();
     };
 
@@ -81,5 +108,6 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         addTemplateIdsToKey,
         deleteTemplateIdsFromKey,
         updateTemplateIdsFromKey,
+        errorMessage,
     };
 };
