@@ -140,4 +140,37 @@ describe('useBlockTemplates hook', () => {
             expect(result.current.errorMessage).toEqual(errorMessage);
         });
     });
+
+    it('should handle error if the template deletion is failed', async () => {
+        const errorMessage = "Couldn't delete template";
+        const { result, appBridgeStub } = await loadUseBlockTemplates();
+        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
+            .fn()
+            .mockRejectedValue(errorMessage);
+
+        await act(async () => {
+            await result.current.deleteTemplateIdsFromKey('key', [1]);
+        });
+
+        await waitFor(async () => {
+            expect(result.current.errorMessage).toEqual(errorMessage);
+        });
+    });
+
+    it('should handle error if it is an instance of an Error object', async () => {
+        const errorMessage = "Couldn't delete template";
+        const errorObject = new Error(errorMessage);
+        const { result, appBridgeStub } = await loadUseBlockTemplates();
+        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
+            .fn()
+            .mockRejectedValue(errorObject);
+
+        await act(async () => {
+            await result.current.deleteTemplateIdsFromKey('key', [1]);
+        });
+
+        await waitFor(async () => {
+            expect(result.current.errorMessage).toEqual(errorMessage);
+        });
+    });
 });
