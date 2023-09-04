@@ -1,5 +1,15 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.2
+
+### Patch Changes
+
+- [#540](https://github.com/Frontify/brand-sdk/pull/540) [`98f876a`](https://github.com/Frontify/brand-sdk/commit/98f876a05cec68c51e9a6986b38bde3cf08597e7) Thanks [@ragi96](https://github.com/ragi96)! - fix: improving the toolbar style
+
+- [#542](https://github.com/Frontify/brand-sdk/pull/542) [`eea4b74`](https://github.com/Frontify/brand-sdk/commit/eea4b746ccd69e2a96251b7d0e909237c20ca0ae) Thanks [@ragi96](https://github.com/ragi96)! - fix: BlockItemWrapper type issue
+
+- [#539](https://github.com/Frontify/brand-sdk/pull/539) [`5e94f00`](https://github.com/Frontify/brand-sdk/commit/5e94f00401dbe7451e2b90c157e89f808bd2fa06) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): link edit looks for button instead of a tags
+
 ## 0.29.1
 
 ### Patch Changes
