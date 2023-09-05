@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.3
+
+### Patch Changes
+
+- [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): default target is \_blank instead of \_self
+
+- [#543](https://github.com/Frontify/brand-sdk/pull/543) [`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.315
+
+- [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
+- Updated dependencies [[`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777), [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be)]:
+  - @frontify/sidebar-settings@0.6.7
+
 ## 0.29.2
 
 ### Patch Changes
