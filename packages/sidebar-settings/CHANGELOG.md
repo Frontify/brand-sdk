@@ -1,5 +1,19 @@
 # @frontify/sidebar-settings
 
+## 0.6.7
+
+### Patch Changes
+
+- [#543](https://github.com/Frontify/brand-sdk/pull/543) [`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.315
+
+- [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
+## 0.6.6
+
+### Patch Changes
+
+- [`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 0.6.5
 
 ### Patch Changes
