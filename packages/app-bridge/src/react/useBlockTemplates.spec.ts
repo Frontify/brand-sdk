@@ -63,10 +63,11 @@ describe('useBlockTemplates hook', () => {
     });
 
     it('should not sort templates if api call throws error', async () => {
+        const errorMessage = 'Unsuccessful API call';
         const { result, appBridgeStub } = await loadUseBlockTemplates([TemplateDummy.with(1), TemplateDummy.with(2)]);
         (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
             .fn()
-            .mockRejectedValue('Unsuccessful API call');
+            .mockRejectedValue(errorMessage);
 
         await act(async () => {
             await result.current.updateTemplateIdsFromKey('key', [2, 1]);
@@ -76,7 +77,7 @@ describe('useBlockTemplates hook', () => {
             expect(result.current.blockTemplates['key'].map((template) => template.id)).toEqual([1, 2]);
         });
 
-        expect(console.error).toHaveBeenCalledOnce();
+        expect(result.current.error).toEqual(errorMessage);
     });
 
     it('should notify about updated templates on delete', async () => {
@@ -123,6 +124,53 @@ describe('useBlockTemplates hook', () => {
             expect(call.lastArg.blockId).toEqual(123);
             expect(call.lastArg.blockTemplates).toMatchObject({ key: [template, templateToAdd] });
             expect(call.lastArg.prevBlockTemplates).toMatchObject({ key: [template] });
+        });
+    });
+
+    it('should handle error message if API call returns an error', async () => {
+        const errorMessage = "Couldn't get the block templates";
+        const { result, appBridgeStub } = await loadUseBlockTemplates([TemplateDummy.with(1)]);
+        (appBridgeStub.addTemplateIdsToBlockTemplateKey as unknown as Mock) = vi.fn().mockRejectedValue(errorMessage);
+
+        await act(async () => {
+            await result.current.addTemplateIdsToKey('key', [1]);
+        });
+
+        await waitFor(async () => {
+            expect(result.current.error).toEqual(errorMessage);
+        });
+    });
+
+    it('should handle error if the template deletion is failed', async () => {
+        const errorMessage = "Couldn't delete template";
+        const { result, appBridgeStub } = await loadUseBlockTemplates();
+        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
+            .fn()
+            .mockRejectedValue(errorMessage);
+
+        await act(async () => {
+            await result.current.deleteTemplateIdsFromKey('key', [1]);
+        });
+
+        await waitFor(async () => {
+            expect(result.current.error).toEqual(errorMessage);
+        });
+    });
+
+    it('should handle error if it is an instance of an Error object', async () => {
+        const errorMessage = "Couldn't delete template";
+        const errorObject = new Error(errorMessage);
+        const { result, appBridgeStub } = await loadUseBlockTemplates();
+        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
+            .fn()
+            .mockRejectedValue(errorObject);
+
+        await act(async () => {
+            await result.current.deleteTemplateIdsFromKey('key', [1]);
+        });
+
+        await waitFor(async () => {
+            expect(result.current.error).toEqual(errorMessage);
         });
     });
 });
