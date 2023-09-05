@@ -20,7 +20,7 @@
         "@changesets/changelog-github": "^0.4.8",
         "@changesets/cli": "^2.26.2",
         "@cypress/vite-dev-server": "^5.0.6",
-        "@frontify/fondue": "12.0.0-beta.315",
+        "@frontify/fondue": "12.0.0-beta.316",
         "@vitejs/plugin-react": "^4.0.4",
         "cypress": "^13.1.0",
         "cypress-real-events": "^1.10.1",
