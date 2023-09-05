@@ -11,7 +11,7 @@ const useLink = (props: LinkRootProps): HTMLPropsAs<'a'> => {
         ...props,
         elementToAttributes: (element) => ({
             href: element.url || element.chosenLink?.searchResult?.link || '',
-            target: element.target || '_blank',
+            target: element.target || '_self',
         }),
     });
 
