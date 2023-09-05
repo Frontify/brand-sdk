@@ -43,21 +43,18 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
 
         if (blockId) {
             const mountingFetch = async () => {
-                appBridge
-                    .getBlockTemplates()
-                    .then((result) => {
-                        if (componentMounted) {
-                            setBlockTemplates(result);
-                        }
-                    })
-                    .catch((error) => {
-                        handleErrorMessage(error);
-                    });
+                try {
+                    const result = await appBridge.getBlockTemplates();
+                    if (componentMounted) {
+                        setBlockTemplates(result);
+                    }
+                } catch (error) {
+                    handleErrorMessage(error);
+                }
             };
 
-            mountingFetch().then(() =>
-                window.emitter.on('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent),
-            );
+            mountingFetch();
+            window.emitter.on('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent);
         }
 
         return () => {
