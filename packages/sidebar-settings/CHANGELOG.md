@@ -1,5 +1,13 @@
 # @frontify/sidebar-settings
 
+## 0.6.8
+
+### Patch Changes
+
+- [#546](https://github.com/Frontify/brand-sdk/pull/546) [`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump app-bridge
+
+- [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Change App Bridge dependency selector
+
 ## 0.6.7
 
 ### Patch Changes
