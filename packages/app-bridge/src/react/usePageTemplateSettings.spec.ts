@@ -4,8 +4,7 @@ import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getAppBridgeThemeStub } from '../tests';
 import { usePageTemplateSettings } from './usePageTemplateSettings';
-import { useThemeSettings } from '.';
-// import { useThemeSettings } from './useThemeSettings';
+import { useThemeSettings } from './useThemeSettings';
 
 const DOCUMENT_ID = 3462;
 const THEME_SETTINGS = {
@@ -141,6 +140,7 @@ describe('usePageTemplateSettings', () => {
         beforeEach(() => {
             (useThemeSettings as Mock).mockImplementation(() => ({ themeSettings: THEME_SETTINGS }));
         });
+
         it('returns the page template settings merged with theme settings and the list of custom overrides', async () => {
             const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS_WITH_OVERRIDES, 'cover');
 
