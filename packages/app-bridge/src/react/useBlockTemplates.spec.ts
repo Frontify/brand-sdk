@@ -77,7 +77,7 @@ describe('useBlockTemplates hook', () => {
             expect(result.current.blockTemplates['key'].map((template) => template.id)).toEqual([1, 2]);
         });
 
-        expect(result.current.errorMessage).toEqual(errorMessage);
+        expect(result.current.error).toEqual(errorMessage);
     });
 
     it('should notify about updated templates on delete', async () => {
@@ -137,7 +137,7 @@ describe('useBlockTemplates hook', () => {
         });
 
         await waitFor(async () => {
-            expect(result.current.errorMessage).toEqual(errorMessage);
+            expect(result.current.error).toEqual(errorMessage);
         });
     });
 
@@ -153,7 +153,7 @@ describe('useBlockTemplates hook', () => {
         });
 
         await waitFor(async () => {
-            expect(result.current.errorMessage).toEqual(errorMessage);
+            expect(result.current.error).toEqual(errorMessage);
         });
     });
 
@@ -170,7 +170,7 @@ describe('useBlockTemplates hook', () => {
         });
 
         await waitFor(async () => {
-            expect(result.current.errorMessage).toEqual(errorMessage);
+            expect(result.current.error).toEqual(errorMessage);
         });
     });
 });

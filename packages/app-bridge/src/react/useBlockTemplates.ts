@@ -10,7 +10,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
     const blockId = appBridge.getBlockId();
 
     const [blockTemplates, setBlockTemplates] = useState<Record<string, Template[]>>({});
-    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
 
     const updateBlockTemplatesFromEvent = (event: {
         blockId: number;
@@ -33,7 +33,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
             errorMessage = String(error);
         }
 
-        setErrorMessage(errorMessage);
+        setError(errorMessage);
     };
 
     // Fetch the block templates on mount.
@@ -120,6 +120,6 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         addTemplateIdsToKey,
         deleteTemplateIdsFromKey,
         updateTemplateIdsFromKey,
-        errorMessage,
+        error,
     };
 };
