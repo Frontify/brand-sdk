@@ -3,4 +3,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-fix(RTE): default target is _blank instead of _self
+chore: bump fondue
