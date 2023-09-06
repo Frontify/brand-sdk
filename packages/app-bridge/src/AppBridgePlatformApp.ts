@@ -21,9 +21,9 @@ import { Topic } from './types';
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
-import { InitializationError } from './errors';
 import type { ApiMethodRegistry } from './registries';
 import { openConnection } from './registries';
+import { InitializationError } from './errors';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
@@ -99,12 +99,15 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 this.initialized = true;
                 const PUBSUB_CHECKSUM = generateRandomString();
 
-                notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token });
+                notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
                 subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port }) => {
                     this.messageBus = new MessageBus(port);
                     this.callSubscribedTopic('Context.connected', [false, true]);
                 });
             } else {
+                if (this.initialized) {
+                    return;
+                }
                 throw new InitializationError();
             }
         }
