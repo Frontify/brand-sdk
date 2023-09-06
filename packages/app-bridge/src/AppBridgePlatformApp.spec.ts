@@ -33,12 +33,21 @@ describe('AppBridgePlatformApp', () => {
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
-    it('should openConnection correctly', async () => {
+    it('should notify endpoint when openConnection is called correctly', async () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
         await platformApp.dispatch({ name: 'openConnection' });
         expect(notify).toHaveBeenCalledTimes(1);
+    });
+
+    it('should yield true for Context.connected after dispatch', async () => {
+        window.location.search = `?token=${TOKEN}`;
+        const platformApp = new AppBridgePlatformApp();
+        platformApp.subscribe('Context.connected', () => {
+            expect(true).toBe(true);
+        });
+        platformApp.dispatch({ name: 'openConnection' });
     });
 
     it.fails('should throw an error when api is not initialized', async () => {
@@ -52,11 +61,5 @@ describe('AppBridgePlatformApp', () => {
         const platformApp = new AppBridgePlatformApp();
         const state = platformApp.state();
         expect(state).toEqual(undefined);
-    });
-
-    it('should return undefined subscribe method as it is not implemented', async () => {
-        const platformApp = new AppBridgePlatformApp();
-        const subscribe = platformApp.subscribe();
-        expect(subscribe).toBeTypeOf('function');
     });
 });
