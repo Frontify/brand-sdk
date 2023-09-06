@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.5
+
+### Patch Changes
+
+- [#548](https://github.com/Frontify/brand-sdk/pull/548) [`792804d`](https://github.com/Frontify/brand-sdk/commit/792804d17bca975a598ff9f919ee70cb1a09e720) Thanks [@ragi96](https://github.com/ragi96)! - fix: blockItemWrapper Toolbar z-index
+
 ## 0.29.4
 
 ### Patch Changes
