@@ -18,7 +18,7 @@ import type {
 } from './AppBridge';
 import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
+export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser' | 'createAsset'>>;
 
 export type PlatformAppCommand = CommandNameValidator<Record<never, never>>;
 
@@ -49,11 +49,15 @@ export interface AppBridgePlatformApp<
     ): Promise<void>;
 
     state(): StateReturn<State, void>;
+
     state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+
     state(key?: keyof State | void): unknown;
 
     context(): ContextReturn<Context, void>;
+
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
+
     context(key?: keyof Context | void): unknown;
 
     subscribe<EventName extends keyof Event>(
