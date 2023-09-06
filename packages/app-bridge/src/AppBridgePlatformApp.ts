@@ -23,6 +23,7 @@ import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
 import { InitializationError } from './errors';
 import type { ApiMethodRegistry } from './registries';
+import { openConnection } from './registries';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
@@ -91,7 +92,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
-        if (dispatchHandler.name === 'openConnection') {
+        if (dispatchHandler.name === openConnection().name) {
             const initialContext = getQueryParameters(window.location.href);
 
             if (initialContext.token && !this.initialized) {

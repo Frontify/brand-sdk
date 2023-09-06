@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { notify } from './utilities';
 import { AppBridgePlatformApp } from './AppBridgePlatformApp';
 import { InitializationError } from './errors';
+import { openConnection } from './registries';
 
 const TOKEN = 'AjY34F87Dsat^J';
 
@@ -29,7 +30,7 @@ describe('AppBridgePlatformApp', () => {
 
         const platformApp = new AppBridgePlatformApp();
 
-        await expect(() => platformApp.dispatch({ name: 'openConnection' })).rejects.toThrow(new InitializationError());
+        await expect(() => platformApp.dispatch(openConnection())).rejects.toThrow(new InitializationError());
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
@@ -37,7 +38,7 @@ describe('AppBridgePlatformApp', () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
-        await platformApp.dispatch({ name: 'openConnection' });
+        await platformApp.dispatch(openConnection());
         expect(notify).toHaveBeenCalledTimes(1);
     });
 
@@ -47,7 +48,7 @@ describe('AppBridgePlatformApp', () => {
         platformApp.subscribe('Context.connected', () => {
             expect(true).toBe(true);
         });
-        platformApp.dispatch({ name: 'openConnection' });
+        platformApp.dispatch(openConnection());
     });
 
     it.fails('should throw an error when api is not initialized', async () => {
