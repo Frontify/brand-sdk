@@ -14,9 +14,9 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     const { themeSettings } = useThemeSettings(appBridge);
     const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<TPageTemplateSettings>>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [loadSettingsError, setLoadSettingsError] = useState(false);
-    const [customOverrides, setCustomOverrides] = useState<string[]>([]);
-    const [themeFieldsWhenOverrideIsNull, setThemeFieldsWhenOverrideIsNull] = useState<Record<string, unknown>>({});
+    const [customizedPageTemplateSettingsKeys, setCustomizedPageTemplateSettingsKeys] = useState<string[]>([]);
+    const [mergedThemeAndPageTemplateSettings, setMergedThemeAndPageTemplateSettings] =
+        useState<Nullable<Record<string, unknown>>>(null);
 
     useEffect(() => {
         const updateBlockSettingsFromEvent = (event: EmitterEvents['AppBridge:PageTemplateSettingsUpdated']) => {
@@ -24,29 +24,25 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
         };
 
         const getInitialPageTemplateSettings = async () => {
-            if (template !== 'cover' && documentOrDocumentPageId === undefined) {
-                console.error(`Document ID is required for ${template} template settings`);
-                setLoadSettingsError(true);
-                return;
-            }
-
             setIsLoading(true);
             let loadedSettings: Nullable<TPageTemplateSettings> = null;
 
             if (template === 'cover') {
                 loadedSettings = await appBridge.getCoverPageTemplateSettings<TPageTemplateSettings>();
+            } else if (documentOrDocumentPageId === undefined) {
+                console.error(`Document ID is required for ${template} template settings`);
+                setMergedThemeAndPageTemplateSettings(null);
+                setIsLoading(false);
+                return;
             } else if (template === 'documentPage') {
-                loadedSettings = await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(
-                    documentOrDocumentPageId as number,
-                );
+                loadedSettings =
+                    await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
             } else if (template === 'library') {
-                loadedSettings = await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(
-                    documentOrDocumentPageId as number,
-                );
+                loadedSettings =
+                    await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
             }
 
             setIsLoading(false);
-            setLoadSettingsError(false);
             setPageTemplateSettings(loadedSettings);
         };
 
@@ -64,53 +60,38 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
             return;
         }
 
-        for (const field of Object.keys(themeSettings)) {
-            if (!pageTemplateSettings.hasOwnProperty(field)) {
-                continue;
-            }
+        const overrides = [];
+        const mergedSettings: Record<string, unknown> = { ...pageTemplateSettings };
 
+        for (const field of Object.keys(themeSettings)) {
             if (
                 (pageTemplateSettings as Record<string, unknown>)[field] !== null &&
                 (pageTemplateSettings as Record<string, unknown>)[field] !== undefined
             ) {
-                setCustomOverrides((current) => (current.includes(field) ? current : [...current, field]));
-                setThemeFieldsWhenOverrideIsNull((current) => ({
-                    ...Object.fromEntries(
-                        Object.keys(current)
-                            .filter((key) => key !== field)
-                            .map((key) => [key, current[key]]),
-                    ),
-                }));
+                overrides.push(field);
             } else {
-                setThemeFieldsWhenOverrideIsNull((current) => ({
-                    ...current,
-                    [field]: themeSettings[field],
-                }));
-                setCustomOverrides((current) => current.filter((override) => override !== field));
+                mergedSettings[field] = themeSettings[field];
             }
         }
+
+        setCustomizedPageTemplateSettingsKeys(overrides);
+        setMergedThemeAndPageTemplateSettings(mergedSettings);
     }, [themeSettings, pageTemplateSettings]);
 
     const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<TPageTemplateSettings>) => {
         try {
             if (template === 'cover') {
                 await appBridge.updateCoverPageTemplateSettings(pageTemplateSettingsUpdate);
+            } else if (documentOrDocumentPageId === undefined) {
+                console.error(`Document ID is required for ${template} template settings`);
+                setIsLoading(false);
+                return;
             } else if (template === 'documentPage') {
-                if (documentOrDocumentPageId === undefined) {
-                    console.error('Document ID is required for document page template settings');
-                    return;
-                }
-
                 await appBridge.updateDocumentPageTemplateSettings(
                     documentOrDocumentPageId,
                     pageTemplateSettingsUpdate,
                 );
             } else if (template === 'library') {
-                if (documentOrDocumentPageId === undefined) {
-                    console.error('Document ID is required for library template settings');
-                    return;
-                }
-
                 await appBridge.updateLibraryPageTemplateSettings(documentOrDocumentPageId, pageTemplateSettingsUpdate);
             }
 
@@ -126,14 +107,8 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     };
 
     return {
-        pageTemplateSettings: loadSettingsError
-            ? null
-            : {
-                  ...themeSettings,
-                  ...pageTemplateSettings,
-                  ...themeFieldsWhenOverrideIsNull,
-              },
-        customOverrides,
+        pageTemplateSettings: mergedThemeAndPageTemplateSettings,
+        customizedPageTemplateSettingsKeys,
         updatePageTemplateSettings,
         isLoading,
     };

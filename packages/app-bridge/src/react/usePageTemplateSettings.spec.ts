@@ -152,7 +152,7 @@ describe('usePageTemplateSettings', () => {
                     ...THEME_SETTINGS,
                     ...PAGE_SETTINGS_WITH_OVERRIDES,
                 });
-                expect(result.current.customOverrides).toEqual(['customThemeSetting']);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual(['customThemeSetting']);
             });
         });
 
@@ -167,7 +167,7 @@ describe('usePageTemplateSettings', () => {
                     ...PAGE_SETTINGS,
                     ...THEME_SETTINGS,
                 });
-                expect(result.current.customOverrides).toEqual([]);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
         });
 
@@ -180,7 +180,7 @@ describe('usePageTemplateSettings', () => {
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({});
-                expect(result.current.customOverrides).toEqual([]);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
         });
 
@@ -192,7 +192,7 @@ describe('usePageTemplateSettings', () => {
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual(THEME_SETTINGS);
-                expect(result.current.customOverrides).toEqual([]);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
         });
 
@@ -205,7 +205,7 @@ describe('usePageTemplateSettings', () => {
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual(PAGE_SETTINGS);
-                expect(result.current.customOverrides).toEqual([]);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
         });
 
@@ -220,38 +220,8 @@ describe('usePageTemplateSettings', () => {
                     ...PAGE_SETTINGS,
                     ...THEME_SETTINGS,
                 });
-                expect(result.current.customOverrides).toEqual([]);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
-        });
-
-        it('returns the list override without duplicated fields when editing the page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS_WITH_OVERRIDES, 'cover');
-
-            expect(result.current.isLoading).toEqual(true);
-
-            await waitFor(() => {
-                expect(result.current.isLoading).toEqual(false);
-                expect(result.current.pageTemplateSettings).toEqual({
-                    ...THEME_SETTINGS,
-                    ...PAGE_SETTINGS_WITH_OVERRIDES,
-                });
-            });
-
-            await result.current.updatePageTemplateSettings({ customThemeSetting: 456 });
-            expect(result.current.isLoading).toEqual(false);
-
-            await waitFor(() => {
-                expect(result.current.isLoading).toEqual(false);
-                expect(result.current.pageTemplateSettings).toEqual({
-                    ...THEME_SETTINGS,
-                    ...PAGE_SETTINGS_WITH_OVERRIDES,
-                    customThemeSetting: 456,
-                });
-                expect(result.current.customOverrides).toEqual(['customThemeSetting']);
-            });
-
-            // Reset the object to avoid mutation in other tests
-            await result.current.updatePageTemplateSettings({ customThemeSetting: 321 });
         });
 
         it('returns the theme setting if the override is deleted (reset) from page template settings', async () => {
@@ -273,10 +243,10 @@ describe('usePageTemplateSettings', () => {
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({
-                    ...PAGE_SETTINGS_WITH_OVERRIDES,
+                    ...PAGE_SETTINGS,
                     ...THEME_SETTINGS,
                 });
-                expect(result.current.customOverrides).toEqual([]);
+                expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
 
             // Reset the object to avoid mutation in other tests
