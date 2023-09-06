@@ -13,7 +13,7 @@ const useButton = (props: ButtonRootProps): HTMLPropsAs<'a'> & { buttonStyle: Ri
         elementToAttributes: (element) => ({
             url: element.href,
             buttonStyle: element.buttonStyle || 'primary',
-            target: element.target || '_blank',
+            target: element.target || '_self',
         }),
     });
 
