@@ -20,10 +20,13 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
         try {
             setStatus(AssetBulkDownloadState.Started);
 
-            const token = await appBridge.getAssetBulkDownloadToken(settingIds);
+            const { assetBulkDownloadToken } = await appBridge.api({
+                name: 'getAssetBulkDownloadToken',
+                payload: { settingIds, documentBlockId: appBridge.getBlockId() },
+            });
 
             setDownloadUrl(null);
-            startDownload(token);
+            startDownload(assetBulkDownloadToken);
         } catch (error) {
             setStatus(AssetBulkDownloadState.Error);
             console.error(error);

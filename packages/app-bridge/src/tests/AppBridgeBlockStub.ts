@@ -169,7 +169,6 @@ export const getAppBridgeBlockStub = ({
         ),
 
         getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
-        getAssetBulkDownloadToken: stub<Parameters<AppBridgeBlock['getAssetBulkDownloadToken']>>().resolves('token'),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
         ),
