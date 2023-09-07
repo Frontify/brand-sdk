@@ -11,6 +11,10 @@ export enum BulkDownloadState {
     Error = 'error',
 }
 
+/**
+ * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
+ * Use useAssetBulkDownload(appBridge) instead
+ */
 export const useBulkDownload = (appBridge: AppBridgeBlock) => {
     const intervalId = useRef<number | null>(null);
     const [status, setStatus] = useState<BulkDownloadState>(BulkDownloadState.Init);
