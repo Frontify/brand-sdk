@@ -112,6 +112,28 @@ describe('usePageTemplateSettings', () => {
         expect(console.error).toHaveBeenCalledOnce();
     });
 
+    it('updates the page settings for document page', async () => {
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
+
+        expect(result.current.isLoading).toEqual(true);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(PAGE_SETTINGS);
+        });
+
+        await result.current.updatePageTemplateSettings({ myCustomSetting: 456 });
+        expect(result.current.isLoading).toEqual(false);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual({ ...PAGE_SETTINGS, myCustomSetting: 456 });
+        });
+
+        // Reset the object to avoid mutation in other tests
+        await result.current.updatePageTemplateSettings({ myCustomSetting: 123 });
+    });
+
     it('returns the page settings for library page', async () => {
         const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library', DOCUMENT_ID);
 
@@ -134,6 +156,48 @@ describe('usePageTemplateSettings', () => {
         });
 
         expect(console.error).toHaveBeenCalledOnce();
+    });
+
+    it('updates the page settings for library page', async () => {
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library', DOCUMENT_ID);
+
+        expect(result.current.isLoading).toEqual(true);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(PAGE_SETTINGS);
+        });
+
+        await result.current.updatePageTemplateSettings({ myCustomSetting: 456 });
+        expect(result.current.isLoading).toEqual(false);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual({ ...PAGE_SETTINGS, myCustomSetting: 456 });
+        });
+
+        // Reset the object to avoid mutation in other tests
+        await result.current.updatePageTemplateSettings({ myCustomSetting: 123 });
+    });
+
+    it('logs an error when trying to update document or library page without a documentId', async () => {
+        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library');
+
+        expect(result.current.isLoading).toEqual(false);
+
+        await waitFor(() => {
+            expect(result.current.pageTemplateSettings).toEqual(null);
+        });
+
+        await result.current.updatePageTemplateSettings({ muCystomSetting: 456 });
+        expect(result.current.isLoading).toEqual(false);
+
+        await waitFor(() => {
+            expect(result.current.isLoading).toEqual(false);
+            expect(result.current.pageTemplateSettings).toEqual(null);
+        });
+
+        expect(console.error).toHaveBeenCalledTimes(2);
     });
 
     describe('Theme and Page template overrides', () => {
