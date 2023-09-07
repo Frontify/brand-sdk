@@ -22,7 +22,7 @@ import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
 import type { ApiMethodRegistry } from './registries';
-import { connection } from './registries';
+import { openConnection } from './registries';
 import { InitializationError } from './errors';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
@@ -90,7 +90,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
-        if (dispatchHandler.name === connection().name) {
+        if (dispatchHandler.name === openConnection().name) {
             const initialContext = getQueryParameters(window.location.href);
 
             if (initialContext.token && !this.initialized) {
