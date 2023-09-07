@@ -43,7 +43,12 @@ export type BlockApiMethod = ApiMethodNameValidator<
 export type BlockCommand = CommandNameValidator<
     Pick<
         CommandRegistry,
-        'closeAssetChooser' | 'closeTemplateChooser' | 'openAssetChooser' | 'openAssetViewer' | 'openTemplateChooser'
+        | 'closeAssetChooser'
+        | 'closeTemplateChooser'
+        | 'openAssetChooser'
+        | 'openAssetViewer'
+        | 'openTemplateChooser'
+        | 'openNewPublication'
     >
 >;
 

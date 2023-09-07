@@ -1,5 +1,58 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.5
+
+### Patch Changes
+
+- [#548](https://github.com/Frontify/brand-sdk/pull/548) [`792804d`](https://github.com/Frontify/brand-sdk/commit/792804d17bca975a598ff9f919ee70cb1a09e720) Thanks [@ragi96](https://github.com/ragi96)! - fix: blockItemWrapper Toolbar z-index
+
+## 0.29.4
+
+### Patch Changes
+
+- [#546](https://github.com/Frontify/brand-sdk/pull/546) [`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump app-bridge
+
+- [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Change App Bridge dependency selector
+
+- Updated dependencies [[`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8), [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba)]:
+  - @frontify/sidebar-settings@0.6.8
+
+## 0.29.3
+
+### Patch Changes
+
+- [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): default target is \_blank instead of \_self
+
+- [#543](https://github.com/Frontify/brand-sdk/pull/543) [`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.315
+
+- [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
+- Updated dependencies [[`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777), [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be)]:
+  - @frontify/sidebar-settings@0.6.7
+
+## 0.29.2
+
+### Patch Changes
+
+- [#540](https://github.com/Frontify/brand-sdk/pull/540) [`98f876a`](https://github.com/Frontify/brand-sdk/commit/98f876a05cec68c51e9a6986b38bde3cf08597e7) Thanks [@ragi96](https://github.com/ragi96)! - fix: improving the toolbar style
+
+- [#542](https://github.com/Frontify/brand-sdk/pull/542) [`eea4b74`](https://github.com/Frontify/brand-sdk/commit/eea4b746ccd69e2a96251b7d0e909237c20ca0ae) Thanks [@ragi96](https://github.com/ragi96)! - fix: BlockItemWrapper type issue
+
+- [#539](https://github.com/Frontify/brand-sdk/pull/539) [`5e94f00`](https://github.com/Frontify/brand-sdk/commit/5e94f00401dbe7451e2b90c157e89f808bd2fa06) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): link edit looks for button instead of a tags
+
+## 0.29.1
+
+### Patch Changes
+
+- [`2df4a2e`](https://github.com/Frontify/brand-sdk/commit/2df4a2ef0830c7d4a72a5b77e86d0645e33ad757) Thanks [@ragi96](https://github.com/ragi96)! - fix: export TextStyles enum correctly
+
+- [`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [`9199d24`](https://github.com/Frontify/brand-sdk/commit/9199d24dd1221640687d6d157897eedc40ed3d43) Thanks [@ragi96](https://github.com/ragi96)! - fix: BlockItemWrapper typing issue
+
+- Updated dependencies [[`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8)]:
+  - @frontify/sidebar-settings@0.6.6
+
 ## 0.29.0
 
 ### Minor Changes
