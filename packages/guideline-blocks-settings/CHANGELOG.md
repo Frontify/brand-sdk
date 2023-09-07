@@ -1,5 +1,22 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.5
+
+### Patch Changes
+
+- [#548](https://github.com/Frontify/brand-sdk/pull/548) [`792804d`](https://github.com/Frontify/brand-sdk/commit/792804d17bca975a598ff9f919ee70cb1a09e720) Thanks [@ragi96](https://github.com/ragi96)! - fix: blockItemWrapper Toolbar z-index
+
+## 0.29.4
+
+### Patch Changes
+
+- [#546](https://github.com/Frontify/brand-sdk/pull/546) [`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump app-bridge
+
+- [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Change App Bridge dependency selector
+
+- Updated dependencies [[`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8), [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba)]:
+  - @frontify/sidebar-settings@0.6.8
+
 ## 0.29.3
 
 ### Patch Changes
