@@ -173,7 +173,7 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
-     * Use appBridge.apiappBridge.api({ name: 'getAssetBulkDownloadToken', payload: { settingIds, documentBlockId: appBridge.getBlockId() },}); instead
+     * Use appBridge.api({ name: 'getAssetBulkDownloadToken', payload: { settingIds, documentBlockId: appBridge.getBlockId() },}); instead
      */
     getBulkDownloadToken(assetIds: number[], setIds?: number[]): Promise<string>;
 
