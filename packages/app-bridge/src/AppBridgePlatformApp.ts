@@ -22,7 +22,7 @@ import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
 import type { ApiMethodRegistry } from './registries';
-import { openConnection } from './registries';
+import { connection } from './registries';
 import { InitializationError } from './errors';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
@@ -53,7 +53,6 @@ export type PlatformAppContext = AppBaseProps & {
     parentId: string;
     directory: string;
     domain: string;
-    parameters: { [key: string]: unknown }[];
 };
 
 export type PlatformAppEvent = EventNameValidator<
@@ -76,7 +75,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         'Context.directory': new Map(),
         'Context.domain': new Map(),
         'Context.type': new Map(),
-        'Context.parameters': new Map(),
         'Context.connected': new Map(),
     };
 
@@ -92,7 +90,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
-        if (dispatchHandler.name === openConnection().name) {
+        if (dispatchHandler.name === connection().name) {
             const initialContext = getQueryParameters(window.location.href);
 
             if (initialContext.token && !this.initialized) {
@@ -115,7 +113,10 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
     context(): ContextReturn<PlatformAppContext, void>;
     context(): unknown {
-        return {};
+        return this.messageBus.post({
+            method: 'context',
+            parameter: 'smth',
+        });
     }
 
     state(): StateReturn<PlatformAppState, void>;

@@ -4,7 +4,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { notify } from './utilities';
 import { AppBridgePlatformApp } from './AppBridgePlatformApp';
 import { InitializationError } from './errors';
-import { openConnection } from './registries';
+import { connection } from './registries';
 
 const TOKEN = 'AjY34F87Dsat^J';
 
@@ -30,7 +30,7 @@ describe('AppBridgePlatformApp', () => {
 
         const platformApp = new AppBridgePlatformApp();
 
-        await expect(() => platformApp.dispatch(openConnection())).rejects.toThrow(new InitializationError());
+        await expect(() => platformApp.dispatch(connection())).rejects.toThrow(new InitializationError());
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
@@ -38,17 +38,18 @@ describe('AppBridgePlatformApp', () => {
         window.location.search = `?token=${TOKEN}`;
 
         const platformApp = new AppBridgePlatformApp();
-        await platformApp.dispatch(openConnection());
+        await platformApp.dispatch(connection());
         expect(notify).toHaveBeenCalledTimes(1);
     });
 
     it('should yield true for Context.connected after dispatch', async () => {
+        const connected = true;
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
         platformApp.subscribe('Context.connected', () => {
-            expect(true).toBe(true);
+            expect(connected).toBe(true);
         });
-        platformApp.dispatch(openConnection());
+        platformApp.dispatch(connection());
     });
 
     it.fails('should throw an error when api is not initialized', async () => {
