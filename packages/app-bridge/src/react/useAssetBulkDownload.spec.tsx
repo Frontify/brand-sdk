@@ -31,20 +31,28 @@ describe('useAssetBulkDownload', () => {
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
         const settingIds = ['setting1', 'setting2'];
         result.current.generateBulkDownload(settingIds);
-        /* await waitFor(() => {
-            sinon.assert.calledWithExactly(appBridgeStub.getAssetBulkDownloadToken, settingIds);
-        });*/
+        await waitFor(() => {
+            sinon.assert.calledWithExactly(appBridgeStub.api, {
+                name: 'getAssetBulkDownloadToken',
+                payload: { documentBlockId: appBridgeStub.getBlockId(), settingIds },
+            });
+        });
     });
 
-    /*it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
+    it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.getAssetBulkDownloadToken.rejects(appBridgeError);
+        appBridgeStub.api
+            .withArgs({
+                name: 'getAssetBulkDownloadToken',
+                payload: { settingIds: undefined, documentBlockId: appBridgeStub.getBlockId() },
+            })
+            .rejects(appBridgeError);
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
         result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(AssetBulkDownloadState.Error);
         });
-    });*/
+    });
 
     it('should set signature and set status to ready', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
