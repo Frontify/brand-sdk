@@ -51,20 +51,22 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
     };
 
     const listenForBulkDownloadReady = (signature: string) => {
-        return window.setInterval(async () => {
-            try {
-                const download = await appBridge.getBulkDownloadBySignature(signature);
+        return window.setInterval(() => {
+            (async () => {
+                try {
+                    const download = await appBridge.getBulkDownloadBySignature(signature);
 
-                if (download.downloadUrl) {
-                    setStatus(AssetBulkDownloadState.Ready);
-                    setDownloadUrl(download.downloadUrl);
+                    if (download.downloadUrl) {
+                        setStatus(AssetBulkDownloadState.Ready);
+                        setDownloadUrl(download.downloadUrl);
+                        intervalId.current && clearInterval(intervalId.current);
+                    }
+                } catch (error) {
+                    setStatus(AssetBulkDownloadState.Error);
+                    console.error(error);
                     intervalId.current && clearInterval(intervalId.current);
                 }
-            } catch (error) {
-                setStatus(AssetBulkDownloadState.Error);
-                console.error(error);
-                intervalId.current && clearInterval(intervalId.current);
-            }
+            })();
         }, 2500);
     };
 
