@@ -17,7 +17,7 @@ import type {
     StateReturn,
     SubscribeMap,
 } from './AppBridge';
-import { PlatformAppContext, Topic } from './types';
+import { Topic } from './types';
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
@@ -173,11 +173,13 @@ export interface IAppBridgePlatformApp<
     state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
 
     state(key?: keyof State | void): unknown;
+
     context(): ContextReturn<Context, void>;
 
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
 
     context(key?: keyof Context | void): unknown;
+
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName, Event>,
         callback: EventCallbackParameter<EventName, Event>,
