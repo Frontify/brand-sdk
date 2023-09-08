@@ -6,3 +6,4 @@ export * from './CommandRegistry';
 export * from './NavigationManager';
 export * from './TemplateChooser';
 export * from './NewPublication';
+export * from './Connection';
