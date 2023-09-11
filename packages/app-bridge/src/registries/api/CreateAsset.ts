@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 export type GetCreateAssetPayload = {
-    file: File;
+    file: File | Blob;
     projectId: string;
     title: string;
     description: string;
