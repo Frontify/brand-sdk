@@ -88,7 +88,7 @@ export const createButtonPlugin = (appBridge: AppBridgeBlock) =>
                 getNode: (el) => ({
                     type,
                     url: el.getAttribute('href'),
-                    target: el.getAttribute('target') || '_self',
+                    target: el.getAttribute('target') || '_blank',
                 }),
             },
         }),
