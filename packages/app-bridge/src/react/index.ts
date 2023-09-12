@@ -8,7 +8,6 @@ export * from './useBlockAssets';
 export * from './useBlockTemplates';
 export * from './useBlockSettings';
 export * from './useBrandportalLink';
-export * from './useBulkDownload';
 export * from './useCategorizedDocumentPages';
 export * from './useColorPalettes';
 export * from './useColors';
