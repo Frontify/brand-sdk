@@ -2,12 +2,12 @@
 
 export type GetCreateAssetPayload = {
     file: File | Blob;
-    projectId: string;
     title: string;
-    description: string;
-    externalId: string;
-    tags: { value: string }[];
-    directory: string[];
+    parentId?: string;
+    description?: string;
+    externalId?: string;
+    tags?: { value: string }[];
+    directory?: string[];
 };
 
 export type GetCreateAssetResponse = {
