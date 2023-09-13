@@ -32,7 +32,7 @@
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
-        "@babel/core": "^7.22.11",
+        "@babel/core": "^7.22.17",
         "@frontify/eslint-config-typescript": "^0.16.1",
         "@testing-library/react": "^14.0.0",
         "@types/node": "^18.17.12",
