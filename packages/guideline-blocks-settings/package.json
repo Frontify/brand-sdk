@@ -1,6 +1,6 @@
 {
     "name": "@frontify/guideline-blocks-settings",
-    "version": "0.29.5",
+    "version": "0.29.6",
     "description": "Provides types and helpers for the guideline block development",
     "sideEffects": false,
     "main": "dist/index.umd.js",
@@ -67,7 +67,7 @@
         "@dnd-kit/modifiers": "^6.0.1",
         "@dnd-kit/sortable": "^7.0.2",
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/fondue": "12.0.0-beta.319",
+        "@frontify/fondue": "12.0.0-beta.321",
         "@frontify/sidebar-settings": "workspace:^",
         "@react-aria/focus": "^3.14.0",
         "@react-stately/overlays": "^3.6.1",
