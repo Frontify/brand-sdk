@@ -32,7 +32,7 @@
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
-        "@babel/core": "^7.22.11",
+        "@babel/core": "^7.22.17",
         "@frontify/eslint-config-typescript": "^0.16.1",
         "@testing-library/react": "^14.0.0",
         "@types/node": "^18.17.12",
@@ -67,7 +67,7 @@
         "@dnd-kit/modifiers": "^6.0.1",
         "@dnd-kit/sortable": "^7.0.2",
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/fondue": "12.0.0-beta.316",
+        "@frontify/fondue": "12.0.0-beta.319",
         "@frontify/sidebar-settings": "workspace:^",
         "@react-aria/focus": "^3.14.0",
         "@react-stately/overlays": "^3.6.1",
