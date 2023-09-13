@@ -25,6 +25,7 @@
         "test:watch": "vitest"
     },
     "devDependencies": {
+        "@babel/core": "^7.22.17",
         "@frontify/eslint-config-typescript": "^0.16.1",
         "@types/react": "^18.2.21",
         "@types/react-dom": "^18.2.7",
@@ -40,7 +41,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/fondue": "12.0.0-beta.316"
+        "@frontify/fondue": "12.0.0-beta.319"
     },
     "peerDependencies": {
         "react": "^18",
