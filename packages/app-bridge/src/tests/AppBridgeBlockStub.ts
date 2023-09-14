@@ -167,8 +167,6 @@ export const getAppBridgeBlockStub = ({
         updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
             Promise.resolve(ColorDummy.red(colorId)),
         ),
-
-        getBulkDownloadToken: stub<Parameters<AppBridgeBlock['getBulkDownloadToken']>>().resolves('token'),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
         ),
@@ -176,6 +174,20 @@ export const getAppBridgeBlockStub = ({
             BulkDownloadDummy.default(),
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
+
+        api: stub<Parameters<AppBridgeBlock['api']>>()
+            .withArgs()
+            .resolves()
+            .withArgs({
+                name: 'getAssetBulkDownloadToken',
+                payload: { settingIds: ['settings1', 'settings2'], documentBlockId: BLOCK_ID },
+            })
+            .resolves({ assetBulkDownloadToken: 'token' })
+            .withArgs({
+                name: 'getAssetBulkDownloadToken',
+                payload: { settingIds: undefined, documentBlockId: BLOCK_ID },
+            })
+            .resolves({ assetBulkDownloadToken: 'token' }),
 
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
@@ -200,7 +212,6 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
-        api: stub<Parameters<AppBridgeBlock['api']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
         context: stub<Parameters<AppBridgeBlock['context']>>().resolves(),
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
