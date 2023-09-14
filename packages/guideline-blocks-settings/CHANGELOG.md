@@ -1,5 +1,20 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.6
+
+### Patch Changes
+
+- [#560](https://github.com/Frontify/brand-sdk/pull/560) [`7460f29`](https://github.com/Frontify/brand-sdk/commit/7460f298fa346f89da7de2a0465c12c077e22f05) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.319
+
+- [#559](https://github.com/Frontify/brand-sdk/pull/559) [`0a75910`](https://github.com/Frontify/brand-sdk/commit/0a75910955da33d6866af1f42e82280f64118701) Thanks [@ragi96](https://github.com/ragi96)! - fix: button plugin add margins to button
+
+- [#564](https://github.com/Frontify/brand-sdk/pull/564) [`3684397`](https://github.com/Frontify/brand-sdk/commit/368439792d855bbc5117f97931b7d52f75295677) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.321
+
+- [#563](https://github.com/Frontify/brand-sdk/pull/563) [`c3b2f6c`](https://github.com/Frontify/brand-sdk/commit/c3b2f6cb86844a10cc7ff2d4ef8802945d5d1e5b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): edit modal styles can be invisible
+
+- Updated dependencies [[`7460f29`](https://github.com/Frontify/brand-sdk/commit/7460f298fa346f89da7de2a0465c12c077e22f05), [`3684397`](https://github.com/Frontify/brand-sdk/commit/368439792d855bbc5117f97931b7d52f75295677)]:
+  - @frontify/sidebar-settings@0.6.9
+
 ## 0.29.5
 
 ### Patch Changes

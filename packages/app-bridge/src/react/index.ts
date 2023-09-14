@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+export * from './useAssetBulkDownload';
 export * from './useAssetChooser';
 export * from './useAssetUpload';
 export * from './useAssetViewer';
@@ -7,7 +8,6 @@ export * from './useBlockAssets';
 export * from './useBlockTemplates';
 export * from './useBlockSettings';
 export * from './useBrandportalLink';
-export * from './useBulkDownload';
 export * from './useCategorizedDocumentPages';
 export * from './useColorPalettes';
 export * from './useColors';
