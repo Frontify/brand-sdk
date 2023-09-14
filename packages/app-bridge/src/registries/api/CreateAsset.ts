@@ -7,7 +7,6 @@ export type GetCreateAssetPayload = {
     description?: string;
     externalId?: string;
     tags?: { value: string }[];
-    directory?: string[];
 };
 
 export type GetCreateAssetResponse = {
