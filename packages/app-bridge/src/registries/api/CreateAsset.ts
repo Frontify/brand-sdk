@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export type GetCreateAssetPayload = {
-    file: File | Blob;
+export type CreateAssetPayload = {
+    data: File | Blob | string;
     title: string;
     parentId?: string;
     description?: string;
@@ -9,6 +9,6 @@ export type GetCreateAssetPayload = {
     tags?: { value: string }[];
 };
 
-export type GetCreateAssetResponse = {
+export type CreateAssetResponse = {
     assetId: string;
 };
