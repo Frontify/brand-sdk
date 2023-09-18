@@ -33,18 +33,16 @@ export const PageLink = ({ page, selectedUrl, onSelectUrl, itemsToExpandInitiall
 
     return (
         <>
-            <div
-                tabIndex={0}
+            <button
                 data-test-id="internal-link-selector-page-link"
                 className={merge([
-                    'tw-py-2 tw-px-2.5 tw-leading-5 tw-cursor-pointer',
+                    'tw-py-2 tw-px-2.5 tw-leading-5 tw-cursor-pointer tw-flex tw-w-full',
                     hasSections ? 'tw-pl-7' : 'tw-pl-12',
                     isActive
                         ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
                         : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
                 ])}
                 onClick={() => onSelectUrl(page.permanentLink)}
-                onFocus={() => onSelectUrl(page.permanentLink)}
             >
                 <div key={page.id} className="tw-flex tw-flex-1 tw-space-x-1 tw-items-center tw-h-6">
                     {hasSections && (
@@ -52,7 +50,6 @@ export const PageLink = ({ page, selectedUrl, onSelectUrl, itemsToExpandInitiall
                             data-test-id="tree-item-toggle"
                             className="tw-flex tw-items-center tw-justify-center tw-p-1.5 tw-cursor-pointer"
                             onClick={() => setIsExpanded(!isExpanded)}
-                            onFocus={() => setIsExpanded(!isExpanded)}
                         >
                             <div
                                 className={merge([
@@ -65,7 +62,7 @@ export const PageLink = ({ page, selectedUrl, onSelectUrl, itemsToExpandInitiall
                     <span className="tw-text-s">{page.title}</span>
                     <span className="tw-flex-auto tw-font-sans tw-text-xs tw-text-right">Page</span>
                 </div>
-            </div>
+            </button>
             {isExpanded &&
                 sectionsArray.length > 0 &&
                 sectionsArray.map((section) => {

@@ -45,15 +45,13 @@ export const DocumentLink = ({
                         : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
                 ])}
                 onClick={() => onSelectUrl(document.permanentLink)}
-                onFocus={() => onSelectUrl(document.permanentLink)}
             >
-                <div
+                <button
                     role="button"
                     tabIndex={0}
                     data-test-id="tree-item-toggle"
                     className="tw-flex tw-items-center tw-justify-center tw-p-1.5 tw-cursor-pointer"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    onFocus={() => setIsExpanded(!isExpanded)}
                 >
                     <div
                         className={merge([
@@ -61,7 +59,7 @@ export const DocumentLink = ({
                             isExpanded ? 'tw-rotate-90' : '',
                         ])}
                     ></div>
-                </div>
+                </button>
                 <IconColorFan16 />
                 <span className="tw-text-s">{document.title}</span>
                 <span className="tw-flex-auto tw-font-sans tw-text-xs tw-text-right">Document</span>
