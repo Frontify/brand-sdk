@@ -21,7 +21,7 @@ describe('useThemeAssets hook', () => {
     const loadUseThemeAssets = async (existingAssets = [AssetDummy.with(1)], keyName = 'key') => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeThemeStub({
-            pageTemplateAssets: { [keyName]: existingAssets },
+            themeAssets: { [keyName]: existingAssets },
         });
 
         const { result, rerender } = renderHook(() => useThemeAssets(appBridgeStub));

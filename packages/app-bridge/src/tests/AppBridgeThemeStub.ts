@@ -67,6 +67,7 @@ export type getAppBridgeThemeStubProps = {
     pageTemplateSettings?: Record<string, unknown>;
     pageTemplateAssets?: Record<string, Asset[]>;
     themeSettings?: Record<string, unknown>;
+    themeAssets?: Record<string, Asset[]>;
     language?: string;
     openAssetChooser?: (callback: Parameters<AppBridgeTheme['openAssetChooser']>[0]) => void;
     closeAssetChooser?: () => void;
@@ -80,6 +81,7 @@ export const getAppBridgeThemeStub = ({
     pageTemplateSettings = {},
     pageTemplateAssets = {},
     themeSettings = {},
+    themeAssets = {},
     language = 'en',
     openAssetChooser = () => null,
     closeAssetChooser = () => null,
@@ -92,8 +94,8 @@ export const getAppBridgeThemeStub = ({
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
 
-    const getTemplateAssets = async () => {
-        return Object.entries(pageTemplateAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
+    const getAssets = async (themeOrTemplateAssets: Record<string, Asset[]>) => {
+        return Object.entries(themeOrTemplateAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
             const addedAssetIdsList = addedAssetIds[key] ?? [];
             const deletedAssetIdsList = deletedAssetIds[key] ?? [];
             assetsDiff[key] = [
@@ -103,6 +105,10 @@ export const getAppBridgeThemeStub = ({
             return assetsDiff;
         }, {});
     };
+
+    const getTemplateAssets = async () => getAssets(pageTemplateAssets);
+
+    const getThemeAssets = async () => getAssets(themeAssets);
 
     return {
         getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
@@ -242,7 +248,7 @@ export const getAppBridgeThemeStub = ({
         }),
         getCoverPageTemplateAssets:
             stub<Parameters<AppBridgeTheme['getCoverPageTemplateAssets']>>().callsFake(getTemplateAssets),
-        getThemeAssets: stub<Parameters<AppBridgeTheme['getThemeAssets']>>().callsFake(getTemplateAssets),
+        getThemeAssets: stub<Parameters<AppBridgeTheme['getThemeAssets']>>().callsFake(getThemeAssets),
         getLibraryPageTemplateAssets:
             stub<Parameters<AppBridgeTheme['getLibraryPageTemplateAssets']>>().callsFake(getTemplateAssets),
         getDocumentPageTemplateAssets:
