@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset } from '../types';
@@ -11,15 +11,18 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
 
     const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>({});
 
-    const updateBlockAssetsFromEvent = (event: {
-        blockId: number;
-        blockAssets: Record<string, Asset[]>;
-        prevBlockAssets: Record<string, Asset[]>;
-    }) => {
-        if (event.blockId === blockId && !compareObjects(event.blockAssets, event.prevBlockAssets)) {
-            setBlockAssets(event.blockAssets);
-        }
-    };
+    const updateBlockAssetsFromEvent = useCallback(
+        (event: {
+            blockId: number;
+            blockAssets: Record<string, Asset[]>;
+            prevBlockAssets: Record<string, Asset[]>;
+        }) => {
+            if (event.blockId === blockId && !compareObjects(event.blockAssets, event.prevBlockAssets)) {
+                setBlockAssets(event.blockAssets);
+            }
+        },
+        [blockId],
+    );
 
     // Fetch the block assets on mount.
     // And add listener for block assets updates.
@@ -42,7 +45,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
             componentMounted = false;
             window.emitter.off('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
         };
-    }, [appBridge]);
+    }, [appBridge, blockId, updateBlockAssetsFromEvent]);
 
     const emitUpdatedBlockAssets = async () => {
         window.emitter.emit('AppBridge:BlockAssetsUpdated', {
@@ -57,7 +60,12 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
         const oldAssetIds = currentBlockAssets[key]?.map((asset) => asset.id) ?? [];
 
         try {
-            await appBridge.deleteAssetIdsFromBlockAssetKey(key, oldAssetIds);
+            if (appBridge.getTranslationLanguage() === '') {
+                console.info('Default language is selected. Deleting previous assets');
+                await appBridge.deleteAssetIdsFromBlockAssetKey(key, oldAssetIds);
+            } else {
+                console.info('Translated language is selected. Not deleting assets');
+            }
             await appBridge.addAssetIdsToBlockAssetKey(key, newAssetIds);
         } catch (error) {
             console.error(error);
