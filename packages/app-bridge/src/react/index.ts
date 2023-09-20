@@ -32,3 +32,4 @@ export * from './useThemeSettings';
 export * from './useTemplateChooser';
 export * from './useUncategorizedDocumentPages';
 export * from './useUngroupedDocuments';
+export * from './usePlatformAppBridge';
