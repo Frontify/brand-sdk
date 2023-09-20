@@ -130,7 +130,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             };
         }
         return {
-            get: () => (this.localContext && this.localContext[key] ? this.localContext[key] : {}),
+            get: () => (this.localContext ? this.localContext[key] : {}),
             subscribe: (
                 callback: (nextContext: PlatformAppContext[Key], previousContext: PlatformAppContext[Key]) => void,
             ) => {
