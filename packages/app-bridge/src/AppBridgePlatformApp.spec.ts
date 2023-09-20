@@ -10,7 +10,7 @@ const TOKEN = 'AjY34F87Dsat^J';
 
 describe('AppBridgePlatformApp', () => {
     vi.mock('./utilities/subscribe', () => ({
-        subscribe: vi.fn().mockResolvedValue({ test: 'passed' }),
+        subscribe: vi.fn().mockResolvedValue({ context: { parentId: 'parentId-test' } }),
     }));
 
     vi.mock('./utilities/notify', () => ({
@@ -63,5 +63,19 @@ describe('AppBridgePlatformApp', () => {
         const platformApp = new AppBridgePlatformApp();
         const state = platformApp.state();
         expect(state).toEqual(undefined);
+    });
+    it('should yield true for Context.connected after dispatch', async () => {
+        const connected = true;
+        window.location.search = `?token=${TOKEN}`;
+        const platformApp = new AppBridgePlatformApp();
+        platformApp.subscribe('Context.connected', () => {
+            const context = platformApp.context().get();
+            const parentId = platformApp.context('parentId').get();
+
+            expect(connected).toBe(true);
+            expect(context).toEqual({ parentId: 'parentId-test' });
+            expect(parentId).toEqual('parentId-test');
+        });
+        platformApp.dispatch(openConnection());
     });
 });
