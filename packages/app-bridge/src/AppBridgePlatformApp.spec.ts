@@ -68,6 +68,12 @@ describe('AppBridgePlatformApp', () => {
         const connected = true;
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
+        platformApp.context().subscribe((context) => {
+            expect({ parentId: 'parentId-test' }).toStrictEqual(context);
+        });
+        platformApp.context('parentId').subscribe((parentId) => {
+            expect('parentId-test').toStrictEqual(parentId);
+        });
         platformApp.subscribe('Context.connected', () => {
             const context = platformApp.context().get();
             const parentId = platformApp.context('parentId').get();
