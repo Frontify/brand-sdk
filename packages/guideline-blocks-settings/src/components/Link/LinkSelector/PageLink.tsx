@@ -36,7 +36,7 @@ export const PageLink = ({ page, selectedUrl, onSelectUrl, itemsToExpandInitiall
             <button
                 data-test-id="internal-link-selector-page-link"
                 className={merge([
-                    'tw-py-2 tw-px-2.5 tw-leading-5 tw-cursor-pointer tw-flex tw-w-full',
+                    'tw-py-2 tw-pr-2.5 tw-leading-5 tw-cursor-pointer tw-flex tw-w-full',
                     hasSections ? 'tw-pl-7' : 'tw-pl-12',
                     isActive
                         ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
@@ -48,7 +48,7 @@ export const PageLink = ({ page, selectedUrl, onSelectUrl, itemsToExpandInitiall
                     {hasSections && (
                         <button
                             data-test-id="tree-item-toggle"
-                            className="tw-flex tw-items-center tw-justify-center tw-p-1.5 tw-cursor-pointer"
+                            className="tw-flex tw-items-center tw-justify-center -tw-mr-2 tw-pr-3.5 tw-pt-1.5 tw-pb-1.5 tw-pl-3.5 tw-cursor-pointer"
                             onClick={() => setIsExpanded(!isExpanded)}
                         >
                             <div

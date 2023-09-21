@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
-import { LoadingCircle } from '@frontify/fondue';
+import { LoadingCircle, LoadingCircleSize } from '@frontify/fondue';
 import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';
 import { InitiallyExpandedItems } from '../';
@@ -75,8 +75,8 @@ export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentL
     };
 
     return isLoading ? (
-        <div className="tw-flex tw-justify-center tw-p-4">
-            <LoadingCircle />
+        <div className="tw-flex tw-justify-center  tw-h-10 tw-items-center">
+            <LoadingCircle size={LoadingCircleSize.Small} />
         </div>
     ) : (
         <>

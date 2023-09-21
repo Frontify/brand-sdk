@@ -39,7 +39,7 @@ export const DocumentLink = ({
             <button
                 data-test-id="internal-link-selector-document-link"
                 className={merge([
-                    'tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-py-2 tw-px-2.5 tw-leading-5 tw-cursor-pointer tw-w-full',
+                    'tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-py-2 tw-pr-2.5 tw-leading-5 tw-cursor-pointer tw-w-full',
                     isActive
                         ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
                         : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
@@ -50,7 +50,7 @@ export const DocumentLink = ({
                     role="button"
                     tabIndex={0}
                     data-test-id="tree-item-toggle"
-                    className="tw-flex tw-items-center tw-justify-center tw-p-1.5 tw-cursor-pointer"
+                    className="tw-flex tw-items-center tw-justify-center -tw-mr-2 tw-pr-3.5 tw-pt-1.5 tw-pb-1.5 tw-pl-3.5 tw-cursor-pointer"
                     onClick={() => setIsExpanded(!isExpanded)}
                 >
                     <div
