@@ -105,7 +105,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port, context }) => {
                     this.messageBus = new MessageBus(port);
                     this.localContext = context;
-                    this.callSubscribedTopic('Context.connected', [false, true]);
+                    this.callSubscribedTopic('Context.connected', [true, true]);
                     this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
                 });
             } else {
