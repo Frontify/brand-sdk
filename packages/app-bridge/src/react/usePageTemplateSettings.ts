@@ -16,7 +16,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     const [isLoading, setIsLoading] = useState(false);
     const [customizedPageTemplateSettingsKeys, setCustomizedPageTemplateSettingsKeys] = useState<string[]>([]);
     const [mergedThemeAndPageTemplateSettings, setMergedThemeAndPageTemplateSettings] =
-        useState<Nullable<Record<string, unknown>>>(null);
+        useState<Nullable<TPageTemplateSettings & Record<string, unknown>>>(null);
 
     useEffect(() => {
         const updateBlockSettingsFromEvent = (event: EmitterEvents['AppBridge:PageTemplateSettingsUpdated']) => {
@@ -61,7 +61,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
         }
 
         const overrides = [];
-        const mergedSettings: Record<string, unknown> = { ...pageTemplateSettings };
+        const mergedSettings: Record<string, unknown> & TPageTemplateSettings = { ...pageTemplateSettings };
 
         for (const field of Object.keys(themeSettings)) {
             if (
@@ -70,7 +70,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
             ) {
                 overrides.push(field);
             } else {
-                mergedSettings[field] = themeSettings[field];
+                (mergedSettings as Record<string, unknown>)[field] = themeSettings[field];
             }
         }
 

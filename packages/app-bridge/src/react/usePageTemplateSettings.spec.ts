@@ -1,10 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
-import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getAppBridgeThemeStub } from '../tests';
 import { usePageTemplateSettings } from './usePageTemplateSettings';
-import { useThemeSettings } from './useThemeSettings';
 
 const DOCUMENT_ID = 3462;
 const THEME_SETTINGS = {
@@ -25,16 +24,9 @@ const PAGE_SETTINGS_WITH_NULL_OVERRIDES = {
     customThemeSetting: null,
 };
 
-vi.mock('./useThemeSettings', () => {
-    return {
-        useThemeSettings: vi.fn(),
-    };
-});
-
 describe('usePageTemplateSettings', () => {
     beforeEach(() => {
         vi.spyOn(console, 'error').mockImplementation(() => void 0);
-        (useThemeSettings as Mock).mockImplementation(() => ({ themeSettings: {} }));
     });
 
     afterEach(() => {
@@ -46,9 +38,11 @@ describe('usePageTemplateSettings', () => {
         pageTemplateSettings: Record<string, unknown>,
         template: Parameters<typeof usePageTemplateSettings>[1],
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
+        themeSettings = {},
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
             pageTemplateSettings,
+            themeSettings,
         });
 
         const { result } = renderHook(() => usePageTemplateSettings(appBridgeStub, template, documentId));
@@ -201,12 +195,13 @@ describe('usePageTemplateSettings', () => {
     });
 
     describe('Theme and Page template overrides', () => {
-        beforeEach(() => {
-            (useThemeSettings as Mock).mockImplementation(() => ({ themeSettings: THEME_SETTINGS }));
-        });
-
         it('returns the page template settings merged with theme settings and the list of custom overrides', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS_WITH_OVERRIDES, 'cover');
+            const { result } = await loadUsePageTemplateSettings(
+                PAGE_SETTINGS_WITH_OVERRIDES,
+                'cover',
+                undefined,
+                THEME_SETTINGS,
+            );
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -221,7 +216,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns the page template settings merged with theme settings and no overrides', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover');
+            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, THEME_SETTINGS);
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -236,8 +231,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns an empty object if no theme settins and no page template settings', async () => {
-            (useThemeSettings as Mock).mockImplementation(() => ({ themeSettings: {} }));
-            const { result } = await loadUsePageTemplateSettings({}, 'cover');
+            const { result } = await loadUsePageTemplateSettings({}, 'cover', undefined, {});
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -249,7 +243,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns only the theme settings if no page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings({}, 'cover');
+            const { result } = await loadUsePageTemplateSettings({}, 'cover', undefined, THEME_SETTINGS);
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -261,8 +255,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns only the page template settings if no theme settings', async () => {
-            (useThemeSettings as Mock).mockImplementation(() => ({ themeSettings: {} }));
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover');
+            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, {});
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -274,7 +267,12 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns theme setting value if page template override is null', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS_WITH_NULL_OVERRIDES, 'cover');
+            const { result } = await loadUsePageTemplateSettings(
+                PAGE_SETTINGS_WITH_NULL_OVERRIDES,
+                'cover',
+                undefined,
+                THEME_SETTINGS,
+            );
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -289,7 +287,12 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns the theme setting if the override is deleted (reset) from page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS_WITH_OVERRIDES, 'cover');
+            const { result } = await loadUsePageTemplateSettings(
+                PAGE_SETTINGS_WITH_OVERRIDES,
+                'cover',
+                undefined,
+                THEME_SETTINGS,
+            );
 
             expect(result.current.isLoading).toEqual(true);
 
