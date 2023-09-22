@@ -3,8 +3,8 @@
 import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
 import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';
+import { LoadingIndicator } from './LoadingIndicator';
 import { InitiallyExpandedItems } from '../';
-import { LoadingIndicator } from 'src/components/Link/LinkSelector/LoadingIndicator';
 
 type DocumentLinksProps = {
     appBridge: AppBridgeBlock | AppBridgeTheme;

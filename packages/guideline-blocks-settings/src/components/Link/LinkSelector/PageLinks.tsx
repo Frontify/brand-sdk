@@ -4,7 +4,7 @@ import type { AppBridgeBlock, AppBridgeTheme, DocumentPage } from '@frontify/app
 import { ReactElement, useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { PageLink } from './PageLink';
-import { LoadingIndicator } from 'src/components/Link/LinkSelector/LoadingIndicator';
+import { LoadingIndicator } from './LoadingIndicator';
 
 type PageLinksProps = {
     appBridge: AppBridgeBlock | AppBridgeTheme;
