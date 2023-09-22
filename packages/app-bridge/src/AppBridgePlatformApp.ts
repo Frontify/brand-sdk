@@ -41,6 +41,7 @@ export type PlatformAppState = {
 
 type InitializeEvent = {
     port: MessagePort;
+    context: PlatformAppContext;
 };
 
 type AppBaseProps = {
@@ -65,6 +66,7 @@ export type PlatformAppEvent = EventNameValidator<
 export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     private messageBus: IMessageBus = new ErrorMessageBus();
     private initialized: boolean = false;
+    private localContext?: PlatformAppContext;
 
     private readonly subscribeMap: SubscribeMap<PlatformAppEvent> = {
         'State.*': new Map(),
@@ -100,9 +102,11 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 const PUBSUB_CHECKSUM = generateRandomString();
 
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
-                subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port }) => {
+                subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port, context }) => {
                     this.messageBus = new MessageBus(port);
-                    this.callSubscribedTopic('Context.connected', [false, true]);
+                    this.localContext = context;
+                    this.callSubscribedTopic('Context.connected', [true, true]);
+                    this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
                 });
             } else {
                 if (this.initialized) {
@@ -113,12 +117,28 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         }
     }
 
-    context(): ContextReturn<PlatformAppContext, void>;
-    context(): unknown {
-        return this.messageBus.post({
-            method: 'context',
-            parameter: 'smth',
-        });
+    context(key?: void): ContextReturn<PlatformAppContext, void>;
+    context<Key extends keyof PlatformAppContext>(key?: Key): ContextReturn<PlatformAppContext, Key>;
+    context<Key extends keyof PlatformAppContext>(key?: keyof PlatformAppContext | void): unknown {
+        if (typeof key === 'undefined') {
+            return {
+                get: () => this.localContext,
+                subscribe: (
+                    callback: (nextContext: PlatformAppContext, previousContext: PlatformAppContext) => void,
+                ) => {
+                    return this.subscribe('Context.*', callback);
+                },
+            };
+        }
+        return {
+            get: () => (this.localContext ? this.localContext[key] : {}),
+            subscribe: (
+                callback: (nextContext: PlatformAppContext[Key], previousContext: PlatformAppContext[Key]) => void,
+            ) => {
+                // @ts-expect-error typing is correct, but TS doesn't like it
+                return this.subscribe(`Context.${key}`, callback);
+            },
+        };
     }
 
     state(): StateReturn<PlatformAppState, void>;
