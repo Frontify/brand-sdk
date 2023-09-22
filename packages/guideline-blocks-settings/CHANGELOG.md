@@ -1,5 +1,20 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.8
+
+### Patch Changes
+
+- [#577](https://github.com/Frontify/brand-sdk/pull/577) [`2c17f39`](https://github.com/Frontify/brand-sdk/commit/2c17f396b7f3670cf8c9c041937a414bcd22ae94) Thanks [@ragi96](https://github.com/ragi96)! - feat: add autoFormatPlugin to defaultPluginsWithLinkChooser
+
+- [#570](https://github.com/Frontify/brand-sdk/pull/570) [`9b2e5f3`](https://github.com/Frontify/brand-sdk/commit/9b2e5f3853832dfa3cf0ec9fe0ec2ad1c5927d23) Thanks [@ragi96](https://github.com/ragi96)! - fix(RTE): list style inconsistent between view and edit mode
+
+- [#577](https://github.com/Frontify/brand-sdk/pull/577) [`2c17f39`](https://github.com/Frontify/brand-sdk/commit/2c17f396b7f3670cf8c9c041937a414bcd22ae94) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.334
+
+- [#574](https://github.com/Frontify/brand-sdk/pull/574) [`a025aee`](https://github.com/Frontify/brand-sdk/commit/a025aeecfd3647a7bd75d139d9309310092d5b54) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(LinkSelector): initial click triggered twice
+
+- Updated dependencies [[`2c17f39`](https://github.com/Frontify/brand-sdk/commit/2c17f396b7f3670cf8c9c041937a414bcd22ae94)]:
+  - @frontify/sidebar-settings@0.6.11
+
 ## 0.29.7
 
 ### Patch Changes
