@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock, AppBridgeTheme, DocumentPage } from '@frontify/app-bridge';
-import { LoadingCircle } from '@frontify/fondue';
 import { ReactElement, useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { PageLink } from './PageLink';
+import { LoadingIndicator } from './LoadingIndicator';
 
 type PageLinksProps = {
     appBridge: AppBridgeBlock | AppBridgeTheme;
@@ -44,11 +44,7 @@ export const PageLinks = ({
     }, []);
 
     if (isLoading) {
-        return (
-            <div className="tw-flex tw-justify-center tw-p-4">
-                <LoadingCircle />
-            </div>
-        );
+        return <LoadingIndicator />;
     }
 
     return hasPages ? (
@@ -67,7 +63,7 @@ export const PageLinks = ({
             })}
         </>
     ) : (
-        <div className="tw-py-2 tw-px-2.5 tw-pl-7 tw-leading-5 tw-text-s tw-text-text-weak">
+        <div className="tw-h-10 tw-flex tw-items-center tw-pr-2.5 tw-pl-7 tw-leading-5 tw-text-s tw-text-text-weak">
             This document does not contain any pages.
         </div>
     );

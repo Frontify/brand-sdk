@@ -127,11 +127,14 @@ describe('Link Selector', () => {
         cy.get(DocumentLinkSelector).should('have.length', 2);
         cy.realPress('Tab');
         cy.realPress('Tab');
+        cy.realPress('Enter');
         cy.get(PageLinkSelector).should('have.length', 3);
         cy.realPress('Tab');
         cy.realPress('Tab');
+        cy.realPress('Enter');
         cy.get(SectionLinkSelector).should('have.length', 4);
         cy.realPress('Tab');
+        cy.realPress('Space');
         cy.realPress('Enter');
         cy.get('@urlChange').should('be.calledWith', '/6');
     });

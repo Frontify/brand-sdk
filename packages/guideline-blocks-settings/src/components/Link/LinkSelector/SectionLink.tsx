@@ -25,7 +25,6 @@ export const SectionLink = ({ section, selectedUrl, onSelectUrl }: SectionLinkPr
                     : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
             ])}
             onClick={() => onSelectUrl(section.permanentLink)}
-            onFocus={() => onSelectUrl(section.permanentLink)}
         >
             <div className="tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-h-6">
                 <IconDocumentText16 />
