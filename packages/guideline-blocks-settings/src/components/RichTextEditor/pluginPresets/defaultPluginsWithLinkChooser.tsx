@@ -6,6 +6,7 @@ import {
     AlignJustifyPlugin,
     AlignLeftPlugin,
     AlignRightPlugin,
+    AutoformatPlugin,
     BoldPlugin,
     CheckboxListPlugin,
     CodePlugin,
@@ -48,6 +49,7 @@ export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {
                 new CheckboxListPlugin(),
                 new OrderedListPlugin(),
                 new ResetFormattingPlugin(),
+                new AutoformatPlugin(),
             ],
         );
 };
