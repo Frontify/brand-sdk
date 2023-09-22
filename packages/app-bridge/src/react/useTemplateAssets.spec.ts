@@ -10,6 +10,18 @@ import { useTemplateAssets } from './useTemplateAssets';
 const DOCUMENT_ID = 16;
 const DOCUMENT_PAGE_ID = 568;
 
+const THEME_ASSETS = {
+    key: [AssetDummy.with(3)],
+};
+
+const THEME_ASSETS_WITH_CUSTOM_KEY = {
+    customKey: [AssetDummy.with(2)],
+};
+
+const TEMPLATE_ASSETS = {
+    key: [AssetDummy.with(1)],
+};
+
 describe('useTemplateAssets hook', () => {
     beforeEach(() => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -23,11 +35,14 @@ describe('useTemplateAssets hook', () => {
 
     const loadUseTemplateAssets = async (
         template: 'documentPage' | 'library' | 'cover',
-        existingAssets = [AssetDummy.with(1)],
+        existingTemplateAssets = [AssetDummy.with(1)],
+        existingThemeAssets = {},
+        returnEmptyTemplateAssets = false,
     ) => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeThemeStub({
-            pageTemplateAssets: { key: existingAssets },
+            pageTemplateAssets: returnEmptyTemplateAssets ? {} : { key: existingTemplateAssets },
+            themeAssets: existingThemeAssets,
         });
 
         const { result, rerender } = renderHook(() =>
@@ -372,6 +387,57 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toMatchObject({ key: [asset, assetToAdd] });
                 expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
+            });
+        });
+    });
+
+    describe('Theme and Template assets overrides', () => {
+        it('returns the template assets merged with theme assets and the list of custom overrides', async () => {
+            const { result } = await loadUseTemplateAssets('cover', [AssetDummy.with(1)], THEME_ASSETS);
+            await waitFor(() => {
+                expect(result.current.templateAssets).toEqual({
+                    ...TEMPLATE_ASSETS,
+                });
+                expect(result.current.customizedTemplateAssetsKeys).toEqual(['key']);
+            });
+        });
+
+        it('returns the template assets merged with theme assets and no overrides', async () => {
+            const { result } = await loadUseTemplateAssets('cover', [AssetDummy.with(1)], THEME_ASSETS_WITH_CUSTOM_KEY);
+            await waitFor(() => {
+                expect(result.current.templateAssets).toEqual({
+                    ...THEME_ASSETS_WITH_CUSTOM_KEY,
+                    ...TEMPLATE_ASSETS,
+                });
+                expect(result.current.customizedTemplateAssetsKeys).toEqual([]);
+            });
+        });
+
+        it('returns an empty object if no theme assets and no template assets', async () => {
+            const { result } = await loadUseTemplateAssets('cover', [], {}, true);
+            await waitFor(() => {
+                expect(result.current.templateAssets).toEqual({});
+                expect(result.current.customizedTemplateAssetsKeys).toEqual([]);
+            });
+        });
+
+        it('returns only the theme assets if no template assets', async () => {
+            const { result } = await loadUseTemplateAssets('cover', [], THEME_ASSETS, true);
+            await waitFor(() => {
+                expect(result.current.templateAssets).toEqual({
+                    ...THEME_ASSETS,
+                });
+                expect(result.current.customizedTemplateAssetsKeys).toEqual([]);
+            });
+        });
+
+        it('returns only the template assets if no theme assets', async () => {
+            const { result } = await loadUseTemplateAssets('cover', [AssetDummy.with(1)], {}, false);
+            await waitFor(() => {
+                expect(result.current.templateAssets).toEqual({
+                    ...TEMPLATE_ASSETS,
+                });
+                expect(result.current.customizedTemplateAssetsKeys).toEqual([]);
             });
         });
     });
