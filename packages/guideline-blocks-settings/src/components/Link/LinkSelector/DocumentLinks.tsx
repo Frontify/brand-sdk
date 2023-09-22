@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
-import { LoadingCircle, LoadingCircleSize } from '@frontify/fondue';
 import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';
 import { InitiallyExpandedItems } from '../';
+import { LoadingIndicator } from 'src/components/Link/LinkSelector/LoadingIndicator';
 
 type DocumentLinksProps = {
     appBridge: AppBridgeBlock | AppBridgeTheme;
@@ -75,9 +75,7 @@ export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentL
     };
 
     return isLoading ? (
-        <div className="tw-flex tw-justify-center  tw-h-10 tw-items-center">
-            <LoadingCircle size={LoadingCircleSize.Small} />
-        </div>
+        <LoadingIndicator />
     ) : (
         <>
             {documentArray.map((document) => {
