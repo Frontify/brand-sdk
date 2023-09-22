@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-fix(LinkSelector): bug fixes and qol changes
+fix(LinkSelector): initial click triggered twice
