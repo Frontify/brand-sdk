@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.9
+
+### Patch Changes
+
+- [#583](https://github.com/Frontify/brand-sdk/pull/583) [`aed99a3`](https://github.com/Frontify/brand-sdk/commit/aed99a3a62e58c7b9436f8f031c64ac024566c2c) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.337
+
+- Updated dependencies [[`aed99a3`](https://github.com/Frontify/brand-sdk/commit/aed99a3a62e58c7b9436f8f031c64ac024566c2c)]:
+  - @frontify/sidebar-settings@0.6.12
+
 ## 0.29.8
 
 ### Patch Changes
