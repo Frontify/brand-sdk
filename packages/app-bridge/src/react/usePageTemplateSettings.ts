@@ -4,14 +4,19 @@ import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { EmitterEvents } from '../types';
+import { useThemeSettings } from './';
 
 export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
     template: 'cover' | 'documentPage' | 'library',
     documentOrDocumentPageId?: number,
 ) => {
+    const { themeSettings } = useThemeSettings(appBridge);
     const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<TPageTemplateSettings>>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [customizedPageTemplateSettingsKeys, setCustomizedPageTemplateSettingsKeys] = useState<string[]>([]);
+    const [mergedThemeAndPageTemplateSettings, setMergedThemeAndPageTemplateSettings] =
+        useState<Nullable<TPageTemplateSettings & Record<string, unknown>>>(null);
 
     useEffect(() => {
         const updateBlockSettingsFromEvent = (event: EmitterEvents['AppBridge:PageTemplateSettingsUpdated']) => {
@@ -20,32 +25,25 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
 
         const getInitialPageTemplateSettings = async () => {
             setIsLoading(true);
+            let loadedSettings: Nullable<TPageTemplateSettings> = null;
 
             if (template === 'cover') {
-                const coverPageSettings = await appBridge.getCoverPageTemplateSettings<TPageTemplateSettings>();
-                setPageTemplateSettings(coverPageSettings);
+                loadedSettings = await appBridge.getCoverPageTemplateSettings<TPageTemplateSettings>();
+            } else if (documentOrDocumentPageId === undefined) {
+                console.error(`Document ID is required for ${template} template settings`);
+                setMergedThemeAndPageTemplateSettings(null);
+                setIsLoading(false);
+                return;
             } else if (template === 'documentPage') {
-                if (documentOrDocumentPageId === undefined) {
-                    console.error('Document ID is required for document page template settings');
-                } else {
-                    const documentSettings =
-                        await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(
-                            documentOrDocumentPageId,
-                        );
-
-                    setPageTemplateSettings(documentSettings);
-                }
+                loadedSettings =
+                    await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
             } else if (template === 'library') {
-                if (documentOrDocumentPageId === undefined) {
-                    console.error('Document ID is required for library template settings');
-                } else {
-                    const librarySettings =
-                        await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
-                    setPageTemplateSettings(librarySettings);
-                }
+                loadedSettings =
+                    await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
             }
 
             setIsLoading(false);
+            setPageTemplateSettings(loadedSettings);
         };
 
         getInitialPageTemplateSettings();
@@ -57,26 +55,43 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
         };
     }, [appBridge, documentOrDocumentPageId, template]);
 
+    useEffect(() => {
+        if (!themeSettings || !pageTemplateSettings) {
+            return;
+        }
+
+        const overrides = [];
+        const mergedSettings: Record<string, unknown> & TPageTemplateSettings = { ...pageTemplateSettings };
+
+        for (const field of Object.keys(themeSettings)) {
+            if (
+                (pageTemplateSettings as Record<string, unknown>)[field] !== null &&
+                (pageTemplateSettings as Record<string, unknown>)[field] !== undefined
+            ) {
+                overrides.push(field);
+            } else {
+                (mergedSettings as Record<string, unknown>)[field] = themeSettings[field];
+            }
+        }
+
+        setCustomizedPageTemplateSettingsKeys(overrides);
+        setMergedThemeAndPageTemplateSettings(mergedSettings);
+    }, [themeSettings, pageTemplateSettings]);
+
     const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<TPageTemplateSettings>) => {
         try {
             if (template === 'cover') {
                 await appBridge.updateCoverPageTemplateSettings(pageTemplateSettingsUpdate);
+            } else if (documentOrDocumentPageId === undefined) {
+                console.error(`Document ID is required for ${template} template settings`);
+                setIsLoading(false);
+                return;
             } else if (template === 'documentPage') {
-                if (documentOrDocumentPageId === undefined) {
-                    console.error('Document ID is required for document page template settings');
-                    return;
-                }
-
                 await appBridge.updateDocumentPageTemplateSettings(
                     documentOrDocumentPageId,
                     pageTemplateSettingsUpdate,
                 );
             } else if (template === 'library') {
-                if (documentOrDocumentPageId === undefined) {
-                    console.error('Document ID is required for library template settings');
-                    return;
-                }
-
                 await appBridge.updateLibraryPageTemplateSettings(documentOrDocumentPageId, pageTemplateSettingsUpdate);
             }
 
@@ -91,5 +106,10 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
         }
     };
 
-    return { pageTemplateSettings, updatePageTemplateSettings, isLoading };
+    return {
+        pageTemplateSettings: mergedThemeAndPageTemplateSettings,
+        customizedPageTemplateSettingsKeys,
+        updatePageTemplateSettings,
+        isLoading,
+    };
 };

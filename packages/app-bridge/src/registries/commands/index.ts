@@ -7,3 +7,4 @@ export * from './DownloadAsset';
 export * from './NavigationManager';
 export * from './TemplateChooser';
 export * from './NewPublication';
+export * from './Connection';

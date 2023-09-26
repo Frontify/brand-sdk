@@ -1,5 +1,47 @@
 # @frontify/sidebar-settings
 
+## 0.6.12
+
+### Patch Changes
+
+- [#583](https://github.com/Frontify/brand-sdk/pull/583) [`aed99a3`](https://github.com/Frontify/brand-sdk/commit/aed99a3a62e58c7b9436f8f031c64ac024566c2c) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.337
+
+## 0.6.11
+
+### Patch Changes
+
+- [#577](https://github.com/Frontify/brand-sdk/pull/577) [`2c17f39`](https://github.com/Frontify/brand-sdk/commit/2c17f396b7f3670cf8c9c041937a414bcd22ae94) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.334
+
+## 0.6.10
+
+### Patch Changes
+
+- [#566](https://github.com/Frontify/brand-sdk/pull/566) [`ece6876`](https://github.com/Frontify/brand-sdk/commit/ece68765bcd1675cf32f9fd20b77c8dd5e665ee1) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.324
+
+## 0.6.9
+
+### Patch Changes
+
+- [#560](https://github.com/Frontify/brand-sdk/pull/560) [`7460f29`](https://github.com/Frontify/brand-sdk/commit/7460f298fa346f89da7de2a0465c12c077e22f05) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.319
+
+- [#564](https://github.com/Frontify/brand-sdk/pull/564) [`3684397`](https://github.com/Frontify/brand-sdk/commit/368439792d855bbc5117f97931b7d52f75295677) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.321
+
+## 0.6.8
+
+### Patch Changes
+
+- [#546](https://github.com/Frontify/brand-sdk/pull/546) [`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump app-bridge
+
+- [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Change App Bridge dependency selector
+
+## 0.6.7
+
+### Patch Changes
+
+- [#543](https://github.com/Frontify/brand-sdk/pull/543) [`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.315
+
+- [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
 ## 0.6.6
 
 ### Patch Changes

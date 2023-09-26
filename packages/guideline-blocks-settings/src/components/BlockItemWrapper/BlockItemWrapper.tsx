@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useRef, useState } from 'react';
+import { ReactElement, useEffect, useRef, useState } from 'react';
 import { joinClassNames } from '../../utilities';
 import { Toolbar } from './Toolbar';
 import { BlockItemWrapperProps, ToolbarItem } from './types';
@@ -15,7 +15,7 @@ export const BlockItemWrapper = ({
     shouldFillContainer,
     outlineOffset = 2,
     shouldBeShown = false,
-}: BlockItemWrapperProps) => {
+}: BlockItemWrapperProps): ReactElement => {
     const [isFlyoutOpen, setIsFlyoutOpen] = useState(shouldBeShown);
     const [isFlyoutDisabled, setIsFlyoutDisabled] = useState(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
@@ -28,7 +28,8 @@ export const BlockItemWrapper = ({
     }, [isFlyoutOpen]);
 
     if (shouldHideWrapper) {
-        return children;
+        // eslint-disable-next-line react/jsx-no-useless-fragment
+        return <>{children}</>;
     }
 
     const items = toolbarItems?.filter((item): item is ToolbarItem => item !== undefined);
@@ -56,7 +57,7 @@ export const BlockItemWrapper = ({
                     bottom: `calc(100% - ${2 + outlineOffset}px)`,
                 }}
                 className={joinClassNames([
-                    'tw-pointer-events-none tw-absolute tw-bottom-[calc(100%-4px)] tw-right-[-3px] tw-w-full tw-opacity-0 tw-z-10',
+                    'tw-pointer-events-none tw-absolute tw-bottom-[calc(100%-4px)] tw-right-[-3px] tw-w-full tw-opacity-0 tw-z-[60]',
                     'group-hover:tw-opacity-100 group-focus:tw-opacity-100 focus-within:tw-opacity-100',
                     (isFlyoutOpen || shouldBeShown) && 'tw-opacity-100',
                 ])}

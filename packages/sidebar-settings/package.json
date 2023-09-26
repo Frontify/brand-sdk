@@ -1,6 +1,6 @@
 {
     "name": "@frontify/sidebar-settings",
-    "version": "0.6.6",
+    "version": "0.6.12",
     "description": "Provides types and helpers for the settings sidebar",
     "sideEffects": false,
     "main": "dist/index.umd.js",
@@ -25,6 +25,7 @@
         "test:watch": "vitest"
     },
     "devDependencies": {
+        "@babel/core": "^7.22.17",
         "@frontify/eslint-config-typescript": "^0.16.1",
         "@types/react": "^18.2.21",
         "@types/react-dom": "^18.2.7",
@@ -39,8 +40,8 @@
         "vitest": "^0.34.3"
     },
     "dependencies": {
-        "@frontify/app-bridge": "workspace:*",
-        "@frontify/fondue": "12.0.0-beta.314"
+        "@frontify/app-bridge": "workspace:^",
+        "@frontify/fondue": "12.0.0-beta.337"
     },
     "peerDependencies": {
         "react": "^18",
