@@ -3,4 +3,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-chore: bump fondue to v12.0.0-beta.335
+chore: bump fondue to v12.0.0-beta.337
