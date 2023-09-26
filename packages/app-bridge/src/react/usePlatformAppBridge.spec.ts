@@ -19,18 +19,14 @@ describe('usePlatformAppBridge', () => {
     afterEach(() => {
         vi.clearAllMocks();
     });
-    it('should return platformAppBridge', async () => {
+    it('should return undefined platformApp if not initiated', async () => {
         const { result } = renderHook(() => usePlatformAppBridge());
-        expect(result.current.platformAppBridge).toBeDefined();
+        expect(result.current).toBeUndefined();
     });
-    it('should return initiated false', async () => {
-        const { result } = renderHook(() => usePlatformAppBridge());
-        expect(result.current.connected).toBe(false);
-    });
-    it('should return initiated true after waiting', async () => {
+    it('should return platformApp after initiation and waiting', async () => {
         const { result } = renderHook(() => usePlatformAppBridge());
         await waitFor(() => {
-            expect(result.current.connected).toBe(true);
+            expect(result.current).toBeTypeOf('object');
         });
     });
 });

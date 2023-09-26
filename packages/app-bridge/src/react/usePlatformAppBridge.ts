@@ -4,17 +4,17 @@ import { AppBridgePlatformApp } from '../AppBridgePlatformApp';
 import { useEffect, useState } from 'react';
 
 export const usePlatformAppBridge = () => {
-    const [platformAppBridge] = useState<AppBridgePlatformApp>(new AppBridgePlatformApp());
-    const [connected, setConnected] = useState<boolean>(false);
+    const [platformAppBridge, setPlatformAppBridge] = useState<AppBridgePlatformApp | undefined>();
 
     useEffect(() => {
         (async () => {
-            platformAppBridge.subscribe('Context.connected', () => {
-                setConnected(true);
+            const appBridge = new AppBridgePlatformApp();
+            appBridge.subscribe('Context.connected', () => {
+                setPlatformAppBridge(appBridge);
             });
-            platformAppBridge.dispatch({ name: 'openConnection' });
+            appBridge.dispatch({ name: 'openConnection' });
         })();
     }, []);
 
-    return { platformAppBridge, connected };
+    return platformAppBridge;
 };
