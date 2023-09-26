@@ -48,8 +48,8 @@ export type BlockCommand = CommandNameValidator<
         | 'downloadAsset'
         | 'openAssetChooser'
         | 'openAssetViewer'
-        | 'openNewPublication'
         | 'openTemplateChooser'
+        | 'openNewPublication'
     >
 >;
 
