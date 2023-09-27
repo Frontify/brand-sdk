@@ -18,7 +18,7 @@ import type {
     SubscribeMap,
 } from './AppBridge';
 import { Topic } from './types';
-import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
+import { ErrorMessageQueue, IMessageQueue, MessageQueue } from './utilities/MessageQueue';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
 import type { ApiMethodRegistry } from './registries';
@@ -73,7 +73,7 @@ export type PlatformAppEvent = EventNameValidator<
 >;
 
 export class AppBridgePlatformApp implements IAppBridgePlatformApp {
-    private messageBus: IMessageBus = new ErrorMessageBus();
+    private messageQueue: IMessageQueue = new ErrorMessageQueue();
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
 
@@ -94,7 +94,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
     ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
-        return this.messageBus.post({
+        return this.messageQueue.post({
             method: 'api',
             parameter: apiHandler,
         }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
@@ -112,7 +112,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
                 subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port, context }) => {
-                    this.messageBus = new MessageBus(port);
+                    this.messageQueue = new MessageQueue(port);
                     this.localContext = context;
                     this.callSubscribedTopic('Context.connected', [true, true]);
                     this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
