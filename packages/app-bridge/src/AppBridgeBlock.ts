@@ -45,6 +45,7 @@ export type BlockCommand = CommandNameValidator<
         CommandRegistry,
         | 'closeAssetChooser'
         | 'closeTemplateChooser'
+        | 'downloadAsset'
         | 'openAssetChooser'
         | 'openAssetViewer'
         | 'openTemplateChooser'
