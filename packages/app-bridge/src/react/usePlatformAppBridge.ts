@@ -15,6 +15,5 @@ export const usePlatformAppBridge = () => {
             appBridge.dispatch({ name: 'openConnection' });
         })();
     }, []);
-
     return platformAppBridge;
 };
