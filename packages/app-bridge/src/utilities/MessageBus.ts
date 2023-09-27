@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { InitializationError, TimeoutReachedError } from '../errors';
-import { SUBSCRIBE_TIMEOUT } from './subscribe';
+import { InitializationError } from '../errors';
 
 export interface IMessageBus {
     post(message: { method: string; parameter: unknown }): unknown;
@@ -20,9 +19,6 @@ export class MessageBus implements IMessageBus {
             this.port.onmessageerror = (error) => {
                 reject(error);
             };
-            setTimeout(() => {
-                reject(new TimeoutReachedError('operation'));
-            }, SUBSCRIBE_TIMEOUT * 8);
         });
     }
 }
