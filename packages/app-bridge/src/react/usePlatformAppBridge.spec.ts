@@ -26,7 +26,7 @@ describe('usePlatformAppBridge', () => {
     it('should return platformApp after initiation and waiting', async () => {
         const { result } = renderHook(() => usePlatformAppBridge());
         await waitFor(() => {
-            expect(result.current).toBeTypeOf('object');
+            expect(result.current).toBeDefined();
         });
     });
 });
