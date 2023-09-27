@@ -22,7 +22,7 @@ export class MessageBus implements IMessageBus {
             };
             setTimeout(() => {
                 reject(new TimeoutReachedError('operation'));
-            }, SUBSCRIBE_TIMEOUT * 2);
+            }, SUBSCRIBE_TIMEOUT * 8);
         });
     }
 }
