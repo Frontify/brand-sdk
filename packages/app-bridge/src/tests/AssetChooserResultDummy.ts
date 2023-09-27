@@ -18,7 +18,7 @@ export class AssetChooserResultDummy {
             preview_url: 'https://preview.url',
             project: 23,
             project_name: null,
-            project_type: null,
+            project_type: 'STYLEGUIDE',
             filesize: 256,
             file_size_formatted: '123.45 MB',
             status: 'FINISHED',
