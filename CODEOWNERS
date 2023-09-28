@@ -38,3 +38,5 @@ packages/app-bridge/src/registries/api @Frontify/integration
 
 # Guideline Blocks Settings
 packages/guideline-blocks-settings @Frontify/guidelines-one @SamuelAlev
+
+CODEOWNERS @Frontify/architecture
