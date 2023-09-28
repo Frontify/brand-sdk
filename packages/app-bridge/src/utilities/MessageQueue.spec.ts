@@ -3,12 +3,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import { MessageQueue } from './MessageQueue';
 
-describe('MessageBus', () => {
+describe('messageQueue', () => {
     it('should be instantiable', () => {
         const { port1 } = new MessageChannel();
 
-        const messageBus = new MessageQueue(port1);
-        expect(messageBus).toBeInstanceOf(MessageQueue);
+        const messageQueue = new MessageQueue(port1);
+        expect(messageQueue).toBeInstanceOf(MessageQueue);
     });
 
     it('should call postMessage from the MessageChannel on post', () => {
@@ -20,31 +20,31 @@ describe('MessageBus', () => {
             onmessageerror = vi.fn();
         }
 
-        const messageBus = new MessageQueue(new PortMock() as unknown as MessagePort);
-        messageBus.post({ operation: 'test' });
+        const messageQueue = new MessageQueue(new PortMock() as unknown as MessagePort);
+        messageQueue.post({ operation: 'test' });
         expect(postMessageMock).toHaveBeenCalledTimes(1);
     });
 
     it('should return message from port2', async () => {
         const channel = new MessageChannel();
 
-        const messageBus = new MessageQueue(channel.port1);
+        const messageQueue = new MessageQueue(channel.port1);
 
         const testResponse = { result: { data: { test: 'test' } } };
         channel.port2.postMessage(testResponse);
 
-        const result = await messageBus.post({ operation: 'test' });
+        const result = messageQueue.post({ operation: 'test' });
         expect(result).toEqual(testResponse);
     });
 
     it.fails('should trigger onmessage error on message sending error', async () => {
         const channel = new MessageChannel();
-        const messageBus = new MessageQueue(channel.port1);
+        const messageQueue = new MessageQueue(channel.port1);
 
         channel.port1.postMessage = () => {
             throw new Error('Simulated message sending error');
         };
 
-        await expect(() => messageBus.post({ operation: 'test' })).rejects.toThrowError();
+        expect(() => messageQueue.post({ operation: 'test' })).rejects.toThrowError();
     });
 });
