@@ -18,8 +18,8 @@ importers:
         specifier: ^5.0.6
         version: 5.0.6
       '@frontify/fondue':
-        specifier: 12.0.0-beta.334
-        version: 12.0.0-beta.334(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
+        specifier: 12.0.0-beta.341
+        version: 12.0.0-beta.341(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
       '@vitejs/plugin-react':
         specifier: ^4.0.4
         version: 4.0.4(vite@4.4.9)
@@ -245,8 +245,8 @@ importers:
         specifier: workspace:^
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: 12.0.0-beta.334
-        version: 12.0.0-beta.334(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
+        specifier: 12.0.0-beta.341
+        version: 12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -357,8 +357,8 @@ importers:
         specifier: workspace:^
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: 12.0.0-beta.334
-        version: 12.0.0-beta.334(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
+        specifier: 12.0.0-beta.341
+        version: 12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.22.17
@@ -1483,8 +1483,8 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.334(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
-    resolution: {integrity: sha512-fPnxxWXDmNEEz3NTm2Lr/vEdPqj69Fp9NYRAFL2Da8EFtmi16KiiMMAUT4UkQ7dfDEYK8ZKp7cvzm0HkxU90Uw==}
+  /@frontify/fondue@12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
+    resolution: {integrity: sha512-/V2Q/1aNL6i/Bw52YJDXpxZnRLZ8PZuGZWAso35o78i/bC/3Q95QWxzQmFuupyIyflyWPfkemwCM7S38EL4nBA==}
     engines: {node: '>=16'}
     peerDependencies:
       react: ^17 || ^18
@@ -1587,8 +1587,8 @@ packages:
       - zustand
     dev: false
 
-  /@frontify/fondue@12.0.0-beta.334(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
-    resolution: {integrity: sha512-fPnxxWXDmNEEz3NTm2Lr/vEdPqj69Fp9NYRAFL2Da8EFtmi16KiiMMAUT4UkQ7dfDEYK8ZKp7cvzm0HkxU90Uw==}
+  /@frontify/fondue@12.0.0-beta.341(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
+    resolution: {integrity: sha512-/V2Q/1aNL6i/Bw52YJDXpxZnRLZ8PZuGZWAso35o78i/bC/3Q95QWxzQmFuupyIyflyWPfkemwCM7S38EL4nBA==}
     engines: {node: '>=16'}
     peerDependencies:
       react: ^17 || ^18

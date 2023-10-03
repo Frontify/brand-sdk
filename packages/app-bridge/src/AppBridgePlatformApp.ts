@@ -50,13 +50,22 @@ type AppBaseProps = {
     connected: boolean;
 };
 
-export type PlatformAppContext = AppBaseProps & {
-    type: 'ASSET_ACTION';
-    assetId: string;
-    parentId: string;
-    directory: string;
-    domain: string;
-};
+export type PlatformAppContext = AppBaseProps &
+    (
+        | {
+              assetId: string;
+              brandId: string;
+              domain: string;
+              parentId: string;
+              type: 'ASSET_ACTION';
+          }
+        | {
+              brandId: string;
+              domain: string;
+              parentId: string;
+              type: 'ASSET_CREATION';
+          }
+    );
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
@@ -75,8 +84,8 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         'Context.marketplaceServiceAppId': new Map(),
         'Context.token': new Map(),
         'Context.assetId': new Map(),
+        'Context.brandId': new Map(),
         'Context.parentId': new Map(),
-        'Context.directory': new Map(),
         'Context.domain': new Map(),
         'Context.type': new Map(),
         'Context.connected': new Map(),

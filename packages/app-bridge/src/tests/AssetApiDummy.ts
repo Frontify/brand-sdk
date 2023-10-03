@@ -18,13 +18,14 @@ export class AssetApiDummy {
             preview_url: 'https://preview.url',
             project_id: 23,
             project_name: null,
-            project_type: null,
+            project_type: 'STYLEGUIDE',
             file_size: 256,
             file_size_formatted: '123.45 MB',
             status: 'FINISHED',
             title: 'A title',
             width: 640,
             token: '--token--',
+            revision_id: 1,
         };
     }
 }

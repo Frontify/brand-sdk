@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { CommandNameValidator } from '../../AppBridge';
-import type { AssetChooserOptions, OpenNewPublicationPayload } from '../../types';
+import type { Asset, AssetChooserOptions, OpenNewPublicationPayload } from '../../types';
 
 type OpenAssetChooserPayload = AssetChooserOptions;
 type CloseAssetChooserPayload = void;
@@ -9,6 +9,7 @@ type OpenAssetViewerPayload = { token: string };
 type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
 type OpenNavigationManager = void;
+type DownloadAsset = Asset;
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -16,6 +17,7 @@ export type CommandRegistry = CommandNameValidator<{
     openAssetViewer: OpenAssetViewerPayload;
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
+    downloadAsset: DownloadAsset;
     openNavigationManager: OpenNavigationManager;
     openNewPublication: OpenNewPublicationPayload;
 }>;
