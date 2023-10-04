@@ -30,10 +30,13 @@ describe('MessageBus', () => {
 
         const messageBus = new MessageBus(channel.port1);
 
-        const testResponse = { result: { data: { test: 'test' } } };
-        channel.port2.postMessage(testResponse);
-
+        const testResponse = 'test-message';
+        channel.port2.onmessage = (event) => {
+            const { token } = event.data;
+            channel.port2.postMessage({ message: testResponse, token });
+        };
         const result = await messageBus.post({ operation: 'test' });
+
         expect(result).toEqual(testResponse);
     });
 
@@ -110,7 +113,6 @@ describe('MessageBus', () => {
         expect(response2).toBe(message2);
         expect(response3).toBe(message3);
 
-        console.log(allPromises);
         expect(allPromises.includes(message1)).toBe(true);
         expect(allPromises.includes(message2)).toBe(true);
         expect(allPromises.includes(message3)).toBe(true);
