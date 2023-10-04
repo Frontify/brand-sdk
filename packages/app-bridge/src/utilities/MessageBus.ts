@@ -20,13 +20,13 @@ export class MessageBus implements IMessageBus {
         this.port.onmessage = (event) => {
             const { token } = event.data;
             const messageIndex = this.messageBucket.findIndex((item) => item.token === token);
-
+            console.log('messageIndex', messageIndex);
             if (messageIndex > -1) {
                 const message = this.messageBucket.splice(messageIndex, 1)[0];
-                message.resolve(event.data);
+                message.resolve(event.data.message);
             }
         };
-        //
+
         // this.port.onmessageerror = (error) => {
         //     reject(error);
         // };
@@ -41,7 +41,7 @@ export class MessageBus implements IMessageBus {
 
             setTimeout(() => {
                 reject(new TimeoutReachedError('operation'));
-            }, SUBSCRIBE_TIMEOUT * 8);
+            }, SUBSCRIBE_TIMEOUT * 10);
         });
     }
 }
