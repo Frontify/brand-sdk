@@ -1,0 +1,10 @@
+{
+    "appId": "Test App",
+    "name": "sample-name",
+    "version": "1",
+    "entryPoint": [
+        {
+            "type": "ASSET_CREATION"
+        }
+    ]
+}

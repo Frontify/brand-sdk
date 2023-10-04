@@ -9,6 +9,7 @@ import {
     createDeployment,
     createDevelopmentServer,
     createNewContentBlock,
+    createNewPlatformApp,
     loginUser,
     logoutUser,
 } from './commands/index.js';
@@ -116,7 +117,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
-    const { promptedAppName, stylingFramework } = await prompts([
+    const { promptedAppName, stylingFramework, appType } = await prompts([
         {
             type: 'text',
             name: 'promptedAppName',
@@ -132,6 +133,15 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
         },
         {
             type: 'select',
+            name: 'appType',
+            message: 'Select the type of your app',
+            choices: [
+                { title: 'App (alpha)', value: 'platformApp' },
+                { title: 'Block', value: 'block' },
+            ],
+        },
+        {
+            type: (prev) => (prev === 'block' ? 'select' : null),
             name: 'stylingFramework',
             message: 'Choose a styling framework',
             choices: [
@@ -142,11 +152,17 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
         },
     ]);
 
-    if (!promptedAppName || !stylingFramework) {
+    if (!promptedAppName) {
         exit(0);
     }
 
-    createNewContentBlock(promptedAppName, stylingFramework);
+    if (appType === 'platformApp') {
+        createNewPlatformApp(promptedAppName);
+    } else if (appType === 'block') {
+        createNewContentBlock(promptedAppName, stylingFramework);
+    } else {
+        exit(0);
+    }
 });
 
 /**
