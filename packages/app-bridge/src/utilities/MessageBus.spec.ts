@@ -56,7 +56,6 @@ describe('MessageBus', () => {
         const messageBus = new MessageBus(channel.port1);
 
         channel.port2.onmessage = (event) => {
-            console.log(event);
             expect(event.data.token).toBeDefined();
         };
 

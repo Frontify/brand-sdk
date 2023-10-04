@@ -29,10 +29,10 @@ export class MessageBus implements IMessageBus {
 
     public post(message: unknown) {
         return new Promise((resolve, reject) => {
-            const nextMessage = { message, resolve, reject, token: generateRandomString() };
+            const token = generateRandomString();
 
-            this.messageBucket.push(nextMessage);
-            this.port.postMessage({ message: nextMessage.message, token: nextMessage.token });
+            this.messageBucket.push({ message, resolve, reject, token });
+            this.port.postMessage({ message, token });
 
             setTimeout(() => {
                 reject(new TimeoutReachedError('operation'));
