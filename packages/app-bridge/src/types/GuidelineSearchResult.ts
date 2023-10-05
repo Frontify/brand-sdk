@@ -2,9 +2,11 @@
 
 import type { CamelCasedPropertiesDeep } from 'type-fest';
 
+export type GuidelineSearchResultType = 'PAGE' | 'SECTION' | 'BLOCK' | 'COLOR';
+
 export type GuidelineSearchResultApi = {
     highlights: string[];
-    type: 'PAGE' | 'SECTION' | 'BLOCK' | 'COLOR';
+    type: GuidelineSearchResultType;
     object_id: number;
     page_id: number;
     page_slug: string;
