@@ -16,6 +16,10 @@ export type GuidelineSearchResultApi = {
     document_title: string;
     portal_id: number;
     portal_token: string | null;
+    section_id: string | null;
+    section_slug: string | null;
+    section_title: string | null;
+    color_hex?: string;
 };
 
 export type GuidelineSearchResult = CamelCasedPropertiesDeep<GuidelineSearchResultApi>;
