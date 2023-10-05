@@ -139,7 +139,7 @@ cli.command('create [appName]', 'create a new marketplace app')
                     name: 'appType',
                     message: 'Select the type of your app',
                     choices: [
-                        { title: 'App (alpha)', value: 'platformApp' },
+                        { title: 'App', value: 'platformApp' },
                         { title: 'Block', value: 'block' },
                     ],
                 },
