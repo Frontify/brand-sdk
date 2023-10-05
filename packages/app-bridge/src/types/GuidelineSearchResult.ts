@@ -2,13 +2,13 @@
 
 import type { CamelCasedPropertiesDeep } from 'type-fest';
 
-export const GuidelineSearchResultType = {
+export const GuidelineSearchResultTypeMap = {
     block: 'BLOCK',
     section: 'SECTION',
     page: 'PAGE',
     color: 'COLOR',
 } as const;
-type GuidelineSearchResultType = (typeof GuidelineSearchResultType)[keyof typeof GuidelineSearchResultType];
+type GuidelineSearchResultType = (typeof GuidelineSearchResultTypeMap)[keyof typeof GuidelineSearchResultTypeMap];
 
 export type GuidelineSearchResultApi = {
     highlights: string[];
