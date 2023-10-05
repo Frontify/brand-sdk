@@ -116,54 +116,89 @@ cli.command('deploy', 'deploy the app to the marketplace')
         });
     });
 
-cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
-    const { promptedAppName, stylingFramework, appType } = await prompts([
-        {
-            type: 'text',
-            name: 'promptedAppName',
-            message: 'Enter your app name',
-            initial: appName || 'my-frontify-app',
-            validate: (value: string) => {
-                if (value.trim() === '') {
-                    return 'You need to enter an app name.';
-                }
+cli.command('create [appName]', 'create a new marketplace app')
+    .option('-e, --experimental', 'set experimental flag')
+    .action(async (appName: string, options) => {
+        if (options.experimental) {
+            const { promptedAppName, stylingFramework, appType } = await prompts([
+                {
+                    type: 'text',
+                    name: 'promptedAppName',
+                    message: 'Enter your app name',
+                    initial: appName || 'my-frontify-app',
+                    validate: (value: string) => {
+                        if (value.trim() === '') {
+                            return 'You need to enter an app name.';
+                        }
 
-                return isValidName(value);
-            },
-        },
-        {
-            type: 'select',
-            name: 'appType',
-            message: 'Select the type of your app',
-            choices: [
-                { title: 'App (alpha)', value: 'platformApp' },
-                { title: 'Block', value: 'block' },
-            ],
-        },
-        {
-            type: (prev) => (prev === 'block' ? 'select' : null),
-            name: 'stylingFramework',
-            message: 'Choose a styling framework',
-            choices: [
-                { title: 'Tailwind', value: 'tailwind' },
-                { title: 'CSS Modules', value: 'css-modules' },
-                { title: 'None', value: 'css' },
-            ],
-        },
-    ]);
+                        return isValidName(value);
+                    },
+                },
+                {
+                    type: 'select',
+                    name: 'appType',
+                    message: 'Select the type of your app',
+                    choices: [
+                        { title: 'App (alpha)', value: 'platformApp' },
+                        { title: 'Block', value: 'block' },
+                    ],
+                },
+                {
+                    type: (prev) => (prev === 'block' ? 'select' : null),
+                    name: 'stylingFramework',
+                    message: 'Choose a styling framework',
+                    choices: [
+                        { title: 'Tailwind', value: 'tailwind' },
+                        { title: 'CSS Modules', value: 'css-modules' },
+                        { title: 'None', value: 'css' },
+                    ],
+                },
+            ]);
 
-    if (!promptedAppName) {
-        exit(0);
-    }
+            if (!promptedAppName) {
+                exit(0);
+            }
 
-    if (appType === 'platformApp') {
-        createNewPlatformApp(promptedAppName);
-    } else if (appType === 'block') {
-        createNewContentBlock(promptedAppName, stylingFramework);
-    } else {
-        exit(0);
-    }
-});
+            if (appType === 'platformApp') {
+                createNewPlatformApp(promptedAppName);
+            } else if (appType === 'block') {
+                createNewContentBlock(promptedAppName, stylingFramework);
+            } else {
+                exit(0);
+            }
+        } else {
+            const { promptedAppName, stylingFramework } = await prompts([
+                {
+                    type: 'text',
+                    name: 'promptedAppName',
+                    message: 'Enter your app name',
+                    initial: appName || 'my-frontify-app',
+                    validate: (value: string) => {
+                        if (value.trim() === '') {
+                            return 'You need to enter an app name.';
+                        }
+                        return isValidName(value);
+                    },
+                },
+                {
+                    type: 'select',
+                    name: 'stylingFramework',
+                    message: 'Choose a styling framework',
+                    choices: [
+                        { title: 'Tailwind', value: 'tailwind' },
+                        { title: 'CSS Modules', value: 'css-modules' },
+                        { title: 'None', value: 'css' },
+                    ],
+                },
+            ]);
+
+            if (!promptedAppName || !stylingFramework) {
+                exit(0);
+            }
+
+            createNewContentBlock(promptedAppName, stylingFramework);
+        }
+    });
 
 /**
  * @deprecated `block create` and `theme create` will be removed in version 4.0 in favour of `create`
