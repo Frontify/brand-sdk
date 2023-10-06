@@ -25,6 +25,11 @@ export type DropdownBlock<AppBridge> = {
     size?: 'small' | 'large' | DropdownSize;
 
     /**
+     * Whether the dropdown should open to top or to bottom.
+     */
+    position?: 'top' | 'bottom';
+
+    /**
      * Whether the dropdown value should be clearable or not.
      *
      * It will set the value of the setting to `null` when clicked.
