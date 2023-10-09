@@ -6,6 +6,7 @@ import { exit } from 'node:process';
 import { join } from 'node:path';
 
 import {
+    createAppDeployment,
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
@@ -115,12 +116,21 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
     .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
     .option('--open', '[boolean] open the marketplace app page', { default: false })
+    .option('--platformApp', '[boolean] deploy a platform app', { default: false })
     .action(async (options) => {
-        await createDeployment(options.entryPath, options.outDir, {
-            dryRun: options.dryRun,
-            noVerify: options.noVerify,
-            openInBrowser: options.open,
-        });
+        if (options.platformApp) {
+            await createAppDeployment(options.entryPath, options.outDir, {
+                dryRun: options.dryRun,
+                noVerify: options.noVerify,
+                openInBrowser: options.open,
+            });
+        } else {
+            await createDeployment(options.entryPath, options.outDir, {
+                dryRun: options.dryRun,
+                noVerify: options.noVerify,
+                openInBrowser: options.open,
+            });
+        }
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {

@@ -38,3 +38,13 @@ export const compile = async (projectPath: string, entryFile: string, outputName
             },
         },
     });
+
+export const compilePlatformApp = async (projectName: string, appId: string) =>
+    build({
+        plugins: [
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            react(),
+        ],
+        base: `${projectName}/${appId}/`,
+    });
