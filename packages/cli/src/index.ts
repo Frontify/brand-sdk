@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import {
     createDeployment,
     createDevelopmentServer,
+    createDevelopmentServerForPlatformApp,
     createNewContentBlock,
     loginUser,
     logoutUser,
@@ -78,8 +79,15 @@ cli.command('serve', 'serve the app locally')
     .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
         default: false,
     })
+    .option('--platformApp, --platform-app', '[boolean] serve a platform app', {
+        default: false,
+    })
     .action(async (options) => {
-        await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
+        if (options.platformApp) {
+            await createDevelopmentServerForPlatformApp(options.port);
+        } else {
+            await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
+        }
     });
 
 /**
