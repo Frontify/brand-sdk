@@ -6,8 +6,8 @@
     "main": "dist/index.js",
     "scripts": {
         "dev": "vite",
-        "serve": "frontify-cli serve --entryPath src/main.ts",
-        "build": "tsc && vite build",
+        "serve": "frontify-cli serve",
+        "deploy": "frontify-cli deploy --platformApp --dryRun -e src/index.tsx",
         "lint": "eslint sample-app --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },

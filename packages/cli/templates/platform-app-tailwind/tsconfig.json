@@ -16,10 +16,6 @@
             "DOM"
         ],
         "resolveJsonModule": true,
-        "types": [
-            "cypress",
-            "cypress-real-events"
-        ],
         "skipLibCheck": true
     },
     "include": [
