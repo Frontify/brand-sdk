@@ -165,7 +165,7 @@ export const createAppDeployment = async (
             }
 
             try {
-                await compilePlatformApp('app name', manifest.appId);
+                await compilePlatformApp(manifest.appId);
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
