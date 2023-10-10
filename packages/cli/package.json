@@ -44,9 +44,7 @@
         "picocolors": "^1.0.0",
         "prompts": "^2.4.2",
         "vite": "^4.4.9",
-        "vite-plugin-externals": "^0.6.2",
-        "vite-plugin-html": "^3.2.0",
-        "vite-plugin-singlefile": "^0.13.5"
+        "vite-plugin-externals": "^0.6.2"
     },
     "devDependencies": {
         "@frontify/eslint-config-typescript": "^0.16.1",
