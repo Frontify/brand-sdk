@@ -6,6 +6,7 @@ import { exit } from 'node:process';
 import { join } from 'node:path';
 
 import {
+    AppManifest,
     createAppDeployment,
     createDeployment,
     createDevelopmentServer,
@@ -14,7 +15,7 @@ import {
     loginUser,
     logoutUser,
 } from './commands/index.js';
-import { getValidInstanceUrl, isValidName } from './utils/index.js';
+import { getValidInstanceUrl, isValidName, reactiveJson } from './utils/index.js';
 import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);
@@ -80,11 +81,12 @@ cli.command('serve', 'serve the app locally')
     .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
         default: false,
     })
-    .option('--platformApp, --platform-app', '[boolean] serve a platform app', {
-        default: false,
-    })
+    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options) => {
-        if (options.platformApp) {
+        const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
+        const appType = options.appType ?? manifest.appType;
+
+        if (appType === 'platform-app') {
             await createDevelopmentServerForPlatformApp(options.port);
         } else {
             await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
