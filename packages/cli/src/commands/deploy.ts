@@ -182,7 +182,7 @@ export const createAppDeployment = async (
                 build_files: await makeFilesDict(join(projectPath, distPath), buildFilesToIgnore),
                 source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore),
             };
-            Logger.info(util.inspect(request.source_files));
+            Logger.info(util.inspect(request.build_files));
 
             if (!dryRun) {
                 Logger.info('Sending the files to Frontify Marketplace...');

@@ -3,6 +3,8 @@
 import react from '@vitejs/plugin-react';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
+import { createHash } from 'crypto';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 
 export const compile = async (projectPath: string, entryFile: string, outputName: string) =>
     build({
@@ -39,12 +41,24 @@ export const compile = async (projectPath: string, entryFile: string, outputName
         },
     });
 
-export const compilePlatformApp = async (projectName: string, appId: string) =>
-    build({
+export const compilePlatformApp = async (projectName: string, appId: string) => {
+    const getHash = (text) => createHash('sha256').update(text).digest('hex').substring(0, 8);
+    const htmlHashPlugin = {
+        name: 'html-hash',
+        enforce: 'post',
+        generateBundle(options, bundle) {
+            const indexHtml = bundle['index.html'];
+            indexHtml.fileName = `index.${getHash(indexHtml.source)}.html`;
+        },
+    };
+
+    return build({
         plugins: [
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
             react(),
+            htmlHashPlugin,
+            viteSingleFile(),
         ],
-        base: `${projectName}/${appId}/`,
     });
+};
