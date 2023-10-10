@@ -7,7 +7,6 @@ import { join } from 'node:path';
 
 import {
     AppManifest,
-    createAppDeployment,
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
@@ -15,7 +14,7 @@ import {
     loginUser,
     logoutUser,
 } from './commands/index.js';
-import { getValidInstanceUrl, isValidName, reactiveJson } from './utils/index.js';
+import { compileBlock, compilePlatformApp, getValidInstanceUrl, isValidName, reactiveJson } from './utils/index.js';
 import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);
@@ -104,11 +103,16 @@ for (const appType of ['block', 'theme']) {
         .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
         .option('--open', '[boolean] open the marketplace app page', { default: false })
         .action(async (options) => {
-            await createDeployment(options.entryPath, options.outDir, {
-                dryRun: options.dryRun,
-                noVerify: options.noVerify,
-                openInBrowser: options.open,
-            });
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                },
+                compileBlock,
+            );
         });
 }
 
@@ -124,17 +128,27 @@ cli.command('deploy', 'deploy the app to the marketplace')
         const appType = options.appType ?? manifest.appType;
 
         if (appType === 'platform-app') {
-            await createAppDeployment(options.entryPath, options.outDir, {
-                dryRun: options.dryRun,
-                noVerify: options.noVerify,
-                openInBrowser: options.open,
-            });
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                },
+                compilePlatformApp,
+            );
         } else {
-            await createDeployment(options.entryPath, options.outDir, {
-                dryRun: options.dryRun,
-                noVerify: options.noVerify,
-                openInBrowser: options.open,
-            });
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                },
+                compileBlock,
+            );
         }
     });
 

@@ -5,7 +5,12 @@ import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 
-export const compile = async (projectPath: string, entryFile: string, outputName: string) =>
+export type CompilerOptions = {
+    projectPath: string;
+    entryFile: string;
+    outputName: string;
+};
+export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) =>
     build({
         plugins: [
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -40,7 +45,7 @@ export const compile = async (projectPath: string, entryFile: string, outputName
         },
     });
 
-export const compilePlatformApp = async (appId: string) => {
+export const compilePlatformApp = async ({ outputName }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex').substring(0, 8);
     const htmlHashPlugin = {
         name: 'html-hash',
@@ -52,7 +57,7 @@ export const compilePlatformApp = async (appId: string) => {
     };
 
     return build({
-        base: `/${appId}`,
+        base: `/${outputName}`,
 
         plugins: [
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

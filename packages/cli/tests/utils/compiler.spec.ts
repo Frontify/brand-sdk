@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { beforeEach, describe, expect, test } from 'vitest';
-import { compile } from '../../src/utils/compiler.js';
+import { compileBlock } from '../../src/utils/compiler.js';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
@@ -22,7 +22,7 @@ describe('Compiler utils', async () => {
 
     describe('compile', () => {
         test('should provide a valid build with block and settings', async () => {
-            await compile(rootPath, pathToIndex, 'index');
+            await compileBlock({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
             await import(outputFile);
             expect(global.window).toHaveProperty('index');
             expect(global.window?.index.block).toBe('this is a block');
