@@ -156,16 +156,16 @@ export const createAppDeployment = async (
             // Here we have everything we need for the Manifest
             const manifest = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
 
-            // if (!noVerify) {
-            //     Logger.info('Performing type checks...');
-            //     await promiseExec('npx tsc --noEmit');
-            //
-            //     Logger.info('Performing eslint checks...');
-            //     await promiseExec('npx eslint src');
-            // }
+            if (!noVerify) {
+                Logger.info('Performing type checks...');
+                await promiseExec('npx tsc --noEmit');
+
+                Logger.info('Performing eslint checks...');
+                await promiseExec('npx eslint src');
+            }
 
             try {
-                await compilePlatformApp("app name", manifest.appId);
+                await compilePlatformApp('app name', manifest.appId);
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
