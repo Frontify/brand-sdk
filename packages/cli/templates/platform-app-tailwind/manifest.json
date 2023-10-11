@@ -1,5 +1,5 @@
 {
-    "appId": "changeThisIdToMatchMarketplace",
+    "appId": "<Your app ID>",
     "appType": "platform-app",
     "name": "sample-name",
     "entryPoint": [
