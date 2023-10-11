@@ -29,7 +29,7 @@ const App = () => {
 
     const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
     const [assetRessources, setAssetRessources] = useState<AssetResource>();
-    const [context, setContext] = useState<PlatformAppContext>();
+    const [context, setContext] = useState<PlatformAppContext>([]);
     const [reUploadCounter, setReUploadCounter] = useState<number>(0);
     const [uploading, setUploading] = useState<boolean>(false);
 
@@ -92,7 +92,7 @@ const App = () => {
                                     <Text>
                                         <b>Context</b>:
                                     </Text>
-                                    {Object.keys(context ? context : [])
+                                    {Object.keys(context)
                                         .filter((item) => item !== 'marketplaceServiceAppId')
                                         .map((item) => (
                                             <Text key={item}>{item} </Text>
