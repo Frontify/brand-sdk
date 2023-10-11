@@ -46,19 +46,26 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
     });
 
 export const compilePlatformApp = async ({ outputName }: CompilerOptions) => {
-    const getHash = (text) => createHash('sha256').update(text).digest('hex').substring(0, 8);
+    const getHash = (text) => createHash('sha256').update(text).digest('hex');
     const htmlHashPlugin = {
         name: 'html-hash',
         enforce: 'post',
+        transformIndexHtml(html, { bundle }) {
+            const linkTag = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
+            const scriptTag = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
+
+            html = html.replace('index.css', linkTag);
+            html = html.replace('index.js', scriptTag);
+            return html;
+        },
         generateBundle(options, bundle) {
-            const indexHtml = bundle['index.html'];
-            indexHtml.fileName = `index.${getHash(indexHtml.source)}.html`;
+            bundle['index.html'].fileName = `${outputName}.${getHash(bundle['index.html'].source)}.html`;
+            bundle['index.css'].fileName = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
+            bundle['index.js'].fileName = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
         },
     };
 
     return build({
-        base: `/${outputName}`,
-
         plugins: [
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
@@ -68,9 +75,9 @@ export const compilePlatformApp = async ({ outputName }: CompilerOptions) => {
         build: {
             rollupOptions: {
                 output: {
-                    assetFileNames: () => '[name]-[hash][extname]',
-                    chunkFileNames: '[name]-[hash].js',
-                    entryFileNames: '[name]-[hash].js',
+                    assetFileNames: () => '[name][extname]',
+                    chunkFileNames: '[name].js',
+                    entryFileNames: '[name].js',
                 },
             },
         },
