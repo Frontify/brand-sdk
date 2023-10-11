@@ -108,7 +108,7 @@ const App = () => {
             {context?.type === 'ASSET_ACTION' && (
                 <Button emphasis={ButtonEmphasis.Strong} onClick={onButtonClick}>
                     <div className="tw-flex tw-items-center">
-                        {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}{' '}
+                        {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}
                         {uploading && (
                             <div className="tw-pl-2">
                                 <LoadingCircle size={LoadingCircleSize.Small} style={LoadingCircleStyle.Progress} />
