@@ -25,8 +25,9 @@ type Options = {
     openInBrowser?: boolean;
 };
 
-type Manifest = {
+export type AppManifest = {
     appId: string;
+    appType?: string;
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -65,7 +66,7 @@ export const createDeployment = async (
             dryRun && Logger.info(pc.blue('Dry run: enabled'));
 
             const projectPath = process.cwd();
-            const manifest = reactiveJson<Manifest>(join(projectPath, 'manifest.json'));
+            const manifest = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');

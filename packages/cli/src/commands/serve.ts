@@ -6,6 +6,34 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { Logger } from '../utils/logger.js';
 import pkg from '../../package.json';
 
+class PlatformAppDevelopmentServer {
+    constructor(private readonly port: number) {}
+
+    async serve(): Promise<void> {
+        try {
+            const viteServer = await createServer({
+                root: process.cwd(),
+                configFile: false,
+                plugins: [
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
+                    react(),
+                ],
+                define: {
+                    'process.env.NODE_ENV': JSON.stringify('development'),
+                },
+                base: `http://localhost:${this.port}/`,
+            });
+
+            const server = await viteServer.listen(this.port, true);
+            server.printUrls();
+        } catch (error) {
+            console.error(error);
+            process.exit(1);
+        }
+    }
+}
+
 class DevelopmentServer {
     constructor(
         private readonly entryFilePath: string,
@@ -86,5 +114,12 @@ export const createDevelopmentServer = async (
     Logger.info('Starting the development server...');
 
     const developmentServer = new DevelopmentServer(entryFilePath, port, allowExternal);
+    await developmentServer.serve();
+};
+
+export const createDevelopmentServerForPlatformApp = async (port: number): Promise<void> => {
+    Logger.info('Starting the development server for Apps...');
+
+    const developmentServer = new PlatformAppDevelopmentServer(port);
     await developmentServer.serve();
 };
