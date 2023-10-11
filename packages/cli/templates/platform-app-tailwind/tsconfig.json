@@ -1,28 +1,31 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
-        "isolatedModules": true,
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "sourceMap": true,
-        "strict": true,
-        "target": "es6",
-        "jsx": "react-jsx",
+        "target": "ES2020",
+        "useDefineForClassFields": true,
         "lib": [
-            "ES2021",
-            "DOM"
+            "ES2020",
+            "DOM",
+            "DOM.Iterable"
         ],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "skipLibCheck": true,
+        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
-        "skipLibCheck": true
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
     },
     "include": [
-      "src/**/*"
+        "src"
     ],
-    "exclude": [
-        "../sample-app/node_modules",
-        "dist"
+    "references": [
+        {
+            "path": "./tsconfig.node.json"
+        }
     ]
 }
