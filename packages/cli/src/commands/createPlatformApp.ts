@@ -19,8 +19,8 @@ export const createNewPlatformApp = (appName: string, template = 'tailwind'): vo
     updatePackageJsonProjectName(appName);
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);
-    const blockNameInBlue = pc.blue(`./${appName}`);
-    Logger.defaultInfo(`${Logger.spacer(4)}cd ${blockNameInBlue}`);
+    const appNameInBlue = pc.blue(`./${appName}`);
+    Logger.defaultInfo(`${Logger.spacer(4)}cd ${appNameInBlue}`);
     Logger.defaultInfo(`${Logger.spacer(4)}npm i`);
     Logger.defaultInfo(`${Logger.spacer(4)}npm run dev`);
 
