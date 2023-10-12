@@ -55,8 +55,7 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             const cssFileName = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
             const jsFileName = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
 
-            html = html.replace('index.css', cssFileName);
-            html = html.replace('index.js', jsFileName);
+            html = html.replace('index.css', cssFileName).replace('index.js', jsFileName);
             return html;
         },
         generateBundle(options, bundle) {
