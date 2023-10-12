@@ -46,7 +46,7 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
         },
     });
 
-export const compilePlatformApp = async ({ outputName }: CompilerOptions) => {
+export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
     const htmlHashPlugin = {
         name: 'html-hash',
@@ -73,6 +73,7 @@ export const compilePlatformApp = async ({ outputName }: CompilerOptions) => {
             react(),
             htmlHashPlugin,
         ],
+        root: projectPath,
         build: {
             rollupOptions: {
                 output: {
