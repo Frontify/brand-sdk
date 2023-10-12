@@ -2,9 +2,17 @@
 
 import type { CamelCasedPropertiesDeep } from 'type-fest';
 
+export const GuidelineSearchResultTypeMap = {
+    block: 'BLOCK',
+    section: 'SECTION',
+    page: 'PAGE',
+    color: 'COLOR',
+} as const;
+type GuidelineSearchResultType = (typeof GuidelineSearchResultTypeMap)[keyof typeof GuidelineSearchResultTypeMap];
+
 export type GuidelineSearchResultApi = {
     highlights: string[];
-    type: 'PAGE' | 'SECTION' | 'BLOCK' | 'COLOR';
+    type: GuidelineSearchResultType;
     object_id: number;
     page_id: number;
     page_slug: string;
@@ -16,6 +24,10 @@ export type GuidelineSearchResultApi = {
     document_title: string;
     portal_id: number;
     portal_token: string | null;
+    section_id: string | null;
+    section_slug: string | null;
+    section_title: string | null;
+    color_hex?: string;
 };
 
 export type GuidelineSearchResult = CamelCasedPropertiesDeep<GuidelineSearchResultApi>;
