@@ -14,6 +14,14 @@ declare global {
     }
 }
 
+vi.mock('crypto', () => ({
+    createHash: vi.fn(() => ({
+        update: vi.fn(() => ({
+            digest: vi.fn(() => 'mocked hash'),
+        })),
+    })),
+}));
+
 describe('Compiler utils', async () => {
     beforeEach(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -33,13 +41,6 @@ describe('Compiler utils', async () => {
 
     describe('compile PlatformApp', () => {
         const testHash = 'mocked hash';
-        vi.mock('crypto', () => ({
-            createHash: vi.fn(() => ({
-                update: vi.fn(() => ({
-                    digest: vi.fn(() => 'mocked hash'),
-                })),
-            })),
-        }));
 
         test('should provide a valid build with a index.html', async () => {
             const outputNameTest = 'test-output';
