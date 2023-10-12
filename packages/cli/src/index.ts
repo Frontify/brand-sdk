@@ -125,7 +125,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
-        const appType = options.appType ?? manifest.appType;
+        const appType = options.appType || manifest.appType;
 
         if (appType === 'platform-app') {
             await createDeployment(
