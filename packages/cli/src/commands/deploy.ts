@@ -47,7 +47,7 @@ export const createDeployment = async (
     entryFile: string,
     distPath: string,
     { dryRun = false, noVerify = false, openInBrowser = false }: Options,
-    compiler: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
+    compile: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
@@ -77,7 +77,7 @@ export const createDeployment = async (
             }
 
             try {
-                await compiler({ projectPath, entryFile, outputName: appId });
+                await compile({ projectPath, entryFile, outputName: appId });
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
