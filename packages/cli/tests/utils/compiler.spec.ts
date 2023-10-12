@@ -43,11 +43,13 @@ describe('Compiler utils', async () => {
 
         test('should provide a valid build with a index.html', async () => {
             const outputNameTest = 'test-output';
+
             const result = (await compilePlatformApp({
                 projectPath: rootPath,
                 entryFile: '',
                 outputName: outputNameTest,
             })) as unknown as { output: { fileName: string }[] };
+
             expect(createHash).toHaveBeenCalledWith('sha256');
             expect(result.output[0].fileName).toBe(`${outputNameTest}.${testHash}.js`);
             expect(result.output[1].fileName).toBe(`${outputNameTest}.${testHash}.css`);
