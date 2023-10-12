@@ -40,7 +40,8 @@ describe('Compiler utils', async () => {
                 })),
             })),
         }));
-        test('should provide a valid build with block and settings', async () => {
+
+        test('should provide a valid build with a index.html', async () => {
             const outputNameTest = 'test-output';
             const result = (await compilePlatformApp({
                 projectPath: rootPath,
