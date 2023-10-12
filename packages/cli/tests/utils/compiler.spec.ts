@@ -47,7 +47,6 @@ describe('Compiler utils', async () => {
                 entryFile: '',
                 outputName: outputNameTest,
             })) as unknown as { output: { fileName: string }[] };
-            console.log(result.output[1].fileName);
             expect(createHash).toHaveBeenCalledWith('sha256');
             expect(result.output[0].fileName).toBe(`${outputNameTest}.${testHash}.js`);
             expect(result.output[1].fileName).toBe(`${outputNameTest}.${testHash}.css`);
