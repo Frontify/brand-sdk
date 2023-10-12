@@ -52,11 +52,11 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         name: 'html-hash',
         enforce: 'post',
         transformIndexHtml(html, { bundle }) {
-            const linkTag = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
-            const scriptTag = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
+            const cssFileName = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
+            const jsFileName = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
 
-            html = html.replace('index.css', linkTag);
-            html = html.replace('index.js', scriptTag);
+            html = html.replace('index.css', cssFileName);
+            html = html.replace('index.js', jsFileName);
             return html;
         },
         generateBundle(options, bundle) {
