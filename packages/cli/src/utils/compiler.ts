@@ -10,6 +10,7 @@ export type CompilerOptions = {
     entryFile: string;
     outputName: string;
 };
+
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) =>
     build({
         plugins: [
