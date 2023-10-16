@@ -4,13 +4,12 @@ import pc from 'picocolors';
 import fastGlob from 'fast-glob';
 import open from 'open';
 import { join } from 'node:path';
-
 import {
+    CompilerOptions,
     Configuration,
     HttpClient,
     Logger,
     UserInfo,
-    compile,
     getUser,
     promiseExec,
     reactiveJson,
@@ -25,8 +24,9 @@ type Options = {
     openInBrowser?: boolean;
 };
 
-type Manifest = {
+export type AppManifest = {
     appId: string;
+    appType?: string;
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -44,9 +44,10 @@ const BUILD_FILE_BLOCK_LIST = ['**/*.*.map'];
 const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.idea', 'README.md', '.DS_Store'];
 
 export const createDeployment = async (
-    entryFileName: string,
+    entryFile: string,
     distPath: string,
     { dryRun = false, noVerify = false, openInBrowser = false }: Options,
+    compile: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
@@ -65,7 +66,7 @@ export const createDeployment = async (
             dryRun && Logger.info(pc.blue('Dry run: enabled'));
 
             const projectPath = process.cwd();
-            const manifest = reactiveJson<Manifest>(join(projectPath, 'manifest.json'));
+            const { appId } = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');
@@ -76,7 +77,7 @@ export const createDeployment = async (
             }
 
             try {
-                await compile(projectPath, entryFileName, manifest.appId);
+                await compile({ projectPath, entryFile, outputName: appId });
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
@@ -102,7 +103,7 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
 
                 try {
-                    await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
+                    await httpClient.put(`/api/marketplace/app/${appId}`, request, {
                         headers: { Authorization: `Bearer ${accessToken}` },
                     });
 
@@ -110,7 +111,7 @@ export const createDeployment = async (
 
                     if (openInBrowser) {
                         Logger.info('Opening the Frontify Marketplace page...');
-                        await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                        await open(`https://${instanceUrl}/marketplace/apps/${appId}`);
                     }
                 } catch (error) {
                     Logger.error('An error occured while deploying:', (error as HttpClientError).responseBody.error);

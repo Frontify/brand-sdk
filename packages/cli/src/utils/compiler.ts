@@ -3,8 +3,15 @@
 import react from '@vitejs/plugin-react';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
+import { createHash } from 'crypto';
 
-export const compile = async (projectPath: string, entryFile: string, outputName: string) =>
+export type CompilerOptions = {
+    projectPath: string;
+    entryFile: string;
+    outputName: string;
+};
+
+export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) =>
     build({
         plugins: [
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -38,3 +45,42 @@ export const compile = async (projectPath: string, entryFile: string, outputName
             },
         },
     });
+
+export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
+    const getHash = (text) => createHash('sha256').update(text).digest('hex');
+    const htmlHashPlugin = {
+        name: 'html-hash',
+        enforce: 'post',
+        transformIndexHtml(html, { bundle }) {
+            const cssFileName = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
+            const jsFileName = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
+
+            html = html.replace('index.css', cssFileName).replace('index.js', jsFileName);
+            return html;
+        },
+        generateBundle(options, bundle) {
+            bundle['index.html'].fileName = `${outputName}.${getHash(bundle['index.html'].source)}.html`;
+            bundle['index.css'].fileName = `${outputName}.${getHash(bundle['index.css'].source)}.css`;
+            bundle['index.js'].fileName = `${outputName}.${getHash(bundle['index.js'].code)}.js`;
+        },
+    };
+
+    return build({
+        plugins: [
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            react(),
+            htmlHashPlugin,
+        ],
+        root: projectPath,
+        build: {
+            rollupOptions: {
+                output: {
+                    assetFileNames: () => '[name][extname]',
+                    chunkFileNames: '[name].js',
+                    entryFileNames: '[name].js',
+                },
+            },
+        },
+    });
+};

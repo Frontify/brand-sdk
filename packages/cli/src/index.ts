@@ -6,13 +6,15 @@ import { exit } from 'node:process';
 import { join } from 'node:path';
 
 import {
+    AppManifest,
     createDeployment,
     createDevelopmentServer,
+    createDevelopmentServerForPlatformApp,
     createNewContentBlock,
     loginUser,
     logoutUser,
 } from './commands/index.js';
-import { getValidInstanceUrl, isValidName } from './utils/index.js';
+import { compileBlock, compilePlatformApp, getValidInstanceUrl, isValidName, reactiveJson } from './utils/index.js';
 import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);
@@ -78,8 +80,16 @@ cli.command('serve', 'serve the app locally')
     .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
         default: false,
     })
+    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options) => {
-        await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
+        const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
+        const appType = options.appType || manifest.appType;
+
+        if (appType === 'platform-app') {
+            await createDevelopmentServerForPlatformApp(options.port);
+        } else {
+            await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
+        }
     });
 
 /**
@@ -93,11 +103,16 @@ for (const appType of ['block', 'theme']) {
         .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
         .option('--open', '[boolean] open the marketplace app page', { default: false })
         .action(async (options) => {
-            await createDeployment(options.entryPath, options.outDir, {
-                dryRun: options.dryRun,
-                noVerify: options.noVerify,
-                openInBrowser: options.open,
-            });
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                },
+                compileBlock,
+            );
         });
 }
 
@@ -107,12 +122,34 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
     .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
     .option('--open', '[boolean] open the marketplace app page', { default: false })
+    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options) => {
-        await createDeployment(options.entryPath, options.outDir, {
-            dryRun: options.dryRun,
-            noVerify: options.noVerify,
-            openInBrowser: options.open,
-        });
+        const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
+        const appType = options.appType || manifest.appType;
+
+        if (appType === 'platform-app') {
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                },
+                compilePlatformApp,
+            );
+        } else {
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                },
+                compileBlock,
+            );
+        }
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {

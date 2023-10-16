@@ -18,6 +18,10 @@ export class GuidelineSearchResultApiDummy {
             document_title: 'Document Title',
             portal_id: 1,
             portal_token: 'portal-token',
+            section_id: null,
+            section_slug: null,
+            section_title: null,
+            color_hex: undefined,
         };
     }
 }
