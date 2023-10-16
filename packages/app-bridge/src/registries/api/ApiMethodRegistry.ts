@@ -4,7 +4,10 @@ import type { ApiMethodNameValidator } from '../../AppBridge';
 import type { GetAssetBulkDownloadTokenPayload, GetAssetBulkDownloadTokenResponse } from './GetAssetBulkDownloadToken';
 import type { GetCurrentUserPayload, GetCurrentUserResponse } from './GetCurrentUser';
 import { CreateAssetPayload, CreateAssetResponse } from './CreateAsset';
-import type { GetAssetResourceInfoPayload, GetAssetResourceInfoResponse } from './GetAssetResourceInfo';
+import type {
+    GetAssetResourceInformationPayload,
+    GetAssetResourceInformationResponse,
+} from './GetAssetResourceInformation';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {
@@ -13,5 +16,8 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     };
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
     createAsset: { payload: CreateAssetPayload; response: CreateAssetResponse };
-    getAssetResourceInfo: { payload: GetAssetResourceInfoPayload; response: GetAssetResourceInfoResponse };
+    getAssetResourceInfo: {
+        payload: GetAssetResourceInformationPayload;
+        response: GetAssetResourceInformationResponse;
+    };
 }>;

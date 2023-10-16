@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export type GetAssetResourceInfoPayload = {
+export type GetAssetResourceInformationPayload = {
     assetId: string;
 };
 
-export type GetAssetResourceInfoResponse = {
+export type GetAssetResourceInformationResponse = {
     type: string;
     id: string;
     title?: string;
@@ -14,3 +14,8 @@ export type GetAssetResourceInfoResponse = {
     sourceUrl?: string;
     html?: string;
 };
+
+export const getAssetResourceInformation = (payload: GetAssetResourceInformationPayload) => ({
+    name: 'getAssetResourceInformation',
+    payload,
+});
