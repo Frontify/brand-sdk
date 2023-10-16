@@ -9,7 +9,7 @@ describe('usePlatformAppBridge', () => {
 
     window.location.search = `?token=${TOKEN}`;
     vi.mock('../utilities/subscribe', () => ({
-        subscribe: vi.fn().mockResolvedValue({ test: 'passed' }),
+        subscribe: vi.fn().mockResolvedValue({ port: { onmessage: vi.fn() }, test: 'passed' }),
     }));
 
     vi.mock('../utilities/notify', () => ({
