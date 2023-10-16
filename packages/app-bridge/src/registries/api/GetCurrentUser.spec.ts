@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-/* (c) Copyright Frontify Ltd., all rights reserved. */
 import { describe, expect, it } from 'vitest';
 import { getCurrentUser } from './GetCurrentUser';
 
