@@ -6,13 +6,14 @@ import { createAsset } from './CreateAsset';
 
 describe('CreateAsset', () => {
     it('should return correct method name and payload', () => {
+        const TEST_DATA = 'test';
         const payload = {
-            data: 'test',
-            filename: 'test',
-            parentId: 'test',
-            description: 'test',
-            externalId: 'test',
-            tags: [{ value: 'test' }],
+            data: TEST_DATA,
+            filename: TEST_DATA,
+            parentId: TEST_DATA,
+            description: TEST_DATA,
+            externalId: TEST_DATA,
+            tags: [{ value: TEST_DATA }],
         };
         const currentUser = createAsset(payload);
         expect(currentUser.name).toBe('createAsset');
