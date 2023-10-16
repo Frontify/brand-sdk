@@ -25,6 +25,10 @@ export class MessageBus implements IMessageBus {
                 message.resolve(event.data.message);
             }
         };
+
+        this.port.onmessageerror = () => {
+            throw new Error('Message sending error');
+        };
     }
 
     public post(message: unknown) {
