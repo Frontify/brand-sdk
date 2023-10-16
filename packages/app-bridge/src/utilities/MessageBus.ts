@@ -13,7 +13,6 @@ export class MessageBus implements IMessageBus {
         message: unknown;
         token: string;
         resolve: (value: PromiseLike<unknown> | unknown) => void;
-        reject: (reason?: unknown) => void;
     }[] = [];
 
     constructor(private port: MessagePort) {
@@ -35,7 +34,7 @@ export class MessageBus implements IMessageBus {
         return new Promise((resolve, reject) => {
             const token = generateRandomString();
 
-            this.messageBucket.push({ message, resolve, reject, token });
+            this.messageBucket.push({ message, resolve, token });
             this.port.postMessage({ message, token });
 
             setTimeout(() => {
