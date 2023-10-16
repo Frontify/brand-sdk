@@ -8,3 +8,5 @@ export type GetCurrentUserResponse = {
     avatar?: string | null;
     email: string;
 };
+
+export const getCurrentUser = (payload: GetCurrentUserPayload) => ({ name: 'getCurrentUser', payload });
