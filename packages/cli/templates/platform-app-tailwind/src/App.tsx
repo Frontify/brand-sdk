@@ -1,6 +1,4 @@
-/* (c) Copyright Frontify Ltd., all rights reserved. */
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Button,
     ButtonEmphasis,
@@ -24,12 +22,12 @@ type AssetResource = {
     html?: string;
 };
 
-const App = () => {
+export const App = () => {
     const appBridge = usePlatformAppBridge();
 
     const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
     const [assetRessources, setAssetRessources] = useState<AssetResource>();
-    const [context, setContext] = useState<PlatformAppContext>([]);
+    const [context, setContext] = useState<PlatformAppContext>();
     const [reUploadCounter, setReUploadCounter] = useState<number>(0);
     const [uploading, setUploading] = useState<boolean>(false);
 
@@ -73,16 +71,16 @@ const App = () => {
     };
 
     return (
-        <div className="tw-flex tw-justify-center tw-flex-col tw-items-center tw-h-[100vh]">
+        <div className="flex justify-center flex-col items-center h-[100vh]">
             <a href="https://developer.frontify.com" target="_blank" rel="noreferrer">
-                <Text size="large">Frontify</Text>
+                Frontify
             </a>
-            <div className="tw-p-4">
+            <div className="p-4">
                 <Card>
-                    <div className="tw-flex tw-flex-row tw-items-center tw-p-3">
-                        <div className="tw-w-[550px]">
+                    <div className="flex flex-row items-center p-3">
+                        <div className="w-[550px]">
                             <Stack spacing={8} padding={16} margin={4}>
-                                <div className="tw-self-center">
+                                <div className="self-center">
                                     <Text size="large">Frontify Platform Apps</Text>
                                 </div>
                                 <Text>
@@ -91,26 +89,24 @@ const App = () => {
                                 <div>
                                     <Text>
                                         <b>Context</b>:
-                                    </Text>
-                                    {Object.keys(context)
-                                        .filter((item) => item !== 'marketplaceServiceAppId')
-                                        .map((item) => (
-                                            <Text key={item}>{item} </Text>
-                                        ))}
+                                    </Text>{' '}
+                                    {Object.keys(context ? context : []).map((item) => (
+                                        <Text key={item}>{item} </Text>
+                                    ))}
                                 </div>
                             </Stack>
                         </div>
-                        {imageSrc && <img src={imageSrc} alt="alt-title" className="tw-h-36" />}
+                        {imageSrc && <img src={imageSrc} alt="alt-title" className="h-36" />}
                     </div>
                 </Card>
             </div>
 
             {context?.type === 'ASSET_ACTION' && (
                 <Button emphasis={ButtonEmphasis.Strong} onClick={onButtonClick}>
-                    <div className="tw-flex tw-items-center">
-                        {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}
+                    <div className="flex items-center">
+                        {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}{' '}
                         {uploading && (
-                            <div className="tw-pl-2">
+                            <div className="pl-2">
                                 <LoadingCircle size={LoadingCircleSize.Small} style={LoadingCircleStyle.Progress} />
                             </div>
                         )}
@@ -120,5 +116,3 @@ const App = () => {
         </div>
     );
 };
-
-export default App;

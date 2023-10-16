@@ -3,6 +3,9 @@
     "appType": "platform-app",
     "entryPoint": [
         {
+            "type": "ASSET_CREATION"
+        },
+        {
             "type": "ASSET_ACTION"
         }
     ]
