@@ -12,7 +12,7 @@ export class MessageBus implements IMessageBus {
     private messageBucket: {
         message: unknown;
         token: string;
-        resolve: (value: PromiseLike<unknown> | unknown) => void;
+        resolve: (value: unknown) => void;
     }[] = [];
 
     constructor(private port: MessagePort) {
