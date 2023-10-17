@@ -10,8 +10,8 @@ import {
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
+    createNewApp,
     createNewContentBlock,
-    createNewPlatformApp,
     loginUser,
     logoutUser,
 } from './commands/index.js';
@@ -176,12 +176,12 @@ cli.command('create [appName]', 'create a new marketplace app')
                     name: 'appType',
                     message: 'Select the type of your app',
                     choices: [
-                        { title: 'App', value: 'platformApp' },
-                        { title: 'Block', value: 'block' },
+                        { title: 'App', value: 'platform-app' },
+                        { title: 'Block', value: 'content-block' },
                     ],
                 },
                 {
-                    type: (prev) => (prev === 'block' ? 'select' : null),
+                    type: 'select',
                     name: 'stylingFramework',
                     message: 'Choose a styling framework',
                     choices: [
@@ -192,17 +192,11 @@ cli.command('create [appName]', 'create a new marketplace app')
                 },
             ]);
 
-            if (!promptedAppName) {
+            if (!promptedAppName || !stylingFramework || !appType) {
                 exit(0);
             }
 
-            if (appType === 'platformApp') {
-                createNewPlatformApp(promptedAppName);
-            } else if (appType === 'block') {
-                createNewContentBlock(promptedAppName, stylingFramework);
-            } else {
-                exit(0);
-            }
+            createNewApp(promptedAppName, stylingFramework, appType);
         } else {
             const { promptedAppName, stylingFramework } = await prompts([
                 {
