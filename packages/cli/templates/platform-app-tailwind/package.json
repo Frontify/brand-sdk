@@ -3,11 +3,10 @@
     "private": true,
     "author": "Frontify Developers <developers@frontify.com>",
     "version": "0.0.0",
-    "type": "module",
     "scripts": {
         "serve": "frontify-cli serve",
-        "login": "frontify-cli login",
-        "deploy": "frontify-cli deploy",
+        "login": "NODE_TLS_REJECT_UNAUTHORIZED=0 frontify-cli login",
+        "deploy": "NODE_TLS_REJECT_UNAUTHORIZED=0 frontify-cli deploy",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"

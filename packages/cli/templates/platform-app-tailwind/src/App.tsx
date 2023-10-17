@@ -1,14 +1,7 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { useEffect, useState } from 'react';
-import {
-    Button,
-    ButtonEmphasis,
-    Card,
-    LoadingCircle,
-    LoadingCircleSize,
-    LoadingCircleStyle,
-    Stack,
-    Text,
-} from '@frontify/fondue';
+import { Card, LoadingCircle, LoadingCircleSize, LoadingCircleStyle, Stack, Text } from '@frontify/fondue';
 import { PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
 
 type AssetResource = {
@@ -102,8 +95,8 @@ export const App = () => {
             </div>
 
             {context?.type === 'ASSET_ACTION' && (
-                <Button emphasis={ButtonEmphasis.Strong} onClick={onButtonClick}>
-                    <div className="flex items-center">
+                <button className="bg-black rounded py-1 px-3" onClick={onButtonClick}>
+                    <div className="flex items-center text-white">
                         {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}{' '}
                         {uploading && (
                             <div className="pl-2">
@@ -111,7 +104,7 @@ export const App = () => {
                             </div>
                         )}
                     </div>
-                </Button>
+                </button>
             )}
         </div>
     );
