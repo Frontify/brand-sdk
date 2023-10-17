@@ -2,27 +2,40 @@
 
 import { InitializationError, TimeoutReachedError } from '../errors';
 import { SUBSCRIBE_TIMEOUT } from './subscribe';
+import { generateRandomString } from './hash';
 
 export interface IMessageBus {
     post(message: { method: string; parameter: unknown }): unknown;
 }
 
 export class MessageBus implements IMessageBus {
-    constructor(private port: MessagePort) {}
+    private messageBucket: {
+        message: unknown;
+        token: string;
+        resolve: (value: unknown) => void;
+    }[] = [];
+
+    constructor(private port: MessagePort) {
+        this.port.onmessage = (event) => {
+            const { token } = event.data;
+            const messageIndex = this.messageBucket.findIndex((item) => item.token === token);
+            if (messageIndex > -1) {
+                const message = this.messageBucket.splice(messageIndex, 1)[0];
+                message.resolve(event.data.message);
+            }
+        };
+    }
 
     public post(message: unknown) {
         return new Promise((resolve, reject) => {
-            this.port.postMessage(message);
+            const token = generateRandomString();
 
-            this.port.onmessage = (event) => {
-                resolve(event.data);
-            };
-            this.port.onmessageerror = (error) => {
-                reject(error);
-            };
+            this.messageBucket.push({ message, resolve, token });
+            this.port.postMessage({ message, token });
+
             setTimeout(() => {
                 reject(new TimeoutReachedError('operation'));
-            }, SUBSCRIBE_TIMEOUT * 8);
+            }, SUBSCRIBE_TIMEOUT * 10);
         });
     }
 }
