@@ -26,7 +26,7 @@ import { openConnection } from './registries';
 import { InitializationError } from './errors';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<
-    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInfo' | 'createAsset'>
+    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset'>
 >;
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{

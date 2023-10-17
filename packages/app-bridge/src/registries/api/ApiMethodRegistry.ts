@@ -16,7 +16,7 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     };
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
     createAsset: { payload: CreateAssetPayload; response: CreateAssetResponse };
-    getAssetResourceInfo: {
+    getAssetResourceInformation: {
         payload: GetAssetResourceInformationPayload;
         response: GetAssetResourceInformationResponse;
     };
