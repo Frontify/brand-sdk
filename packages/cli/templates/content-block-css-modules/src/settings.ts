@@ -1,4 +1,4 @@
-import { DropdownSize, IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
+import { IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
 
 export const settings = defineSettings({
     main: [
@@ -6,7 +6,7 @@ export const settings = defineSettings({
             id: 'main-dropdown',
             type: 'dropdown',
             defaultValue: 'content_block',
-            size: DropdownSize.Large,
+            size: 'large',
             disabled: true,
             choices: [
                 {
