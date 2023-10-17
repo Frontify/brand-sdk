@@ -13,4 +13,7 @@ export type CreateAssetResponse = {
     assetId: string;
 };
 
-export const createAsset = (payload: CreateAssetPayload) => ({ name: 'createAsset', payload });
+export const createAsset = (payload: CreateAssetPayload): { name: 'createAsset'; payload: CreateAssetPayload } => ({
+    name: 'createAsset',
+    payload,
+});
