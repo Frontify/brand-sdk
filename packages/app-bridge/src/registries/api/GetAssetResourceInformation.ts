@@ -15,7 +15,9 @@ export type GetAssetResourceInformationResponse = {
     html?: string;
 };
 
-export const getAssetResourceInformation = (payload: GetAssetResourceInformationPayload) => ({
+export const getAssetResourceInformation = (
+    payload: GetAssetResourceInformationPayload,
+): { name: 'getAssetResourceInformation'; payload: GetAssetResourceInformationPayload } => ({
     name: 'getAssetResourceInformation',
     payload,
 });
