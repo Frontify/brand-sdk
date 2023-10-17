@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Card, LoadingCircle, LoadingCircleSize, LoadingCircleStyle, Stack, Text } from '@frontify/fondue';
-import { PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
+import {
+    PlatformAppContext,
+    createAsset,
+    getAssetResourceInformation,
+    usePlatformAppBridge,
+} from '@frontify/app-bridge';
 
 type AssetResource = {
     type: string;
@@ -20,7 +25,7 @@ export const App = () => {
 
     const [imageSrc, setImageSrc] = useState<string | undefined>(undefined);
     const [assetRessources, setAssetRessources] = useState<AssetResource>();
-    const [context, setContext] = useState<PlatformAppContext>();
+    const [context, setContext] = useState<PlatformAppContext>([]);
     const [reUploadCounter, setReUploadCounter] = useState<number>(0);
     const [uploading, setUploading] = useState<boolean>(false);
 
@@ -34,10 +39,9 @@ export const App = () => {
             setContext(currentContext);
 
             if (currentContext?.type === 'ASSET_ACTION') {
-                const assetRessources = await appBridge.api({
-                    name: 'getAssetResourceInfo',
-                    payload: { assetId: currentContext.assetId },
-                });
+                const assetRessources = await appBridge.api(
+                    getAssetResourceInformation({ assetId: currentContext.assetId }),
+                );
 
                 setAssetRessources(assetRessources);
                 setImageSrc(assetRessources.previewUrl);
@@ -51,14 +55,14 @@ export const App = () => {
         }
 
         setUploading(true);
-        await appBridge.api({
-            name: 'createAsset',
-            payload: {
+        await appBridge.api(
+            createAsset({
                 data: assetRessources.downloadUrl,
                 filename: 'test.jpeg',
                 parentId: appBridge?.context('parentId').get(),
-            },
-        });
+            }),
+        );
+
         setReUploadCounter(reUploadCounter + 1);
         setUploading(false);
     };
@@ -83,7 +87,7 @@ export const App = () => {
                                     <Text>
                                         <b>Context</b>:
                                     </Text>{' '}
-                                    {Object.keys(context ? context : []).map((item) => (
+                                    {Object.keys(context).map((item) => (
                                         <Text key={item}>{item} </Text>
                                     ))}
                                 </div>
@@ -97,7 +101,7 @@ export const App = () => {
             {context?.type === 'ASSET_ACTION' && (
                 <button className="bg-black rounded py-1 px-3" onClick={onButtonClick}>
                     <div className="flex items-center text-white">
-                        {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}{' '}
+                        {reUploadCounter > 0 ? `re-uploaded ${reUploadCounter} times` : 'Reupload Image'}
                         {uploading && (
                             <div className="pl-2">
                                 <LoadingCircle size={LoadingCircleSize.Small} style={LoadingCircleStyle.Progress} />
