@@ -1,5 +1,19 @@
 # @frontify/frontify-cli
 
+## 5.4.0
+
+### Minor Changes
+
+- [#600](https://github.com/Frontify/brand-sdk/pull/600) [`4599249`](https://github.com/Frontify/brand-sdk/commit/45992493e16789688e3447fe0cf1d2feb9f3fcea) Thanks [@julianiff](https://github.com/julianiff)! - feat: add platform App cli deploy command
+
+- [#596](https://github.com/Frontify/brand-sdk/pull/596) [`e3a7a94`](https://github.com/Frontify/brand-sdk/commit/e3a7a942a5c77e57525c7f232156811b9115cbf4) Thanks [@julianiff](https://github.com/julianiff)! - feat: add platform app to CLI and add a sample-app
+
+### Patch Changes
+
+- [#604](https://github.com/Frontify/brand-sdk/pull/604) [`bec5207`](https://github.com/Frontify/brand-sdk/commit/bec52077c52a9c03648274e5ea3caf2eac5f7c45) Thanks [@floriangaechter](https://github.com/floriangaechter)! - Fix deprecated dropdown types in templates
+
+- [#599](https://github.com/Frontify/brand-sdk/pull/599) [`6332d4e`](https://github.com/Frontify/brand-sdk/commit/6332d4e64cd30ac1dbb38c24cf14cebfc5e62820) Thanks [@julianiff](https://github.com/julianiff)! - feat: add flag to run serve as a platformApp
+
 ## 5.3.17
 
 ### Patch Changes
