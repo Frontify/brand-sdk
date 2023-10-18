@@ -12,20 +12,20 @@
     "dependencies": {
         "@frontify/app-bridge": "^3.0.0-beta.98",
         "@frontify/fondue": "12.0.0-beta.334",
-        "@frontify/fondue-tokens": "^3.3.0",
+        "@frontify/fondue-tokens": "^3.4.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.16.2",
         "@frontify/frontify-cli": "^5.3.17",
-        "@types/react": "^18.2.15",
-        "@types/react-dom": "^18.2.7",
+        "@types/react": "^18.2.28",
+        "@types/react-dom": "^18.2.13",
         "autoprefixer": "^10.4.16",
         "eslint": "^8.51.0",
         "postcss": "^8.4.31",
         "prettier": "^3.0.3",
         "tailwindcss": "^3.3.3",
-        "typescript": "^5.0.2"
+        "typescript": "^5.2.2"
     }
 }
