@@ -1,6 +1,6 @@
 ---
 "@frontify/app-bridge": patch
-"@frontify/frontify-cli": patch
+"@frontify/frontify-cli": minor
 ---
 
 feat: add platform app to CLI and add a sample-app
