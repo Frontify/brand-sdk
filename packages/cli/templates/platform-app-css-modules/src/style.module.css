@@ -1,0 +1,12 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.text {
+    font-weight: 700;
+    color: cornflowerblue;
+}

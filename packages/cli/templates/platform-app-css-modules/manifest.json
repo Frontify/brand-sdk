@@ -1,0 +1,9 @@
+{
+    "appId": "<Your app ID>",
+    "appType": "platform-app",
+    "name": "template-platform-app-css-module",
+    "entryPoint": [
+        { "type": "ASSET_CREATION" },
+        { "type": "ASSET_ACTION" }
+    ]
+}
