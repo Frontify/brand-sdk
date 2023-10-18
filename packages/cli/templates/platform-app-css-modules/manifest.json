@@ -1,5 +1,5 @@
 {
-    "appId": "<appId Here>",
+    "appId": "<Your app ID>",
     "appType": "platform-app",
     "name": "template-platform-app-css-module",
     "entryPoint": [
