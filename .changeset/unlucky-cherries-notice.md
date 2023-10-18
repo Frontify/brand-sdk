@@ -1,5 +1,4 @@
 ---
-"@frontify/app-bridge": patch
 "@frontify/frontify-cli": minor
 ---
 
