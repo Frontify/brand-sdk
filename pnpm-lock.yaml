@@ -19,7 +19,7 @@ importers:
         version: 5.0.6
       '@frontify/fondue':
         specifier: 12.0.0-beta.341
-        version: 12.0.0-beta.341(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.341(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
       '@vitejs/plugin-react':
         specifier: ^4.0.4
         version: 4.0.4(vite@4.4.9)
@@ -115,8 +115,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       sinon:
-        specifier: 15.2.0
-        version: 15.2.0
+        specifier: 16.1.3
+        version: 16.1.3
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -246,7 +246,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.341
-        version: 12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -330,8 +330,8 @@ importers:
         specifier: ^3.28.1
         version: 3.28.1
       sinon:
-        specifier: 15.2.0
-        version: 15.2.0
+        specifier: 16.1.3
+        version: 16.1.3
       tailwindcss:
         specifier: ^3.3.3
         version: 3.3.3(ts-node@10.9.1)
@@ -358,7 +358,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.341
-        version: 12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.22.17
@@ -1483,7 +1483,7 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
+  /@frontify/fondue@12.0.0-beta.341(@babel/core@7.22.17)(@types/node@18.17.12)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
     resolution: {integrity: sha512-/V2Q/1aNL6i/Bw52YJDXpxZnRLZ8PZuGZWAso35o78i/bC/3Q95QWxzQmFuupyIyflyWPfkemwCM7S38EL4nBA==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -1553,7 +1553,6 @@ packages:
       react-textarea-autosize: 8.5.3(@types/react@18.2.21)(react@18.2.0)
       remark-gfm: 3.0.1
       remark-parse: 10.0.2
-      scheduler: 0.23.0
       slate: 0.94.1
       slate-react: 0.98.3(react-dom@18.2.0)(react@18.2.0)(slate@0.94.1)
       unified: 10.1.2
@@ -1578,6 +1577,7 @@ packages:
       - jotai-xstate
       - jotai-zustand
       - react-native
+      - scheduler
       - slate-history
       - slate-hyperscript
       - styled-components
@@ -1587,7 +1587,7 @@ packages:
       - zustand
     dev: false
 
-  /@frontify/fondue@12.0.0-beta.341(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
+  /@frontify/fondue@12.0.0-beta.341(@babel/core@7.22.9)(@types/node@18.17.12)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.3)(ts-node@10.9.1)(zustand@3.7.2):
     resolution: {integrity: sha512-/V2Q/1aNL6i/Bw52YJDXpxZnRLZ8PZuGZWAso35o78i/bC/3Q95QWxzQmFuupyIyflyWPfkemwCM7S38EL4nBA==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -1657,7 +1657,6 @@ packages:
       react-textarea-autosize: 8.5.3(@types/react@18.2.21)(react@18.2.0)
       remark-gfm: 3.0.1
       remark-parse: 10.0.2
-      scheduler: 0.23.0
       slate: 0.94.1
       slate-react: 0.98.3(react-dom@18.2.0)(react@18.2.0)(slate@0.94.1)
       unified: 10.1.2
@@ -1682,6 +1681,7 @@ packages:
       - jotai-xstate
       - jotai-zustand
       - react-native
+      - scheduler
       - slate-history
       - slate-hyperscript
       - styled-components
@@ -14201,8 +14201,8 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /sinon@15.2.0:
-    resolution: {integrity: sha512-nPS85arNqwBXaIsFCkolHjGIkFo+Oxu9vbgmBJizLAhqe6P2o3Qmj3KCUoRkfhHtvgDhZdWD3risLHAUJ8npjw==}
+  /sinon@16.1.3:
+    resolution: {integrity: sha512-mjnWWeyxcAf9nC0bXcPmiDut+oE8HYridTNzBbF98AYVLmWwGRp2ISEpyhYflG1ifILT+eNn3BmKUJPxjXUPlA==}
     dependencies:
       '@sinonjs/commons': 3.0.0
       '@sinonjs/fake-timers': 10.3.0
