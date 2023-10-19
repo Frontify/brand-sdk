@@ -10,7 +10,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@frontify/app-bridge": "^3.0.0-beta.98",
+        "@frontify/app-bridge": "^3.0.0-beta.99",
         "@frontify/fondue": "12.0.0-beta.334",
         "@frontify/fondue-tokens": "^3.4.0",
         "react": "^18.2.0",
