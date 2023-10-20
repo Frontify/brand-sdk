@@ -126,7 +126,7 @@ export type FontValue = {
     /**
      * The weight of the font on hover (100-1000, increment of 100).
      */
-    hoverWeight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000;
+    hoverWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000 | null;
 
     /**
      * The size of the font on hover.
@@ -205,7 +205,7 @@ export type FontValue = {
     /**
      * The weight of the font when active (100-1000, increment of 100).
      */
-    activeWeight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000;
+    activeWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000 | null;
 
     /**
      * The size of the font when active.
