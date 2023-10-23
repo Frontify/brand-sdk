@@ -22,7 +22,11 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
 
             const { assetBulkDownloadToken } = await appBridge.api({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds, documentBlockId: appBridge.getBlockId() },
+                payload: {
+                    settingIds,
+                    documentBlockId: appBridge.getBlockId(),
+                    language: appBridge.getTranslationLanguage(),
+                },
             });
 
             setDownloadUrl(null);

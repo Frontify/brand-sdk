@@ -3,6 +3,7 @@
 export type GetAssetBulkDownloadTokenPayload = {
     documentBlockId: number;
     settingIds?: string[];
+    language?: string;
 };
 
 export type GetAssetBulkDownloadTokenResponse = {
