@@ -7,6 +7,7 @@ import { getAppBridgeBlockStub } from '../tests';
 import { AssetBulkDownloadState, useAssetBulkDownload } from './';
 
 const appBridgeError = new Error('Something went wrong');
+const DUMMY_LANGUAGE = 'de';
 
 describe('useAssetBulkDownload', () => {
     beforeEach(() => {
@@ -30,11 +31,13 @@ describe('useAssetBulkDownload', () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
         const settingIds = ['setting1', 'setting2'];
+
         result.current.generateBulkDownload(settingIds);
+
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.api, {
                 name: 'getAssetBulkDownloadToken',
-                payload: { documentBlockId: appBridgeStub.getBlockId(), settingIds },
+                payload: { documentBlockId: appBridgeStub.getBlockId(), settingIds, language: 'en' },
             });
         });
     });
