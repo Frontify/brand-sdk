@@ -11,6 +11,20 @@ export enum FontProvider {
     System = 'System',
 }
 
+export enum PaddingSizes {
+    None = '0',
+    S = '4px',
+    M = '8px',
+    L = '12px',
+}
+
+export enum BorderRadius {
+    None = '0',
+    S = '2px',
+    M = '4px',
+    L = '12px',
+}
+
 export type FontValue = {
     /**
      * The origin of the font.
@@ -80,9 +94,14 @@ export type FontValue = {
     underline: boolean;
 
     /**
-     * The rgba-color of the text on hover.
+     * Whether the text has highlight (backgound color).
      */
-    hoverColor?: {
+    highlight: boolean;
+
+    /**
+     * The highlight color.
+     */
+    highlightColor?: {
         /**
          * The red value of the color (0-255).
          */
@@ -102,9 +121,33 @@ export type FontValue = {
     } | null;
 
     /**
-     * The background color of the text on hover.
+     * Padding around the text.
      */
-    hoverBackgroundColor?: {
+    highlightPaddingCustomEnabled?: boolean;
+    highlightPadding?: PaddingSizes | null;
+    highlightPaddingCustom?: {
+        top: string;
+        right: string;
+        bottom: string;
+        left: string;
+    } | null;
+
+    /**
+     * Highlight corner radius.
+     */
+    highlightCornerRadiusCustomEnabled?: boolean;
+    highlightCornerRadiusCustom?: {
+        topLeft: string;
+        topRight: string;
+        bottomRight: string;
+        bottomLeft: string;
+    } | null;
+    highlightCornerRadius?: BorderRadius | null;
+
+    /**
+     * The rgba-color of the text on hover.
+     */
+    hoverColor?: {
         /**
          * The red value of the color (0-255).
          */
@@ -159,6 +202,57 @@ export type FontValue = {
     hoverUnderline: boolean;
 
     /**
+     * Whether the text has highlight (backgound color) on hover.
+     */
+    hoverHighlight: boolean;
+
+    /**
+     * The highlight color of the text on hover.
+     */
+    hoverHighlightColor?: {
+        /**
+         * The red value of the color (0-255).
+         */
+        red: number;
+        /**
+         * The green value of the color (0-255).
+         */
+        green: number;
+        /**
+         * The blue value of the color (0-255).
+         */
+        blue: number;
+        /**
+         * The alpha value of the color (0-1).
+         */
+        alpha?: number;
+    } | null;
+
+    /**
+     * Padding around the text on hover.
+     */
+    hoverHighlightPaddingCustomEnabled?: boolean;
+    hoverHighlightPadding?: PaddingSizes | null;
+    hoverHighlightPaddingCustom?: {
+        top: string;
+        right: string;
+        bottom: string;
+        left: string;
+    } | null;
+
+    /**
+     * Highlight corner radius on hover.
+     */
+    hoverHighlightCornerRadiusCustomEnabled?: boolean;
+    hoverHighlightCornerRadiusCustom?: {
+        topLeft: string;
+        topRight: string;
+        bottomRight: string;
+        bottomLeft: string;
+    } | null;
+    hoverHighlightCornerRadius?: BorderRadius | null;
+
+    /**
      * The color of the text when active.
      */
     activeColor?: {
@@ -176,28 +270,6 @@ export type FontValue = {
         blue: number;
         /**
          * The alpha value of the color when active (0-1).
-         */
-        alpha?: number;
-    } | null;
-
-    /**
-     * The background color of the text when active.
-     */
-    activeBackgroundColor?: {
-        /**
-         * The red value of the background color when active (0-255).
-         */
-        red: number;
-        /**
-         * The green value of the background color when active (0-255).
-         */
-        green: number;
-        /**
-         * The blue value of the background color when active (0-255).
-         */
-        blue: number;
-        /**
-         * The alpha value of the background color when active (0-1).
          */
         alpha?: number;
     } | null;
@@ -236,6 +308,57 @@ export type FontValue = {
      * Whether the font should be underlined or not when active.
      */
     activeUnderline: boolean;
+
+    /**
+     * Whether the text has highlight (backgound color) when active.
+     */
+    activeHighlight: boolean;
+
+    /**
+     * The highlight of the text when active.
+     */
+    activeHighlightColor?: {
+        /**
+         * The red value of the color (0-255).
+         */
+        red: number;
+        /**
+         * The green value of the color (0-255).
+         */
+        green: number;
+        /**
+         * The blue value of the color (0-255).
+         */
+        blue: number;
+        /**
+         * The alpha value of the color (0-1).
+         */
+        alpha?: number;
+    } | null;
+
+    /**
+     * Padding around the text when active.
+     */
+    activeHighlightPaddingCustomEnabled?: boolean;
+    activeHighlightPadding?: PaddingSizes | null;
+    activeHighlightPaddingCustom?: {
+        top: string;
+        right: string;
+        bottom: string;
+        left: string;
+    } | null;
+
+    /**
+     * Highlight corner radius when active.
+     */
+    activeHighlightCornerRadiusCustomEnabled?: boolean;
+    activeHighlightCornerRadiusCustom?: {
+        topLeft: string;
+        topRight: string;
+        bottomRight: string;
+        bottomLeft: string;
+    } | null;
+    activeHighlightCornerRadius?: BorderRadius | null;
 };
 
 export type FontInputBlock<AppBridge> = {
