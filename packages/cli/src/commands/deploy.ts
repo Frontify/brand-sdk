@@ -85,7 +85,9 @@ export const createDeployment = async (
 
             const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
 
-            const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore'));
+            const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
+                (entry) => entry !== 'manifest.json',
+            );
             const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
                 join(projectPath, path),
             );
