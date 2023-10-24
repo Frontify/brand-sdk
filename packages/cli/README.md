@@ -60,6 +60,8 @@ The Frontify URL represent your instance URL.
 
 Example: `weare.frontify.com` or `https://weare.frontify.com`
 
+If you are using a local development environment, you might need to put `NODE_TLS_REJECT_UNAUTHORIZED=0` before the command
+
 ### Logout
 
 ```bash
