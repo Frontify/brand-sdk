@@ -40,8 +40,8 @@ export type PlatformAppState = {
 };
 
 type InitializeEvent = {
-    apiIframePort: MessagePort;
-    stateIframePort: MessagePort;
+    apiPort: MessagePort;
+    statePort: MessagePort;
     context: PlatformAppContext;
     state: PlatformAppState;
 };
@@ -116,9 +116,9 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
                 subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(
-                    ({ stateIframePort, apiIframePort, context, state }) => {
-                        this.apiMessageBus = new MessageBus(apiIframePort);
-                        this.stateMessageBus = new MessageBus(stateIframePort);
+                    ({ statePort, apiPort, context, state }) => {
+                        this.apiMessageBus = new MessageBus(apiPort);
+                        this.stateMessageBus = new MessageBus(statePort);
 
                         this.localContext = context;
                         this.localState = state;
