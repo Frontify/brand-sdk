@@ -40,7 +40,8 @@ export type PlatformAppState = {
 };
 
 type InitializeEvent = {
-    port: MessagePort;
+    apiIframePort: MessagePort;
+    stateIframePort: MessagePort;
     context: PlatformAppContext;
 };
 
@@ -73,7 +74,8 @@ export type PlatformAppEvent = EventNameValidator<
 >;
 
 export class AppBridgePlatformApp implements IAppBridgePlatformApp {
-    private messageBus: IMessageBus = new ErrorMessageBus();
+    private apiMessageBus: IMessageBus = new ErrorMessageBus();
+    private stateMessageBus: IMessageBus = new ErrorMessageBus();
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
 
@@ -94,7 +96,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
     ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
-        return this.messageBus.post({
+        return this.apiMessageBus.post({
             method: 'api',
             parameter: apiHandler,
         }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
@@ -111,12 +113,17 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 const PUBSUB_CHECKSUM = generateRandomString();
 
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
-                subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ port, context }) => {
-                    this.messageBus = new MessageBus(port);
-                    this.localContext = context;
-                    this.callSubscribedTopic('Context.connected', [true, true]);
-                    this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
-                });
+                subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(
+                    ({ stateIframePort, apiIframePort, context }) => {
+                        console.log(stateIframePort, apiIframePort, context);
+                        this.apiMessageBus = new MessageBus(apiIframePort);
+                        this.stateMessageBus = new MessageBus(stateIframePort);
+                        this.localContext = context;
+
+                        this.callSubscribedTopic('Context.connected', [true, true]);
+                        this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
+                    },
+                );
             } else {
                 if (this.initialized) {
                     return;
@@ -152,6 +159,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
     state(): StateReturn<PlatformAppState, void>;
     state(): unknown {
+        this.stateMessageBus.post({ method: 'state', parameter: 'hey' });
         return undefined;
     }
 
