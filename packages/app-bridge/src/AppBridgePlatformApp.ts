@@ -43,6 +43,7 @@ type InitializeEvent = {
     apiIframePort: MessagePort;
     stateIframePort: MessagePort;
     context: PlatformAppContext;
+    state: PlatformAppState;
 };
 
 type AppBaseProps = {
@@ -78,6 +79,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     private stateMessageBus: IMessageBus = new ErrorMessageBus();
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
+    private localState: PlatformAppState = { settings: {} };
 
     private readonly subscribeMap: SubscribeMap<PlatformAppEvent> = {
         'State.*': new Map(),
@@ -114,14 +116,16 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
                 notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
                 subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(
-                    ({ stateIframePort, apiIframePort, context }) => {
-                        console.log(stateIframePort, apiIframePort, context);
+                    ({ stateIframePort, apiIframePort, context, state }) => {
                         this.apiMessageBus = new MessageBus(apiIframePort);
                         this.stateMessageBus = new MessageBus(stateIframePort);
-                        this.localContext = context;
 
-                        this.callSubscribedTopic('Context.connected', [true, true]);
+                        this.localContext = context;
+                        this.localState = state;
+
+                        this.callSubscribedTopic('Context.connected', [true, false]);
                         this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
+                        this.callSubscribedTopic('State.*', [this.localState, this.localState]);
                     },
                 );
             } else {
@@ -157,10 +161,44 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         };
     }
 
+    private async setInternalState(state: Promise<PlatformAppState>): Promise<void> {
+        const prevState = this.localState;
+        this.localState = await state;
+        this.callSubscribedTopic('State.*', [this.localState, prevState]);
+    }
+
     state(): StateReturn<PlatformAppState, void>;
-    state(): unknown {
-        this.stateMessageBus.post({ method: 'state', parameter: 'hey' });
-        return undefined;
+    state<Key extends keyof PlatformAppState>(key: Key): StateReturn<PlatformAppState, Key>;
+    state<Key extends keyof PlatformAppState>(key?: keyof PlatformAppState | void): unknown {
+        if (typeof key === 'undefined') {
+            return {
+                get: () => this.localState,
+                set: (nextState: PlatformAppState) => {
+                    const newState = this.stateMessageBus.post({
+                        method: 'set',
+                        parameter: { nextState },
+                    }) as Promise<PlatformAppState>;
+                    this.setInternalState(newState);
+                },
+                subscribe: (callback: (nextState: PlatformAppState, previousState: PlatformAppState) => void) => {
+                    return this.subscribe('State.*', callback);
+                },
+            };
+        }
+
+        return {
+            get: () => this.localState[key],
+            set: (nextState: PlatformAppState[Key]) => {
+                const newState = this.stateMessageBus.post({
+                    method: 'set',
+                    parameter: { nextState },
+                }) as Promise<PlatformAppState>;
+                this.setInternalState(newState);
+            },
+            subscribe: (callback: (nextState: PlatformAppState[Key], previousState: PlatformAppState[Key]) => void) => {
+                return this.subscribe(`State.${key}`, callback);
+            },
+        };
     }
 
     subscribe<EventName extends keyof PlatformAppEvent>(
