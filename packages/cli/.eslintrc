@@ -4,6 +4,7 @@
     "overrides": [
         {
             "files": ["*.js", "*.ts", "*.tsx"],
+            "excludedFiles": ["/templates"],
             "rules": {
                 "notice/notice": [
                     "error",
