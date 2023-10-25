@@ -2,8 +2,5 @@
     "appId": "<Your app ID>",
     "appType": "platform-app",
     "name": "sample-name",
-    "entryPoint": [
-        { "type": "ASSET_CREATION" },
-        { "type": "ASSET_ACTION" }
-    ]
+    "entryPoint": [{ "type": "ASSET_CREATION" }, { "type": "ASSET_ACTION" }]
 }

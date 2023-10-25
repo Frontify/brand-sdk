@@ -1,4 +1,4 @@
-import { defineSettings, IconEnum } from '@frontify/guideline-blocks-settings';
+import { IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
 
 export const settings = defineSettings({
     main: [
