@@ -11,8 +11,8 @@ const TOKEN = 'AjY34F87Dsat^J';
 describe('AppBridgePlatformApp', () => {
     vi.mock('./utilities/subscribe', () => ({
         subscribe: vi.fn().mockResolvedValue({
-            stateIframePort: { onmessage: vi.fn() },
-            apiIframePort: { onmessage: vi.fn() },
+            statePort: { onmessage: vi.fn() },
+            apiPort: { onmessage: vi.fn() },
             context: { parentId: 'parentId-test', connected: true },
             state: { settings: 'settings-test' },
         }),
