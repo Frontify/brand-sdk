@@ -11,8 +11,10 @@ const TOKEN = 'AjY34F87Dsat^J';
 describe('AppBridgePlatformApp', () => {
     vi.mock('./utilities/subscribe', () => ({
         subscribe: vi.fn().mockResolvedValue({
-            port: { onmessage: vi.fn() },
+            stateIframePort: { onmessage: vi.fn() },
+            apiIframePort: { onmessage: vi.fn() },
             context: { parentId: 'parentId-test', connected: true },
+            state: { settings: 'settings-test' },
         }),
     }));
 
@@ -62,10 +64,22 @@ describe('AppBridgePlatformApp', () => {
         await expect(() => platformApp.api({ name: 'getCurrentUser' })).rejects.toThrow();
     });
 
-    it('should return undefined state as it is not implemented', async () => {
+    it('should return empty state when not inititalized', async () => {
         const platformApp = new AppBridgePlatformApp();
-        const state = platformApp.state();
-        expect(state).toEqual(undefined);
+        const state = platformApp.state().get();
+        expect(state).toEqual({ settings: {} });
+    });
+
+    it('should return state after app is initialized', async () => {
+        window.location.search = `?token=${TOKEN}`;
+        const platformApp = new AppBridgePlatformApp();
+        platformApp.subscribe('Context.connected', (connected) => {
+            const state = platformApp.state().get();
+
+            expect(connected).toBe(true);
+            expect(state).toEqual({ settings: 'settings-test' });
+        });
+        platformApp.dispatch(openConnection());
     });
 
     it('should yield true for Context.connected after dispatch', async () => {
