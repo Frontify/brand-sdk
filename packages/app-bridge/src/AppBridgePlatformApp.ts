@@ -99,7 +99,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
     ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
         return this.apiMessageBus.post({
-            method: 'api',
             parameter: apiHandler,
         }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
     }
@@ -175,7 +174,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 get: () => this.localState,
                 set: (nextState: PlatformAppState) => {
                     const newState = this.stateMessageBus.post({
-                        method: 'set',
                         parameter: { nextState },
                     }) as Promise<PlatformAppState>;
                     this.setInternalState(newState);
@@ -190,7 +188,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             get: () => this.localState[key],
             set: (nextState: PlatformAppState[Key]) => {
                 const newState = this.stateMessageBus.post({
-                    method: 'set',
                     parameter: { nextState },
                 }) as Promise<PlatformAppState>;
                 this.setInternalState(newState);
