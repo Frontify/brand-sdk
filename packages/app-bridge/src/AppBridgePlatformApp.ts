@@ -119,7 +119,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         if (dispatchHandler.name === openConnection().name) {
             this.initializationGuard();
 
-            this.initialized = true;
             const PUBSUB_CHECKSUM = generateRandomString();
 
             notify(Topic.Init, PUBSUB_CHECKSUM, {
@@ -132,6 +131,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
                 this.localContext = context;
                 this.localState = state;
+                this.initialized = true;
 
                 this.callSubscribedTopic('Context.connected', [true, false]);
                 this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
