@@ -120,10 +120,12 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             this.initializationGuard();
 
             this.initialized = true;
-            const initialContext = getQueryParameters(window.location.href);
             const PUBSUB_CHECKSUM = generateRandomString();
 
-            notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
+            notify(Topic.Init, PUBSUB_CHECKSUM, {
+                token: getQueryParameters(window.location.href).token,
+                appBridgeVersion: 'v3',
+            });
             subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ statePort, apiPort, context, state }) => {
                 this.apiMessageBus = new MessageBus(apiPort);
                 this.stateMessageBus = new MessageBus(statePort);
