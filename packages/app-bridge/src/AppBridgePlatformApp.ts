@@ -103,21 +103,21 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
     }
 
-    private initializationGuard() {
+    private guardForInitialization() {
         const initialContext = getQueryParameters(window.location.href);
         if (!initialContext.token) {
             throw new InitializationError();
         }
-        if (this.initialized) {
-            return;
-        }
+        return !this.initialized;
     }
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
         if (dispatchHandler.name === openConnection().name) {
-            this.initializationGuard();
+            if (this.guardForInitialization()) {
+                return;
+            }
 
             const PUBSUB_CHECKSUM = generateRandomString();
 

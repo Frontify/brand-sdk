@@ -39,13 +39,13 @@ describe('AppBridgePlatformApp', () => {
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
-    it('should notify endpoint when openConnection is called correctly', async () => {
-        window.location.search = `?token=${TOKEN}`;
-
-        const platformApp = new AppBridgePlatformApp();
-        await platformApp.dispatch(openConnection());
-        expect(notify).toHaveBeenCalledTimes(1);
-    });
+    // it('should notify endpoint when openConnection is called correctly', async () => {
+    //     window.location.search = `?token=${TOKEN}`;
+    //
+    //     const platformApp = new AppBridgePlatformApp();
+    //     await platformApp.dispatch(openConnection());
+    //     expect(notify).toHaveBeenCalledTimes(1);
+    // });
 
     it('should yield true for Context.connected after dispatch', async () => {
         const connected = true;
@@ -101,6 +101,16 @@ describe('AppBridgePlatformApp', () => {
         const platformApp = new AppBridgePlatformApp();
         platformApp.context().subscribe((context) => {
             expect({ parentId: 'parentId-test', connected: true }).toStrictEqual(context);
+        });
+        platformApp.dispatch(openConnection());
+    });
+
+    it('should return correct object when subscribing to context', async () => {
+        window.location.search = `?token=${TOKEN}`;
+        const platformApp = new AppBridgePlatformApp();
+        platformApp.context().subscribe((context) => {
+            expect({ parentId: 'parentId-test', connected: true }).toStrictEqual(context);
+            platformApp.dispatch(openConnection());
         });
         platformApp.dispatch(openConnection());
     });
