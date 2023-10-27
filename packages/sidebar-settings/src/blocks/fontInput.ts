@@ -12,18 +12,32 @@ export enum FontProvider {
 }
 
 export enum PaddingSizes {
-    None = '0',
-    S = '4px',
-    M = '8px',
-    L = '12px',
+    Auto = 'auto',
+    S = 's',
+    M = 'm',
+    L = 'l',
 }
 
 export enum BorderRadius {
-    None = '0',
-    S = '2px',
-    M = '4px',
-    L = '12px',
+    None = 'none',
+    S = 's',
+    M = 'm',
+    L = 'l',
 }
+
+export type FontValueSizeType = {
+    top: string;
+    right: string;
+    bottom: string;
+    left: string;
+};
+
+export type FontValueBorderRadiusType = {
+    topLeft: string;
+    topRight: string;
+    bottomRight: string;
+    bottomLeft: string;
+};
 
 export type FontValue = {
     /**
@@ -79,6 +93,16 @@ export type FontValue = {
     lineHeight?: string;
 
     /**
+     * The margin top of the text.
+     */
+    marginTop?: string;
+
+    /**
+     * The margin bottom of the text.
+     */
+    marginBottom?: string;
+
+    /**
      * Whether the font should be uppercase or not.
      */
     uppercase: boolean;
@@ -96,7 +120,7 @@ export type FontValue = {
     /**
      * Whether the text has highlight (backgound color).
      */
-    highlight: boolean;
+    highlight?: boolean;
 
     /**
      * The highlight color.
@@ -124,25 +148,18 @@ export type FontValue = {
      * Padding around the text.
      */
     highlightPaddingCustomEnabled?: boolean;
-    highlightPadding?: PaddingSizes | null;
-    highlightPaddingCustom?: {
-        top: string;
-        right: string;
-        bottom: string;
-        left: string;
-    } | null;
+    highlightPaddingChoice?: PaddingSizes;
+    highlightPaddingValue?: string;
+    highlightPaddingCustom?: FontValueSizeType | null;
+    highlightPaddingAutoSize?: string;
 
     /**
      * Highlight corner radius.
      */
     highlightCornerRadiusCustomEnabled?: boolean;
-    highlightCornerRadiusCustom?: {
-        topLeft: string;
-        topRight: string;
-        bottomRight: string;
-        bottomLeft: string;
-    } | null;
-    highlightCornerRadius?: BorderRadius | null;
+    highlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
+    highlightCornerRadiusChoice?: BorderRadius;
+    highlightCornerRadiusValue?: string;
 
     /**
      * The rgba-color of the text on hover.
@@ -189,22 +206,22 @@ export type FontValue = {
     /**
      * Whether the font should be uppercase or not on hover.
      */
-    hoverUppercase: boolean;
+    hoverUppercase?: boolean;
 
     /**
      * Whether the font should be italic or not on hover.
      */
-    hoverItalic: boolean;
+    hoverItalic?: boolean;
 
     /**
      * Whether the font should be underlined or not on hover.
      */
-    hoverUnderline: boolean;
+    hoverUnderline?: boolean;
 
     /**
      * Whether the text has highlight (backgound color) on hover.
      */
-    hoverHighlight: boolean;
+    hoverHighlight?: boolean;
 
     /**
      * The highlight color of the text on hover.
@@ -232,25 +249,17 @@ export type FontValue = {
      * Padding around the text on hover.
      */
     hoverHighlightPaddingCustomEnabled?: boolean;
-    hoverHighlightPadding?: PaddingSizes | null;
-    hoverHighlightPaddingCustom?: {
-        top: string;
-        right: string;
-        bottom: string;
-        left: string;
-    } | null;
+    hoverHighlightPaddingChoice?: PaddingSizes;
+    hoverHighlightPaddingValue?: string;
+    hoverHighlightPaddingCustom?: FontValueSizeType | null;
 
     /**
      * Highlight corner radius on hover.
      */
     hoverHighlightCornerRadiusCustomEnabled?: boolean;
-    hoverHighlightCornerRadiusCustom?: {
-        topLeft: string;
-        topRight: string;
-        bottomRight: string;
-        bottomLeft: string;
-    } | null;
-    hoverHighlightCornerRadius?: BorderRadius | null;
+    hoverHighlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
+    hoverHighlightCornerRadiusChoice?: BorderRadius;
+    hoverHighlightCornerRadiusValue?: string;
 
     /**
      * The color of the text when active.
@@ -297,22 +306,22 @@ export type FontValue = {
     /**
      * Whether the font should be uppercase or not when active.
      */
-    activeUppercase: boolean;
+    activeUppercase?: boolean;
 
     /**
      * Whether the font should be italic or not when active.
      */
-    activeItalic: boolean;
+    activeItalic?: boolean;
 
     /**
      * Whether the font should be underlined or not when active.
      */
-    activeUnderline: boolean;
+    activeUnderline?: boolean;
 
     /**
      * Whether the text has highlight (backgound color) when active.
      */
-    activeHighlight: boolean;
+    activeHighlight?: boolean;
 
     /**
      * The highlight of the text when active.
@@ -340,25 +349,15 @@ export type FontValue = {
      * Padding around the text when active.
      */
     activeHighlightPaddingCustomEnabled?: boolean;
-    activeHighlightPadding?: PaddingSizes | null;
-    activeHighlightPaddingCustom?: {
-        top: string;
-        right: string;
-        bottom: string;
-        left: string;
-    } | null;
+    activeHighlightPaddingChoice?: PaddingSizes;
+    activeHighlightPaddingCustom?: FontValueSizeType | null;
 
     /**
      * Highlight corner radius when active.
      */
     activeHighlightCornerRadiusCustomEnabled?: boolean;
-    activeHighlightCornerRadiusCustom?: {
-        topLeft: string;
-        topRight: string;
-        bottomRight: string;
-        bottomLeft: string;
-    } | null;
-    activeHighlightCornerRadius?: BorderRadius | null;
+    activeHighlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
+    activeHighlightCornerRadiusChoice?: BorderRadius;
 };
 
 export type FontInputBlock<AppBridge> = {
@@ -372,4 +371,8 @@ export type FontInputBlock<AppBridge> = {
      * @default "Lorem Ipsum"
      */
     placeholder?: string;
+    predefinedChoiceValues?: {
+        [choice: string]: { [option: string]: string } | string;
+    };
+    stateTabsEnabled?: 'none' | 'all';
 } & BaseBlock<AppBridge, FontValue>;
