@@ -103,36 +103,38 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
     }
 
+    private initializationGuard() {
+        const initialContext = getQueryParameters(window.location.href);
+        if (!initialContext.token) {
+            throw new InitializationError();
+        }
+        if (this.initialized) {
+            return;
+        }
+    }
+
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
         if (dispatchHandler.name === openConnection().name) {
+            this.initializationGuard();
+
+            this.initialized = true;
             const initialContext = getQueryParameters(window.location.href);
+            const PUBSUB_CHECKSUM = generateRandomString();
 
-            if (initialContext.token && !this.initialized) {
-                this.initialized = true;
-                const PUBSUB_CHECKSUM = generateRandomString();
+            notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
+            subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ statePort, apiPort, context, state }) => {
+                this.apiMessageBus = new MessageBus(apiPort);
+                this.stateMessageBus = new MessageBus(statePort);
 
-                notify(Topic.Init, PUBSUB_CHECKSUM, { token: initialContext.token, appBridgeVersion: 'v3' });
-                subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(
-                    ({ statePort, apiPort, context, state }) => {
-                        this.apiMessageBus = new MessageBus(apiPort);
-                        this.stateMessageBus = new MessageBus(statePort);
+                this.localContext = context;
+                this.localState = state;
 
-                        this.localContext = context;
-                        this.localState = state;
-
-                        this.callSubscribedTopic('Context.connected', [true, false]);
-                        this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
-                        this.callSubscribedTopic('State.*', [this.localState, this.localState]);
-                    },
-                );
-            } else {
-                if (this.initialized) {
-                    return;
-                }
-                throw new InitializationError();
-            }
+                this.callSubscribedTopic('Context.connected', [true, false]);
+                this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
+                this.callSubscribedTopic('State.*', [this.localState, this.localState]);
+            });
         }
     }
 
