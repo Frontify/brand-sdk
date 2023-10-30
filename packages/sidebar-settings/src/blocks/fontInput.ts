@@ -31,7 +31,7 @@ export enum TextAlignment {
     Right = 'right',
 }
 
-export type FontValueSizeType = {
+export type FontValuePaddingType = {
     top: string;
     right: string;
     bottom: string;
@@ -159,15 +159,15 @@ export type FontValue = {
      * Padding around the text.
      */
     highlightPaddingCustomEnabled?: boolean;
+    highlightPaddingCustom?: FontValuePaddingType | null;
     highlightPaddingChoice?: PaddingSizes;
-    highlightPaddingCustom?: FontValueSizeType | null;
 
     /**
-     * Highlight corner radius.
+     * Highlight border radius.
      */
-    highlightCornerRadiusCustomEnabled?: boolean;
-    highlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
-    highlightCornerRadiusChoice?: BorderRadius;
+    highlightBorderRadiusCustomEnabled?: boolean;
+    highlightBorderRadiusCustom?: FontValueBorderRadiusType | null;
+    highlightBorderRadiusChoice?: BorderRadius;
 
     /**
      * The rgba-color of the text on hover.
@@ -257,15 +257,15 @@ export type FontValue = {
      * Padding around the text on hover.
      */
     hoverHighlightPaddingCustomEnabled?: boolean;
+    hoverHighlightPaddingCustom?: FontValuePaddingType | null;
     hoverHighlightPaddingChoice?: PaddingSizes;
-    hoverHighlightPaddingCustom?: FontValueSizeType | null;
 
     /**
-     * Highlight corner radius on hover.
+     * Highlight border radius on hover.
      */
-    hoverHighlightCornerRadiusCustomEnabled?: boolean;
-    hoverHighlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
-    hoverHighlightCornerRadiusChoice?: BorderRadius;
+    hoverHighlightBorderRadiusCustomEnabled?: boolean;
+    hoverHighlightBorderRadiusCustom?: FontValueBorderRadiusType | null;
+    hoverHighlightBorderRadiusChoice?: BorderRadius;
 
     /**
      * The color of the text when active.
@@ -355,15 +355,15 @@ export type FontValue = {
      * Padding around the text when active.
      */
     activeHighlightPaddingCustomEnabled?: boolean;
+    activeHighlightPaddingCustom?: FontValuePaddingType | null;
     activeHighlightPaddingChoice?: PaddingSizes;
-    activeHighlightPaddingCustom?: FontValueSizeType | null;
 
     /**
-     * Highlight corner radius when active.
+     * Highlight border radius when active.
      */
-    activeHighlightCornerRadiusCustomEnabled?: boolean;
-    activeHighlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
-    activeHighlightCornerRadiusChoice?: BorderRadius;
+    activeHighlightBorderRadiusCustomEnabled?: boolean;
+    activeHighlightBorderRadiusCustom?: FontValueBorderRadiusType | null;
+    activeHighlightBorderRadiusChoice?: BorderRadius;
 };
 
 export type FontInputBlock<AppBridge> = {
