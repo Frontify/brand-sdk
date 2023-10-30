@@ -160,9 +160,7 @@ export type FontValue = {
      */
     highlightPaddingCustomEnabled?: boolean;
     highlightPaddingChoice?: PaddingSizes;
-    highlightPaddingValue?: string;
     highlightPaddingCustom?: FontValueSizeType | null;
-    highlightPaddingAutoSize?: string;
 
     /**
      * Highlight corner radius.
@@ -170,7 +168,6 @@ export type FontValue = {
     highlightCornerRadiusCustomEnabled?: boolean;
     highlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
     highlightCornerRadiusChoice?: BorderRadius;
-    highlightCornerRadiusValue?: string;
 
     /**
      * The rgba-color of the text on hover.
@@ -261,7 +258,6 @@ export type FontValue = {
      */
     hoverHighlightPaddingCustomEnabled?: boolean;
     hoverHighlightPaddingChoice?: PaddingSizes;
-    hoverHighlightPaddingValue?: string;
     hoverHighlightPaddingCustom?: FontValueSizeType | null;
 
     /**
@@ -270,7 +266,6 @@ export type FontValue = {
     hoverHighlightCornerRadiusCustomEnabled?: boolean;
     hoverHighlightCornerRadiusCustom?: FontValueBorderRadiusType | null;
     hoverHighlightCornerRadiusChoice?: BorderRadius;
-    hoverHighlightCornerRadiusValue?: string;
 
     /**
      * The color of the text when active.
@@ -382,8 +377,21 @@ export type FontInputBlock<AppBridge> = {
      * @default "Lorem Ipsum"
      */
     placeholder?: string;
+
+    /**
+     * Values used for visualization on slider fields, like:
+     *    autoPaddingSizeLabel: Whether a label other than 'Auto' is used for 'auto' padding size.
+     *    paddingSizeChoiceValues: actual values for generic padding sizes choices, used for preview:
+     *          { auto: '12px 4px', s: '4px', m: '8px', l: '12px' }
+     *    borderRadiusChoiceValues: actual values for generic border radius choices, used for preview:
+     *          { none: '0', s: '2px', m: '4px', l: '12px' }
+     */
     predefinedChoiceValues?: {
         [choice: string]: { [option: string]: string } | string;
     };
+    /**
+     * Whether all (default/hover/active) state tabs as needed or just the `default` state with the enabled fields.
+     * On state tabs, only fields set in the `defaultValue` object will be shown.
+     */
     stateTabsEnabled?: 'none' | 'all';
 } & BaseBlock<AppBridge, FontValue>;
