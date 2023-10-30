@@ -20,7 +20,7 @@ export const createNewApp = (appName: string, template, type: string): void => {
     const appNameInBlue = pc.blue(`./${appName}`);
     Logger.defaultInfo(`${Logger.spacer(4)}cd ${appNameInBlue}`);
     Logger.defaultInfo(`${Logger.spacer(4)}npm i`);
-    Logger.defaultInfo(`${Logger.spacer(4)}npm run dev`);
+    Logger.defaultInfo(`${Logger.spacer(4)}npm run serve`);
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}Happy hacking!`);
 };

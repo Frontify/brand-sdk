@@ -11,7 +11,7 @@ export const createNewContentBlock = (contentBlockName: string, template = 'tail
     Logger.info('Creating the content block...');
 
     const blockPathInBlue = pc.blue(`./${contentBlockName}`);
-    Logger.info(`Scaffholding content block in ${blockPathInBlue}...`);
+    Logger.info(`Scaffolding content block in ${blockPathInBlue}...`);
 
     const templateDir = resolve(fileURLToPath(import.meta.url), `../../templates/${CONTENT_BLOCK_PREFIX}${template}`);
     copyFolder(templateDir, contentBlockName, { exclude: ['node_modules'] });
