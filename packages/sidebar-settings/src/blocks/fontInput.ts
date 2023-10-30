@@ -25,6 +25,12 @@ export enum BorderRadius {
     L = 'l',
 }
 
+export enum TextAlignment {
+    Left = 'left',
+    Center = 'center',
+    Right = 'right',
+}
+
 export type FontValueSizeType = {
     top: string;
     right: string;
@@ -116,6 +122,11 @@ export type FontValue = {
      * Whether the font should be underlined or not.
      */
     underline: boolean;
+
+    /**
+     * Where the text is anchor, not quite alignment but similar of the text
+     */
+    alignment?: TextAlignment;
 
     /**
      * Whether the text has highlight (backgound color).
