@@ -389,9 +389,11 @@ export type FontInputBlock<AppBridge> = {
     predefinedChoiceValues?: {
         [choice: string]: { [option: string]: string } | string;
     };
+
     /**
-     * Whether all (default/hover/active) state tabs as needed or just the `default` state with the enabled fields.
-     * On state tabs, only fields set in the `defaultValue` object will be shown.
+     * `Default` tab will be always visible if there are fields enabled and defined in the defaultValues fontInput block.
+     * Whether any of these StateTab flags are enabled Default and the set tabs will be shown.
      */
-    stateTabsEnabled?: 'none' | 'all';
+    showHoverStateTab?: boolean;
+    showActiveStateTab?: boolean;
 } & BaseBlock<AppBridge, FontValue>;
