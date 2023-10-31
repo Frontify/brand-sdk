@@ -108,7 +108,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         if (!initialContext.token) {
             throw new InitializationError();
         }
-        return !this.initialized;
+        return this.initialized;
     }
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
@@ -125,6 +125,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 token: getQueryParameters(window.location.href).token,
                 appBridgeVersion: 'v3',
             });
+
             subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ statePort, apiPort, context, state }) => {
                 this.apiMessageBus = new MessageBus(apiPort);
                 this.stateMessageBus = new MessageBus(statePort);
@@ -173,7 +174,9 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     state(): StateReturn<PlatformAppState, void>;
     state<Key extends keyof PlatformAppState>(key: Key): StateReturn<PlatformAppState, Key>;
     state<Key extends keyof PlatformAppState>(key?: keyof PlatformAppState | void): unknown {
+        console.log('state update');
         if (typeof key === 'undefined') {
+            console.log('state update');
             return {
                 get: () => this.localState,
                 set: (nextState: PlatformAppState) => {
