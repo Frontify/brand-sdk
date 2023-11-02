@@ -6,10 +6,5 @@ import { PackageJson } from './npm.js';
 
 export const getAppBridgeVersion = (rootPath: string) => {
     const packageJson = reactiveJson<PackageJson>(join(rootPath, 'package.json'));
-    return getMajorVersion(packageJson.dependencies['@frontify/app-bridge']);
-};
-
-export const getMajorVersion = (version: string) => {
-    const match = /^\W*(\d+)/.exec(version);
-    return match ? parseInt(match[1], 10) : 0;
+    return packageJson.dependencies['@frontify/app-bridge'];
 };
