@@ -5,10 +5,11 @@ import { resolve } from 'node:path';
 import { isDirectoryEmpty } from './file.js';
 import { reactiveJson } from './reactiveJson.js';
 
-type PackageJson = {
+export type PackageJson = {
     name: string;
     version: string;
     main: string;
+    dependencies: Record<string, string>;
 };
 
 export const updatePackageJsonProjectName = (folderPath: string): void => {

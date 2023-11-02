@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { Logger } from '../utils/logger.js';
+import { getAppBridgeVersion } from '../utils/appBridgeVersion.js';
 import pkg from '../../package.json';
 
 class PlatformAppDevelopmentServer {
@@ -56,6 +57,7 @@ class DevelopmentServer {
                 ],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
+                    'DevCustomBlock.packages.appBridge': getAppBridgeVersion(process.cwd()),
                 },
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',

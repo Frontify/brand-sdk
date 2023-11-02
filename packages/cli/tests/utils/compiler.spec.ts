@@ -30,12 +30,13 @@ describe('Compiler utils', async () => {
     });
 
     describe('compile Block', () => {
-        test('should provide a valid build with block and settings', async () => {
+        test('should provide a valid build with block, settings and appBridge version', async () => {
             await compileBlock({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
             await import(outputFile);
             expect(global.window).toHaveProperty('index');
             expect(global.window?.index.block).toBe('this is a block');
             expect(global.window?.index.settings).toMatchObject({ some: 'settings' });
+            expect(global.window?.index.packages.appBridge).toBe('3');
         });
     });
 
