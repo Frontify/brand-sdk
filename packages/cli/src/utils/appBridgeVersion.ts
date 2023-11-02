@@ -10,6 +10,6 @@ export const getAppBridgeVersion = (rootPath: string) => {
 };
 
 export const getMajorVersion = (version: string) => {
-    const match = version.match(/^[>^~]?\d+/);
-    return match ? parseInt(match[0].replace(/^[>^~]/, ''), 10) : 0;
+    const match = /^\W*(\d+)/.exec(version);
+    return match ? parseInt(match[1], 10) : 0;
 };
