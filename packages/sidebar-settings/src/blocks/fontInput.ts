@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { Choice } from '.';
 import type { BaseBlock } from './base';
 
 /**
@@ -44,6 +45,8 @@ export type FontValueBorderRadiusType = {
     bottomRight: string;
     bottomLeft: string;
 };
+
+export type FontInputBlockChoice = { id?: number | string } & Choice;
 
 export type FontValue = {
     /**
@@ -379,15 +382,13 @@ export type FontInputBlock<AppBridge> = {
     placeholder?: string;
 
     /**
-     * Values used for visualization on slider fields, like:
-     *    autoPaddingSizeLabel: Whether a label other than 'Auto' is used for 'auto' padding size.
-     *    paddingSizeChoiceValues: actual values for generic padding sizes choices, used for preview:
-     *          { auto: '12px 4px', s: '4px', m: '8px', l: '12px' }
-     *    borderRadiusChoiceValues: actual values for generic border radius choices, used for preview:
-     *          { none: '0', s: '2px', m: '4px', l: '12px' }
+     * Choice values, for example:
+     *    highlightPaddingChoiceValues: choices values for padding sizes choices
+     *    borderRadiusChoiceValues: choices values for border radius choices
+     *    aligmentChoiceValues: text alignment choices
      */
     predefinedChoiceValues?: {
-        [choice: string]: { [option: string]: string } | string;
+        [choice: string]: FontInputBlockChoice[];
     };
 
     /**
