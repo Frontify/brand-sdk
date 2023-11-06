@@ -14,7 +14,7 @@ describe('AppBridgeVersion utils', async () => {
     it('should return the 3 as version from package.json', () => {
         mockFs({
             'frontify-cli': {
-                'package.json': '{"dependencies": {"@frontify/app-bridge": "3"}',
+                'package.json': '{"dependencies": {"@frontify/app-bridge": "3"}}',
             },
         });
 
@@ -24,7 +24,7 @@ describe('AppBridgeVersion utils', async () => {
     it('should return the 3.0.0-beta.99 as version from package.json', () => {
         mockFs({
             'frontify-cli': {
-                'package.json': '{"dependencies": {"@frontify/app-bridge": "3.0.0-beta.99"}',
+                'package.json': '{"dependencies": {"@frontify/app-bridge": "3.0.0-beta.99"}}',
             },
         });
 
@@ -34,7 +34,7 @@ describe('AppBridgeVersion utils', async () => {
     it('should return the ^3.0.0 as version from package.json', () => {
         mockFs({
             'frontify-cli': {
-                'package.json': '{"dependencies": {"@frontify/app-bridge": "^3.0.0"}',
+                'package.json': '{"dependencies": {"@frontify/app-bridge": "^3.0.0"}}',
             },
         });
 
