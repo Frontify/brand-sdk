@@ -18,3 +18,4 @@ export * from './numericalOrPercentRule';
 export * from './numericalOrPixelOrAutoRule';
 export * from './numericalOrPixelRule';
 export * from './pixelRule';
+export * from './urlRule';
