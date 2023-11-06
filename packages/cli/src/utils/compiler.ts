@@ -44,8 +44,8 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                     },
                     footer: `
                         window.${outputName} = ${outputName}; 
-                        window.${outputName}.packages = window.${outputName}.packages || {};
-                        window.${outputName}.packages['@frontify/app-bridge'] = '${appBridgeVersion}';
+                        window.${outputName}.dependencies = window.${outputName}.packages || {};
+                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
                     `,
                 },
             },

@@ -57,7 +57,7 @@ class DevelopmentServer {
                 ],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
-                    'DevCustomBlock.packages.appBridge': JSON.stringify(getAppBridgeVersion(process.cwd())),
+                    'DevCustomBlock.dependencies.appBridge': JSON.stringify(getAppBridgeVersion(process.cwd())),
                 },
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
