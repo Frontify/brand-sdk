@@ -14,7 +14,7 @@ describe('AppBridgeVersion utils', async () => {
     it('should return the 3 as version from package.json', () => {
         mockFs({
             'frontify-cli': {
-                'package.json': JSON.parse('{"dependencies": {"@frontify/app-bridge": "3"}'),
+                'package.json': '{"dependencies": {"@frontify/app-bridge": "3"}',
             },
         });
 
