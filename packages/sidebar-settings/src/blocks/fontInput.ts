@@ -48,9 +48,8 @@ export type FontValueBorderRadiusType = {
 
 export type FontInputBlockChoice = { id?: number | string } & Choice;
 
-export type FontInputChoiceValues = Record<
-    'aligmentChoiceValues' | 'borderRadiusChoiceValues' | 'paddingSizeChoiceValues',
-    FontInputBlockChoice[]
+export type FontInputChoiceValues = Partial<
+    Record<'aligmentChoiceValues' | 'borderRadiusChoiceValues' | 'paddingSizeChoiceValues', FontInputBlockChoice[]>
 >;
 
 export type FontValue = {
