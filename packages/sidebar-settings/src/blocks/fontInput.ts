@@ -48,6 +48,11 @@ export type FontValueBorderRadiusType = {
 
 export type FontInputBlockChoice = { id?: number | string } & Choice;
 
+export type FontInputChoiceValues = Record<
+    'aligmentChoiceValues' | 'borderRadiusChoiceValues' | 'paddingSizeChoiceValues',
+    FontInputBlockChoice[]
+>;
+
 export type FontValue = {
     /**
      * The origin of the font.
@@ -383,14 +388,11 @@ export type FontInputBlock<AppBridge> = {
 
     /**
      * Choice values:
-     *    highlightPaddingChoiceValues: choices values for padding sizes choices
+     *    paddingSizeChoiceValues: choices values for padding sizes choices
      *    borderRadiusChoiceValues: choices values for border radius choices
      *    aligmentChoiceValues: text alignment choices
      */
-    predefinedChoiceValues?: Record<
-        'highlightPaddingChoiceValues' | 'borderRadiusChoiceValues' | 'aligmentChoiceValues',
-        FontInputBlockChoice[]
-    >;
+    predefinedChoiceValues?: FontInputChoiceValues;
 
     /**
      * `Default` tab will be always visible if there are fields enabled and defined in the defaultValues fontInput block.
