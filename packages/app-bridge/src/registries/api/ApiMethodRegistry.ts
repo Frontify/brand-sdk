@@ -8,8 +8,10 @@ import type {
     GetAssetResourceInformationPayload,
     GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
+import { GetPrivacySettingsPayload, GetPrivacySettingsResponse } from './GetPrivacySettings';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
+    getPrivacySettings: { payload: GetPrivacySettingsPayload; response: GetPrivacySettingsResponse };
     getAssetBulkDownloadToken: {
         payload: GetAssetBulkDownloadTokenPayload;
         response: GetAssetBulkDownloadTokenResponse;

@@ -7,10 +7,28 @@ import type { PrivacySettings } from '../types/PrivacySettings';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 
 export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
-    const [privacySettings, setPrivacySettings] = useState<PrivacySettings>(appBridge.getPrivacySettings());
+    const [privacySettings, setPrivacySettings] = useState<PrivacySettings>({
+        assetDownloadEnabled: false,
+        assetViewerEnabled: true,
+    });
 
     useEffect(() => {
-        const updateSettings: Handler<PrivacySettings> = (data) => setPrivacySettings({ ...privacySettings, ...data });
+        const fetchPrivacySettings = async () => {
+            const privacySettings = await appBridge.api({
+                name: 'getPrivacySettings',
+                payload: { portalId: appBridge.context('portalId').get() },
+            });
+            setPrivacySettings(privacySettings);
+        };
+        fetchPrivacySettings();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        const updateSettings: Handler<PrivacySettings> = (data) => {
+            console.log('AppBridge:PrivacySettingsChanged', data);
+            setPrivacySettings({ ...privacySettings, ...data });
+        };
 
         window.emitter.on('AppBridge:PrivacySettingsChanged', updateSettings);
 
