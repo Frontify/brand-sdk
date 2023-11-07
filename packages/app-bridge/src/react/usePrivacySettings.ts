@@ -25,10 +25,7 @@ export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
     }, []);
 
     useEffect(() => {
-        const updateSettings: Handler<PrivacySettings> = (data) => {
-            console.log('AppBridge:PrivacySettingsChanged', data);
-            setPrivacySettings({ ...privacySettings, ...data });
-        };
+        const updateSettings: Handler<PrivacySettings> = (data) => setPrivacySettings({ ...privacySettings, ...data });
 
         window.emitter.on('AppBridge:PrivacySettingsChanged', updateSettings);
 
