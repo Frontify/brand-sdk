@@ -386,12 +386,12 @@ export type FontInputBlock<AppBridge> = {
     placeholder?: string;
 
     /**
-     * Choice values:
+     * Choice values presets:
      *    paddingSizeChoiceValues: choices values for padding sizes choices
      *    borderRadiusChoiceValues: choices values for border radius choices
      *    aligmentChoiceValues: text alignment choices
      */
-    predefinedChoiceValues?: FontInputChoiceValues;
+    choicePresets?: FontInputChoiceValues;
 
     /**
      * `Default` tab will be always visible if there are fields enabled and defined in the defaultValues fontInput block.
