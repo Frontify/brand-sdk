@@ -174,9 +174,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     state(): StateReturn<PlatformAppState, void>;
     state<Key extends keyof PlatformAppState>(key: Key): StateReturn<PlatformAppState, Key>;
     state<Key extends keyof PlatformAppState>(key?: keyof PlatformAppState | void): unknown {
-        console.log('state update');
         if (typeof key === 'undefined') {
-            console.log('state update');
             return {
                 get: () => this.localState,
                 set: (nextState: PlatformAppState) => {
