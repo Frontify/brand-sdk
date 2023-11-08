@@ -5,7 +5,7 @@ import { SUBSCRIBE_TIMEOUT } from './subscribe';
 import { generateRandomString } from './hash';
 
 export interface IMessageBus {
-    post(message: { method: string; parameter: unknown }): unknown;
+    post(message: { parameter: unknown }): unknown;
 }
 
 export class MessageBus implements IMessageBus {
