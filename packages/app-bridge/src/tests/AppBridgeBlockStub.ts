@@ -186,11 +186,14 @@ export const getAppBridgeBlockStub = ({
             return Promise.reject(new Error(`Unexpected call to api with args: ${JSON.stringify(args)}`));
         }),
 
-        context: stub<Parameters<AppBridgeBlock['context']>>()
-            .withArgs('portalId')
-            .returns({
-                get: stub().resolves(PORTAL_ID),
-            }),
+        context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
+            if (args === 'portalId') {
+                return {
+                    get: () => PORTAL_ID,
+                };
+            }
+            return new Error(`Unexpected call to context with args: ${JSON.stringify(args)}`);
+        }),
 
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),

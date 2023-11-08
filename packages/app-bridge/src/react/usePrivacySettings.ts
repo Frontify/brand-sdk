@@ -9,7 +9,7 @@ import { AppBridgeBlock } from '../AppBridgeBlock';
 export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
     const [privacySettings, setPrivacySettings] = useState<PrivacySettings>({
         assetDownloadEnabled: false,
-        assetViewerEnabled: true,
+        assetViewerEnabled: false,
     });
 
     useEffect(() => {
