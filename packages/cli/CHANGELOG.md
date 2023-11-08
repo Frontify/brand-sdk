@@ -1,5 +1,19 @@
 # @frontify/frontify-cli
 
+## 5.4.1
+
+### Patch Changes
+
+- [#607](https://github.com/Frontify/brand-sdk/pull/607) [`e3ea35d`](https://github.com/Frontify/brand-sdk/commit/e3ea35dc3c3433b5d09712463534b681eef718f9) Thanks [@julianiff](https://github.com/julianiff)! - chore: update app-bridge version
+
+- [#610](https://github.com/Frontify/brand-sdk/pull/610) [`49958e4`](https://github.com/Frontify/brand-sdk/commit/49958e4c1fb7caef2ea2394fef0966625f6e4804) Thanks [@ragi96](https://github.com/ragi96)! - fix: never ignore manifest.json on deploy"
+
+- [#608](https://github.com/Frontify/brand-sdk/pull/608) [`6659cbf`](https://github.com/Frontify/brand-sdk/commit/6659cbff1e6d84809cb6637e08b2960ad7d4d315) Thanks [@julianiff](https://github.com/julianiff)! - chore: update frontify-cli in templates
+
+- [#614](https://github.com/Frontify/brand-sdk/pull/614) [`b571cbf`](https://github.com/Frontify/brand-sdk/commit/b571cbf86a0d0ebc47aead17bb51edc407dd3196) Thanks [@floriangaechter](https://github.com/floriangaechter)! - Fix: move eslint ignore information to .eslintrc and fix a typo
+
+- [#615](https://github.com/Frontify/brand-sdk/pull/615) [`d68cabc`](https://github.com/Frontify/brand-sdk/commit/d68cabcc7a6b95ad5194ae374779d1ef10dcc130) Thanks [@julianiff](https://github.com/julianiff)! - chore: change from dev to serve
+
 ## 5.4.0
 
 ### Minor Changes
