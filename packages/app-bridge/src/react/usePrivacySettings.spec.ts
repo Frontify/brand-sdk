@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
-import { beforeEach, describe, expect, it } from 'vitest';
+import sinon from 'sinon';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { usePrivacySettings } from './usePrivacySettings';
 import { getAppBridgeBlockStub } from '../tests';
 
@@ -11,7 +12,11 @@ describe('usePrivacySettings', () => {
         window.emitter = mitt();
     });
 
-    it('should set imageAndVideoDownloadEnabled to true if enabled', () => {
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    it('should set imageAndVideoDownloadEnabled to true if enabled', async () => {
         const appBridgeStub = getAppBridgeBlockStub({
             privacySettings: {
                 assetDownloadEnabled: true,
@@ -19,10 +24,13 @@ describe('usePrivacySettings', () => {
             },
         });
         const { result } = renderHook(() => usePrivacySettings(appBridgeStub));
+        await waitFor(() => {
+            return result.current.assetDownloadEnabled === true;
+        });
         expect(result.current.assetDownloadEnabled).toBe(true);
     });
 
-    it('should set imageAndVideoDownloadEnabled to false if disabled', () => {
+    it('should set imageAndVideoDownloadEnabled to false if disabled', async () => {
         const appBridgeStub = getAppBridgeBlockStub({
             privacySettings: {
                 assetDownloadEnabled: false,
@@ -30,10 +38,13 @@ describe('usePrivacySettings', () => {
             },
         });
         const { result } = renderHook(() => usePrivacySettings(appBridgeStub));
+        await waitFor(() => {
+            return result.current.assetDownloadEnabled === false;
+        });
         expect(result.current.assetDownloadEnabled).toBe(false);
     });
 
-    it('should set assetViewerEnabled to true if enabled', () => {
+    it('should set assetViewerEnabled to true if enabled', async () => {
         const appBridgeStub = getAppBridgeBlockStub({
             privacySettings: {
                 assetViewerEnabled: true,
@@ -41,10 +52,13 @@ describe('usePrivacySettings', () => {
             },
         });
         const { result } = renderHook(() => usePrivacySettings(appBridgeStub));
+        await waitFor(() => {
+            return result.current.assetViewerEnabled === true;
+        });
         expect(result.current.assetViewerEnabled).toBe(true);
     });
 
-    it('should set assetViewerEnabled to false if disabled', () => {
+    it('should set assetViewerEnabled to false if disabled', async () => {
         const appBridgeStub = getAppBridgeBlockStub({
             privacySettings: {
                 assetViewerEnabled: false,
@@ -52,6 +66,9 @@ describe('usePrivacySettings', () => {
             },
         });
         const { result } = renderHook(() => usePrivacySettings(appBridgeStub));
+        await waitFor(() => {
+            return result.current.assetViewerEnabled === false;
+        });
         expect(result.current.assetViewerEnabled).toBe(false);
     });
 

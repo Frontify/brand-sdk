@@ -14,6 +14,7 @@ import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 
+const PORTAL_ID = 1234;
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
@@ -175,19 +176,21 @@ export const getAppBridgeBlockStub = ({
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
 
-        api: stub<Parameters<AppBridgeBlock['api']>>()
-            .withArgs()
-            .resolves()
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: ['settings1', 'settings2'], documentBlockId: BLOCK_ID },
-            })
-            .resolves({ assetBulkDownloadToken: 'token' })
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: undefined, documentBlockId: BLOCK_ID },
-            })
-            .resolves({ assetBulkDownloadToken: 'token' }),
+        api: stub<Parameters<AppBridgeBlock['api']>>().callsFake((args) => {
+            if (args.name === 'getPrivacySettings') {
+                return Promise.resolve(privacySettings);
+            }
+            if (args.name === 'getAssetBulkDownloadToken') {
+                return Promise.resolve({ assetBulkDownloadToken: 'token' });
+            }
+            return Promise.reject(new Error(`Unexpected call to api with args: ${JSON.stringify(args)}`));
+        }),
+
+        context: stub<Parameters<AppBridgeBlock['context']>>()
+            .withArgs('portalId')
+            .returns({
+                get: stub().resolves(PORTAL_ID),
+            }),
 
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
@@ -213,7 +216,6 @@ export const getAppBridgeBlockStub = ({
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
-        context: stub<Parameters<AppBridgeBlock['context']>>().resolves(),
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
