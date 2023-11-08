@@ -39,14 +39,6 @@ describe('AppBridgePlatformApp', () => {
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
-    // it('should notify endpoint when openConnection is called correctly', async () => {
-    //     window.location.search = `?token=${TOKEN}`;
-    //
-    //     const platformApp = new AppBridgePlatformApp();
-    //     await platformApp.dispatch(openConnection());
-    //     expect(notify).toHaveBeenCalledTimes(1);
-    // });
-
     it('should yield true for Context.connected after dispatch', async () => {
         const connected = true;
         window.location.search = `?token=${TOKEN}`;
