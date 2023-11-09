@@ -1,5 +1,17 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.12
+
+### Patch Changes
+
+- [#628](https://github.com/Frontify/brand-sdk/pull/628) [`44efda9`](https://github.com/Frontify/brand-sdk/commit/44efda90fd454298ea623c7f41b370f81ad1a203) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockItemWRapper): fix toolbar focus style
+
+## 0.29.11
+
+### Patch Changes
+
+- [#622](https://github.com/Frontify/brand-sdk/pull/622) [`34aa320`](https://github.com/Frontify/brand-sdk/commit/34aa32063c306826d35a6b973c3e5f6931dabc76) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockItemWrapper): add focus visible style to drag btn
+
 ## 0.29.10
 
 ### Patch Changes

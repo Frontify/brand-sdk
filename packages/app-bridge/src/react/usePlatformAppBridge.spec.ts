@@ -9,7 +9,12 @@ describe('usePlatformAppBridge', () => {
 
     window.location.search = `?token=${TOKEN}`;
     vi.mock('../utilities/subscribe', () => ({
-        subscribe: vi.fn().mockResolvedValue({ port: { onmessage: vi.fn() }, test: 'passed' }),
+        subscribe: vi.fn().mockResolvedValue({
+            statePort: { onmessage: vi.fn() },
+            apiPort: { onmessage: vi.fn() },
+            context: { parentId: 'parentId-test', connected: true },
+            state: { settings: 'settings-test' },
+        }),
     }));
 
     vi.mock('../utilities/notify', () => ({

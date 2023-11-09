@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+export * from './appBridgeVersion.js';
 export * from './compiler.js';
 export * from './configuration.js';
 export * from './date.js';

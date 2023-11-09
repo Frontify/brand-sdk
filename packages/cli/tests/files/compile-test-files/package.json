@@ -1,0 +1,8 @@
+{
+    "name": "test-block",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "dependencies": {
+        "@frontify/app-bridge": "^3.0.0-beta.99"
+    }
+}
