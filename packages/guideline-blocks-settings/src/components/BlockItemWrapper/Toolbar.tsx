@@ -44,7 +44,8 @@ export const Toolbar = ({
                                     data-test-id="block-item-wrapper-toolbar-btn"
                                     {...item.draggableProps}
                                     className={joinClassNames([
-                                        'tw-bg-base tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm',
+                                        FOCUS_VISIBLE_STYLE,
+                                        'tw-bg-base tw-relative tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm focus-visible:tw-z-10',
                                         isDragging
                                             ? 'tw-cursor-grabbing tw-bg-box-selected-pressed'
                                             : 'tw-cursor-grab hover:tw-bg-box-selected-hover',
