@@ -21,8 +21,7 @@ export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
             setPrivacySettings(privacySettings);
         };
         fetchPrivacySettings();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [appBridge]);
 
     useEffect(() => {
         const updateSettings: Handler<PrivacySettings> = (data) => setPrivacySettings({ ...privacySettings, ...data });
