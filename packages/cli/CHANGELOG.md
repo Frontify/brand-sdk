@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.0
+
+### Minor Changes
+
+- [#623](https://github.com/Frontify/brand-sdk/pull/623) [`22b7a0b`](https://github.com/Frontify/brand-sdk/commit/22b7a0b007981fac0c1b3d838a644232acc21e85) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds the appBridge version to the block bundle
+
 ## 5.4.1
 
 ### Patch Changes
