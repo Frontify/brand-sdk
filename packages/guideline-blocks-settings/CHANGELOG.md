@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.12
+
+### Patch Changes
+
+- [#628](https://github.com/Frontify/brand-sdk/pull/628) [`44efda9`](https://github.com/Frontify/brand-sdk/commit/44efda90fd454298ea623c7f41b370f81ad1a203) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockItemWRapper): fix toolbar focus style
+
 ## 0.29.11
 
 ### Patch Changes
