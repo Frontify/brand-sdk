@@ -71,13 +71,15 @@ export class Authenticator {
         } catch (error) {
             if (error instanceof Error) {
                 throw new TypeError(`An error occured while getting the random challenge: ${error.message}`);
+            } else {
+                throw new TypeError('An error occured while getting the random challenge.');
             }
         }
     }
 
     getLoginUrl(): string {
         if (!this.randomChallenge) {
-            throw new Error('Random challenge needs to be defined');
+            throw new Error('Random challenge needs to be defined.');
         }
 
         const queryParams = [
@@ -94,7 +96,7 @@ export class Authenticator {
 
     async getOauthCredentialDetails(authorizationCode: string): Promise<OauthAccessTokenApiResponse> {
         if (!this.randomChallenge) {
-            throw new Error('Random challenge needs to be defined');
+            throw new Error('Random challenge needs to be defined.');
         }
 
         try {
