@@ -69,7 +69,9 @@ export class Authenticator {
             );
             this.randomChallenge = randomCodeChallenge.data;
         } catch (error) {
-            throw new Error(`An error occured while getting the random challenge: ${(error as Error).message}`);
+            if (error instanceof Error) {
+                throw new TypeError(`An error occured while getting the random challenge: ${error.message}`);
+            }
         }
     }
 
@@ -127,7 +129,9 @@ export const loginUser = async (instanceUrl: string, port: number): Promise<void
         );
         await open(loginUrl);
     } catch (error) {
-        Logger.error(`You need to enter a valid Frontify instance URL: ${(error as Error).message}`);
+        if (error instanceof Error) {
+            Logger.error(`You need to enter a valid Frontify instance URL: ${error.message}`);
+        }
         process.exit(-1);
     }
 };
