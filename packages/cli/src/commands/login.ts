@@ -68,8 +68,8 @@ export class Authenticator {
                 '/api/oauth/random',
             );
             this.randomChallenge = randomCodeChallenge.data;
-        } catch {
-            throw new Error('An error occured while getting the random challenge.');
+        } catch (error) {
+            throw new Error(`An error occured while getting the random challenge: ${(error as Error).message}`);
         }
     }
 
@@ -126,8 +126,8 @@ export const loginUser = async (instanceUrl: string, port: number): Promise<void
             `If a browser window doesn't automatically open, please open the following link manually: ${loginUrl}`,
         );
         await open(loginUrl);
-    } catch {
-        Logger.error('You need to enter a valid Frontify instance URL.');
+    } catch (error) {
+        Logger.error(`You need to enter a valid Frontify instance URL: ${(error as Error).message}`);
         process.exit(-1);
     }
 };
