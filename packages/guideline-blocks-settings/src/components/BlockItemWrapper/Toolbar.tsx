@@ -45,7 +45,7 @@ export const Toolbar = ({
                                     {...item.draggableProps}
                                     className={joinClassNames([
                                         FOCUS_VISIBLE_STYLE,
-                                        'tw-bg-base tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm',
+                                        'tw-bg-base tw-relative tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm focus-visible:tw-z-10',
                                         isDragging
                                             ? 'tw-cursor-grabbing tw-bg-box-selected-pressed'
                                             : 'tw-cursor-grab hover:tw-bg-box-selected-hover',
