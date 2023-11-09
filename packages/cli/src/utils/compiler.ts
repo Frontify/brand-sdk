@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
+import { getAppBridgeVersion } from './appBridgeVersion.js';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -11,8 +12,9 @@ export type CompilerOptions = {
     outputName: string;
 };
 
-export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) =>
-    build({
+export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
+    const appBridgeVersion = getAppBridgeVersion(projectPath);
+    return build({
         plugins: [
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
@@ -40,11 +42,16 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                         react: 'React',
                         'react-dom': 'ReactDOM',
                     },
-                    footer: `window.${outputName} = ${outputName};`,
+                    footer: `
+                        window.${outputName} = ${outputName}; 
+                        window.${outputName}.dependencies = window.${outputName}.packages || {};
+                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
+                    `,
                 },
             },
         },
     });
+};
 
 export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
