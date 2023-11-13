@@ -5,6 +5,7 @@ import FastifyCors from '@fastify/cors';
 import open from 'open';
 
 import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils/index.js';
+import CommandExecutionError from '../errors/CommandExecutionError.js';
 
 export interface OauthRandomCodeChallenge {
     secret: string;
@@ -69,11 +70,8 @@ export class Authenticator {
             );
             this.randomChallenge = randomCodeChallenge.data;
         } catch (error) {
-            if (error instanceof Error) {
-                throw new TypeError(`An error occured while getting the random challenge: ${error.message}`);
-            } else {
-                throw new TypeError('An error occured while getting the random challenge.');
-            }
+            const errorText = error instanceof Error ? error.message : String(error);
+            throw new Error(`An error occured while getting the random challenge: ${errorText}`);
         }
     }
 
@@ -111,7 +109,8 @@ export class Authenticator {
 
             return tokens;
         } catch (error) {
-            throw new Error(`An error occured while getting tokens: ${(error as Error).message}`);
+            const errorText = error instanceof Error ? error.message : String(error);
+            throw new Error(`An error occured while getting tokens: ${errorText}`);
         }
     }
 }
