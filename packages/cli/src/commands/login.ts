@@ -130,9 +130,8 @@ export const loginUser = async (instanceUrl: string, port: number): Promise<void
         );
         await open(loginUrl);
     } catch (error) {
-        if (error instanceof Error) {
-            Logger.error(`You need to enter a valid Frontify instance URL: ${error.message}`);
-        }
+        const errorText = error instanceof Error ? error.message : String(error);
+        Logger.error(`You need to enter a valid Frontify instance URL: ${errorText}`);
         process.exit(-1);
     }
 };
