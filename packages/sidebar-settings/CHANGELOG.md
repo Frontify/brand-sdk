@@ -1,5 +1,15 @@
 # @frontify/sidebar-settings
 
+## 0.7.0
+
+### Minor Changes
+
+- [#626](https://github.com/Frontify/brand-sdk/pull/626) [`8920ec9`](https://github.com/Frontify/brand-sdk/commit/8920ec993401caf94813974c7fad476c3decc2c6) Thanks [@mike85](https://github.com/mike85)! - feat: add url rule
+
+### Patch Changes
+
+- [#619](https://github.com/Frontify/brand-sdk/pull/619) [`dfe83ee`](https://github.com/Frontify/brand-sdk/commit/dfe83ee7417d3916d9bc52b96e600deb130bf147) Thanks [@anxobotana](https://github.com/anxobotana)! - extends fontInput typing
+
 ## 0.6.13
 
 ### Patch Changes
