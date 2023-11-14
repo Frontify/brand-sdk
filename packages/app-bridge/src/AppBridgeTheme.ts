@@ -19,11 +19,12 @@ import type {
 import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 import type { CommandRegistry } from './registries/commands/CommandRegistry';
 import type { EventRegistry } from './registries/events/EventRegistry';
-import type { AppBridgeBase } from './AppBridgeBase';
 import type {
     Asset,
     AssetChooserOptions,
     BrandportalLink,
+    Color,
+    ColorPalette,
     CoverPage,
     CoverPageCreate,
     CoverPageUpdate,
@@ -42,9 +43,12 @@ import type {
     DocumentPage,
     DocumentPageCreate,
     DocumentPageDuplicate,
+    DocumentPageTargets,
     DocumentPageUpdate,
+    DocumentSection,
     DocumentStandardCreate,
     DocumentStandardUpdate,
+    DocumentTargets,
     GuidelineSearchResult,
     TargetsUpdate,
 } from './types';
@@ -75,8 +79,7 @@ export interface AppBridgeTheme<
     State extends ThemeState = ThemeState,
     Context extends ThemeContext = ThemeContext,
     Event extends ThemeEvent = ThemeEvent,
-> extends AppBridge<ThemeApiMethod, ThemeCommand, State, Context, Event>,
-        AppBridgeBase {
+> extends AppBridge<ThemeApiMethod, ThemeCommand, State, Context, Event> {
     api<ApiMethodName extends keyof ThemeApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, ThemeApiMethod>,
     ): ApiReturn<ApiMethodName, ThemeApiMethod>;
@@ -98,13 +101,21 @@ export interface AppBridgeTheme<
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
+    /**
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.context('portalId').get()` instead.
+     */
     getPortalId(): number;
 
+    /**
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.context('brandId').get()` instead.
+     */
     getBrandId(): number;
 
     /**
-     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
-     * Use appBridge.dispatch(openNavigationManager()) for opening the Navigation Manager
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.dispatch(openNavigationManager())` for opening the Navigation Manager
      */
     openNavigationManager(): void;
 
@@ -257,15 +268,59 @@ export interface AppBridgeTheme<
     searchInGuideline(query: string, order?: 'relevance' | 'newest' | 'oldest'): Promise<GuidelineSearchResult[]>;
 
     /**
-     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
-     * Use appBridge.dispatch(openAssetChooser(options)) to open the asset chooser
-     * and appBridge.subscribe('assetsChosen', callback) to subscribe to the asset chosen event
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.dispatch(openAssetChooser(options))` to open the asset chooser
+     * and `appBridge.subscribe('assetsChosen', callback)` to subscribe to the asset chosen event
      */
     openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
 
     /**
-     * @deprecated This will be removed in version 4.0.0 of @frontify/app-bridge
-     * Use appBridge.dispatch(closeAssetChooser()) instead
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.dispatch(closeAssetChooser())` instead
      */
     closeAssetChooser(): void;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.context('projectId').get()` instead
+     */
+    getProjectId(): number;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.context('isEditing').get()` instead
+     */
+    getEditorState(): boolean;
+
+    /**
+     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `appBridge.context('language').get()` instead
+     */
+    getTranslationLanguage(): string;
+
+    getColorPalettes(): Promise<ColorPalette[]>;
+
+    getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
+
+    getAllDocuments(): Promise<Document[]>;
+
+    getUngroupedDocuments(): Promise<Document[]>;
+
+    getDocumentsByDocumentGroupId(documentGroupId: number): Promise<Document[]>;
+
+    getDocumentGroups(): Promise<DocumentGroup[]>;
+
+    getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
+
+    getDocumentPagesByDocumentCategoryId(documentCategoryId: number): Promise<DocumentPage[]>;
+
+    getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]>;
+
+    getUncategorizedDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
+
+    getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
+
+    getDocumentTargets(documentId: number): Promise<DocumentTargets>;
+
+    getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 }
