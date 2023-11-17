@@ -8,7 +8,11 @@ import { getAppBridgeVersion } from '../utils/appBridgeVersion.js';
 import pkg from '../../package.json';
 
 class PlatformAppDevelopmentServer {
-    constructor(private readonly port: number) {}
+    constructor(private port: number) {}
+
+    private setPort(port: number): void {
+        this.port = port;
+    }
 
     async serve(): Promise<void> {
         try {
@@ -27,6 +31,11 @@ class PlatformAppDevelopmentServer {
             });
 
             const server = await viteServer.listen(this.port, true);
+
+            if (viteServer.config.server?.port && viteServer.config.server?.port !== this.port) {
+                this.setPort(viteServer.config.server?.port);
+            }
+
             server.printUrls();
         } catch (error) {
             console.error(error);
@@ -38,9 +47,13 @@ class PlatformAppDevelopmentServer {
 class DevelopmentServer {
     constructor(
         private readonly entryFilePath: string,
-        private readonly port: number,
+        private port: number,
         private readonly allowExternal: boolean,
     ) {}
+
+    private setPort(port: number): void {
+        this.port = port;
+    }
 
     async serve(): Promise<void> {
         try {
@@ -100,6 +113,11 @@ class DevelopmentServer {
             });
 
             const server = await viteServer.listen(this.port, true);
+
+            if (viteServer.config.server?.port && viteServer.config.server?.port !== this.port) {
+                this.setPort(viteServer.config.server?.port);
+            }
+
             server.printUrls();
         } catch (error) {
             console.error(error);
