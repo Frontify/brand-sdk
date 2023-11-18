@@ -104,13 +104,13 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('blockId').get()` instead
+     * Use `appBridge.context('blockId').get()` instead.
      */
     getBlockId(): number;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('sectionId').get()` instead
+     * Use `appBridge.context('sectionId').get()` instead.
      */
     getSectionId(): number | undefined;
 
@@ -124,7 +124,7 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openAssetViewer(token))` instead
+     * Use `appBridge.dispatch(openAssetViewer(token))` instead.
      */
     openAssetViewer(token: string): void;
 
@@ -172,13 +172,13 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openTemplateChooser())` instead
+     * Use `appBridge.dispatch(openTemplateChooser())` instead.
      */
     openTemplateChooser(callback: (selectedTemplate: TemplateLegacy) => void): void;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeTemplateChooser())` instead
+     * Use `appBridge.dispatch(closeTemplateChooser())` instead.
      */
     closeTemplateChooser(): void;
 
@@ -199,25 +199,25 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeAssetChooser())` instead
+     * Use `appBridge.dispatch(closeAssetChooser())` instead.
      */
     closeAssetChooser(): void;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('projectId').get()` instead
+     * Use `appBridge.context('projectId').get()` instead.
      */
     getProjectId(): number;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('isEditing').get()` instead
+     * Use `appBridge.context('isEditing').get()` instead.
      */
     getEditorState(): boolean;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('language').get()` instead
+     * Use `appBridge.context('language').get()` instead.
      */
     getTranslationLanguage(): string;
 

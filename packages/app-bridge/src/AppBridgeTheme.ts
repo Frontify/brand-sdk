@@ -115,7 +115,7 @@ export interface AppBridgeTheme<
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openNavigationManager())` for opening the Navigation Manager
+     * Use `appBridge.dispatch(openNavigationManager())` for opening the Navigation Manager.
      */
     openNavigationManager(): void;
 
@@ -270,31 +270,31 @@ export interface AppBridgeTheme<
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
      * Use `appBridge.dispatch(openAssetChooser(options))` to open the asset chooser
-     * and `appBridge.subscribe('assetsChosen', callback)` to subscribe to the asset chosen event
+     * and `appBridge.subscribe('assetsChosen', callback)` to subscribe to the asset chosen event.
      */
     openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeAssetChooser())` instead
+     * Use `appBridge.dispatch(closeAssetChooser())` instead.
      */
     closeAssetChooser(): void;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('projectId').get()` instead
+     * Use `appBridge.context('projectId').get()` instead.
      */
     getProjectId(): number;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('isEditing').get()` instead
+     * Use `appBridge.context('isEditing').get()` instead.
      */
     getEditorState(): boolean;
 
     /**
      * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('language').get()` instead
+     * Use `appBridge.context('language').get()` instead.
      */
     getTranslationLanguage(): string;
 
