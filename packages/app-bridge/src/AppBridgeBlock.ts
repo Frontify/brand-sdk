@@ -29,6 +29,7 @@ import type {
     ColorPaletteCreate,
     ColorPalettePatch,
     ColorPatch,
+    Document,
     DocumentCategory,
     DocumentGroup,
     DocumentPage,
