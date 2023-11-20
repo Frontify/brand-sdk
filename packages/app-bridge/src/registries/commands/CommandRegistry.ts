@@ -10,7 +10,7 @@ type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
 type OpenNavigationManager = void;
 type DownloadAsset = Asset;
-type DownloadAssetsInBulk = { downloadUrl: string; assets: Asset[] };
+type DownloadAssets = { downloadUrl: string; assets: Asset[] };
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -19,7 +19,7 @@ export type CommandRegistry = CommandNameValidator<{
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
     downloadAsset: DownloadAsset;
-    downloadAssetsInBulk: DownloadAssetsInBulk;
+    downloadAssets: DownloadAssets;
     openNavigationManager: OpenNavigationManager;
     openNewPublication: OpenNewPublicationPayload;
 }>;

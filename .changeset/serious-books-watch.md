@@ -2,4 +2,4 @@
 "@frontify/app-bridge": minor
 ---
 
-Added `downloadAssetsInBulk` Command to trigger download for Bulk Assets
+Added `downloadAssets` Command to trigger download for Bulk Assets
