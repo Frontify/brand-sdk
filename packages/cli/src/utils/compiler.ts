@@ -60,10 +60,6 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             const indexJsSource = bundle?.['index.js'].type === 'asset' ? bundle?.['index.js'].source : null;
             const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
 
-            if (!indexJsSource || !indexCssSource) {
-                return html;
-            }
-
             const cssFileName = `${outputName}.${getHash(indexJsSource)}.css`;
             const jsFileName = `${outputName}.${getHash(indexCssSource)}.js`;
 
@@ -74,10 +70,6 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             const indexHtmlSource = bundle?.['index.html'].type === 'asset' ? bundle?.['index.html'].source : null;
             const indexJsSource = bundle?.['index.js'].type === 'asset' ? bundle?.['index.js'].source : null;
             const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
-
-            if (!indexHtmlSource || !indexJsSource || !indexCssSource) {
-                throw new Error('Could not find `index.html`, `index.js` or `index.css` in the produced bundle.');
-            }
 
             bundle['index.html'].fileName = `${outputName}.${getHash(indexHtmlSource)}.html`;
             bundle['index.js'].fileName = `${outputName}.${getHash(indexJsSource)}.js`;
