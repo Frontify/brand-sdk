@@ -25,23 +25,23 @@
         "test:watch": "vitest"
     },
     "devDependencies": {
-        "@babel/core": "^7.22.17",
-        "@frontify/eslint-config-typescript": "^0.16.1",
-        "@types/react": "^18.2.21",
-        "@types/react-dom": "^18.2.7",
-        "eslint": "^8.48.0",
+        "@babel/core": "^7.23.3",
+        "@frontify/eslint-config-typescript": "^0.16.2",
+        "@types/react": "^18.2.38",
+        "@types/react-dom": "^18.2.16",
+        "eslint": "^8.54.0",
         "eslint-plugin-notice": "^0.9.10",
-        "prettier": "^3.0.3",
+        "prettier": "^3.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "typescript": "^5.2.2",
-        "vite": "^4.4.9",
-        "vite-plugin-dts": "^3.5.3",
-        "vitest": "^0.34.3"
+        "typescript": "^5.3.2",
+        "vite": "^4.5.0",
+        "vite-plugin-dts": "^3.6.3",
+        "vitest": "^0.34.6"
     },
     "dependencies": {
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/fondue": "12.0.0-beta.341"
+        "@frontify/fondue": "12.0.0-beta.382"
     },
     "peerDependencies": {
         "react": "^18",
