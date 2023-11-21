@@ -61,7 +61,7 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
 
             if (!indexJsSource || !indexCssSource) {
-                throw new Error('Could not find `index.js` or `index.css` in the produced bundle.');
+                return html;
             }
 
             const cssFileName = `${outputName}.${getHash(indexJsSource)}.css`;
