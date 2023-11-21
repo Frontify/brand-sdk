@@ -72,6 +72,6 @@
     "peerDependencies": {
         "react": "^18",
         "react-dom": "^18",
-        "sinon": "^15"
+        "sinon": "^15 || ^16 || ^17"
     }
 }
