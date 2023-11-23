@@ -1,5 +1,15 @@
 # @frontify/sidebar-settings
 
+## 0.8.0
+
+### Minor Changes
+
+- [#638](https://github.com/Frontify/brand-sdk/pull/638) [`13ca57e`](https://github.com/Frontify/brand-sdk/commit/13ca57e7440e5d7175e54109b89eb8dc60eee4fd) Thanks [@mike85](https://github.com/mike85)! - feat: add minimumNumericalOrPixelRule
+
+### Patch Changes
+
+- [#639](https://github.com/Frontify/brand-sdk/pull/639) [`d55bd9f`](https://github.com/Frontify/brand-sdk/commit/d55bd9f39fdfa6e5c45a80744c058a605d81c893) Thanks [@mike85](https://github.com/mike85)! - feat: export minimumNumericalOrPixelRule
+
 ## 0.7.0
 
 ### Minor Changes
