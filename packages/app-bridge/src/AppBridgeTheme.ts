@@ -22,6 +22,7 @@ import type { EventRegistry } from './registries/events/EventRegistry';
 import type {
     Asset,
     AssetChooserOptions,
+    BrandportalI18nLanguage,
     BrandportalLink,
     Color,
     ColorPalette,
@@ -253,6 +254,8 @@ export interface AppBridgeTheme<
     getCoverPage(): Promise<CoverPage>;
 
     getBrandportalLink(): Promise<BrandportalLink>;
+
+    getBrandportalLanguages(): Promise<BrandportalI18nLanguage[]>;
 
     getUngroupedDocuments(): Promise<Document[]>;
 
