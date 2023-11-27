@@ -7,7 +7,6 @@ export * from './AssetApiDummy';
 export * from './AssetChooserOptionsDummy';
 export * from './AssetChooserResultDummy';
 export * from './AssetDummy';
-export * from './BrandportalI18nLanguageDummy';
 export * from './BrandportalLinkApiDummy';
 export * from './BrandportalLinkDummy';
 export * from './BulkDownloadDummy';

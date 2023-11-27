@@ -9,7 +9,6 @@ import { mergeDeep } from '../utilities';
 
 import {
     AssetDummy,
-    BrandportalI18nLanguageDummy,
     BrandportalLinkDummy,
     ColorDummy,
     ColorPaletteDummy,
@@ -348,9 +347,6 @@ export const getAppBridgeThemeStub = ({
         getBrandportalLink: stub<Parameters<AppBridgeTheme['getBrandportalLink']>>().resolves(
             BrandportalLinkDummy.with(),
         ),
-        getBrandportalLanguages: stub<Parameters<AppBridgeTheme['getBrandportalLanguages']>>().resolves([
-            BrandportalI18nLanguageDummy.with(),
-        ]),
         getTranslationLanguage: stub<Parameters<AppBridgeTheme['getTranslationLanguage']>>().returns(language),
         moveDocument: stub<Parameters<AppBridgeTheme['moveDocument']>>().resolves(DocumentDummy.with(DOCUMENT_ID_1)),
         moveDocumentCategory: stub<Parameters<AppBridgeTheme['moveDocumentCategory']>>().resolves(

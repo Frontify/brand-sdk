@@ -22,7 +22,6 @@ import type { EventRegistry } from './registries/events/EventRegistry';
 import type {
     Asset,
     AssetChooserOptions,
-    BrandportalI18nLanguage,
     BrandportalLink,
     Color,
     ColorPalette,
@@ -51,6 +50,7 @@ import type {
     DocumentStandardUpdate,
     DocumentTargets,
     GuidelineSearchResult,
+    PortalI18nLanguage,
     TargetsUpdate,
 } from './types';
 
@@ -68,6 +68,7 @@ export type ThemeState = {
 export type ThemeContext = {
     portalId: number;
     brandId: number;
+    languages: PortalI18nLanguage[];
 };
 
 export type ThemeEvent = EventNameValidator<
@@ -254,8 +255,6 @@ export interface AppBridgeTheme<
     getCoverPage(): Promise<CoverPage>;
 
     getBrandportalLink(): Promise<BrandportalLink>;
-
-    getBrandportalLanguages(): Promise<BrandportalI18nLanguage[]>;
 
     getUngroupedDocuments(): Promise<Document[]>;
 
