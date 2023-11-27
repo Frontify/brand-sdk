@@ -26,6 +26,7 @@ export * from './Notify';
 export * from './OauthTokens';
 export * from './PageTemplateAsset';
 export * from './PrivacySettings';
+export * from './Portal';
 export * from './PostExternalAssetParams';
 export * from './Project';
 export * from './SubscriptionHandler';
