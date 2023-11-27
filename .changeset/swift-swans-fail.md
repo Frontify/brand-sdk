@@ -2,4 +2,4 @@
 "@frontify/app-bridge": minor
 ---
 
-feat: add getBrandportalLanguages to AppBridgeTheme
+feat: add portal languages to AppBridgeTheme context
