@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export type Language = {
+export type PortalLanguage = {
     isoCode: string;
     name: string;
     isDefault: boolean;
