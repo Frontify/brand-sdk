@@ -50,7 +50,7 @@ import type {
     DocumentStandardUpdate,
     DocumentTargets,
     GuidelineSearchResult,
-    PortalLanguage,
+    Language,
     TargetsUpdate,
 } from './types';
 
@@ -68,7 +68,7 @@ export type ThemeState = {
 export type ThemeContext = {
     portalId: number;
     brandId: number;
-    languages: PortalLanguage[];
+    languages: Language[];
 };
 
 export type ThemeEvent = EventNameValidator<
