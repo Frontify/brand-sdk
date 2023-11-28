@@ -9,11 +9,3 @@ export const downloadAsset = (
     name: 'downloadAsset',
     payload: asset,
 });
-
-export const downloadAssets = (
-    downloadUrl: CommandRegistry['downloadAssets']['downloadUrl'],
-    assets: CommandRegistry['downloadAssets']['assets'],
-): DispatchHandlerParameter<'downloadAssets', CommandRegistry> => ({
-    name: 'downloadAssets',
-    payload: { downloadUrl, assets },
-});
