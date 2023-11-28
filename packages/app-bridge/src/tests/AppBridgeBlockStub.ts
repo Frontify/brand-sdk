@@ -180,12 +180,15 @@ export const getAppBridgeBlockStub = ({
             .resolves()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: ['settings1', 'settings2'], documentBlockId: BLOCK_ID },
+                payload: {
+                    blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
+                    documentBlockId: BLOCK_ID,
+                },
             })
             .resolves({ assetBulkDownloadToken: 'token' })
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: undefined, documentBlockId: BLOCK_ID },
+                payload: { blockAssets: undefined, documentBlockId: BLOCK_ID },
             })
             .resolves({ assetBulkDownloadToken: 'token' }),
 
