@@ -68,14 +68,15 @@ export class Authenticator {
                 '/api/oauth/random',
             );
             this.randomChallenge = randomCodeChallenge.data;
-        } catch {
-            throw new Error('An error occured while getting the random challenge.');
+        } catch (error) {
+            const errorText = error instanceof Error ? error.message : String(error);
+            throw new Error(`An error occured while getting the random challenge: ${errorText}`);
         }
     }
 
     getLoginUrl(): string {
         if (!this.randomChallenge) {
-            throw new Error('Random challenge needs to be defined');
+            throw new Error('Random challenge needs to be defined.');
         }
 
         const queryParams = [
@@ -92,7 +93,7 @@ export class Authenticator {
 
     async getOauthCredentialDetails(authorizationCode: string): Promise<OauthAccessTokenApiResponse> {
         if (!this.randomChallenge) {
-            throw new Error('Random challenge needs to be defined');
+            throw new Error('Random challenge needs to be defined.');
         }
 
         try {
@@ -107,7 +108,8 @@ export class Authenticator {
 
             return tokens;
         } catch (error) {
-            throw new Error(`An error occured while getting tokens: ${(error as Error).message}`);
+            const errorText = error instanceof Error ? error.message : String(error);
+            throw new Error(`An error occured while getting tokens: ${errorText}`);
         }
     }
 }
@@ -126,8 +128,9 @@ export const loginUser = async (instanceUrl: string, port: number): Promise<void
             `If a browser window doesn't automatically open, please open the following link manually: ${loginUrl}`,
         );
         await open(loginUrl);
-    } catch {
-        Logger.error('You need to enter a valid Frontify instance URL.');
+    } catch (error) {
+        const errorText = error instanceof Error ? error.message : String(error);
+        Logger.error(`You need to enter a valid Frontify instance URL: ${errorText}`);
         process.exit(-1);
     }
 };

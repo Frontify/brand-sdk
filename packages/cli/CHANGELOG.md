@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.1
+
+### Patch Changes
+
+- [#630](https://github.com/Frontify/brand-sdk/pull/630) [`d5635c2`](https://github.com/Frontify/brand-sdk/commit/d5635c2fa24a39d09e62708674888de27dade290) Thanks [@floriangaechter](https://github.com/floriangaechter)! - Show more information when login fails
+
 ## 5.5.0
 
 ### Minor Changes
