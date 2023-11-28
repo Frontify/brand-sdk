@@ -1,7 +1,7 @@
 {
     "name": "@frontify/frontify-cli",
     "author": "Frontify Developers <developers@frontify.com>",
-    "version": "5.5.0",
+    "version": "5.5.1",
     "bin": {
         "frontify-cli": "dist/index.mjs"
     },
@@ -31,37 +31,37 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@fastify/cors": "^8.3.0",
-        "@vitejs/plugin-react": "^4.0.4",
-        "archiver": "^6.0.0",
+        "@fastify/cors": "^8.4.1",
+        "@vitejs/plugin-react": "^4.2.0",
+        "archiver": "^6.0.1",
         "cac": "^6.7.14",
-        "conf": "^11.0.2",
-        "fast-glob": "^3.3.1",
-        "fastify": "^4.22.2",
+        "conf": "^12.0.0",
+        "fast-glob": "^3.3.2",
+        "fastify": "^4.24.3",
         "glob-to-regexp": "^0.4.1",
         "node-fetch": "^3.3.2",
         "open": "^9.1.0",
         "picocolors": "^1.0.0",
         "prompts": "^2.4.2",
-        "vite": "^4.4.9",
+        "vite": "^4.5.0",
         "vite-plugin-externals": "^0.6.2"
     },
     "devDependencies": {
-        "@frontify/eslint-config-typescript": "^0.16.1",
-        "@types/glob-to-regexp": "^0.4.1",
-        "@types/mock-fs": "^4.13.1",
-        "@types/node": "^18.17.12",
-        "@types/prompts": "^2.4.4",
-        "@types/ws": "8.5.5",
-        "@vitest/coverage-v8": "0.34.3",
-        "@vitest/ui": "^0.34.3",
-        "eslint": "^8.48.0",
+        "@frontify/eslint-config-typescript": "^0.16.2",
+        "@types/glob-to-regexp": "^0.4.4",
+        "@types/mock-fs": "^4.13.4",
+        "@types/node": "^18.18.11",
+        "@types/prompts": "^2.4.9",
+        "@types/ws": "8.5.10",
+        "@vitest/coverage-v8": "0.34.6",
+        "@vitest/ui": "^0.34.6",
+        "eslint": "^8.54.0",
         "eslint-plugin-notice": "^0.9.10",
         "mock-fs": "^5.2.0",
-        "nock": "^13.3.3",
-        "prettier": "^3.0.3",
+        "nock": "^13.3.8",
+        "prettier": "^3.1.0",
         "ts-node": "^10.9.1",
-        "typescript": "^5.2.2",
-        "vitest": "^0.34.3"
+        "typescript": "^5.3.2",
+        "vitest": "^0.34.6"
     }
 }

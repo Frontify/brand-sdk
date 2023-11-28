@@ -28,7 +28,6 @@ packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/guidelines-one
 packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/guidelines-one @SamuelAlev
 packages/app-bridge/src/AppBridgeBlock.ts @Frontify/guidelines-one @SamuelAlev
-packages/app-bridge/src/AppBridgeBase.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @SamuelAlev
 packages/app-bridge/src/AppBridgePlatformApp.ts @Frontify/integration
 packages/app-bridge/src/AppBridgePlatformApp.spec.ts @Frontify/integration
 packages/app-bridge/src/utilities/MessageBus.ts @Frontify/integration
