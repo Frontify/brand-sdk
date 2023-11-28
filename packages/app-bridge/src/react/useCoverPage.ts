@@ -26,7 +26,7 @@ export const useCoverPage = (
 
     const fetchCoverPage = useCallback(async () => {
         setIsLoading(true);
-        setCoverPage(await appBridge.getCoverPage());
+        setCoverPage(await appBridge.getCoverPage(appBridge.context('currentLanguage').get()));
         setIsLoading(false);
     }, [appBridge]);
 
@@ -57,9 +57,11 @@ export const useCoverPage = (
         };
 
         window.emitter.on('AppBridge:GuidelineCoverPage:Action', updateCoverPageFromEvent);
+        const unsubscribeCurrentLanguage = appBridge.context('currentLanguage').subscribe(fetchCoverPage);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineCoverPage:Action', updateCoverPageFromEvent);
+            unsubscribeCurrentLanguage();
         };
     }, [appBridge, fetchCoverPage]);
 

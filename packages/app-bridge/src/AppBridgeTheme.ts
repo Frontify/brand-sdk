@@ -65,8 +65,15 @@ export type ThemeState = {
 };
 
 export type ThemeContext = {
-    portalId: number;
     brandId: number;
+    projectId: number;
+    portalId: number;
+    portalToken: string | null;
+    currentLanguage: string;
+    defaultLanguage: string;
+    isEditing: boolean;
+    isPublicLink: boolean;
+    authenticated: boolean;
 };
 
 export type ThemeEvent = EventNameValidator<
@@ -250,7 +257,7 @@ export interface AppBridgeTheme<
 
     updateBrandportalLink(brandportalLink: Partial<BrandportalLink>): Promise<Partial<BrandportalLink> | null>;
 
-    getCoverPage(): Promise<CoverPage>;
+    getCoverPage(language?: string, isPublicLink?: boolean): Promise<CoverPage>;
 
     getBrandportalLink(): Promise<BrandportalLink>;
 
