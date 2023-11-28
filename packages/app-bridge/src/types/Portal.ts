@@ -14,10 +14,10 @@ export type Language = {
     /**
      * Indicates whether the language is the default language.
      */
-    isDefault: boolean;
+    default: boolean;
 
     /**
      * Indicates whether the language is in draft status.
      */
-    isDraft: boolean;
+    draft: boolean;
 };
