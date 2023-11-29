@@ -181,14 +181,14 @@ export const getAppBridgeBlockStub = ({
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
                 payload: {
-                    blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
                     appBridge: getAppBridgeBlockStub(),
+                    blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
                 },
             })
             .resolves({ assetBulkDownloadToken: 'token' })
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets: undefined, appBridge: getAppBridgeBlockStub() },
+                payload: { appBridge: getAppBridgeBlockStub(), blockAssets: undefined },
             })
             .resolves({ assetBulkDownloadToken: 'token' }),
 
