@@ -259,7 +259,7 @@ export interface AppBridgeTheme<
 
     updateBrandportalLink(brandportalLink: Partial<BrandportalLink>): Promise<Partial<BrandportalLink> | null>;
 
-    getCoverPage(language?: string): Promise<CoverPage>;
+    getCoverPage(): Promise<CoverPage>;
 
     getBrandportalLink(): Promise<BrandportalLink>;
 
