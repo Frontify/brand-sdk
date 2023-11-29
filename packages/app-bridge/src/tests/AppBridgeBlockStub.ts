@@ -61,7 +61,7 @@ export const getAppBridgeBlockStub = ({
     const deletedTemplateIds: Record<string, number[]> = {};
     const addedTemplateIds: Record<string, number[]> = {};
 
-    return {
+    const stubbedInstance = {
         getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
         getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
@@ -174,23 +174,7 @@ export const getAppBridgeBlockStub = ({
             BulkDownloadDummy.default(),
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
-
-        api: stub<Parameters<AppBridgeBlock['api']>>()
-            .withArgs()
-            .resolves()
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: {
-                    appBridge: getAppBridgeBlockStub(),
-                    blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
-                },
-            })
-            .resolves({ assetBulkDownloadToken: 'token' })
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: { appBridge: getAppBridgeBlockStub(), blockAssets: undefined },
-            })
-            .resolves({ assetBulkDownloadToken: 'token' }),
+        api: stub<Parameters<AppBridgeBlock['api']>>().resolves(),
 
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
@@ -220,4 +204,21 @@ export const getAppBridgeBlockStub = ({
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
+
+    stubbedInstance['api'] = stub<Parameters<AppBridgeBlock['api']>>()
+        .withArgs({
+            name: 'getAssetBulkDownloadToken',
+            payload: {
+                appBridge: stubbedInstance,
+                blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
+            },
+        })
+        .resolves({ assetBulkDownloadToken: 'token' })
+        .withArgs({
+            name: 'getAssetBulkDownloadToken',
+            payload: { appBridge: stubbedInstance, blockAssets: undefined },
+        })
+        .resolves({ assetBulkDownloadToken: 'token' });
+
+    return stubbedInstance;
 };
