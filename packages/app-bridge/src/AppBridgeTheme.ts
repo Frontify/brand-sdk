@@ -73,7 +73,7 @@ export type ThemeContext = {
     defaultLanguage: string;
     isEditing: boolean;
     isPublicLink: boolean;
-    authenticated: boolean;
+    isAuthenticated: boolean;
 };
 
 export type ThemeEvent = EventNameValidator<
@@ -257,7 +257,7 @@ export interface AppBridgeTheme<
 
     updateBrandportalLink(brandportalLink: Partial<BrandportalLink>): Promise<Partial<BrandportalLink> | null>;
 
-    getCoverPage(language?: string, isPublicLink?: boolean): Promise<CoverPage>;
+    getCoverPage(language?: string): Promise<CoverPage>;
 
     getBrandportalLink(): Promise<BrandportalLink>;
 
