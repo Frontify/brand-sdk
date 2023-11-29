@@ -174,7 +174,7 @@ export const getAppBridgeBlockStub = ({
             BulkDownloadDummy.default(),
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
-        api: stub<Parameters<AppBridgeBlock['api']>>().resolves(),
+        api: apiStubs,
 
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
