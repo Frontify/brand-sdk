@@ -12,6 +12,7 @@ export * from './minimumNumericRule';
 export * from './minimumNumericalOrPercentOrAutoRule';
 export * from './minimumNumericalOrPercentRule';
 export * from './minimumNumericalOrPixelOrAutoRule';
+export * from './minimumNumericalOrPixelRule';
 export * from './minimumNumericalRule';
 export * from './minimumPixelRule';
 export * from './numericalOrPercentRule';
