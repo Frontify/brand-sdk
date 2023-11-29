@@ -44,7 +44,7 @@ describe('useAssetBulkDownload', () => {
         appBridgeStub.api
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets: undefined, appBridge: appBridgeStub },
+                payload: { appBridge: appBridgeStub, blockAssets: undefined },
             })
             .rejects(appBridgeError);
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
