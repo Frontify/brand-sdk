@@ -50,6 +50,7 @@ import type {
     DocumentStandardUpdate,
     DocumentTargets,
     GuidelineSearchResult,
+    Language,
     TargetsUpdate,
 } from './types';
 
@@ -74,6 +75,7 @@ export type ThemeContext = {
     isEditing: boolean;
     isPublicLink: boolean;
     isAuthenticated: boolean;
+    languages: Language[];
 };
 
 export type ThemeEvent = EventNameValidator<

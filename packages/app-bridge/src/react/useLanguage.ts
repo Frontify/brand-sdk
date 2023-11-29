@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 
-export type Language = {
+type UseLanguageReturn = {
     currentLanguage: string;
     defaultLanguage: string;
 };
 
-export const useLanguage = (appBridge: AppBridgeTheme): Language => {
+export const useLanguage = (appBridge: AppBridgeTheme): UseLanguageReturn => {
     const [currentLanguage, setCurrentLanguage] = useState(appBridge.context('currentLanguage').get());
     const [defaultLanguage, setDefaultLanguage] = useState(appBridge.context('defaultLanguage').get());
 
