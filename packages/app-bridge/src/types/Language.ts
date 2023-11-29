@@ -17,7 +17,7 @@ export type Language = {
     isDefault: boolean;
 
     /**
-     * Indicates whether the language is in draft status.
+     * Indicates whether the language is in draft state.
      */
     isDraft: boolean;
 };
