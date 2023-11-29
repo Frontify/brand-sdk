@@ -61,7 +61,7 @@ export const getAppBridgeBlockStub = ({
     const deletedTemplateIds: Record<string, number[]> = {};
     const addedTemplateIds: Record<string, number[]> = {};
 
-    const stubbedInstance = {
+    return {
         getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
         getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
