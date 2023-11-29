@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import type { CoverPage, Document, DocumentCategory, DocumentPage } from '../types';
-import type { Language } from '../react/useLanguage';
 
 export const computeCoverPageLink = ({
     coverPage,
@@ -9,7 +8,10 @@ export const computeCoverPageLink = ({
     portalToken,
 }: {
     coverPage: CoverPage;
-    language: Language;
+    language: {
+        currentLanguage: string;
+        defaultLanguage: string;
+    };
     portalToken: Nullable<string>;
 }) => {
     const languageUrlPart = language.currentLanguage === language.defaultLanguage ? '' : `/${language.currentLanguage}`;
@@ -27,7 +29,10 @@ export const computeDocumentLink = ({
     portalToken,
 }: {
     document: Document;
-    language: Language;
+    language: {
+        currentLanguage: string;
+        defaultLanguage: string;
+    };
     portalToken: Nullable<string>;
 }) => {
     const languageUrlPart = language.currentLanguage === language.defaultLanguage ? '' : `/${language.currentLanguage}`;
@@ -49,7 +54,10 @@ export const computeDocumentPageLink = ({
     documentPage: DocumentPage;
     document: Document;
     documentCategory?: DocumentCategory;
-    language: Language;
+    language: {
+        currentLanguage: string;
+        defaultLanguage: string;
+    };
     portalToken: Nullable<string>;
 }) => {
     const categoryUrlPart = documentCategory ? `${documentCategory.slug}/` : '-/';
