@@ -66,8 +66,15 @@ export type ThemeState = {
 };
 
 export type ThemeContext = {
-    portalId: number;
     brandId: number;
+    projectId: number;
+    portalId: number;
+    portalToken: string | null;
+    currentLanguage: string;
+    defaultLanguage: string;
+    isEditing: boolean;
+    isPublicLink: boolean;
+    isAuthenticated: boolean;
     languages: Language[];
 };
 
