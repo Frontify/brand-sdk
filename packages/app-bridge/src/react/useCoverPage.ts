@@ -26,7 +26,7 @@ export const useCoverPage = (
 
     const fetchCoverPage = useCallback(async () => {
         setIsLoading(true);
-        setCoverPage(await appBridge.getCoverPage(appBridge.context('currentLanguage').get()));
+        setCoverPage(await appBridge.getCoverPage());
         setIsLoading(false);
     }, [appBridge]);
 
