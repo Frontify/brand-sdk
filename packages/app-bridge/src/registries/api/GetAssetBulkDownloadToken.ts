@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Asset } from '../../types';
+import type { AppBridgeBlock, Asset } from '../..';
 
 export type GetAssetBulkDownloadTokenPayload = {
-    documentBlockId: number;
+    appBridge: AppBridgeBlock;
     blockAssets?: Record<string, Asset[]>;
 };
 
