@@ -20,6 +20,7 @@ describe('useCoverPage', () => {
 
         const coverPage = CoverPageDummy.with(1);
         appBridge.getCoverPage.resolves(coverPage);
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => vi.fn() });
 
         const { result } = renderHook(() => useCoverPage(appBridge));
 
@@ -37,6 +38,7 @@ describe('useCoverPage', () => {
 
         const coverPage = CoverPageDummy.with(243);
         appBridge.getCoverPage.resolves(coverPage);
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => vi.fn() });
 
         const { result } = renderHook(() => useCoverPage(appBridge));
 
@@ -52,6 +54,7 @@ describe('useCoverPage', () => {
 
     it('should update the cover page when an event is emitted', () => {
         const appBridge = getAppBridgeThemeStub();
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => vi.fn() });
 
         const { result } = renderHook(() => useCoverPage(appBridge));
 
@@ -69,6 +72,7 @@ describe('useCoverPage', () => {
 
     it('should set the cover page to null when an event to delete it is emitted', () => {
         const appBridge = getAppBridgeThemeStub();
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => vi.fn() });
 
         const { result } = renderHook(() => useCoverPage(appBridge));
 
@@ -83,6 +87,7 @@ describe('useCoverPage', () => {
 
     it('should not update the cover page when an event with an invalid action is emitted', () => {
         const appBridge = getAppBridgeThemeStub();
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => vi.fn() });
 
         const { result } = renderHook(() => useCoverPage(appBridge));
 
@@ -99,6 +104,7 @@ describe('useCoverPage', () => {
     it('should start fetching only when it is enabled', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getCoverPage');
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => vi.fn() });
 
         let enabled = false;
 
@@ -114,12 +120,15 @@ describe('useCoverPage', () => {
 
     it('should unregister when unmounted', () => {
         const appBridge = getAppBridgeThemeStub();
+        const unsubscribeFn = vi.fn();
         const spy = vi.spyOn(window.emitter, 'off');
+        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => unsubscribeFn });
 
         const { unmount } = renderHook(() => useCoverPage(appBridge));
 
         unmount();
 
         expect(spy).toBeCalledWith('AppBridge:GuidelineCoverPage:Action', expect.any(Function));
+        expect(unsubscribeFn).toHaveBeenCalledOnce();
     });
 });

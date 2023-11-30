@@ -57,9 +57,11 @@ export const useCoverPage = (
         };
 
         window.emitter.on('AppBridge:GuidelineCoverPage:Action', updateCoverPageFromEvent);
+        const unsubscribeCurrentLanguage = appBridge.context('currentLanguage').subscribe(fetchCoverPage);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineCoverPage:Action', updateCoverPageFromEvent);
+            unsubscribeCurrentLanguage();
         };
     }, [appBridge, fetchCoverPage]);
 
