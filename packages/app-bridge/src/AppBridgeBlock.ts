@@ -204,22 +204,10 @@ export interface AppBridgeBlock<
      */
     closeAssetChooser(): void;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('projectId').get()` instead.
-     */
     getProjectId(): number;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('isEditing').get()` instead.
-     */
     getEditorState(): boolean;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('language').get()` instead.
-     */
     getTranslationLanguage(): string;
 
     getColorPalettes(): Promise<ColorPalette[]>;
