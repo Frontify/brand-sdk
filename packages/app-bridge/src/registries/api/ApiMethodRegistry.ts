@@ -12,7 +12,7 @@ import type {
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {
         payload: GetAssetBulkDownloadTokenPayload;
-        response: GetAssetBulkDownloadTokenResponse;
+        response: GetAssetBulkDownloadTokenResponse | never;
     };
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
     createAsset: { payload: CreateAssetPayload; response: CreateAssetResponse };

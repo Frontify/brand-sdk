@@ -35,7 +35,7 @@ describe('useAssetBulkDownload', () => {
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.api, {
                 name: 'getAssetBulkDownloadToken',
-                payload: { appBridge: appBridgeStub, blockAssets },
+                payload: { blockAssets },
             });
         });
     });
@@ -45,7 +45,7 @@ describe('useAssetBulkDownload', () => {
         appBridgeStub.api = stub<Parameters<AppBridgeBlock['api']>>()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { appBridge: appBridgeStub, blockAssets: undefined },
+                payload: { blockAssets: undefined },
             })
             .rejects(appBridgeError);
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
