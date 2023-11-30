@@ -2,9 +2,10 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import sinon from 'sinon';
+import sinon, { stub } from 'sinon';
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 import { AssetBulkDownloadState, useAssetBulkDownload } from './';
+import { AppBridgeBlock } from '../AppBridgeBlock';
 
 const appBridgeError = new Error('Something went wrong');
 
@@ -41,7 +42,7 @@ describe('useAssetBulkDownload', () => {
 
     it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.api
+        appBridgeStub.api = stub<Parameters<AppBridgeBlock['api']>>()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
                 payload: { appBridge: appBridgeStub, blockAssets: undefined },
