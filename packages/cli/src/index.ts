@@ -11,7 +11,6 @@ import {
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
     createNewApp,
-    createNewContentBlock,
     loginUser,
     logoutUser,
 } from './commands/index.js';
