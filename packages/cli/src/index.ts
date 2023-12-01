@@ -227,7 +227,7 @@ cli.command('create [appName]', 'create a new marketplace app')
                 exit(0);
             }
 
-            createNewContentBlock(promptedAppName, stylingFramework);
+            createNewApp(promptedAppName, stylingFramework, 'content-block');
         }
     });
 
