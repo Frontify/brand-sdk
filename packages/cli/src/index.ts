@@ -237,7 +237,7 @@ for (const appType of ['block', 'theme']) {
     cli.command(
         `${appType} create [appName]`,
         `[deprecated: use 'create' instead] create a ${appType} app locally`,
-    ).action((appName: string) => createNewContentBlock(appName, 'css-modules'));
+    ).action((appName: string) => createNewApp(appName, 'css-modules', 'content-block'));
 }
 
 cli.help();
