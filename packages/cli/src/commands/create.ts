@@ -24,7 +24,7 @@ export const createNewContentBlock = (contentBlockName: string, template = 'tail
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}Happy hacking!`);
 };
-export const createNewPlatformApp = (appName: string, template, type: string): void => {
+export const createNewApp = (appName: string, template, type: string): void => {
     Logger.info(`Creating the ${type}...`);
 
     const appInBlue = pc.blue(`./${appName}`);
