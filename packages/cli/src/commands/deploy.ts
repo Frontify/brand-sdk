@@ -17,6 +17,7 @@ import {
     readFileLinesAsArray,
 } from '../utils/index.js';
 import { HttpClientError } from '../errors/HttpClientError.js';
+import { verifyManifest } from '../utils/verifyManifest.js';
 
 type Options = {
     dryRun?: boolean;
@@ -74,6 +75,9 @@ export const createDeployment = async (
 
                 Logger.info('Performing eslint checks...');
                 await promiseExec('npx eslint src');
+
+                Logger.info('Performing manifest checks...');
+                await verifyManifest();
             }
 
             try {
