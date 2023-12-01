@@ -5,14 +5,13 @@ import pc from 'picocolors';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const CONTENT_BLOCK_PREFIX = 'content-block-';
 export const createNewContentBlock = (contentBlockName: string, template = 'tailwind'): void => {
     Logger.info('Creating the content block...');
 
     const blockPathInBlue = pc.blue(`./${contentBlockName}`);
     Logger.info(`Scaffolding content block in ${blockPathInBlue}...`);
 
-    const templateDir = resolve(fileURLToPath(import.meta.url), `../../templates/${CONTENT_BLOCK_PREFIX}${template}`);
+    const templateDir = resolve(fileURLToPath(import.meta.url), `../../templates/content-block-${template}`);
     copyFolder(templateDir, contentBlockName, { exclude: ['node_modules'] });
 
     updatePackageJsonProjectName(contentBlockName);
@@ -25,7 +24,7 @@ export const createNewContentBlock = (contentBlockName: string, template = 'tail
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}Happy hacking!`);
 };
-export const createNewApp = (appName: string, template, type: string): void => {
+export const createNewPlatformApp = (appName: string, template, type: string): void => {
     Logger.info(`Creating the ${type}...`);
 
     const appInBlue = pc.blue(`./${appName}`);

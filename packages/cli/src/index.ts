@@ -10,8 +10,8 @@ import {
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
-    createNewApp,
     createNewContentBlock,
+    createNewPlatformApp,
     loginUser,
     logoutUser,
 } from './commands/index.js';
@@ -196,7 +196,7 @@ cli.command('create [appName]', 'create a new marketplace app')
                 exit(0);
             }
 
-            createNewApp(promptedAppName, stylingFramework, appType);
+            createNewPlatformApp(promptedAppName, stylingFramework, appType);
         } else {
             const { promptedAppName, stylingFramework } = await prompts([
                 {
