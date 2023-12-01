@@ -1,3 +1,3 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export const verifyManifest = async () => {};
+export const verifyManifest = async (mainfest: unknown) => {};
