@@ -73,14 +73,17 @@ describe('Verify Platform App Manifest', () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManfiestSchemaV1);
         expect(verifiedManifest).toBe(true);
     });
+
     it('should throw error when wrong file extension is present in IconLibrary', async () => {
         const verifiedManifest = await verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManfiestSchemaV1);
         expect(verifiedManifest).toBe(false);
     });
+
     it('should throw error when forbidden extensions are in the manifest', async () => {
         const verifiedManifest = await verifyManifest(MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS, platformAppManfiestSchemaV1);
         expect(verifiedManifest).toBe(false);
     });
+
     it('should throw error when forbidden extensions are in the Logo Library manifest', async () => {
         const verifiedManifest = await verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManfiestSchemaV1);
         expect(verifiedManifest).toBe(false);
