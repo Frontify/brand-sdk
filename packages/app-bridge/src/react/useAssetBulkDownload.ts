@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
+import type { Asset } from '../types';
 
 export enum AssetBulkDownloadState {
     Init = 'init',
@@ -16,13 +17,13 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
     const [status, setStatus] = useState<AssetBulkDownloadState>(AssetBulkDownloadState.Init);
     const [downloadUrl, setDownloadUrl] = useState<Nullable<string>>(null);
 
-    const generateBulkDownload = async (settingIds?: string[]) => {
+    const generateBulkDownload = async (blockAssets?: Record<string, Asset[]>) => {
         try {
             setStatus(AssetBulkDownloadState.Started);
 
             const { assetBulkDownloadToken } = await appBridge.api({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds, documentBlockId: appBridge.getBlockId() },
+                payload: { blockAssets },
             });
 
             setDownloadUrl(null);
