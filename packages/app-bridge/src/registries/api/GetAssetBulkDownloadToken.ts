@@ -10,7 +10,7 @@ export type GetAssetBulkDownloadTokenResponse = {
     assetBulkDownloadToken: string;
 };
 
-export const getAssetBulkDownloadToken = (
+export const withGetAssetBulkDownloadTokenPayload = (
     blockAssets?: GetAssetBulkDownloadTokenPayload['blockAssets'],
 ): {
     name: 'getAssetBulkDownloadToken';
