@@ -17,7 +17,7 @@ import {
     readFileLinesAsArray,
 } from '../utils/index.js';
 import { HttpClientError } from '../errors/HttpClientError.js';
-import { verifyManifest } from '../utils/verifyManifest.js';
+import { platformAppManfiestSchemaV1, verifyManifest } from '../utils/verifyManifest.js';
 
 type Options = {
     dryRun?: boolean;
@@ -28,6 +28,9 @@ type Options = {
 export type AppManifest = {
     appId: string;
     appType?: string;
+    metadata?: {
+        version?: number;
+    };
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -67,7 +70,7 @@ export const createDeployment = async (
             dryRun && Logger.info(pc.blue('Dry run: enabled'));
 
             const projectPath = process.cwd();
-            const { appId } = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+            const manifest = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');
@@ -76,12 +79,15 @@ export const createDeployment = async (
                 Logger.info('Performing eslint checks...');
                 await promiseExec('npx eslint src');
 
-                Logger.info('Performing manifest checks...');
-                await verifyManifest();
+                if (manifest.appType === 'platform-app') {
+                    Logger.info('Performing manifest checks...');
+                    const validManifest = await verifyManifest(manifest, platformAppManfiestSchemaV1);
+                    !validManifest && process.exit(-1);
+                }
             }
 
             try {
-                await compile({ projectPath, entryFile, outputName: appId });
+                await compile({ projectPath, entryFile, outputName: manifest.appId });
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
@@ -109,7 +115,7 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
 
                 try {
-                    await httpClient.put(`/api/marketplace/app/${appId}`, request, {
+                    await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
                         headers: { Authorization: `Bearer ${accessToken}` },
                     });
 
@@ -117,7 +123,7 @@ export const createDeployment = async (
 
                     if (openInBrowser) {
                         Logger.info('Opening the Frontify Marketplace page...');
-                        await open(`https://${instanceUrl}/marketplace/apps/${appId}`);
+                        await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
                     }
                 } catch (error) {
                     Logger.error('An error occured while deploying:', (error as HttpClientError).responseBody.error);

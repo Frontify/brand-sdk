@@ -15,8 +15,16 @@ import {
     loginUser,
     logoutUser,
 } from './commands/index.js';
-import { compileBlock, compilePlatformApp, getValidInstanceUrl, isValidName, reactiveJson } from './utils/index.js';
+import {
+    Logger,
+    compileBlock,
+    compilePlatformApp,
+    getValidInstanceUrl,
+    isValidName,
+    reactiveJson,
+} from './utils/index.js';
 import pkg from '../package.json';
+import { platformAppManfiestSchemaV1, verifyManifest } from './utils/verifyManifest.js';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -116,6 +124,24 @@ for (const appType of ['block', 'theme']) {
             );
         });
 }
+
+cli.command('verify-manifest', 'verify the manifest structure to be correct')
+    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
+    .action(async (options) => {
+        const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
+        const appType = options.appType || manifest.appType;
+
+        if (appType === 'platform-app') {
+            if (manifest.metadata?.version === 1) {
+                const validatedManifest = await verifyManifest(manifest, platformAppManfiestSchemaV1);
+                validatedManifest && Logger.success('Your manifest.json is valid');
+            } else {
+                Logger.error('Please specify a manifest metadata.version');
+            }
+        } else {
+            Logger.error('AppType is required.');
+        }
+    });
 
 cli.command('deploy', 'deploy the app to the marketplace')
     .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.ts') })
