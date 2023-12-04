@@ -2,9 +2,10 @@
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import sinon from 'sinon';
-import { getAppBridgeBlockStub } from '../tests';
-import { AssetBulkDownloadState, useAssetBulkDownload } from './';
+import sinon, { stub } from 'sinon';
+import { AssetDummy, getAppBridgeBlockStub } from '../tests';
+import { AssetBulkDownloadState, useAssetBulkDownload } from './useAssetBulkDownload';
+import { AppBridgeBlock } from '../AppBridgeBlock';
 
 const appBridgeError = new Error('Something went wrong');
 
@@ -29,22 +30,22 @@ describe('useAssetBulkDownload', () => {
     it('should call getAssetBulkDownloadToken with the correct arguments', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        const settingIds = ['setting1', 'setting2'];
-        result.current.generateBulkDownload(settingIds);
+        const blockAssets = { setting1: [AssetDummy.with(123)], setting2: [AssetDummy.with(456)] };
+        result.current.generateBulkDownload(blockAssets);
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.api, {
                 name: 'getAssetBulkDownloadToken',
-                payload: { documentBlockId: appBridgeStub.getBlockId(), settingIds },
+                payload: { blockAssets },
             });
         });
     });
 
     it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.api
+        appBridgeStub.api = stub<Parameters<AppBridgeBlock['api']>>()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: undefined, documentBlockId: appBridgeStub.getBlockId() },
+                payload: { blockAssets: undefined },
             })
             .rejects(appBridgeError);
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));

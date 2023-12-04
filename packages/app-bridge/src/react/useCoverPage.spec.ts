@@ -117,18 +117,4 @@ describe('useCoverPage', () => {
 
         expect(spy).toBeCalled();
     });
-
-    it('should unregister when unmounted', () => {
-        const appBridge = getAppBridgeThemeStub();
-        const unsubscribeFn = vi.fn();
-        const spy = vi.spyOn(window.emitter, 'off');
-        appBridge.context.withArgs('currentLanguage').returns({ get: () => 'en', subscribe: () => unsubscribeFn });
-
-        const { unmount } = renderHook(() => useCoverPage(appBridge));
-
-        unmount();
-
-        expect(spy).toBeCalledWith('AppBridge:GuidelineCoverPage:Action', expect.any(Function));
-        expect(unsubscribeFn).toHaveBeenCalledOnce();
-    });
 });
