@@ -24,7 +24,7 @@ import {
     reactiveJson,
 } from './utils/index.js';
 import pkg from '../package.json';
-import { platformAppManfiestSchemaV1, verifyManifest } from './utils/verifyManifest.js';
+import { platformAppManifestSchemaV1, verifyManifest } from './utils/verifyManifest.js';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -133,7 +133,7 @@ cli.command('verify-manifest', 'verify the manifest structure to be correct')
 
         if (appType === 'platform-app') {
             if (manifest.metadata?.version === 1) {
-                const validatedManifest = await verifyManifest(manifest, platformAppManfiestSchemaV1);
+                const validatedManifest = await verifyManifest(manifest, platformAppManifestSchemaV1);
                 validatedManifest && Logger.success('Your manifest.json is valid');
             } else {
                 Logger.error('Please specify a manifest metadata.version');

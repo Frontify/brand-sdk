@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
-import { platformAppManfiestSchemaV1, verifyManifest } from '../../src/utils/verifyManifest.js';
+import { platformAppManifestSchemaV1, verifyManifest } from '../../src/utils/verifyManifest.js';
 
 const VALID_MANIFEST = {
     appType: 'platform-app',
@@ -70,22 +70,22 @@ const MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS = {
 
 describe('Verify Platform App Manifest', () => {
     it('should validate a valid manfiest', async () => {
-        const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManfiestSchemaV1);
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
         expect(verifiedManifest).toBe(true);
     });
 
     it('should throw error when wrong file extension is present in IconLibrary', async () => {
-        const verifiedManifest = await verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManfiestSchemaV1);
+        const verifiedManifest = await verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManifestSchemaV1);
         expect(verifiedManifest).toBe(false);
     });
 
     it('should throw error when forbidden extensions are in the manifest', async () => {
-        const verifiedManifest = await verifyManifest(MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS, platformAppManfiestSchemaV1);
+        const verifiedManifest = await verifyManifest(MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS, platformAppManifestSchemaV1);
         expect(verifiedManifest).toBe(false);
     });
 
     it('should throw error when forbidden extensions are in the Logo Library manifest', async () => {
-        const verifiedManifest = await verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManfiestSchemaV1);
+        const verifiedManifest = await verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManifestSchemaV1);
         expect(verifiedManifest).toBe(false);
     });
 });

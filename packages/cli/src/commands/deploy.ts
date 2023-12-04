@@ -17,7 +17,7 @@ import {
     readFileLinesAsArray,
 } from '../utils/index.js';
 import { HttpClientError } from '../errors/HttpClientError.js';
-import { platformAppManfiestSchemaV1, verifyManifest } from '../utils/verifyManifest.js';
+import { platformAppManifestSchemaV1, verifyManifest } from '../utils/verifyManifest.js';
 
 type Options = {
     dryRun?: boolean;
@@ -81,7 +81,7 @@ export const createDeployment = async (
 
                 if (manifest.appType === 'platform-app') {
                     Logger.info('Performing manifest checks...');
-                    const validManifest = await verifyManifest(manifest, platformAppManfiestSchemaV1);
+                    const validManifest = await verifyManifest(manifest, platformAppManifestSchemaV1);
                     !validManifest && process.exit(-1);
                 }
             }
