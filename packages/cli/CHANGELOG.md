@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.3
+
+### Patch Changes
+
+- [#642](https://github.com/Frontify/brand-sdk/pull/642) [`913e697`](https://github.com/Frontify/brand-sdk/commit/913e697be0e37e734cf098cca41803ee86307cbf) Thanks [@julianiff](https://github.com/julianiff)! - chore: move into common create folder
+
 ## 5.5.2
 
 ### Patch Changes
