@@ -63,7 +63,7 @@ export const platformAppManifestSchemaV1 = object({
             }),
             assetCreation: AssetCreationShape,
         }).optional(),
-        workspaceProject: object({
+        WorkspaceProject: object({
             assetAction: object({
                 type: array(
                     string().refine((value) =>
