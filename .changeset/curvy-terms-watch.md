@@ -2,4 +2,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-Feat/add mainfest verify step
+feat: add manifest verification step
