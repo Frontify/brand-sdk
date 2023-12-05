@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { array, number, object, string } from 'zod';
-import { Logger } from './logger.js';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const forbiddenExtensionsErrorMessage = `Invalid file extension. Cannot include filenameExtensions: ${forbiddenExtensions}.`;
@@ -90,8 +89,8 @@ export const verifyManifest = async (manifest: unknown, schema: typeof platformA
     const validatedManifest = schema.safeParse(manifest);
 
     if (!validatedManifest.success) {
-        Logger.error(validatedManifest.error.message);
+        throw new Error(validatedManifest.error.message);
     }
 
-    return validatedManifest.success;
+    return validatedManifest.data;
 };

@@ -70,7 +70,11 @@ export const createDeployment = async (
             dryRun && Logger.info(pc.blue('Dry run: enabled'));
 
             const projectPath = process.cwd();
-            const manifest = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+            const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+            const parsedManifest =
+                manifestContent.appType === 'platform-app'
+                    ? await verifyManifest(manifestContent, platformAppManifestSchemaV1)
+                    : manifestContent;
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');
@@ -78,16 +82,10 @@ export const createDeployment = async (
 
                 Logger.info('Performing eslint checks...');
                 await promiseExec('npx eslint src');
-
-                if (manifest.appType === 'platform-app') {
-                    Logger.info('Performing manifest checks...');
-                    const validManifest = await verifyManifest(manifest, platformAppManifestSchemaV1);
-                    !validManifest && process.exit(-1);
-                }
             }
 
             try {
-                await compile({ projectPath, entryFile, outputName: manifest.appId });
+                await compile({ projectPath, entryFile, outputName: parsedManifest.appId });
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
@@ -115,7 +113,7 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
 
                 try {
-                    await httpClient.put(`/api/marketplace/app/${manifest.appId}`, request, {
+                    await httpClient.put(`/api/marketplace/app/${parsedManifest.appId}`, request, {
                         headers: { Authorization: `Bearer ${accessToken}` },
                     });
 
@@ -123,7 +121,7 @@ export const createDeployment = async (
 
                     if (openInBrowser) {
                         Logger.info('Opening the Frontify Marketplace page...');
-                        await open(`https://${instanceUrl}/marketplace/apps/${manifest.appId}`);
+                        await open(`https://${instanceUrl}/marketplace/apps/${parsedManifest.appId}`);
                     }
                 } catch (error) {
                     Logger.error('An error occured while deploying:', (error as HttpClientError).responseBody.error);
