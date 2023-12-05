@@ -68,6 +68,22 @@ const MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS = {
     },
 };
 
+const VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL = {
+    appType: 'platform-app',
+    appId: 'abcd',
+    surfaces: {
+        MediaLibrary: {
+            assetAction: {
+                type: ['IMAGE'],
+                filenameExtension: ['png'],
+            },
+        },
+    },
+    metadata: {
+        version: 1.1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     it('should validate a valid manfiest', async () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
@@ -86,6 +102,22 @@ describe('Verify Platform App Manifest', () => {
 
     it('should throw error when forbidden extensions are in the Logo Library manifest', async () => {
         const verifiedManifest = await verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManifestSchemaV1);
+        expect(verifiedManifest).toBe(false);
+    });
+
+    it('should throw error when version number is a float', async () => {
+        const verifiedManifest = await verifyManifest(
+            VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL,
+            platformAppManifestSchemaV1,
+        );
+        expect(verifiedManifest).toBe(false);
+    });
+
+    it('should throw error when version number is not an integer without decimal', async () => {
+        const verifiedManifest = await verifyManifest(
+            VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL,
+            platformAppManifestSchemaV1,
+        );
         expect(verifiedManifest).toBe(false);
     });
 });
