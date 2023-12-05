@@ -174,18 +174,18 @@ export const getAppBridgeBlockStub = ({
             BulkDownloadDummy.default(),
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
-
         api: stub<Parameters<AppBridgeBlock['api']>>()
-            .withArgs()
             .resolves()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: ['settings1', 'settings2'], documentBlockId: BLOCK_ID },
+                payload: {
+                    blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
+                },
             })
             .resolves({ assetBulkDownloadToken: 'token' })
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
-                payload: { settingIds: undefined, documentBlockId: BLOCK_ID },
+                payload: { blockAssets: undefined },
             })
             .resolves({ assetBulkDownloadToken: 'token' }),
 
