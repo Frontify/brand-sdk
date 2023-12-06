@@ -9,7 +9,7 @@ const AssetCreationShape = object({}).optional();
 
 export const platformAppManifestSchemaV1 = object({
     appId: string().refine((value) => value.trim() !== '', {
-        message: 'appId is required',
+        message: '`appId` is required',
     }),
     appType: string().refine((value) => ['content-block', 'platform-app', 'theme'].includes(value), {
         message: 'appType is required',
