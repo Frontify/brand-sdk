@@ -7,10 +7,13 @@ const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
     `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
 
 const AssetCreationShape = object({}).optional();
+
 const completeAssetType = z.enum(['audio', 'document', 'image', 'video', 'file', 'embeddedContent']);
 const imageAssetType = completeAssetType.exclude(['audio', 'document', 'video', 'file', 'embeddedContent']);
+
 const iconLibraryFilenameExtension = z.enum(['svg']);
 const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff']);
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().refine((value) => value.trim() !== '', {
         message: '`appId` is required',
