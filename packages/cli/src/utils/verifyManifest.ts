@@ -12,7 +12,7 @@ export const platformAppManifestSchemaV1 = object({
         message: '`appId` is required',
     }),
     appType: string().refine((value) => ['content-block', 'platform-app', 'theme'].includes(value), {
-        message: 'appType is required',
+        message: '`appType` is required',
     }),
     surfaces: object({
         mediaLibrary: object({
