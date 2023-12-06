@@ -1,5 +1,19 @@
 # @frontify/frontify-cli
 
+## 5.5.3
+
+### Patch Changes
+
+- [#642](https://github.com/Frontify/brand-sdk/pull/642) [`913e697`](https://github.com/Frontify/brand-sdk/commit/913e697be0e37e734cf098cca41803ee86307cbf) Thanks [@julianiff](https://github.com/julianiff)! - chore: move into common create folder
+
+## 5.5.2
+
+### Patch Changes
+
+- [#621](https://github.com/Frontify/brand-sdk/pull/621) [`e86676e`](https://github.com/Frontify/brand-sdk/commit/e86676e98cb8e1f35205804069b2a9a8ac1f69aa) Thanks [@ragi96](https://github.com/ragi96)! - chore: templates using stable version of app-bridge
+
+- [#636](https://github.com/Frontify/brand-sdk/pull/636) [`1dbc48e`](https://github.com/Frontify/brand-sdk/commit/1dbc48e9b8421a893d0b2da8f17ac201abc2b113) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 5.5.1
 
 ### Patch Changes

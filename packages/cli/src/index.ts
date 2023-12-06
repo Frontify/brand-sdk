@@ -11,7 +11,6 @@ import {
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
     createNewApp,
-    createNewContentBlock,
     loginUser,
     logoutUser,
 } from './commands/index.js';
@@ -227,7 +226,7 @@ cli.command('create [appName]', 'create a new marketplace app')
                 exit(0);
             }
 
-            createNewContentBlock(promptedAppName, stylingFramework);
+            createNewApp(promptedAppName, stylingFramework, 'content-block');
         }
     });
 
@@ -238,7 +237,7 @@ for (const appType of ['block', 'theme']) {
     cli.command(
         `${appType} create [appName]`,
         `[deprecated: use 'create' instead] create a ${appType} app locally`,
-    ).action((appName: string) => createNewContentBlock(appName, 'css-modules'));
+    ).action((appName: string) => createNewApp(appName, 'css-modules', 'content-block'));
 }
 
 cli.help();
