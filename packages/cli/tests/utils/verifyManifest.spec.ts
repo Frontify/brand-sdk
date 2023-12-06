@@ -85,7 +85,7 @@ const VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL = {
 };
 
 describe('Verify Platform App Manifest', () => {
-    it('should validate a valid manfiest', async () => {
+    it('should validate a valid manifest', async () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
