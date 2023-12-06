@@ -81,7 +81,7 @@ export const platformAppManifestSchemaV1 = object({
     }).optional(),
     metadata: object({
         version: number().refine((value) => !isNaN(value) && Number.isInteger(value), {
-            message: 'metadata.version is required and must be an integer without decimals',
+            message: '`metadata.version` is required and must be an integer without decimals',
         }),
     }),
 });
