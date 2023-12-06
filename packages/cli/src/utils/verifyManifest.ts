@@ -3,42 +3,43 @@
 import { array, number, object, string } from 'zod';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
-const forbiddenExtensionsErrorMessage = `Invalid file extension. Cannot include filenameExtensions: ${forbiddenExtensions}.`;
+const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
+    `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
 const AssetCreationShape = object({}).optional();
 
 export const platformAppManifestSchemaV1 = object({
     appId: string().refine((value) => value.trim() !== '', {
-        message: 'AppId is required',
+        message: 'appId is required',
     }),
     appType: string().refine((value) => ['content-block', 'platform-app', 'theme'].includes(value), {
-        message: 'AppType is required',
+        message: 'appType is required',
     }),
     surfaces: object({
-        MediaLibrary: object({
+        mediaLibrary: object({
             assetAction: object({
                 type: array(
                     string().refine((value) =>
-                        ['AUDIO', 'DOCUMENT', 'IMAGE', 'VIDEO', 'FILE', 'EMBEDDED_CONTENT'].includes(value),
+                        ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
                     ),
                 ),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
-                        message: forbiddenExtensionsErrorMessage,
+                        message: getForbiddenExtensionsErrorMessage('mediaLibrary'),
                     }),
                 ),
             }),
             assetCreation: AssetCreationShape,
         }).optional(),
-        IconLibrary: object({
+        iconLibrary: object({
             assetAction: object({
-                type: array(string().refine((value) => ['IMAGE'].includes(value))),
+                type: array(string().refine((value) => ['image'].includes(value))),
                 filenameExtension: array(string().refine((value) => ['svg'].includes(value))),
             }),
             assetCreation: AssetCreationShape,
         }).optional(),
-        LogoLibrary: object({
+        logoLibrary: object({
             assetAction: object({
-                type: array(string().refine((value) => ['IMAGE'].includes(value))),
+                type: array(string().refine((value) => ['image'].includes(value))),
                 filenameExtension: array(
                     string().refine((value) =>
                         ['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff'].includes(value),
@@ -47,31 +48,31 @@ export const platformAppManifestSchemaV1 = object({
             }),
             assetCreation: AssetCreationShape,
         }).optional(),
-        DocumentLibrary: object({
+        documentLibrary: object({
             assetAction: object({
                 type: array(
                     string().refine((value) =>
-                        ['AUDIO', 'DOCUMENT', 'IMAGE', 'VIDEO', 'FILE', 'EMBEDDED_CONTENT'].includes(value),
+                        ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
                     ),
                 ),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
-                        message: forbiddenExtensionsErrorMessage,
+                        message: getForbiddenExtensionsErrorMessage('documentLibrary'),
                     }),
                 ),
             }),
             assetCreation: AssetCreationShape,
         }).optional(),
-        WorkspaceProject: object({
+        workspaceProject: object({
             assetAction: object({
                 type: array(
                     string().refine((value) =>
-                        ['AUDIO', 'DOCUMENT', 'IMAGE', 'VIDEO', 'FILE', 'EMBEDDED_CONTENT'].includes(value),
+                        ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
                     ),
                 ),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
-                        message: forbiddenExtensionsErrorMessage,
+                        message: getForbiddenExtensionsErrorMessage('workspaceProject'),
                     }),
                 ),
             }),
@@ -80,7 +81,7 @@ export const platformAppManifestSchemaV1 = object({
     }).optional(),
     metadata: object({
         version: number().refine((value) => !isNaN(value) && Number.isInteger(value), {
-            message: 'Version is required and must be an integer without decimals',
+            message: 'metadata.version is required and must be an integer without decimals',
         }),
     }),
 });

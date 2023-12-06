@@ -7,9 +7,9 @@ const VALID_MANIFEST = {
     appType: 'platform-app',
     appId: 'abcd',
     surfaces: {
-        MediaLibrary: {
+        mediaLibrary: {
             assetAction: {
-                type: ['IMAGE'],
+                type: ['image'],
                 filenameExtension: ['png'],
             },
             assetCreation: {},
@@ -24,9 +24,9 @@ const ICON_LIBRARY_MANIFEST = {
     appType: 'platform-app',
     appId: 'abcd',
     surfaces: {
-        IconLibrary: {
+        iconLibrary: {
             assetAction: {
-                type: ['IMAGE'],
+                type: ['image'],
                 filenameExtension: ['png'],
             },
         },
@@ -40,9 +40,9 @@ const LOGO_LIBRARY_MANIFEST = {
     appType: 'platform-app',
     appId: 'abcd',
     surfaces: {
-        LogoLibrary: {
+        logoLibrary: {
             assetAction: {
-                type: ['VIDEO'],
+                type: ['video'],
                 filenameExtension: ['exe'],
             },
         },
@@ -56,9 +56,9 @@ const MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS = {
     appType: 'platform-app',
     appId: 'abcd',
     surfaces: {
-        MediaLibrary: {
+        mediaLibrary: {
             assetAction: {
-                type: ['IMAGE'],
+                type: ['image'],
                 filenameExtension: ['exe'],
             },
         },
@@ -72,9 +72,9 @@ const VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL = {
     appType: 'platform-app',
     appId: 'abcd',
     surfaces: {
-        MediaLibrary: {
+        mediaLibrary: {
             assetAction: {
-                type: ['IMAGE'],
+                type: ['image'],
                 filenameExtension: ['png'],
             },
         },
