@@ -5,7 +5,24 @@ import { platformAppManifestSchemaV1, verifyManifest } from '../../src/utils/ver
 
 const VALID_MANIFEST = {
     appType: 'platform-app',
-    appId: 'abcd',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {},
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_SHORT_ID = {
+    appType: 'platform-app',
+    appId: 'tooShortId',
     surfaces: {
         mediaLibrary: {
             assetAction: {
@@ -111,6 +128,12 @@ describe('Verify Platform App Manifest', () => {
     it('should throw error when version number is a float', async () => {
         await expect(
             async () => await verifyManifest(VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when appId is not of length 25', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_SHORT_ID, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 });

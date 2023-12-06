@@ -6,7 +6,7 @@ const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
     `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
 
-const AssetCreationShape = object({}).optional();
+const assetCreationShape = object({}).optional();
 
 const completeAssetType = z.enum(['audio', 'document', 'image', 'video', 'file', 'embeddedContent']);
 const imageAssetType = completeAssetType.exclude(['audio', 'document', 'video', 'file', 'embeddedContent']);
@@ -14,82 +14,61 @@ const imageAssetType = completeAssetType.exclude(['audio', 'document', 'video', 
 const iconLibraryFilenameExtension = z.enum(['svg']);
 const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff']);
 
+const appType = z.enum(['content-block', 'platform-app', 'theme']);
 export const platformAppManifestSchemaV1 = object({
-    appId: string().refine((value) => value.trim() !== '', {
-        message: '`appId` is required',
-    }),
-    appType: string().refine((value) => ['content-block', 'platform-app', 'theme'].includes(value), {
-        message: '`appType` is required',
-    }),
+    appId: string().length(25),
+    appType,
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({
-                type: array(
-                    completeAssetType.refine((value) =>
-                        ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
-                    ),
-                ),
+                type: array(completeAssetType),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
                         message: getForbiddenExtensionsErrorMessage('mediaLibrary'),
                     }),
                 ),
             }),
-            assetCreation: AssetCreationShape,
+            assetCreation: assetCreationShape,
         }).optional(),
         iconLibrary: object({
             assetAction: object({
-                type: array(imageAssetType.refine((value) => ['image'].includes(value))),
-                filenameExtension: array(iconLibraryFilenameExtension.refine((value) => ['svg'].includes(value))),
+                type: array(imageAssetType),
+                filenameExtension: array(iconLibraryFilenameExtension),
             }),
-            assetCreation: AssetCreationShape,
+            assetCreation: assetCreationShape,
         }).optional(),
         logoLibrary: object({
             assetAction: object({
-                type: array(imageAssetType.refine((value) => ['image'].includes(value))),
-                filenameExtension: array(
-                    logoLibraryFilenameExtension.refine((value) =>
-                        ['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff'].includes(value),
-                    ),
-                ),
+                type: array(imageAssetType),
+                filenameExtension: array(logoLibraryFilenameExtension),
             }),
-            assetCreation: AssetCreationShape,
+            assetCreation: assetCreationShape,
         }).optional(),
         documentLibrary: object({
             assetAction: object({
-                type: array(
-                    completeAssetType.refine((value) =>
-                        ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
-                    ),
-                ),
+                type: array(completeAssetType),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
                         message: getForbiddenExtensionsErrorMessage('documentLibrary'),
                     }),
                 ),
             }),
-            assetCreation: AssetCreationShape,
+            assetCreation: assetCreationShape,
         }).optional(),
         workspaceProject: object({
             assetAction: object({
-                type: array(
-                    completeAssetType.refine((value) =>
-                        ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
-                    ),
-                ),
+                type: array(completeAssetType),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
                         message: getForbiddenExtensionsErrorMessage('workspaceProject'),
                     }),
                 ),
             }),
-            assetCreation: AssetCreationShape,
+            assetCreation: assetCreationShape,
         }).optional(),
     }).optional(),
     metadata: object({
-        version: number().refine((value) => !isNaN(value) && Number.isInteger(value), {
-            message: '`metadata.version` is required and must be an integer without decimals',
-        }),
+        version: number().int(),
     }),
 });
 
