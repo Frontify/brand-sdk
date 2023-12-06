@@ -9,7 +9,7 @@ const VALID_MANIFEST = {
     surfaces: {
         mediaLibrary: {
             assetAction: {
-                type: ['image'],
+                type: ['image', 'video'],
                 filenameExtension: ['png'],
             },
             assetCreation: {},

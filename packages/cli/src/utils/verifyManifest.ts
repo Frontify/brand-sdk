@@ -1,12 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { array, number, object, string } from 'zod';
+import { array, number, object, string, z } from 'zod';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
     `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
-const AssetCreationShape = object({}).optional();
 
+const AssetCreationShape = object({}).optional();
+const completeAssetType = z.enum(['audio', 'document', 'image', 'video', 'file', 'embeddedContent']);
+const imageAssetType = completeAssetType.exclude(['audio', 'document', 'video', 'file', 'embeddedContent']);
+const iconLibraryFilenameExtension = z.enum(['svg']);
+const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff']);
 export const platformAppManifestSchemaV1 = object({
     appId: string().refine((value) => value.trim() !== '', {
         message: '`appId` is required',
@@ -18,7 +22,7 @@ export const platformAppManifestSchemaV1 = object({
         mediaLibrary: object({
             assetAction: object({
                 type: array(
-                    string().refine((value) =>
+                    completeAssetType.refine((value) =>
                         ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
                     ),
                 ),
@@ -32,16 +36,16 @@ export const platformAppManifestSchemaV1 = object({
         }).optional(),
         iconLibrary: object({
             assetAction: object({
-                type: array(string().refine((value) => ['image'].includes(value))),
-                filenameExtension: array(string().refine((value) => ['svg'].includes(value))),
+                type: array(imageAssetType.refine((value) => ['image'].includes(value))),
+                filenameExtension: array(iconLibraryFilenameExtension.refine((value) => ['svg'].includes(value))),
             }),
             assetCreation: AssetCreationShape,
         }).optional(),
         logoLibrary: object({
             assetAction: object({
-                type: array(string().refine((value) => ['image'].includes(value))),
+                type: array(imageAssetType.refine((value) => ['image'].includes(value))),
                 filenameExtension: array(
-                    string().refine((value) =>
+                    logoLibraryFilenameExtension.refine((value) =>
                         ['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff'].includes(value),
                     ),
                 ),
@@ -51,7 +55,7 @@ export const platformAppManifestSchemaV1 = object({
         documentLibrary: object({
             assetAction: object({
                 type: array(
-                    string().refine((value) =>
+                    completeAssetType.refine((value) =>
                         ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
                     ),
                 ),
@@ -66,7 +70,7 @@ export const platformAppManifestSchemaV1 = object({
         workspaceProject: object({
             assetAction: object({
                 type: array(
-                    string().refine((value) =>
+                    completeAssetType.refine((value) =>
                         ['audio', 'document', 'image', 'video', 'file', 'embeddedContent'].includes(value),
                     ),
                 ),
