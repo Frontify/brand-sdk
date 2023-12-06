@@ -71,7 +71,7 @@ export const createDeployment = async (
 
             const projectPath = process.cwd();
             const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
-            const parsedManifest =
+            const { appId } =
                 manifestContent.appType === 'platform-app'
                     ? await verifyManifest(manifestContent, platformAppManifestSchemaV1)
                     : manifestContent;
@@ -85,7 +85,7 @@ export const createDeployment = async (
             }
 
             try {
-                await compile({ projectPath, entryFile, outputName: parsedManifest.appId });
+                await compile({ projectPath, entryFile, outputName: appId });
             } catch (error) {
                 Logger.error(error as string);
                 process.exit(-1);
@@ -113,7 +113,7 @@ export const createDeployment = async (
                 const accessToken = Configuration.get('tokens.access_token');
 
                 try {
-                    await httpClient.put(`/api/marketplace/app/${parsedManifest.appId}`, request, {
+                    await httpClient.put(`/api/marketplace/app/${appId}`, request, {
                         headers: { Authorization: `Bearer ${accessToken}` },
                     });
 
@@ -121,7 +121,7 @@ export const createDeployment = async (
 
                     if (openInBrowser) {
                         Logger.info('Opening the Frontify Marketplace page...');
-                        await open(`https://${instanceUrl}/marketplace/apps/${parsedManifest.appId}`);
+                        await open(`https://${instanceUrl}/marketplace/apps/${appId}`);
                     }
                 } catch (error) {
                     Logger.error('An error occured while deploying:', (error as HttpClientError).responseBody.error);
