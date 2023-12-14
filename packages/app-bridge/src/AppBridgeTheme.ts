@@ -146,11 +146,19 @@ export interface AppBridgeTheme<
 
     deleteAssetIdsFromCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<void>;
 
-    addAssetIdsToThemeAssetKey(key: string, assetIds: number[]): Promise<Record<string, Asset[]>>;
+    addAssetIdsToThemeAssetKey(
+        key: string,
+        assetIds: number[],
+        template?: 'documentPage' | 'library' | 'cover',
+    ): Promise<Record<string, Asset[]>>;
 
-    getThemeAssets(): Promise<Record<string, Asset[]>>;
+    getThemeAssets(template?: 'documentPage' | 'library' | 'cover'): Promise<Record<string, Asset[]>>;
 
-    deleteAssetIdsFromThemeAssetKey(key: string, assetIds: number[]): Promise<void>;
+    deleteAssetIdsFromThemeAssetKey(
+        key: string,
+        assetIds: number[],
+        template?: 'documentPage' | 'library' | 'cover',
+    ): Promise<void>;
 
     addAssetIdsToLibraryPageTemplateAssetKey(
         documentId: number,

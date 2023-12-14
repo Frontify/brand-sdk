@@ -39,6 +39,7 @@ export type EmitterEvents = {
         portalId: number;
         themeAssets: Record<string, Asset[]>;
         prevThemeAssets: Record<string, Asset[]>;
+        template: 'documentPage' | 'library' | 'cover';
     };
 
     'AppBridge:BlockTemplatesUpdated': {

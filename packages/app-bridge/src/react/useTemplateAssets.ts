@@ -66,7 +66,7 @@ export const useTemplateAssets = (
     documentPageId?: number,
 ) => {
     const [templateAssets, setTemplateAssets] = useState<Record<string, Asset[]>>({});
-    const { themeAssets } = useThemeAssets(appBridge);
+    const { themeAssets } = useThemeAssets(appBridge, template);
     const [customizedTemplateAssetsKeys, setCustomizedTemplateAssetsKeys] = useState<string[]>([]);
     const [mergedThemeAndTemplateAssets, setMergedThemeAndTemplateAssets] = useState<Record<string, Asset[]>>({});
 
