@@ -45,7 +45,7 @@ export const Toolbar = ({
                                     {...item.draggableProps}
                                     className={joinClassNames([
                                         FOCUS_VISIBLE_STYLE,
-                                        'tw-bg-base tw-relative tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm focus-visible:tw-z-10',
+                                        'tw-bg-base tw-relative tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm tw-mt-[3px] focus-visible:tw-z-10',
                                         isDragging
                                             ? 'tw-cursor-grabbing tw-bg-box-selected-pressed'
                                             : 'tw-cursor-grab hover:tw-bg-box-selected-hover',
@@ -69,7 +69,7 @@ export const Toolbar = ({
                                     data-test-id="block-item-wrapper-toolbar-btn"
                                     onClick={item.onClick}
                                     className={joinClassNames([
-                                        'tw-bg-base tw-relative hover:tw-bg-box-selected-hover active:tw-bg-box-selected-pressed tw-cursor-pointer tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm focus-visible:tw-z-10',
+                                        'tw-bg-base tw-relative hover:tw-bg-box-selected-hover active:tw-bg-box-selected-pressed tw-cursor-pointer tw-inline-flex tw-items-center tw-justify-center tw-w-6 tw-h-6 tw-rounded-sm tw-mt-[3px] focus-visible:tw-z-10',
                                         FOCUS_VISIBLE_STYLE,
                                     ])}
                                 >
