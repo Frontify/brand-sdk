@@ -114,7 +114,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should notify about updated assets on delete', async () => {
-        const { result, asset } = await loadUseThemeAssets(undefined, 'documentPage', 'key');
+        const { result, asset } = await loadUseThemeAssets([AssetDummy.with(1)], 'documentPage', 'key');
 
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -130,7 +130,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should add asset ids', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets(undefined, 'documentPage', 'key');
+        const { result, appBridgeStub } = await loadUseThemeAssets([AssetDummy.with(1)], 'documentPage', 'key');
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [2]);
         });
@@ -144,7 +144,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should notify about updated assets on add asset ids to key', async () => {
-        const { result, asset } = await loadUseThemeAssets(undefined, 'documentPage', 'key');
+        const { result, asset } = await loadUseThemeAssets([AssetDummy.with(1)], 'documentPage', 'key');
         const assetToAdd = AssetDummy.with(2);
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
