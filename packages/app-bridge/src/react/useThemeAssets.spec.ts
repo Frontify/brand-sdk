@@ -6,7 +6,7 @@ import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeThemeStub } from '../tests';
 import { useThemeAssets } from './useThemeAssets';
-import { ThemeTemplate } from '..';
+import { Asset, ThemeTemplate } from '..';
 
 describe('useThemeAssets hook', () => {
     beforeEach(() => {
@@ -19,11 +19,7 @@ describe('useThemeAssets hook', () => {
         cleanup();
     });
 
-    const loadUseThemeAssets = async (
-        existingAssets = [AssetDummy.with(1)],
-        template: ThemeTemplate,
-        keyName = 'key',
-    ) => {
+    const loadUseThemeAssets = async (existingAssets: Asset[] | any, template: ThemeTemplate, keyName: string) => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeThemeStub({
             themeAssets: { [keyName]: existingAssets },
