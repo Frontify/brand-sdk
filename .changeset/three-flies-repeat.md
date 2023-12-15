@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-chore: export type FlyoutToolbarItem
+feat: export type FlyoutToolbarItem
