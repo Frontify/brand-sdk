@@ -28,11 +28,7 @@ export const useThemeAssets = (appBridge: AppBridgeTheme, template?: ThemeTempla
     };
 
     const getThemeAssets = async (): Promise<Record<string, Asset[]>> => {
-        return template
-            ? await appBridge.getThemeAssets(template)
-            : new Promise((resolve) => {
-                  resolve({});
-              });
+        return template ? await appBridge.getThemeAssets(template) : Promise.resolve({});
     };
 
     const addAssetIdsToThemeAssetKey = async (key: string, assetIds: number[]): Promise<void> => {
