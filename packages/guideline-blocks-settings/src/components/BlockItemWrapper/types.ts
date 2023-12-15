@@ -40,7 +40,7 @@ type ButtonToolbarItem = BaseToolbarItem & {
 
 export type ToolbarItem = DraghandleToolbarItem | ButtonToolbarItem;
 
-type FlyoutToolbarItem = {
+export type FlyoutToolbarItem = {
     title: string;
     onClick: () => void;
     icon: JSX.Element;
