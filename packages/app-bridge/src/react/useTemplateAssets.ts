@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
 import type { Asset } from '../types';
 import { compareObjects } from '../utilities';
 import { useThemeAssets } from './';
 
 type HookArgs = {
     appBridge: AppBridgeTheme;
-    template?: 'documentPage' | 'library' | 'cover';
+    template?: ThemeTemplate;
     documentId?: number;
     documentPageId?: number;
 };
@@ -61,7 +61,7 @@ const deleteAssetIdsFromTemplateAssetKey = async (
 
 export const useTemplateAssets = (
     appBridge: AppBridgeTheme,
-    template?: 'documentPage' | 'library' | 'cover',
+    template?: ThemeTemplate,
     documentId?: number,
     documentPageId?: number,
 ) => {
@@ -76,7 +76,7 @@ export const useTemplateAssets = (
         let componentMounted = true;
 
         const updateTemplateAssetsFromEvent = (event: {
-            template?: 'documentPage' | 'library' | 'cover';
+            template?: ThemeTemplate;
             documentId?: number;
             documentPageId?: number;
             templateAssets: Record<string, Asset[]>;

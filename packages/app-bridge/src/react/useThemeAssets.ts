@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
 import type { Asset } from '../types';
 import { compareObjects } from '../utilities';
 
-export const useThemeAssets = (appBridge: AppBridgeTheme, template?: 'documentPage' | 'library' | 'cover') => {
+export const useThemeAssets = (appBridge: AppBridgeTheme, template?: ThemeTemplate) => {
     const portalId = appBridge.getPortalId();
 
     const [themeAssets, setThemeAssets] = useState<Record<string, Asset[]>>({});
 
     const updateThemeAssetsFromEvent = (event: {
-        template?: 'documentPage' | 'library' | 'cover';
+        template?: ThemeTemplate;
         portalId: number;
         themeAssets: Record<string, Asset[]>;
         prevThemeAssets: Record<string, Asset[]>;

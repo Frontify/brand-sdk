@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
 import type { EmitterEvents } from '../types';
 import { useThemeSettings } from './';
 
 export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
-    template: 'cover' | 'documentPage' | 'library',
+    template: ThemeTemplate,
     documentOrDocumentPageId?: number,
 ) => {
     const { themeSettings } = useThemeSettings(appBridge);

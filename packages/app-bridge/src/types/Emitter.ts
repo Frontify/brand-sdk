@@ -13,6 +13,7 @@ import type { DocumentCategory } from './DocumentCategory';
 import type { BrandportalLink } from './BrandportalLink';
 import type { PrivacySettings } from './PrivacySettings';
 import type { Template } from './Template';
+import type { ThemeTemplate } from '../AppBridgeTheme';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
@@ -28,7 +29,7 @@ export type EmitterEvents = {
     };
 
     'AppBridge:TemplateAssetsUpdated': {
-        template?: 'documentPage' | 'library' | 'cover';
+        template?: ThemeTemplate;
         documentId?: number;
         documentPageId?: number;
         templateAssets: Record<string, Asset[]>;
@@ -39,7 +40,7 @@ export type EmitterEvents = {
         portalId: number;
         themeAssets: Record<string, Asset[]>;
         prevThemeAssets: Record<string, Asset[]>;
-        template: 'documentPage' | 'library' | 'cover';
+        template: ThemeTemplate;
     };
 
     'AppBridge:BlockTemplatesUpdated': {

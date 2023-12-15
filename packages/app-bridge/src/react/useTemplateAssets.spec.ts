@@ -6,6 +6,7 @@ import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeThemeStub } from '../tests';
 import { useTemplateAssets } from './useTemplateAssets';
+import { ThemeTemplate } from '..';
 
 const DOCUMENT_ID = 16;
 const DOCUMENT_PAGE_ID = 568;
@@ -34,7 +35,7 @@ describe('useTemplateAssets hook', () => {
     });
 
     const loadUseTemplateAssets = async (
-        template: 'documentPage' | 'library' | 'cover',
+        template: ThemeTemplate,
         existingTemplateAssets = [AssetDummy.with(1)],
         existingThemeAssets = {},
         returnEmptyTemplateAssets = false,
