@@ -7,7 +7,9 @@ import { useThemeSettings } from './useThemeSettings';
 import { SinonStub } from 'sinon';
 
 const THEME_SETTINGS = {
-    myCustomSetting: 123,
+    cover: {
+        myCustomSetting: 123,
+    },
 };
 
 describe('useThemeSettings', () => {
@@ -51,16 +53,18 @@ describe('useThemeSettings', () => {
             expect(result.current.themeSettings).toEqual(THEME_SETTINGS);
         });
 
-        await result.current.updateThemeSettings({ myCustomSetting: 456 });
+        await result.current.updateThemeSettings({ cover: { myCustomSetting: 456 } });
         expect(result.current.isLoading).toEqual(false);
 
         const emitCall = (window.emitter.emit as SinonStub).getCall(0);
 
         await waitFor(() => {
             expect(result.current.isLoading).toEqual(false);
-            expect(result.current.themeSettings).toEqual({ ...THEME_SETTINGS, myCustomSetting: 456 });
+            expect(result.current.themeSettings).toEqual({ cover: { ...THEME_SETTINGS.cover, myCustomSetting: 456 } });
             expect(emitCall.firstArg).toEqual('AppBridge:ThemeSettingsUpdated');
-            expect(emitCall.lastArg.themeSettings).toStrictEqual({ ...THEME_SETTINGS, myCustomSetting: 456 });
+            expect(emitCall.lastArg.themeSettings).toStrictEqual({
+                cover: { ...THEME_SETTINGS.cover, myCustomSetting: 456 },
+            });
         });
     });
 });

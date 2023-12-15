@@ -4,7 +4,7 @@ import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 
 import { EmitterEvents } from '../types/Emitter';
-import { AppBridgeTheme } from '../AppBridgeTheme';
+import { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
 import { mergeDeep } from '../utilities';
 
 import {
@@ -66,7 +66,7 @@ export type getAppBridgeThemeStubProps = {
     projectId?: number;
     pageTemplateSettings?: Record<string, unknown>;
     pageTemplateAssets?: Record<string, Asset[]>;
-    themeSettings?: Record<string, unknown>;
+    themeSettings?: Record<ThemeTemplate, unknown>;
     themeAssets?: Record<string, Asset[]>;
     language?: string;
     openAssetChooser?: (callback: Parameters<AppBridgeTheme['openAssetChooser']>[0]) => void;
@@ -80,7 +80,7 @@ export const getAppBridgeThemeStub = ({
     projectId = PROJECT_ID,
     pageTemplateSettings = {},
     pageTemplateAssets = {},
-    themeSettings = {},
+    themeSettings = { cover: {}, documentPage: {}, library: {} },
     themeAssets = {},
     language = 'en',
     openAssetChooser = () => null,

@@ -6,6 +6,7 @@ import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeThemeStub } from '../tests';
 import { useThemeAssets } from './useThemeAssets';
+import { ThemeTemplate } from '..';
 
 describe('useThemeAssets hook', () => {
     beforeEach(() => {
@@ -18,13 +19,17 @@ describe('useThemeAssets hook', () => {
         cleanup();
     });
 
-    const loadUseThemeAssets = async (existingAssets = [AssetDummy.with(1)], keyName = 'key') => {
+    const loadUseThemeAssets = async (
+        existingAssets = [AssetDummy.with(1)],
+        keyName = 'key',
+        template: ThemeTemplate,
+    ) => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeThemeStub({
             themeAssets: { [keyName]: existingAssets },
         });
 
-        const { result, rerender } = renderHook(() => useThemeAssets(appBridgeStub));
+        const { result, rerender } = renderHook(() => useThemeAssets(appBridgeStub, template));
 
         await act(async () => {
             rerender();
@@ -34,21 +39,27 @@ describe('useThemeAssets hook', () => {
     };
 
     it('should delete an asset', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets([]);
+        const { result, appBridgeStub } = await loadUseThemeAssets([], 'key', 'documentPage');
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
         });
 
         const call = appBridgeStub.deleteAssetIdsFromThemeAssetKey.getCall(0);
+
         await waitFor(() => {
             expect(call.firstArg).toEqual('key');
-            expect(call.lastArg).toEqual([1]);
+            expect(call.args[1]).toEqual([1]);
+            expect(call.lastArg).toEqual('documentPage');
             expect(result.current.themeAssets).toStrictEqual({ key: [] });
         });
     });
 
     it('should sort assets', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+        const { result, appBridgeStub } = await loadUseThemeAssets(
+            [AssetDummy.with(1), AssetDummy.with(2)],
+            'key',
+            'documentPage',
+        );
 
         await act(async () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
@@ -59,9 +70,9 @@ describe('useThemeAssets hook', () => {
 
         await waitFor(async () => {
             expect(deleteCall.firstArg).toEqual('key');
-            expect(deleteCall.lastArg).toEqual([1, 2]);
+            expect(deleteCall.args[1]).toEqual([1, 2]);
             expect(addCall.firstArg).toEqual('key');
-            expect(addCall.lastArg).toEqual([2, 1]);
+            expect(addCall.args[1]).toEqual([2, 1]);
             expect(result.current.themeAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
         });
     });
@@ -70,6 +81,7 @@ describe('useThemeAssets hook', () => {
         const { result, appBridgeStub } = await loadUseThemeAssets(
             [AssetDummy.with(1), AssetDummy.with(2)],
             'non-existing-key',
+            'documentPage',
         );
 
         await act(async () => {
@@ -80,12 +92,16 @@ describe('useThemeAssets hook', () => {
 
         await waitFor(async () => {
             expect(deleteCall.firstArg).toEqual('key');
-            expect(deleteCall.lastArg).toEqual([]);
+            expect(deleteCall.args[1]).toEqual([]);
         });
     });
 
     it('should not sort assets if api call throws error', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+        const { result, appBridgeStub } = await loadUseThemeAssets(
+            [AssetDummy.with(1), AssetDummy.with(2)],
+            'key',
+            'documentPage',
+        );
         (appBridgeStub.deleteAssetIdsFromThemeAssetKey as unknown as Mock) = vi
             .fn()
             .mockRejectedValue('Unsuccessful API call');
@@ -102,7 +118,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should notify about updated assets on delete', async () => {
-        const { result, asset } = await loadUseThemeAssets();
+        const { result, asset } = await loadUseThemeAssets(undefined, 'key', 'documentPage');
 
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -118,7 +134,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should add asset ids', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets();
+        const { result, appBridgeStub } = await loadUseThemeAssets(undefined, 'key', 'documentPage');
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [2]);
         });
@@ -126,13 +142,13 @@ describe('useThemeAssets hook', () => {
         const call = appBridgeStub.addAssetIdsToThemeAssetKey.getCall(0);
         await waitFor(() => {
             expect(call.firstArg).toEqual('key');
-            expect(call.lastArg).toEqual([2]);
+            expect(call.args[1]).toEqual([2]);
             expect(result.current.themeAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
         });
     });
 
     it('should notify about updated assets on add asset ids to key', async () => {
-        const { result, asset } = await loadUseThemeAssets();
+        const { result, asset } = await loadUseThemeAssets(undefined, 'key', 'documentPage');
         const assetToAdd = AssetDummy.with(2);
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [assetToAdd.id]);

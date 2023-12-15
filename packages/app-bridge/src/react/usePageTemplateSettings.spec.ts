@@ -7,8 +7,12 @@ import { usePageTemplateSettings } from './usePageTemplateSettings';
 
 const DOCUMENT_ID = 3462;
 const THEME_SETTINGS = {
-    customThemeSetting: 123,
-    themeExclusiveSetting: 234,
+    documentPage: {
+        customThemeSetting: 123,
+        themeExclusiveSetting: 234,
+    },
+    cover: {},
+    library: {},
 };
 const PAGE_SETTINGS = {
     myCustomSetting: 123,
@@ -38,7 +42,7 @@ describe('usePageTemplateSettings', () => {
         pageTemplateSettings: Record<string, unknown>,
         template: Parameters<typeof usePageTemplateSettings>[1],
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
-        themeSettings = {},
+        themeSettings = { documentPage: {}, cover: {}, library: {} },
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
             pageTemplateSettings,
@@ -171,7 +175,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         // Reset the object to avoid mutation in other tests
-        await result.current.updatePageTemplateSettings({ myCustomSetting: 123 });
+        await result.current.updatePageTemplateSettings({ library: { myCustomSetting: 123 } });
     });
 
     it('logs an error when trying to update document or library page without a documentId', async () => {
@@ -183,7 +187,7 @@ describe('usePageTemplateSettings', () => {
             expect(result.current.pageTemplateSettings).toEqual(null);
         });
 
-        await result.current.updatePageTemplateSettings({ muCystomSetting: 456 });
+        await result.current.updatePageTemplateSettings({ library: { muCystomSetting: 456 } });
         expect(result.current.isLoading).toEqual(false);
 
         await waitFor(() => {
@@ -198,17 +202,15 @@ describe('usePageTemplateSettings', () => {
         it('returns the page template settings merged with theme settings and the list of custom overrides', async () => {
             const { result } = await loadUsePageTemplateSettings(
                 PAGE_SETTINGS_WITH_OVERRIDES,
-                'cover',
-                undefined,
+                'documentPage',
+                DOCUMENT_ID,
                 THEME_SETTINGS,
             );
-
-            expect(result.current.isLoading).toEqual(true);
 
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({
-                    ...THEME_SETTINGS,
+                    ...THEME_SETTINGS.documentPage,
                     ...PAGE_SETTINGS_WITH_OVERRIDES,
                 });
                 expect(result.current.customizedPageTemplateSettingsKeys).toEqual(['customThemeSetting']);
@@ -224,14 +226,18 @@ describe('usePageTemplateSettings', () => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({
                     ...PAGE_SETTINGS,
-                    ...THEME_SETTINGS,
+                    ...THEME_SETTINGS.cover,
                 });
                 expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
         });
 
         it('returns an empty object if no theme settins and no page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings({}, 'cover', undefined, {});
+            const { result } = await loadUsePageTemplateSettings({}, 'cover', undefined, {
+                documentPage: {},
+                cover: {},
+                library: {},
+            });
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -249,13 +255,17 @@ describe('usePageTemplateSettings', () => {
 
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
-                expect(result.current.pageTemplateSettings).toEqual(THEME_SETTINGS);
+                expect(result.current.pageTemplateSettings).toEqual(THEME_SETTINGS.cover);
                 expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
         });
 
         it('returns only the page template settings if no theme settings', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, {});
+            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, {
+                documentPage: {},
+                cover: {},
+                library: {},
+            });
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -269,8 +279,8 @@ describe('usePageTemplateSettings', () => {
         it('returns theme setting value if page template override is null', async () => {
             const { result } = await loadUsePageTemplateSettings(
                 PAGE_SETTINGS_WITH_NULL_OVERRIDES,
-                'cover',
-                undefined,
+                'documentPage',
+                DOCUMENT_ID,
                 THEME_SETTINGS,
             );
 
@@ -280,7 +290,7 @@ describe('usePageTemplateSettings', () => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({
                     ...PAGE_SETTINGS,
-                    ...THEME_SETTINGS,
+                    ...THEME_SETTINGS.documentPage,
                 });
                 expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
@@ -289,8 +299,8 @@ describe('usePageTemplateSettings', () => {
         it('returns the theme setting if the override is deleted (reset) from page template settings', async () => {
             const { result } = await loadUsePageTemplateSettings(
                 PAGE_SETTINGS_WITH_OVERRIDES,
-                'cover',
-                undefined,
+                'documentPage',
+                DOCUMENT_ID,
                 THEME_SETTINGS,
             );
 
@@ -299,7 +309,7 @@ describe('usePageTemplateSettings', () => {
             await waitFor(() => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({
-                    ...THEME_SETTINGS,
+                    ...THEME_SETTINGS.documentPage,
                     ...PAGE_SETTINGS_WITH_OVERRIDES,
                 });
             });
@@ -311,7 +321,7 @@ describe('usePageTemplateSettings', () => {
                 expect(result.current.isLoading).toEqual(false);
                 expect(result.current.pageTemplateSettings).toEqual({
                     ...PAGE_SETTINGS,
-                    ...THEME_SETTINGS,
+                    ...THEME_SETTINGS.documentPage,
                 });
                 expect(result.current.customizedPageTemplateSettingsKeys).toEqual([]);
             });
