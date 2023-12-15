@@ -1,5 +1,5 @@
 ---
-"@frontify/guideline-blocks-settings": minor
+"@frontify/guideline-blocks-settings": patch
 ---
 
 chore: export type FlyoutToolbarItem
