@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@frontify/app-bridge": "3.0.0",
+    "@frontify/frontify-cli": "5.5.3",
+    "@frontify/guideline-blocks-settings": "0.29.16",
+    "@frontify/sidebar-settings": "0.8.1"
+  },
+  "changesets": []
+}
