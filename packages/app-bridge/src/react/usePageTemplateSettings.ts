@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
-import type { EmitterEvents } from '../types';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { EmitterEvents, ThemeTemplate } from '../types';
 import { useThemeSettings } from './';
 
 export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(
@@ -57,14 +57,15 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     }, [appBridge, documentOrDocumentPageId, template]);
 
     useEffect(() => {
-        if (!themeSettingsTemplate || !pageTemplateSettings) {
+        const themeSettingsTemplateKeys = Object.keys(themeSettingsTemplate);
+        if (themeSettingsTemplateKeys.length === 0 || !pageTemplateSettings) {
             return;
         }
 
         const overrides = [];
         const mergedSettings: Record<string, unknown> & TPageTemplateSettings = { ...pageTemplateSettings };
 
-        for (const field of Object.keys(themeSettingsTemplate)) {
+        for (const field of themeSettingsTemplateKeys) {
             if (
                 (pageTemplateSettings as Record<string, unknown>)[field] !== null &&
                 (pageTemplateSettings as Record<string, unknown>)[field] !== undefined

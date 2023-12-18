@@ -4,7 +4,7 @@ import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
 
 import { EmitterEvents } from '../types/Emitter';
-import { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
+import { AppBridgeTheme } from '../AppBridgeTheme';
 import { mergeDeep } from '../utilities';
 
 import {
@@ -24,7 +24,7 @@ import {
     UpdateTargetsDummy,
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
-import { Asset } from '../types';
+import type { Asset, ThemeTemplate } from '../types';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;

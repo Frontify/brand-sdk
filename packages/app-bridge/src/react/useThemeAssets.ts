@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
-import type { Asset } from '../types';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { Asset, ThemeTemplate } from '../types';
 import { compareObjects } from '../utilities';
 
 export const useThemeAssets = (appBridge: AppBridgeTheme, template?: ThemeTemplate) => {
@@ -32,11 +32,15 @@ export const useThemeAssets = (appBridge: AppBridgeTheme, template?: ThemeTempla
     };
 
     const addAssetIdsToThemeAssetKey = async (key: string, assetIds: number[]): Promise<void> => {
-        await appBridge.addAssetIdsToThemeAssetKey(key, assetIds, template);
+        if (template) {
+            await appBridge.addAssetIdsToThemeAssetKey(key, assetIds, template);
+        }
     };
 
     const deleteAssetIdsFromThemeAssetKey = async (key: string, assetIds: number[]): Promise<void> => {
-        await appBridge.deleteAssetIdsFromThemeAssetKey(key, assetIds, template);
+        if (template) {
+            await appBridge.deleteAssetIdsFromThemeAssetKey(key, assetIds, template);
+        }
     };
 
     // Fetch the theme assets on mount.

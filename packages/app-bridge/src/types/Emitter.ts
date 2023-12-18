@@ -13,7 +13,7 @@ import type { DocumentCategory } from './DocumentCategory';
 import type { BrandportalLink } from './BrandportalLink';
 import type { PrivacySettings } from './PrivacySettings';
 import type { Template } from './Template';
-import type { ThemeTemplate } from '../AppBridgeTheme';
+import type { ThemeTemplate } from './ThemeTemplate';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme, ThemeTemplate } from '../AppBridgeTheme';
-import type { Asset } from '../types';
+import type { AppBridgeTheme } from '../AppBridgeTheme';
+import type { Asset, ThemeTemplate } from '../types';
 import { compareObjects } from '../utilities';
 import { useThemeAssets } from './';
 
