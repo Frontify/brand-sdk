@@ -15,7 +15,6 @@ import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 
 const BLOCK_ID = 3452;
-const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
 
@@ -23,8 +22,6 @@ export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
     blockAssets?: Record<string, Asset[]>;
     editorState?: boolean;
-    openAssetChooser?: (callback: Parameters<AppBridgeBlock['openAssetChooser']>[0]) => void;
-    closeAssetChooser?: () => void;
     blockId?: number;
     sectionId?: number;
     projectId?: number;
@@ -38,10 +35,7 @@ export const getAppBridgeBlockStub = ({
     blockSettings = {},
     blockAssets = {},
     editorState = false,
-    openAssetChooser = () => null,
-    closeAssetChooser = () => null,
     blockId = BLOCK_ID,
-    sectionId = SECTION_ID,
     projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
     language = 'en',
@@ -62,16 +56,9 @@ export const getAppBridgeBlockStub = ({
     const addedTemplateIds: Record<string, number[]> = {};
 
     return {
-        getBlockId: stub<Parameters<AppBridgeBlock['getBlockId']>>().returns(blockId),
-        getSectionId: stub<Parameters<AppBridgeBlock['getSectionId']>>().returns(sectionId),
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
-        getAvailablePalettes: stub<Parameters<AppBridgeBlock['getAvailablePalettes']>>().resolves([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]),
         getColorPalettes: stub<Parameters<AppBridgeBlock['getColorPalettes']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
             ColorPaletteDummy.with(427, 'Palette 2'),
@@ -99,7 +86,6 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
         deleteColorPalette: stub<Parameters<AppBridgeBlock['deleteColorPalette']>>().resolves(),
-        getAvailableColors: stub<Parameters<AppBridgeBlock['getAvailableColors']>>().resolves([]),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
             `/api/color/export/${PROJECT_ID}/zip/500`,
@@ -107,12 +93,6 @@ export const getAppBridgeBlockStub = ({
         getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
             Promise.resolve(AssetDummy.with(assetId)),
         ),
-        closeAssetChooser: stub<Parameters<AppBridgeBlock['closeAssetChooser']>>().callsFake(() => {
-            closeAssetChooser();
-        }),
-        openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
-            openAssetChooser(callback);
-        }),
         getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(async () => {
             return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
                 const addedAssetIdsList = addedAssetIds[key] ?? [];
@@ -189,13 +169,19 @@ export const getAppBridgeBlockStub = ({
             })
             .resolves({ assetBulkDownloadToken: 'token' }),
 
+        context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
+            if (args && args === 'blockId') {
+                return {
+                    get: () => blockId,
+                };
+            }
+            return Promise.reject(new Error(`Unexpected call to context with args: ${JSON.stringify(args)}`));
+        }),
+
         // TODO: Stub the following methods
-        closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
-        openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
         createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
         deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
-        openAssetViewer: stub<Parameters<AppBridgeBlock['openAssetViewer']>>(),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
         getUngroupedDocuments: stub<Parameters<AppBridgeBlock['getUngroupedDocuments']>>().resolves(),
@@ -213,7 +199,6 @@ export const getAppBridgeBlockStub = ({
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
-        context: stub<Parameters<AppBridgeBlock['context']>>().resolves(),
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };

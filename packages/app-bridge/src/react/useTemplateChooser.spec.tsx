@@ -35,6 +35,7 @@ const TemplateChooserDummy = ({
 
 describe('useReadyForPrint hook', () => {
     afterEach(() => {
+        sinon.reset();
         cleanup();
     });
 
@@ -43,7 +44,7 @@ describe('useReadyForPrint hook', () => {
         const { getByTestId } = render(<BlockWithStubs />);
         const openTemplateChooserButton = getByTestId(OPEN_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openTemplateChooserButton.click();
-        sinon.assert.calledOnce(appBridge.openTemplateChooser);
+        sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'openTemplateChooser'));
     });
 
     it('should close the template chooser', () => {
@@ -51,6 +52,6 @@ describe('useReadyForPrint hook', () => {
         const { getByTestId } = render(<BlockWithStubs />);
         const openTemplateChooserButton = getByTestId(CLOSE_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openTemplateChooserButton.click();
-        sinon.assert.calledOnce(appBridge.closeTemplateChooser);
+        sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'closeTemplateChooser'));
     });
 });

@@ -26,15 +26,16 @@ const AssetChooserDummy = ({
         <>
             <button
                 data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID}
-                onClick={() => openAssetChooser(onAssetChosen ?? (() => null), {})}
+                onClick={() => openAssetChooser({}, onAssetChosen ?? (() => null))}
             />
             <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} />
         </>
     );
 };
 
-describe('useReadyForPrint hook', () => {
+describe('useAssetChooser hook', () => {
     afterEach(() => {
+        sinon.reset();
         cleanup();
     });
 
@@ -43,7 +44,7 @@ describe('useReadyForPrint hook', () => {
         const { getByTestId } = render(<BlockWithStubs />);
         const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
-        sinon.assert.calledOnce(appBridge.openAssetChooser);
+        sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'openAssetChooser'));
     });
 
     it('should close the asset chooser', () => {
@@ -51,6 +52,6 @@ describe('useReadyForPrint hook', () => {
         const { getByTestId } = render(<BlockWithStubs />);
         const openAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
-        sinon.assert.calledOnce(appBridge.closeAssetChooser);
+        sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'closeAssetChooser'));
     });
 });
