@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.29.16
+
+### Patch Changes
+
+- [#652](https://github.com/Frontify/brand-sdk/pull/652) [`eef2c98`](https://github.com/Frontify/brand-sdk/commit/eef2c982e12c50d6b5bd573c2ba73266a8a78ec8) Thanks [@mikeyrayvon](https://github.com/mikeyrayvon)! - feat: export type FlyoutToolbarItem
+
 ## 0.29.15
 
 ### Patch Changes
