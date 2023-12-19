@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { EmitterEvents, ThemeTemplate } from '../types';
 
-export const useThemeSettings = <T = Record<ThemeTemplate, Record<string, unknown>>>(appBridge: AppBridgeTheme) => {
+export const useThemeSettings = <T = Record<ThemeTemplate, unknown>>(appBridge: AppBridgeTheme) => {
     const [themeSettings, setThemeSettings] = useState<Nullable<T>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
