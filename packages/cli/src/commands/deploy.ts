@@ -17,6 +17,7 @@ import {
     readFileLinesAsArray,
 } from '../utils/index.js';
 import { HttpClientError } from '../errors/HttpClientError.js';
+import { platformAppManifestSchemaV1, verifyManifest } from '../utils/verifyManifest.js';
 
 type Options = {
     dryRun?: boolean;
@@ -27,6 +28,9 @@ type Options = {
 export type AppManifest = {
     appId: string;
     appType?: string;
+    metadata?: {
+        version?: number;
+    };
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -66,7 +70,11 @@ export const createDeployment = async (
             dryRun && Logger.info(pc.blue('Dry run: enabled'));
 
             const projectPath = process.cwd();
-            const { appId } = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+            const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+            const { appId } =
+                manifestContent.appType === 'platform-app'
+                    ? await verifyManifest(manifestContent, platformAppManifestSchemaV1)
+                    : manifestContent;
 
             if (!noVerify) {
                 Logger.info('Performing type checks...');

@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.4
+
+### Patch Changes
+
+- [#645](https://github.com/Frontify/brand-sdk/pull/645) [`0e34987`](https://github.com/Frontify/brand-sdk/commit/0e349871c67c8c5260c6456af1af2aec58ab6e2e) Thanks [@julianiff](https://github.com/julianiff)! - feat: add manifest verification step
+
 ## 5.5.3
 
 ### Patch Changes
