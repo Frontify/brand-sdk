@@ -36,13 +36,11 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
                 setIsLoading(false);
                 return;
             } else if (template === 'documentPage') {
-                loadedSettings = await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(
-                    documentOrDocumentPageId,
-                );
+                loadedSettings =
+                    await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
             } else if (template === 'library') {
-                loadedSettings = await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(
-                    documentOrDocumentPageId,
-                );
+                loadedSettings =
+                    await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
             }
 
             setIsLoading(false);
