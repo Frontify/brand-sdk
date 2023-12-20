@@ -66,7 +66,7 @@ export type getAppBridgeThemeStubProps = {
     projectId?: number;
     pageTemplateSettings?: Record<string, unknown>;
     pageTemplateAssets?: Record<string, Asset[]>;
-    themeSettings?: Record<ThemeTemplate, unknown>;
+    themeSettings?: Record<ThemeTemplate, Record<string, unknown>>;
     themeAssets?: Record<string, Asset[]>;
     language?: string;
     openAssetChooser?: (callback: Parameters<AppBridgeTheme['openAssetChooser']>[0]) => void;

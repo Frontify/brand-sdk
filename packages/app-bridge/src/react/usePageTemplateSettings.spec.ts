@@ -4,6 +4,7 @@ import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getAppBridgeThemeStub } from '../tests';
 import { usePageTemplateSettings } from './usePageTemplateSettings';
+import type { ThemeTemplate } from '../types';
 
 const DOCUMENT_ID = 3462;
 const THEME_SETTINGS = {
@@ -42,7 +43,7 @@ describe('usePageTemplateSettings', () => {
         pageTemplateSettings: Record<string, unknown>,
         template: Parameters<typeof usePageTemplateSettings>[1],
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
-        themeSettings = { documentPage: {}, cover: {}, library: {} },
+        themeSettings?: Record<ThemeTemplate, Record<string, unknown>>,
     ) => {
         const appBridgeStub = getAppBridgeThemeStub({
             pageTemplateSettings,

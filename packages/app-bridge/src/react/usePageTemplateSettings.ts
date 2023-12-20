@@ -12,7 +12,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     documentOrDocumentPageId?: number,
 ) => {
     const { themeSettings } = useThemeSettings(appBridge);
-    const themeSettingsTemplate = themeSettings?.[template] ?? {};
+    const templateThemeSettings = themeSettings?.[template] ?? {};
     const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<TPageTemplateSettings>>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [customizedPageTemplateSettingsKeys, setCustomizedPageTemplateSettingsKeys] = useState<string[]>([]);
@@ -36,11 +36,13 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
                 setIsLoading(false);
                 return;
             } else if (template === 'documentPage') {
-                loadedSettings =
-                    await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
+                loadedSettings = await appBridge.getDocumentPageTemplateSettings<TPageTemplateSettings>(
+                    documentOrDocumentPageId,
+                );
             } else if (template === 'library') {
-                loadedSettings =
-                    await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(documentOrDocumentPageId);
+                loadedSettings = await appBridge.getLibraryPageTemplateSettings<TPageTemplateSettings>(
+                    documentOrDocumentPageId,
+                );
             }
 
             setIsLoading(false);
@@ -57,15 +59,14 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     }, [appBridge, documentOrDocumentPageId, template]);
 
     useEffect(() => {
-        const themeSettingsTemplateKeys = Object.keys(themeSettingsTemplate);
-        if (themeSettingsTemplateKeys.length === 0 || !pageTemplateSettings) {
+        if (!templateThemeSettings || !pageTemplateSettings) {
             return;
         }
 
         const overrides = [];
         const mergedSettings: Record<string, unknown> & TPageTemplateSettings = { ...pageTemplateSettings };
 
-        for (const field of themeSettingsTemplateKeys) {
+        for (const field of Object.keys(templateThemeSettings)) {
             if (
                 (pageTemplateSettings as Record<string, unknown>)[field] !== null &&
                 (pageTemplateSettings as Record<string, unknown>)[field] !== undefined
@@ -73,7 +74,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
                 overrides.push(field);
             } else {
                 (mergedSettings as Record<string, unknown>)[field] =
-                    themeSettingsTemplate[field as keyof typeof themeSettingsTemplate];
+                    templateThemeSettings[field as keyof typeof templateThemeSettings];
             }
         }
 

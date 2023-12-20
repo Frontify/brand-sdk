@@ -19,7 +19,7 @@ export type EmitterAction = 'add' | 'update' | 'delete';
 
 export type EmitterEvents = {
     'AppBridge:PageTemplateSettingsUpdated': { pageTemplateSettings: Record<string, unknown> };
-    'AppBridge:ThemeSettingsUpdated': { themeSettings: Record<string, unknown> };
+    'AppBridge:ThemeSettingsUpdated': { themeSettings: Record<ThemeTemplate, Record<string, unknown>> };
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
 
     'AppBridge:BlockAssetsUpdated': {

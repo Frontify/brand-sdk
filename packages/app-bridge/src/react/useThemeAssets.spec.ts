@@ -8,6 +8,8 @@ import { AssetDummy, getAppBridgeThemeStub } from '../tests';
 import { useThemeAssets } from './useThemeAssets';
 import { Asset, ThemeTemplate } from '..';
 
+const DOCUMENT_PAGE_TEMPLATE = 'documentPage';
+
 describe('useThemeAssets hook', () => {
     beforeEach(() => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -35,7 +37,7 @@ describe('useThemeAssets hook', () => {
     };
 
     it('should delete an asset', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets([], 'documentPage', 'key');
+        const { result, appBridgeStub } = await loadUseThemeAssets([], DOCUMENT_PAGE_TEMPLATE, 'key');
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
         });
@@ -45,7 +47,7 @@ describe('useThemeAssets hook', () => {
         await waitFor(() => {
             expect(call.firstArg).toEqual('key');
             expect(call.args[1]).toEqual([1]);
-            expect(call.lastArg).toEqual('documentPage');
+            expect(call.lastArg).toEqual(DOCUMENT_PAGE_TEMPLATE);
             expect(result.current.themeAssets).toStrictEqual({ key: [] });
         });
     });
@@ -53,7 +55,7 @@ describe('useThemeAssets hook', () => {
     it('should sort assets', async () => {
         const { result, appBridgeStub } = await loadUseThemeAssets(
             [AssetDummy.with(1), AssetDummy.with(2)],
-            'documentPage',
+            DOCUMENT_PAGE_TEMPLATE,
             'key',
         );
 
@@ -76,7 +78,7 @@ describe('useThemeAssets hook', () => {
     it('should delete nothing if key does not exist', async () => {
         const { result, appBridgeStub } = await loadUseThemeAssets(
             [AssetDummy.with(1), AssetDummy.with(2)],
-            'documentPage',
+            DOCUMENT_PAGE_TEMPLATE,
             'non-existing-key',
         );
 
@@ -95,7 +97,7 @@ describe('useThemeAssets hook', () => {
     it('should not sort assets if api call throws error', async () => {
         const { result, appBridgeStub } = await loadUseThemeAssets(
             [AssetDummy.with(1), AssetDummy.with(2)],
-            'documentPage',
+            DOCUMENT_PAGE_TEMPLATE,
             'key',
         );
         (appBridgeStub.deleteAssetIdsFromThemeAssetKey as unknown as Mock) = vi
@@ -114,7 +116,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should notify about updated assets on delete', async () => {
-        const { result, asset } = await loadUseThemeAssets([AssetDummy.with(1)], 'documentPage', 'key');
+        const { result, asset } = await loadUseThemeAssets([AssetDummy.with(1)], DOCUMENT_PAGE_TEMPLATE, 'key');
 
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -130,7 +132,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should add asset ids', async () => {
-        const { result, appBridgeStub } = await loadUseThemeAssets([AssetDummy.with(1)], 'documentPage', 'key');
+        const { result, appBridgeStub } = await loadUseThemeAssets([AssetDummy.with(1)], DOCUMENT_PAGE_TEMPLATE, 'key');
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [2]);
         });
@@ -144,7 +146,7 @@ describe('useThemeAssets hook', () => {
     });
 
     it('should notify about updated assets on add asset ids to key', async () => {
-        const { result, asset } = await loadUseThemeAssets([AssetDummy.with(1)], 'documentPage', 'key');
+        const { result, asset } = await loadUseThemeAssets([AssetDummy.with(1)], DOCUMENT_PAGE_TEMPLATE, 'key');
         const assetToAdd = AssetDummy.with(2);
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
