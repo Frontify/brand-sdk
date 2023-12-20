@@ -32,7 +32,7 @@ describe('useAssetBulkDownload', () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
         const blockAssets = { setting1: [AssetDummy.with(123)], setting2: [AssetDummy.with(456)] };
-        result.current.generateBulkDownload(blockAssets);
+        await result.current.generateBulkDownload(blockAssets);
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.api, {
                 name: 'getAssetBulkDownloadToken',
@@ -50,7 +50,7 @@ describe('useAssetBulkDownload', () => {
             })
             .rejects(appBridgeError);
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(AssetBulkDownloadState.Error);
         });
@@ -59,7 +59,7 @@ describe('useAssetBulkDownload', () => {
     it('should set signature and set status to ready', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
         await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.getBulkDownloadByToken, 'token');
             expect(result.current.downloadUrl).toBe('dummy-url');
@@ -71,7 +71,7 @@ describe('useAssetBulkDownload', () => {
         const appBridgeStub = getAppBridgeBlockStub();
         appBridgeStub.getBulkDownloadByToken.rejects(appBridgeError);
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(AssetBulkDownloadState.Error);
         });
@@ -81,7 +81,7 @@ describe('useAssetBulkDownload', () => {
         const appBridgeStub = getAppBridgeBlockStub();
         appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: '' });
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
         await waitFor(() => {
             expect(result.current.status).toBe(AssetBulkDownloadState.Pending);
         });
@@ -95,7 +95,7 @@ describe('useAssetBulkDownload', () => {
         appBridgeStub.getBulkDownloadBySignature.onCall(1).resolves({ downloadUrl: '', signature: 'signature' });
 
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
 
         await act(async () => {
             await vi.advanceTimersByTimeAsync(2500);
@@ -122,7 +122,7 @@ describe('useAssetBulkDownload', () => {
         appBridgeStub.getBulkDownloadBySignature.onCall(1).rejects(appBridgeError);
 
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
 
         await act(async () => {
             await vi.advanceTimersByTimeAsync(2500);
@@ -146,14 +146,14 @@ describe('useAssetBulkDownload', () => {
             .onCall(1)
             .resolves({ downloadUrl: 'changed-dummy-url', signature: 'signature' });
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
 
         await waitFor(() => {
             expect(result.current.downloadUrl).toBe('dummy-url');
             expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
         });
 
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
 
         await waitFor(() => {
             expect(result.current.downloadUrl).toBe('changed-dummy-url');
@@ -170,7 +170,7 @@ describe('useAssetBulkDownload', () => {
             .resolves({ downloadUrl: 'change-dummy-url', signature: 'signature' });
 
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
 
         await waitFor(() => {
             expect(result.current.downloadUrl).toBe('dummy-url');
@@ -179,7 +179,7 @@ describe('useAssetBulkDownload', () => {
 
         vi.useFakeTimers();
 
-        result.current.generateBulkDownload();
+        await result.current.generateBulkDownload();
 
         await act(async () => {
             await vi.advanceTimersByTimeAsync(2500);
