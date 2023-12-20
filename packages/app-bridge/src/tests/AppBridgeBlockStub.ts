@@ -15,6 +15,7 @@ import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 
 const BLOCK_ID = 3452;
+const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
 
@@ -36,6 +37,7 @@ export const getAppBridgeBlockStub = ({
     blockAssets = {},
     editorState = false,
     blockId = BLOCK_ID,
+    sectionId = SECTION_ID,
     projectId = PROJECT_ID,
     user = UserDummy.with(USER_ID),
     language = 'en',
@@ -170,12 +172,28 @@ export const getAppBridgeBlockStub = ({
             .resolves({ assetBulkDownloadToken: 'token' }),
 
         context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
-            if (args && args === 'blockId') {
+            if (args === undefined) {
                 return {
-                    get: () => blockId,
+                    get: () => [blockId, sectionId],
                 };
+            } else {
+                switch (args) {
+                    case 'blockId':
+                        return {
+                            get: () => blockId,
+                        };
+                    case 'sectionId':
+                        return {
+                            get: () => sectionId,
+                        };
+                    default:
+                        return {
+                            get: () => {
+                                throw new Error(`Unknown context key: ${args}`);
+                            },
+                        };
+                }
             }
-            return Promise.reject(new Error(`Unexpected call to context with args: ${JSON.stringify(args)}`));
         }),
 
         // TODO: Stub the following methods
