@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, AppBridgeTheme, useDocumentSection } from '@frontify/app-bridge';
+import { type AppBridgeBlock, type AppBridgeTheme, useDocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
-import { InitiallyExpandedItems } from '../';
+
+import { type InitiallyExpandedItems } from '../';
+
 import { SectionLink } from './SectionLink';
 
 type DocumentLinkProps = {

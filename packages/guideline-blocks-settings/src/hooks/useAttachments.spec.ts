@@ -2,8 +2,8 @@
 
 import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { renderHook, waitFor } from '@testing-library/react';
-
 import { describe, expect, it } from 'vitest';
+
 import { useAttachments } from './useAttachments';
 
 const MOCK_SETTINGS_ID = 'attachments';

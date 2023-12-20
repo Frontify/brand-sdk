@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type AsProps, type HTMLPropsAs, createComponentAs, createElementAs, useEditorRef } from '@udecode/plate';
 import { useCallback } from 'react';
-import { AsProps, HTMLPropsAs, createComponentAs, createElementAs, useEditorRef } from '@udecode/plate';
+
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
 
 export const useFloatingButtonEditButton = (props: HTMLPropsAs<'button'>): HTMLPropsAs<'button'> => {

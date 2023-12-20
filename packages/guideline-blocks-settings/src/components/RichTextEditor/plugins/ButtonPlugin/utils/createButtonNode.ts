@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, TText, Value, getPluginType } from '@udecode/plate';
-import { RichTextButtonStyle, TButtonElement } from '..';
+import { type PlateEditor, type TText, type Value, getPluginType } from '@udecode/plate';
+
+import { type RichTextButtonStyle, type TButtonElement } from '..';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 
 export interface CreateButtonNodeOptions {

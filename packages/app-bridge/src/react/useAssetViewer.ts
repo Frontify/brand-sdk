@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Asset } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type Asset } from '../types';
 
 export const useAssetViewer = (appBridge: AppBridgeBlock) => {
-    const open = async ({ token }: Asset) => {
+    const open = ({ token }: Asset) => {
         appBridge.openAssetViewer(token);
     };
 

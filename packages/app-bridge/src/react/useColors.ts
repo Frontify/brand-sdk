@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from 'react';
 
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type Color, type ColorCreate, type ColorPatch } from '../types';
 import { compareObjects } from '../utilities';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Color, ColorCreate, ColorPatch } from '../types';
 
 export type UseColorsReturnType = {
     colorsByPaletteId: Color[];
-    createColor: (colorCreate: ColorCreate) => void;
-    updateColor: (colorId: number, colorPatch: ColorPatch) => void;
-    deleteColor: (colorId: number) => void;
+    createColor: (colorCreate: ColorCreate) => Promise<void>;
+    updateColor: (colorId: number, colorPatch: ColorPatch) => Promise<void>;
+    deleteColor: (colorId: number) => Promise<void>;
 };
 
 export const useColors = (appBridge: AppBridgeBlock, colorPaletteId: number): UseColorsReturnType => {

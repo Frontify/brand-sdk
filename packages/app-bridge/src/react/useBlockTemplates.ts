@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Template } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type Template } from '../types';
 import { compareObjects } from '../utilities';
 
 export const useBlockTemplates = (appBridge: AppBridgeBlock) => {

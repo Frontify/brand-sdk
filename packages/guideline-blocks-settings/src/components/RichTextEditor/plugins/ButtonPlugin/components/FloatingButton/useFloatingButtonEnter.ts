@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEditorRef, useHotkeys } from '@udecode/plate';
+
 import { submitFloatingButton } from '../../transforms/submitFloatingButton';
 
 export const useFloatingButtonEnter = () => {

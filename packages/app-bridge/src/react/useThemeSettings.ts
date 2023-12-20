@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { EmitterEvents } from '../types';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type EmitterEvents } from '../types';
 
 export const useThemeSettings = <T = Record<string, unknown>>(appBridge: AppBridgeTheme) => {
     const [themeSettings, setThemeSettings] = useState<Nullable<T>>(null);

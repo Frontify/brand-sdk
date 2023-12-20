@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    FloatingLinkProps,
+    type FloatingLinkProps,
     FloatingLink as PlateFloatingLink,
     createComponentAs,
     createElementAs,
 } from '@udecode/plate';
+
 import { useFloatingLinkEdit } from './EditLinkModal';
 import { useFloatingLinkInsert } from './InsertLinkModal/useFloatingLinkInsert';
 

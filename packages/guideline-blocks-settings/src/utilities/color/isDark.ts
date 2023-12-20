@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ColorInput, TinyColor } from '@ctrl/tinycolor';
+import { type ColorInput, TinyColor } from '@ctrl/tinycolor';
+import { type Color } from '@frontify/sidebar-settings';
+
 import { toShortRgba } from './toShortRgba';
-import { Color } from '@frontify/sidebar-settings';
 
 /**
  * Calculates if text should be in a light color depending on color (e.g. background-color)
@@ -14,7 +15,7 @@ import { Color } from '@frontify/sidebar-settings';
 
 const isRgbaLongFormat = (value: unknown): value is Color => {
     const requiredKeys = ['red', 'green', 'blue'];
-    return typeof value === 'object' && requiredKeys.every((i) => value?.hasOwnProperty(i));
+    return typeof value === 'object' && requiredKeys.every((i) => value && i in value);
 };
 
 export const isDark = (color: unknown, threshold?: number): boolean => {

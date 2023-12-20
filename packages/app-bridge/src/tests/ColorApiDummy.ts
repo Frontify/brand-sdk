@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ColorApi, ColorApiCreate, ColorApiPatch } from '../types';
+import { type ColorApi, type ColorApiCreate, type ColorApiPatch } from '../types';
 
 export class ColorApiDummy {
     static red(id = 767): ColorApi {

@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ReactElement, useEffect, useRef, useState } from 'react';
+import { type ReactElement, useEffect, useRef, useState } from 'react';
+
 import { joinClassNames } from '../../utilities';
+
 import { Toolbar } from './Toolbar';
-import { BlockItemWrapperProps, ToolbarItem } from './types';
+import { type BlockItemWrapperProps, type ToolbarItem } from './types';
 
 export const BlockItemWrapper = ({
     children,
@@ -35,6 +37,7 @@ export const BlockItemWrapper = ({
     const items = toolbarItems?.filter((item): item is ToolbarItem => item !== undefined);
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             ref={wrapperRef}
             onFocus={() => setIsFlyoutDisabled(false)}

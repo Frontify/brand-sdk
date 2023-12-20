@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ELEMENT_LINK, PlateEditor, getAboveNode } from '@udecode/plate';
-import { TLinkElement } from '../../RichTextEditor/plugins/LinkPlugin/types';
+import { ELEMENT_LINK, type PlateEditor, getAboveNode } from '@udecode/plate';
+
+import { type TLinkElement } from '../../RichTextEditor/plugins/LinkPlugin/types';
 
 const getLinkNode = (editor: PlateEditor, cb: (link: TLinkElement) => string): string => {
     const linkNode = getAboveNode<TLinkElement>(editor, { match: { type: ELEMENT_LINK } });

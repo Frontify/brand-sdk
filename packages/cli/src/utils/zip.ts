@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import archiver from 'archiver';
 import { createWriteStream } from 'node:fs';
+
+import archiver from 'archiver';
 
 export const createZip = (path: string, pathOut: string, ignored: string[] = []): Promise<void> => {
     return new Promise((resolve, reject): void => {

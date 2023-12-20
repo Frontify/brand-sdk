@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { HTMLPropsAs, PlateRenderElementProps, Value, useElementProps } from '@udecode/plate';
-import { CSSProperties, HTMLAttributeAnchorTarget, ReactElement, ReactNode, useState } from 'react';
-import { RichTextButtonStyle, TButtonElement } from '../types';
+import { type HTMLPropsAs, type PlateRenderElementProps, type Value, useElementProps } from '@udecode/plate';
+import { type CSSProperties, type HTMLAttributeAnchorTarget, type ReactElement, type ReactNode, useState } from 'react';
+
+import { type RichTextButtonStyle, type TButtonElement } from '../types';
 import { BlockButtonStyles } from '../utils';
 
 export type ButtonRootProps = PlateRenderElementProps<Value, TButtonElement> & HTMLPropsAs<'a'>;

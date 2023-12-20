@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { defineConfig } from 'vitest/config';
-import { dependencies as dependenciesMap } from './package.json';
-import { resolve } from 'node:path';
 import { builtinModules } from 'node:module';
+import { resolve } from 'node:path';
+
+import { defineConfig } from 'vitest/config';
+
+import { dependencies as dependenciesMap } from './package.json';
 
 const dependencies = Object.keys(dependenciesMap);
 

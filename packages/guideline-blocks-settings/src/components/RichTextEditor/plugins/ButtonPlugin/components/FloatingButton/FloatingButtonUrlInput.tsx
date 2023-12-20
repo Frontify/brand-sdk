@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ChangeEventHandler, useCallback, useEffect, useRef } from 'react';
-import { HTMLPropsAs, mergeProps, useComposedRef } from '@udecode/plate';
+import { type HTMLPropsAs, mergeProps, useComposedRef } from '@udecode/plate';
+import { type ChangeEventHandler, useCallback, useEffect, useRef } from 'react';
+
 import { floatingButtonActions, floatingButtonSelectors, useFloatingButtonSelectors } from './floatingButtonStore';
 
 export const useFloatingButtonUrlInput = (props: HTMLPropsAs<'input'>): HTMLPropsAs<'input'> => {

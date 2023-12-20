@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Color } from '@frontify/fondue';
+import { type Color } from '@frontify/fondue';
+
+import { type SettingBlock } from '../';
+
 import { BACKGROUND_COLOR_DEFAULT_VALUE } from './defaultValues';
-import { SettingBlock } from '../';
 
 /**
  * Returns background settings: background switch, background color
@@ -27,7 +29,7 @@ type BackgroundSettingsType = {
 export const getBackgroundSettings = (options?: BackgroundSettingsType): SettingBlock => {
     const hasId = options?.id ? `hasBackground${options.id}` : 'hasBackground';
     const colorId = options?.id ? `backgroundColor${options.id}` : 'backgroundColor';
-    const defaultColor = !!options?.preventDefaultColor
+    const defaultColor = options?.preventDefaultColor
         ? undefined
         : options?.defaultColor || BACKGROUND_COLOR_DEFAULT_VALUE;
     const switchLabel = options?.switchLabel ? options.switchLabel : undefined;

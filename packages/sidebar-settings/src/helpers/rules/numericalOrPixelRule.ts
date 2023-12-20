@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Rule } from './Rule';
+import { type Rule } from './Rule';
 
 /**
  * Rule to validate value is a number or a number string with "px".

@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { createHash } from 'node:crypto';
+
 import react from '@vitejs/plugin-react';
-import { PluginOption, build } from 'vite';
+import { type PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
-import { createHash } from 'crypto';
-import { getAppBridgeVersion } from './appBridgeVersion.js';
+
+import { getAppBridgeVersion } from './appBridgeVersion';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -52,13 +54,19 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
 };
 
 export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
-    const getHash = (text) => createHash('sha256').update(text).digest('hex');
+    const getHash = (text: string | null) =>
+        createHash('sha256')
+            .update(text ?? '')
+            .digest('hex');
+
     const htmlHashPlugin: PluginOption = {
         name: 'html-hash',
         enforce: 'post',
         transformIndexHtml(html, { bundle }) {
-            const indexJsSource = bundle?.['index.js'].type === 'asset' ? bundle?.['index.js'].source : null;
-            const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
+            const indexJsSource =
+                bundle?.['index.js'].type === 'asset' ? (bundle?.['index.js'].source as string) : null;
+            const indexCssSource =
+                bundle?.['index.css'].type === 'asset' ? (bundle?.['index.css'].source as string) : null;
 
             const cssFileName = `${outputName}.${getHash(indexJsSource)}.css`;
             const jsFileName = `${outputName}.${getHash(indexCssSource)}.js`;
@@ -67,9 +75,12 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             return html;
         },
         generateBundle(_options, bundle) {
-            const indexHtmlSource = bundle?.['index.html'].type === 'asset' ? bundle?.['index.html'].source : null;
-            const indexJsSource = bundle?.['index.js'].type === 'asset' ? bundle?.['index.js'].source : null;
-            const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
+            const indexHtmlSource =
+                bundle?.['index.html'].type === 'asset' ? (bundle?.['index.html'].source as string) : null;
+            const indexJsSource =
+                bundle?.['index.js'].type === 'asset' ? (bundle?.['index.js'].source as string) : null;
+            const indexCssSource =
+                bundle?.['index.css'].type === 'asset' ? (bundle?.['index.css'].source as string) : null;
 
             bundle['index.html'].fileName = `${outputName}.${getHash(indexHtmlSource)}.html`;
             bundle['index.js'].fileName = `${outputName}.${getHash(indexJsSource)}.js`;

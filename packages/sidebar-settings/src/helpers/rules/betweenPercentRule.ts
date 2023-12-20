@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type Rule } from './Rule';
 import { maximumNumericalOrPercentRule } from './maximumNumericalOrPercentRule';
 import { minimumNumericalOrPercentRule } from './minimumNumericalOrPercentRule';
-import { Rule } from './Rule';
 
 /**
  * Rule to validate value is between two percent values.

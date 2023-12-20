@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { mergeDeep } from '../utilities/object';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
 
 export type BlockSettingsUpdateEvent<T = Record<string, unknown>> = {
     blockId: number;

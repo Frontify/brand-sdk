@@ -1,19 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
 import {
     DndContext,
-    DragEndEvent,
+    type DragEndEvent,
     DragOverlay,
-    DragStartEvent,
+    type DragStartEvent,
     KeyboardSensor,
     PointerSensor,
     closestCenter,
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
-import { Asset, useAssetUpload, useEditorState } from '@frontify/app-bridge';
+import { type Asset, useAssetUpload, useEditorState } from '@frontify/app-bridge';
 import {
     AssetInput,
     AssetInputSize,
@@ -24,9 +24,10 @@ import {
     LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
+import { useEffect, useState } from 'react';
+
 import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
-import { AttachmentsProps } from './types';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { type AttachmentsProps } from './types';
 
 export const Attachments = ({
     items = [],
@@ -94,6 +95,7 @@ export const Attachments = ({
     const onReplaceItemWithBrowse = (toReplace: Asset) => {
         setIsFlyoutOpen(false);
         appBridge.openAssetChooser(
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             async (result: Asset[]) => {
                 setIsFlyoutOpen(true);
                 appBridge.closeAssetChooser();
@@ -142,7 +144,7 @@ export const Attachments = ({
                 <div data-test-id="attachments-flyout-button">
                     <Flyout
                         placement={FlyoutPlacement.BottomRight}
-                        onOpenChange={(isOpen) => setIsFlyoutOpen(!!draggedItem ? true : isOpen)}
+                        onOpenChange={(isOpen) => setIsFlyoutOpen(draggedItem ? true : isOpen)}
                         isOpen={isFlyoutOpen}
                         hug={false}
                         fitContent

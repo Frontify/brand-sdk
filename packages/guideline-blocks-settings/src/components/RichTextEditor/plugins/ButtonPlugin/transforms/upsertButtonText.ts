@@ -1,16 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    PlateEditor,
-    TText,
-    Value,
+    type PlateEditor,
+    type TText,
+    type Value,
     getAboveNode,
     getEditorString,
     getPluginType,
     replaceNodeChildren,
 } from '@udecode/plate';
-import { ELEMENT_BUTTON, TButtonElement } from '..';
-import { UpsertButtonOptions } from './upsertButton';
+
+import { ELEMENT_BUTTON, type TButtonElement } from '..';
+
+import { type UpsertButtonOptions } from './upsertButton';
 
 /**
  * If the text is different than the button above text, replace button children by a new text.

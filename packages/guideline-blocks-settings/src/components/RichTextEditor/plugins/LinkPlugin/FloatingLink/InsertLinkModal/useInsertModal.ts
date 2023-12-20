@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import { CheckboxState } from '@frontify/fondue';
 import {
     ELEMENT_LINK,
@@ -11,11 +11,13 @@ import {
     useEditorRef,
     useHotkeys,
 } from '@udecode/plate';
-import { Dispatch, Reducer, useEffect, useReducer } from 'react';
-import { getLegacyUrl, getUrl } from '../../../../../Link/utils';
-import { InsertModalDispatchType, InsertModalStateProps } from './types';
+import { type Dispatch, type Reducer, useEffect, useReducer } from 'react';
+
 import { addHttps } from '../../../../../../helpers';
+import { getLegacyUrl, getUrl } from '../../../../../Link/utils';
 import { isValidUrlOrEmpty } from '../../../../../Link/utils/url';
+
+import { type InsertModalDispatchType, type InsertModalStateProps } from './types';
 
 const initialState: InsertModalStateProps = {
     url: '',

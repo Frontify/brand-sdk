@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 
 export const useReadyForPrint = (
     appBridge: AppBridgeBlock,

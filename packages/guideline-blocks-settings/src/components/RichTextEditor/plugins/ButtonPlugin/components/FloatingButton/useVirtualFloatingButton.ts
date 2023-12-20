@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { UseVirtualFloatingOptions, flip, offset, useVirtualFloating } from '@udecode/plate';
+import { type UseVirtualFloatingOptions, flip, offset, useVirtualFloating } from '@udecode/plate';
 
 const OFFSET_Y = 12;
 const OFFSET_X = -22;

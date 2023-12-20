@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep, RequireAtLeastOne, SetRequired } from 'type-fest';
+import { type CamelCasedPropertiesDeep, type RequireAtLeastOne, type SetRequired } from 'type-fest';
 
-import { LinkType } from './Document';
-import { SingleTargetApi } from './Targets';
+import { type LinkType } from './Document';
+import { type SingleTargetApi } from './Targets';
 
 export enum DocumentPageVisibility {
     Everyone = 'EVERYONE',

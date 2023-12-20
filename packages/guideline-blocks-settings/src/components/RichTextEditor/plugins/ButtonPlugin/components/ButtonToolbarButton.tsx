@@ -2,7 +2,7 @@
 
 import { getButtonClassNames, getHotkeyByPlatform, getTooltip } from '@frontify/fondue';
 import {
-    BlockToolbarButtonProps,
+    type BlockToolbarButtonProps,
     ToolbarButton,
     focusEditor,
     isRangeInSameBlock,
@@ -36,7 +36,7 @@ export const ButtonToolbarButton = ({ type, ...props }: LinkToolbarButtonProps) 
             )}
             classNames={getButtonClassNames(isEnabled)}
             active={isLink}
-            onMouseDown={async (event) => {
+            onMouseDown={(event) => {
                 if (!editor) {
                     return;
                 }

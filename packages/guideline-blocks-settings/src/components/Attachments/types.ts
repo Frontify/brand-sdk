@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, Asset } from '@frontify/app-bridge';
+import { type AppBridgeBlock, type Asset } from '@frontify/app-bridge';
 
 export type AttachmentsProps = {
     items?: Asset[];

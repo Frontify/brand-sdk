@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type Handler } from 'mitt';
 import { useEffect, useState } from 'react';
-import type { Handler } from 'mitt';
 
-import type { PrivacySettings } from '../types/PrivacySettings';
-import { AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type PrivacySettings } from '../types/PrivacySettings';
 
 export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
     const [privacySettings, setPrivacySettings] = useState<PrivacySettings>(appBridge.getPrivacySettings());

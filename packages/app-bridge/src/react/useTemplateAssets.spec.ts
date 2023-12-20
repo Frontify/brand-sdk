@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { SinonStub } from 'sinon';
-import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { type SinonStub } from 'sinon';
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeThemeStub } from '../tests';
+
 import { useTemplateAssets } from './useTemplateAssets';
 
 const DOCUMENT_ID = 16;
@@ -24,7 +25,6 @@ const TEMPLATE_ASSETS = {
 
 describe('useTemplateAssets hook', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -33,7 +33,7 @@ describe('useTemplateAssets hook', () => {
         cleanup();
     });
 
-    const loadUseTemplateAssets = async (
+    const loadUseTemplateAssets = (
         template: 'documentPage' | 'library' | 'cover',
         existingTemplateAssets = [AssetDummy.with(1)],
         existingThemeAssets = {},
@@ -49,7 +49,7 @@ describe('useTemplateAssets hook', () => {
             useTemplateAssets(appBridgeStub, template, DOCUMENT_ID, DOCUMENT_PAGE_ID),
         );
 
-        await act(async () => {
+        act(() => {
             rerender();
         });
 
@@ -58,7 +58,7 @@ describe('useTemplateAssets hook', () => {
 
     describe('documentPage template context', () => {
         it('should delete an asset', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('documentPage', []);
+            const { result, appBridgeStub } = loadUseTemplateAssets('documentPage', []);
             await act(async () => {
                 await result.current.deleteAssetIdsFromKey('key', [1]);
             });
@@ -73,7 +73,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('should sort assets', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('documentPage', [
+            const { result, appBridgeStub } = loadUseTemplateAssets('documentPage', [
                 AssetDummy.with(1),
                 AssetDummy.with(2),
             ]);
@@ -85,22 +85,23 @@ describe('useTemplateAssets hook', () => {
             const deleteCall = appBridgeStub.deleteAssetIdsFromDocumentPageTemplateAssetKey.getCall(0);
             const addCall = appBridgeStub.addAssetIdsToDocumentPageTemplateAssetKey.getCall(0);
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(deleteCall.firstArg).toEqual(DOCUMENT_PAGE_ID);
                 expect(deleteCall.args[1]).toEqual('key');
                 expect(deleteCall.lastArg).toEqual([1, 2]);
                 expect(addCall.firstArg).toEqual(DOCUMENT_PAGE_ID);
                 expect(addCall.args[1]).toEqual('key');
                 expect(addCall.lastArg).toEqual([2, 1]);
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
             });
         });
 
         it('should not sort assets if api call throws error', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('documentPage', [
+            const { result, appBridgeStub } = loadUseTemplateAssets('documentPage', [
                 AssetDummy.with(1),
                 AssetDummy.with(2),
             ]);
+
             (appBridgeStub.deleteAssetIdsFromDocumentPageTemplateAssetKey as unknown as Mock) = vi
                 .fn()
                 .mockRejectedValue('Unsuccessful API call');
@@ -109,15 +110,15 @@ describe('useTemplateAssets hook', () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
             });
 
-            await waitFor(async () => {
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+            await waitFor(() => {
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
             expect(console.error).toHaveBeenCalledOnce();
         });
 
         it('should notify about updated assets on delete', async () => {
-            const { result, asset } = await loadUseTemplateAssets('documentPage');
+            const { result, asset } = loadUseTemplateAssets('documentPage');
 
             await act(async () => {
                 await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -136,7 +137,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('should add asset ids', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('documentPage');
+            const { result, appBridgeStub } = loadUseTemplateAssets('documentPage');
             await act(async () => {
                 await result.current.addAssetIdsToKey('key', [2]);
             });
@@ -146,12 +147,12 @@ describe('useTemplateAssets hook', () => {
                 expect(call.firstArg).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.args[1]).toEqual('key');
                 expect(call.lastArg).toEqual([2]);
-                expect(result.current.templateAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map(({ id }) => id)).toEqual([1, 2]);
             });
         });
 
         it('should notify about updated assets on add asset ids to key', async () => {
-            const { result, asset } = await loadUseTemplateAssets('documentPage');
+            const { result, asset } = loadUseTemplateAssets('documentPage');
             const assetToAdd = AssetDummy.with(2);
             await act(async () => {
                 await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
@@ -171,7 +172,7 @@ describe('useTemplateAssets hook', () => {
 
     describe('library template context', () => {
         it('should delete an asset', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('library', []);
+            const { result, appBridgeStub } = loadUseTemplateAssets('library', []);
             await act(async () => {
                 await result.current.deleteAssetIdsFromKey('key', [1]);
             });
@@ -186,7 +187,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('should sort assets', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('library', [
+            const { result, appBridgeStub } = loadUseTemplateAssets('library', [
                 AssetDummy.with(1),
                 AssetDummy.with(2),
             ]);
@@ -198,19 +199,19 @@ describe('useTemplateAssets hook', () => {
             const deleteCall = appBridgeStub.deleteAssetIdsFromLibraryPageTemplateAssetKey.getCall(0);
             const addCall = appBridgeStub.addAssetIdsToLibraryPageTemplateAssetKey.getCall(0);
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(deleteCall.firstArg).toEqual(DOCUMENT_ID);
                 expect(deleteCall.args[1]).toEqual('key');
                 expect(deleteCall.lastArg).toEqual([1, 2]);
                 expect(addCall.firstArg).toEqual(DOCUMENT_ID);
                 expect(addCall.args[1]).toEqual('key');
                 expect(addCall.lastArg).toEqual([2, 1]);
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
             });
         });
 
         it('should not sort assets if api call throws error', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('library', [
+            const { result, appBridgeStub } = loadUseTemplateAssets('library', [
                 AssetDummy.with(1),
                 AssetDummy.with(2),
             ]);
@@ -222,15 +223,15 @@ describe('useTemplateAssets hook', () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
             });
 
-            await waitFor(async () => {
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+            await waitFor(() => {
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
             expect(console.error).toHaveBeenCalledOnce();
         });
 
         it('should notify about updated assets on delete', async () => {
-            const { result, asset } = await loadUseTemplateAssets('library');
+            const { result, asset } = loadUseTemplateAssets('library');
 
             await act(async () => {
                 await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -249,7 +250,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('should add asset ids', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('library');
+            const { result, appBridgeStub } = loadUseTemplateAssets('library');
             await act(async () => {
                 await result.current.addAssetIdsToKey('key', [2]);
             });
@@ -259,12 +260,12 @@ describe('useTemplateAssets hook', () => {
                 expect(call.firstArg).toEqual(DOCUMENT_ID);
                 expect(call.args[1]).toEqual('key');
                 expect(call.lastArg).toEqual([2]);
-                expect(result.current.templateAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map(({ id }) => id)).toEqual([1, 2]);
             });
         });
 
         it('should notify about updated assets on add asset ids to key', async () => {
-            const { result, asset } = await loadUseTemplateAssets('library');
+            const { result, asset } = loadUseTemplateAssets('library');
             const assetToAdd = AssetDummy.with(2);
             await act(async () => {
                 await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
@@ -284,7 +285,7 @@ describe('useTemplateAssets hook', () => {
 
     describe('cover template context', () => {
         it('should delete an asset', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('cover', []);
+            const { result, appBridgeStub } = loadUseTemplateAssets('cover', []);
             await act(async () => {
                 await result.current.deleteAssetIdsFromKey('key', [1]);
             });
@@ -298,10 +299,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('should sort assets', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('cover', [
-                AssetDummy.with(1),
-                AssetDummy.with(2),
-            ]);
+            const { result, appBridgeStub } = loadUseTemplateAssets('cover', [AssetDummy.with(1), AssetDummy.with(2)]);
 
             await act(async () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
@@ -310,20 +308,17 @@ describe('useTemplateAssets hook', () => {
             const deleteCall = appBridgeStub.deleteAssetIdsFromCoverPageTemplateAssetKey.getCall(0);
             const addCall = appBridgeStub.addAssetIdsToCoverPageTemplateAssetKey.getCall(0);
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(deleteCall.firstArg).toEqual('key');
                 expect(deleteCall.lastArg).toEqual([1, 2]);
                 expect(addCall.firstArg).toEqual('key');
                 expect(addCall.lastArg).toEqual([2, 1]);
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
             });
         });
 
         it('should not sort assets if api call throws error', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('cover', [
-                AssetDummy.with(1),
-                AssetDummy.with(2),
-            ]);
+            const { result, appBridgeStub } = loadUseTemplateAssets('cover', [AssetDummy.with(1), AssetDummy.with(2)]);
             (appBridgeStub.deleteAssetIdsFromCoverPageTemplateAssetKey as unknown as Mock) = vi
                 .fn()
                 .mockRejectedValue('Unsuccessful API call');
@@ -332,15 +327,15 @@ describe('useTemplateAssets hook', () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
             });
 
-            await waitFor(async () => {
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+            await waitFor(() => {
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
             expect(console.error).toHaveBeenCalledOnce();
         });
 
         it('should notify about updated assets on delete', async () => {
-            const { result, asset } = await loadUseTemplateAssets('cover');
+            const { result, asset } = loadUseTemplateAssets('cover');
 
             await act(async () => {
                 await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -359,7 +354,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('should add asset ids', async () => {
-            const { result, appBridgeStub } = await loadUseTemplateAssets('cover');
+            const { result, appBridgeStub } = loadUseTemplateAssets('cover');
             await act(async () => {
                 await result.current.addAssetIdsToKey('key', [2]);
             });
@@ -368,12 +363,12 @@ describe('useTemplateAssets hook', () => {
             await waitFor(() => {
                 expect(call.firstArg).toEqual('key');
                 expect(call.lastArg).toEqual([2]);
-                expect(result.current.templateAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map(({ id }) => id)).toEqual([1, 2]);
             });
         });
 
         it('should notify about updated assets on add asset ids to key', async () => {
-            const { result, asset } = await loadUseTemplateAssets('cover');
+            const { result, asset } = loadUseTemplateAssets('cover');
             const assetToAdd = AssetDummy.with(2);
             await act(async () => {
                 await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
@@ -393,7 +388,7 @@ describe('useTemplateAssets hook', () => {
 
     describe('Theme and Template assets overrides', () => {
         it('returns the template assets merged with theme assets and the list of custom overrides', async () => {
-            const { result } = await loadUseTemplateAssets('cover', [AssetDummy.with(1)], THEME_ASSETS);
+            const { result } = loadUseTemplateAssets('cover', [AssetDummy.with(1)], THEME_ASSETS);
             await waitFor(() => {
                 expect(result.current.templateAssets).toEqual({
                     ...TEMPLATE_ASSETS,
@@ -403,7 +398,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('returns the template assets merged with theme assets and no overrides', async () => {
-            const { result } = await loadUseTemplateAssets('cover', [AssetDummy.with(1)], THEME_ASSETS_WITH_CUSTOM_KEY);
+            const { result } = loadUseTemplateAssets('cover', [AssetDummy.with(1)], THEME_ASSETS_WITH_CUSTOM_KEY);
             await waitFor(() => {
                 expect(result.current.templateAssets).toEqual({
                     ...THEME_ASSETS_WITH_CUSTOM_KEY,
@@ -414,7 +409,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('returns an empty object if no theme assets and no template assets', async () => {
-            const { result } = await loadUseTemplateAssets('cover', [], {}, true);
+            const { result } = loadUseTemplateAssets('cover', [], {}, true);
             await waitFor(() => {
                 expect(result.current.templateAssets).toEqual({});
                 expect(result.current.customizedTemplateAssetsKeys).toEqual([]);
@@ -422,7 +417,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('returns only the theme assets if no template assets', async () => {
-            const { result } = await loadUseTemplateAssets('cover', [], THEME_ASSETS, true);
+            const { result } = loadUseTemplateAssets('cover', [], THEME_ASSETS, true);
             await waitFor(() => {
                 expect(result.current.templateAssets).toEqual({
                     ...THEME_ASSETS,
@@ -432,7 +427,7 @@ describe('useTemplateAssets hook', () => {
         });
 
         it('returns only the template assets if no theme assets', async () => {
-            const { result } = await loadUseTemplateAssets('cover', [AssetDummy.with(1)], {}, false);
+            const { result } = loadUseTemplateAssets('cover', [AssetDummy.with(1)], {}, false);
             await waitFor(() => {
                 expect(result.current.templateAssets).toEqual({
                     ...TEMPLATE_ASSETS,

@@ -1,10 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep, SnakeCasedPropertiesDeep } from 'type-fest';
-
-import transform from 'lodash-es/transform';
-import snakeCase from 'lodash-es/snakeCase';
 import camelCase from 'lodash-es/camelCase';
+import snakeCase from 'lodash-es/snakeCase';
+import transform from 'lodash-es/transform';
+import { type CamelCasedPropertiesDeep, type SnakeCasedPropertiesDeep } from 'type-fest';
 
 export const compareObjects = (obj1: unknown, obj2: unknown) => {
     if (!obj1 || !obj2 || typeof obj1 !== 'object' || typeof obj2 !== 'object') {

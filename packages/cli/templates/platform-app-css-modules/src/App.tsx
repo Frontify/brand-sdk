@@ -1,5 +1,6 @@
+import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
-import { PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
+
 import style from './style.module.css';
 
 export const App = () => {

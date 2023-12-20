@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Bundle } from '../../src/bundle';
 import { describe, expect, test, vi } from 'vitest';
+
+import { type Bundle } from '../../src/bundle';
 import { presetCustomValue } from '../../src/helpers/presetCustomValue';
 
 const exampleMap: Record<string, string> = {
@@ -24,9 +25,9 @@ describe('presetCustomValue', () => {
                 }
                 return null;
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
+
             setBlockValue(): void {},
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
         };
 
@@ -49,9 +50,9 @@ describe('presetCustomValue', () => {
                 }
                 return null;
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
+
             setBlockValue(): void {},
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
         };
 

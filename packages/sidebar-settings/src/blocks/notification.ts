@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BaseBlock } from './base';
+import { type BaseBlock } from './base';
 
 export enum NotificationStyleType {
     Warning = 'Warning',
@@ -20,7 +20,6 @@ export declare type Footer<Label extends string> = {
     | { replace?: ExtractVariables<Label> extends never ? never : Record<ExtractVariables<Label>, LinkOrEvent> }
 );
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ExtractVariables<T extends string> = T extends `${infer _Start}[${infer Variable}]${infer Rest}`
     ? Variable extends string
         ? Rest extends string

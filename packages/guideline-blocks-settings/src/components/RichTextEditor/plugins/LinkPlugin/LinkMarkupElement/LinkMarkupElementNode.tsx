@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { HTMLPropsAs, LinkRootProps, useElementProps } from '@udecode/plate';
-import type { MouseEvent } from 'react';
-import { TLinkElement } from '../types';
+import { type HTMLPropsAs, type LinkRootProps, useElementProps } from '@udecode/plate';
+import { type MouseEvent } from 'react';
+
 import { BlockStyles } from '../../styles';
 import { LINK_PLUGIN } from '../id';
+import { type TLinkElement } from '../types';
 
 const useLink = (props: LinkRootProps): HTMLPropsAs<'a'> => {
     const _props = useElementProps<TLinkElement, 'a'>({

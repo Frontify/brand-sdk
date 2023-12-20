@@ -1,17 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Dispatch, Reducer, useEffect, useReducer } from 'react';
-import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate';
-import { InsertModalDispatchType, InsertModalStateProps } from './types';
-import { floatingButtonActions, floatingButtonSelectors } from '../floatingButtonStore';
-import { ELEMENT_BUTTON } from '../../../createButtonPlugin';
-import { submitFloatingButton } from '../../../transforms/submitFloatingButton';
-import { RichTextButtonStyle } from '../../../types';
-import { getButtonStyle } from '../../../utils/getButtonStyle';
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import { CheckboxState } from '@frontify/fondue';
+import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate';
+import { type Dispatch, type Reducer, useEffect, useReducer } from 'react';
+
 import { addHttps } from '../../../../../../../helpers';
 import { isValidUrlOrEmpty } from '../../../../../../Link/utils/url';
+import { ELEMENT_BUTTON } from '../../../createButtonPlugin';
+import { submitFloatingButton } from '../../../transforms/submitFloatingButton';
+import { type RichTextButtonStyle } from '../../../types';
+import { getButtonStyle } from '../../../utils/getButtonStyle';
+import { floatingButtonActions, floatingButtonSelectors } from '../floatingButtonStore';
+
+import { type InsertModalDispatchType, type InsertModalStateProps } from './types';
 
 const initialState: InsertModalStateProps = {
     url: '',

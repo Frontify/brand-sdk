@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React, { ComponentType } from 'react';
-import { AppBridgeBlock } from '../AppBridgeBlock';
-import { getAppBridgeBlockStub, getAppBridgeBlockStubProps } from './AppBridgeBlockStub';
+import React, { type ComponentType } from 'react';
+
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+
+import { getAppBridgeBlockStub, type getAppBridgeBlockStubProps } from './AppBridgeBlockStub';
 
 type withAppBridgeStubsProps = { appBridge: AppBridgeBlock };
 

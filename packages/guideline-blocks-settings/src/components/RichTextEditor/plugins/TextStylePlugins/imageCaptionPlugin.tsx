@@ -1,16 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createPluginFactory } from '@udecode/plate';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
     Plugin,
-    PluginProps,
-    TextStyleRenderElementProps,
+    type PluginProps,
+    type TextStyleRenderElementProps,
     alignmentClassnames,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import { createPluginFactory } from '@udecode/plate';
+import { type CSSProperties } from 'react';
+
 import { BlockStyles, TextStyles } from '../styles';
 
 const ID = 'textstyle-imageCaption-plugin';

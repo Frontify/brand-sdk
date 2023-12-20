@@ -1,17 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateRenderElementProps, createPluginFactory } from '@udecode/plate';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
     Plugin,
-    PluginProps,
-    TextStyleRenderElementProps,
+    type PluginProps,
+    type TextStyleRenderElementProps,
     TextStyles,
     alignmentClassnames,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import { type PlateRenderElementProps, createPluginFactory } from '@udecode/plate';
+import { type CSSProperties } from 'react';
+
 import { BlockStyles } from '../styles';
 
 const ID = 'textstyle-custom3-plugin';

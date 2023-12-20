@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Asset } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type Asset } from '../types';
 import { compareObjects } from '../utilities';
 
 export const useBlockAssets = (appBridge: AppBridgeBlock) => {

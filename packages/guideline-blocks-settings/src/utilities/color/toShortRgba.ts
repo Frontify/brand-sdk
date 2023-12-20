@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Color } from '@frontify/fondue';
+import { type Color } from '@frontify/fondue';
 
 type ShortNotationColor = {
     r: number;
@@ -19,7 +19,7 @@ type ShortNotationColor = {
 export const toShortRgba = (color: unknown): ShortNotationColor => {
     const isRgbaLongFormat = (value: Color) => {
         const requiredKeys = ['red', 'green', 'blue'];
-        return typeof value === 'object' && requiredKeys.every((i) => value.hasOwnProperty(i));
+        return typeof value === 'object' && requiredKeys.every((i) => i in value);
     };
 
     const mapToShortFormat = (value: Color): ShortNotationColor => {

@@ -1,16 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createParagraphPlugin as createPlateParagraphPlugin, createPluginFactory } from '@udecode/plate';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
     Plugin,
-    PluginProps,
-    TextStyleRenderElementProps,
+    type PluginProps,
+    type TextStyleRenderElementProps,
     alignmentClassnames,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import { createParagraphPlugin as createPlateParagraphPlugin, createPluginFactory } from '@udecode/plate';
+import { type CSSProperties } from 'react';
+
 import { BlockStyles, TextStyles } from '../styles';
 
 export class ParagraphPlugin extends Plugin {

@@ -2,6 +2,7 @@
 
 import { IconMagnifier16 } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
+
 import { BlockItemWrapper } from './BlockItemWrapper';
 
 const BlockItemWrapperSelector = '[data-test-id="block-item-wrapper"]';

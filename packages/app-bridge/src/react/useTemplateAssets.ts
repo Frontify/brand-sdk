@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { Asset } from '../types';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type Asset } from '../types';
 import { compareObjects } from '../utilities';
+
 import { useThemeAssets } from './';
 
 type HookArgs = {
@@ -173,7 +174,7 @@ export const useTemplateAssets = (
             console.error(error);
         }
 
-        emitUpdatedTemplateAssets();
+        await emitUpdatedTemplateAssets();
     };
 
     const deleteAssetIdsFromKey = async (key: string, assetIds: number[]) => {
@@ -183,7 +184,7 @@ export const useTemplateAssets = (
             documentId,
             documentPageId,
         });
-        emitUpdatedTemplateAssets();
+        await emitUpdatedTemplateAssets();
     };
 
     const addAssetIdsToKey = async (key: string, assetIds: number[]) => {
@@ -193,7 +194,7 @@ export const useTemplateAssets = (
             documentId,
             documentPageId,
         });
-        emitUpdatedTemplateAssets();
+        await emitUpdatedTemplateAssets();
     };
 
     return {

@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { notify } from './utilities';
+
 import { AppBridgePlatformApp } from './AppBridgePlatformApp';
 import { InitializationError } from './errors';
 import { openConnection } from './registries';
+import { notify } from './utilities';
 
 const TOKEN = 'AjY34F87Dsat^J';
 
@@ -46,7 +47,7 @@ describe('AppBridgePlatformApp', () => {
         platformApp.subscribe('Context.connected', () => {
             expect(connected).toBe(true);
         });
-        platformApp.dispatch(openConnection());
+        await platformApp.dispatch(openConnection());
     });
 
     it.fails('should throw an error when api is not initialized', async () => {
@@ -56,7 +57,7 @@ describe('AppBridgePlatformApp', () => {
         await expect(() => platformApp.api({ name: 'getCurrentUser' })).rejects.toThrow();
     });
 
-    it('should return empty state when not inititalized', async () => {
+    it('should return empty state when not inititalized', () => {
         const platformApp = new AppBridgePlatformApp();
         const state = platformApp.state().get();
         expect(state).toEqual({ settings: {} });
@@ -71,7 +72,7 @@ describe('AppBridgePlatformApp', () => {
             expect(connected).toBe(true);
             expect(state).toEqual({ settings: 'settings-test' });
         });
-        platformApp.dispatch(openConnection());
+        await platformApp.dispatch(openConnection());
     });
 
     it('should yield true for Context.connected after dispatch', async () => {
@@ -85,7 +86,7 @@ describe('AppBridgePlatformApp', () => {
             expect(context).toEqual({ parentId: 'parentId-test', connected: true });
             expect(parentId).toEqual('parentId-test');
         });
-        platformApp.dispatch(openConnection());
+        await platformApp.dispatch(openConnection());
     });
 
     it('should return correct object when subscribing to context', async () => {
@@ -94,16 +95,17 @@ describe('AppBridgePlatformApp', () => {
         platformApp.context().subscribe((context) => {
             expect({ parentId: 'parentId-test', connected: true }).toStrictEqual(context);
         });
-        platformApp.dispatch(openConnection());
+        await platformApp.dispatch(openConnection());
     });
 
     it('should return correct object when subscribing to context', async () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
-        platformApp.context().subscribe((context) => {
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        platformApp.context().subscribe(async (context) => {
             expect({ parentId: 'parentId-test', connected: true }).toStrictEqual(context);
-            platformApp.dispatch(openConnection());
+            await platformApp.dispatch(openConnection());
         });
-        platformApp.dispatch(openConnection());
+        await platformApp.dispatch(openConnection());
     });
 });

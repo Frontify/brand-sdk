@@ -10,4 +10,5 @@ afterEach(() => {
     vi.restoreAllMocks();
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 globalThis.structuredClone = (data: unknown) => JSON.parse(JSON.stringify(data));

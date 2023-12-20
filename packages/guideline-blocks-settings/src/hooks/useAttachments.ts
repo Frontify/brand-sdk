@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, Asset, useBlockAssets } from '@frontify/app-bridge';
+import { type AppBridgeBlock, type Asset, useBlockAssets } from '@frontify/app-bridge';
 
 export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
     const { blockAssets, updateAssetIdsFromKey } = useBlockAssets(appBridge);

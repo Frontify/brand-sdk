@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, beforeAll, describe, expect, it, test, vi } from 'vitest';
+
 import { AppBridgeCreateAsset } from './AppBridgeCreateAsset';
 import { Topic } from './types';
+import { generateRandomString } from './utilities/hash';
 import { notify } from './utilities/notify';
 import { subscribe } from './utilities/subscribe';
-import { generateRandomString } from './utilities/hash';
 
 const TOKEN = 'AjY34F87Dsat^J';
 const EXPECTED_RESULT = { test: 'passed' };
@@ -45,7 +46,7 @@ describe('AppBridgeCreateAssetTest', () => {
         expect(new AppBridgeCreateAsset()).toBeInstanceOf(AppBridgeCreateAsset);
     });
 
-    test('getAppState', () => {
+    test('getAppState', async () => {
         const appBridge = new AppBridgeCreateAsset();
         const result = appBridge.getAppState();
 
@@ -54,10 +55,10 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.GetAppState, TOKEN);
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
-    test('putAppState', () => {
+    test('putAppState', async () => {
         const newState = { new: 'state' };
         const appBridge = new AppBridgeCreateAsset();
         const result = appBridge.putAppState(newState);
@@ -67,10 +68,10 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.PutAppState, TOKEN);
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
-    test('deleteAppState', () => {
+    test('deleteAppState', async () => {
         const appBridge = new AppBridgeCreateAsset();
         const result = appBridge.deleteAppState();
 
@@ -79,10 +80,10 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.DeleteAppState, TOKEN);
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
-    test('getAssetById', () => {
+    test('getAssetById', async () => {
         const assetId = 4076;
         const appBridge = new AppBridgeCreateAsset();
         const result = appBridge.getAssetById(assetId);
@@ -92,10 +93,10 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.GetAssetById, TOKEN);
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
-    test('postExternalAssetWithPreview', () => {
+    test('postExternalAssetWithPreview', async () => {
         const assets = [
             {
                 title: 'My external asset',
@@ -116,10 +117,10 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.PostExternalAssets, TOKEN, { timeout: LONG_TIMEOUT });
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
-    test('postExternalAssetWithoutPreview', () => {
+    test('postExternalAssetWithoutPreview', async () => {
         const assets = [
             {
                 title: 'My external asset',
@@ -138,7 +139,7 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.PostExternalAssets, TOKEN, { timeout: DEFAULT_TIMEOUT });
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
     test('getThirdPartyOauth2Tokens', async () => {
@@ -152,10 +153,10 @@ describe('AppBridgeCreateAssetTest', () => {
         expect(subscribe).toHaveBeenCalledWith(Topic.GetThirdPartyOauth2Tokens, TOKEN, {
             timeout: LONG_TIMEOUT,
         });
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
-    test('getRefreshedThirdpartyOauth2Tokens', () => {
+    test('getRefreshedThirdpartyOauth2Tokens', async () => {
         const refreshToken = '8raSsn0nG5v4';
         const appBridge = new AppBridgeCreateAsset();
         const result = appBridge.getRefreshedThirdpartyOauth2Tokens(refreshToken);
@@ -164,7 +165,7 @@ describe('AppBridgeCreateAssetTest', () => {
 
         expect(subscribe).toHaveBeenCalledTimes(1);
         expect(subscribe).toHaveBeenCalledWith(Topic.GetRefreshedThirdpartyOauth2Token, TOKEN);
-        expect(result).resolves.toEqual(EXPECTED_RESULT);
+        await expect(result).resolves.toEqual(EXPECTED_RESULT);
     });
 
     test('closeApp', () => {

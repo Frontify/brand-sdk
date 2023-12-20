@@ -20,8 +20,10 @@
         "declaration": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
+        "allowJs": true,
+        "noEmit": true,
         "types": ["cypress", "node", "cypress-real-events"]
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "vite.config.ts", "tailwind.config.js", "setupTests.ts", "postcss.config.js"],
     "exclude": ["node_modules", "dist"]
 }

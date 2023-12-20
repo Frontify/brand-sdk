@@ -2,9 +2,9 @@
 
 import {
     ELEMENT_LINK,
-    FloatingLinkProps,
-    HTMLPropsAs,
-    LinkPlugin,
+    type FloatingLinkProps,
+    type HTMLPropsAs,
+    type LinkPlugin,
     floatingLinkActions,
     getPluginOptions,
     getSelectionBoundingClientRect,
@@ -28,7 +28,6 @@ export const useFloatingLinkInsert = ({ floatingOptions, ...props }: FloatingLin
     const { triggerFloatingLinkHotkeys } = getPluginOptions<LinkPlugin>(editor, ELEMENT_LINK);
 
     useHotkeys(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         triggerFloatingLinkHotkeys!,
         (e) => {
             if (triggerFloatingLinkInsert(editor, { focused })) {
@@ -45,7 +44,7 @@ export const useFloatingLinkInsert = ({ floatingOptions, ...props }: FloatingLin
         editorId: editor.id,
         open: open && mode === 'insert',
         getBoundingClientRect: getSelectionBoundingClientRect,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+
         whileElementsMounted: () => {},
         ...floatingOptions,
     });

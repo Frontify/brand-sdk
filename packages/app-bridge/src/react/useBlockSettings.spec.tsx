@@ -1,11 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, render, waitFor } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import React, { type ReactElement } from 'react';
 import sinon from 'sinon';
 import { afterEach, describe, expect, it } from 'vitest';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
+
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { withAppBridgeBlockStubs } from '../tests/';
+
 import { useBlockSettings } from './useBlockSettings';
 
 const BLOCK_SETTINGS_DIV_ID = 'block-settings-div';
@@ -52,7 +54,7 @@ describe('useBlockSettings', () => {
         expect(getByTestId(BLOCK_SETTINGS_DIV_ID).textContent).toBe('{}');
     });
 
-    it('should initially set the block settings to the API data', async () => {
+    it('should initially set the block settings to the API data', () => {
         const [BlockWithStubs] = withAppBridgeBlockStubs(Block, {
             blockSettings: NEW_SETTINGS,
         });
@@ -178,7 +180,7 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('gets the correct settings when rendering 2 blocks', async () => {
+    it('gets the correct settings when rendering 2 blocks', () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [Block1WithStubs] = withAppBridgeBlockStubs(Block, {

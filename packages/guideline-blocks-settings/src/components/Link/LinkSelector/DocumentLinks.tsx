@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
-import { ReactElement, useEffect, useState } from 'react';
+import { type AppBridgeBlock, type AppBridgeTheme, type Document } from '@frontify/app-bridge';
+import { type ReactElement, useEffect, useState } from 'react';
+
+import { type InitiallyExpandedItems } from '../';
+
 import { DocumentLink } from './DocumentLink';
 import { LoadingIndicator } from './LoadingIndicator';
-import { InitiallyExpandedItems } from '../';
 
 type DocumentLinksProps = {
     appBridge: AppBridgeBlock | AppBridgeTheme;

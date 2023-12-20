@@ -2,8 +2,8 @@
 
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { DocumentDummy, getAppBridgeThemeStub } from '../tests';
 
@@ -144,14 +144,13 @@ describe('useUngroupedDocuments', () => {
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documents).toEqual([
+                DocumentDummy.with(DOCUMENT_ID_1),
+                DocumentDummy.with(DOCUMENT_ID_2),
+                DocumentDummy.with(DOCUMENT_ID_3),
+                NEW_DOCUMENT,
+            ]);
         });
-
-        expect(result.current.documents).toEqual([
-            DocumentDummy.with(DOCUMENT_ID_1),
-            DocumentDummy.with(DOCUMENT_ID_2),
-            DocumentDummy.with(DOCUMENT_ID_3),
-            NEW_DOCUMENT,
-        ]);
     });
 
     it('should update document if a page is deleted', async () => {

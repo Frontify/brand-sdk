@@ -1,14 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mockFs from 'mock-fs';
+import mockFs, { restore } from 'mock-fs';
 import { afterEach, describe, expect, it } from 'vitest';
-import { getAppBridgeVersion } from '../../src/utils/appBridgeVersion.js';
+
+import { getAppBridgeVersion } from '../../src/utils/appBridgeVersion';
 
 const rootPath = 'frontify-cli';
 
-describe('AppBridgeVersion utils', async () => {
+describe('AppBridgeVersion utils', () => {
     afterEach(() => {
-        mockFs.restore();
+        restore();
     });
 
     it('should return the 3 as version from package.json', () => {

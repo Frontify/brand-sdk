@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DropdownSize } from '.';
-import type { ChoicesType } from './choices';
+import { type ChoicesType } from './choices';
+
+import { type DropdownSize } from '.';
 
 export type DropdownBlock<AppBridge> = {
     /**

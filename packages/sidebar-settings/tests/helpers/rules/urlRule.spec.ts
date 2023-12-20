@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { urlRule } from '../../../src';
 import { describe, expect, test } from 'vitest';
+
+import { urlRule } from '../../../src';
 
 /**
  * @vitest-environment happy-dom

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { createStore } from '@udecode/plate';
-import { RichTextButtonStyle } from '../../types';
+
+import { type RichTextButtonStyle } from '../../types';
 
 export type FloatingButtonMode = '' | 'insert' | 'edit';
 
@@ -43,4 +44,5 @@ export const floatingButtonStore: any = createStore('floatingButton')({
 
 export const floatingButtonActions = floatingButtonStore.set;
 export const floatingButtonSelectors = floatingButtonStore.get;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 export const useFloatingButtonSelectors = () => floatingButtonStore.use;

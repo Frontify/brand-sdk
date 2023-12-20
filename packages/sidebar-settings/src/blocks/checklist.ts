@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BaseBlock, ValueOrPromisedValue } from './base';
-import type { Checkbox } from './checkbox';
+import { type BaseBlock, type ValueOrPromisedValue } from './base';
+import { type Checkbox } from './checkbox';
 
 export type ChecklistBlock<AppBridge> = {
     /**

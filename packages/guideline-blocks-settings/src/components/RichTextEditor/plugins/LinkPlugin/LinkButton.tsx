@@ -3,7 +3,7 @@
 import {
     IconLink,
     IconSize,
-    PluginButtonProps,
+    type PluginButtonProps,
     getButtonClassNames,
     getHotkeyByPlatform,
     getTooltip,

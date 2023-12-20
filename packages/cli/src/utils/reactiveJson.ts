@@ -1,14 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import ParseJsonError from '../errors/ParseJsonError.js';
-import FileNotFoundError from '../errors/FileNotFoundError.js';
+
+import FileNotFoundError from '../errors/FileNotFoundError';
+import ParseJsonError from '../errors/ParseJsonError';
 
 export const reactiveJson = <T>(path: string): T => {
     try {
         const jsonRaw = readFileSync(path, 'utf8');
         const jsonParsed = JSON.parse(jsonRaw);
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return new Proxy(jsonParsed, {
             set: (obj, prop, value) => {
                 obj[prop] = value;

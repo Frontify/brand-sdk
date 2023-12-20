@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type Rule } from './Rule';
 import { numericalOrPixelRule } from './numericalOrPixelRule';
-import { Rule } from './Rule';
 
 export const minimumNumericalOrPixelRule = (minimumValue: number): Rule<string> => ({
     errorMessage: `Please use a value bigger or equal to ${minimumValue}`,

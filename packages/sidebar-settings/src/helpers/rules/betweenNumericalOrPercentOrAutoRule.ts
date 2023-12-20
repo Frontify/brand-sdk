@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { minimumNumericalOrPercentOrAutoRule } from './minimumNumericalOrPercentOrAutoRule';
+import { type Rule } from './Rule';
 import { maximumNumericalOrPercentOrAutoRule } from './maximumNumericalOrPercentOrAutoRule';
-import { Rule } from './Rule';
+import { minimumNumericalOrPercentOrAutoRule } from './minimumNumericalOrPercentOrAutoRule';
 
 /**
  * Rule to validate value is between two pixel values.

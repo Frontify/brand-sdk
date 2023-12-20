@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconPen16, IconTrashBin16 } from '@frontify/fondue';
+
 import { FloatingButton, useFloatingButtonUrlInput } from '..';
 
 export const EditModal = () => {

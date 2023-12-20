@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    AnyObject,
-    EText,
-    PlateEditor,
-    Value,
-    WithOverride,
+    type AnyObject,
+    type EText,
+    type PlateEditor,
+    type Value,
+    type WithOverride,
     getAboveNode,
     getNextNodeStartPoint,
     getPluginType,
@@ -18,7 +18,8 @@ import {
     select,
     withRemoveEmptyNodes,
 } from '@udecode/plate';
-import { Path, Point, Range } from 'slate';
+import { Path, type Point, type Range } from 'slate';
+
 import { ELEMENT_BUTTON } from './createButtonPlugin';
 
 /**

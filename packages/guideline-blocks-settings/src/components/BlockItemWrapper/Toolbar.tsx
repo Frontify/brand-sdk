@@ -9,9 +9,11 @@ import {
     LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
-import { ToolbarProps } from './types';
+
 import { joinClassNames } from '../../utilities';
+
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from './constants';
+import { type ToolbarProps } from './types';
 
 export const Toolbar = ({
     items,

@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+
 import { MessageBus } from './MessageBus';
 
 describe('MessageBus', () => {
@@ -55,11 +57,16 @@ describe('MessageBus', () => {
         const channel = new MessageChannel();
         const messageBus = new MessageBus(channel.port1);
 
+        messageBus.post({ operation: 'test' });
+
+        let token: string | undefined;
         channel.port2.onmessage = (event) => {
-            expect(event.data.token).toBeDefined();
+            token = event.data.token;
         };
 
-        messageBus.post({ operation: 'test' });
+        await waitFor(() => {
+            expect(token).toBeDefined();
+        });
     });
 
     it('should return a message with a token', async () => {

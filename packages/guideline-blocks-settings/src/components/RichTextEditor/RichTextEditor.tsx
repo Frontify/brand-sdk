@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 
-import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
-import { RichTextEditorProps } from './types';
 import { SerializedText } from './SerializedText';
 import { floatingButtonActions, floatingButtonSelectors } from './plugins/ButtonPlugin/components';
+import { type RichTextEditorProps } from './types';
 
 export const RichTextEditor = ({
     id = 'rte',

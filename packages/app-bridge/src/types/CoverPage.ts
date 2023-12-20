@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CamelCasedPropertiesDeep, Merge, Simplify, ValueOf } from 'type-fest';
+import { type CamelCasedPropertiesDeep, type Merge, type Simplify, type ValueOf } from 'type-fest';
 
 export type CoverPageTemplate = 'hub' | 'explorer' | 'story' | 'cover' | 'blank';
 

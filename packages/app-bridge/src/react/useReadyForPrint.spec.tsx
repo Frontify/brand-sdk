@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { afterEach, describe, expect, test } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+
+import { getAppBridgeBlockStub } from '../tests';
 
 import { useReadyForPrint } from './useReadyForPrint';
-import { getAppBridgeBlockStub } from '../tests';
 
 const IS_READY_CONTAINER = 'is-ready-container';
 const SET_TO_FALSE_BUTTON = 'set-to-false-button';

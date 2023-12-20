@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    HTMLPropsAs,
+    type HTMLPropsAs,
     getAboveNode,
     getDefaultBoundingClientRect,
     getEndPoint,
@@ -16,11 +16,13 @@ import {
     usePlateSelectors,
 } from '@udecode/plate';
 import { useCallback, useEffect } from 'react';
-import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
+
+import { type ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
+
 import {
-    FloatingButtonProps,
+    type FloatingButtonProps,
     floatingButtonActions,
     floatingButtonSelectors,
     useFloatingButtonEnter,

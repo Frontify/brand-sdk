@@ -2,9 +2,10 @@
 
 import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
+import { type SinonStub } from 'sinon';
+
 import { Attachments as AttachmentsComponent } from './Attachments';
-import { AttachmentsProps } from './types';
-import type { SinonStub } from 'sinon';
+import { type AttachmentsProps } from './types';
 
 const FlyoutButtonSelector = '[data-test-id="attachments-flyout-button"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';

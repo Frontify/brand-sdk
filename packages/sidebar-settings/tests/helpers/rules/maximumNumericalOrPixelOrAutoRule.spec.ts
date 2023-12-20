@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { maximumNumericalOrPixelOrAutoRule } from '../../../src/helpers/rules/maximumNumericalOrPixelOrAutoRule';
 import { describe, expect, test } from 'vitest';
+
+import { maximumNumericalOrPixelOrAutoRule } from '../../../src/helpers/rules/maximumNumericalOrPixelOrAutoRule';
 
 describe('maximumNumericalOrPixelOrAutoRule', () => {
     const data = [

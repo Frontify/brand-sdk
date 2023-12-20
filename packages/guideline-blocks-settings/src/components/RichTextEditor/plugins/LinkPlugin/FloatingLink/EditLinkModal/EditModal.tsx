@@ -2,6 +2,7 @@
 
 import { IconPen16, IconTrashBin16 } from '@frontify/fondue';
 import { useFloatingLinkUrlInput } from '@udecode/plate';
+
 import { FloatingLink } from '../FloatingLink';
 
 export const EditModal = () => {

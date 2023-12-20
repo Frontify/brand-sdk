@@ -2,9 +2,9 @@
 
 import {
     ELEMENT_LINK,
-    FloatingLinkProps,
-    HTMLPropsAs,
-    LinkPlugin,
+    type FloatingLinkProps,
+    type HTMLPropsAs,
+    type LinkPlugin,
     floatingLinkActions,
     floatingLinkSelectors,
     getAboveNode,
@@ -26,6 +26,7 @@ import {
     useVirtualFloatingLink,
 } from '@udecode/plate';
 import { useCallback, useEffect } from 'react';
+
 import { getLinkFromEditor } from '../../../../../Link';
 
 export const useFloatingLinkEdit = ({ floatingOptions, ...props }: FloatingLinkProps): HTMLPropsAs<'div'> => {

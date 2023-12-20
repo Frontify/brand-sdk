@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
-import { getCurrentTime } from '../../src/utils/date.js';
+
+import { getCurrentTime } from '../../src/utils/date';
 
 describe('Date utils', () => {
     beforeAll(() => {

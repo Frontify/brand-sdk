@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React, { ComponentType } from 'react';
-import { AppBridgeTheme } from '../AppBridgeTheme';
-import { getAppBridgeThemeStub, getAppBridgeThemeStubProps } from './AppBridgeThemeStub';
+import React, { type ComponentType } from 'react';
+
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+
+import { getAppBridgeThemeStub, type getAppBridgeThemeStubProps } from './AppBridgeThemeStub';
 
 type withAppBridgeThemeStubsProps = { appBridge: AppBridgeTheme };
 

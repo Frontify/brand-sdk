@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
-import { PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
 
 export const App = () => {
     const appBridge = usePlatformAppBridge();

@@ -2,6 +2,7 @@
 
 import { MarkupElement } from '@frontify/fondue';
 import { ELEMENT_LINK } from '@udecode/plate';
+
 import { LinkMarkupElementNode } from './LinkMarkupElementNode';
 
 export class LinkMarkupElement extends MarkupElement {

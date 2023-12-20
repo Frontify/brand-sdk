@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    HTMLPropsAs,
+    type HTMLPropsAs,
     getPluginOptions,
     getSelectionBoundingClientRect,
     useComposedRef,
@@ -10,10 +10,12 @@ import {
 } from '@udecode/plate';
 import { useEffect } from 'react';
 import { useFocused } from 'slate-react';
-import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
+
+import { type ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { triggerFloatingButtonInsert } from '../../utils/triggerFloatingButtonInsert';
+
 import {
-    FloatingButtonProps,
+    type FloatingButtonProps,
     floatingButtonActions,
     useFloatingButtonEscape,
     useFloatingButtonSelectors,

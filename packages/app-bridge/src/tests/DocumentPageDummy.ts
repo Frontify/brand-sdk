@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentPage, DocumentPageDuplicate, DocumentPageDuplicateApi } from '../types';
+import { type DocumentPage, type DocumentPageDuplicate, type DocumentPageDuplicateApi } from '../types';
 import { convertObjectCase } from '../utilities';
 
 import { DocumentPageApiDummy, DocumentPageDuplicateApiDummy } from './DocumentPageApiDummy';

@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { Document, EmitterEvents } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type Document, type EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
 type DocumentCategoryEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentCategoryAction'];
@@ -97,6 +97,7 @@ export const useGroupedDocuments = (
         };
 
         window.emitter.on('AppBridge:GuidelineDocument:Action', handler);
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
@@ -104,6 +105,7 @@ export const useGroupedDocuments = (
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentPageAction', handleDocumentPageEvent);
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);

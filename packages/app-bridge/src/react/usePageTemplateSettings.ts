@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { EmitterEvents } from '../types';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type EmitterEvents } from '../types';
+
 import { useThemeSettings } from './';
 
 export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(

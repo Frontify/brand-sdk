@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { beforeAll, describe, expect, test } from 'vitest';
 import nock from 'nock';
+import { beforeAll, describe, expect, test } from 'vitest';
 
-import { Configuration } from '../../src/utils/configuration.js';
-import { getUser } from '../../src/utils/user.js';
+import { Configuration } from '../../src/utils/configuration';
+import { getUser } from '../../src/utils/user';
 
 const DUMMY_TOKENS = {
     tokens: {
@@ -31,7 +31,7 @@ describe('User utils', () => {
 
     describe('getUser', () => {
         test('should get user object', async () => {
-            //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
+            // TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
             const oldTokens = Configuration.get('tokens') || {};
             Configuration.set('tokens', DUMMY_TOKENS.tokens);
             expect(await getUser(TEST_BASE_URL)).toEqual(DUMMY_TOKENS);

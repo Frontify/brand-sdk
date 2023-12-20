@@ -1,15 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mockFs from 'mock-fs';
 import { readFileSync } from 'node:fs';
+
+import mockFs, { restore } from 'mock-fs';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { reactiveJson } from '../../src/utils/reactiveJson.js';
+
+import { reactiveJson } from '../../src/utils/reactiveJson';
 
 const testString = '{ "some": "body" }';
-const testObject = JSON.parse(testString);
+const testObject = JSON.parse(testString) as { some: string };
 
 const expectedString = '{\n\t"some": "one",\n\t"told": "me"\n}';
-const expectedObject = JSON.parse(expectedString);
+const expectedObject = JSON.parse(expectedString) as { some: string; told: string };
 
 const fileTestPath = './frontify-cli/someObject.json';
 
@@ -28,7 +30,7 @@ describe('Reactive JSON utils', () => {
     });
 
     afterEach(() => {
-        mockFs.restore();
+        restore();
     });
 
     describe('reactiveJson', () => {

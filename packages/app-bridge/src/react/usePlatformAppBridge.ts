@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgePlatformApp } from '../AppBridgePlatformApp';
 import { useEffect, useState } from 'react';
+
+import { AppBridgePlatformApp } from '../AppBridgePlatformApp';
 
 export const usePlatformAppBridge = () => {
     const [platformAppBridge, setPlatformAppBridge] = useState<AppBridgePlatformApp | undefined>();
@@ -12,7 +13,7 @@ export const usePlatformAppBridge = () => {
             appBridge.subscribe('Context.connected', () => {
                 setPlatformAppBridge(appBridge);
             });
-            appBridge.dispatch({ name: 'openConnection' });
+            await appBridge.dispatch({ name: 'openConnection' });
         })();
     }, []);
     return platformAppBridge;

@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test } from 'vitest';
+
 import { minimumPixelRule } from '../../../src/helpers/rules/minimumPixelRule';
 
 describe('minimumPixelRule', () => {

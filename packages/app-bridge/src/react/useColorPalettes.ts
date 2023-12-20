@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from 'react';
 
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type ColorPalette, type ColorPaletteCreate, type ColorPalettePatch } from '../types';
 import { compareObjects } from '../utilities';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { ColorPalette, ColorPaletteCreate, ColorPalettePatch } from '../types';
 
 export type UseColorPalettesReturnType = {
     colorPalettes: ColorPalette[];
-    createColorPalette: (colorPaletteCreate: ColorPaletteCreate) => void;
-    updateColorPalette: (colorPaletteId: number, colorPalettePatch: ColorPalettePatch) => void;
-    deleteColorPalette: (colorPaletteId: number) => void;
+    createColorPalette: (colorPaletteCreate: ColorPaletteCreate) => Promise<void>;
+    updateColorPalette: (colorPaletteId: number, colorPalettePatch: ColorPalettePatch) => Promise<void>;
+    deleteColorPalette: (colorPaletteId: number) => Promise<void>;
     downloadColorKit: (selectedColorPalettes: number[]) => string;
 };
 

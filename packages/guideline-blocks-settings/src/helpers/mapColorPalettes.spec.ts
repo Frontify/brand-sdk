@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
+
 import { mapAppBridgeColorPalettesToFonduePalettes } from './mapColorPalettes';
 
 describe('mapAppBridgeColorPalettesToFonduePalettes', () => {

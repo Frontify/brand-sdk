@@ -2,7 +2,9 @@
 
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
+
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
+
 import { useAssetViewer } from './useAssetViewer';
 
 describe('useAssetViewer', () => {
@@ -10,7 +12,7 @@ describe('useAssetViewer', () => {
         cleanup();
     });
 
-    const loadUseAssetViewer = async () => {
+    const loadUseAssetViewer = () => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeBlockStub({
             blockId: 123,
@@ -22,11 +24,11 @@ describe('useAssetViewer', () => {
     };
 
     it('should open the asset viewer', async () => {
-        const { result, appBridgeStub, asset } = await loadUseAssetViewer();
+        const { result, appBridgeStub, asset } = loadUseAssetViewer();
         result.current.open(asset);
 
         const call = appBridgeStub.openAssetViewer.getCall(0);
-        waitFor(() => {
+        await waitFor(() => {
             expect(call.calledOnceWithExactly(asset.token)).toBe(true);
         });
     });

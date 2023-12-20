@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import {
     Button,
     ButtonEmphasis,
@@ -10,9 +10,11 @@ import {
     IconCheckMark20,
     TextInput,
 } from '@frontify/fondue';
-import { FC, ReactNode } from 'react';
-import { InsertModalStateProps } from './types';
+import { type FC, type ReactNode } from 'react';
+
 import { LinkInput } from '../../../../../Link/LinkInput';
+
+import { type InsertModalStateProps } from './types';
 
 type InsertModalProps = {
     state: InsertModalStateProps;

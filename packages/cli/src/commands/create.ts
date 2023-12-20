@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index.js';
-import pc from 'picocolors';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import pc from 'picocolors';
+
+import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
 
 export const createNewApp = (appName: string, template: string, type: string): void => {
     Logger.info(`Creating the ${type}...`);

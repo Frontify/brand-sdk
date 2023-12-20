@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { MultiInputLayout } from '.';
-import type { BaseBlock } from './base';
-import type { ColorInputBlock } from './colorInput';
-import type { DropdownBlock } from './dropdown';
-import type { InputBlock } from './input';
+import { type BaseBlock } from './base';
+import { type ColorInputBlock } from './colorInput';
+import { type DropdownBlock } from './dropdown';
+import { type InputBlock } from './input';
+
+import { type MultiInputLayout } from '.';
 
 export type MultiInputBlock<AppBridge> = {
     /**
