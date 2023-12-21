@@ -61,7 +61,7 @@ const deleteAssetIdsFromTemplateAssetKey = async (
 
 export const useTemplateAssets = (
     appBridge: AppBridgeTheme,
-    template?: ThemeTemplate,
+    template: ThemeTemplate,
     documentId?: number,
     documentPageId?: number,
 ) => {
@@ -76,7 +76,7 @@ export const useTemplateAssets = (
         let componentMounted = true;
 
         const updateTemplateAssetsFromEvent = (event: {
-            template?: ThemeTemplate;
+            template: ThemeTemplate;
             documentId?: number;
             documentPageId?: number;
             templateAssets: Record<string, Asset[]>;

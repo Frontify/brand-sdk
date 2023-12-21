@@ -29,7 +29,7 @@ export type EmitterEvents = {
     };
 
     'AppBridge:TemplateAssetsUpdated': {
-        template?: ThemeTemplate;
+        template: ThemeTemplate;
         documentId?: number;
         documentPageId?: number;
         templateAssets: Record<string, Asset[]>;
