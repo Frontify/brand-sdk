@@ -33,5 +33,6 @@ export * from './Targets';
 export * from './TemplateLegacy';
 export * from './Template';
 export * from './Terrific';
+export * from './ThemeTemplate';
 export * from './Topic';
 export * from './User';
