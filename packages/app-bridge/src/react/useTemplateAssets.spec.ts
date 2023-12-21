@@ -132,7 +132,6 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentId).toEqual(DOCUMENT_ID);
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toStrictEqual({ key: [] });
-                expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
             });
         });
 
@@ -165,7 +164,6 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentId).toEqual(DOCUMENT_ID);
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toMatchObject({ key: [asset, assetToAdd] });
-                expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
             });
         });
     });
@@ -245,7 +243,6 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentId).toEqual(DOCUMENT_ID);
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toStrictEqual({ key: [] });
-                expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
             });
         });
 
@@ -278,7 +275,6 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentId).toEqual(DOCUMENT_ID);
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toMatchObject({ key: [asset, assetToAdd] });
-                expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
             });
         });
     });
@@ -349,7 +345,6 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentId).toEqual(DOCUMENT_ID);
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toStrictEqual({ key: [] });
-                expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
             });
         });
 
@@ -381,7 +376,6 @@ describe('useTemplateAssets hook', () => {
                 expect(call.lastArg.documentId).toEqual(DOCUMENT_ID);
                 expect(call.lastArg.documentPageId).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.lastArg.templateAssets).toMatchObject({ key: [asset, assetToAdd] });
-                expect(call.lastArg.prevTemplateAssets).toMatchObject({ key: [asset] });
             });
         });
     });

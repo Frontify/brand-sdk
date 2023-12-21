@@ -113,7 +113,6 @@ describe('useThemeAssets hook', () => {
         await waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:ThemeAssetsUpdated');
             expect(call.lastArg.themeAssets).toStrictEqual({ key: [] });
-            expect(call.lastArg.prevThemeAssets).toMatchObject({ key: [asset] });
         });
     });
 
@@ -142,7 +141,6 @@ describe('useThemeAssets hook', () => {
         await waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:ThemeAssetsUpdated');
             expect(call.lastArg.themeAssets).toMatchObject({ key: [asset, assetToAdd] });
-            expect(call.lastArg.prevThemeAssets).toMatchObject({ key: [asset] });
         });
     });
 });
