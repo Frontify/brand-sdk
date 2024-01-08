@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.6
+
+### Patch Changes
+
+- [#664](https://github.com/Frontify/brand-sdk/pull/664) [`5cf77ee`](https://github.com/Frontify/brand-sdk/commit/5cf77eefad4fceea1baed23cd5750c4d95fd91cc) Thanks [@julianiff](https://github.com/julianiff)! - fix: platform app compiler
+
 ## 5.5.5
 
 ### Patch Changes
