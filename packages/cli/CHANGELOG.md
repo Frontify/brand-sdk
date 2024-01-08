@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.6
+
+### Patch Changes
+
+- [#668](https://github.com/Frontify/brand-sdk/pull/668) [`e8bf308`](https://github.com/Frontify/brand-sdk/commit/e8bf308262124356a0d13b8bf251fb208de7f19f) Thanks [@julianiff](https://github.com/julianiff)! - chore: fix css and js filename exchanged
+
 ## 5.5.5
 
 ### Patch Changes
