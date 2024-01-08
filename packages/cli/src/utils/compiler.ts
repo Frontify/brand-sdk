@@ -60,8 +60,8 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             const indexJsSource = bundle?.['index.js'].type === 'chunk' ? bundle?.['index.js'].code : null;
             const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
 
-            const cssFileName = `${outputName}.${getHash(indexJsSource)}.css`;
-            const jsFileName = `${outputName}.${getHash(indexCssSource)}.js`;
+            const cssFileName = `${outputName}.${getHash(indexCssSource)}.css`;
+            const jsFileName = `${outputName}.${getHash(indexJsSource)}.js`;
 
             html = html.replace('index.css', cssFileName).replace('index.js', jsFileName);
             return html;
