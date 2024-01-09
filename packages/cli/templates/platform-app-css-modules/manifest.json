@@ -5,13 +5,8 @@
     "surfaces": {
         "mediaLibrary": {
             "assetAction": {
-                "type": [
-                    "image"
-                ],
-                "filenameExtension": [
-                    "png",
-                    "jpeg"
-                ]
+                "type": ["image"],
+                "filenameExtension": ["png", "jpeg"]
             },
             "assetCreation": {}
         }
