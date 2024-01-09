@@ -2,5 +2,13 @@
     "appId": "<Your app ID>",
     "appType": "platform-app",
     "name": "template-platform-app-css",
-    "entryPoint": [{ "type": "ASSET_CREATION" }, { "type": "ASSET_ACTION" }]
+    "surfaces": {
+        "mediaLibrary": {
+            "assetAction": {
+                "type": ["image"],
+                "filenameExtension": ["png", "jpeg"]
+            },
+            "assetCreation": {}
+        }
+    }
 }
