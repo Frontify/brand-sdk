@@ -12,6 +12,7 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { Asset, useAssetUpload, useEditorState } from '@frontify/app-bridge';
 import {
@@ -24,15 +25,10 @@ import {
     LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
-import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
-import { AttachmentsProps, AttachmentsTriggerComponentProps } from './types';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 
-const AttachmentsButtonTrigger = ({ children }: AttachmentsTriggerComponentProps) => (
-    <div className="tw-flex tw-text-[13px] tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-[1px] tw-p-[6px] tw-outline-line">
-        {children}
-    </div>
-);
+import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
+import { type AttachmentsProps } from './types';
+import { AttachmentsButtonTrigger } from './AttachmentsButtonTrigger';
 
 export const Attachments = ({
     items = [],

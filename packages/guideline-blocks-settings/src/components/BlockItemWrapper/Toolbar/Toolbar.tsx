@@ -2,78 +2,19 @@
 
 import {
     ActionMenu,
-    FOCUS_VISIBLE_STYLE,
     Flyout,
     IconDotsHorizontal16,
     MenuItemContentSize,
     LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
-import { ReactNode } from 'react';
-import { FlyoutState, ToolbarProps } from './types';
-import { joinClassNames } from '../../utilities';
-import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from './constants';
-import { Attachments, AttachmentsTriggerComponentProps } from '..';
-import { useAttachmentsContext } from '../../hooks/useAttachments';
 
-const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActiveStyle?: boolean) => {
-    const classNames = [
-        FOCUS_VISIBLE_STYLE,
-        'tw-relative tw-inline-flex tw-items-center tw-justify-center',
-        'tw-h-6 tw-p-1',
-        'tw-rounded',
-        'tw-text-xs tw-font-medium',
-        'tw-gap-0.5',
-        'focus-visible:tw-z-10',
-    ];
+import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../constants';
 
-    if (forceActiveStyle) {
-        classNames.push(
-            'tw-bg-box-neutral-pressed',
-            'tw-text-box-neutral-inverse-pressed',
-            cursor === 'grab' ? 'tw-cursor-grabbing' : 'tw-cursor-pointer',
-        );
-    } else {
-        classNames.push(
-            'tw-bg-base hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed',
-            'tw-text-text-weak hover:tw-text-box-neutral-inverse-hover active:tw-text-box-neutral-inverse-pressed',
-            cursor === 'grab' ? 'tw-cursor-grab active:tw-cursor-grabbing' : 'tw-cursor-pointer',
-        );
-    }
-
-    return joinClassNames(classNames);
-};
-
-const AttachmentsToolbarTrigger = ({ children, isFlyoutOpen }: AttachmentsTriggerComponentProps) => (
-    <div className={getToolbarButtonClassNames('pointer', isFlyoutOpen)}>{children}</div>
-);
-
-const ToolbarSegment = ({ children }: { children: ReactNode }) => (
-    <div className="tw-pointer-events-auto tw-flex tw-flex-shrink-0 tw-gap-px tw-px-px tw-h-[26px] tw-items-center tw-self-start">
-        {children}
-    </div>
-);
-
-const ToolbarAttachments = ({ isOpen, onOpenChange }: FlyoutState) => {
-    const { appBridge, attachments, onAddAttachments, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
-        useAttachmentsContext();
-
-    return (
-        <Attachments
-            onUpload={onAddAttachments}
-            onDelete={onAttachmentDelete}
-            onReplaceWithBrowse={onAttachmentReplace}
-            onReplaceWithUpload={onAttachmentReplace}
-            onSorted={onAttachmentsSorted}
-            onBrowse={onAddAttachments}
-            items={attachments}
-            appBridge={appBridge}
-            triggerComponent={AttachmentsToolbarTrigger}
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-        />
-    );
-};
+import { ToolbarSegment } from './ToolbarSegment';
+import { ToolbarAttachments } from './ToolbarAttachments';
+import { getToolbarButtonClassNames } from './helpers';
+import { type ToolbarProps } from './types';
 
 export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarProps) => {
     return (

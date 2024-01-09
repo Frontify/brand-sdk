@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ReactElement, useRef, useState } from 'react';
+import { type ReactElement, useRef, useState } from 'react';
+
 import { joinClassNames } from '../../utilities';
-import { Toolbar } from './Toolbar';
-import { BlockItemWrapperProps, ToolbarItem } from './types';
+
+import { Toolbar, type ToolbarItem } from './Toolbar';
+import { type BlockItemWrapperProps } from './types';
 
 export const BlockItemWrapper = ({
     children,

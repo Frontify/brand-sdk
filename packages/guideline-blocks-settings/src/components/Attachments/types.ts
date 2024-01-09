@@ -3,6 +3,11 @@
 import { AppBridgeBlock, Asset } from '@frontify/app-bridge';
 import { ReactNode } from 'react';
 
+export type AttachmentsTriggerProps = {
+    children: ReactNode;
+    isFlyoutOpen: boolean;
+};
+
 export type AttachmentsProps = {
     items?: Asset[];
     appBridge: AppBridgeBlock;
@@ -12,7 +17,7 @@ export type AttachmentsProps = {
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
     onBrowse: (browserAttachments: Asset[]) => void;
     onSorted: (sortedAttachments: Asset[]) => void;
-    triggerComponent?: ({ children }: AttachmentsTriggerComponentProps) => JSX.Element;
+    triggerComponent?: ({ children }: AttachmentsTriggerProps) => JSX.Element;
 } & ({ isOpen?: never; onOpenChange?: never } | { isOpen: boolean; onOpenChange: (isOpen: boolean) => void });
 
 export type AttachmentItemProps = SortableAttachmentItemProps & {
@@ -29,9 +34,4 @@ export type SortableAttachmentItemProps = {
     isLoading?: boolean;
     onReplaceWithBrowse: () => void;
     onReplaceWithUpload: (uploadedAsset: Asset) => void;
-};
-
-export type AttachmentsTriggerComponentProps = {
-    children: ReactNode;
-    isFlyoutOpen: boolean;
 };
