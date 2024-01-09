@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AppBridgeBlock, Asset } from '@frontify/app-bridge';
+import { ReactNode } from 'react';
 
 export type AttachmentsProps = {
     items?: Asset[];
@@ -11,7 +12,8 @@ export type AttachmentsProps = {
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
     onBrowse: (browserAttachments: Asset[]) => void;
     onSorted: (sortedAttachments: Asset[]) => void;
-};
+    triggerComponent?: ({ children }: AttachmentsTriggerComponentProps) => JSX.Element;
+} & ({ isOpen?: never; onOpenChange?: never } | { isOpen: boolean; onOpenChange: (isOpen: boolean) => void });
 
 export type AttachmentItemProps = SortableAttachmentItemProps & {
     isDragging?: boolean;
@@ -27,4 +29,8 @@ export type SortableAttachmentItemProps = {
     isLoading?: boolean;
     onReplaceWithBrowse: () => void;
     onReplaceWithUpload: (uploadedAsset: Asset) => void;
+};
+
+export type AttachmentsTriggerComponentProps = {
+    children: ReactNode;
 };

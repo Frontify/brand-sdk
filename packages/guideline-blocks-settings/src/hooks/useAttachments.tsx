@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AppBridgeBlock, Asset, useBlockAssets } from '@frontify/app-bridge';
+import { FC, ReactNode, createContext, useContext } from 'react';
+import { BlockProps } from 'src';
 
 export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
     const { blockAssets, updateAssetIdsFromKey } = useBlockAssets(appBridge);
@@ -42,5 +44,46 @@ export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
         onAttachmentReplace,
         onAttachmentsSorted,
         attachments,
+        appBridge,
     };
+};
+
+const AttachmentsContext = createContext<ReturnType<typeof useAttachments> | null>(null);
+
+export const AttachmentsProvider = ({
+    appBridge,
+    children,
+    assetId,
+}: {
+    appBridge: AppBridgeBlock;
+    children: ReactNode;
+    assetId: string;
+}) => {
+    const attachmentContext = useAttachments(appBridge, assetId);
+
+    return <AttachmentsContext.Provider value={attachmentContext}>{children}</AttachmentsContext.Provider>;
+};
+
+export const useAttachmentsContext = () => {
+    const context = useContext(AttachmentsContext);
+
+    if (!context) {
+        throw new Error(
+            "No AttachmentsContext Provided. Component must be wrapped in an 'AttachmentsProvider' or the 'withAttachments' HOC",
+        );
+    }
+
+    return context;
+};
+
+export const withAttachments = <T extends BlockProps>(Component: FC<T>, assetId: string) => {
+    const wrappedComponent = (props: T) => (
+        <AttachmentsProvider appBridge={props.appBridge} assetId={assetId}>
+            <Component {...props} />
+        </AttachmentsProvider>
+    );
+
+    wrappedComponent.displayName = 'withAttachments';
+
+    return wrappedComponent;
 };

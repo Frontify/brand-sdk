@@ -13,15 +13,19 @@ export type BlockItemWrapperProps = {
     shouldFillContainer?: boolean;
     outlineOffset?: number;
     shouldBeShown?: boolean;
+    showAttachments: boolean;
 };
 
 export type ToolbarProps = {
     items: ToolbarItem[];
-    flyoutItems: FlyoutToolbarItem[][];
-    isFlyoutOpen: boolean;
-    setIsFlyoutOpen: (isOpen: boolean) => void;
+    flyoutMenu: FlyoutState & { items: FlyoutToolbarItem[][] };
+    attachments: FlyoutState & { enabled: boolean };
     isDragging?: boolean;
-    isFlyoutDisabled?: boolean;
+};
+
+export type FlyoutState = {
+    isOpen: boolean;
+    onOpenChange: (isOpen: boolean) => void;
 };
 
 type BaseToolbarItem = {

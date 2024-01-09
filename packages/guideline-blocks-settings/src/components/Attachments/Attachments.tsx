@@ -25,8 +25,14 @@ import {
     TooltipPosition,
 } from '@frontify/fondue';
 import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
-import { AttachmentsProps } from './types';
+import { AttachmentsProps, AttachmentsTriggerComponentProps } from './types';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+
+const AttachmentsButtonTrigger = ({ children }: AttachmentsTriggerComponentProps) => (
+    <div className="tw-flex tw-text-[13px] tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-[1px] tw-p-[6px] tw-outline-line">
+        {children}
+    </div>
+);
 
 export const Attachments = ({
     items = [],
@@ -37,21 +43,32 @@ export const Attachments = ({
     onUpload,
     onSorted,
     appBridge,
+    triggerComponent: TriggerComponent = AttachmentsButtonTrigger,
+    isOpen,
+    onOpenChange,
 }: AttachmentsProps) => {
     const [internalItems, setInternalItems] = useState<Asset[]>(items);
-    const [isFlyoutOpen, setIsFlyoutOpen] = useState(false);
+    const [isFlyoutOpenInternal, setIsFlyoutOpenInternal] = useState(false);
     const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
     const [draggedAssetId, setDraggedAssetId] = useState<number | undefined>(undefined);
     const [isUploadLoading, setIsUploadLoading] = useState(false);
     const [assetIdsLoading, setAssetIdsLoading] = useState<number[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const isEditing = useEditorState(appBridge);
+    const isControllingStateExternally = isOpen !== undefined;
+    const isFlyoutOpen = isControllingStateExternally ? isOpen : isFlyoutOpenInternal;
 
     const draggedItem = internalItems?.find((item) => item.id === draggedAssetId);
 
     const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload({
         onUploadProgress: () => !isUploadLoading && setIsUploadLoading(true),
     });
+
+    const handleFlyoutOpenChange = (isOpen: boolean) => {
+        const stateSetter = isControllingStateExternally ? onOpenChange! : setIsFlyoutOpenInternal;
+
+        stateSetter(isOpen);
+    };
 
     useEffect(() => {
         setInternalItems(items);
@@ -77,12 +94,12 @@ export const Attachments = ({
     }, [doneAll, uploadResults]);
 
     const onOpenAssetChooser = () => {
-        setIsFlyoutOpen(false);
+        handleFlyoutOpenChange(false);
         appBridge.openAssetChooser(
             (result: Asset[]) => {
                 onBrowse(result);
                 appBridge.closeAssetChooser();
-                setIsFlyoutOpen(true);
+                handleFlyoutOpenChange(true);
             },
             {
                 multiSelection: true,
@@ -92,10 +109,10 @@ export const Attachments = ({
     };
 
     const onReplaceItemWithBrowse = (toReplace: Asset) => {
-        setIsFlyoutOpen(false);
+        handleFlyoutOpenChange(false);
         appBridge.openAssetChooser(
             async (result: Asset[]) => {
-                setIsFlyoutOpen(true);
+                handleFlyoutOpenChange(true);
                 appBridge.closeAssetChooser();
                 setAssetIdsLoading([...assetIdsLoading, toReplace.id]);
                 await onReplaceWithBrowse(toReplace, result[0]);
@@ -142,17 +159,17 @@ export const Attachments = ({
                 <div data-test-id="attachments-flyout-button">
                     <Flyout
                         placement={FlyoutPlacement.BottomRight}
-                        onOpenChange={(isOpen) => setIsFlyoutOpen(!!draggedItem ? true : isOpen)}
+                        onOpenChange={(isOpen) => handleFlyoutOpenChange(!!draggedItem ? true : isOpen)}
                         isOpen={isFlyoutOpen}
                         hug={false}
                         fitContent
                         legacyFooter={false}
                         trigger={
-                            <div className="tw-flex tw-text-[13px] tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-[1px] tw-p-[6px] tw-outline-line">
+                            <TriggerComponent>
                                 <IconPaperclip16 />
                                 <div>{items.length > 0 ? items.length : 'Add'}</div>
                                 <IconCaretDown12 />
-                            </div>
+                            </TriggerComponent>
                         }
                     >
                         <div className="tw-w-[300px]">
