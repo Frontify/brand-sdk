@@ -19,7 +19,7 @@ export type BlockItemWrapperProps = {
 export type ToolbarProps = {
     items: ToolbarItem[];
     flyoutMenu: FlyoutState & { items: FlyoutToolbarItem[][] };
-    attachments: FlyoutState & { enabled: boolean };
+    attachments: FlyoutState & { isEnabled: boolean };
     isDragging?: boolean;
 };
 

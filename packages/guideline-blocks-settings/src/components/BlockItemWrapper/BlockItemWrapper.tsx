@@ -64,7 +64,7 @@ export const BlockItemWrapper = ({
                         onOpenChange: setIsMenuFlyoutOpen,
                     }}
                     attachments={{
-                        enabled: showAttachments,
+                        isEnabled: showAttachments,
                         isOpen: isAttachmentFlyoutOpen,
                         onOpenChange: setIsAttachmentFlyoutOpen,
                     }}
