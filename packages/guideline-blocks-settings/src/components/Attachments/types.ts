@@ -33,4 +33,5 @@ export type SortableAttachmentItemProps = {
 
 export type AttachmentsTriggerComponentProps = {
     children: ReactNode;
+    isFlyoutOpen: boolean;
 };

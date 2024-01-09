@@ -13,24 +13,42 @@ import { ReactNode } from 'react';
 import { FlyoutState, ToolbarProps } from './types';
 import { joinClassNames } from '../../utilities';
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from './constants';
-import { Attachments } from '..';
+import { Attachments, AttachmentsTriggerComponentProps } from '..';
 import { useAttachmentsContext } from '../../hooks/useAttachments';
 
-export const SHARED_TOOLBAR_BUTTON_CLASSES =
-    'tw-bg-base tw-relative tw-inline-flex tw-items-center tw-justify-center tw-min-w-[24px] tw-h-6 tw-rounded focus-visible:tw-z-10';
+const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActiveStyle?: boolean) => {
+    const classNames = [
+        FOCUS_VISIBLE_STYLE,
+        'tw-relative tw-inline-flex tw-items-center tw-justify-center',
+        'tw-h-6 tw-p-1',
+        'tw-rounded',
+        'tw-text-xs tw-font-medium',
+        'tw-gap-0.5',
+        'focus-visible:tw-z-10',
+    ];
 
-const AttachmentsToolbarTrigger = ({ children }: { children: ReactNode }) => (
-    <div
-        className={joinClassNames([
-            'tw-flex tw-text-xs tw-font-medium tw-gap-0.5 hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed tw-p-1',
-            SHARED_TOOLBAR_BUTTON_CLASSES,
-        ])}
-    >
-        {children}
-    </div>
+    if (forceActiveStyle) {
+        classNames.push(
+            'tw-bg-box-neutral-pressed',
+            'tw-text-box-neutral-inverse-pressed',
+            cursor === 'grab' ? 'tw-cursor-grabbing' : 'tw-cursor-pointer',
+        );
+    } else {
+        classNames.push(
+            'tw-bg-base hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed',
+            'tw-text-text-weak hover:tw-text-box-neutral-inverse-hover active:tw-text-box-neutral-inverse-pressed',
+            cursor === 'grab' ? 'tw-cursor-grab active:tw-cursor-grabbing' : 'tw-cursor-pointer',
+        );
+    }
+
+    return joinClassNames(classNames);
+};
+
+const AttachmentsToolbarTrigger = ({ children, isFlyoutOpen }: AttachmentsTriggerComponentProps) => (
+    <div className={getToolbarButtonClassNames('pointer', isFlyoutOpen)}>{children}</div>
 );
 
-const ToolbarButtonSegment = ({ children }: { children: ReactNode }) => (
+const ToolbarSegment = ({ children }: { children: ReactNode }) => (
     <div className="tw-pointer-events-auto tw-flex tw-flex-shrink-0 tw-gap-px tw-px-px tw-h-[26px] tw-items-center tw-self-start">
         {children}
     </div>
@@ -61,17 +79,17 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
     return (
         <div
             data-test-id="block-item-wrapper-toolbar"
-            className="tw-rounded-md tw-border tw-border-line-strong tw-divide-x tw-divide-line-strong tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-bg-base tw-text-box-neutral-strong tw-isolate"
+            className="tw-rounded-md tw-border tw-border-line-strong tw-divide-x tw-divide-line-strong tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-bg-base tw-isolate"
         >
             {attachments.isEnabled && (
-                <ToolbarButtonSegment>
+                <ToolbarSegment>
                     <ToolbarAttachments
                         isOpen={attachments.isOpen && !isDragging}
                         onOpenChange={attachments.onOpenChange}
                     />
-                </ToolbarButtonSegment>
+                </ToolbarSegment>
             )}
-            <ToolbarButtonSegment>
+            <ToolbarSegment>
                 {items.map((item, i) =>
                     'draggableProps' in item ? (
                         <Tooltip
@@ -91,14 +109,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
                                     ref={item.setActivatorNodeRef}
                                     data-test-id="block-item-wrapper-toolbar-btn"
                                     {...item.draggableProps}
-                                    className={joinClassNames([
-                                        FOCUS_VISIBLE_STYLE,
-                                        SHARED_TOOLBAR_BUTTON_CLASSES,
-                                        'focus-visible:tw-z-10',
-                                        isDragging
-                                            ? 'tw-cursor-grabbing tw-bg-box-neutral-pressed'
-                                            : 'tw-cursor-grab hover:tw-bg-box-neutral-hover',
-                                    ])}
+                                    className={getToolbarButtonClassNames('grab', isDragging)}
                                 >
                                     {item.icon}
                                 </button>
@@ -117,11 +128,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
                                 <button
                                     data-test-id="block-item-wrapper-toolbar-btn"
                                     onClick={item.onClick}
-                                    className={joinClassNames([
-                                        'hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed tw-cursor-pointer',
-                                        FOCUS_VISIBLE_STYLE,
-                                        SHARED_TOOLBAR_BUTTON_CLASSES,
-                                    ])}
+                                    className={getToolbarButtonClassNames('pointer')}
                                 >
                                     {item.icon}
                                 </button>
@@ -148,10 +155,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
                                     trigger={
                                         <div
                                             data-test-id="block-item-wrapper-toolbar-flyout"
-                                            className={joinClassNames([
-                                                'hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed tw-cursor-pointer',
-                                                SHARED_TOOLBAR_BUTTON_CLASSES,
-                                            ])}
+                                            className={getToolbarButtonClassNames('pointer', flyoutMenu.isOpen)}
                                         >
                                             <IconDotsHorizontal16 />
                                         </div>
@@ -179,7 +183,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
                         }
                     />
                 )}
-            </ToolbarButtonSegment>
+            </ToolbarSegment>
         </div>
     );
 };

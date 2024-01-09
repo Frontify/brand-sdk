@@ -165,7 +165,7 @@ export const Attachments = ({
                         fitContent
                         legacyFooter={false}
                         trigger={
-                            <TriggerComponent>
+                            <TriggerComponent isFlyoutOpen={isFlyoutOpen}>
                                 <IconPaperclip16 />
                                 <div>{items.length > 0 ? items.length : 'Add'}</div>
                                 <IconCaretDown12 />
