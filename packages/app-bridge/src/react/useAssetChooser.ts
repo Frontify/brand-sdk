@@ -5,13 +5,13 @@ import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions } from '../types';
 
 type UseAssetChooserType = {
-    openAssetChooser: (options: AssetChooserOptions, callback: (selectedAsset: Asset[]) => void) => void;
+    openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;
     closeAssetChooser: () => void;
 };
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     return {
-        openAssetChooser: (options, callback) => {
+        openAssetChooser: (callback, options) => {
             appBridge.dispatch(openAssetChooser(options));
             appBridge.subscribe('assetsChosen', (selectedAssets) => {
                 callback(selectedAssets.assets);
