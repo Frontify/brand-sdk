@@ -4,7 +4,7 @@ import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { renderHook, waitFor } from '@testing-library/react';
 
 import { describe, expect, it } from 'vitest';
-import { useAttachments } from './useAttachments';
+import { AttachmentsProvider, useAttachments, useAttachmentsContext } from './useAttachments';
 
 const MOCK_SETTINGS_ID = 'attachments';
 
@@ -74,6 +74,31 @@ describe('useAttachments', () => {
             expect(result.current.attachments[0].id).toBe(3);
             expect(result.current.attachments[1].id).toBe(2);
             expect(result.current.attachments[2].id).toBe(1);
+        });
+    });
+});
+
+describe('useAttachmentsContext', () => {
+    it('should throw an error when not a child of a provider', async () => {
+        expect(() => renderHook(() => useAttachmentsContext())).toThrowError();
+    });
+
+    it('should return correct info', async () => {
+        const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
+            blockId: 1,
+            blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1)] },
+        });
+        const { result } = renderHook(useAttachmentsContext, {
+            wrapper: ({ children }) => (
+                <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_SETTINGS_ID}>
+                    {children}
+                </AttachmentsProvider>
+            ),
+        });
+
+        expect(result.current.appBridge).toEqual(STUB_WITH_NO_ASSETS);
+        await waitFor(() => {
+            expect(result.current.attachments).toHaveLength(1);
         });
     });
 });

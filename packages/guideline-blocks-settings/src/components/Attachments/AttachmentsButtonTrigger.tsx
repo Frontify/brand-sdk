@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { IconCaretDown12, IconPaperclip16 } from '@frontify/fondue';
+
 import { joinClassNames } from '../../utilities';
 
 import { type AttachmentsTriggerProps } from './types';
@@ -13,6 +15,8 @@ export const AttachmentsButtonTrigger = ({ children, isFlyoutOpen }: Attachments
                 : 'tw-bg-base hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed tw-text-box-neutral-inverse hover:tw-text-box-neutral-inverse-hover active:tw-text-box-neutral-inverse-pressed',
         ])}
     >
+        <IconPaperclip16 />
         {children}
+        <IconCaretDown12 />
     </div>
 );

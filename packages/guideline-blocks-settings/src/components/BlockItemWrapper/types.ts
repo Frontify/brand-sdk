@@ -14,5 +14,10 @@ export type BlockItemWrapperProps = {
     shouldFillContainer?: boolean;
     outlineOffset?: number;
     shouldBeShown?: boolean;
-    showAttachments: boolean;
+    /**
+     * When set to true the BlockItemWrapper must be a child of a 'AttachmentsProvider' component,
+     *  or the block must be wrapper with a 'withAttachments' HOC.
+     * @default false
+     */
+    showAttachments?: boolean;
 };

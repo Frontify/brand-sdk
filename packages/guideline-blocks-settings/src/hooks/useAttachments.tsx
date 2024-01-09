@@ -77,6 +77,11 @@ export const useAttachmentsContext = () => {
     return context;
 };
 
+/**
+ * Block-level HOC for cases when there is only one attachment asset field related to the block.
+ * Recommended for most cases.
+ * If finer control is required over attachments, use AttachmentsProvider component.
+ */
 export const withAttachments = <T extends BlockProps>(Component: FC<T>, assetId: string) => {
     const wrappedComponent = (props: T) => (
         <AttachmentsProvider appBridge={props.appBridge} assetId={assetId}>

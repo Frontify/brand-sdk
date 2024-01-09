@@ -17,7 +17,7 @@ export const BlockItemWrapper = ({
     shouldFillContainer,
     outlineOffset = 2,
     shouldBeShown = false,
-    showAttachments,
+    showAttachments = false,
 }: BlockItemWrapperProps): ReactElement => {
     const [isMenuFlyoutOpen, setIsMenuFlyoutOpen] = useState(shouldBeShown);
     const [isAttachmentFlyoutOpen, setIsAttachmentFlyoutOpen] = useState(false);

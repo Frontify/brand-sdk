@@ -20,8 +20,6 @@ import {
     AssetInputSize,
     Flyout,
     FlyoutPlacement,
-    IconCaretDown12,
-    IconPaperclip16,
     LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
@@ -162,13 +160,11 @@ export const Attachments = ({
                         legacyFooter={false}
                         trigger={
                             <TriggerComponent isFlyoutOpen={isFlyoutOpen}>
-                                <IconPaperclip16 />
                                 <div>{items.length > 0 ? items.length : 'Add'}</div>
-                                <IconCaretDown12 />
                             </TriggerComponent>
                         }
                     >
-                        <div className="tw-w-[300px]">
+                        <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
                             {internalItems.length > 0 && (
                                 <DndContext
                                     sensors={sensors}

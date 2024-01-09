@@ -17,7 +17,7 @@ export type AttachmentsProps = {
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
     onBrowse: (browserAttachments: Asset[]) => void;
     onSorted: (sortedAttachments: Asset[]) => void;
-    triggerComponent?: ({ children }: AttachmentsTriggerProps) => JSX.Element;
+    triggerComponent?: (props: AttachmentsTriggerProps) => JSX.Element;
 } & ({ isOpen?: never; onOpenChange?: never } | { isOpen: boolean; onOpenChange: (isOpen: boolean) => void });
 
 export type AttachmentItemProps = SortableAttachmentItemProps & {
