@@ -55,7 +55,7 @@ export const platformAppManifestSchemaV1 = object({
             }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
-        workspaceProject: object({
+        workspace: object({
             assetAction: object({
                 type: array(completeAssetType),
                 filenameExtension: array(
