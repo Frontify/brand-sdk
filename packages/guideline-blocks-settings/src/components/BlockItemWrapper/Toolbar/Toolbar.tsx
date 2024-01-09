@@ -20,7 +20,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
     return (
         <div
             data-test-id="block-item-wrapper-toolbar"
-            className="tw-rounded-md tw-border tw-border-line-strong tw-divide-x tw-divide-line-strong tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-bg-base tw-isolate"
+            className="tw-rounded-md tw-bg-base tw-border tw-border-line-strong tw-divide-x tw-divide-line-strong tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-isolate"
         >
             {attachments.isEnabled && (
                 <ToolbarSegment>
