@@ -96,7 +96,10 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
                                     trigger={
                                         <div
                                             data-test-id="block-item-wrapper-toolbar-flyout"
-                                            className={getToolbarButtonClassNames('pointer', flyoutMenu.isOpen)}
+                                            className={getToolbarButtonClassNames(
+                                                'pointer',
+                                                flyoutMenu.isOpen && !isDragging,
+                                            )}
                                         >
                                             <IconDotsHorizontal16 />
                                         </div>
