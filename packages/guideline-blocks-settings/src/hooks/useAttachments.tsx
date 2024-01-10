@@ -3,7 +3,7 @@
 import { AppBridgeBlock, Asset, useBlockAssets } from '@frontify/app-bridge';
 import { type ReactNode, createContext, useContext } from 'react';
 
-import { type BlockProps } from '../../';
+import { type BlockProps } from '../';
 
 export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
     const { blockAssets, updateAssetIdsFromKey } = useBlockAssets(appBridge);
