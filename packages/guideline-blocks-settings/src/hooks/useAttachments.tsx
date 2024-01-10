@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AppBridgeBlock, Asset, useBlockAssets } from '@frontify/app-bridge';
-import { type FC, type ReactNode, createContext, useContext } from 'react';
+import { type ReactNode, createContext, useContext } from 'react';
 
 import { type BlockProps } from 'src';
 
@@ -82,7 +82,7 @@ export const useAttachmentsContext = () => {
  * Recommended for most cases.
  * If finer control is required over attachments, use AttachmentsProvider component.
  */
-export const withAttachments = <T extends BlockProps>(Component: FC<T>, assetId: string) => {
+export const withAttachments = <T extends BlockProps>(Component: (props: T) => ReactNode, assetId: string) => {
     const wrappedComponent = (props: T) => (
         <AttachmentsProvider appBridge={props.appBridge} assetId={assetId}>
             <Component {...props} />
