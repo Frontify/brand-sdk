@@ -59,9 +59,9 @@ export const Attachments = ({
     });
 
     const handleFlyoutOpenChange = (isOpen: boolean) => {
-        const stateSetter = isControllingStateExternally ? onOpenChange! : setIsFlyoutOpenInternal;
+        const stateSetter = isControllingStateExternally ? onOpenChange : setIsFlyoutOpenInternal;
 
-        stateSetter(isOpen);
+        stateSetter?.(isOpen);
     };
 
     useEffect(() => {

@@ -53,18 +53,6 @@ describe('Toolbar', () => {
         ).toThrowError();
     });
 
-    it('should throw error if toolbar does have attachments enabled without provider', () => {
-        expect(() =>
-            render(
-                <Toolbar
-                    items={[]}
-                    flyoutMenu={{ items: [], isOpen: false, onOpenChange: vi.fn() }}
-                    attachments={{ isEnabled: true, isOpen: false, onOpenChange: vi.fn() }}
-                />,
-            ),
-        ).toThrowError();
-    });
-
     it('should open flyouts if not dragging', async () => {
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,

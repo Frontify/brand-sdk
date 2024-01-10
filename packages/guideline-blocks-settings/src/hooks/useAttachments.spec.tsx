@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
-import { renderHook, waitFor } from '@testing-library/react';
+import { render, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { AttachmentsProvider, useAttachments, useAttachmentsContext } from './useAttachments';
+import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachments } from './useAttachments';
 
 const MOCK_SETTINGS_ID = 'attachments';
 
@@ -100,5 +100,31 @@ describe('useAttachmentsContext', () => {
         await waitFor(() => {
             expect(result.current.attachments).toHaveLength(1);
         });
+    });
+});
+
+describe('withAttachments', () => {
+    it('should provide correct info to context consumer', async () => {
+        const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
+            blockId: 2,
+            blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
+        });
+
+        const Component = withAttachments(() => {
+            const context = useAttachmentsContext();
+            return (
+                <ul>
+                    {context.attachments.map((attachment) => (
+                        <li key={attachment.id} role="list">
+                            {attachment.id}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }, MOCK_SETTINGS_ID);
+
+        const { getAllByRole } = render(<Component appBridge={STUB_WITH_THREE_ASSETS} />);
+
+        await waitFor(() => expect(getAllByRole('list')).toHaveLength(3));
     });
 });
