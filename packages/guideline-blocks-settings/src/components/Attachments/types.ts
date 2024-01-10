@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, Asset } from '@frontify/app-bridge';
-import { ReactNode } from 'react';
+import { type AppBridgeBlock, type Asset } from '@frontify/app-bridge';
+import { type ReactNode } from 'react';
 
 export type AttachmentsTriggerProps = {
     children: ReactNode;

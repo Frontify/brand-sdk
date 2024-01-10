@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { FOCUS_VISIBLE_STYLE } from '@frontify/fondue';
+
 import { joinClassNames } from '../../../utilities';
 
 export const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActiveStyle?: boolean) => {
