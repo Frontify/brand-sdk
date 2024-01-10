@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import React from 'react';
-import { afterEach, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import { useReadyForPrint } from './useReadyForPrint';
@@ -14,12 +14,12 @@ const IS_READY_FOR_PRINT = 'is ready for print';
 const IS_NOT_READY_FOR_PRINT = 'is not ready for print';
 const BLOCK_ID = 345;
 
-const ReadyForPrintDummy = () => {
+const ReadyForPrintDummy = ({ dataBlockId = BLOCK_ID } = {}) => {
     const appBridge = getAppBridgeBlockStub({ blockId: BLOCK_ID });
     const { isReadyForPrint, setIsReadyForPrint } = useReadyForPrint(appBridge);
 
     return (
-        <div data-test-id={IS_READY_CONTAINER} className="mod block" data-block={BLOCK_ID}>
+        <div data-test-id={IS_READY_CONTAINER} className="mod block" data-block={dataBlockId}>
             <div>
                 {(isReadyForPrint && IS_READY_FOR_PRINT) || IS_NOT_READY_FOR_PRINT}
                 <button data-test-id={SET_TO_FALSE_BUTTON} onClick={() => setIsReadyForPrint(false)} />
@@ -59,5 +59,11 @@ describe('useReadyForPrint hook', () => {
 
         expect(container.getAttribute('data-ready')).toBe('false');
         expect(screen.getByText(IS_NOT_READY_FOR_PRINT)).toBeDefined;
+    });
+
+    test('Should throw an error if no blockId is provided', () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        render(<ReadyForPrintDummy dataBlockId={123} />);
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Could not find block wrapper:'), BLOCK_ID);
     });
 });
