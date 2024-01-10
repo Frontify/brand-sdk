@@ -27,6 +27,7 @@ import {
 import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
 import { AttachmentsProps } from './types';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { useAssetChooser } from '@frontify/app-bridge';
 
 export const Attachments = ({
     items = [],
@@ -46,6 +47,7 @@ export const Attachments = ({
     const [assetIdsLoading, setAssetIdsLoading] = useState<number[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const isEditing = useEditorState(appBridge);
+    const { openAssetChooser, closeAssetChooser } = useAssetChooser(appBridge);
 
     const draggedItem = internalItems?.find((item) => item.id === draggedAssetId);
 
@@ -78,10 +80,10 @@ export const Attachments = ({
 
     const onOpenAssetChooser = () => {
         setIsFlyoutOpen(false);
-        appBridge.openAssetChooser(
+        openAssetChooser(
             (result: Asset[]) => {
                 onBrowse(result);
-                appBridge.closeAssetChooser();
+                closeAssetChooser();
                 setIsFlyoutOpen(true);
             },
             {
@@ -93,10 +95,10 @@ export const Attachments = ({
 
     const onReplaceItemWithBrowse = (toReplace: Asset) => {
         setIsFlyoutOpen(false);
-        appBridge.openAssetChooser(
+        openAssetChooser(
             async (result: Asset[]) => {
                 setIsFlyoutOpen(true);
-                appBridge.closeAssetChooser();
+                closeAssetChooser();
                 setAssetIdsLoading([...assetIdsLoading, toReplace.id]);
                 await onReplaceWithBrowse(toReplace, result[0]);
                 setAssetIdsLoading(assetIdsLoading.filter((id) => id !== toReplace.id));
