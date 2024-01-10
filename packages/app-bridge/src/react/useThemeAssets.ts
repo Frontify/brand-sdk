@@ -3,34 +3,44 @@
 import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { Asset } from '../types';
+import type { Asset, ThemeTemplate } from '../types';
 import { compareObjects } from '../utilities';
 
-export const useThemeAssets = (appBridge: AppBridgeTheme) => {
+export const useThemeAssets = (appBridge: AppBridgeTheme, template?: ThemeTemplate) => {
     const portalId = appBridge.getPortalId();
 
     const [themeAssets, setThemeAssets] = useState<Record<string, Asset[]>>({});
 
     const updateThemeAssetsFromEvent = (event: {
+        template?: ThemeTemplate;
         portalId: number;
         themeAssets: Record<string, Asset[]>;
         prevThemeAssets: Record<string, Asset[]>;
     }) => {
-        if (event.portalId === portalId && !compareObjects(event.themeAssets, event.prevThemeAssets)) {
+        if (
+            template &&
+            event.template === template &&
+            event.portalId === portalId &&
+            !compareObjects(event.themeAssets, event.prevThemeAssets)
+        ) {
             setThemeAssets(event.themeAssets);
         }
     };
 
     const getThemeAssets = async (): Promise<Record<string, Asset[]>> => {
-        return await appBridge.getThemeAssets();
+        return template ? await appBridge.getThemeAssets(template) : Promise.resolve({});
     };
 
     const addAssetIdsToThemeAssetKey = async (key: string, assetIds: number[]): Promise<void> => {
-        await appBridge.addAssetIdsToThemeAssetKey(key, assetIds);
+        if (template) {
+            await appBridge.addAssetIdsToThemeAssetKey(key, assetIds, template);
+        }
     };
 
     const deleteAssetIdsFromThemeAssetKey = async (key: string, assetIds: number[]): Promise<void> => {
-        await appBridge.deleteAssetIdsFromThemeAssetKey(key, assetIds);
+        if (template) {
+            await appBridge.deleteAssetIdsFromThemeAssetKey(key, assetIds, template);
+        }
     };
 
     // Fetch the theme assets on mount.
@@ -40,9 +50,9 @@ export const useThemeAssets = (appBridge: AppBridgeTheme) => {
 
         if (portalId) {
             const mountingFetch = async () => {
-                const allThemeAssets = await getThemeAssets();
+                const allThemeAssets = template ? await getThemeAssets() : {};
 
-                if (componentMounted) {
+                if (componentMounted && template) {
                     setThemeAssets(allThemeAssets);
                 }
             };
@@ -58,11 +68,14 @@ export const useThemeAssets = (appBridge: AppBridgeTheme) => {
     }, [appBridge]);
 
     const emitUpdatedThemeAssets = async () => {
-        window.emitter.emit('AppBridge:ThemeAssetsUpdated', {
-            portalId,
-            themeAssets: await getThemeAssets(),
-            prevThemeAssets: { ...themeAssets },
-        });
+        if (template) {
+            window.emitter.emit('AppBridge:ThemeAssetsUpdated', {
+                portalId,
+                themeAssets: await getThemeAssets(),
+                prevThemeAssets: { ...themeAssets },
+                template,
+            });
+        }
     };
 
     const updateAssetIdsFromKey = async (key: string, newAssetIds: number[]) => {

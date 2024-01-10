@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { Asset } from '../types';
+import type { Asset, ThemeTemplate } from '../types';
 import { compareObjects } from '../utilities';
 import { useThemeAssets } from './';
 
 type HookArgs = {
     appBridge: AppBridgeTheme;
-    template?: 'documentPage' | 'library' | 'cover';
+    template?: ThemeTemplate;
     documentId?: number;
     documentPageId?: number;
 };
@@ -61,12 +61,12 @@ const deleteAssetIdsFromTemplateAssetKey = async (
 
 export const useTemplateAssets = (
     appBridge: AppBridgeTheme,
-    template?: 'documentPage' | 'library' | 'cover',
+    template: ThemeTemplate,
     documentId?: number,
     documentPageId?: number,
 ) => {
     const [templateAssets, setTemplateAssets] = useState<Record<string, Asset[]>>({});
-    const { themeAssets } = useThemeAssets(appBridge);
+    const { themeAssets } = useThemeAssets(appBridge, template);
     const [customizedTemplateAssetsKeys, setCustomizedTemplateAssetsKeys] = useState<string[]>([]);
     const [mergedThemeAndTemplateAssets, setMergedThemeAndTemplateAssets] = useState<Record<string, Asset[]>>({});
 
@@ -76,7 +76,7 @@ export const useTemplateAssets = (
         let componentMounted = true;
 
         const updateTemplateAssetsFromEvent = (event: {
-            template?: 'documentPage' | 'library' | 'cover';
+            template: ThemeTemplate;
             documentId?: number;
             documentPageId?: number;
             templateAssets: Record<string, Asset[]>;

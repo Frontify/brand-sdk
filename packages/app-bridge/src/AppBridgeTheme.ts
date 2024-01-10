@@ -52,6 +52,7 @@ import type {
     GuidelineSearchResult,
     Language,
     TargetsUpdate,
+    ThemeTemplate,
 } from './types';
 
 export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
@@ -146,11 +147,15 @@ export interface AppBridgeTheme<
 
     deleteAssetIdsFromCoverPageTemplateAssetKey(key: string, assetIds: number[]): Promise<void>;
 
-    addAssetIdsToThemeAssetKey(key: string, assetIds: number[]): Promise<Record<string, Asset[]>>;
+    addAssetIdsToThemeAssetKey(
+        key: string,
+        assetIds: number[],
+        template: ThemeTemplate,
+    ): Promise<Record<string, Asset[]>>;
 
-    getThemeAssets(): Promise<Record<string, Asset[]>>;
+    getThemeAssets(template: ThemeTemplate): Promise<Record<string, Asset[]>>;
 
-    deleteAssetIdsFromThemeAssetKey(key: string, assetIds: number[]): Promise<void>;
+    deleteAssetIdsFromThemeAssetKey(key: string, assetIds: number[], template: ThemeTemplate): Promise<void>;
 
     addAssetIdsToLibraryPageTemplateAssetKey(
         documentId: number,

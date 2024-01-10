@@ -3,15 +3,16 @@
 import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { EmitterEvents } from '../types';
+import type { EmitterEvents, ThemeTemplate } from '../types';
 import { useThemeSettings } from './';
 
 export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(
     appBridge: AppBridgeTheme,
-    template: 'cover' | 'documentPage' | 'library',
+    template: ThemeTemplate,
     documentOrDocumentPageId?: number,
 ) => {
     const { themeSettings } = useThemeSettings(appBridge);
+    const templateThemeSettings = themeSettings?.[template] ?? {};
     const [pageTemplateSettings, setPageTemplateSettings] = useState<Nullable<TPageTemplateSettings>>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [customizedPageTemplateSettingsKeys, setCustomizedPageTemplateSettingsKeys] = useState<string[]>([]);
@@ -56,21 +57,22 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
     }, [appBridge, documentOrDocumentPageId, template]);
 
     useEffect(() => {
-        if (!themeSettings || !pageTemplateSettings) {
+        if (!templateThemeSettings || !pageTemplateSettings) {
             return;
         }
 
         const overrides = [];
         const mergedSettings: Record<string, unknown> & TPageTemplateSettings = { ...pageTemplateSettings };
 
-        for (const field of Object.keys(themeSettings)) {
+        for (const field of Object.keys(templateThemeSettings)) {
             if (
                 (pageTemplateSettings as Record<string, unknown>)[field] !== null &&
                 (pageTemplateSettings as Record<string, unknown>)[field] !== undefined
             ) {
                 overrides.push(field);
             } else {
-                (mergedSettings as Record<string, unknown>)[field] = themeSettings[field];
+                (mergedSettings as Record<string, unknown>)[field] =
+                    templateThemeSettings[field as keyof typeof templateThemeSettings];
             }
         }
 
