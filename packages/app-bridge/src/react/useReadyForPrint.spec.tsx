@@ -32,6 +32,7 @@ const ReadyForPrintDummy = ({ dataBlockId = BLOCK_ID } = {}) => {
 describe('useReadyForPrint hook', () => {
     afterEach(() => {
         cleanup();
+        vi.restoreAllMocks();
     });
 
     test('Should initially set the data-ready attribute to false', () => {
