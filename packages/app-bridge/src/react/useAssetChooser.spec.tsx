@@ -9,6 +9,7 @@ import type { Asset } from '../types/Asset';
 import { AppBridgeBlock } from '../AppBridgeBlock';
 import { useAssetChooser } from './useAssetChooser';
 import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+import { AssetDummy } from '..';
 
 const OPEN_ASSET_CHOOSER_BUTTON_ID = 'open-asset-chooser';
 const CLOSE_ASSET_CHOOSER_BUTTON_ID = 'close-asset-chooser';
@@ -53,5 +54,14 @@ describe('useAssetChooser hook', () => {
         const openAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
         sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'closeAssetChooser'));
+    });
+
+    it('should call the onAssetChosen callback when an asset is chosen', () => {
+        const [BlockWithStubs] = withAppBridgeBlockStubs(AssetChooserDummy);
+        const onAssetChosen = sinon.spy();
+        const { getByTestId } = render(<BlockWithStubs onAssetChosen={onAssetChosen} />);
+        const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openAssetChooserButton.click();
+        sinon.assert.calledWith(onAssetChosen, [AssetDummy.with(123)]);
     });
 });
