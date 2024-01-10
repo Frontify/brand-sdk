@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 5.5.7
+
+### Patch Changes
+
+- [#674](https://github.com/Frontify/brand-sdk/pull/674) [`d7385ea`](https://github.com/Frontify/brand-sdk/commit/d7385ea6ff2c034e47b5d9727eae73600522bb2f) Thanks [@julianiff](https://github.com/julianiff)! - chore: update manifest
+
+- [#670](https://github.com/Frontify/brand-sdk/pull/670) [`f28dd67`](https://github.com/Frontify/brand-sdk/commit/f28dd67dd2d5058a10e8420252ba213a1d3d62cd) Thanks [@julianiff](https://github.com/julianiff)! - chore: add optional to assetAction
+
+- [#673](https://github.com/Frontify/brand-sdk/pull/673) [`1bd6524`](https://github.com/Frontify/brand-sdk/commit/1bd6524a9b7b9021d1173c16f984c7944a628867) Thanks [@julianiff](https://github.com/julianiff)! - chore: change naming to workspace
+
 ## 5.5.6
 
 ### Patch Changes
