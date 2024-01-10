@@ -57,18 +57,18 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         name: 'html-hash',
         enforce: 'post',
         transformIndexHtml(html, { bundle }) {
-            const indexJsSource = bundle?.['index.js'].type === 'asset' ? bundle?.['index.js'].source : null;
+            const indexJsSource = bundle?.['index.js'].type === 'chunk' ? bundle?.['index.js'].code : null;
             const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
 
-            const cssFileName = `${outputName}.${getHash(indexJsSource)}.css`;
-            const jsFileName = `${outputName}.${getHash(indexCssSource)}.js`;
+            const cssFileName = `${outputName}.${getHash(indexCssSource)}.css`;
+            const jsFileName = `${outputName}.${getHash(indexJsSource)}.js`;
 
             html = html.replace('index.css', cssFileName).replace('index.js', jsFileName);
             return html;
         },
         generateBundle(_options, bundle) {
             const indexHtmlSource = bundle?.['index.html'].type === 'asset' ? bundle?.['index.html'].source : null;
-            const indexJsSource = bundle?.['index.js'].type === 'asset' ? bundle?.['index.js'].source : null;
+            const indexJsSource = bundle?.['index.js'].type === 'chunk' ? bundle?.['index.js'].code : null;
             const indexCssSource = bundle?.['index.css'].type === 'asset' ? bundle?.['index.css'].source : null;
 
             bundle['index.html'].fileName = `${outputName}.${getHash(indexHtmlSource)}.html`;

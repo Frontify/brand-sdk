@@ -5,9 +5,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getAppBridgeThemeStub } from '../tests';
 import { useThemeSettings } from './useThemeSettings';
 import { SinonStub } from 'sinon';
+import type { ThemeTemplate } from '../types';
 
 const THEME_SETTINGS = {
-    myCustomSetting: 123,
+    cover: {
+        coverSettingOne: 'value one',
+        coverSettingTwo: 'value two',
+    },
+    documentPage: {},
+    library: {},
 };
 
 describe('useThemeSettings', () => {
@@ -21,7 +27,7 @@ describe('useThemeSettings', () => {
         cleanup();
     });
 
-    const loadUseThemeSettings = async (themeSettings: Record<string, unknown>) => {
+    const loadUseThemeSettings = async (themeSettings: Record<ThemeTemplate, Record<string, unknown>>) => {
         const appBridgeStub = getAppBridgeThemeStub({
             themeSettings,
         });
@@ -51,16 +57,26 @@ describe('useThemeSettings', () => {
             expect(result.current.themeSettings).toEqual(THEME_SETTINGS);
         });
 
-        await result.current.updateThemeSettings({ myCustomSetting: 456 });
+        await result.current.updateThemeSettings({
+            cover: { coverSettingTwo: 'value two - updated' },
+        });
         expect(result.current.isLoading).toEqual(false);
 
         const emitCall = (window.emitter.emit as SinonStub).getCall(0);
 
         await waitFor(() => {
             expect(result.current.isLoading).toEqual(false);
-            expect(result.current.themeSettings).toEqual({ ...THEME_SETTINGS, myCustomSetting: 456 });
+            expect(result.current.themeSettings).toEqual({
+                cover: { coverSettingOne: 'value one', coverSettingTwo: 'value two - updated' },
+                documentPage: {},
+                library: {},
+            });
             expect(emitCall.firstArg).toEqual('AppBridge:ThemeSettingsUpdated');
-            expect(emitCall.lastArg.themeSettings).toStrictEqual({ ...THEME_SETTINGS, myCustomSetting: 456 });
+            expect(emitCall.lastArg.themeSettings).toStrictEqual({
+                cover: { coverSettingOne: 'value one', coverSettingTwo: 'value two - updated' },
+                documentPage: {},
+                library: {},
+            });
         });
     });
 });

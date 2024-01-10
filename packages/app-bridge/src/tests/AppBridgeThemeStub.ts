@@ -24,7 +24,7 @@ import {
     UpdateTargetsDummy,
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
-import { Asset } from '../types';
+import type { Asset, ThemeTemplate } from '../types';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -66,7 +66,7 @@ export type getAppBridgeThemeStubProps = {
     projectId?: number;
     pageTemplateSettings?: Record<string, unknown>;
     pageTemplateAssets?: Record<string, Asset[]>;
-    themeSettings?: Record<string, unknown>;
+    themeSettings?: Record<ThemeTemplate, Record<string, unknown>>;
     themeAssets?: Record<string, Asset[]>;
     language?: string;
     openAssetChooser?: (callback: Parameters<AppBridgeTheme['openAssetChooser']>[0]) => void;
@@ -80,7 +80,7 @@ export const getAppBridgeThemeStub = ({
     projectId = PROJECT_ID,
     pageTemplateSettings = {},
     pageTemplateAssets = {},
-    themeSettings = {},
+    themeSettings = { cover: {}, documentPage: {}, library: {} },
     themeAssets = {},
     language = 'en',
     openAssetChooser = () => null,

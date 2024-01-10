@@ -1,5 +1,33 @@
 # @frontify/frontify-cli
 
+## 5.5.7
+
+### Patch Changes
+
+- [#674](https://github.com/Frontify/brand-sdk/pull/674) [`d7385ea`](https://github.com/Frontify/brand-sdk/commit/d7385ea6ff2c034e47b5d9727eae73600522bb2f) Thanks [@julianiff](https://github.com/julianiff)! - chore: update manifest
+
+- [#670](https://github.com/Frontify/brand-sdk/pull/670) [`f28dd67`](https://github.com/Frontify/brand-sdk/commit/f28dd67dd2d5058a10e8420252ba213a1d3d62cd) Thanks [@julianiff](https://github.com/julianiff)! - chore: add optional to assetAction
+
+- [#673](https://github.com/Frontify/brand-sdk/pull/673) [`1bd6524`](https://github.com/Frontify/brand-sdk/commit/1bd6524a9b7b9021d1173c16f984c7944a628867) Thanks [@julianiff](https://github.com/julianiff)! - chore: change naming to workspace
+
+## 5.5.6
+
+### Patch Changes
+
+- [#668](https://github.com/Frontify/brand-sdk/pull/668) [`e8bf308`](https://github.com/Frontify/brand-sdk/commit/e8bf308262124356a0d13b8bf251fb208de7f19f) Thanks [@julianiff](https://github.com/julianiff)! - chore: fix css and js filename exchanged
+
+## 5.5.5
+
+### Patch Changes
+
+- [#664](https://github.com/Frontify/brand-sdk/pull/664) [`5cf77ee`](https://github.com/Frontify/brand-sdk/commit/5cf77eefad4fceea1baed23cd5750c4d95fd91cc) Thanks [@julianiff](https://github.com/julianiff)! - fix: platform app compiler
+
+## 5.5.4
+
+### Patch Changes
+
+- [#645](https://github.com/Frontify/brand-sdk/pull/645) [`0e34987`](https://github.com/Frontify/brand-sdk/commit/0e349871c67c8c5260c6456af1af2aec58ab6e2e) Thanks [@julianiff](https://github.com/julianiff)! - feat: add manifest verification step
+
 ## 5.5.3
 
 ### Patch Changes

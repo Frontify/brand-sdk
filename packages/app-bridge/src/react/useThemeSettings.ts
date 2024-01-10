@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 
 import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { EmitterEvents } from '../types';
+import type { EmitterEvents, ThemeTemplate } from '../types';
 
-export const useThemeSettings = <T = Record<string, unknown>>(appBridge: AppBridgeTheme) => {
+export const useThemeSettings = <T extends Record<ThemeTemplate, Record<string, unknown>>>(
+    appBridge: AppBridgeTheme,
+) => {
     const [themeSettings, setThemeSettings] = useState<Nullable<T>>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -38,8 +40,9 @@ export const useThemeSettings = <T = Record<string, unknown>>(appBridge: AppBrid
 
             window.emitter.emit('AppBridge:ThemeSettingsUpdated', {
                 themeSettings: {
-                    ...themeSettings,
-                    ...themeSettingsUpdate,
+                    cover: { ...themeSettings?.cover, ...themeSettingsUpdate.cover },
+                    library: { ...themeSettings?.library, ...themeSettingsUpdate.library },
+                    documentPage: { ...themeSettings?.documentPage, ...themeSettingsUpdate.documentPage },
                 },
             });
         } catch (error) {
