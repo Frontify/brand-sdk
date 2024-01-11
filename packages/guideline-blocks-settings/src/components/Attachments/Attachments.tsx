@@ -168,6 +168,12 @@ export const Attachments = ({
                                         <div className="tw-border-b tw-border-b-line">
                                             {internalItems.map((item) => (
                                                 <SortableAttachmentItem
+                                                    download={() =>
+                                                        appBridge.dispatch({
+                                                            name: 'downloadAsset',
+                                                            payload: item,
+                                                        })
+                                                    }
                                                     isEditing={isEditing}
                                                     isLoading={assetIdsLoading.includes(item.id)}
                                                     key={item.id}
@@ -184,6 +190,12 @@ export const Attachments = ({
                                     <DragOverlay>
                                         {draggedItem && (
                                             <AttachmentItem
+                                                download={() =>
+                                                    appBridge.dispatch({
+                                                        name: 'downloadAsset',
+                                                        payload: draggedItem,
+                                                    })
+                                                }
                                                 isOverlay={true}
                                                 isEditing={isEditing}
                                                 key={draggedAssetId}

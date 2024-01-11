@@ -44,6 +44,7 @@ const getDecorator = (type: string) => {
 export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>(
     (
         {
+            download,
             item,
             isEditing,
             draggableProps,
@@ -76,25 +77,13 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [doneAll, uploadResults]);
 
-        const download = (url: string, filename: string) => {
-            fetch(url).then((response) => {
-                response.blob().then((blob) => {
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = filename;
-                    a.click();
-                });
-            });
-        };
-
         const showLoadingCircle = isLoading || (selectedFiles && !doneAll);
 
         return (
             <button
                 aria-label="Download attachment"
                 data-test-id="attachments-item"
-                onClick={() => download(item.genericUrl, item.fileName)}
+                onClick={() => download()}
                 ref={ref}
                 style={{
                     ...transformStyle,
