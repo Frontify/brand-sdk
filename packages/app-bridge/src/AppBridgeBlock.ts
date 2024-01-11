@@ -69,6 +69,8 @@ export type BlockContext = {
     portalId: number;
     blockId: number;
     sectionId?: number;
+    blockName?: string;
+    marketplaceServiceAppId?: string;
 };
 
 export type BlockEvent = EventNameValidator<
