@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { closeAssetChooser, openAssetChooser } from '../registries/commands/AssetChooser';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { Asset, AssetChooserOptions } from '../types';
 
@@ -10,7 +11,14 @@ type UseAssetChooserType = {
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     return {
-        openAssetChooser: appBridge.openAssetChooser.bind(appBridge),
-        closeAssetChooser: appBridge.closeAssetChooser.bind(appBridge),
+        openAssetChooser: (callback, options) => {
+            appBridge.dispatch(openAssetChooser(options));
+            appBridge.subscribe('assetsChosen', (selectedAssets) => {
+                callback(selectedAssets.assets);
+            });
+        },
+        closeAssetChooser: () => {
+            appBridge.dispatch(closeAssetChooser());
+        },
     };
 };

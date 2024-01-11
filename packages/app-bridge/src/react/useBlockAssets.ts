@@ -7,7 +7,7 @@ import type { Asset } from '../types';
 import { compareObjects } from '../utilities';
 
 export const useBlockAssets = (appBridge: AppBridgeBlock) => {
-    const blockId = appBridge.getBlockId();
+    const blockId = appBridge.context('blockId').get();
 
     const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>({});
 
