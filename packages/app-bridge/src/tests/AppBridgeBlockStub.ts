@@ -13,7 +13,7 @@ import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
-import { TemplateLegacyDummy } from '.';
+import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
