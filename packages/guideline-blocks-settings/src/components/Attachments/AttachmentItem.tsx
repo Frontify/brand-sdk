@@ -79,17 +79,11 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
 
         const showLoadingCircle = isLoading || (selectedFiles && !doneAll);
 
-        const handleDownload = () => {
-            if (download) {
-                download();
-            }
-        };
-
         return (
             <button
                 aria-label="Download attachment"
                 data-test-id="attachments-item"
-                onClick={() => handleDownload()}
+                onClick={() => download?.()}
                 ref={ref}
                 style={{
                     ...transformStyle,
