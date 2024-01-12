@@ -4,3 +4,5 @@ coverage
 .DS_Store
 .idea
 .vscode
+cypress/videos
+cypress/screenshots
