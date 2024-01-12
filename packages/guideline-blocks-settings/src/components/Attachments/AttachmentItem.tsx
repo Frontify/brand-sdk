@@ -44,7 +44,6 @@ const getDecorator = (type: string) => {
 export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>(
     (
         {
-            download,
             item,
             isEditing,
             draggableProps,
@@ -55,6 +54,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
             onDelete,
             onReplaceWithBrowse,
             onReplaceWithUpload,
+            onDownload,
         },
         ref,
     ) => {
@@ -83,7 +83,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
             <button
                 aria-label="Download attachment"
                 data-test-id="attachments-item"
-                onClick={() => download?.()}
+                onClick={() => onDownload?.()}
                 ref={ref}
                 style={{
                     ...transformStyle,

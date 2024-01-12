@@ -168,12 +168,6 @@ export const Attachments = ({
                                         <div className="tw-border-b tw-border-b-line">
                                             {internalItems.map((item) => (
                                                 <SortableAttachmentItem
-                                                    download={() =>
-                                                        appBridge.dispatch({
-                                                            name: 'downloadAsset',
-                                                            payload: item,
-                                                        })
-                                                    }
                                                     isEditing={isEditing}
                                                     isLoading={assetIdsLoading.includes(item.id)}
                                                     key={item.id}
@@ -182,6 +176,12 @@ export const Attachments = ({
                                                     onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
                                                     onReplaceWithUpload={(uploadedAsset: Asset) =>
                                                         onReplaceItemWithUpload(item, uploadedAsset)
+                                                    }
+                                                    onDownload={() =>
+                                                        appBridge.dispatch({
+                                                            name: 'downloadAsset',
+                                                            payload: item,
+                                                        })
                                                     }
                                                 />
                                             ))}

@@ -21,11 +21,11 @@ export type AttachmentItemProps = SortableAttachmentItemProps & {
 };
 
 export type SortableAttachmentItemProps = {
-    download?: () => Promise<void>;
     item: Asset;
     isEditing: boolean;
     onDelete: () => void;
     isLoading?: boolean;
     onReplaceWithBrowse: () => void;
     onReplaceWithUpload: (uploadedAsset: Asset) => void;
+    onDownload?: () => Promise<void>;
 };
