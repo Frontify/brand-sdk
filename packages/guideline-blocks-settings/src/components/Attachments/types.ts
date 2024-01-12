@@ -21,7 +21,7 @@ export type AttachmentItemProps = SortableAttachmentItemProps & {
 };
 
 export type SortableAttachmentItemProps = {
-    download: () => Promise<void>;
+    download?: () => Promise<void>;
     item: Asset;
     isEditing: boolean;
     onDelete: () => void;

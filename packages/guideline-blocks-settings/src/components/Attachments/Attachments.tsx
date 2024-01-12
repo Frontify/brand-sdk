@@ -190,12 +190,6 @@ export const Attachments = ({
                                     <DragOverlay>
                                         {draggedItem && (
                                             <AttachmentItem
-                                                download={() =>
-                                                    appBridge.dispatch({
-                                                        name: 'downloadAsset',
-                                                        payload: draggedItem,
-                                                    })
-                                                }
                                                 isOverlay={true}
                                                 isEditing={isEditing}
                                                 key={draggedAssetId}
