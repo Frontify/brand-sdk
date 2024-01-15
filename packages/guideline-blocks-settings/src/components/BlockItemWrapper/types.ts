@@ -2,6 +2,8 @@
 
 import { type ReactNode } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { type AttachmentsProvider, type withAttachmentsProvider } from '../../hooks/useAttachments';
 import { type FlyoutToolbarItem, type ToolbarItem } from './Toolbar';
 
 export type BlockItemWrapperProps = {
@@ -15,8 +17,8 @@ export type BlockItemWrapperProps = {
     outlineOffset?: number;
     shouldBeShown?: boolean;
     /**
-     * When set to true the BlockItemWrapper must be a child of a 'AttachmentsProvider' component,
-     *  or the block must be wrapper with a 'withAttachments' HOC.
+     * When set to true the BlockItemWrapper must be a child of a {@link AttachmentsProvider} component,
+     *  or the block must be wrapped with a {@link withAttachmentsProvider} HOC.
      * @default false
      */
     showAttachments?: boolean;

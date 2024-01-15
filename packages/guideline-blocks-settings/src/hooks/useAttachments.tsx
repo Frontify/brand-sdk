@@ -82,14 +82,14 @@ export const useAttachmentsContext = () => {
  * Recommended for most cases.
  * If finer control is required over attachments, use AttachmentsProvider component.
  */
-export const withAttachments = <T extends BlockProps>(Component: (props: T) => ReactNode, assetId: string) => {
+export const withAttachmentsProvider = <T extends BlockProps>(Component: (props: T) => ReactNode, assetId: string) => {
     const wrappedComponent = (props: T) => (
         <AttachmentsProvider appBridge={props.appBridge} assetId={assetId}>
             <Component {...props} />
         </AttachmentsProvider>
     );
 
-    wrappedComponent.displayName = 'withAttachments';
+    wrappedComponent.displayName = 'withAttachmentsProvider';
 
     return wrappedComponent;
 };

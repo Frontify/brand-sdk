@@ -4,7 +4,7 @@ import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachments } from './useAttachments';
+import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachmentsProvider } from './useAttachments';
 
 const MOCK_SETTINGS_ID = 'attachments';
 
@@ -103,14 +103,14 @@ describe('useAttachmentsContext', () => {
     });
 });
 
-describe('withAttachments', () => {
+describe('withAttachmentsProvider', () => {
     it('should provide correct info to context consumer', async () => {
         const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
             blockId: 2,
             blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
         });
 
-        const Component = withAttachments(() => {
+        const Component = withAttachmentsProvider(() => {
             const context = useAttachmentsContext();
             return (
                 <ul>
