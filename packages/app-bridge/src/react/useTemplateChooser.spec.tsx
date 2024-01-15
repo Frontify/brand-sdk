@@ -50,8 +50,8 @@ describe('useReadyForPrint hook', () => {
     it('should close the template chooser', () => {
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(TemplateChooserDummy);
         const { getByTestId } = render(<BlockWithStubs />);
-        const openTemplateChooserButton = getByTestId(CLOSE_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        openTemplateChooserButton.click();
+        const closeTemplateChooserButton = getByTestId(CLOSE_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        closeTemplateChooserButton.click();
         sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'closeTemplateChooser'));
     });
 
@@ -62,5 +62,16 @@ describe('useReadyForPrint hook', () => {
         const openTemplateChooserButton = getByTestId(OPEN_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openTemplateChooserButton.click();
         sinon.assert.calledWith(onTemplateChosen, TemplateLegacyDummy.with(234));
+    });
+
+    it('should unsubscribe if template chooser gets opened and closed', () => {
+        const unsubscribeSpy = sinon.spy();
+        const [BlockWithStubs] = withAppBridgeBlockStubs(TemplateChooserDummy, { unsubscribe: unsubscribeSpy });
+        const { getByTestId } = render(<BlockWithStubs />);
+        const openTemplateChooserButton = getByTestId(OPEN_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openTemplateChooserButton.click();
+        const closeTemplateChooserButton = getByTestId(CLOSE_TEMPLATE_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        closeTemplateChooserButton.click();
+        sinon.assert.calledOnce(unsubscribeSpy);
     });
 });

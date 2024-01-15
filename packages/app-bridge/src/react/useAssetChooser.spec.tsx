@@ -50,8 +50,8 @@ describe('useAssetChooser hook', () => {
     it('should close the asset chooser', () => {
         const [BlockWithStubs, appBridge] = withAppBridgeBlockStubs(AssetChooserDummy);
         const { getByTestId } = render(<BlockWithStubs />);
-        const openAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
-        openAssetChooserButton.click();
+        const closeAssetChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        closeAssetChooserButton.click();
         sinon.assert.calledWith(appBridge.dispatch, sinon.match.has('name', 'closeAssetChooser'));
     });
 
@@ -62,5 +62,16 @@ describe('useAssetChooser hook', () => {
         const openAssetChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         openAssetChooserButton.click();
         sinon.assert.calledWith(onAssetChosen, [AssetDummy.with(123)]);
+    });
+
+    it('should unsubscribe if asset chooser gets opened and closed', () => {
+        const unsubscribeSpy = sinon.spy();
+        const [BlockWithStubs] = withAppBridgeBlockStubs(AssetChooserDummy, { unsubscribe: unsubscribeSpy });
+        const { getByTestId } = render(<BlockWithStubs />);
+        const openTemplateChooserButton = getByTestId(OPEN_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openTemplateChooserButton.click();
+        const closeTemplateChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        closeTemplateChooserButton.click();
+        sinon.assert.calledOnce(unsubscribeSpy);
     });
 });

@@ -33,6 +33,7 @@ export type getAppBridgeBlockStubProps = {
     language?: string;
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
+    unsubscribe?: () => void;
 };
 
 type subscribeCallbackArguments = Record<string, unknown> & {
@@ -59,6 +60,7 @@ export const getAppBridgeBlockStub = ({
         assetDownloadEnabled: false,
     },
     blockTemplates = {},
+    unsubscribe = () => null,
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
@@ -229,7 +231,7 @@ export const getAppBridgeBlockStub = ({
             } else if (eventName === 'templateChosen') {
                 callback({ template: TemplateLegacyDummy.with(234) } as subscribeCallbackArguments);
             }
-            return () => {};
+            return unsubscribe;
         }),
 
         // TODO: Stub the following methods
