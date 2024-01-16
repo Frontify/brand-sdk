@@ -1,7 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MenuItemStyle } from '@frontify/fondue';
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { type AttachmentsProvider, type withAttachmentsProvider } from '../../hooks/useAttachments';
+import { type FlyoutToolbarItem, type ToolbarItem } from './Toolbar';
 
 export type BlockItemWrapperProps = {
     children: ReactNode;
@@ -13,36 +16,10 @@ export type BlockItemWrapperProps = {
     shouldFillContainer?: boolean;
     outlineOffset?: number;
     shouldBeShown?: boolean;
-};
-
-export type ToolbarProps = {
-    items: ToolbarItem[];
-    flyoutItems: FlyoutToolbarItem[][];
-    isFlyoutOpen: boolean;
-    setIsFlyoutOpen: (isOpen: boolean) => void;
-    isDragging?: boolean;
-    isFlyoutDisabled?: boolean;
-};
-
-type BaseToolbarItem = {
-    icon: JSX.Element;
-    tooltip?: string;
-};
-
-type DraghandleToolbarItem = BaseToolbarItem & {
-    draggableProps: Record<string, unknown>;
-    setActivatorNodeRef?: (node: HTMLElement | null) => void;
-};
-
-type ButtonToolbarItem = BaseToolbarItem & {
-    onClick: () => void;
-};
-
-export type ToolbarItem = DraghandleToolbarItem | ButtonToolbarItem;
-
-export type FlyoutToolbarItem = {
-    title: string;
-    onClick: () => void;
-    icon: JSX.Element;
-    style?: MenuItemStyle;
+    /**
+     * When set to true the BlockItemWrapper must be a child of a {@link AttachmentsProvider} component,
+     *  or the block must be wrapped with a {@link withAttachmentsProvider} HOC.
+     * @default false
+     */
+    showAttachments?: boolean;
 };
