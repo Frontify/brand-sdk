@@ -9,7 +9,7 @@ export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
     const { blockAssets, updateAssetIdsFromKey } = useBlockAssets(appBridge);
     const attachments = blockAssets?.[assetId] || [];
 
-    const onAddAttachments = async (newAssets: Asset[]) => {
+    const onAttachmentsAdd = async (newAssets: Asset[]) => {
         const newAssetIds = attachments.map((attachment) => attachment.id);
         for (const asset of newAssets) {
             newAssetIds.push(asset.id);
@@ -40,7 +40,7 @@ export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
     };
 
     return {
-        onAddAttachments,
+        onAttachmentsAdd,
         onAttachmentDelete,
         onAttachmentReplace,
         onAttachmentsSorted,
