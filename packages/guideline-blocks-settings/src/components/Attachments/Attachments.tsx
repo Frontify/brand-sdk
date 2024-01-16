@@ -137,7 +137,7 @@ export const Attachments = ({
             const newIndex = internalItems.findIndex((i) => i.id === over.id);
             const sortedItems = arrayMove(internalItems, oldIndex, newIndex);
             setInternalItems(sortedItems);
-            onSorted(sortedItems);
+            onSorted?.(sortedItems);
         }
         setDraggedAssetId(undefined);
     };

@@ -16,7 +16,7 @@ export type AttachmentsProps = {
     onDelete: (attachmentToDelete: Asset) => void;
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
     onBrowse: (browserAttachments: Asset[]) => void;
-    onSorted: (sortedAttachments: Asset[]) => void;
+    onSorted?: (sortedAttachments: Asset[]) => void;
     triggerComponent?: (props: AttachmentsTriggerProps) => JSX.Element;
 } & ({ isOpen?: never; onOpenChange?: never } | { isOpen: boolean; onOpenChange: (isOpen: boolean) => void });
 
