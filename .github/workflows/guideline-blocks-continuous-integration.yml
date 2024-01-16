@@ -42,8 +42,11 @@ jobs:
             - name: Build build:sidebar-settings
               run: pnpm build:app-bridge && pnpm build:sidebar-settings
 
-            - name: Build package (+ typechecking)
-              run: pnpm build:guideline-blocks-settings
+            - name: Typecheck code
+              run: pnpm --stream --filter {packages/guideline-blocks-settings} typecheck
+
+            - name: Lint code
+              run: pnpm --stream --filter {packages/guideline-blocks-settings} lint
 
     component-tests:
         runs-on: ubuntu-latest
