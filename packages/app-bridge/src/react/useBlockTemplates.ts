@@ -7,7 +7,7 @@ import type { Template } from '../types';
 import { compareObjects } from '../utilities';
 
 export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
-    const blockId = appBridge.getBlockId();
+    const blockId = appBridge.context('blockId').get();
 
     const [blockTemplates, setBlockTemplates] = useState<Record<string, Template[]>>({});
     const [error, setError] = useState<string | null>(null);

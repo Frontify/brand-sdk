@@ -23,7 +23,7 @@ const Block = ({ appBridge }: { appBridge: AppBridgeBlock }): ReactElement => {
     const [blockSettings, updateBlockSettings] = useBlockSettings(appBridge);
 
     return (
-        <div data-test-id={`block-${appBridge.getBlockId()}`}>
+        <div data-test-id={`block-${appBridge.context('blockId').get()}`}>
             <div data-test-id={BLOCK_SETTINGS_DIV_ID}>{JSON.stringify(blockSettings)}</div>
             <button onClick={() => updateBlockSettings(NEW_SETTINGS)} data-test-id={SET_BLOCK_SETTING_BUTTON}>
                 Update block setting
