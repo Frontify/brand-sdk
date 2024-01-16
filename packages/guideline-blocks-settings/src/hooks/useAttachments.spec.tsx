@@ -20,7 +20,7 @@ describe('useAttachments', () => {
         });
         const { result } = renderHook(() => useAttachments(STUB_WITH_NO_ASSETS, MOCK_SETTINGS_ID));
 
-        await result.current.onAddAttachments([AssetDummy.with(1)]);
+        await result.current.onAttachmentsAdd([AssetDummy.with(1)]);
         await waitFor(() => {
             expect(result.current.attachments).toHaveLength(1);
         });
