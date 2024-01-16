@@ -8,17 +8,17 @@ import { type ToolbarFlyoutState } from './types';
 import { ToolbarAttachmentsTrigger } from './ToolbarAttachmentsTrigger';
 
 export const ToolbarAttachments = ({ isOpen, onOpenChange }: ToolbarFlyoutState) => {
-    const { appBridge, attachments, onAddAttachments, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
+    const { appBridge, attachments, onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
         useAttachmentsContext();
 
     return (
         <Attachments
-            onUpload={onAddAttachments}
+            onUpload={onAttachmentsAdd}
             onDelete={onAttachmentDelete}
             onReplaceWithBrowse={onAttachmentReplace}
             onReplaceWithUpload={onAttachmentReplace}
             onSorted={onAttachmentsSorted}
-            onBrowse={onAddAttachments}
+            onBrowse={onAttachmentsAdd}
             items={attachments}
             appBridge={appBridge}
             triggerComponent={ToolbarAttachmentsTrigger}
