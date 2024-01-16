@@ -51,6 +51,7 @@ export const Attachments = ({
     const isEditing = useEditorState(appBridge);
     const isControllingStateExternally = isOpen !== undefined;
     const isFlyoutOpen = isControllingStateExternally ? isOpen : isFlyoutOpenInternal;
+
     const draggedItem = internalItems?.find((item) => item.id === draggedAssetId);
 
     const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload({

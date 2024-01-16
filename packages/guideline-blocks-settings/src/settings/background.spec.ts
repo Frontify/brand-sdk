@@ -17,7 +17,7 @@ describe('getBackgroundSettings', () => {
                         red: 241,
                         green: 241,
                         blue: 241,
-                        alpha: 1,
+                        alpha: 0,
                     },
                     type: 'colorInput',
                 },
