@@ -8,3 +8,4 @@
     `isFlyoutDisabled` prop has been removed.
     `attachments` prop has been added (`{ isEnabled: boolean; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
     To enable block attachments in the Toolbar from the `BlockWrapper` component, set `showAttachments` to `true` and wrap the block in the `withAttachmentsProvider` HOC or alternatively, wrap the `BlockWrapper` in an `AttachmentsProvider`.
+-   `onAddAttachments` has been replaced with `onAttachmentsAdd` in the object returned from `useAttachments` hook.
