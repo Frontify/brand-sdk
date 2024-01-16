@@ -70,7 +70,7 @@ export const useAttachmentsContext = () => {
 
     if (!context) {
         throw new Error(
-            "No AttachmentsContext Provided. Component must be wrapped in an 'AttachmentsProvider' or the 'withAttachments' HOC",
+            "No AttachmentsContext Provided. Component must be wrapped in an 'AttachmentsProvider' or the 'withAttachmentsProvider' HOC",
         );
     }
 
