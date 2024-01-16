@@ -89,7 +89,6 @@ describe('Attachments', () => {
         const appBridge = getAppBridgeBlockStub({
             editorState: true,
         });
-        (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
 
         cy.clock();
         const replaceStub = () =>
