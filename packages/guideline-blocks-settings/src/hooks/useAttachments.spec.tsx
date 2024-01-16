@@ -58,24 +58,6 @@ describe('useAttachments', () => {
             expect(result.current.attachments[1].id).toBe(10);
         });
     });
-
-    it('should reorder the attachments', async () => {
-        const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
-            blockId: 2,
-            blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
-        });
-        const { result } = renderHook(() => useAttachments(STUB_WITH_THREE_ASSETS, MOCK_SETTINGS_ID));
-        const initialValue = result.current;
-        await waitFor(() => {
-            expect(result.current).not.toBe(initialValue);
-        });
-        await result.current.onAttachmentsSorted([AssetDummy.with(3), AssetDummy.with(2), AssetDummy.with(1)]);
-        await waitFor(() => {
-            expect(result.current.attachments[0].id).toBe(3);
-            expect(result.current.attachments[1].id).toBe(2);
-            expect(result.current.attachments[2].id).toBe(1);
-        });
-    });
 });
 
 describe('useAttachmentsContext', () => {

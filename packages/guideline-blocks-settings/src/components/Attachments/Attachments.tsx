@@ -1,19 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-import {
-    DndContext,
-    DragEndEvent,
-    DragOverlay,
-    DragStartEvent,
-    KeyboardSensor,
-    PointerSensor,
-    closestCenter,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
-import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { Asset, useAssetUpload, useEditorState } from '@frontify/app-bridge';
 import {
     AssetInput,
@@ -24,7 +11,7 @@ import {
     TooltipPosition,
 } from '@frontify/fondue';
 
-import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
+import { AttachmentItem } from './AttachmentItem';
 import { type AttachmentsProps } from './types';
 import { AttachmentsButtonTrigger } from './AttachmentsButtonTrigger';
 
@@ -35,7 +22,6 @@ export const Attachments = ({
     onReplaceWithUpload,
     onBrowse,
     onUpload,
-    onSorted,
     appBridge,
     triggerComponent: TriggerComponent = AttachmentsButtonTrigger,
     isOpen,
@@ -43,16 +29,12 @@ export const Attachments = ({
 }: AttachmentsProps) => {
     const [internalItems, setInternalItems] = useState<Asset[]>(items);
     const [isFlyoutOpenInternal, setIsFlyoutOpenInternal] = useState(false);
-    const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
-    const [draggedAssetId, setDraggedAssetId] = useState<number | undefined>(undefined);
     const [isUploadLoading, setIsUploadLoading] = useState(false);
     const [assetIdsLoading, setAssetIdsLoading] = useState<number[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const isEditing = useEditorState(appBridge);
     const isControllingStateExternally = isOpen !== undefined;
     const isFlyoutOpen = isControllingStateExternally ? isOpen : isFlyoutOpenInternal;
-
-    const draggedItem = internalItems?.find((item) => item.id === draggedAssetId);
 
     const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload({
         onUploadProgress: () => !isUploadLoading && setIsUploadLoading(true),
@@ -125,23 +107,6 @@ export const Attachments = ({
         setAssetIdsLoading(assetIdsLoading.filter((id) => id !== toReplace.id));
     };
 
-    const handleDragStart = (event: DragStartEvent) => {
-        const { active } = event;
-        setDraggedAssetId(active.id as number);
-    };
-
-    const handleDragEnd = (event: DragEndEvent) => {
-        const { active, over } = event;
-        if (over && active.id !== over.id && internalItems) {
-            const oldIndex = internalItems.findIndex((i) => i.id === active.id);
-            const newIndex = internalItems.findIndex((i) => i.id === over.id);
-            const sortedItems = arrayMove(internalItems, oldIndex, newIndex);
-            setInternalItems(sortedItems);
-            onSorted(sortedItems);
-        }
-        setDraggedAssetId(undefined);
-    };
-
     return isEditing || (internalItems?.length ?? 0) > 0 ? (
         <Tooltip
             withArrow
@@ -153,7 +118,7 @@ export const Attachments = ({
                 <div data-test-id="attachments-flyout-button">
                     <Flyout
                         placement={FlyoutPlacement.BottomRight}
-                        onOpenChange={(isOpen) => handleFlyoutOpenChange(!!draggedItem ? true : isOpen)}
+                        onOpenChange={handleFlyoutOpenChange}
                         isOpen={isFlyoutOpen}
                         hug={false}
                         fitContent
@@ -166,53 +131,27 @@ export const Attachments = ({
                     >
                         <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
                             {internalItems.length > 0 && (
-                                <DndContext
-                                    sensors={sensors}
-                                    collisionDetection={closestCenter}
-                                    onDragStart={handleDragStart}
-                                    onDragEnd={handleDragEnd}
-                                    modifiers={[restrictToWindowEdges]}
-                                >
-                                    <SortableContext items={internalItems} strategy={rectSortingStrategy}>
-                                        <div className="tw-border-b tw-border-b-line">
-                                            {internalItems.map((item) => (
-                                                <SortableAttachmentItem
-                                                    isEditing={isEditing}
-                                                    isLoading={assetIdsLoading.includes(item.id)}
-                                                    key={item.id}
-                                                    item={item}
-                                                    onDelete={() => onDelete(item)}
-                                                    onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
-                                                    onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                        onReplaceItemWithUpload(item, uploadedAsset)
-                                                    }
-                                                    onDownload={() =>
-                                                        appBridge.dispatch({
-                                                            name: 'downloadAsset',
-                                                            payload: item,
-                                                        })
-                                                    }
-                                                />
-                                            ))}
-                                        </div>
-                                    </SortableContext>
-                                    <DragOverlay>
-                                        {draggedItem && (
-                                            <AttachmentItem
-                                                isOverlay={true}
-                                                isEditing={isEditing}
-                                                key={draggedAssetId}
-                                                item={draggedItem}
-                                                isDragging={true}
-                                                onDelete={() => onDelete(draggedItem)}
-                                                onReplaceWithBrowse={() => onReplaceItemWithBrowse(draggedItem)}
-                                                onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                    onReplaceItemWithUpload(draggedItem, uploadedAsset)
-                                                }
-                                            />
-                                        )}
-                                    </DragOverlay>
-                                </DndContext>
+                                <div className="tw-border-b tw-border-b-line">
+                                    {internalItems.map((item) => (
+                                        <AttachmentItem
+                                            isEditing={isEditing}
+                                            isLoading={assetIdsLoading.includes(item.id)}
+                                            key={item.id}
+                                            item={item}
+                                            onDelete={() => onDelete(item)}
+                                            onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
+                                            onReplaceWithUpload={(uploadedAsset: Asset) =>
+                                                onReplaceItemWithUpload(item, uploadedAsset)
+                                            }
+                                            onDownload={() =>
+                                                appBridge.dispatch({
+                                                    name: 'downloadAsset',
+                                                    payload: item,
+                                                })
+                                            }
+                                        />
+                                    ))}
+                                </div>
                             )}
                             {isEditing && (
                                 <div className="tw-px-5 tw-py-3">

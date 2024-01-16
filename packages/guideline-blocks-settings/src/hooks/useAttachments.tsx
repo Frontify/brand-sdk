@@ -33,17 +33,10 @@ export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
         await updateAssetIdsFromKey(assetId, newAssetIds);
     };
 
-    const onAttachmentsSorted = async (assets: Asset[]) => {
-        const newAssetIds = assets.map((asset) => asset.id);
-
-        await updateAssetIdsFromKey(assetId, newAssetIds);
-    };
-
     return {
         onAttachmentsAdd,
         onAttachmentDelete,
         onAttachmentReplace,
-        onAttachmentsSorted,
         attachments,
         appBridge,
     };

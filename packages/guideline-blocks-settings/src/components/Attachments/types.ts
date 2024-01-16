@@ -16,18 +16,10 @@ export type AttachmentsProps = {
     onDelete: (attachmentToDelete: Asset) => void;
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
     onBrowse: (browserAttachments: Asset[]) => void;
-    onSorted: (sortedAttachments: Asset[]) => void;
     triggerComponent?: (props: AttachmentsTriggerProps) => JSX.Element;
 } & ({ isOpen?: never; onOpenChange?: never } | { isOpen: boolean; onOpenChange: (isOpen: boolean) => void });
 
-export type AttachmentItemProps = SortableAttachmentItemProps & {
-    isDragging?: boolean;
-    transformStyle?: Record<string, unknown>;
-    draggableProps?: Record<string, unknown>;
-    isOverlay?: boolean;
-};
-
-export type SortableAttachmentItemProps = {
+export type AttachmentItemProps = {
     item: Asset;
     isEditing: boolean;
     onDelete: () => void;
