@@ -186,6 +186,12 @@ export const Attachments = ({
                                                     onReplaceWithUpload={(uploadedAsset: Asset) =>
                                                         onReplaceItemWithUpload(item, uploadedAsset)
                                                     }
+                                                    onDownload={() =>
+                                                        appBridge.dispatch({
+                                                            name: 'downloadAsset',
+                                                            payload: item,
+                                                        })
+                                                    }
                                                 />
                                             ))}
                                         </div>

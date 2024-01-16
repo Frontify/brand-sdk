@@ -2,4 +2,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-fix: platform app compiler
+chore: update cli version of templates

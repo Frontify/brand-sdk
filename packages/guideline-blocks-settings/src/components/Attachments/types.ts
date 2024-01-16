@@ -34,4 +34,5 @@ export type SortableAttachmentItemProps = {
     isLoading?: boolean;
     onReplaceWithBrowse: () => void;
     onReplaceWithUpload: (uploadedAsset: Asset) => void;
+    onDownload?: () => Promise<void>;
 };

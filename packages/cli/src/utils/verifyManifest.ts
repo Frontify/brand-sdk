@@ -27,21 +27,21 @@ export const platformAppManifestSchemaV1 = object({
                         message: getForbiddenExtensionsErrorMessage('mediaLibrary'),
                     }),
                 ),
-            }),
+            }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
         iconLibrary: object({
             assetAction: object({
                 type: array(imageAssetType),
                 filenameExtension: array(iconLibraryFilenameExtension),
-            }),
+            }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
         logoLibrary: object({
             assetAction: object({
                 type: array(imageAssetType),
                 filenameExtension: array(logoLibraryFilenameExtension),
-            }),
+            }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
         documentLibrary: object({
@@ -52,10 +52,10 @@ export const platformAppManifestSchemaV1 = object({
                         message: getForbiddenExtensionsErrorMessage('documentLibrary'),
                     }),
                 ),
-            }),
+            }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
-        workspaceProject: object({
+        workspace: object({
             assetAction: object({
                 type: array(completeAssetType),
                 filenameExtension: array(
@@ -63,7 +63,7 @@ export const platformAppManifestSchemaV1 = object({
                         message: getForbiddenExtensionsErrorMessage('workspaceProject'),
                     }),
                 ),
-            }),
+            }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
     }).optional(),
