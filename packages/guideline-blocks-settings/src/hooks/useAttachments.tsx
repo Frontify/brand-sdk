@@ -3,7 +3,7 @@
 import { AppBridgeBlock, Asset, useBlockAssets } from '@frontify/app-bridge';
 import { type ReactNode, createContext, useContext } from 'react';
 
-import { type BlockProps } from '../';
+import { type BlockProps } from '../index';
 
 export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
     const { blockAssets, updateAssetIdsFromKey } = useBlockAssets(appBridge);
@@ -80,7 +80,7 @@ export const useAttachmentsContext = () => {
 /**
  * Block-level HOC for cases when there is only one attachment asset field related to the block.
  * Recommended for most cases.
- * If finer control is required over attachments, use AttachmentsProvider component.
+ * If finer control is required over attachments, use {@link AttachmentsProvider} component.
  */
 export const withAttachmentsProvider = <T extends BlockProps>(Component: (props: T) => ReactNode, assetId: string) => {
     const wrappedComponent = (props: T) => (
