@@ -1,5 +1,17 @@
 # @frontify/guideline-blocks-settings
 
+## 0.30.1
+
+### Patch Changes
+
+- [#691](https://github.com/Frontify/brand-sdk/pull/691) [`2a2f106`](https://github.com/Frontify/brand-sdk/commit/2a2f106c0f79c7d43dfddf3d0193fa9eeb7835a3) Thanks [@SamCreasey](https://github.com/SamCreasey)! - Toolbar components and types have been made available in build
+
+- [#692](https://github.com/Frontify/brand-sdk/pull/692) [`43866c2`](https://github.com/Frontify/brand-sdk/commit/43866c28fa470d5dbf4e61a7d42796904629fead) Thanks [@SamCreasey](https://github.com/SamCreasey)! - BlockItemToolbar: Force line-height to be 1 on toolbar items to prevent wrapping element height from being miscalculated.
+
+- Updated dependencies [[`3fa74ba`](https://github.com/Frontify/brand-sdk/commit/3fa74badfedd8c52661f23e0528dc35d8a10062d)]:
+  - @frontify/app-bridge@3.0.2
+  - @frontify/sidebar-settings@0.8.3
+
 ## 0.30.0
 
 ### Minor Changes
