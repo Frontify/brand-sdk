@@ -15,7 +15,7 @@ export type UseColorPalettesReturnType = {
 };
 
 export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: number[]): UseColorPalettesReturnType => {
-    const blockId = appBridge.getBlockId();
+    const blockId = appBridge.context('blockId').get();
 
     const [colorPalettes, setColorPalettes] = useState<ColorPalette[]>([]);
 
