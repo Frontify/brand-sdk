@@ -40,7 +40,6 @@
         "vitest": "^0.34.6"
     },
     "dependencies": {
-        "@frontify/app-bridge": "workspace:^",
         "@frontify/fondue": "12.0.0-beta.382"
     },
     "peerDependencies": {
