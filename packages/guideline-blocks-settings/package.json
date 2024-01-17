@@ -67,7 +67,7 @@
         "@dnd-kit/modifiers": "^7.0.0",
         "@dnd-kit/sortable": "^8.0.0",
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/fondue": "12.0.0-beta.382",
+        "@frontify/fondue": "12.0.0-beta.395",
         "@frontify/sidebar-settings": "workspace:^",
         "@react-aria/focus": "^3.14.0",
         "@react-stately/overlays": "^3.6.1",
