@@ -13,10 +13,10 @@ export const useReadyForPrint = (
     const [ready, setReady] = useState<boolean>(false);
 
     useEffect(() => {
-        const blockWrapper = document.querySelector(`.block[data-block="${appBridge.getBlockId()}"]`);
+        const blockWrapper = document.querySelector(`.block[data-block="${appBridge.context('blockId').get()}"]`);
 
         if (!blockWrapper) {
-            console.error('Could not find block wrapper:', appBridge.getBlockId());
+            console.error('Could not find block wrapper:', appBridge.context('blockId').get());
             return;
         }
 

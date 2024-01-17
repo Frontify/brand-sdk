@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.8
+
+### Patch Changes
+
+- [#676](https://github.com/Frontify/brand-sdk/pull/676) [`e6e2abd`](https://github.com/Frontify/brand-sdk/commit/e6e2abd0050c81ebff79e282e23c1fcf45ee4aea) Thanks [@julianiff](https://github.com/julianiff)! - chore: update cli version of templates
+
 ## 5.5.7
 
 ### Patch Changes

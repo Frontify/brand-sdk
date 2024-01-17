@@ -1,5 +1,21 @@
 # @frontify/guideline-blocks-settings
 
+## 0.30.0
+
+### Minor Changes
+
+- [#672](https://github.com/Frontify/brand-sdk/pull/672) [`22eb8eb`](https://github.com/Frontify/brand-sdk/commit/22eb8eb8dce8f2d4dccf040376b3368b2962a59b) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - Toolbar design updated
+  - Add Attachments to the Toolbar component. `isFlyoutOpen`, `setIsFlyoutOpen` and `flyoutItems` props have been removed from the Toolbar and replaced
+    with a `flyoutMenu` object (`{ items: FlyoutItem[]; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
+    `isFlyoutDisabled` prop has been removed.
+    `attachments` prop has been added (`{ isEnabled: boolean; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
+    To enable block attachments in the Toolbar from the `BlockWrapper` component, set `showAttachments` to `true` and wrap the block in the `withAttachmentsProvider` HOC or alternatively, wrap the `BlockWrapper` in an `AttachmentsProvider`.
+  - `onAddAttachments` has been replaced with `onAttachmentsAdd` in the object returned from `useAttachments` hook.
+
+### Patch Changes
+
+- [#679](https://github.com/Frontify/brand-sdk/pull/679) [`61edea9`](https://github.com/Frontify/brand-sdk/commit/61edea939fc9c2c64badafb054a5c254c8cef580) Thanks [@ragi96](https://github.com/ragi96)! - feat(Attachments): replace download function to use the appBridge
+
 ## 0.29.17
 
 ### Patch Changes

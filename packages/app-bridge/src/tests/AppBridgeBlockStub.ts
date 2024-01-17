@@ -2,8 +2,8 @@
 
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
-import { AppBridgeBlock } from '../AppBridgeBlock';
-import { Template, TemplateLegacy, User } from '../types';
+import { type AppBridgeBlock, type BlockContext, type BlockState } from '../AppBridgeBlock';
+import { type Template, type TemplateLegacy, type User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
@@ -13,6 +13,7 @@ import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
+import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -32,7 +33,16 @@ export type getAppBridgeBlockStubProps = {
     language?: string;
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
+    unsubscribe?: () => void;
 };
+
+type subscribeCallbackArguments = Record<string, unknown> & {
+    assets: Asset[];
+    template: TemplateLegacy;
+} & BlockState &
+    number &
+    [number | undefined, number | undefined] &
+    BlockContext;
 
 export const getAppBridgeBlockStub = ({
     blockSettings = {},
@@ -50,6 +60,7 @@ export const getAppBridgeBlockStub = ({
         assetDownloadEnabled: false,
     },
     blockTemplates = {},
+    unsubscribe = () => null,
 }: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
@@ -189,6 +200,40 @@ export const getAppBridgeBlockStub = ({
             })
             .resolves({ assetBulkDownloadToken: 'token' }),
 
+        context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
+            if (args === undefined) {
+                return {
+                    get: () => [blockId, sectionId],
+                };
+            } else {
+                switch (args) {
+                    case 'blockId':
+                        return {
+                            get: () => blockId,
+                        };
+                    case 'sectionId':
+                        return {
+                            get: () => sectionId,
+                        };
+                    default:
+                        return {
+                            get: () => {
+                                throw new Error(`Unknown context key: ${args}`);
+                            },
+                        };
+                }
+            }
+        }),
+
+        subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().callsFake((eventName, callback) => {
+            if (eventName === 'assetsChosen') {
+                callback({ assets: [AssetDummy.with(123)] } as subscribeCallbackArguments);
+            } else if (eventName === 'templateChosen') {
+                callback({ template: TemplateLegacyDummy.with(234) } as subscribeCallbackArguments);
+            }
+            return unsubscribe;
+        }),
+
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
         openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
@@ -213,8 +258,6 @@ export const getAppBridgeBlockStub = ({
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
-        context: stub<Parameters<AppBridgeBlock['context']>>().resolves(),
-        subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };
