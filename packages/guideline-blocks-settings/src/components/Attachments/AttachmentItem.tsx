@@ -3,18 +3,15 @@
 import { MutableRefObject, forwardRef, useEffect, useState } from 'react';
 import { Asset, useAssetUpload, useFileInput } from '@frontify/app-bridge';
 import { useSortable } from '@dnd-kit/sortable';
-import { useFocusRing } from '@react-aria/focus';
 
 import {
     ActionMenu,
     Button,
     ButtonEmphasis,
-    FOCUS_STYLE,
     Flyout,
     FlyoutPlacement,
     IconArrowCircleUp20,
     IconDocument24,
-    IconGrabHandle20,
     IconImage24,
     IconImageStack20,
     IconMusicNote24,
@@ -46,7 +43,6 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
         {
             item,
             isEditing,
-            draggableProps,
             transformStyle,
             isDragging,
             isOverlay,
@@ -61,7 +57,6 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
         const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>();
         const [openFileDialog, { selectedFiles }] = useFileInput({ multiple: true, accept: 'image/*' });
         const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload();
-        const { focusProps, isFocusVisible } = useFocusRing();
 
         useEffect(() => {
             if (selectedFiles) {
@@ -116,21 +111,6 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                             isOverlay || selectedAsset?.id === item.id ? 'tw-opacity-100' : 'tw-opacity-0',
                         ])}
                     >
-                        <button
-                            {...focusProps}
-                            {...draggableProps}
-                            aria-label="Drag attachment"
-                            className={joinClassNames([
-                                ' tw-border-button-border tw-bg-button-background active:tw-bg-button-background-pressed tw-group tw-border tw-box-box tw-relative tw-flex tw-items-center tw-justify-center tw-outline-none tw-font-medium tw-rounded tw-h-9 tw-w-9 ',
-                                isDragging || isOverlay
-                                    ? 'tw-cursor-grabbing tw-bg-button-background-pressed hover:tw-bg-button-background-pressed'
-                                    : 'tw-cursor-grab hover:tw-bg-button-background-hover',
-                                isFocusVisible && FOCUS_STYLE,
-                                isFocusVisible && 'tw-z-[2]',
-                            ])}
-                        >
-                            <IconGrabHandle20 />
-                        </button>
                         <div data-test-id="attachments-actionbar-flyout">
                             <Flyout
                                 placement={FlyoutPlacement.Right}

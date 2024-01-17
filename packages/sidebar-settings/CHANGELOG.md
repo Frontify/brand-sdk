@@ -1,5 +1,12 @@
 # @frontify/sidebar-settings
 
+## 0.8.3
+
+### Patch Changes
+
+- Updated dependencies [[`3fa74ba`](https://github.com/Frontify/brand-sdk/commit/3fa74badfedd8c52661f23e0528dc35d8a10062d)]:
+  - @frontify/app-bridge@3.0.2
+
 ## 0.8.2
 
 ### Patch Changes
