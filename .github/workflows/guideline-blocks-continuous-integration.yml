@@ -89,9 +89,8 @@ jobs:
               with:
                   path: |
                       ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-                      ~/.cache/Cypress
-                  key: pnpm-with-cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: pnpm-with-cypress-${{ runner.os }}-
+                  key: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
@@ -141,8 +140,8 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
                       ~/.cache/Cypress
-                  key: pnpm-with-cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: pnpm-with-cypress-${{ runner.os }}-
+                  key: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
