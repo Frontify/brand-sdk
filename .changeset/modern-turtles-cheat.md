@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-Add line-height class to `AttachmentsButtonTrigger`.
+fix(Attachments): Add line-height class to `AttachmentsButtonTrigger`.
