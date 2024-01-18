@@ -60,6 +60,9 @@ jobs:
 
     unit-tests:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                app-bridge-version: ["3.0.0", "workspace:^"]
         timeout-minutes: 10
 
         steps:
@@ -93,14 +96,24 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Build local dependencies
-              run: pnpm build:app-bridge && pnpm build:sidebar-settings
+            - name: Build build:sidebar-settings
+              run: pnpm build:sidebar-settings
+
+            - name: Build @frontify/app-bridge (if workspace)
+              if: matrix.app-bridge-version == 'workspace:^'
+              run: pnpm --stream --filter @frontify/app-bridge build
+
+            - name: Add app-bridge dependency
+              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
             - name: Unit Tests
               run: pnpm --stream --filter {packages/guideline-blocks-settings} test
 
     component-tests:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                app-bridge-version: ["3.0.0", "workspace:^"]
         timeout-minutes: 10
 
         steps:
@@ -134,8 +147,15 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Build local dependencies
-              run: pnpm build:app-bridge && pnpm build:sidebar-settings
+            - name: Build build:sidebar-settings
+              run: pnpm build:sidebar-settings
+
+            - name: Build @frontify/app-bridge (if workspace)
+              if: matrix.app-bridge-version == 'workspace:^'
+              run: pnpm --stream --filter @frontify/app-bridge build
+
+            - name: Add app-bridge dependency
+              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
             - name: Component Tests
               run: pnpm test:components
