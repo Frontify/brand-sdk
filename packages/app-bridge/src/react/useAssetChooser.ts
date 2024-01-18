@@ -10,7 +10,7 @@ type UseAssetChooserType = {
     closeAssetChooser: () => void;
 };
 
-export const useAssetChoosers = (appBridge: AppBridgeBlock): UseAssetChooserType => {
+export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     let unsubscribe: EventUnsubscribeFunction;
 
     return {
