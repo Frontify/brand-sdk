@@ -1,5 +1,20 @@
 # @frontify/guideline-blocks-settings
 
+## 0.30.2
+
+### Patch Changes
+
+- [#687](https://github.com/Frontify/brand-sdk/pull/687) [`b044981`](https://github.com/Frontify/brand-sdk/commit/b0449814d55554e82507e1341d0f42a35f17a5e5) Thanks [@ragi96](https://github.com/ragi96)! - chore(Attachments): replace deprecated functions with hooks
+
+- [#696](https://github.com/Frontify/brand-sdk/pull/696) [`edc00b0`](https://github.com/Frontify/brand-sdk/commit/edc00b0cb1b04753e1563231eb1e28f9e7d05670) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(Attachments): Add line-height class to `AttachmentsButtonTrigger`.
+
+- [#695](https://github.com/Frontify/brand-sdk/pull/695) [`d7764c1`](https://github.com/Frontify/brand-sdk/commit/d7764c129ee1d61aaed4ce519e70eb5d0984bfec) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump @frontify/fondue to v12.0.0-beta.395
+
+- [#689](https://github.com/Frontify/brand-sdk/pull/689) [`6c34c1c`](https://github.com/Frontify/brand-sdk/commit/6c34c1c8e354f95bb873a70bceef0939198574c4) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): temporarily disable sorting
+
+- Updated dependencies [[`d79e69a`](https://github.com/Frontify/brand-sdk/commit/d79e69a1c6d8f901b7f91866a92fd0d99363f07d), [`d7764c1`](https://github.com/Frontify/brand-sdk/commit/d7764c129ee1d61aaed4ce519e70eb5d0984bfec)]:
+  - @frontify/sidebar-settings@0.9.0
+
 ## 0.30.1
 
 ### Patch Changes
