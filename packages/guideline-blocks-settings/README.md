@@ -58,3 +58,17 @@ import '@frontify/guideline-blocks-settings/styles';
 ## Development
 
 Run `pnpm build` to make changes directly available to the linked packages.
+
+To run the tests, linter, or type checker, first update @frontify/app-bridge. For the latest version, execute:
+
+```
+pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
+```
+
+For a specific version, such as 3.0.2, execute:
+
+```
+pnpm add @frontify/app-bridge@workspace:3.0.2 --filter {packages/guideline-blocks-settings}
+```
+
+After updating, you can run the following commands as needed. For testing, use `pnpm test`. For linting, use `pnpm lint`. For type checking, use `pnpm typecheck`.
