@@ -356,9 +356,6 @@ importers:
 
   packages/sidebar-settings:
     dependencies:
-      '@frontify/app-bridge':
-        specifier: workspace:^
-        version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.395
         version: 12.0.0-beta.395(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.5)(ts-node@10.9.1)(zustand@3.7.2)
