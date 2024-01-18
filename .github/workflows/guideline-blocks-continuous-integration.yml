@@ -47,7 +47,7 @@ jobs:
 
             - name: Build @frontify/app-bridge (if workspace)
               if: matrix.app-bridge-version == 'workspace:^'
-              run: pnpm --stream --filter @frontify/app-bridge build
+              run: pnpm build:app-bridge
 
             - name: Add app-bridge dependency
               run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
@@ -101,7 +101,7 @@ jobs:
 
             - name: Build @frontify/app-bridge (if workspace)
               if: matrix.app-bridge-version == 'workspace:^'
-              run: pnpm --stream --filter @frontify/app-bridge build
+              run: pnpm build:app-bridge
 
             - name: Add app-bridge dependency
               run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
@@ -152,7 +152,7 @@ jobs:
 
             - name: Build @frontify/app-bridge (if workspace)
               if: matrix.app-bridge-version == 'workspace:^'
-              run: pnpm --stream --filter @frontify/app-bridge build
+              run: pnpm build:app-bridge
 
             - name: Add app-bridge dependency
               run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
