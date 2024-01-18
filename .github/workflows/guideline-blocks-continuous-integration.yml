@@ -17,6 +17,9 @@ env:
 jobs:
     lint-typecheck:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                app-bridge-version: ["3.0.0", "workspace:^"]
         timeout-minutes: 10
 
         steps:
@@ -40,7 +43,10 @@ jobs:
               run: pnpm i --frozen-lockfile
 
             - name: Build build:sidebar-settings
-              run: pnpm build:app-bridge && pnpm build:sidebar-settings
+              run: pnpm build:sidebar-settings
+
+            - name: Add app-bridge dependency
+              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
             - name: Typecheck code
               run: pnpm --stream --filter {packages/guideline-blocks-settings} typecheck
