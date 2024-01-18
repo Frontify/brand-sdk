@@ -1,5 +1,15 @@
 # @frontify/sidebar-settings
 
+## 0.9.0
+
+### Minor Changes
+
+- [#694](https://github.com/Frontify/brand-sdk/pull/694) [`d79e69a`](https://github.com/Frontify/brand-sdk/commit/d79e69a1c6d8f901b7f91866a92fd0d99363f07d) Thanks [@ragi96](https://github.com/ragi96)! - chore: decouples the sidebar-settings from the app-bridge
+
+### Patch Changes
+
+- [#695](https://github.com/Frontify/brand-sdk/pull/695) [`d7764c1`](https://github.com/Frontify/brand-sdk/commit/d7764c129ee1d61aaed4ce519e70eb5d0984bfec) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump @frontify/fondue to v12.0.0-beta.395
+
 ## 0.8.3
 
 ### Patch Changes
