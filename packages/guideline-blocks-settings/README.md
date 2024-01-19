@@ -68,7 +68,7 @@ pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-se
 For a specific version, such as 3.0.2, execute:
 
 ```
-pnpm add @frontify/app-bridge@workspace:3.0.2 --filter {packages/guideline-blocks-settings}
+pnpm add @frontify/app-bridge@3.0.2 --filter {packages/guideline-blocks-settings}
 ```
 
 After updating, you can run the following commands as needed. For testing, use `pnpm test`. For linting, use `pnpm lint`. For type checking, use `pnpm typecheck`.
