@@ -65,9 +65,6 @@ jobs:
         steps:
             - name: Checkout default branch
               uses: actions/checkout@v4
-              with:
-                  # Disabling shallow clone is recommended for improving relevancy of reporting
-                  fetch-depth: 0
 
             - name: Use pnpm
               uses: pnpm/action-setup@v2
