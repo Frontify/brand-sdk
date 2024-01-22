@@ -35,7 +35,7 @@ jobs:
               run: pnpm i --frozen-lockfile
 
             - name: Add app-bridge dependency for guideline-blocks-settings
-              run: pnpm add @frontify/app-bridge@$workspace:^ --filter {packages/guideline-blocks-settings}
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
 
             - name: Lint code
               run: pnpm lint
@@ -66,7 +66,7 @@ jobs:
               run: pnpm build
 
             - name: Add app-bridge dependency for guideline-blocks-settings
-              run: pnpm add @frontify/app-bridge@$workspace:^ --filter {packages/guideline-blocks-settings}
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
 
             - name: Typecheck code
               run: pnpm typecheck
@@ -97,7 +97,7 @@ jobs:
               run: pnpm build
 
             - name: Add app-bridge dependency for guideline-blocks-settings
-              run: pnpm add @frontify/app-bridge@$workspace:^ --filter {packages/guideline-blocks-settings}
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
 
             - name: Test code
               run: pnpm test
@@ -141,7 +141,7 @@ jobs:
               run: pnpm build:app-bridge && pnpm build:sidebar-settings
 
             - name: Add app-bridge dependency for guideline-blocks-settings
-              run: pnpm add @frontify/app-bridge@$workspace:^ --filter {packages/guideline-blocks-settings}
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
 
             - name: Component Tests
               run: pnpm test:components
