@@ -1,15 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
 import { Attachments as AttachmentsComponent } from './Attachments';
 import { AttachmentsProps } from './types';
-import type { SinonStub } from 'sinon';
+import { SinonStub } from 'sinon';
 
 const FlyoutButtonSelector = '[data-test-id="attachments-flyout-button"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';
 const ActionBarSelector = '[data-test-id="attachments-actionbar"]';
-const DragHandleSelector = '[data-test-id="attachments-actionbar"] > button';
 const FlyoutTriggerSelector = '[data-test-id="attachments-actionbar-flyout"] button';
 const AttachmentItemSelector = '[data-test-id="attachments-item"]';
 const MenuItemSelector = '[data-test-id="menu-item"]';
@@ -37,6 +36,11 @@ const Attachments = ({
             onUpload={onUpload}
         />
     );
+};
+
+const isPre302Stub = async (appBridge: AppBridgeBlock): Promise<boolean> => {
+    const context = appBridge.context();
+    return context === undefined;
 };
 
 describe('Attachments', () => {
@@ -85,11 +89,14 @@ describe('Attachments', () => {
         cy.get(AttachmentItemSelector).should('have.length', 3);
     });
 
-    it('renders loading circle for attachment item', () => {
+    it('renders loading circle for attachment item', async () => {
         const appBridge = getAppBridgeBlockStub({
             editorState: true,
         });
-        (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
+
+        if (await isPre302Stub(appBridge)) {
+            (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
+        }
 
         cy.clock();
         const replaceStub = () =>
@@ -126,26 +133,8 @@ describe('Attachments', () => {
         cy.get(FlyoutButtonSelector).click();
         cy.realPress('Tab');
         cy.realPress('Tab');
-        cy.realPress('Tab');
         cy.get(FlyoutTriggerSelector).eq(0).should('have.class', 'focus-visible:tw-ring-blue');
         cy.get(FlyoutTriggerSelector).eq(0).type('{enter}');
         cy.get(MenuItemSelector).should('exist');
-    });
-
-    it('reorders items using only keyboard events', () => {
-        const onSortStub = cy.stub();
-        mount(
-            <Attachments
-                appBridge={getAppBridgeBlockStub({ editorState: true })}
-                items={[{ ...AssetDummy.with(1), title: 'Moved item' }, AssetDummy.with(2), AssetDummy.with(3)]}
-                onSorted={onSortStub}
-            />,
-        );
-        cy.get(FlyoutButtonSelector).click();
-        cy.realPress('Tab');
-        cy.realPress('Tab');
-        cy.realPress('Tab');
-        cy.get(DragHandleSelector).eq(0).type(' {downarrow}{downarrow} ');
-        cy.get(AttachmentItemSelector).eq(1).should('contain.text', 'Moved item');
     });
 });

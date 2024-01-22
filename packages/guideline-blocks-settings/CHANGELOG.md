@@ -1,5 +1,61 @@
 # @frontify/guideline-blocks-settings
 
+## 0.31.0
+
+### Minor Changes
+
+- [#698](https://github.com/Frontify/brand-sdk/pull/698) [`1003fea`](https://github.com/Frontify/brand-sdk/commit/1003feab2b08e4cc4db5629306e2f25cda8bae86) Thanks [@ragi96](https://github.com/ragi96)! - feat: move @frontify/app-bridge to peer dependencies
+
+### Patch Changes
+
+- [#697](https://github.com/Frontify/brand-sdk/pull/697) [`759188b`](https://github.com/Frontify/brand-sdk/commit/759188b28219e23ef7ce19edbc2d5e3248270ea8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bumps @frontify/fondue to 12.0.0-beta.396
+
+- Updated dependencies [[`759188b`](https://github.com/Frontify/brand-sdk/commit/759188b28219e23ef7ce19edbc2d5e3248270ea8)]:
+  - @frontify/sidebar-settings@0.9.1
+
+## 0.30.2
+
+### Patch Changes
+
+- [#687](https://github.com/Frontify/brand-sdk/pull/687) [`b044981`](https://github.com/Frontify/brand-sdk/commit/b0449814d55554e82507e1341d0f42a35f17a5e5) Thanks [@ragi96](https://github.com/ragi96)! - chore(Attachments): replace deprecated functions with hooks
+
+- [#696](https://github.com/Frontify/brand-sdk/pull/696) [`edc00b0`](https://github.com/Frontify/brand-sdk/commit/edc00b0cb1b04753e1563231eb1e28f9e7d05670) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(Attachments): Add line-height class to `AttachmentsButtonTrigger`.
+
+- [#695](https://github.com/Frontify/brand-sdk/pull/695) [`d7764c1`](https://github.com/Frontify/brand-sdk/commit/d7764c129ee1d61aaed4ce519e70eb5d0984bfec) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump @frontify/fondue to v12.0.0-beta.395
+
+- [#689](https://github.com/Frontify/brand-sdk/pull/689) [`6c34c1c`](https://github.com/Frontify/brand-sdk/commit/6c34c1c8e354f95bb873a70bceef0939198574c4) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): temporarily disable sorting
+
+- Updated dependencies [[`d79e69a`](https://github.com/Frontify/brand-sdk/commit/d79e69a1c6d8f901b7f91866a92fd0d99363f07d), [`d7764c1`](https://github.com/Frontify/brand-sdk/commit/d7764c129ee1d61aaed4ce519e70eb5d0984bfec)]:
+  - @frontify/sidebar-settings@0.9.0
+
+## 0.30.1
+
+### Patch Changes
+
+- [#691](https://github.com/Frontify/brand-sdk/pull/691) [`2a2f106`](https://github.com/Frontify/brand-sdk/commit/2a2f106c0f79c7d43dfddf3d0193fa9eeb7835a3) Thanks [@SamCreasey](https://github.com/SamCreasey)! - Toolbar components and types have been made available in build
+
+- [#692](https://github.com/Frontify/brand-sdk/pull/692) [`43866c2`](https://github.com/Frontify/brand-sdk/commit/43866c28fa470d5dbf4e61a7d42796904629fead) Thanks [@SamCreasey](https://github.com/SamCreasey)! - BlockItemToolbar: Force line-height to be 1 on toolbar items to prevent wrapping element height from being miscalculated.
+
+- Updated dependencies [[`3fa74ba`](https://github.com/Frontify/brand-sdk/commit/3fa74badfedd8c52661f23e0528dc35d8a10062d)]:
+  - @frontify/app-bridge@3.0.2
+  - @frontify/sidebar-settings@0.8.3
+
+## 0.30.0
+
+### Minor Changes
+
+- [#672](https://github.com/Frontify/brand-sdk/pull/672) [`22eb8eb`](https://github.com/Frontify/brand-sdk/commit/22eb8eb8dce8f2d4dccf040376b3368b2962a59b) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - Toolbar design updated
+  - Add Attachments to the Toolbar component. `isFlyoutOpen`, `setIsFlyoutOpen` and `flyoutItems` props have been removed from the Toolbar and replaced
+    with a `flyoutMenu` object (`{ items: FlyoutItem[]; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
+    `isFlyoutDisabled` prop has been removed.
+    `attachments` prop has been added (`{ isEnabled: boolean; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
+    To enable block attachments in the Toolbar from the `BlockWrapper` component, set `showAttachments` to `true` and wrap the block in the `withAttachmentsProvider` HOC or alternatively, wrap the `BlockWrapper` in an `AttachmentsProvider`.
+  - `onAddAttachments` has been replaced with `onAttachmentsAdd` in the object returned from `useAttachments` hook.
+
+### Patch Changes
+
+- [#679](https://github.com/Frontify/brand-sdk/pull/679) [`61edea9`](https://github.com/Frontify/brand-sdk/commit/61edea939fc9c2c64badafb054a5c254c8cef580) Thanks [@ragi96](https://github.com/ragi96)! - feat(Attachments): replace download function to use the appBridge
+
 ## 0.29.17
 
 ### Patch Changes

@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
-import { renderHook, waitFor } from '@testing-library/react';
-
+import { render, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { useAttachments } from './useAttachments';
+
+import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachmentsProvider } from './useAttachments';
 
 const MOCK_SETTINGS_ID = 'attachments';
 
@@ -20,7 +20,7 @@ describe('useAttachments', () => {
         });
         const { result } = renderHook(() => useAttachments(STUB_WITH_NO_ASSETS, MOCK_SETTINGS_ID));
 
-        await result.current.onAddAttachments([AssetDummy.with(1)]);
+        await result.current.onAttachmentsAdd([AssetDummy.with(1)]);
         await waitFor(() => {
             expect(result.current.attachments).toHaveLength(1);
         });
@@ -75,5 +75,56 @@ describe('useAttachments', () => {
             expect(result.current.attachments[1].id).toBe(2);
             expect(result.current.attachments[2].id).toBe(1);
         });
+    });
+});
+
+describe('useAttachmentsContext', () => {
+    it('should throw an error when not a child of a provider', async () => {
+        expect(() => renderHook(() => useAttachmentsContext())).toThrowError();
+    });
+
+    it('should return correct info', async () => {
+        const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
+            blockId: 1,
+            blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1)] },
+        });
+        const { result } = renderHook(useAttachmentsContext, {
+            wrapper: ({ children }) => (
+                <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_SETTINGS_ID}>
+                    {children}
+                </AttachmentsProvider>
+            ),
+        });
+
+        expect(result.current.appBridge).toEqual(STUB_WITH_NO_ASSETS);
+        await waitFor(() => {
+            expect(result.current.attachments).toHaveLength(1);
+        });
+    });
+});
+
+describe('withAttachmentsProvider', () => {
+    it('should provide correct info to context consumer', async () => {
+        const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
+            blockId: 2,
+            blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
+        });
+
+        const Component = withAttachmentsProvider(() => {
+            const context = useAttachmentsContext();
+            return (
+                <ul>
+                    {context.attachments.map((attachment) => (
+                        <li key={attachment.id} role="list">
+                            {attachment.id}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }, MOCK_SETTINGS_ID);
+
+        const { getAllByRole } = render(<Component appBridge={STUB_WITH_THREE_ASSETS} />);
+
+        await waitFor(() => expect(getAllByRole('list')).toHaveLength(3));
     });
 });
