@@ -17,6 +17,9 @@ env:
 jobs:
     lint-typecheck:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                app-bridge-version: ["3.0.0", "workspace:^"]
         timeout-minutes: 10
 
         steps:
@@ -40,13 +43,26 @@ jobs:
               run: pnpm i --frozen-lockfile
 
             - name: Build build:sidebar-settings
-              run: pnpm build:app-bridge && pnpm build:sidebar-settings
+              run: pnpm build:sidebar-settings
 
-            - name: Build package (+ typechecking)
-              run: pnpm build:guideline-blocks-settings
+            - name: Build @frontify/app-bridge (if workspace)
+              if: matrix.app-bridge-version == 'workspace:^'
+              run: pnpm build:app-bridge
 
-    component-tests:
+            - name: Add app-bridge dependency
+              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
+
+            - name: Typecheck code
+              run: pnpm --stream --filter {packages/guideline-blocks-settings} typecheck
+
+            - name: Lint code
+              run: pnpm --stream --filter {packages/guideline-blocks-settings} lint
+
+    unit-tests:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                app-bridge-version: ["3.0.0", "workspace:^"]
         timeout-minutes: 10
 
         steps:
@@ -66,7 +82,57 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+              run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+            - name: Setup pnpm cache
+              uses: actions/cache@v3
+              with:
+                  path: |
+                      ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+                  key: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build build:sidebar-settings
+              run: pnpm build:sidebar-settings
+
+            - name: Build @frontify/app-bridge (if workspace)
+              if: matrix.app-bridge-version == 'workspace:^'
+              run: pnpm build:app-bridge
+
+            - name: Add app-bridge dependency
+              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
+
+            - name: Unit Tests
+              run: pnpm --stream --filter {packages/guideline-blocks-settings} test
+
+    component-tests:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                app-bridge-version: ["3.0.0", "workspace:^"]
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout current commit
+              uses: actions/checkout@v4
+
+            - name: Use Node.js ${{ env.NODE_VERSION }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+
+            - name: Use pnpm
+              uses: pnpm/action-setup@v2.4.0
+              with:
+                  version: latest
+                  run_install: false
+
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Setup pnpm cache
               uses: actions/cache@v3
@@ -74,14 +140,21 @@ jobs:
                   path: |
                       ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
                       ~/.cache/Cypress
-                  key: pnpm-with-cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: pnpm-with-cypress-${{ runner.os }}-
+                  key: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Build local dependencies
-              run: pnpm build:app-bridge && pnpm build:sidebar-settings
+            - name: Build build:sidebar-settings
+              run: pnpm build:sidebar-settings
+
+            - name: Build @frontify/app-bridge (if workspace)
+              if: matrix.app-bridge-version == 'workspace:^'
+              run: pnpm build:app-bridge
+
+            - name: Add app-bridge dependency
+              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
             - name: Component Tests
               run: pnpm test:components

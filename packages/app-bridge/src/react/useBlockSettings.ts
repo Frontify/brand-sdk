@@ -13,7 +13,7 @@ export type BlockSettingsUpdateEvent<T = Record<string, unknown>> = {
 export const useBlockSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeBlock,
 ): [T, (newSettings: Partial<T>) => Promise<void>] => {
-    const blockId = appBridge.getBlockId();
+    const blockId = appBridge.context('blockId').get();
     const [blockSettings, setBlockSettings] = useState<T>(structuredClone(window.blockSettings[blockId]) as T);
 
     // Add listener for block settings updates

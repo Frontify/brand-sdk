@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.0.2
+
+### Patch Changes
+
+- [#680](https://github.com/Frontify/brand-sdk/pull/680) [`3fa74ba`](https://github.com/Frontify/brand-sdk/commit/3fa74badfedd8c52661f23e0528dc35d8a10062d) Thanks [@ragi96](https://github.com/ragi96)! - chore: replace usage of deprecated appBridgeBlock functions
+
 ## 3.0.1
 
 ### Patch Changes

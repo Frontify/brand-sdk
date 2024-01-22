@@ -40,11 +40,8 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
-            - name: Build app-bridge
-              run: pnpm build:app-bridge
-
             - name: Lint code
               run: pnpm --stream --filter {packages/sidebar-settings} lint
 
-            - name: Build package (+ typechecking)
-              run: pnpm build:sidebar-settings
+            - name: Typecheck code
+              run: pnpm --stream --filter {packages/sidebar-settings} typecheck
