@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.31.0
+
+### Minor Changes
+
+- [#698](https://github.com/Frontify/brand-sdk/pull/698) [`1003fea`](https://github.com/Frontify/brand-sdk/commit/1003feab2b08e4cc4db5629306e2f25cda8bae86) Thanks [@ragi96](https://github.com/ragi96)! - feat: move @frontify/app-bridge to peer dependencies
+
+### Patch Changes
+
+- [#697](https://github.com/Frontify/brand-sdk/pull/697) [`759188b`](https://github.com/Frontify/brand-sdk/commit/759188b28219e23ef7ce19edbc2d5e3248270ea8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bumps @frontify/fondue to 12.0.0-beta.396
+
+- Updated dependencies [[`759188b`](https://github.com/Frontify/brand-sdk/commit/759188b28219e23ef7ce19edbc2d5e3248270ea8)]:
+  - @frontify/sidebar-settings@0.9.1
+
 ## 0.30.2
 
 ### Patch Changes
