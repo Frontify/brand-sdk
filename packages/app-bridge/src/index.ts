@@ -13,6 +13,5 @@ export * from './errors';
 export * from './helpers';
 export * from './registries';
 export * from './react';
-export * from './tests';
 export * from './types';
 export * from './utilities';

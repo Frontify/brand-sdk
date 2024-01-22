@@ -29,6 +29,11 @@
             "import": "./dist/testing.mjs",
             "require": "./dist/testing.js"
         },
+        "./testing": {
+            "types": "./dist/testing.d.ts",
+            "import": "./dist/testing.es.js",
+            "require": "./dist/testing.umd.js"
+        },
         "./upload-worker": "./dist/upload.worker.js"
     },
     "engines": {
