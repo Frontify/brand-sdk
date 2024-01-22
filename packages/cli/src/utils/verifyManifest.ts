@@ -6,7 +6,9 @@ const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
     `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
 
-const assetCreationShape = object({}).optional();
+const assetCreationShape = object({
+    title: string().min(1).max(40),
+}).optional();
 
 const completeAssetType = z.enum(['audio', 'document', 'image', 'video', 'file', 'embeddedContent']);
 const imageAssetType = completeAssetType.exclude(['audio', 'document', 'video', 'file', 'embeddedContent']);
@@ -21,6 +23,7 @@ export const platformAppManifestSchemaV1 = object({
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({
+                title: string().min(2).max(28),
                 type: array(completeAssetType),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
@@ -32,6 +35,7 @@ export const platformAppManifestSchemaV1 = object({
         }).optional(),
         iconLibrary: object({
             assetAction: object({
+                title: string().min(2).max(28),
                 type: array(imageAssetType),
                 filenameExtension: array(iconLibraryFilenameExtension),
             }).optional(),
@@ -39,6 +43,7 @@ export const platformAppManifestSchemaV1 = object({
         }).optional(),
         logoLibrary: object({
             assetAction: object({
+                title: string().min(2).max(28),
                 type: array(imageAssetType),
                 filenameExtension: array(logoLibraryFilenameExtension),
             }).optional(),
@@ -46,6 +51,7 @@ export const platformAppManifestSchemaV1 = object({
         }).optional(),
         documentLibrary: object({
             assetAction: object({
+                title: string().min(2).max(28),
                 type: array(completeAssetType),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
@@ -57,6 +63,7 @@ export const platformAppManifestSchemaV1 = object({
         }).optional(),
         workspace: object({
             assetAction: object({
+                title: string().min(2).max(28),
                 type: array(completeAssetType),
                 filenameExtension: array(
                     string().refine((value) => !forbiddenExtensions.includes(value), {
