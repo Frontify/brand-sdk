@@ -12,7 +12,6 @@ type UseAssetChooserType = {
 
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     let unsubscribe: EventUnsubscribeFunction;
-
     return {
         openAssetChooser: (callback, options) => {
             appBridge.dispatch(openAssetChooser(options));
