@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
+import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { mount } from 'cypress/react18';
 import { Attachments as AttachmentsComponent } from './Attachments';
 import { AttachmentsProps } from './types';

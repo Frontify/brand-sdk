@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { PluginComposer } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
 import type { SinonStub } from 'sinon';

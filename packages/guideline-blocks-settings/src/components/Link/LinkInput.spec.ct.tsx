@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
+import { withAppBridgeBlockStubs } from '@frontify/app-bridge/testing';
 import { mount } from 'cypress/react18';
 import { LinkInput } from './LinkInput';
 import { ButtonSize, CheckboxState } from '@frontify/fondue';

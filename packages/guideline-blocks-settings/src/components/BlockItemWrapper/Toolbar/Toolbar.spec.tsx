@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { render } from '@testing-library/react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
