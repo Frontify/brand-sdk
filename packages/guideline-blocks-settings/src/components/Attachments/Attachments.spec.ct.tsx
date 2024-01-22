@@ -43,6 +43,12 @@ const isPre302Stub = async (appBridge: AppBridgeBlock): Promise<boolean> => {
     return context === undefined;
 };
 
+const hasOpenAssetChooser = (
+    appBridge: AppBridgeBlock,
+): appBridge is AppBridgeBlock & { openAssetChooser: SinonStub } => {
+    return 'openAssetChooser' in appBridge;
+};
+
 describe('Attachments', () => {
     it('renders attachments flyout if it is in edit mode', () => {
         mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} />);
@@ -94,8 +100,8 @@ describe('Attachments', () => {
             editorState: true,
         });
 
-        if (await isPre302Stub(appBridge)) {
-            (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
+        if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
+            appBridge.openAssetChooser = cy.stub().callsArgWith(0, AssetDummy.with(4));
         }
 
         cy.clock();
