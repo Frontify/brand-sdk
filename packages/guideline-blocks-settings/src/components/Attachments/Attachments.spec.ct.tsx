@@ -101,7 +101,7 @@ describe('Attachments', () => {
         });
 
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
-            appBridge.openAssetChooser = cy.stub().callsArgWith(0, AssetDummy.with(4));
+            (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
         }
 
         cy.clock();
