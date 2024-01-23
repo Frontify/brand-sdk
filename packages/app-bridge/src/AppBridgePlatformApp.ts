@@ -59,7 +59,7 @@ export type PlatformAppContext = AppBaseProps &
               brandId: string;
               domain: string;
               parentId: string;
-              type: 'ASSET_ACTION';
+              type: 'assetAction';
           }
         | {
               brandId: string;
