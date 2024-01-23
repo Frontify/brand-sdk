@@ -75,7 +75,7 @@
         "slate-react": "^0.98.3"
     },
     "peerDependencies": {
-        "@frontify/app-bridge": "^3.0.0",
+        "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha.0",
         "react": "^18",
         "react-dom": "^18"
     }
