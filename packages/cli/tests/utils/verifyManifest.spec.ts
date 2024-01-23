@@ -9,10 +9,13 @@ const VALID_MANIFEST = {
     surfaces: {
         mediaLibrary: {
             assetAction: {
+                title: 'action title',
                 type: ['image', 'video'],
                 filenameExtension: ['png'],
             },
-            assetCreation: {},
+            assetCreation: {
+                title: 'action title',
+            },
         },
     },
     metadata: {
@@ -101,6 +104,46 @@ const VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL = {
     },
 };
 
+const MANIFEST_WITH_TOO_LONG_TITLE_ASSET_ACTION = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title action title action title action title action title action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title action title action title action title action title action title action title action title action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     it('should validate a valid manifest', async () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
@@ -134,6 +177,18 @@ describe('Verify Platform App Manifest', () => {
     it('should throw error when appId is not of length 25', async () => {
         await expect(
             async () => await verifyManifest(MANIFEST_WITH_SHORT_ID, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when asset action title is too long', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_ACTION, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when asset creation title is too long', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 });
