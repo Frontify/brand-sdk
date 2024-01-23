@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.0.3
+
+### Patch Changes
+
+- [#711](https://github.com/Frontify/brand-sdk/pull/711) [`6672186`](https://github.com/Frontify/brand-sdk/commit/6672186580907a4ef74870696bb3720da1390f30) Thanks [@julianiff](https://github.com/julianiff)! - refactor: change variable order
+
 ## 3.0.2
 
 ### Patch Changes
