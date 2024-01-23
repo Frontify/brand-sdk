@@ -34,6 +34,9 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
+            - name: Add app-bridge dependency for guideline-blocks-settings
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
+
             - name: Lint code
               run: pnpm lint
 
@@ -61,6 +64,9 @@ jobs:
 
             - name: Build the packages
               run: pnpm build
+
+            - name: Add app-bridge dependency for guideline-blocks-settings
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
 
             - name: Typecheck code
               run: pnpm typecheck
@@ -90,6 +96,9 @@ jobs:
             - name: Build the packages
               run: pnpm build
 
+            - name: Add app-bridge dependency for guideline-blocks-settings
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
+
             - name: Test code
               run: pnpm test
 
@@ -114,7 +123,7 @@ jobs:
 
             - name: Get pnpm store directory
               id: pnpm-cache
-              run: echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+              run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
             - name: Setup pnpm cache
               uses: actions/cache@v3
@@ -130,6 +139,9 @@ jobs:
 
             - name: Build local dependencies
               run: pnpm build:app-bridge && pnpm build:sidebar-settings
+
+            - name: Add app-bridge dependency for guideline-blocks-settings
+              run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
 
             - name: Component Tests
               run: pnpm test:components

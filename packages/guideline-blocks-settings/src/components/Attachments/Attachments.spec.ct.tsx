@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
 import { Attachments as AttachmentsComponent } from './Attachments';
 import { AttachmentsProps } from './types';
+import { SinonStub } from 'sinon';
 
 const FlyoutButtonSelector = '[data-test-id="attachments-flyout-button"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';
@@ -35,6 +36,17 @@ const Attachments = ({
             onUpload={onUpload}
         />
     );
+};
+
+const isPre302Stub = async (appBridge: AppBridgeBlock): Promise<boolean> => {
+    const context = appBridge.context();
+    return context === undefined;
+};
+
+const hasOpenAssetChooser = (
+    appBridge: AppBridgeBlock,
+): appBridge is AppBridgeBlock & { openAssetChooser: SinonStub } => {
+    return 'openAssetChooser' in appBridge;
 };
 
 describe('Attachments', () => {
@@ -83,10 +95,14 @@ describe('Attachments', () => {
         cy.get(AttachmentItemSelector).should('have.length', 3);
     });
 
-    it('renders loading circle for attachment item', () => {
+    it('renders loading circle for attachment item', async () => {
         const appBridge = getAppBridgeBlockStub({
             editorState: true,
         });
+
+        if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
+            (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
+        }
 
         cy.clock();
         const replaceStub = () =>
