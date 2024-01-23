@@ -8,10 +8,6 @@ import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
 
-/**
- * @vitest-environment happy-dom
- */
-
 const ATTACHMENTS_FLYOUT_ID = 'attachments-flyout-content';
 const MENU_FLYOUT_ID = 'menu-item';
 

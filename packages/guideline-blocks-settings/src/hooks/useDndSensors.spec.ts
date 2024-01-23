@@ -5,9 +5,6 @@ import { useDndSensors } from './useDndSensors';
 import { describe, expect, it } from 'vitest';
 import { KeyboardSensorOptions } from '@dnd-kit/core';
 
-/**
- * @vitest-environment happy-dom
- */
 describe('useDndSensors', () => {
     it('should create a PointerSensor and a KeyboardSensor with a coordinate getter function and custom keyboardCodes', () => {
         const { result } = renderHook(() => useDndSensors());

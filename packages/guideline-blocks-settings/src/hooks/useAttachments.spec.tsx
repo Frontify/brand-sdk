@@ -8,7 +8,7 @@ import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachm
 
 const MOCK_SETTINGS_ID = 'attachments';
 
-describe('useAttachments', async () => {
+describe('useAttachments', () => {
     it('should have 1 attachment if attachment is added', async () => {
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
