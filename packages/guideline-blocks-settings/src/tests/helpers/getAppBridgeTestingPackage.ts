@@ -25,7 +25,7 @@ type AppBridgePatchVersion = GetPatchVersion<typeof appBridgeVersion>;
 
 export const getAppBridgeTestingPackage = async (): AppBridgeMajorVersion extends '3'
     ? AppBridgeMinorVersion extends '0'
-        ? AppBridgePatchVersion extends '0' | '1' | '2' | '3' | '4'
+        ? AppBridgePatchVersion extends '0' | '1' | '2' | '3'
             ? Promise<typeof import('@frontify/app-bridge')>
             : // @ts-ignore will fail if <=v3.0.4 is installed
               Promise<typeof import('@frontify/app-bridge/testing')>
