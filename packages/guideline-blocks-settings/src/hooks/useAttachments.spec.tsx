@@ -1,14 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { render, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachmentsProvider } from './useAttachments';
+import { getAppBridgeTestingPackage } from '../tests/helpers/getAppBridgeTestingPackage';
 
 const MOCK_SETTINGS_ID = 'attachments';
 
-describe('useAttachments', () => {
+describe('useAttachments', async () => {
+    const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
     it('should have 1 attachment if attachment is added', async () => {
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
@@ -74,7 +76,9 @@ describe('useAttachments', () => {
     });
 });
 
-describe('useAttachmentsContext', () => {
+describe('useAttachmentsContext', async () => {
+    const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
     it('should throw an error when not a child of a provider', async () => {
         expect(() => renderHook(() => useAttachmentsContext())).toThrowError();
     });
@@ -99,7 +103,9 @@ describe('useAttachmentsContext', () => {
     });
 });
 
-describe('withAttachmentsProvider', () => {
+describe('withAttachmentsProvider', async () => {
+    const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
     it('should provide correct info to context consumer', async () => {
         const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
             blockId: 2,
