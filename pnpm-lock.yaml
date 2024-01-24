@@ -245,7 +245,7 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@frontify/app-bridge':
-        specifier: ^3.0.0
+        specifier: ^3.0.0 || ^4.0.0-alpha.0
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
