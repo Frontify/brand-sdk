@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.31.1
+
+### Patch Changes
+
+- [#708](https://github.com/Frontify/brand-sdk/pull/708) [`e2a0023`](https://github.com/Frontify/brand-sdk/commit/e2a0023256001dcc64a597f6dcd9df66a1c9f186) Thanks [@ragi96](https://github.com/ragi96)! - feat: add support for @frontify/app-bridge 4.0.0-alpha.0
+
+- Updated dependencies [[`c98d8c4`](https://github.com/Frontify/brand-sdk/commit/c98d8c414b2cdd00d4945f0c29581370b0a7daa0)]:
+  - @frontify/app-bridge@3.0.4
+
 ## 0.31.0
 
 ### Minor Changes
