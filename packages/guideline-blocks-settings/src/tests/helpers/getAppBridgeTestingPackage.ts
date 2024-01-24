@@ -43,7 +43,7 @@ export const getAppBridgeTestingPackage = async (): AppBridgeMajorVersion extend
     // Needed if <=v3.0.3 is installed as it doesn't have the /testing export
     const getPath = () => '@frontify/app-bridge/testing';
     // @ts-ignore will fail if <=v3.0.3 is installed
-    const appBridgeTestingPackage = await import(getPath());
+    const appBridgeTestingPackage = await import(/* @vite-ignore */ getPath());
 
     // @ts-ignore will fail if <=v3.0.3 is installed
     return appBridgeTestingPackage as typeof import('@frontify/app-bridge/testing');
