@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.0.4
+
+### Patch Changes
+
+- [#713](https://github.com/Frontify/brand-sdk/pull/713) [`c98d8c4`](https://github.com/Frontify/brand-sdk/commit/c98d8c414b2cdd00d4945f0c29581370b0a7daa0) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add typing for package.json
+
 ## 3.0.3
 
 ### Patch Changes
