@@ -248,7 +248,7 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0(@dnd-kit/core@6.1.0)(react@18.2.0)
       '@frontify/app-bridge':
-        specifier: ^3.0.4
+        specifier: ^3.0.0 || ^4.0.0-alpha.0
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
@@ -474,7 +474,7 @@ packages:
     resolution: {integrity: sha512-LvBTxu8bQSQkcyKOU+a1btnNFQ1dMAd0R6PyW3arXes06F6QLWLIrd681bxRPIXlrMGR3XYnW9JyML7dP3qgxg==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.23.4
+      '@babel/types': 7.23.6
 
   /@babel/helper-compilation-targets@7.22.15:
     resolution: {integrity: sha512-y6EEzULok0Qvz8yyLkCvVX+02ic+By2UdOhylwUOvOn9dvYc9mKICJuuU1n1XBI02YWsNsnrY1kc6DVbjcXbtw==}
@@ -678,7 +678,6 @@ packages:
       '@babel/helper-string-parser': 7.23.4
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
-    dev: true
 
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
@@ -7642,7 +7641,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /ci-info@3.8.0:
     resolution: {integrity: sha512-eXTggHWSooYhq49F2opQhuHWgzucfF2YgODK4e1566GQs5BIfP30B0oenwBJHfWxAs2fyPB1s7Mg949zLf61Yw==}
@@ -9488,19 +9487,11 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    optional: true
-
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /function-bind@1.1.1:
@@ -12599,7 +12590,7 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /rollup@4.9.6:
     resolution: {integrity: sha512-05lzkCS2uASX0CiLFybYfVkwNbKZG5NFQ6Go0VWyogFTXXbR039UVsegViTntkk4OglHBdF54ccApXRRuXRbsg==}
@@ -14069,7 +14060,7 @@ packages:
       postcss: 8.4.31
       rollup: 3.29.4
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   /vite@5.0.12(@types/node@18.18.11):
     resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
