@@ -9,7 +9,7 @@
         "build:cli": "pnpm --stream --filter {packages/cli} build",
         "lint": "pnpm --stream --filter {packages/**} --parallel lint",
         "lint:fix": "pnpm --stream --filter {packages/**} --parallel lint:fix",
-        "test": "pnpm --stream --filter {packages/**} --parallel test",
+        "test": "pnpm --stream --filter {packages/**} test",
         "test:components": "cypress run --component",
         "test:components:browser": "cypress open --component",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",

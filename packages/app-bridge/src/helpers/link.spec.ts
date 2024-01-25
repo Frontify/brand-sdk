@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { CoverPageDummy } from '../tests/CoverPageDummy';
 import { computeCoverPageLink, computeDocumentLink, computeDocumentPageLink } from './link';
-import { DocumentCategoryDummy, DocumentDummy, DocumentPageDummy } from '..';
+import { DocumentCategoryDummy, DocumentDummy, DocumentPageDummy } from '../tests';
 
 const PORTAL_ID = 23451;
 const PORTAL_TOKEN = 'weisdfjsdf';

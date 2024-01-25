@@ -5,7 +5,7 @@ import React, { ReactElement } from 'react';
 import sinon from 'sinon';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
-import { withAppBridgeBlockStubs } from '../tests/';
+import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
 import { useBlockSettings } from './useBlockSettings';
 
 const BLOCK_SETTINGS_DIV_ID = 'block-settings-div';
