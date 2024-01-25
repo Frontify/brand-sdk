@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.0
+
+### Major Changes
+
+- [#705](https://github.com/Frontify/brand-sdk/pull/705) [`a027b87`](https://github.com/Frontify/brand-sdk/commit/a027b87593ae25d18cda62c4989920a16958d28c) Thanks [@ragi96](https://github.com/ragi96)! - feat: first alpha release, removes all deprecated functions on the AppBridgeBlock
+
 ## 3.1.0
 
 ### Minor Changes
