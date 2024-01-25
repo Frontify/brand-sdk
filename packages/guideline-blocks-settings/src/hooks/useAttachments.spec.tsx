@@ -8,11 +8,7 @@ import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachm
 
 const MOCK_SETTINGS_ID = 'attachments';
 
-/**
- * @vitest-environment happy-dom
- */
-
-describe('useAttachments', () => {
+describe('useAttachments', async () => {
     it('should have 1 attachment if attachment is added', async () => {
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
@@ -115,7 +111,7 @@ describe('withAttachmentsProvider', () => {
             return (
                 <ul>
                     {context.attachments.map((attachment) => (
-                        <li key={attachment.id} role="list">
+                        <li key={attachment.id} data-test-id="item-test">
                             {attachment.id}
                         </li>
                     ))}
@@ -123,8 +119,8 @@ describe('withAttachmentsProvider', () => {
             );
         }, MOCK_SETTINGS_ID);
 
-        const { getAllByRole } = render(<Component appBridge={STUB_WITH_THREE_ASSETS} />);
+        const { getAllByTestId } = render(<Component appBridge={STUB_WITH_THREE_ASSETS} />);
 
-        await waitFor(() => expect(getAllByRole('list')).toHaveLength(3));
+        await waitFor(() => expect(getAllByTestId('item-test')).toHaveLength(3));
     });
 });

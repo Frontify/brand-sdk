@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitest/config';
@@ -23,32 +22,15 @@ export default defineConfig({
     ],
     build: {
         lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
-            fileName: (format: string) => `[name].${format}.js`,
+            entry: {
+                index: './src/index.ts',
+                testing: './src/tests/index.ts',
+            },
         },
         sourcemap: true,
         minify: true,
         rollupOptions: {
             external: [...dependencies, ...peerDependencies],
-            output: [
-                {
-                    name: 'AppBridge',
-                    format: 'es',
-                    preserveModules: true,
-                    preserveModulesRoot: 'src',
-                    globals,
-                },
-                {
-                    name: 'AppBridge',
-                    format: 'umd',
-                    globals,
-                },
-                {
-                    name: 'AppBridge',
-                    format: 'cjs',
-                    globals,
-                },
-            ],
         },
     },
     test: {
@@ -59,6 +41,6 @@ export default defineConfig({
             include: ['src/**/*.ts', 'src/**/*.tsx'],
             exclude: ['src/**/test.ts', 'src/**/test.tsx', 'src/**/spec.ts', 'src/**/spec.tsx'],
         },
-        setupFiles: [resolve(__dirname, 'src/setupTests.ts')],
+        setupFiles: ['./src/setupTests.ts'],
     },
 });

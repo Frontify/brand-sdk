@@ -17,10 +17,12 @@ env:
 jobs:
     lint-typecheck:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
+
         strategy:
+            fail-fast: false
             matrix:
                 app-bridge-version: ["3.0.0", "workspace:^"]
-        timeout-minutes: 10
 
         steps:
             - name: Checkout default branch
@@ -60,10 +62,12 @@ jobs:
 
     unit-tests:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
+
         strategy:
+            fail-fast: false
             matrix:
                 app-bridge-version: ["3.0.0", "workspace:^"]
-        timeout-minutes: 10
 
         steps:
             - name: Checkout current commit
@@ -110,10 +114,12 @@ jobs:
 
     component-tests:
         runs-on: ubuntu-latest
+        timeout-minutes: 10
+
         strategy:
+            fail-fast: false
             matrix:
                 app-bridge-version: ["3.0.0", "workspace:^"]
-        timeout-minutes: 10
 
         steps:
             - name: Checkout current commit
