@@ -20,6 +20,7 @@ jobs:
         timeout-minutes: 10
 
         strategy:
+            fail-fast: false
             matrix:
                 app-bridge-version:
                     ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
@@ -65,6 +66,7 @@ jobs:
         timeout-minutes: 10
 
         strategy:
+            fail-fast: false
             matrix:
                 app-bridge-version:
                     ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
@@ -117,6 +119,7 @@ jobs:
         timeout-minutes: 10
 
         strategy:
+            fail-fast: false
             matrix:
                 app-bridge-version:
                     ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
