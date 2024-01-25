@@ -4,6 +4,9 @@
         "@changesets/changelog-github",
         { "repo": "frontify/brand-sdk" }
     ],
+    "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+        "onlyUpdatePeerDependentsWhenOutOfRange": true
+    },
     "commit": false,
     "access": "public",
     "baseBranch": "main",
