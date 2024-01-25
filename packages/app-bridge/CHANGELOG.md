@@ -1,5 +1,17 @@
 # @frontify/app-bridge
 
+## 3.1.0
+
+### Minor Changes
+
+- [#714](https://github.com/Frontify/brand-sdk/pull/714) [`68a9298`](https://github.com/Frontify/brand-sdk/commit/68a9298df9e2177e70333f47dc433a056d76625b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Split the testing utilities out of the main bundle, so they don't end up in production builds.
+  You will need to update the import paths in your tests:
+
+  ```git
+  - import { AssetDummy, withAppBridgeBlockStubs } from '@frontify/app-bridge';
+  + import { AssetDummy, withAppBridgeBlockStubs } from '@frontify/app-bridge/testing';
+  ```
+
 ## 3.0.4
 
 ### Patch Changes
