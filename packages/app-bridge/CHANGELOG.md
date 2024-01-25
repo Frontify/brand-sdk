@@ -1,5 +1,17 @@
 # @frontify/app-bridge
 
+## 3.0.4
+
+### Patch Changes
+
+- [#713](https://github.com/Frontify/brand-sdk/pull/713) [`c98d8c4`](https://github.com/Frontify/brand-sdk/commit/c98d8c414b2cdd00d4945f0c29581370b0a7daa0) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add typing for package.json
+
+## 3.0.3
+
+### Patch Changes
+
+- [#711](https://github.com/Frontify/brand-sdk/pull/711) [`6672186`](https://github.com/Frontify/brand-sdk/commit/6672186580907a4ef74870696bb3720da1390f30) Thanks [@julianiff](https://github.com/julianiff)! - refactor: change variable order
+
 ## 3.0.2
 
 ### Patch Changes

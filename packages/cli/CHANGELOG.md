@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.5.9
+
+### Patch Changes
+
+- [#701](https://github.com/Frontify/brand-sdk/pull/701) [`a84f65c`](https://github.com/Frontify/brand-sdk/commit/a84f65c16678bf8fae07416971e0262aadd230dc) Thanks [@julianiff](https://github.com/julianiff)! - feat: add title to manifest.json of platform Apps
+
 ## 5.5.8
 
 ### Patch Changes

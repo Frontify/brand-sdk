@@ -55,17 +55,17 @@ type AppBaseProps = {
 export type PlatformAppContext = AppBaseProps &
     (
         | {
+              brandId: string;
+              domain: string;
+              parentId: string;
+              type: 'assetCreation';
+          }
+        | {
               assetId: string;
               brandId: string;
               domain: string;
               parentId: string;
-              type: 'ASSET_ACTION';
-          }
-        | {
-              brandId: string;
-              domain: string;
-              parentId: string;
-              type: 'ASSET_CREATION';
+              type: 'assetAction';
           }
     );
 
