@@ -1,9 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, vi } from 'vitest';
+import { afterEach, beforeAll, vi } from 'vitest';
+import { configure } from '@testing-library/react';
 
 vi.stubGlobal('crypto', {
     getRandomValues: vi.fn(),
+});
+
+beforeAll(() => {
+    configure({ testIdAttribute: 'data-test-id' });
 });
 
 afterEach(() => {
