@@ -22,7 +22,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                app-bridge-version: ["3.0.0", "workspace:^"]
+                app-bridge-version: ["3.0.0", "^3.0.0", "workspace:^"]
 
         steps:
             - name: Checkout default branch
@@ -67,7 +67,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                app-bridge-version: ["3.0.0", "workspace:^"]
+                app-bridge-version: ["3.0.0", "^3.0.0", "workspace:^"]
 
         steps:
             - name: Checkout current commit
@@ -119,7 +119,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                app-bridge-version: ["3.0.0", "workspace:^"]
+                app-bridge-version: ["3.0.0", "^3.0.0", "workspace:^"]
 
         steps:
             - name: Checkout current commit
