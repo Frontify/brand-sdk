@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.31.3
+
+### Patch Changes
+
+- [#720](https://github.com/Frontify/brand-sdk/pull/720) [`7b8a520`](https://github.com/Frontify/brand-sdk/commit/7b8a5209df3b2116cf83838e6da2aae3f83fa33f) Thanks [@ragi96](https://github.com/ragi96)! - fix(Attachments): use the appropriate function for removing and adding asset
+
 ## 0.31.2
 
 ### Patch Changes
