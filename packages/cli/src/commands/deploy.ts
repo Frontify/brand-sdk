@@ -34,8 +34,7 @@ export type AppManifest = {
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
-    const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs, dot: true });
-
+    const folderFiles = await fastGlob(`${fastGlob.convertPathToPattern(glob)}/**`, { ignore: ignoreGlobs, dot: true });
     const folderFilenames = folderFiles.map((filePath) => filePath.replace(`${glob}/`, ''));
 
     return folderFilenames.reduce((stack, filename, index) => {
@@ -91,18 +90,23 @@ export const createDeployment = async (
                 process.exit(-1);
             }
 
-            const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
+            const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) =>
+                fastGlob.convertPathToPattern(projectPath + path),
+            );
 
             const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
                 (entry) => entry !== 'manifest.json',
             );
             const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
-                join(projectPath, path),
+                fastGlob.convertPathToPattern(`${projectPath}/${path}`),
             );
 
             const request = {
-                build_files: await makeFilesDict(join(projectPath, distPath), buildFilesToIgnore),
-                source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore),
+                build_files: await makeFilesDict(
+                    fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
+                    buildFilesToIgnore,
+                ),
+                source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
             };
 
             if (!dryRun) {
