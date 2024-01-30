@@ -116,8 +116,6 @@ export const createDeployment = async (
 
                 const httpClient = new HttpClient(instanceUrl);
 
-                const accessToken = token ? token : Configuration.get('tokens.access_token');
-
                 try {
                     await httpClient.put(`/api/marketplace/app/${appId}`, request, {
                         headers: { Authorization: `Bearer ${accessToken}` },
