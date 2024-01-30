@@ -10,7 +10,7 @@ export interface UserInfo {
     email: string;
 }
 
-export const getUser = async (instanceUrl: string, token: string): Promise<UserInfo | undefined> => {
+export const getUser = async (instanceUrl: string, token?: string): Promise<UserInfo | undefined> => {
     const httpClient = new HttpClient(instanceUrl);
 
     const accessToken = token ? token : Configuration.get('tokens.access_token');
