@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.31.4
+
+### Patch Changes
+
+- [#722](https://github.com/Frontify/brand-sdk/pull/722) [`975f9c8`](https://github.com/Frontify/brand-sdk/commit/975f9c86409db9041ebcfa02ad8f684b4e5bc24c) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat: add "label" to customizable options for getBackgroundSettings
+
 ## 0.31.3
 
 ### Patch Changes
