@@ -4,6 +4,15 @@ import { Color } from '@frontify/fondue';
 import { BACKGROUND_COLOR_DEFAULT_VALUE } from './defaultValues';
 import { SettingBlock } from '../';
 
+type BackgroundSettingsType = {
+    id?: string;
+    defaultValue?: boolean;
+    defaultColor?: Color;
+    preventDefaultColor?: boolean;
+    switchLabel?: string;
+    label?: string;
+};
+
 /**
  * Returns background settings: background switch, background color
  *
@@ -12,17 +21,10 @@ import { SettingBlock } from '../';
  * @param options.defaultValue Default value for the background switch
  * @param options.defaultColor Default value for the background color
  * @param options.preventDefaultColor Whether the background color should be empty by default
+ * @param options.label Label for the background input
  * @param options.switchLabel Label for the background switch
  * @returns {SettingBlock} Returns background settings
  */
-
-type BackgroundSettingsType = {
-    id?: string;
-    defaultValue?: boolean;
-    defaultColor?: Color;
-    preventDefaultColor?: boolean;
-    switchLabel?: string;
-};
 
 export const getBackgroundSettings = (options?: BackgroundSettingsType): SettingBlock => {
     const hasId = options?.id ? `hasBackground${options.id}` : 'hasBackground';
@@ -30,11 +32,12 @@ export const getBackgroundSettings = (options?: BackgroundSettingsType): Setting
     const defaultColor = !!options?.preventDefaultColor
         ? undefined
         : options?.defaultColor || BACKGROUND_COLOR_DEFAULT_VALUE;
+    const label = options?.label ? options.label : 'Background';
     const switchLabel = options?.switchLabel ? options.switchLabel : undefined;
 
     return {
         id: hasId,
-        label: 'Background',
+        label,
         type: 'switch',
         switchLabel,
         defaultValue: !!options?.defaultValue,
