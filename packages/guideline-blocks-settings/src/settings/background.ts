@@ -32,7 +32,7 @@ export const getBackgroundSettings = (options?: BackgroundSettingsType): Setting
     const defaultColor = !!options?.preventDefaultColor
         ? undefined
         : options?.defaultColor || BACKGROUND_COLOR_DEFAULT_VALUE;
-    const label = options?.label ? options.label : undefined;
+    const label = options?.label ? options.label : 'Background';
     const switchLabel = options?.switchLabel ? options.switchLabel : undefined;
 
     return {
