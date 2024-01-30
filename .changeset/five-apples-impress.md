@@ -2,4 +2,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-Fix: Path handling on windows
+fix: Path handling on windows
