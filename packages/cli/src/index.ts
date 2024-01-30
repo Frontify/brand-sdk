@@ -123,6 +123,8 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
     .option('--open', '[boolean] open the marketplace app page', { default: false })
     .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
+    .option('-i, --instance [instanceUrl]', '[string] url of the Frontify instance')
+    .option('-t, --token [accessToken]', '[string] the access token')
     .action(async (options) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
@@ -135,6 +137,8 @@ cli.command('deploy', 'deploy the app to the marketplace')
                     dryRun: options.dryRun,
                     noVerify: options.noVerify,
                     openInBrowser: options.open,
+                    instance: options.instance,
+                    token: options.token,
                 },
                 compilePlatformApp,
             );
@@ -146,6 +150,8 @@ cli.command('deploy', 'deploy the app to the marketplace')
                     dryRun: options.dryRun,
                     noVerify: options.noVerify,
                     openInBrowser: options.open,
+                    instance: options.instance,
+                    token: options.token,
                 },
                 compileBlock,
             );
