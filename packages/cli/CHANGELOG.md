@@ -1,5 +1,19 @@
 # @frontify/frontify-cli
 
+## 5.6.0
+
+### Minor Changes
+
+- [#724](https://github.com/Frontify/brand-sdk/pull/724) [`b6c65ba`](https://github.com/Frontify/brand-sdk/commit/b6c65bafa134d8de07fbf990f27462f3005ea744) Thanks [@floriangaechter](https://github.com/floriangaechter)! - feat: add the option to deploy with token
+  - `-i, --instance <instanceUrl>`: url of the Frontify instance
+  - `-t, --token <accessToken>`: the access token to authenticate with the Frontify instance
+
+### Patch Changes
+
+- [#719](https://github.com/Frontify/brand-sdk/pull/719) [`4a676dc`](https://github.com/Frontify/brand-sdk/commit/4a676dcccc90dd56ba63cc75b97eea03b534177e) Thanks [@floriangaechter](https://github.com/floriangaechter)! - fix: Path handling on windows
+
+- [#726](https://github.com/Frontify/brand-sdk/pull/726) [`935c591`](https://github.com/Frontify/brand-sdk/commit/935c591b83865e3a4eaa5bab472861d6a5656a4d) Thanks [@ragi96](https://github.com/ragi96)! - fix: nested template literals and also some typos
+
 ## 5.5.9
 
 ### Patch Changes
