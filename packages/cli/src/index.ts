@@ -19,8 +19,8 @@ import pkg from '../package.json';
 
 const cli = cac(pkg.name.split('/')[1]);
 
-cli.command('login <instanceUrl>', 'log in to a Frontify instance')
-    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
+cli.command('login [instanceUrl]', 'log in to a Frontify instance')
+    .option('-i, --instance [instanceUrl]', '[string] url of the Frontify instance')
     .option('-p, --port <port>', '[number] port for the oauth service', {
         default: process.env.PORT || 5600,
     })
@@ -122,9 +122,9 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
     .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
     .option('--open', '[boolean] open the marketplace app page', { default: false })
-    .option('--appType <appType>, --app-type', '[string] specify app type. Overrides manifest values')
-    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
-    .option('-t, --token <accessToken>', '[string] the access token')
+    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
+    .option('-i, --instance [instanceUrl]', '[string] url of the Frontify instance')
+    .option('-t, --token [accessToken]', '[string] the access token')
     .action(async (options) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
@@ -158,7 +158,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
         }
     });
 
-cli.command('create <appName>', 'create a new marketplace app')
+cli.command('create [appName]', 'create a new marketplace app')
     .option('-e, --experimental', 'set experimental flag')
     .action(async (appName: string, options) => {
         if (options.experimental) {
@@ -241,7 +241,7 @@ cli.command('create <appName>', 'create a new marketplace app')
  */
 for (const appType of ['block', 'theme']) {
     cli.command(
-        `${appType} create <appName>`,
+        `${appType} create [appName]`,
         `[deprecated: use 'create' instead] create a ${appType} app locally`,
     ).action((appName: string) => createNewApp(appName, 'css-modules', 'content-block'));
 }
