@@ -63,7 +63,11 @@ export const createDeployment = async (
         const accessToken = token ? token : Configuration.get('tokens.access_token');
 
         if (!accessToken || !instanceUrl) {
-            Logger.error(`You are not logged in, you can use the command ${pc.bold('frontify-cli login')}.`);
+            Logger.error(
+                `You are currently not logged in. You can use the command ${pc.bold(
+                    'frontify-cli login',
+                )} to log in, or pass --token=<token> --instance=<instance> to the deploy command.`,
+            );
             process.exit(-1);
         }
 
