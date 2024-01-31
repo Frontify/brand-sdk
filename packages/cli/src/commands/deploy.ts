@@ -23,6 +23,8 @@ type Options = {
     dryRun?: boolean;
     noVerify?: boolean;
     openInBrowser?: boolean;
+    token?: string;
+    instance?: string;
 };
 
 export type AppManifest = {
@@ -49,19 +51,25 @@ const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.ide
 export const createDeployment = async (
     entryFile: string,
     distPath: string,
-    { dryRun = false, noVerify = false, openInBrowser = false }: Options,
+    { dryRun = false, noVerify = false, openInBrowser = false, token, instance }: Options,
     compile: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
-        const instanceUrl = Configuration.get('instanceUrl') as string | undefined;
-        if (!instanceUrl) {
-            Logger.error(`You are not logged in, you can use the command ${pc.bold('frontify-cli login')}.`);
+        const instanceUrl = instance || Configuration.get('instanceUrl');
+        const accessToken = token || Configuration.get('tokens.access_token');
+
+        if (!accessToken || !instanceUrl) {
+            Logger.error(
+                `You are currently not logged in. You can use the command ${pc.bold(
+                    'frontify-cli login',
+                )} to log in, or pass --token=<token> --instance=<instance> to the deploy command.`,
+            );
             process.exit(-1);
         }
 
         if (!dryRun) {
-            user = await getUser(instanceUrl);
+            user = await getUser(instanceUrl, token);
             user && Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
         }
 
@@ -113,8 +121,6 @@ export const createDeployment = async (
                 Logger.info('Sending the files to Frontify Marketplace...');
 
                 const httpClient = new HttpClient(instanceUrl);
-
-                const accessToken = Configuration.get('tokens.access_token');
 
                 try {
                     await httpClient.put(`/api/marketplace/app/${appId}`, request, {
