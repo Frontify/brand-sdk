@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { beforeAll, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 import nock from 'nock';
 
 import { Configuration } from '../../src/utils/configuration.js';
@@ -24,7 +24,7 @@ const GET_USER_API_RESPONSE = {
 const TEST_BASE_URL = 'testing.frontify.test';
 
 describe('User utils', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         const testMockApi = nock(`https://${TEST_BASE_URL}`);
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, GET_USER_API_RESPONSE);
     });
@@ -36,6 +36,10 @@ describe('User utils', () => {
             Configuration.set('tokens', DUMMY_TOKENS.tokens);
             expect(await getUser(TEST_BASE_URL)).toEqual(DUMMY_TOKENS);
             Configuration.set('tokens', oldTokens);
+        });
+
+        test('should get user object with token', async () => {
+            expect(await getUser(TEST_BASE_URL, 'some_access_token')).toEqual(DUMMY_TOKENS);
         });
     });
 });
