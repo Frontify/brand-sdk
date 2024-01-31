@@ -12,8 +12,7 @@ export interface UserInfo {
 
 export const getUser = async (instanceUrl: string, token?: string): Promise<UserInfo | undefined> => {
     const httpClient = new HttpClient(instanceUrl);
-
-    const accessToken = token ? token : Configuration.get('tokens.access_token');
+    const accessToken = token || Configuration.get('tokens.access_token');
 
     try {
         const user = await httpClient.post<{ data: { currentUser: UserInfo } }>(

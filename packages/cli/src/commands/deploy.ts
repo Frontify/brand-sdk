@@ -52,15 +52,13 @@ const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.ide
 export const createDeployment = async (
     entryFile: string,
     distPath: string,
-    { dryRun = false, noVerify = false, openInBrowser = false, token = '', instance = '' }: Options,
+    { dryRun = false, noVerify = false, openInBrowser = false, token, instance }: Options,
     compile: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
-        const instanceUrl = Configuration.get('instanceUrl')
-            ? (Configuration.get('instanceUrl') as string)
-            : (instance as string | undefined);
-        const accessToken = token ? token : Configuration.get('tokens.access_token');
+        const instanceUrl = instance || Configuration.get('instanceUrl');
+        const accessToken = token || Configuration.get('tokens.access_token');
 
         if (!accessToken || !instanceUrl) {
             Logger.error(
