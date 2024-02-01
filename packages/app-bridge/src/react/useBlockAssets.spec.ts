@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { SinonStub } from 'sinon';
+import sinon, { SinonStub } from 'sinon';
 import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
@@ -43,21 +43,18 @@ describe('useBlockAssets hook', () => {
         });
     });
 
-    it('should sort assets', async () => {
+    it('should set assets', async () => {
         const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
 
         await act(async () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
         });
 
-        const deleteCall = appBridgeStub.deleteAssetIdsFromBlockAssetKey.getCall(0);
-        const addCall = appBridgeStub.addAssetIdsToBlockAssetKey.getCall(0);
-
         await waitFor(async () => {
-            expect(deleteCall.firstArg).toEqual('key');
-            expect(deleteCall.lastArg).toEqual([1, 2]);
-            expect(addCall.firstArg).toEqual('key');
-            expect(addCall.lastArg).toEqual([2, 1]);
+            sinon.assert.calledWithExactly(appBridgeStub.api, {
+                name: 'setAssetIdsByBlockAssetKey',
+                payload: { key: 'key', assetIds: [2, 1] },
+            });
             expect(result.current.blockAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
         });
     });

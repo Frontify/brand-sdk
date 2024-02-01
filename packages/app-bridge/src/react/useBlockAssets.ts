@@ -53,15 +53,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
     };
 
     const updateAssetIdsFromKey = async (key: string, newAssetIds: number[]) => {
-        const currentBlockAssets = await appBridge.getBlockAssets();
-        const oldAssetIds = currentBlockAssets[key]?.map((asset) => asset.id) ?? [];
-
-        try {
-            await appBridge.deleteAssetIdsFromBlockAssetKey(key, oldAssetIds);
-            await appBridge.addAssetIdsToBlockAssetKey(key, newAssetIds);
-        } catch (error) {
-            console.error(error);
-        }
+        appBridge.api({ name: 'setAssetIdsByBlockAssetKey', payload: { key, assetIds: newAssetIds } });
 
         emitUpdatedBlockAssets();
     };
