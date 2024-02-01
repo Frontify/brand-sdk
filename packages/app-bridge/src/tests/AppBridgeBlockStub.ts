@@ -191,7 +191,8 @@ export const getAppBridgeBlockStub = ({
                     return { assetBulkDownloadToken: 'token' };
                 }
                 case 'setAssetIdsByBlockAssetKey': {
-                    return {};
+                    blockAssets[args.payload.key] = args.payload.assetIds.map((id) => AssetDummy.with(id));
+                    return Promise.resolve();
                 }
             }
 

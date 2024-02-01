@@ -61,12 +61,16 @@ describe('useBlockAssets hook', () => {
 
     it('should not sort assets if api call throws error', async () => {
         const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
-        (appBridgeStub.deleteAssetIdsFromBlockAssetKey as unknown as Mock) = vi
-            .fn()
-            .mockRejectedValue('Unsuccessful API call');
+        (appBridgeStub.api as unknown as Mock) = vi.fn().mockImplementation(() => {
+            return Promise.reject(new Error('Unsuccessful API call'));
+        });
 
         await act(async () => {
-            await result.current.updateAssetIdsFromKey('key', [2, 1]);
+            try {
+                await result.current.updateAssetIdsFromKey('key', [2, 1]);
+            } catch (error) {
+                console.error(error);
+            }
         });
 
         await waitFor(async () => {
