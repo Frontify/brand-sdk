@@ -66,11 +66,7 @@ describe('useBlockAssets hook', () => {
         });
 
         await act(async () => {
-            try {
-                await result.current.updateAssetIdsFromKey('key', [2, 1]);
-            } catch (error) {
-                console.error(error);
-            }
+            await result.current.updateAssetIdsFromKey('key', [2, 1]);
         });
 
         await waitFor(async () => {

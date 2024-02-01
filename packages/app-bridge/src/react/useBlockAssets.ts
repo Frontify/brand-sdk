@@ -53,7 +53,11 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
     };
 
     const updateAssetIdsFromKey = async (key: string, newAssetIds: number[]) => {
-        await appBridge.api({ name: 'setAssetIdsByBlockAssetKey', payload: { key, assetIds: newAssetIds } });
+        try {
+            await appBridge.api({ name: 'setAssetIdsByBlockAssetKey', payload: { key, assetIds: newAssetIds } });
+        } catch (error) {
+            console.error(error);
+        }
         emitUpdatedBlockAssets();
     };
 
