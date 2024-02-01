@@ -185,20 +185,18 @@ export const getAppBridgeBlockStub = ({
             BulkDownloadDummy.default(),
         ),
         getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
-        api: stub<Parameters<AppBridgeBlock['api']>>()
-            .resolves()
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: {
-                    blockAssets: { settings1: [AssetDummy.with(123)], settings2: [AssetDummy.with(456)] },
-                },
-            })
-            .resolves({ assetBulkDownloadToken: 'token' })
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets: undefined },
-            })
-            .resolves({ assetBulkDownloadToken: 'token' }),
+        api: stub<Parameters<AppBridgeBlock['api']>>().callsFake((args) => {
+            switch (args.name) {
+                case 'getAssetBulkDownloadToken': {
+                    return { assetBulkDownloadToken: 'token' };
+                }
+                case 'setAssetIdsByBlockAssetKey': {
+                    return {};
+                }
+            }
+
+            throw new Error('Method is not stubbed');
+        }),
 
         context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
             if (args === undefined) {
