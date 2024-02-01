@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.31.5
+
+### Patch Changes
+
+- [#728](https://github.com/Frontify/brand-sdk/pull/728) [`9de8764`](https://github.com/Frontify/brand-sdk/commit/9de87643decdbff847c2e29b9aa895773c8321b3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: Add missing path for types in the export list
+
 ## 0.31.4
 
 ### Patch Changes
