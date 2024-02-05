@@ -86,7 +86,7 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         },
         build: {
             rollupOptions: {
-                external: ['react', 'ReactDOM'],
+                external: ['react', 'react-dom'],
                 output: {
                     assetFileNames: () => '[name][extname]',
                     chunkFileNames: '[name].js',
