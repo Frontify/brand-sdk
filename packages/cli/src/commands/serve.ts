@@ -20,11 +20,6 @@ class PlatformAppDevelopmentServer {
                     'process.env.NODE_ENV': JSON.stringify('development'),
                 },
                 build: {
-                    lib: {
-                        entry: './src/index.tsx',
-                        name: 'platformApp',
-                        formats: ['es'],
-                    },
                     rollupOptions: {
                         external: ['react', 'ReactDOM'],
                         output: {

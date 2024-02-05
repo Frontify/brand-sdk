@@ -85,11 +85,6 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
         build: {
-            lib: {
-                entry: './src/index.tsx',
-                name: 'platformApp',
-                formats: ['es'],
-            },
             rollupOptions: {
                 external: ['react', 'ReactDOM'],
                 output: {
