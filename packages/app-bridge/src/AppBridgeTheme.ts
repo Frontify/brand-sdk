@@ -61,10 +61,10 @@ export type ThemeCommand = CommandNameValidator<
     Pick<CommandRegistry, 'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager'>
 >;
 
-export type TemplateContext = { templateId?: string; type: ThemeTemplate } & (
+export type TemplateContext = { templateId: string; type: ThemeTemplate } & (
     | { type: 'documentPage'; document: Document; documentPageId: number }
     | { type: 'library'; document: Document }
-    | { type: 'cover'; document: undefined }
+    | { type: 'cover' }
 );
 
 export type ThemeState = {
