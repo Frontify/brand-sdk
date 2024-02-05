@@ -6,8 +6,6 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { Logger } from '../utils/logger.js';
 import { getAppBridgeVersion } from '../utils/appBridgeVersion.js';
 import pkg from '../../package.json';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 class PlatformAppDevelopmentServer {
     constructor(private readonly port: number) {}
@@ -15,7 +13,6 @@ class PlatformAppDevelopmentServer {
     async serve(): Promise<void> {
         Logger.info('Development');
 
-        const __dirname = path.dirname(fileURLToPath(import.meta.url));
         try {
             const viteServer = await createServer({
                 root: process.cwd(),
@@ -25,20 +22,22 @@ class PlatformAppDevelopmentServer {
                 },
                 build: {
                     lib: {
-                        entry: path.resolve(__dirname, 'src/index.tsx'),
+                        entry: './src/index.tsx',
                         name: 'platformApp',
-                        formats: ['es', 'umd'],
+                        formats: ['es'],
                     },
                     rollupOptions: {
-                        external: ['react'],
+                        external: ['react', 'ReactDOM'],
                         output: {
                             globals: {
                                 react: 'React',
+                                'react-dom': 'ReactDOM',
                             },
                         },
                     },
                 },
             });
+
             const server = await viteServer.listen(this.port, true);
             server.printUrls();
         } catch (error) {

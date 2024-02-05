@@ -55,7 +55,6 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
 
 export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
-    const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
     const htmlHashPlugin: PluginOption = {
         name: 'html-hash',
@@ -83,24 +82,26 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
 
     return build({
         plugins: [react(), htmlHashPlugin],
+        configFile: false,
         root: projectPath,
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
         build: {
             lib: {
-                entry: path.resolve(__dirname, 'src/index.tsx'),
+                entry: './src/index.tsx',
                 name: 'platformApp',
-                formats: ['es', 'umd'],
+                formats: ['es'],
             },
             rollupOptions: {
-                external: ['react'],
+                external: ['react', 'ReactDOM'],
                 output: {
                     assetFileNames: () => '[name][extname]',
                     chunkFileNames: '[name].js',
                     entryFileNames: '[name].js',
                     globals: {
                         react: 'React',
+                        'react-dom': 'ReactDOM',
                     },
                 },
             },
