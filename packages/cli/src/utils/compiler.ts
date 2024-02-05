@@ -82,7 +82,6 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
 
     return build({
         plugins: [react(), htmlHashPlugin],
-        configFile: false,
         root: projectPath,
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),

@@ -16,6 +16,7 @@ class PlatformAppDevelopmentServer {
         try {
             const viteServer = await createServer({
                 root: process.cwd(),
+                configFile: false,
                 plugins: [react()],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
