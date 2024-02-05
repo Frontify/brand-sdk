@@ -11,8 +11,6 @@ class PlatformAppDevelopmentServer {
     constructor(private readonly port: number) {}
 
     async serve(): Promise<void> {
-        Logger.info('Development');
-
         try {
             const viteServer = await createServer({
                 root: process.cwd(),
