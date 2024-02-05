@@ -6,26 +6,39 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { Logger } from '../utils/logger.js';
 import { getAppBridgeVersion } from '../utils/appBridgeVersion.js';
 import pkg from '../../package.json';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 class PlatformAppDevelopmentServer {
     constructor(private readonly port: number) {}
 
     async serve(): Promise<void> {
+        Logger.info('Development');
+
+        const __dirname = path.dirname(fileURLToPath(import.meta.url));
         try {
             const viteServer = await createServer({
                 root: process.cwd(),
-                configFile: false,
-                plugins: [
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
-                    react(),
-                ],
+                plugins: [react()],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
                 },
-                base: `http://localhost:${this.port}/`,
+                build: {
+                    lib: {
+                        entry: path.resolve(__dirname, 'src/index.tsx'),
+                        name: 'platformApp',
+                        formats: ['es', 'umd'],
+                    },
+                    rollupOptions: {
+                        external: ['react'],
+                        output: {
+                            globals: {
+                                react: 'React',
+                            },
+                        },
+                    },
+                },
             });
-
             const server = await viteServer.listen(this.port, true);
             server.printUrls();
         } catch (error) {

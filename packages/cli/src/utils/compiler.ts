@@ -5,6 +5,8 @@ import { PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 import { getAppBridgeVersion } from './appBridgeVersion.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -53,6 +55,8 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
 
 export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
     const htmlHashPlugin: PluginOption = {
         name: 'html-hash',
         enforce: 'post',
@@ -80,12 +84,24 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
     return build({
         plugins: [react(), htmlHashPlugin],
         root: projectPath,
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
         build: {
+            lib: {
+                entry: path.resolve(__dirname, 'src/index.tsx'),
+                name: 'platformApp',
+                formats: ['es', 'umd'],
+            },
             rollupOptions: {
+                external: ['react'],
                 output: {
                     assetFileNames: () => '[name][extname]',
                     chunkFileNames: '[name].js',
                     entryFileNames: '[name].js',
+                    globals: {
+                        react: 'React',
+                    },
                 },
             },
         },
