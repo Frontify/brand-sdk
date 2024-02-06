@@ -19,17 +19,6 @@ class PlatformAppDevelopmentServer {
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
                 },
-                build: {
-                    rollupOptions: {
-                        external: ['react', 'react-dom'],
-                        output: {
-                            globals: {
-                                react: 'React',
-                                'react-dom': 'ReactDOM',
-                            },
-                        },
-                    },
-                },
             });
 
             const server = await viteServer.listen(this.port, true);
