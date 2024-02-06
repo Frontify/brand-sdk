@@ -84,7 +84,6 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
-
         build: {
             rollupOptions: {
                 output: {

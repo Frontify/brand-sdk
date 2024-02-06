@@ -21,7 +21,7 @@ class PlatformAppDevelopmentServer {
                 },
                 build: {
                     rollupOptions: {
-                        external: ['react', 'ReactDOM'],
+                        external: ['react', 'react-dom'],
                         output: {
                             globals: {
                                 react: 'React',
