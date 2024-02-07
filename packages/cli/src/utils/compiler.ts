@@ -5,7 +5,7 @@ import { PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 import { getAppBridgeVersion } from './appBridgeVersion.js';
-import * as fs from 'fs';
+import { renameSync, rmSync } from 'fs';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -132,8 +132,8 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
 
     // move and cleanup
     try {
-        await fs.promises.rename(`temp/${settingsHashName}`, `dist/${settingsHashName}`);
-        await fs.promises.rm('temp', { recursive: true, force: true });
+        renameSync(`temp/${settingsHashName}`, `dist/${settingsHashName}`);
+        rmSync('temp', { recursive: true, force: true });
     } catch (error) {
         console.log('error to rename');
         throw error;
