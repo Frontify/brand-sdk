@@ -67,9 +67,11 @@ export const LinkInput = ({
                         url={url}
                         onUrlChange={onUrlChange}
                         buttonSize={buttonSize ?? ButtonSize.Medium}
-                        getAllDocuments={appBridge.getAllDocuments}
-                        getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
-                        getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                        getAllDocuments={appBridge.getAllDocuments.bind(appBridge)}
+                        getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId.bind(appBridge)}
+                        getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId.bind(
+                            appBridge,
+                        )}
                     />
                 </div>
             )}
