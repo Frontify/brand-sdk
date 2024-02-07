@@ -29,6 +29,7 @@ export * from './DocumentSectionDummy';
 export * from './GuidelineSearchResultApiDummy';
 export * from './GuidelineSearchResultDummy';
 export * from './HttpUtilResponseDummy';
+export * from './ProjectColorDummy';
 export * from './TargetsApiDummy';
 export * from './TargetsDummy';
 export * from './TemplateApiLegacyDummy';

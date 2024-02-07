@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 
 import { compareObjects } from '../utilities';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Color, ColorCreate, ColorPatch } from '../types';
+import type { ColorCreate, ColorPatch, ProjectColor } from '../types';
 
 export type UseColorsReturnType = {
-    colorsByPaletteId: Color[];
+    colorsByPaletteId: ProjectColor[];
     createColor: (colorCreate: ColorCreate) => void;
     updateColor: (colorId: number, colorPatch: ColorPatch) => void;
     deleteColor: (colorId: number) => void;
@@ -16,12 +16,16 @@ export type UseColorsReturnType = {
 export const useColors = (appBridge: AppBridgeBlock, colorPaletteId: number): UseColorsReturnType => {
     const blockId = appBridge.context('blockId').get();
 
-    const [colorsByPaletteId, setColorsByPaletteId] = useState<Color[]>([]);
+    const [colorsByPaletteId, setColorsByPaletteId] = useState<ProjectColor[]>([]);
 
     useEffect(() => {
         let componentMounted = true;
 
-        const updateColorsFromEvent = (event: { blockId: number; colors: Color[]; prevColors: Color[] }) => {
+        const updateColorsFromEvent = (event: {
+            blockId: number;
+            colors: ProjectColor[];
+            prevColors: ProjectColor[];
+        }) => {
             if (event.blockId === blockId && !compareObjects(event.colors, event.prevColors)) {
                 const sortedColors = [...event.colors].sort((a, b) => a.sort - b.sort);
                 setColorsByPaletteId(sortedColors);

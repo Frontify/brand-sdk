@@ -9,11 +9,11 @@ import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
-import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
+import { ProjectColorDummy } from '.';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -84,14 +84,14 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(678),
         ),
         getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
+            ProjectColorDummy.red(9834),
+            ProjectColorDummy.green(342),
+            ProjectColorDummy.yellow(9314),
         ]),
         getColorsByColorPaletteId: stub<Parameters<AppBridgeBlock['getColorsByColorPaletteId']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
+            ProjectColorDummy.red(9834),
+            ProjectColorDummy.green(342),
+            ProjectColorDummy.yellow(9314),
         ]),
         getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
@@ -153,12 +153,12 @@ export const getAppBridgeBlockStub = ({
         }),
         getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
         getColors: stub<Parameters<AppBridgeBlock['getColors']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
+            ProjectColorDummy.red(9834),
+            ProjectColorDummy.green(342),
+            ProjectColorDummy.yellow(9314),
         ]),
         updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
-            Promise.resolve(ColorDummy.red(colorId)),
+            Promise.resolve(ProjectColorDummy.red(colorId)),
         ),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
@@ -217,7 +217,7 @@ export const getAppBridgeBlockStub = ({
         }),
 
         // TODO: Stub the following methods
-        createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
+        createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ProjectColorDummy.red()),
         deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
