@@ -28,7 +28,7 @@
         "test:watch": "vitest"
     },
     "devDependencies": {
-        "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha.0",
+        "@frontify/app-bridge": "workspace:^",
         "@frontify/eslint-config-react": "0.16.1",
         "@types/react": "^18.2.39",
         "eslint": "^8.54.0",
@@ -42,7 +42,7 @@
         "react-dom": "^18"
     },
     "dependencies": {
-        "@frontify/sidebar-settings": "^0.8.0"
+        "@frontify/sidebar-settings": "workspace:^"
     },
     "peerDependencies": {
         "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha.0"
