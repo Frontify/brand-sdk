@@ -27,7 +27,7 @@ Provides settings types for Platform Apps
 import { defineSettings } from '@frontify/platform-app';
 
 export const settings = defineSettings({
-    Credentials: [
+    credentials: [
         {
             type: 'input',
             id: 'api-token',
