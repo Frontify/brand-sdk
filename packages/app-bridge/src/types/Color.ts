@@ -135,3 +135,46 @@ export type ColorCreate = {
 };
 
 export type ColorPatch = Partial<Omit<Color, 'id' | 'hex' | 'hue' | 'saturation' | 'lightness'>>;
+
+export type ProjectColor = {
+    id: number;
+    sort: number;
+    color: ColorAsset;
+};
+
+// This type should be evolved to Asset in the long run
+export type ColorAsset = {
+    title: Nullable<string>;
+    revision: ColorRevision;
+};
+
+export type ColorRevision = {
+    nameCss: Nullable<string>;
+    hex: Nullable<string>;
+    red: Nullable<number>;
+    green: Nullable<number>;
+    blue: Nullable<number>;
+    alpha: Nullable<number>;
+    hue: number;
+    saturation: number;
+    lightness: Nullable<number>;
+    c: Nullable<number>;
+    m: Nullable<number>;
+    y: Nullable<number>;
+    k: Nullable<number>;
+    pantone: Nullable<string>;
+    ral: Nullable<string>;
+    oracal: Nullable<string>;
+    pantoneCoated: Nullable<string>;
+    pantoneUncoated: Nullable<string>;
+    cmykCoated: Nullable<string>;
+    cmykUncoated: Nullable<string>;
+    cmykNewspaper: Nullable<string>;
+    ncs: Nullable<string>;
+    pantoneCp: Nullable<string>;
+    pantonePlastics: Nullable<string>;
+    pantoneTextile: Nullable<string>;
+    hks: Nullable<string>;
+    threeM: Nullable<string>;
+    lab: Nullable<string>;
+};

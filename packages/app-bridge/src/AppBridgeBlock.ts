@@ -35,6 +35,7 @@ import type {
     DocumentPageTargets,
     DocumentSection,
     DocumentTargets,
+    ProjectColor,
     Template,
     TemplateLegacy,
     User,
@@ -120,7 +121,7 @@ export interface AppBridgeBlock<
 
     getColorsByIds(colorIds: number[]): Promise<Color[]>;
 
-    getColors(): Promise<Color[]>;
+    getColors(): Promise<ProjectColor[]>;
 
     getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
 
