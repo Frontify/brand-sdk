@@ -9,11 +9,11 @@ import type { Asset } from '../types/Asset';
 import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
+import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
-import { ColorDummy } from './ColorDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;

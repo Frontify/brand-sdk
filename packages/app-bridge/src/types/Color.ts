@@ -92,44 +92,6 @@ export type ColorApiPatch = Partial<{
     lab: Nullable<string>;
 }>;
 
-export type ColorCreate = {
-    colorPaletteId: number;
-    red: number;
-    green: number;
-    blue: number;
-    alpha: number;
-};
-
-export type ColorPatch = {
-    language?: Nullable<string>;
-    name?: Nullable<string>;
-    nameCss?: Nullable<string>;
-    sort?: number;
-    red?: Nullable<number>;
-    green?: Nullable<number>;
-    blue?: Nullable<number>;
-    alpha?: Nullable<number>;
-    c?: Nullable<number>;
-    m?: Nullable<number>;
-    y?: Nullable<number>;
-    k?: Nullable<number>;
-    pantone?: Nullable<string>;
-    ral?: Nullable<string>;
-    oracal?: Nullable<string>;
-    pantoneCoated?: Nullable<string>;
-    pantoneUncoated?: Nullable<string>;
-    cmykCoated?: Nullable<string>;
-    cmykUncoated?: Nullable<string>;
-    cmykNewspaper?: Nullable<string>;
-    ncs?: Nullable<string>;
-    pantoneCp?: Nullable<string>;
-    pantonePlastics?: Nullable<string>;
-    pantoneTextile?: Nullable<string>;
-    hks?: Nullable<string>;
-    threeM?: Nullable<string>;
-    lab?: Nullable<string>;
-};
-
 export type Color = {
     id: number;
     sort: number;
@@ -171,4 +133,42 @@ export type ColorRevision = {
     hks: Nullable<string>;
     threeM: Nullable<string>;
     lab: Nullable<string>;
+};
+
+export type ColorCreate = {
+    colorPaletteId: number;
+    red: number;
+    green: number;
+    blue: number;
+    alpha: number;
+};
+
+export type ColorPatch = {
+    language?: Nullable<string>;
+    name?: Nullable<string>;
+    nameCss?: Nullable<string>;
+    sort?: number;
+    red?: Nullable<number>;
+    green?: Nullable<number>;
+    blue?: Nullable<number>;
+    alpha?: Nullable<number>;
+    c?: Nullable<number>;
+    m?: Nullable<number>;
+    y?: Nullable<number>;
+    k?: Nullable<number>;
+    pantone?: Nullable<string>;
+    ral?: Nullable<string>;
+    oracal?: Nullable<string>;
+    pantoneCoated?: Nullable<string>;
+    pantoneUncoated?: Nullable<string>;
+    cmykCoated?: Nullable<string>;
+    cmykUncoated?: Nullable<string>;
+    cmykNewspaper?: Nullable<string>;
+    ncs?: Nullable<string>;
+    pantoneCp?: Nullable<string>;
+    pantonePlastics?: Nullable<string>;
+    pantoneTextile?: Nullable<string>;
+    hks?: Nullable<string>;
+    threeM?: Nullable<string>;
+    lab?: Nullable<string>;
 };
