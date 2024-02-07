@@ -1,5 +1,5 @@
 import { App } from './App';
-import { defineApp } from '@frontify/platform-apps';
+import { defineApp } from '@frontify/platform-app';
 import './main.css';
 import '@frontify/fondue/style';
 
