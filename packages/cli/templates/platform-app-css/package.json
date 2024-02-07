@@ -14,7 +14,9 @@
         "@frontify/fondue": "12.0.0-beta.382",
         "@frontify/fondue-tokens": "^3.4.0",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "@frontify/platform-apps": "^0.0.2"
+
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.16.2",
