@@ -5,6 +5,7 @@ Defines the App and gives typing for the settings
 
 ```ts
 /* (c) Copyright Frontify Ltd., all rights reserved. */
+
 import { defineApp } from '@frontify/platform-app';
 import { settings } from './settings';
 
