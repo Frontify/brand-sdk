@@ -11,7 +11,7 @@ packages/app-bridge/src/errors/ValidationError.ts @Frontify/integration
 ## App Bridge Helpers
 packages/app-bridge/src/helpers/ @Frontify/guidelines-navigation-themes
 
-## React Hooks 
+## React Hooks
 packages/app-bridge/src/react/useAssetBulkDownload.spec.tsx @Frontify/guidelines-one
 packages/app-bridge/src/react/useAssetBulkDownload.ts @Frontify/guidelines-one
 packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/guidelines-one
@@ -57,8 +57,8 @@ packages/app-bridge/src/react/useNavigationManager.spec.ts @Frontify/guidelines-
 packages/app-bridge/src/react/useNavigationManager.ts @Frontify/guidelines-navigation-themes
 packages/app-bridge/src/react/usePageTemplateSettings.spec.ts @Frontify/guidelines-navigation-themes
 packages/app-bridge/src/react/usePageTemplateSettings.ts @Frontify/guidelines-navigation-themes
-packages/app-bridge/src/react/usePlatformAppBridge.spec.ts @Frontify/integration
-packages/app-bridge/src/react/usePlatformAppBridge.ts @Frontify/integration
+packages/app-bridge/src/react/usePlatformAppBridge.spec.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/react/usePlatformAppBridge.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/react/usePrivacySettings.spec.ts @Frontify/guidelines-one
 packages/app-bridge/src/react/usePrivacySettings.ts @Frontify/guidelines-one
 packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/guidelines-one
@@ -77,18 +77,18 @@ packages/app-bridge/src/react/useUngroupedDocuments.spec.ts @Frontify/guidelines
 packages/app-bridge/src/react/useUngroupedDocuments.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes
 
 ### App Bridge registries api
-packages/app-bridge/src/registries/api/CreateAsset.ts @Frontify/integration
-packages/app-bridge/src/registries/api/CreateAsset.spec.ts @Frontify/integration
-packages/app-bridge/src/registries/api/GetAssetResourceInformation.ts @Frontify/integration
-packages/app-bridge/src/registries/api/GetAssetResourceInformation.spec.ts @Frontify/integration
+packages/app-bridge/src/registries/api/CreateAsset.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/registries/api/CreateAsset.spec.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/registries/api/GetAssetResourceInformation.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/registries/api/GetAssetResourceInformation.spec.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/registries/api/GetAssetBulkDownloadToken.ts @Frontify/guidelines-one
-packages/app-bridge/src/registries/api/GetCurrentUser.ts @Frontify/guidelines-one @Frontify/integration @Frontify/guidelines-navigation-themes
-packages/app-bridge/src/registries/api/GetCurrentUser.spec.ts @Frontify/guidelines-one @Frontify/integration @Frontify/guidelines-navigation-themes
+packages/app-bridge/src/registries/api/GetCurrentUser.ts @Frontify/guidelines-one @Frontify/apps-and-integrations @Frontify/guidelines-navigation-themes
+packages/app-bridge/src/registries/api/GetCurrentUser.spec.ts @Frontify/guidelines-one @Frontify/apps-and-integrations @Frontify/guidelines-navigation-themes
 
 ### App Bridge registries commands
 packages/app-bridge/src/registries/commands/AssetChooser.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes
 packages/app-bridge/src/registries/commands/AssetViewer.ts @Frontify/guidelines-one
-packages/app-bridge/src/registries/commands/Connection.ts @Frontify/integration
+packages/app-bridge/src/registries/commands/Connection.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/registries/commands/DownloadAsset.ts @Frontify/guidelines-one
 packages/app-bridge/src/registries/commands/NavigationManager.ts @Frontify/guidelines-navigation-themes
 packages/app-bridge/src/registries/commands/NewPublication.ts @Frontify/guidelines-one
@@ -98,57 +98,58 @@ packages/app-bridge/src/registries/commands/TemplateChooser.ts @Frontify/guideli
 packages/app-bridge/src/registries/events/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes
 
 ### App Bridge registries verbs
-packages/app-bridge/src/registries/verbs/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
+packages/app-bridge/src/registries/verbs/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
 
 ## App Bridge repositories
 packages/app-bridge/src/repositories/ @Frontify/guidelines-one
 
 ## App Bridge Tests
 packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/guidelines-one
-packages/app-bridge/src/tests/AppBridgePlatformAppStub.ts @Frontify/integration
+packages/app-bridge/src/tests/AppBridgePlatformAppStub.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/tests/AppBridgeThemeStub.ts @Frontify/guidelines-navigation-themes
 packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/guidelines-one
 packages/app-bridge/src/tests/withAppBridgeThemeStubs.tsx @Frontify/guidelines-navigation-themes
 
 ## App Bridge Utilities
-packages/app-bridge/src/utilities/hash.ts @Frontify/integration
-packages/app-bridge/src/utilities/httpClient.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
-packages/app-bridge/src/utilities/MessageBus.ts @Frontify/integration
-packages/app-bridge/src/utilities/MessageBus.spec.ts @Frontify/integration
-packages/app-bridge/src/utilities/notify.ts @Frontify/integration
+packages/app-bridge/src/utilities/hash.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/httpClient.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/MessageBus.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/MessageBus.spec.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/notify.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/utilities/object.spec.ts @Frontify/guidelines-one
 packages/app-bridge/src/utilities/object.ts @Frontify/guidelines-one
-packages/app-bridge/src/utilities/queryParams.spec.ts @Frontify/integration
-packages/app-bridge/src/utilities/queryParams.ts @Frontify/integration
-packages/app-bridge/src/utilities/subscribe.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
+packages/app-bridge/src/utilities/queryParams.spec.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/queryParams.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/subscribe.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
 
 ## App Bridge Worker
 packages/app-bridge/src/worker/ @Frontify/guidelines-one
 
 ## App Bridge Interfaces
-packages/app-bridge/src/AppBridge.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
+packages/app-bridge/src/AppBridge.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
 packages/app-bridge/src/AppBridgeBlock.ts @Frontify/guidelines-one
-packages/app-bridge/src/AppBridgeCreateAsset.spec.ts @Frontify/integration
-packages/app-bridge/src/AppBridgeCreateAsset.ts @Frontify/integration
-packages/app-bridge/src/AppBridgePlatformApp.spec.ts @Frontify/integration
-packages/app-bridge/src/AppBridgePlatformApp.ts @Frontify/integration
+packages/app-bridge/src/AppBridgeCreateAsset.spec.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/AppBridgeCreateAsset.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/AppBridgePlatformApp.spec.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/AppBridgePlatformApp.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/AppBridgeTheme.ts @Frontify/guidelines-navigation-themes
-packages/app-bridge/src/window.d.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
+packages/app-bridge/src/window.d.ts @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
 
 # CLI
-packages/cli/src/commands/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
-packages/cli/src/errors/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
-packages/cli/src/utils/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/integration
+packages/cli/src/commands/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
+packages/cli/src/errors/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
+packages/cli/src/utils/ @Frontify/guidelines-one @Frontify/guidelines-navigation-themes @Frontify/apps-and-integrations
 
 ## Templates
 packages/cli/templates/content-block-css @Frontify/guidelines-one
 packages/cli/templates/content-block-css-modules @Frontify/guidelines-one
 packages/cli/templates/content-block-tailwind @Frontify/guidelines-one
-packages/cli/templates/platform-app-css @Frontify/integration
-packages/cli/templates/platform-app-css-modules @Frontify/integration
-packages/cli/templates/platform-app-tailwind @Frontify/integration
+packages/cli/templates/platform-app-css @Frontify/apps-and-integrations
+packages/cli/templates/platform-app-css-modules @Frontify/apps-and-integrations
+packages/cli/templates/platform-app-tailwind @Frontify/apps-and-integrations
 
-
+# Platform Apps types
+packages/platform-app @Frontify/apps-and-integrations
 # Guideline Blocks Settings
 packages/guideline-blocks-settings @Frontify/guidelines-one
 
