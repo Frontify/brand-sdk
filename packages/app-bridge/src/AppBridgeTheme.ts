@@ -62,9 +62,9 @@ export type ThemeCommand = CommandNameValidator<
 >;
 
 export type TemplateContext = { templateId: string; type: ThemeTemplate } & (
-    | { type: 'documentPage'; document: Document; documentPageId: number }
+    | { type: 'documentPage'; document: Document; documentPage: DocumentPage }
     | { type: 'library'; document: Document }
-    | { type: 'cover' }
+    | { type: 'cover'; coverPage: CoverPage }
 );
 
 export type ThemeState = {
@@ -83,7 +83,7 @@ export type ThemeContext = {
     isPublicLink: boolean;
     isAuthenticated: boolean;
     languages: Language[];
-    template: TemplateContext;
+    template: TemplateContext | null;
 };
 
 export type ThemeEvent = EventNameValidator<
