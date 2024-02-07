@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { ColorApi, ProjectColor } from './Color';
+import type { Color, ColorApi } from './Color';
 
 export type ColorPaletteApi = {
     id: number;
@@ -21,7 +21,7 @@ export type ColorPalette = {
     id: number;
     name: string;
     description: string;
-    colors: ProjectColor[];
+    colors: Color[];
 };
 
 export type ColorPaletteCreate = {

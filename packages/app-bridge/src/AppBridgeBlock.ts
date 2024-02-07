@@ -22,6 +22,7 @@ import type { EventRegistry } from './registries/events/EventRegistry';
 import type {
     Asset,
     BulkDownload,
+    Color,
     ColorCreate,
     ColorPalette,
     ColorPaletteCreate,
@@ -34,7 +35,6 @@ import type {
     DocumentPageTargets,
     DocumentSection,
     DocumentTargets,
-    ProjectColor,
     Template,
     TemplateLegacy,
     User,
@@ -118,9 +118,9 @@ export interface AppBridgeBlock<
 
     getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
-    getColorsByIds(colorIds: number[]): Promise<ProjectColor[]>;
+    getColorsByIds(colorIds: number[]): Promise<Color[]>;
 
-    getColors(): Promise<ProjectColor[]>;
+    getColors(): Promise<Color[]>;
 
     getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
 
@@ -130,9 +130,9 @@ export interface AppBridgeBlock<
 
     deleteColorPalette(colorPaletteId: number): Promise<void>;
 
-    createColor(colorCreate: ColorCreate): Promise<ProjectColor>;
+    createColor(colorCreate: ColorCreate): Promise<Color>;
 
-    updateColor(colorId: number, colorPatch: ColorPatch): Promise<ProjectColor>;
+    updateColor(colorId: number, colorPatch: ColorPatch): Promise<Color>;
 
     deleteColor(colorId: number): Promise<void>;
 
@@ -158,7 +158,7 @@ export interface AppBridgeBlock<
 
     getColorPalettes(): Promise<ColorPalette[]>;
 
-    getColorsByColorPaletteId(colorPaletteId: number): Promise<ProjectColor[]>;
+    getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
 
     getAllDocuments(): Promise<Document[]>;
 
