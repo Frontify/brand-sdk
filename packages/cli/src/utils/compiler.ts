@@ -52,8 +52,8 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
     });
 };
 
-export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
-    let settingsName = '';
+export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {
+    let settingsHashName = '';
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
 
     const htmlHashPlugin: PluginOption = {
@@ -84,17 +84,20 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         name: 'js-hash',
         enforce: 'post',
         generateBundle(_options, bundle) {
-            const indexJsSource = bundle?.['settings.js'].type === 'chunk' ? bundle?.['settings.js'].code : null;
-            settingsName = `settings-${outputName}.${getHash(indexJsSource)}.js`;
-            bundle['settings.js'].fileName = settingsName;
+            const indexJsSource = bundle?.['index.js'].type === 'chunk' ? bundle?.['index.js'].code : null;
+            settingsHashName = `settings-${outputName}.${getHash(indexJsSource)}.js`;
+            bundle['index.js'].fileName = settingsHashName;
         },
     };
 
     await build({
         plugins: [jsHashPlugin],
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
         build: {
             lib: {
-                entry: 'src/settings.ts',
+                entry: entryFile,
                 name: 'Settings',
                 formats: ['es'],
             },
@@ -105,6 +108,7 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
                     chunkFileNames: '[name].js',
                     entryFileNames: '[name].js',
                 },
+                external: ['app'],
             },
         },
     });
@@ -126,18 +130,12 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         },
     });
 
-    // Rename
-    fs.rename(`temp/${settingsName}`, `dist/${settingsName}`, (err) => {
-        if (err) {
-            throw err;
-        }
-        console.log(`${settingsName} :File moved!`);
-    });
-
-    // Clean up
-    fs.rm('temp', { recursive: true, force: true }, (err) => {
-        if (err) {
-            throw err;
-        }
-    });
+    // move and cleanup
+    try {
+        await fs.promises.rename(`temp/${settingsHashName}`, `dist/${settingsHashName}`);
+        await fs.promises.rm('temp', { recursive: true, force: true });
+    } catch (error) {
+        console.log('error to rename');
+        throw error;
+    }
 };
