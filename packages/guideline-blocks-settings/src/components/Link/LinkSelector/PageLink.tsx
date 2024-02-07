@@ -5,7 +5,6 @@ import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { SectionLink } from './SectionLink';
-import { useDocumentSection } from './hooks/useDocumentSection';
 
 type PageLinkProps = {
     page: {
@@ -27,16 +26,26 @@ export const PageLink = ({
     getDocumentSectionsByDocumentPageId,
 }: PageLinkProps) => {
     const [isExpanded, setIsExpanded] = useState(page.id === itemsToExpandInitially.documentId);
+    const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
     const isActive = page.permanentLink === selectedUrl;
-    const { documentSections } = useDocumentSection(getDocumentSectionsByDocumentPageId, page.id);
-    const sectionsArray = [...documentSections.values()];
-    const hasSections = sectionsArray.length > 0;
+
+    useEffect(() => {
+        const fetchDocumentSections = async () => {
+            const sections = await getDocumentSectionsByDocumentPageId(page.id);
+            setDocumentSections(sections);
+        };
+
+        fetchDocumentSections();
+    }, [page.id, getDocumentSectionsByDocumentPageId]);
 
     useEffect(() => {
         if (page.id === itemsToExpandInitially.pageId) {
             setIsExpanded(true);
         }
     }, [itemsToExpandInitially, page.id]);
+
+    const sectionsArray = [...documentSections.values()];
+    const hasSections = sectionsArray.length > 0;
 
     return (
         <>
