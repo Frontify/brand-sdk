@@ -1,6 +1,6 @@
 {
     "name": "@frontify/platform-app",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Provides the types for the Apps",
     "sideEffects": false,
     "main": "dist/index.umd.js",
@@ -29,7 +29,7 @@
     },
     "devDependencies": {
         "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha.0",
-        "@frontify/eslint-config-react": "0.16.2",
+        "@frontify/eslint-config-react": "0.16.1",
         "@types/react": "^18.2.39",
         "eslint": "^8.54.0",
         "eslint-plugin-notice": "^0.9.10",
@@ -42,9 +42,9 @@
         "react-dom": "^18"
     },
     "dependencies": {
-        "@frontify/sidebar-settings": "workspace:^"
+        "@frontify/sidebar-settings": "^0.8.0"
     },
     "peerDependencies": {
-        "@frontify/app-bridge": "workspace:^"
+        "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha.0"
     }
 }
