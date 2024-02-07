@@ -46,12 +46,12 @@ export type PlatformAppConfigExport = {
 };
 
 /**
- * Type helper to export a platformApp, accepts a direct {@link PlatformAppConfigExport} object.
+ * Type helper to export a platform-app, accepts a direct {@link PlatformAppConfigExport} object.
  */
 export const defineApp = (config: PlatformAppConfigExport): PlatformAppConfigExport => config;
 
 /**
- * Type helper to export platform-app's settings structure, accepts a direct {@link PlatformAppSettingsStructureExport} object.
+ * Type helper to export platform-app settings structure, accepts a direct {@link PlatformAppSettingsStructureExport} object.
  */
 export const defineSettings = (
     settingsStructure: PlatformAppSettingsStructureExport,
