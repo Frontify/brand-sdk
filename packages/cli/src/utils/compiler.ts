@@ -5,6 +5,7 @@ import { PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 import { getAppBridgeVersion } from './appBridgeVersion.js';
+import * as fs from 'fs';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -52,6 +53,7 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
 };
 
 export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
+    let settingsName = '';
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
 
     const htmlHashPlugin: PluginOption = {
@@ -78,7 +80,36 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         },
     };
 
-    return build({
+    const jsHashPlugin: PluginOption = {
+        name: 'js-hash',
+        enforce: 'post',
+        generateBundle(_options, bundle) {
+            const indexJsSource = bundle?.['settings.js'].type === 'chunk' ? bundle?.['settings.js'].code : null;
+            settingsName = `settings-${outputName}.${getHash(indexJsSource)}.js`;
+            bundle['settings.js'].fileName = settingsName;
+        },
+    };
+
+    await build({
+        plugins: [jsHashPlugin],
+        build: {
+            lib: {
+                entry: 'src/settings.ts',
+                name: 'Settings',
+                formats: ['es'],
+            },
+            rollupOptions: {
+                output: {
+                    dir: 'temp',
+                    assetFileNames: () => '[name][extname]',
+                    chunkFileNames: '[name].js',
+                    entryFileNames: '[name].js',
+                },
+            },
+        },
+    });
+
+    await build({
         plugins: [react(), htmlHashPlugin],
         root: projectPath,
         define: {
@@ -93,5 +124,20 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
                 },
             },
         },
+    });
+
+    // Rename
+    fs.rename(`temp/${settingsName}`, `dist/${settingsName}`, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log(`${settingsName} :File moved!`);
+    });
+
+    // Clean up
+    fs.rm('temp', { recursive: true, force: true }, (err) => {
+        if (err) {
+            throw err;
+        }
     });
 };
