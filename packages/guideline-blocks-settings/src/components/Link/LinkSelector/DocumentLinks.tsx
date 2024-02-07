@@ -1,18 +1,26 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
+import type { Document, DocumentPage, DocumentSection } from '@frontify/app-bridge';
 import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';
 import { LoadingIndicator } from './LoadingIndicator';
 import { InitiallyExpandedItems } from '../';
 
 type DocumentLinksProps = {
-    appBridge: AppBridgeBlock | AppBridgeTheme;
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
+    getAllDocuments: () => Promise<Document[]>;
+    getDocumentSectionsByDocumentPageId: (documentPageId: number) => Promise<DocumentSection[]>;
+    getDocumentPagesByDocumentId: (documentId: number) => Promise<DocumentPage[]>;
 };
 
-export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentLinksProps): ReactElement => {
+export const DocumentLinks = ({
+    selectedUrl,
+    onSelectUrl,
+    getAllDocuments,
+    getDocumentPagesByDocumentId,
+    getDocumentSectionsByDocumentPageId,
+}: DocumentLinksProps): ReactElement => {
     const [isLoading, setIsLoading] = useState(true);
     const [documents, setDocuments] = useState<Document[]>([]);
     const [itemsToExpandInitially, setItemsToExpandInitially] = useState<InitiallyExpandedItems>({
@@ -32,8 +40,7 @@ export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentL
     }, [documentArray.length]);
 
     useEffect(() => {
-        appBridge
-            .getAllDocuments()
+        getAllDocuments()
             .then((_documents) => {
                 setDocuments(_documents);
             })
@@ -52,8 +59,8 @@ export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentL
             return itemsToExpand;
         }
         for (const document of documentArray) {
-            const pages = await appBridge.getDocumentPagesByDocumentId(document.id);
-            appBridge.getAllDocuments();
+            const pages = await getDocumentPagesByDocumentId(document.id);
+            getAllDocuments();
             const pagesArray = [...pages.values()];
             const selectedUrlIsPage = !!pagesArray.find((page) => page.permanentLink === selectedUrl);
             if (selectedUrlIsPage) {
@@ -61,7 +68,7 @@ export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentL
                 return itemsToExpand;
             }
             for (const page of pagesArray) {
-                const sections = await appBridge.getDocumentSectionsByDocumentPageId(page.id);
+                const sections = await getDocumentSectionsByDocumentPageId(page.id);
                 const sectionsArray = [...sections.values()];
                 const selectedUrlIsSection = !!sectionsArray.find((section) => section.permanentLink === selectedUrl);
                 if (selectedUrlIsSection) {
@@ -83,10 +90,11 @@ export const DocumentLinks = ({ appBridge, selectedUrl, onSelectUrl }: DocumentL
                     <DocumentLink
                         key={document.id}
                         document={document}
-                        appBridge={appBridge}
                         selectedUrl={selectedUrl}
                         onSelectUrl={onSelectUrl}
                         itemsToExpandInitially={itemsToExpandInitially}
+                        getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
+                        getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
                     />
                 );
             })}

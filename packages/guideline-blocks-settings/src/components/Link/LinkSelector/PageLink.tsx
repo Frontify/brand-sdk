@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock, AppBridgeTheme, useDocumentSection } from '@frontify/app-bridge';
+import { type DocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { SectionLink } from './SectionLink';
+import { useDocumentSection } from './hooks/useDocumentSection';
 
-type DocumentLinkProps = {
+type PageLinkProps = {
     page: {
         id: number;
         title: string;
@@ -14,14 +15,20 @@ type DocumentLinkProps = {
     };
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
-    appBridge: AppBridgeBlock | AppBridgeTheme;
     itemsToExpandInitially: InitiallyExpandedItems;
+    getDocumentSectionsByDocumentPageId: (documentPageId: number) => Promise<DocumentSection[]>;
 };
 
-export const PageLink = ({ page, selectedUrl, onSelectUrl, itemsToExpandInitially, appBridge }: DocumentLinkProps) => {
+export const PageLink = ({
+    page,
+    selectedUrl,
+    onSelectUrl,
+    itemsToExpandInitially,
+    getDocumentSectionsByDocumentPageId,
+}: PageLinkProps) => {
     const [isExpanded, setIsExpanded] = useState(page.id === itemsToExpandInitially.documentId);
     const isActive = page.permanentLink === selectedUrl;
-    const { documentSections } = useDocumentSection(appBridge, page.id);
+    const { documentSections } = useDocumentSection(getDocumentSectionsByDocumentPageId, page.id);
     const sectionsArray = [...documentSections.values()];
     const hasSections = sectionsArray.length > 0;
 

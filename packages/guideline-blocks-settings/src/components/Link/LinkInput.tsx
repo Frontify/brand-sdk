@@ -65,9 +65,11 @@ export const LinkInput = ({
                 <div className="tw-mt-3">
                     <LinkSelector
                         url={url}
-                        appBridge={appBridge}
                         onUrlChange={onUrlChange}
                         buttonSize={buttonSize ?? ButtonSize.Medium}
+                        getAllDocuments={appBridge.getAllDocuments}
+                        getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                        getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
                     />
                 </div>
             )}
