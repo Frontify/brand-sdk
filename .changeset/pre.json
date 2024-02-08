@@ -5,9 +5,11 @@
     "@frontify/app-bridge": "3.0.0",
     "@frontify/frontify-cli": "5.5.3",
     "@frontify/guideline-blocks-settings": "0.29.16",
-    "@frontify/sidebar-settings": "0.8.1"
+    "@frontify/sidebar-settings": "0.8.1",
+    "@frontify/platform-app": "0.0.5"
   },
   "changesets": [
+    "kind-fishes-flash",
     "stale-hairs-wash"
   ]
 }
