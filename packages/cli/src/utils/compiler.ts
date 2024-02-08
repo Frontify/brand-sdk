@@ -5,6 +5,7 @@ import { PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 import { getAppBridgeVersion } from './appBridgeVersion.js';
+import { Logger } from './logger.js';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -53,6 +54,7 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
 
 export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
+    const appBridgeVersion = getAppBridgeVersion(projectPath);
 
     const htmlHashPlugin: PluginOption = {
         name: 'html-hash',
@@ -95,16 +97,26 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         build: {
             lib: {
                 entry: entryFile,
-                name: 'Settings',
-                formats: ['es'],
+                name: outputName,
+                formats: ['iife'],
+                fileName: () => 'index.js',
             },
             rollupOptions: {
+                external: ['app', 'react', 'react-dom'],
                 output: {
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                    },
                     assetFileNames: () => '[name][extname]',
                     chunkFileNames: '[name].js',
                     entryFileNames: '[name].js',
+                    footer: `
+                        window.${outputName} = ${outputName};
+                        window.${outputName}.dependencies = window.${outputName}.packages || {};
+                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
+                    `,
                 },
-                external: ['app'],
             },
         },
     });
