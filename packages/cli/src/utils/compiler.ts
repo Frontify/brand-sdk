@@ -5,7 +5,6 @@ import { PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 import { getAppBridgeVersion } from './appBridgeVersion.js';
-import { renameSync, rmSync } from 'fs';
 
 export type CompilerOptions = {
     projectPath: string;
