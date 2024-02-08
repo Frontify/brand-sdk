@@ -1,6 +1,6 @@
 {
     "name": "@frontify/guideline-blocks-settings",
-    "version": "0.31.2",
+    "version": "0.31.5",
     "description": "Provides types and helpers for the guideline block development",
     "sideEffects": false,
     "main": "dist/index.umd.js",
@@ -16,6 +16,7 @@
     },
     "exports": {
         ".": {
+            "types": "./dist/index.d.ts",
             "import": "./dist/index.es.js",
             "require": "./dist/index.umd.js"
         },

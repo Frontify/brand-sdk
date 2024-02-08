@@ -20,7 +20,7 @@ import pkg from '../package.json';
 const cli = cac(pkg.name.split('/')[1]);
 
 cli.command('login [instanceUrl]', 'log in to a Frontify instance')
-    .option('-i, --instance [instanceUrl]', '[string] url of the Frontify instance')
+    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
     .option('-p, --port <port>', '[number] port for the oauth service', {
         default: process.env.PORT || 5600,
     })
@@ -80,7 +80,7 @@ cli.command('serve', 'serve the app locally')
     .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
         default: false,
     })
-    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
+    .option('--appType <appType>, --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
@@ -123,6 +123,8 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
     .option('--open', '[boolean] open the marketplace app page', { default: false })
     .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
+    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
+    .option('-t, --token <accessToken>', '[string] the access token')
     .action(async (options) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
@@ -135,6 +137,8 @@ cli.command('deploy', 'deploy the app to the marketplace')
                     dryRun: options.dryRun,
                     noVerify: options.noVerify,
                     openInBrowser: options.open,
+                    instance: options.instance,
+                    token: options.token,
                 },
                 compilePlatformApp,
             );
@@ -146,6 +150,8 @@ cli.command('deploy', 'deploy the app to the marketplace')
                     dryRun: options.dryRun,
                     noVerify: options.noVerify,
                     openInBrowser: options.open,
+                    instance: options.instance,
+                    token: options.token,
                 },
                 compileBlock,
             );

@@ -52,7 +52,7 @@ export class Authenticator {
             Configuration.set('instanceUrl', this.instanceUrl);
 
             const user = await getUser(this.instanceUrl);
-            user && Logger.success(`${`Welcome back ${user.name} (${this.instanceUrl})!`}`);
+            user && Logger.success(`Welcome back ${user.name} (${this.instanceUrl})!`);
 
             process.exit(0);
         });
@@ -70,7 +70,7 @@ export class Authenticator {
             this.randomChallenge = randomCodeChallenge.data;
         } catch (error) {
             const errorText = error instanceof Error ? error.message : String(error);
-            throw new Error(`An error occured while getting the random challenge: ${errorText}`);
+            throw new Error(`An error occurred while getting the random challenge: ${errorText}`);
         }
     }
 
@@ -109,7 +109,7 @@ export class Authenticator {
             return tokens;
         } catch (error) {
             const errorText = error instanceof Error ? error.message : String(error);
-            throw new Error(`An error occured while getting tokens: ${errorText}`);
+            throw new Error(`An error occurred while getting tokens: ${errorText}`);
         }
     }
 }
