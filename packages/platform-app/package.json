@@ -1,0 +1,50 @@
+{
+    "name": "@frontify/platform-app",
+    "version": "0.0.5",
+    "description": "Provides the types for the Apps",
+    "sideEffects": false,
+    "main": "dist/platform-app.umd.js",
+    "unpkg": "dist/platform-app.umd.js",
+    "jsdelivr": "dist/platform-app.umd.js",
+    "module": "dist/platform-app.js",
+    "types": "dist/index.d.ts",
+    "author": "Frontify Developers <developers@frontify.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Frontify/brand-sdk",
+        "directory": "packages/platform-app"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build": "vite build",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "prettier": "prettier --check .",
+        "prettier:fix": "prettier --write .",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "devDependencies": {
+        "@frontify/app-bridge": "workspace:^",
+        "@frontify/eslint-config-react": "0.16.1",
+        "@types/react": "^18.2.39",
+        "eslint": "^8.54.0",
+        "eslint-plugin-notice": "^0.9.10",
+        "prettier": "^3.1.0",
+        "typescript": "^5.3.2",
+        "vite": "^5.0.4",
+        "vite-plugin-dts": "^3.6.3",
+        "vitest": "^0.34.6",
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "dependencies": {
+        "@frontify/sidebar-settings": "workspace:^"
+    },
+    "peerDependencies": {
+        "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha.0"
+    }
+}
