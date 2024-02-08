@@ -17,7 +17,7 @@ import type {
     StateReturn,
     SubscribeMap,
 } from './AppBridge';
-import { Topic } from './types';
+import { Document, DocumentPage, DocumentSection, Topic } from './types';
 import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { getQueryParameters } from './utilities/queryParams';
@@ -229,6 +229,18 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 callback(...(Array.isArray(callbackParameters) ? callbackParameters : [callbackParameters]));
             }
         }
+    }
+
+    getAllDocuments(): Promise<Document[]> {
+        return null as any;
+    }
+
+    getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]> {
+        return null as any;
+    }
+
+    getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]> {
+        return null as any;
     }
 }
 

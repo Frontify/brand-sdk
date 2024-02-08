@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgePlatformApp, AppBridgeTheme } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
 import { PageLinks } from './PageLinks';
 import { IconColorFan16, merge } from '@frontify/fondue';
@@ -12,7 +12,7 @@ type DocumentLinkProps = {
         title: string;
         permanentLink: string;
     };
-    appBridge: AppBridgeBlock | AppBridgeTheme;
+    appBridge: AppBridgeBlock | AppBridgeTheme | AppBridgePlatformApp;
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
     itemsToExpandInitially: InitiallyExpandedItems;

@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme, Document } from '@frontify/app-bridge';
+import type { AppBridgeBlock, AppBridgePlatformApp, AppBridgeTheme, Document } from '@frontify/app-bridge';
 import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';
 import { LoadingIndicator } from './LoadingIndicator';
 import { InitiallyExpandedItems } from '../';
 
 type DocumentLinksProps = {
-    appBridge: AppBridgeBlock | AppBridgeTheme;
+    appBridge: AppBridgeBlock | AppBridgeTheme | AppBridgePlatformApp;
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
 };
