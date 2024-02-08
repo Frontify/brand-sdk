@@ -23,6 +23,8 @@ type Options = {
     dryRun?: boolean;
     noVerify?: boolean;
     openInBrowser?: boolean;
+    token?: string;
+    instance?: string;
 };
 
 export type AppManifest = {
@@ -34,8 +36,7 @@ export type AppManifest = {
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
-    const folderFiles = await fastGlob(join(glob, '**'), { ignore: ignoreGlobs, dot: true });
-
+    const folderFiles = await fastGlob(`${fastGlob.convertPathToPattern(glob)}/**`, { ignore: ignoreGlobs, dot: true });
     const folderFilenames = folderFiles.map((filePath) => filePath.replace(`${glob}/`, ''));
 
     return folderFilenames.reduce((stack, filename, index) => {
@@ -50,19 +51,25 @@ const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.ide
 export const createDeployment = async (
     entryFile: string,
     distPath: string,
-    { dryRun = false, noVerify = false, openInBrowser = false }: Options,
+    { dryRun = false, noVerify = false, openInBrowser = false, token, instance }: Options,
     compile: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
 ): Promise<void> => {
     try {
         let user: UserInfo | undefined;
-        const instanceUrl = Configuration.get('instanceUrl') as string | undefined;
-        if (!instanceUrl) {
-            Logger.error(`You are not logged in, you can use the command ${pc.bold('frontify-cli login')}.`);
+        const instanceUrl = instance || Configuration.get('instanceUrl');
+        const accessToken = token || Configuration.get('tokens.access_token');
+
+        if (!accessToken || !instanceUrl) {
+            Logger.error(
+                `You are currently not logged in. You can use the command ${pc.bold(
+                    'frontify-cli login',
+                )} to log in, or pass --token=<token> --instance=<instance> to the deploy command.`,
+            );
             process.exit(-1);
         }
 
         if (!dryRun) {
-            user = await getUser(instanceUrl);
+            user = await getUser(instanceUrl, token);
             user && Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
         }
 
@@ -91,26 +98,29 @@ export const createDeployment = async (
                 process.exit(-1);
             }
 
-            const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) => join(projectPath, path));
+            const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) =>
+                fastGlob.convertPathToPattern(projectPath + path),
+            );
 
             const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
                 (entry) => entry !== 'manifest.json',
             );
             const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
-                join(projectPath, path),
+                fastGlob.convertPathToPattern(`${projectPath}/${path}`),
             );
 
             const request = {
-                build_files: await makeFilesDict(join(projectPath, distPath), buildFilesToIgnore),
-                source_files: await makeFilesDict(join(projectPath), sourceFilesToIgnore),
+                build_files: await makeFilesDict(
+                    fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
+                    buildFilesToIgnore,
+                ),
+                source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
             };
 
             if (!dryRun) {
                 Logger.info('Sending the files to Frontify Marketplace...');
 
                 const httpClient = new HttpClient(instanceUrl);
-
-                const accessToken = Configuration.get('tokens.access_token');
 
                 try {
                     await httpClient.put(`/api/marketplace/app/${appId}`, request, {

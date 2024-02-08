@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.2.0
+
+### Minor Changes
+
+- [#731](https://github.com/Frontify/brand-sdk/pull/731) [`b9c4fc4`](https://github.com/Frontify/brand-sdk/commit/b9c4fc4fddacabb988ceb0cbe125c1793a697e19) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add theme template context to appBridgeThemes context
+
 ## 4.0.0-alpha.0
 
 ### Major Changes

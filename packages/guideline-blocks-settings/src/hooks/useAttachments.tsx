@@ -5,24 +5,19 @@ import { type ReactNode, createContext, useContext } from 'react';
 
 import { type BlockProps } from '../index';
 
-export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
-    const { blockAssets, updateAssetIdsFromKey } = useBlockAssets(appBridge);
-    const attachments = blockAssets?.[assetId] || [];
+export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string) => {
+    const { blockAssets, addAssetIdsToKey, deleteAssetIdsFromKey, updateAssetIdsFromKey } = useBlockAssets(appBridge);
+    const attachments = blockAssets?.[attachmentKey] || [];
 
     const onAttachmentsAdd = async (newAssets: Asset[]) => {
-        const newAssetIds = attachments.map((attachment) => attachment.id);
-        for (const asset of newAssets) {
-            newAssetIds.push(asset.id);
-        }
-        await updateAssetIdsFromKey(assetId, newAssetIds);
+        await addAssetIdsToKey(
+            attachmentKey,
+            newAssets.map((asset) => asset.id),
+        );
     };
 
     const onAttachmentDelete = async (assetToDelete: Asset) => {
-        const newAssetIds = attachments
-            .filter((attachment) => attachment.id !== assetToDelete.id)
-            .map((attachment) => attachment.id);
-
-        await updateAssetIdsFromKey(assetId, newAssetIds);
+        await deleteAssetIdsFromKey(attachmentKey, [assetToDelete.id]);
     };
 
     const onAttachmentReplace = async (attachmentToReplace: Asset, newAsset: Asset) => {
@@ -30,13 +25,13 @@ export const useAttachments = (appBridge: AppBridgeBlock, assetId: string) => {
             attachment.id === attachmentToReplace.id ? newAsset.id : attachment.id,
         );
 
-        await updateAssetIdsFromKey(assetId, newAssetIds);
+        await updateAssetIdsFromKey(attachmentKey, newAssetIds);
     };
 
     const onAttachmentsSorted = async (assets: Asset[]) => {
         const newAssetIds = assets.map((asset) => asset.id);
 
-        await updateAssetIdsFromKey(assetId, newAssetIds);
+        await updateAssetIdsFromKey(attachmentKey, newAssetIds);
     };
 
     return {
