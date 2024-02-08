@@ -120,6 +120,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
         build: {
+            emptyOutDir: false,
             rollupOptions: {
                 output: {
                     assetFileNames: () => '[name][extname]',
@@ -129,13 +130,4 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
             },
         },
     });
-
-    // move and cleanup
-    try {
-        renameSync(`temp/${settingsHashName}`, `dist/${settingsHashName}`);
-        rmSync('temp', { recursive: true, force: true });
-    } catch (error) {
-        console.log('error to rename');
-        throw error;
-    }
 };
