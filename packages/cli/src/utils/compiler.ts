@@ -53,7 +53,6 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
 };
 
 export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {
-    let settingsHashName = '';
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
 
     const htmlHashPlugin: PluginOption = {
@@ -85,8 +84,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         enforce: 'post',
         generateBundle(_options, bundle) {
             const indexJsSource = bundle?.['index.js'].type === 'chunk' ? bundle?.['index.js'].code : null;
-            settingsHashName = `settings-${outputName}.${getHash(indexJsSource)}.js`;
-            bundle['index.js'].fileName = settingsHashName;
+            bundle['index.js'].fileName = `settings-${outputName}.${getHash(indexJsSource)}.js`;
         },
     };
 
@@ -103,7 +101,6 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
             },
             rollupOptions: {
                 output: {
-                    dir: 'temp',
                     assetFileNames: () => '[name][extname]',
                     chunkFileNames: '[name].js',
                     entryFileNames: '[name].js',
