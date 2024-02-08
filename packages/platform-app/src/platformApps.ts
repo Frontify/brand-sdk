@@ -2,41 +2,41 @@
 
 import type { AppBridgePlatformApp } from '@frontify/app-bridge';
 import type {
-    ChecklistBlock as ChecklistBlockSidebarSettings,
-    ChoicesType as ChoicesTypeSidebarSettings,
-    ColorInputBlock as ColorInputBlockSidebarSettings,
-    DropdownBlock as DropdownBlockSidebarSettings,
-    InputBlock as InputBlockSidebarSettings,
-    MultiInputBlock as MultiInputBlockSidebarSettings,
-    NotificationBlock as NotificationBlockSidebarSettings,
-    SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
-    SegmentedControlsBlock as SegmentedControlsBlockSidebarSettings,
-    SettingBlock as SettingBlockSidebarSettings,
-    SimpleSettingBlock as SimpleSettingBlockSidebarSettings,
-    SwitchBlock as SwitchBlockSidebarSettings,
-    TemplateInputBlock as TemplateInputBlockSidebarSettings,
-    TextareaBlock as TextareaBlockSidebarSettings,
-    ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
+    ChecklistBlock as ChecklistBlockSettings,
+    ChoicesType as ChoicesTypeSettings,
+    ColorInputBlock as ColorInputBlockSettings,
+    DropdownBlock as DropdownBlockSettings,
+    InputBlock as InputBlockSettings,
+    MultiInputBlock as MultiInputBlockSettings,
+    NotificationBlock as NotificationBlockSettings,
+    SectionHeadingBlock as SectionHeadingBlockSettings,
+    SegmentedControlsBlock as SegmentedControlsBlockSettings,
+    SettingBlock as SettingBlockSettings,
+    SimpleSettingBlock as SimpleSettingBlockSettings,
+    SwitchBlock as SwitchBlockSettings,
+    TemplateInputBlock as TemplateInputBlockSettings,
+    TextareaBlock as TextareaBlockSettings,
+    ValueOrPromisedValue as ValueOrPromisedValueSettings,
 } from '@frontify/sidebar-settings';
 import { FC } from 'react';
 
 export * from '@frontify/sidebar-settings';
 
-export type ChecklistBlock = ChecklistBlockSidebarSettings<AppBridgePlatformApp>;
-export type ChoicesType = ChoicesTypeSidebarSettings<AppBridgePlatformApp>;
-export type ColorInputBlock = ColorInputBlockSidebarSettings<AppBridgePlatformApp>;
-export type DropdownBlock = DropdownBlockSidebarSettings<AppBridgePlatformApp>;
-export type InputBlock = InputBlockSidebarSettings<AppBridgePlatformApp>;
-export type MultiInputBlock = MultiInputBlockSidebarSettings<AppBridgePlatformApp>;
-export type NotificationBlock = NotificationBlockSidebarSettings<AppBridgePlatformApp>;
-export type SectionHeadingBlock = SectionHeadingBlockSidebarSettings<AppBridgePlatformApp>;
-export type SegmentedControlsBlock = SegmentedControlsBlockSidebarSettings<AppBridgePlatformApp>;
-export type SettingBlock = SettingBlockSidebarSettings<AppBridgePlatformApp>;
-export type SimpleSettingBlock = SimpleSettingBlockSidebarSettings<AppBridgePlatformApp>;
-export type SwitchBlock = SwitchBlockSidebarSettings<AppBridgePlatformApp>;
-export type TemplateInputBlock = TemplateInputBlockSidebarSettings<AppBridgePlatformApp>;
-export type TextareaBlock = TextareaBlockSidebarSettings<AppBridgePlatformApp>;
-export type ValueOrPromisedValue<T> = ValueOrPromisedValueSidebarSettings<AppBridgePlatformApp, T>;
+export type ChecklistBlock = ChecklistBlockSettings<AppBridgePlatformApp>;
+export type ChoicesType = ChoicesTypeSettings<AppBridgePlatformApp>;
+export type ColorInputBlock = ColorInputBlockSettings<AppBridgePlatformApp>;
+export type DropdownBlock = DropdownBlockSettings<AppBridgePlatformApp>;
+export type InputBlock = InputBlockSettings<AppBridgePlatformApp>;
+export type MultiInputBlock = MultiInputBlockSettings<AppBridgePlatformApp>;
+export type NotificationBlock = NotificationBlockSettings<AppBridgePlatformApp>;
+export type SectionHeadingBlock = SectionHeadingBlockSettings<AppBridgePlatformApp>;
+export type SegmentedControlsBlock = SegmentedControlsBlockSettings<AppBridgePlatformApp>;
+export type SettingBlock = SettingBlockSettings<AppBridgePlatformApp>;
+export type SimpleSettingBlock = SimpleSettingBlockSettings<AppBridgePlatformApp>;
+export type SwitchBlock = SwitchBlockSettings<AppBridgePlatformApp>;
+export type TemplateInputBlock = TemplateInputBlockSettings<AppBridgePlatformApp>;
+export type TextareaBlock = TextareaBlockSettings<AppBridgePlatformApp>;
+export type ValueOrPromisedValue<T> = ValueOrPromisedValueSettings<AppBridgePlatformApp, T>;
 
 export type PlatformAppSettingsStructureExport = { [customSectionName: string]: SettingBlock[] };
 
