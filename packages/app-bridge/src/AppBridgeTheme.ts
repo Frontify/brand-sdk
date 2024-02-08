@@ -61,6 +61,12 @@ export type ThemeCommand = CommandNameValidator<
     Pick<CommandRegistry, 'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager'>
 >;
 
+export type TemplateContext = { templateId: string; type: ThemeTemplate } & (
+    | { type: 'documentPage'; document: Document; documentPage: DocumentPage }
+    | { type: 'library'; document: Document }
+    | { type: 'cover'; coverPage: CoverPage }
+);
+
 export type ThemeState = {
     settings: Record<string, unknown>;
     assets: Record<string, unknown>;
@@ -77,6 +83,7 @@ export type ThemeContext = {
     isPublicLink: boolean;
     isAuthenticated: boolean;
     languages: Language[];
+    template: TemplateContext | null;
 };
 
 export type ThemeEvent = EventNameValidator<

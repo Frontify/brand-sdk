@@ -10,10 +10,9 @@ export interface UserInfo {
     email: string;
 }
 
-export const getUser = async (instanceUrl: string): Promise<UserInfo | undefined> => {
+export const getUser = async (instanceUrl: string, token?: string): Promise<UserInfo | undefined> => {
     const httpClient = new HttpClient(instanceUrl);
-
-    const accessToken = Configuration.get('tokens.access_token');
+    const accessToken = token || Configuration.get('tokens.access_token');
 
     try {
         const user = await httpClient.post<{ data: { currentUser: UserInfo } }>(
@@ -23,7 +22,9 @@ export const getUser = async (instanceUrl: string): Promise<UserInfo | undefined
         );
         return user.data.currentUser;
     } catch {
-        Logger.error(`You are not logged in, you can use the command ${pc.bold('frontify-cli login')}.`);
+        Logger.error(
+            `You are currently not logged in. You can use the command ${pc.bold('frontify-cli login')} to log in.`,
+        );
         return undefined;
     }
 };

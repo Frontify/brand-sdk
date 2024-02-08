@@ -23,7 +23,6 @@ jobs:
             fail-fast: false
             matrix:
                 app-bridge-version: ["3.0.0", "^3.0.0", "workspace:^"]
-
         steps:
             - name: Checkout default branch
               uses: actions/checkout@v4
