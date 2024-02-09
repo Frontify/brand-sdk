@@ -40,12 +40,12 @@ export const mapAppBridgeColorPaletteToFonduePalette = (colorPalette: ColorPalet
     };
 };
 
-const isNewColor = (color: Color): color is V4Color => {
+const isV4Color = (color: Color): color is V4Color => {
     return (color as V4Color).color !== undefined;
 };
 
 const mapColor = (color: Color) => {
-    if (isNewColor(color)) {
+    if (isV4Color(color)) {
         return {
             alpha: color.color.revision.alpha ? color.color.revision.alpha / 255 : 1,
             red: color.color.revision.red ?? 0,
