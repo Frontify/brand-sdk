@@ -1,25 +1,27 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme, DocumentPage } from '@frontify/app-bridge';
+import type { DocumentPage, DocumentSection } from '@frontify/app-bridge';
 import { ReactElement, useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { PageLink } from './PageLink';
 import { LoadingIndicator } from './LoadingIndicator';
 
 type PageLinksProps = {
-    appBridge: AppBridgeBlock | AppBridgeTheme;
     documentId: number;
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
     itemsToExpandInitially: InitiallyExpandedItems;
+    getDocumentSectionsByDocumentPageId: (documentPageId: number) => Promise<DocumentSection[]>;
+    getDocumentPagesByDocumentId: (documentId: number) => Promise<DocumentPage[]>;
 };
 
 export const PageLinks = ({
-    appBridge,
     documentId,
     selectedUrl,
     onSelectUrl,
     itemsToExpandInitially,
+    getDocumentSectionsByDocumentPageId,
+    getDocumentPagesByDocumentId,
 }: PageLinksProps): ReactElement => {
     const [pages, setPages] = useState<DocumentPage[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -27,8 +29,7 @@ export const PageLinks = ({
     const hasPages = !isLoading && pagesArray.length > 0;
 
     useEffect(() => {
-        appBridge
-            .getDocumentPagesByDocumentId(documentId)
+        getDocumentPagesByDocumentId(documentId)
             .then((_pages) => {
                 const pagesWithCategories = _pages
                     .filter((page) => !!page.category)
@@ -54,10 +55,10 @@ export const PageLinks = ({
                     <PageLink
                         key={page.id}
                         page={page}
-                        appBridge={appBridge}
                         selectedUrl={selectedUrl}
                         onSelectUrl={onSelectUrl}
                         itemsToExpandInitially={itemsToExpandInitially}
+                        getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
                     />
                 );
             })}
