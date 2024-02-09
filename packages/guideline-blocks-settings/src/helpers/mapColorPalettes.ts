@@ -2,7 +2,8 @@
 
 import { ColorPalette } from '@frontify/app-bridge';
 import { Palette } from '@frontify/fondue';
-import { Nullable } from 'vitest';
+
+type Nullable<T> = T | null;
 
 type V3Color = {
     id: number;
