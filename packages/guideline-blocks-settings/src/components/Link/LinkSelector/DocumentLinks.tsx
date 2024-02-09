@@ -60,7 +60,6 @@ export const DocumentLinks = ({
         }
         for (const document of documentArray) {
             const pages = await getDocumentPagesByDocumentId(document.id);
-            getAllDocuments();
             const pagesArray = [...pages.values()];
             const selectedUrlIsPage = !!pagesArray.find((page) => page.permanentLink === selectedUrl);
             if (selectedUrlIsPage) {
