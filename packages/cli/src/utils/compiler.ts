@@ -5,7 +5,6 @@ import { PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 import { createHash } from 'crypto';
 import { getAppBridgeVersion } from './appBridgeVersion.js';
-import { Logger } from './logger.js';
 
 export type CompilerOptions = {
     projectPath: string;
@@ -84,8 +83,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         name: 'js-hash',
         enforce: 'post',
         generateBundle(_options, bundle) {
-            const indexJsSource = bundle?.['index.js'].type === 'chunk' ? bundle?.['index.js'].code : null;
-            bundle['index.js'].fileName = `settings-${outputName}.${getHash(indexJsSource)}.js`;
+            bundle['index.js'].fileName = 'settings.js';
         },
     };
 
