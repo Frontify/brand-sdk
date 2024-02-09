@@ -46,12 +46,13 @@ const isV4Color = (color: Color): color is V4Color => {
 
 const mapColor = (color: Color) => {
     if (isV4Color(color)) {
+        const { title, revision } = color.color;
         return {
-            alpha: color.color.revision.alpha ? color.color.revision.alpha / 255 : 1,
-            red: color.color.revision.red ?? 0,
-            green: color.color.revision.green ?? 0,
-            blue: color.color.revision.blue ?? 0,
-            name: color.color.title ?? '',
+            alpha: revision.alpha ? revision.alpha / 255 : 1,
+            red: revision.red ?? 0,
+            green: revision.green ?? 0,
+            blue: revision.blue ?? 0,
+            name: title ?? '',
         };
     } else {
         return {
