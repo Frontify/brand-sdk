@@ -11,7 +11,7 @@ packages/app-bridge/src/errors/ValidationError.ts @Frontify/apps-and-integration
 ## App Bridge Helpers
 packages/app-bridge/src/helpers/ @Frontify/themes-and-navigation
 
-## React Hooks 
+## React Hooks
 packages/app-bridge/src/react/useAssetBulkDownload.spec.tsx @Frontify/content-and-blocks
 packages/app-bridge/src/react/useAssetBulkDownload.ts @Frontify/content-and-blocks
 packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/content-and-blocks
@@ -148,7 +148,8 @@ packages/cli/templates/platform-app-css @Frontify/apps-and-integrations
 packages/cli/templates/platform-app-css-modules @Frontify/apps-and-integrations
 packages/cli/templates/platform-app-tailwind @Frontify/apps-and-integrations
 
-
+# Platform Apps types
+packages/platform-app @Frontify/apps-and-integrations
 # Guideline Blocks Settings
 packages/guideline-blocks-settings @Frontify/content-and-blocks
 
