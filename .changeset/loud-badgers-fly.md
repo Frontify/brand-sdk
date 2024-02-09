@@ -22,10 +22,12 @@ with:
     url={url}
     onUrlChange={onUrlChange}
     buttonSize={buttonSize ?? ButtonSize.Medium}
-    getAllDocuments={appBridge.getAllDocuments}
-    getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
-    getDocumentSectionsByDocumentPageId={
-        appBridge.getDocumentSectionsByDocumentPageId
+    getAllDocuments={() => appBridge.getAllDocuments()}
+    getDocumentPagesByDocumentId={(documentId) =>
+        appBridge.getDocumentPagesByDocumentId(documentId)
+    }
+    getDocumentSectionsByDocumentPageId={(documentPageId) =>
+        appBridge.getDocumentSectionsByDocumentPageId(documentPageId)
     }
 />
 ```
