@@ -79,16 +79,15 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         },
     };
 
-    const jsHashPlugin: PluginOption = {
-        name: 'js-hash',
-        enforce: 'post',
-        generateBundle(_options, bundle) {
-            bundle['index.js'].fileName = 'settings.js';
-        },
-    };
-
-    await build({
-        plugins: [jsHashPlugin],
+    const settings = await build({
+        plugins: [
+            react(),
+            viteExternalsPlugin({
+                react: 'React',
+                'react-dom': 'ReactDOM',
+            }),
+        ],
+        root: projectPath,
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
@@ -100,15 +99,13 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
                 fileName: () => 'index.js',
             },
             rollupOptions: {
-                external: ['app', 'react', 'react-dom'],
+                external: ['react', 'react-dom'],
                 output: {
                     globals: {
                         react: 'React',
                         'react-dom': 'ReactDOM',
                     },
-                    assetFileNames: () => '[name][extname]',
-                    chunkFileNames: '[name].js',
-                    entryFileNames: '[name].js',
+                    entryFileNames: 'settings.js',
                     footer: `
                         window.${outputName} = ${outputName};
                         window.${outputName}.dependencies = window.${outputName}.packages || {};
@@ -119,7 +116,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         },
     });
 
-    await build({
+    const app = await build({
         plugins: [react(), htmlHashPlugin],
         root: projectPath,
         define: {
@@ -136,4 +133,5 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
             },
         },
     });
+    return { app, settings };
 };
