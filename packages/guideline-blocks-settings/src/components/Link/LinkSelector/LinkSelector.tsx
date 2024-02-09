@@ -1,23 +1,27 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
+import type { Document, DocumentPage, DocumentSection } from '@frontify/app-bridge';
 import { Button, ButtonEmphasis, ButtonSize, ButtonStyle, ButtonType, IconLink, Modal } from '@frontify/fondue';
 import { useOverlayTriggerState } from '@react-stately/overlays';
 import { KeyboardEvent, ReactElement, useEffect, useState } from 'react';
 import { DocumentLinks } from './DocumentLinks';
 
 type LinkSelectorProps = {
-    appBridge: AppBridgeBlock | AppBridgeTheme;
     url: string;
     onUrlChange?: (value: string) => void;
     buttonSize?: ButtonSize;
+    getAllDocuments: () => Promise<Document[]>;
+    getDocumentSectionsByDocumentPageId: (documentPageId: number) => Promise<DocumentSection[]>;
+    getDocumentPagesByDocumentId: (documentId: number) => Promise<DocumentPage[]>;
 };
 
 export const LinkSelector = ({
-    appBridge,
     url,
     onUrlChange,
     buttonSize = ButtonSize.Medium,
+    getAllDocuments,
+    getDocumentPagesByDocumentId,
+    getDocumentSectionsByDocumentPageId,
 }: LinkSelectorProps): ReactElement => {
     const { open: openLinkTree, isOpen: isLinkTreeOpen, close: closeLinkTree } = useOverlayTriggerState({});
     const [selectedUrl, setSelectedUrl] = useState<string>(url);
@@ -58,7 +62,13 @@ export const LinkSelector = ({
             <Modal zIndex={1001} onClose={() => closeLinkTree()} isOpen={isLinkTreeOpen} isDismissable>
                 <Modal.Header title="Select internal link" />
                 <Modal.Body>
-                    <DocumentLinks appBridge={appBridge} selectedUrl={selectedUrl} onSelectUrl={onSelectUrl} />
+                    <DocumentLinks
+                        selectedUrl={selectedUrl}
+                        onSelectUrl={onSelectUrl}
+                        getAllDocuments={getAllDocuments}
+                        getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
+                        getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
+                    />
                 </Modal.Body>
                 <Modal.Footer
                     buttons={[
