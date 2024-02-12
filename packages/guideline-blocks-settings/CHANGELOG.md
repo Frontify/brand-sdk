@@ -1,5 +1,45 @@
 # @frontify/guideline-blocks-settings
 
+## 0.32.0
+
+### Minor Changes
+
+- [#736](https://github.com/Frontify/brand-sdk/pull/736) [`2f7f30f`](https://github.com/Frontify/brand-sdk/commit/2f7f30f902f3c8ed3bacf5fa378014e148bb20aa) Thanks [@ragi96](https://github.com/ragi96)! - refactor(LinkSelector): Removed `appBridge` prop in favor of directly passing document handling functions: `getAllDocuments`, `getDocumentPagesByDocumentId`, and `getDocumentSectionsByDocumentPageId` for clearer API and enhanced modularity
+
+  Replace this:
+
+  ```jsx
+  <LinkSelector
+    url={url}
+    appBridge={appBridge}
+    onUrlChange={onUrlChange}
+    buttonSize={buttonSize ?? ButtonSize.Medium}
+  />
+  ```
+
+  with:
+
+  ```jsx
+  <LinkSelector
+    url={url}
+    onUrlChange={onUrlChange}
+    buttonSize={buttonSize ?? ButtonSize.Medium}
+    getAllDocuments={() => appBridge.getAllDocuments()}
+    getDocumentPagesByDocumentId={(documentId) =>
+      appBridge.getDocumentPagesByDocumentId(documentId)
+    }
+    getDocumentSectionsByDocumentPageId={(documentPageId) =>
+      appBridge.getDocumentSectionsByDocumentPageId(documentPageId)
+    }
+  />
+  ```
+
+## 0.31.5
+
+### Patch Changes
+
+- [#728](https://github.com/Frontify/brand-sdk/pull/728) [`9de8764`](https://github.com/Frontify/brand-sdk/commit/9de87643decdbff847c2e29b9aa895773c8321b3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: Add missing path for types in the export list
+
 ## 0.31.4
 
 ### Patch Changes

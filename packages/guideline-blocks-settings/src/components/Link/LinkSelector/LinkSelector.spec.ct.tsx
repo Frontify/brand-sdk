@@ -5,7 +5,6 @@ import {
     DocumentPageApiDummy,
     DocumentSectionApiDummy,
     getAppBridgeBlockStub,
-    withAppBridgeBlockStubs,
 } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
 import { LinkSelector } from './LinkSelector';
@@ -37,8 +36,16 @@ const apiSections = [
 
 describe('Link Selector', () => {
     it('renders the link selector button', () => {
-        const [LinkSelectorWithStubs] = withAppBridgeBlockStubs(LinkSelector, {});
-        mount(<LinkSelectorWithStubs url="" onUrlChange={cy.stub()} />);
+        const appBridge = getAppBridgeBlockStub();
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub()}
+            />,
+        );
         cy.get(LinkSelectorSelector).should('exist');
     });
 
@@ -50,7 +57,15 @@ describe('Link Selector', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(<LinkSelector appBridge={appBridge} url="" onUrlChange={cy.stub()} />);
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub()}
+            />,
+        );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(LinkSelectorModalSelector).should('exist');
     });
@@ -62,7 +77,15 @@ describe('Link Selector', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(<LinkSelector appBridge={appBridge} url="" onUrlChange={cy.stub()} />);
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub()}
+            />,
+        );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(DocumentLinkSelector).should('have.length', 2);
     });
@@ -77,7 +100,15 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(<LinkSelector appBridge={appBridge} url="" onUrlChange={cy.stub()} />);
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub()}
+            />,
+        );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(DocumentLinkSelector).eq(0).find(DocumentTreeItemToggleSelector).click();
         cy.get(PageLinkSelector).should('have.length', 3);
@@ -92,7 +123,15 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(<LinkSelector appBridge={appBridge} url="" onUrlChange={cy.stub()} />);
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub()}
+            />,
+        );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(DocumentLinkSelector).eq(0).find(DocumentTreeItemToggleSelector).click();
         cy.get(PageLinkSelector).eq(0).find('button').click();
@@ -108,7 +147,15 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(<LinkSelector appBridge={appBridge} url="/7" onUrlChange={cy.stub()} />);
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url="/7"
+                onUrlChange={cy.stub().as('urlChange')}
+            />,
+        );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(SectionLinkSelector).should('have.length', 4);
     });
@@ -122,7 +169,15 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(<LinkSelector appBridge={appBridge} url="" onUrlChange={cy.stub().as('urlChange')} />);
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub().as('urlChange')}
+            />,
+        );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(DocumentLinkSelector).should('have.length', 2);
         cy.realPress('Tab');
