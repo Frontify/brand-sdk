@@ -3,7 +3,7 @@
 import { Attachments } from '../../Attachments';
 import { useAttachmentsContext } from '../../../hooks';
 
-import { ToolbarAttachmentsTrigger } from './ToolbarAttachmentsTrigger';
+import { AttachmentsToolbarButton } from './ToolbarButton/AttachmentsToolbarButton';
 import { useToolbarFlyoutState } from './hooks/useToolbarFlyoutState';
 import { useMemoizedId } from '@frontify/fondue';
 
@@ -25,7 +25,7 @@ export const ToolbarAttachments = () => {
             onBrowse={onAttachmentsAdd}
             items={attachments}
             appBridge={appBridge}
-            triggerComponent={ToolbarAttachmentsTrigger}
+            triggerComponent={AttachmentsToolbarButton}
             isOpen={isOpen}
             onOpenChange={onOpenChange}
         />
