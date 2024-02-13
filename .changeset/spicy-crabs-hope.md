@@ -2,4 +2,4 @@
 "@frontify/app-bridge": minor
 ---
 
-Added setAssetIdsByBlockAssetKey to AppBridgeBlockApi
+feat: adds `setAssetIdsByBlockAssetKey` to AppBridgeBlock
