@@ -14,8 +14,8 @@ import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../constants';
 import { ToolbarSegment } from './ToolbarSegment';
 import { ToolbarAttachments } from './ToolbarAttachments';
 import { getToolbarButtonClassNames } from './helpers';
-import { type ToolbarProps } from './types';
-import { forwardRef } from 'react';
+import { ButtonToolbarItem, DraghandleToolbarItem, type ToolbarProps } from './types';
+import { createContext, forwardRef, useContext } from 'react';
 
 const BaseToolbarButton = forwardRef(({ onClick, children, forceActiveStyle, ...props }, ref) => (
     <button
@@ -23,6 +23,7 @@ const BaseToolbarButton = forwardRef(({ onClick, children, forceActiveStyle, ...
         onClick={onClick}
         className={getToolbarButtonClassNames('pointer', forceActiveStyle)}
         {...props}
+        ref={ref}
     >
         {children}
     </button>
@@ -41,10 +42,45 @@ const ToolbarButtonTooltip = ({ open, content, children, disabled }) => (
     />
 );
 
+const DraggableToolbarButton = ({ tooltip, icon, setActivatorNodeRef, draggableProps }: DraghandleToolbarItem) => {
+    const isDragPreview = useIsDragPreview();
+
+    return (
+        <ToolbarButtonTooltip
+            open={isDragPreview}
+            content={<div>{isDragPreview ? DEFAULT_DRAGGING_TOOLTIP : tooltip ?? DEFAULT_DRAG_TOOLTIP}</div>}
+        >
+            <BaseToolbarButton
+                ref={setActivatorNodeRef}
+                data-test-id="block-item-wrapper-toolbar-btn"
+                forceActiveStyle={isDragPreview}
+                {...draggableProps}
+            >
+                {icon}
+            </BaseToolbarButton>
+        </ToolbarButtonTooltip>
+    );
+};
+const ToolbarButton = ({ tooltip, icon, onClick }: ButtonToolbarItem) => {
+    const isDragPreview = useIsDragPreview();
+
+    return (
+        <ToolbarButtonTooltip disabled={isDragPreview} content={tooltip ?? ''}>
+            <BaseToolbarButton data-test-id="block-item-wrapper-toolbar-btn" onClick={onClick}>
+                {icon}
+            </BaseToolbarButton>
+        </ToolbarButtonTooltip>
+    );
+};
+
 BaseToolbarButton.displayName = 'BaseToolbarButton';
 
-export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarProps) => {
-    return (
+const DragPreviewContext = createContext(false);
+
+const useIsDragPreview = () => useContext(DragPreviewContext);
+
+export const Toolbar = ({ items, flyoutMenu, attachments, isDragging = false }: ToolbarProps) => (
+    <DragPreviewContext.Provider value={isDragging}>
         <div
             data-test-id="block-item-wrapper-toolbar"
             className="tw-rounded-md tw-bg-base tw-border tw-border-line-strong tw-divide-x tw-divide-line-strong tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-isolate"
@@ -60,34 +96,13 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
             <ToolbarSegment>
                 {items.map((item, i) =>
                     'draggableProps' in item ? (
-                        <ToolbarButtonTooltip
-                            key={i}
-                            open={isDragging}
-                            content={
-                                <div>
-                                    {isDragging ? DEFAULT_DRAGGING_TOOLTIP : item.tooltip ?? DEFAULT_DRAG_TOOLTIP}
-                                </div>
-                            }
-                        >
-                            <BaseToolbarButton
-                                ref={item.setActivatorNodeRef}
-                                data-test-id="block-item-wrapper-toolbar-btn"
-                                forceActiveStyle={isDragging}
-                                {...item.draggableProps}
-                            >
-                                {item.icon}
-                            </BaseToolbarButton>
-                        </ToolbarButtonTooltip>
+                        <DraggableToolbarButton key={i} {...item} />
                     ) : (
-                        <ToolbarButtonTooltip key={i} disabled={isDragging} content={item.tooltip ?? ''}>
-                            <BaseToolbarButton data-test-id="block-item-wrapper-toolbar-btn" onClick={item.onClick}>
-                                {item.icon}
-                            </BaseToolbarButton>
-                        </ToolbarButtonTooltip>
+                        <ToolbarButton key={i} {...item} />
                     ),
                 )}
                 {flyoutMenu.items.length > 0 && (
-                    <ToolbarButtonTooltip disabled={isDragging || flyoutMenu.isOpen} content="OPtions">
+                    <ToolbarButtonTooltip disabled={isDragging || flyoutMenu.isOpen} content="Options">
                         <div className="tw-flex tw-flex-shrink-0 tw-flex-1 tw-h-6 tw-relative">
                             <Flyout
                                 isOpen={flyoutMenu.isOpen && !isDragging}
@@ -129,5 +144,5 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging }: ToolbarP
                 )}
             </ToolbarSegment>
         </div>
-    );
-};
+    </DragPreviewContext.Provider>
+);

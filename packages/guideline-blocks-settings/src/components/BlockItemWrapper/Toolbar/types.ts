@@ -19,12 +19,12 @@ type BaseToolbarItem = {
     tooltip?: string;
 };
 
-type DraghandleToolbarItem = BaseToolbarItem & {
+export type DraghandleToolbarItem = BaseToolbarItem & {
     draggableProps: Record<string, unknown>;
     setActivatorNodeRef?: (node: HTMLElement | null) => void;
 };
 
-type ButtonToolbarItem = BaseToolbarItem & {
+export type ButtonToolbarItem = BaseToolbarItem & {
     onClick: () => void;
 };
 
