@@ -4,12 +4,14 @@ import { IconDotsHorizontal16, useMemoizedId } from '@frontify/fondue';
 import { ToolbarFlyoutMenu, ToolbarFlyoutMenuItem } from './ToolbarFlyoutMenu';
 import { FlyoutToolbarButton } from '../FlyoutToolbarButton/FlyoutToolbarButton';
 
+export const DEFAULT_MENU_BUTTON_ID = 'menu';
+
 export type MenuToolbarButtonProps = {
     items: ToolbarFlyoutMenuItem[][];
-    flyoutId: string;
+    flyoutId?: string;
 };
 
-export const MenuToolbarButton = ({ items, flyoutId }: MenuToolbarButtonProps) => {
+export const MenuToolbarButton = ({ items, flyoutId = DEFAULT_MENU_BUTTON_ID }: MenuToolbarButtonProps) => {
     const id = useMemoizedId(flyoutId);
 
     return (

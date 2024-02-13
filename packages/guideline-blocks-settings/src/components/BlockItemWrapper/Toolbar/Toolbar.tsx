@@ -7,8 +7,6 @@ import { ToolbarButton } from './ToolbarButton';
 import { DragHandleToolbarButton } from './DragHandleToolbarButton';
 import { MenuToolbarButton } from './MenuToolbarButton';
 
-export const DEPRECATED_MENU_BUTTON_ID = 'menu';
-
 export const Toolbar = ({ items, flyoutMenu, attachments }: ToolbarProps) => (
     <div
         data-test-id="block-item-wrapper-toolbar"
@@ -27,7 +25,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments }: ToolbarProps) => (
                     <ToolbarButton key={i} {...item} />
                 ),
             )}
-            {flyoutMenu.items.length > 0 && <MenuToolbarButton {...flyoutMenu} flyoutId={DEPRECATED_MENU_BUTTON_ID} />}
+            {flyoutMenu.items.length > 0 && <MenuToolbarButton {...flyoutMenu} />}
         </ToolbarSegment>
     </div>
 );

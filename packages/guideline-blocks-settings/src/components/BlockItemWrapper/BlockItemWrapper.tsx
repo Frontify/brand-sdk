@@ -4,7 +4,7 @@ import { type ReactElement, useRef, useState } from 'react';
 
 import { joinClassNames } from '../../utilities';
 
-import { DEPRECATED_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
+import { DEFAULT_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
 import { type BlockItemWrapperProps } from './types';
 import { DragPreviewContext } from './Toolbar/context/DragPreviewContext';
 import { MutliFlyoutContext } from './Toolbar/context/useMutliFlyoutContext';
@@ -21,7 +21,7 @@ export const BlockItemWrapper = ({
     shouldBeShown = false,
     showAttachments = false,
 }: BlockItemWrapperProps): ReactElement => {
-    const [openFlyoutIds, setOpenFlyoutIds] = useState<string[]>(shouldBeShown ? [DEPRECATED_MENU_BUTTON_ID] : []);
+    const [openFlyoutIds, setOpenFlyoutIds] = useState<string[]>(shouldBeShown ? [DEFAULT_MENU_BUTTON_ID] : []);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     if (shouldHideWrapper) {

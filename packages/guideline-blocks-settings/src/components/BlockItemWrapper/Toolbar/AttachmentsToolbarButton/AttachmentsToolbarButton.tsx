@@ -8,8 +8,14 @@ import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
 
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
 
-export const AttachmentsToolbarButton = () => {
-    const id = useMemoizedId();
+export const DEFAULT_ATTACHMENTS_BUTTON_ID = 'attachments';
+
+type AttachmentsToolbarButtonProps = { flyoutId?: string };
+
+export const AttachmentsToolbarButton = ({
+    flyoutId = DEFAULT_ATTACHMENTS_BUTTON_ID,
+}: AttachmentsToolbarButtonProps) => {
+    const id = useMemoizedId(flyoutId);
 
     const { appBridge, attachments, onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
         useAttachmentsContext();
