@@ -8,7 +8,6 @@ export type ToolbarProps = {
     items: ToolbarItem[];
     flyoutMenu: { items: ToolbarFlyoutMenuItem[][] };
     attachments: { isEnabled: boolean };
-    isDragging?: boolean;
 };
 
 export type DraghandleToolbarItem = DragHandleToolbarButtonProps;

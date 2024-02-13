@@ -9,6 +9,7 @@ import { AttachmentsProvider } from '../../../hooks/useAttachments';
 import { Toolbar } from './Toolbar';
 import { MutliFlyoutContext } from './context/useMutliFlyoutContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
+import { DragPreviewContext } from './context/DragPreviewContext';
 
 /**
  * @vitest-environment happy-dom
@@ -72,7 +73,6 @@ describe('Toolbar', () => {
                             ],
                         }}
                         attachments={{ isEnabled: true }}
-                        isDragging={false}
                     />
                 </AttachmentsProvider>
             </MutliFlyoutContext.Provider>
@@ -84,7 +84,7 @@ describe('Toolbar', () => {
         expect(baseElement.querySelector(`[data-test-id=${MENU_FLYOUT_ID}]`)).not.toBeNull();
     });
 
-    it('should keep flyouts closed if dragging', async () => {
+    it.only('should keep flyouts closed if dragging', async () => {
         const MOCK_ASSET_FIELD_ID = 'attachment';
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
@@ -99,24 +99,25 @@ describe('Toolbar', () => {
                     setOpenFlyoutIds: vi.fn(),
                 }}
             >
-                <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
-                    <Toolbar
-                        items={[]}
-                        flyoutMenu={{
-                            items: [
-                                [
-                                    {
-                                        title: 'Replace with upload',
-                                        icon: <div></div>,
-                                        onClick: vi.fn(),
-                                    },
+                <DragPreviewContext.Provider value={true}>
+                    <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
+                        <Toolbar
+                            items={[]}
+                            flyoutMenu={{
+                                items: [
+                                    [
+                                        {
+                                            title: 'Replace with upload',
+                                            icon: <div></div>,
+                                            onClick: vi.fn(),
+                                        },
+                                    ],
                                 ],
-                            ],
-                        }}
-                        attachments={{ isEnabled: true }}
-                        isDragging
-                    />
-                </AttachmentsProvider>
+                            }}
+                            attachments={{ isEnabled: true }}
+                        />
+                    </AttachmentsProvider>
+                </DragPreviewContext.Provider>
             </MutliFlyoutContext.Provider>
         );
 

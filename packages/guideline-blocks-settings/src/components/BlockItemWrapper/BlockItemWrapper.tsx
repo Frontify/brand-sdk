@@ -70,7 +70,6 @@ export const BlockItemWrapper = ({
                                 isEnabled: showAttachments,
                             }}
                             items={items}
-                            isDragging={isDragging}
                         />
                     </div>
                     {children}
