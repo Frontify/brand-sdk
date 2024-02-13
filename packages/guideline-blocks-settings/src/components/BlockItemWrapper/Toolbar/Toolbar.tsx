@@ -14,22 +14,30 @@ import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../constants';
 import { ToolbarSegment } from './ToolbarSegment';
 import { ToolbarAttachments } from './ToolbarAttachments';
 import { getToolbarButtonClassNames } from './helpers';
-import { ButtonToolbarItem, DraghandleToolbarItem, type ToolbarProps } from './types';
-import { createContext, forwardRef, useContext } from 'react';
+import {
+    BaseToolbarButtonProps,
+    ButtonToolbarItem,
+    DraghandleToolbarItem,
+    type ToolbarButtonTooltipProps,
+    type ToolbarProps,
+} from './types';
+import { MutableRefObject, createContext, forwardRef, useContext } from 'react';
 
-const BaseToolbarButton = forwardRef(({ onClick, children, forceActiveStyle, ...props }, ref) => (
-    <button
-        data-test-id="block-item-wrapper-toolbar-btn"
-        onClick={onClick}
-        className={getToolbarButtonClassNames('pointer', forceActiveStyle)}
-        {...props}
-        ref={ref}
-    >
-        {children}
-    </button>
-));
+const BaseToolbarButton = forwardRef<HTMLButtonElement, BaseToolbarButtonProps>(
+    ({ onClick, children, forceActiveStyle, ...props }, ref) => (
+        <button
+            data-test-id="block-item-wrapper-toolbar-btn"
+            onClick={onClick}
+            className={getToolbarButtonClassNames('pointer', forceActiveStyle)}
+            {...props}
+            ref={ref}
+        >
+            {children}
+        </button>
+    ),
+);
 
-const ToolbarButtonTooltip = ({ open, content, children, disabled }) => (
+const ToolbarButtonTooltip = ({ open, content, children, disabled }: ToolbarButtonTooltipProps) => (
     <Tooltip
         withArrow
         hoverDelay={0}
@@ -113,9 +121,9 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging = false }: 
                                 trigger={(triggerProps, triggerRef) => (
                                     <BaseToolbarButton
                                         data-test-id="block-item-wrapper-toolbar-flyout"
-                                        forceActiveStyles={flyoutMenu.isOpen && !isDragging}
+                                        forceActiveStyle={flyoutMenu.isOpen && !isDragging}
                                         {...triggerProps}
-                                        ref={triggerRef}
+                                        ref={triggerRef as MutableRefObject<HTMLButtonElement>}
                                     >
                                         <IconDotsHorizontal16 />
                                     </BaseToolbarButton>

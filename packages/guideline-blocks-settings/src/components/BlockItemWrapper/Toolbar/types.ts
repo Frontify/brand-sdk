@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type MenuItemStyle } from '@frontify/fondue';
+import { HTMLAttributes, ReactElement, ReactNode } from 'react';
 
 export type ToolbarProps = {
     items: ToolbarItem[];
@@ -36,3 +37,15 @@ export type FlyoutToolbarItem = {
     icon: JSX.Element;
     style?: MenuItemStyle;
 };
+
+export type ToolbarButtonTooltipProps = {
+    content: ReactNode;
+    children: ReactElement;
+    open?: boolean;
+    disabled?: boolean;
+};
+
+export type BaseToolbarButtonProps = {
+    children: ReactNode;
+    forceActiveStyle?: boolean;
+} & HTMLAttributes<HTMLButtonElement>;
