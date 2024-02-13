@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useIsDragPreview } from '../context/DragPreviewContext';
+import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { BaseToolbarButton } from '../BaseToolbarButton';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 
 export type ToolbarButtonProps = { icon: JSX.Element; tooltip?: string; onClick: () => void };
 
 export const ToolbarButton = ({ tooltip, icon, onClick }: ToolbarButtonProps) => {
-    const isDragPreview = useIsDragPreview();
+    const isDragPreview = useDragPreviewContext();
 
     return (
         <ToolbarButtonTooltip disabled={isDragPreview} content={tooltip ?? ''}>

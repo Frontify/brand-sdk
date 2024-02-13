@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type MutableRefObject, type ReactNode } from 'react';
-import { useIsDragPreview } from '../context/DragPreviewContext';
+import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { Flyout, FlyoutPlacement, useMemoizedId } from '@frontify/fondue';
 import { BaseToolbarButton } from '../BaseToolbarButton';
@@ -19,7 +19,7 @@ export const FlyoutToolbarButton = ({ children, icon, tooltip, flyoutId }: Flyou
 
     const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
 
-    const isDragPreview = useIsDragPreview();
+    const isDragPreview = useDragPreviewContext();
 
     return (
         <ToolbarButtonTooltip disabled={isDragPreview || isOpen} content={tooltip}>

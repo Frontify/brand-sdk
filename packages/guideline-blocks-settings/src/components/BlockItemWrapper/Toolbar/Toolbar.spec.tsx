@@ -7,7 +7,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
-import { MutliFlyoutContext } from './context/useMutliFlyoutContext';
+import { MutliFlyoutContext } from './context/useMultiFlyoutContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
 import { DragPreviewContext } from './context/DragPreviewContext';
 

@@ -7,7 +7,7 @@ import { joinClassNames } from '../../utilities';
 import { DEFAULT_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
 import { type BlockItemWrapperProps } from './types';
 import { DragPreviewContext } from './Toolbar/context/DragPreviewContext';
-import { MutliFlyoutContext } from './Toolbar/context/useMutliFlyoutContext';
+import { MutliFlyoutContext } from './Toolbar/context/useMultiFlyoutContext';
 
 export const BlockItemWrapper = ({
     children,

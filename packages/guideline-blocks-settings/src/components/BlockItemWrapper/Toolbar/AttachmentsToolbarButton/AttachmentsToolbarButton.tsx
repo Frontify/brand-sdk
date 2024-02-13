@@ -7,7 +7,7 @@ import { Attachments } from '../../../Attachments';
 import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
 
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
-import { useIsDragPreview } from '../context/DragPreviewContext';
+import { useDragPreviewContext } from '../context/DragPreviewContext';
 
 export const DEFAULT_ATTACHMENTS_BUTTON_ID = 'attachments';
 
@@ -22,7 +22,7 @@ export const AttachmentsToolbarButton = ({
         useAttachmentsContext();
 
     const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
-    const isDragPreview = useIsDragPreview();
+    const isDragPreview = useDragPreviewContext();
 
     return (
         <Attachments
