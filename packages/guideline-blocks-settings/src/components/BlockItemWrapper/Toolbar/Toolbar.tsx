@@ -81,6 +81,52 @@ const ToolbarButton = ({ tooltip, icon, onClick }: ButtonToolbarItem) => {
     );
 };
 
+const MenuToolbarButton = ({ items, onOpenChange, isOpen }) => {
+    const isDragPreview = useIsDragPreview();
+
+    return (
+        <ToolbarButtonTooltip disabled={isDragPreview || isOpen} content="Options">
+            <div className="tw-flex tw-flex-shrink-0 tw-flex-1 tw-h-6 tw-relative">
+                <Flyout
+                    isOpen={isOpen && !isDragPreview}
+                    legacyFooter={false}
+                    fitContent
+                    hug={false}
+                    onOpenChange={onOpenChange}
+                    trigger={(triggerProps, triggerRef) => (
+                        <BaseToolbarButton
+                            data-test-id="block-item-wrapper-toolbar-flyout"
+                            forceActiveStyle={isOpen && !isDragPreview}
+                            {...triggerProps}
+                            ref={triggerRef as MutableRefObject<HTMLButtonElement>}
+                        >
+                            <IconDotsHorizontal16 />
+                        </BaseToolbarButton>
+                    )}
+                >
+                    <ActionMenu
+                        menuBlocks={items.map((block, blockIndex) => ({
+                            id: blockIndex.toString(),
+                            menuItems: block.map((item, itemIndex) => ({
+                                id: blockIndex.toString() + itemIndex.toString(),
+                                size: MenuItemContentSize.XSmall,
+                                title: item.title,
+                                style: item.style,
+                                onClick: () => {
+                                    onOpenChange(false);
+                                    item.onClick();
+                                },
+                                initialValue: true,
+                                decorator: <div className="tw-mr-2">{item.icon}</div>,
+                            })),
+                        }))}
+                    />
+                </Flyout>
+            </div>
+        </ToolbarButtonTooltip>
+    );
+};
+
 BaseToolbarButton.displayName = 'BaseToolbarButton';
 
 const DragPreviewContext = createContext(false);
@@ -109,47 +155,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments, isDragging = false }: 
                         <ToolbarButton key={i} {...item} />
                     ),
                 )}
-                {flyoutMenu.items.length > 0 && (
-                    <ToolbarButtonTooltip disabled={isDragging || flyoutMenu.isOpen} content="Options">
-                        <div className="tw-flex tw-flex-shrink-0 tw-flex-1 tw-h-6 tw-relative">
-                            <Flyout
-                                isOpen={flyoutMenu.isOpen && !isDragging}
-                                legacyFooter={false}
-                                fitContent
-                                hug={false}
-                                onOpenChange={flyoutMenu.onOpenChange}
-                                trigger={(triggerProps, triggerRef) => (
-                                    <BaseToolbarButton
-                                        data-test-id="block-item-wrapper-toolbar-flyout"
-                                        forceActiveStyle={flyoutMenu.isOpen && !isDragging}
-                                        {...triggerProps}
-                                        ref={triggerRef as MutableRefObject<HTMLButtonElement>}
-                                    >
-                                        <IconDotsHorizontal16 />
-                                    </BaseToolbarButton>
-                                )}
-                            >
-                                <ActionMenu
-                                    menuBlocks={flyoutMenu.items.map((block, blockIndex) => ({
-                                        id: blockIndex.toString(),
-                                        menuItems: block.map((item, itemIndex) => ({
-                                            id: blockIndex.toString() + itemIndex.toString(),
-                                            size: MenuItemContentSize.XSmall,
-                                            title: item.title,
-                                            style: item.style,
-                                            onClick: () => {
-                                                flyoutMenu.onOpenChange(false);
-                                                item.onClick();
-                                            },
-                                            initialValue: true,
-                                            decorator: <div className="tw-mr-2">{item.icon}</div>,
-                                        })),
-                                    }))}
-                                />
-                            </Flyout>
-                        </div>
-                    </ToolbarButtonTooltip>
-                )}
+                {flyoutMenu.items.length > 0 && <MenuToolbarButton {...flyoutMenu} />}
             </ToolbarSegment>
         </div>
     </DragPreviewContext.Provider>
