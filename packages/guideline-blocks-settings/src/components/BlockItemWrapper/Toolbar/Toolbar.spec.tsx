@@ -84,7 +84,7 @@ describe('Toolbar', () => {
         expect(baseElement.querySelector(`[data-test-id=${MENU_FLYOUT_ID}]`)).not.toBeNull();
     });
 
-    it.only('should keep flyouts closed if dragging', async () => {
+    it('should keep flyouts closed if dragging', async () => {
         const MOCK_ASSET_FIELD_ID = 'attachment';
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
