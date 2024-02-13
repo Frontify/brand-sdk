@@ -31,7 +31,7 @@ export const BlockItemWrapper = ({
 
     const items = toolbarItems?.filter((item): item is ToolbarItem => item !== undefined);
 
-    const shouldToolbarBeVisible = openFlyoutIds.length > 1 || shouldBeShown;
+    const shouldToolbarBeVisible = openFlyoutIds.length > 0 || shouldBeShown;
 
     return (
         <DragPreviewContext.Provider value={isDragging}>

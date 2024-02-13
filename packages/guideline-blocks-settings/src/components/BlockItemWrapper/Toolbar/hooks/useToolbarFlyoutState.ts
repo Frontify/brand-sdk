@@ -7,13 +7,13 @@ export const useToolbarFlyoutState = (flyoutId: string) => {
     const { openFlyoutIds, setOpenFlyoutIds } = useToolbarFlyoutContext();
 
     const onOpenChange = useCallback(
-        (isOpen: boolean) => {
+        (isFlyoutOpen: boolean) => {
             setOpenFlyoutIds((currentIds) => {
-                const filteredIds = currentIds.filter((id) => id === flyoutId);
-                if (isOpen) {
-                    return [...filteredIds, flyoutId];
-                } else {
+                const filteredIds = currentIds.filter((id) => id !== flyoutId);
+                if (!isFlyoutOpen) {
                     return filteredIds;
+                } else {
+                    return [...filteredIds, flyoutId];
                 }
             });
         },
