@@ -3,13 +3,17 @@
 import { Attachments } from '../../Attachments';
 import { useAttachmentsContext } from '../../../hooks';
 
-import { type ToolbarFlyoutState } from './types';
-
 import { ToolbarAttachmentsTrigger } from './ToolbarAttachmentsTrigger';
+import { useToolbarFlyoutState } from './hooks/useToolbarFlyoutState';
+import { useMemoizedId } from '@frontify/fondue';
 
-export const ToolbarAttachments = ({ isOpen, onOpenChange }: ToolbarFlyoutState) => {
+export const ToolbarAttachments = () => {
+    const id = useMemoizedId();
+
     const { appBridge, attachments, onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
         useAttachmentsContext();
+
+    const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
 
     return (
         <Attachments

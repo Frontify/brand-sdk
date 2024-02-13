@@ -4,8 +4,8 @@ import { DragHandleToolbarButtonProps, FlyoutMenuItem, ToolbarButtonProps } from
 
 export type ToolbarProps = {
     items: ToolbarItem[];
-    flyoutMenu: ToolbarFlyoutState & { items: FlyoutMenuItem[][] };
-    attachments: ToolbarFlyoutState & { isEnabled: boolean };
+    flyoutMenu: { items: FlyoutMenuItem[][] };
+    attachments: { isEnabled: boolean };
     isDragging?: boolean;
 };
 

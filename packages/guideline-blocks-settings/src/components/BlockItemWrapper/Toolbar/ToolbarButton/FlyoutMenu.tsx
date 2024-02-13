@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ActionMenu, MenuItemContentSize, MenuItemStyle } from '@frontify/fondue';
-import { useCloseFlyoutContext } from '../context/FlyoutCloseContext';
+import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
 
 export type FlyoutMenuItem = {
     title: string;
@@ -12,10 +12,11 @@ export type FlyoutMenuItem = {
 
 export type FlyoutMenuProps = {
     items: FlyoutMenuItem[][];
+    flyoutId: string;
 };
 
-export const FlyoutMenu = ({ items }: FlyoutMenuProps) => {
-    const closeFlyout = useCloseFlyoutContext();
+export const FlyoutMenu = ({ items, flyoutId }: FlyoutMenuProps) => {
+    const { onOpenChange } = useToolbarFlyoutState(flyoutId);
 
     return (
         <ActionMenu
@@ -27,7 +28,7 @@ export const FlyoutMenu = ({ items }: FlyoutMenuProps) => {
                     title: item.title,
                     style: item.style,
                     onClick: () => {
-                        closeFlyout();
+                        onOpenChange(false);
                         item.onClick();
                     },
                     initialValue: true,

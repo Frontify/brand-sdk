@@ -4,8 +4,10 @@ import { type ReactElement, useRef, useState } from 'react';
 
 import { joinClassNames } from '../../utilities';
 
-import { Toolbar, type ToolbarItem } from './Toolbar';
+import { DEPRECATED_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
 import { type BlockItemWrapperProps } from './types';
+import { DragPreviewContext } from './Toolbar/context/DragPreviewContext';
+import { ToolbarFlyoutContext } from './Toolbar/context/useToolbarFlyoutContext';
 
 export const BlockItemWrapper = ({
     children,
@@ -13,14 +15,13 @@ export const BlockItemWrapper = ({
     toolbarItems,
     shouldHideWrapper,
     shouldHideComponent = false,
-    isDragging,
+    isDragging = false,
     shouldFillContainer,
     outlineOffset = 2,
     shouldBeShown = false,
     showAttachments = false,
 }: BlockItemWrapperProps): ReactElement => {
-    const [isMenuFlyoutOpen, setIsMenuFlyoutOpen] = useState(shouldBeShown);
-    const [isAttachmentFlyoutOpen, setIsAttachmentFlyoutOpen] = useState(false);
+    const [openFlyoutIds, setOpenFlyoutIds] = useState<string[]>(shouldBeShown ? [DEPRECATED_MENU_BUTTON_ID] : []);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     if (shouldHideWrapper) {
@@ -30,51 +31,51 @@ export const BlockItemWrapper = ({
 
     const items = toolbarItems?.filter((item): item is ToolbarItem => item !== undefined);
 
-    const shouldToolbarBeVisible = isMenuFlyoutOpen || isAttachmentFlyoutOpen || shouldBeShown;
+    const shouldToolbarBeVisible = openFlyoutIds.length > 1 || shouldBeShown;
 
     return (
-        <div
-            ref={wrapperRef}
-            data-test-id="block-item-wrapper"
-            style={{
-                outlineOffset,
-            }}
-            className={joinClassNames([
-                'tw-relative tw-group tw-outline-1 tw-outline-box-selected-inverse',
-                shouldFillContainer && 'tw-flex-1 tw-h-full tw-w-full',
-                'hover:tw-outline focus-within:tw-outline',
-                shouldToolbarBeVisible && 'tw-outline',
-                shouldHideComponent && 'tw-opacity-0',
-            ])}
-        >
-            <div
-                style={{
-                    right: -1 - outlineOffset,
-                    bottom: `calc(100% - ${2 + outlineOffset}px)`,
-                }}
-                className={joinClassNames([
-                    'tw-pointer-events-none tw-absolute tw-bottom-[calc(100%-4px)] tw-right-[-3px] tw-w-full tw-opacity-0 tw-z-[60]',
-                    'group-hover:tw-opacity-100 group-focus:tw-opacity-100 focus-within:tw-opacity-100',
-                    'tw-flex tw-justify-end has-[.toolbar-button-active]:tw-opacity-100 has-[:active]:tw-opacity-100',
-                    shouldToolbarBeVisible && 'tw-opacity-100',
-                ])}
-            >
-                <Toolbar
-                    flyoutMenu={{
-                        items: toolbarFlyoutItems,
-                        isOpen: isMenuFlyoutOpen,
-                        onOpenChange: setIsMenuFlyoutOpen,
+        <DragPreviewContext.Provider value={isDragging}>
+            <ToolbarFlyoutContext.Provider value={{ openFlyoutIds, setOpenFlyoutIds }}>
+                <div
+                    ref={wrapperRef}
+                    data-test-id="block-item-wrapper"
+                    style={{
+                        outlineOffset,
                     }}
-                    attachments={{
-                        isEnabled: showAttachments,
-                        isOpen: isAttachmentFlyoutOpen,
-                        onOpenChange: setIsAttachmentFlyoutOpen,
-                    }}
-                    items={items}
-                    isDragging={isDragging}
-                />
-            </div>
-            {children}
-        </div>
+                    className={joinClassNames([
+                        'tw-relative tw-group tw-outline-1 tw-outline-box-selected-inverse',
+                        shouldFillContainer && 'tw-flex-1 tw-h-full tw-w-full',
+                        'hover:tw-outline focus-within:tw-outline',
+                        shouldToolbarBeVisible && 'tw-outline',
+                        shouldHideComponent && 'tw-opacity-0',
+                    ])}
+                >
+                    <div
+                        style={{
+                            right: -1 - outlineOffset,
+                            bottom: `calc(100% - ${2 + outlineOffset}px)`,
+                        }}
+                        className={joinClassNames([
+                            'tw-pointer-events-none tw-absolute tw-bottom-[calc(100%-4px)] tw-right-[-3px] tw-w-full tw-opacity-0 tw-z-[60]',
+                            'group-hover:tw-opacity-100 group-focus:tw-opacity-100 focus-within:tw-opacity-100',
+                            'tw-flex tw-justify-end has-[.toolbar-button-active]:tw-opacity-100 has-[:active]:tw-opacity-100',
+                            shouldToolbarBeVisible && 'tw-opacity-100',
+                        ])}
+                    >
+                        <Toolbar
+                            flyoutMenu={{
+                                items: toolbarFlyoutItems,
+                            }}
+                            attachments={{
+                                isEnabled: showAttachments,
+                            }}
+                            items={items}
+                            isDragging={isDragging}
+                        />
+                    </div>
+                    {children}
+                </div>
+            </ToolbarFlyoutContext.Provider>
+        </DragPreviewContext.Provider>
     );
 };
