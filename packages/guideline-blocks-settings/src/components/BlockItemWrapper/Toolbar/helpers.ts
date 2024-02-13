@@ -17,6 +17,7 @@ export const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActi
 
     if (forceActiveStyle) {
         classNames.push(
+            'toolbar-button-active',
             'tw-bg-box-neutral-pressed',
             'tw-text-box-neutral-inverse-pressed',
             cursor === 'grab' ? 'tw-cursor-grabbing' : 'tw-cursor-pointer',
