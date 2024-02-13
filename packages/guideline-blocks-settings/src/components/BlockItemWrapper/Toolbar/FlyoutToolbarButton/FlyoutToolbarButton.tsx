@@ -12,9 +12,18 @@ export type FlyoutToolbarButtonProps = {
     icon: ReactNode;
     tooltip: ReactNode;
     flyoutId: string;
+    flyoutFooter?: ReactNode;
+    flyoutHeader?: ReactNode;
 };
 
-export const FlyoutToolbarButton = ({ children, icon, tooltip, flyoutId }: FlyoutToolbarButtonProps) => {
+export const FlyoutToolbarButton = ({
+    children,
+    icon,
+    tooltip,
+    flyoutId,
+    flyoutFooter,
+    flyoutHeader,
+}: FlyoutToolbarButtonProps) => {
     const id = useMemoizedId(flyoutId);
 
     const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
@@ -27,6 +36,8 @@ export const FlyoutToolbarButton = ({ children, icon, tooltip, flyoutId }: Flyou
                 <Flyout
                     isOpen={isOpen && !isDragPreview}
                     legacyFooter={false}
+                    fixedFooter={flyoutFooter}
+                    fixedHeader={flyoutHeader}
                     fitContent
                     hug={false}
                     placement={FlyoutPlacement.BottomRight}
