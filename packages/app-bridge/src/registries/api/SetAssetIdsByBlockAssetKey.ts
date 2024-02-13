@@ -5,7 +5,7 @@ export type SetAssetIdsByBlockAssetKeyPayload = {
     assetIds: number[];
 };
 
-export type SetAssetIdsByBlockAssetKeyResponse = Promise<void>;
+export type SetAssetIdsByBlockAssetKeyResponse = void;
 
 export const setAssetIdsByBlockAssetKey = (
     payload: SetAssetIdsByBlockAssetKeyPayload,
