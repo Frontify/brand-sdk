@@ -7,7 +7,7 @@ import { joinClassNames } from '../../utilities';
 import { DEPRECATED_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
 import { type BlockItemWrapperProps } from './types';
 import { DragPreviewContext } from './Toolbar/context/DragPreviewContext';
-import { ToolbarFlyoutContext } from './Toolbar/context/useToolbarFlyoutContext';
+import { MutliFlyoutContext } from './Toolbar/context/useMutliFlyoutContext';
 
 export const BlockItemWrapper = ({
     children,
@@ -35,7 +35,7 @@ export const BlockItemWrapper = ({
 
     return (
         <DragPreviewContext.Provider value={isDragging}>
-            <ToolbarFlyoutContext.Provider value={{ openFlyoutIds, setOpenFlyoutIds }}>
+            <MutliFlyoutContext.Provider value={{ openFlyoutIds, setOpenFlyoutIds }}>
                 <div
                     ref={wrapperRef}
                     data-test-id="block-item-wrapper"
@@ -75,7 +75,7 @@ export const BlockItemWrapper = ({
                     </div>
                     {children}
                 </div>
-            </ToolbarFlyoutContext.Provider>
+            </MutliFlyoutContext.Provider>
         </DragPreviewContext.Provider>
     );
 };
