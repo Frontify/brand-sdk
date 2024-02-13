@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DragHandleToolbarButtonProps, FlyoutMenuItem, ToolbarButtonProps } from './ToolbarButton';
+import { type DragHandleToolbarButtonProps, type ToolbarButtonProps } from './ToolbarButton';
+import { type ToolbarFlyoutMenuItem } from './ToolbarFlyoutMenu';
 
 export type ToolbarProps = {
     items: ToolbarItem[];
-    flyoutMenu: { items: FlyoutMenuItem[][] };
+    flyoutMenu: { items: ToolbarFlyoutMenuItem[][] };
     attachments: { isEnabled: boolean };
     isDragging?: boolean;
 };
@@ -18,6 +19,6 @@ export type DraghandleToolbarItem = DragHandleToolbarButtonProps;
 
 export type ButtonToolbarItem = ToolbarButtonProps;
 
-export type FlyoutToolbarItem = FlyoutMenuItem;
+export type FlyoutToolbarItem = ToolbarFlyoutMenuItem;
 
 export type ToolbarItem = DraghandleToolbarItem | ButtonToolbarItem;

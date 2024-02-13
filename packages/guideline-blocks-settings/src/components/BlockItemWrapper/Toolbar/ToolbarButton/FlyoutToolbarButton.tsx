@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MutableRefObject, ReactNode } from 'react';
+import { type MutableRefObject, type ReactNode } from 'react';
 import { useIsDragPreview } from '../context/DragPreviewContext';
-import { ToolbarButtonTooltip } from './ToolbarButtonTooltip';
+import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { Flyout, FlyoutPlacement, useMemoizedId } from '@frontify/fondue';
 import { BaseToolbarButton } from './BaseToolbarButton';
 import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';

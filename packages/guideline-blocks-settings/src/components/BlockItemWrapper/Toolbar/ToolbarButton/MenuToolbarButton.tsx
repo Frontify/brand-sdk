@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconDotsHorizontal16, useMemoizedId } from '@frontify/fondue';
-import { FlyoutMenu, FlyoutMenuItem } from './FlyoutMenu';
-import { FlyoutToolbarButton } from '.';
+import { ToolbarFlyoutMenu, ToolbarFlyoutMenuItem } from '../ToolbarFlyoutMenu';
+import { FlyoutToolbarButton } from './FlyoutToolbarButton';
 
 export type MenuToolbarButtonProps = {
-    items: FlyoutMenuItem[][];
+    items: ToolbarFlyoutMenuItem[][];
     flyoutId: string;
 };
 
@@ -14,7 +14,7 @@ export const MenuToolbarButton = ({ items, flyoutId }: MenuToolbarButtonProps) =
 
     return (
         <FlyoutToolbarButton icon={<IconDotsHorizontal16 />} tooltip="Options" flyoutId={id}>
-            <FlyoutMenu items={items} flyoutId={id} />
+            <ToolbarFlyoutMenu items={items} flyoutId={id} />
         </FlyoutToolbarButton>
     );
 };

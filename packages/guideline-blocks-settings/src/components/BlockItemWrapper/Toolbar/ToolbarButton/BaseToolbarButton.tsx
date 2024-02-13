@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { HTMLAttributes, ReactNode, forwardRef } from 'react';
+import { type HTMLAttributes, type ReactNode, forwardRef } from 'react';
 import { getToolbarButtonClassNames } from '../helpers';
 
 type BaseToolbarButtonProps = {

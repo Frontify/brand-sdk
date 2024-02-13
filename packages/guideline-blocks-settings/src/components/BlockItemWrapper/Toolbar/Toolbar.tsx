@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ToolbarSegment } from './ToolbarSegment';
-import { ToolbarAttachments } from './ToolbarAttachments';
+import { AttachmentsToolbarButton } from './ToolbarButton/AttachmentsToolbarButton';
 import { type ToolbarProps } from './types';
 import { DragHandleToolbarButton, MenuToolbarButton, ToolbarButton } from './ToolbarButton';
 
@@ -14,7 +14,7 @@ export const Toolbar = ({ items, flyoutMenu, attachments }: ToolbarProps) => (
     >
         {attachments.isEnabled && (
             <ToolbarSegment>
-                <ToolbarAttachments />
+                <AttachmentsToolbarButton />
             </ToolbarSegment>
         )}
         <ToolbarSegment>

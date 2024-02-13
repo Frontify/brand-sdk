@@ -1,14 +1,33 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconCaretDown12, IconPaperclip16 } from '@frontify/fondue';
-import { type AttachmentsTriggerProps } from '../../../Attachments/types';
+import { Attachments } from '../../../Attachments';
+import { useAttachmentsContext } from '../../../../hooks';
 
-import { BaseToolbarButton } from './BaseToolbarButton';
+import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
+import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
+import { useMemoizedId } from '@frontify/fondue';
 
-export const AttachmentsToolbarButton = ({ children, isFlyoutOpen }: AttachmentsTriggerProps) => (
-    <BaseToolbarButton forceActiveStyle={isFlyoutOpen}>
-        <IconPaperclip16 />
-        {children}
-        <IconCaretDown12 />
-    </BaseToolbarButton>
-);
+export const AttachmentsToolbarButton = () => {
+    const id = useMemoizedId();
+
+    const { appBridge, attachments, onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
+        useAttachmentsContext();
+
+    const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
+
+    return (
+        <Attachments
+            onUpload={onAttachmentsAdd}
+            onDelete={onAttachmentDelete}
+            onReplaceWithBrowse={onAttachmentReplace}
+            onReplaceWithUpload={onAttachmentReplace}
+            onSorted={onAttachmentsSorted}
+            onBrowse={onAttachmentsAdd}
+            items={attachments}
+            appBridge={appBridge}
+            triggerComponent={AttachmentsToolbarButtonTrigger}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+        />
+    );
+};

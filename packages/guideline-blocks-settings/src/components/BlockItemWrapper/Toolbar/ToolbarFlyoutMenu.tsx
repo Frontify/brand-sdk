@@ -1,21 +1,21 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ActionMenu, MenuItemContentSize, MenuItemStyle } from '@frontify/fondue';
-import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
+import { useToolbarFlyoutState } from './hooks/useToolbarFlyoutState';
 
-export type FlyoutMenuItem = {
+export type ToolbarFlyoutMenuItem = {
     title: string;
     onClick: () => void;
     icon: JSX.Element;
     style?: MenuItemStyle;
 };
 
-export type FlyoutMenuProps = {
-    items: FlyoutMenuItem[][];
+export type ToolbarFlyoutMenuProps = {
+    items: ToolbarFlyoutMenuItem[][];
     flyoutId: string;
 };
 
-export const FlyoutMenu = ({ items, flyoutId }: FlyoutMenuProps) => {
+export const ToolbarFlyoutMenu = ({ items, flyoutId }: ToolbarFlyoutMenuProps) => {
     const { onOpenChange } = useToolbarFlyoutState(flyoutId);
 
     return (

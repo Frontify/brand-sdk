@@ -3,7 +3,7 @@
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../..';
 import { useIsDragPreview } from '../context/DragPreviewContext';
 import { BaseToolbarButton } from './BaseToolbarButton';
-import { ToolbarButtonTooltip } from './ToolbarButtonTooltip';
+import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 
 export type DragHandleToolbarButtonProps = {
     icon: JSX.Element;
