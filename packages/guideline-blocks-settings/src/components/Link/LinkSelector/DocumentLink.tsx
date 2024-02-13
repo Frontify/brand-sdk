@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgeBlock, AppBridgeTheme } from '@frontify/app-bridge';
+import type { DocumentPage, DocumentSection } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
 import { PageLinks } from './PageLinks';
 import { IconColorFan16, merge } from '@frontify/fondue';
@@ -12,18 +12,20 @@ type DocumentLinkProps = {
         title: string;
         permanentLink: string;
     };
-    appBridge: AppBridgeBlock | AppBridgeTheme;
     selectedUrl: string;
     onSelectUrl: (url: string) => void;
     itemsToExpandInitially: InitiallyExpandedItems;
+    getDocumentSectionsByDocumentPageId: (documentPageId: number) => Promise<DocumentSection[]>;
+    getDocumentPagesByDocumentId: (documentId: number) => Promise<DocumentPage[]>;
 };
 
 export const DocumentLink = ({
     document,
-    appBridge,
     selectedUrl,
     onSelectUrl,
     itemsToExpandInitially,
+    getDocumentSectionsByDocumentPageId,
+    getDocumentPagesByDocumentId,
 }: DocumentLinkProps) => {
     const [isExpanded, setIsExpanded] = useState(document.id === itemsToExpandInitially.documentId);
     const isActive = document.permanentLink === selectedUrl;
@@ -66,11 +68,12 @@ export const DocumentLink = ({
             </button>
             {isExpanded && (
                 <PageLinks
-                    appBridge={appBridge}
                     documentId={document.id}
                     selectedUrl={selectedUrl}
                     onSelectUrl={onSelectUrl}
                     itemsToExpandInitially={itemsToExpandInitially}
+                    getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
+                    getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
                 />
             )}
         </>
