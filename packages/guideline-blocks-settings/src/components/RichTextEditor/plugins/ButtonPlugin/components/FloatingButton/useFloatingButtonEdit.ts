@@ -1,26 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    HTMLPropsAs,
-    getAboveNode,
-    getDefaultBoundingClientRect,
-    getEndPoint,
-    getPluginOptions,
-    getPluginType,
-    getRangeBoundingClientRect,
-    getStartPoint,
-    someNode,
-    useComposedRef,
-    useEditorRef,
-    useHotkeys,
-    usePlateSelectors,
-} from '@udecode/plate';
+import { getAboveNode, getEndPoint, getStartPoint, someNode } from '@udecode/slate';
+import { getDefaultBoundingClientRect, getRangeBoundingClientRect } from '@udecode/plate-floating';
+import { useComposedRef } from '@udecode/react-utils';
+import { getPluginOptions, getPluginType, useEditorRef, useEditorVersion, useHotkeys } from '@udecode/plate-core';
 import { useCallback, useEffect } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
 import {
-    FloatingButtonProps,
     floatingButtonActions,
     floatingButtonSelectors,
     useFloatingButtonEnter,
@@ -29,11 +17,11 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingButtonProps): HTMLPropsAs<'div'> => {
+export const useFloatingButtonEdit = ({ floatingOptions, ...props }: any) => {
     const editor = useEditorRef();
-    const keyEditor = usePlateSelectors(editor.id).keyEditor();
     const mode = useFloatingButtonSelectors().mode();
     const open = useFloatingButtonSelectors().isOpen(editor.id);
+    const version = useEditorVersion();
 
     const { triggerFloatingButtonHotkeys } = getPluginOptions<ButtonPlugin>(editor, ELEMENT_BUTTON);
 
@@ -79,9 +67,9 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingBut
         }
 
         if (floatingButtonSelectors.mode() === 'edit') {
-            floatingButtonActions.hide();
+            floatingButtonActions.reset();
         }
-    }, [editor, keyEditor, update]);
+    }, [editor, version, update]);
 
     useHotkeys(
         triggerFloatingButtonHotkeys,

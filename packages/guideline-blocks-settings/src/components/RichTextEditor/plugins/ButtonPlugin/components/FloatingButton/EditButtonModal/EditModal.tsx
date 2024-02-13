@@ -1,40 +1,45 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconPen16, IconTrashBin16 } from '@frontify/fondue';
-import { FloatingButton, useFloatingButtonUrlInput } from '..';
+import { useEditorRef } from '@udecode/plate-core';
+import { focusEditor } from '@udecode/slate-react';
+
+import { floatingButtonSelectors } from '../floatingButtonStore';
+import { unwrapButton } from '../../../transforms';
+import { triggerFloatingButtonEdit } from '../../../utils';
 
 export const EditModal = () => {
-    const urlHtmlProps = useFloatingButtonUrlInput({});
-
+    const editor = useEditorRef();
     return (
         <div
             data-test-id="floating-button-edit"
             className="tw-bg-white tw-text-text tw-rounded tw-shadow tw-p-4 tw-min-w-[400px]"
         >
             <span data-test-id="preview-button-flyout" className="tw-flex tw-justify-between tw-items-center">
-                <span className="tw-pointer-events-none">{urlHtmlProps.defaultValue}</span>
+                <span className="tw-pointer-events-none">{floatingButtonSelectors.url()}</span>
                 <span className="tw-flex tw-gap-2">
-                    <span
-                        role="button"
+                    <button
+                        onClick={() => {
+                            triggerFloatingButtonEdit(editor);
+                        }}
                         tabIndex={0}
-                        data-test-id="edit-button-button"
+                        data-test-id={'edit-button-button'}
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                     >
-                        <FloatingButton.EditButton>
-                            <IconPen16 />
-                        </FloatingButton.EditButton>
-                    </span>
+                        <IconPen16 />
+                    </button>
 
-                    <span
-                        role="button"
+                    <button
+                        onClick={() => {
+                            unwrapButton(editor);
+                            focusEditor(editor, editor.selection ?? undefined);
+                        }}
                         tabIndex={0}
-                        data-test-id="remove-button-button"
+                        data-test-id={'remove-button-button'}
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                     >
-                        <FloatingButton.UnlinkButton>
-                            <IconTrashBin16 />
-                        </FloatingButton.UnlinkButton>
-                    </span>
+                        <IconTrashBin16 />
+                    </button>
                 </span>
             </span>
         </div>

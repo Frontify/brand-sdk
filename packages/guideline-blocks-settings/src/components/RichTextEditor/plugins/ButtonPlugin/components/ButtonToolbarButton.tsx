@@ -1,56 +1,34 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getButtonClassNames, getHotkeyByPlatform, getTooltip } from '@frontify/fondue';
-import {
-    BlockToolbarButtonProps,
-    ToolbarButton,
-    focusEditor,
-    isRangeInSameBlock,
-    someNode,
-    useEditorRef,
-} from '@udecode/plate';
+import { IconButton16 } from '@frontify/fondue';
+import { useEditorRef } from '@udecode/plate-core';
+import { focusEditor } from '@udecode/slate-react';
 
 import { triggerFloatingButton } from '../utils';
 
-export interface LinkToolbarButtonProps extends BlockToolbarButtonProps {
-    /**
-     * Default onMouseDown is getting the link url by calling this promise before inserting the image.
-     */
-    getLinkUrl?: (prevUrl: string | null) => Promise<string | null>;
-}
+import { ReactNode, forwardRef } from 'react';
+import { IconStylingWrapper, ToolbarButton } from '@frontify/fondue';
 
-export const ButtonToolbarButton = ({ type, ...props }: LinkToolbarButtonProps) => {
+export const ButtonToolbarButton = forwardRef<
+    HTMLButtonElement,
+    { disabled: boolean; tooltip: ReactNode; pressed: boolean }
+>((rootProps, ref) => {
     const editor = useEditorRef();
-    const isEnabled = !!isRangeInSameBlock(editor, {
-        at: editor.selection,
-    });
-
-    const isLink = !!editor?.selection && someNode(editor, { match: { type } });
 
     return (
         <ToolbarButton
-            tooltip={getTooltip(
-                isEnabled
-                    ? `Button\n${getHotkeyByPlatform('Ctrl+Shift+K')}`
-                    : 'Buttons can only be set for a single text block.',
-            )}
-            classNames={getButtonClassNames(isEnabled)}
-            active={isLink}
-            onMouseDown={async (event) => {
-                if (!editor) {
-                    return;
-                }
-
-                event.preventDefault();
-                event.stopPropagation();
-
+            ref={ref}
+            {...rootProps}
+            onMouseDown={() => {
                 focusEditor(editor, editor.selection ?? editor.prevSelection ?? undefined);
-
-                setTimeout(() => {
-                    triggerFloatingButton(editor, { focused: true });
-                }, 0);
             }}
-            {...props}
-        />
+            onClick={() => {
+                triggerFloatingButton(editor, { focused: true });
+            }}
+        >
+            <IconStylingWrapper icon={<IconButton16 />} />
+        </ToolbarButton>
     );
-};
+});
+
+ButtonToolbarButton.displayName = 'ButtonToolbarButton';

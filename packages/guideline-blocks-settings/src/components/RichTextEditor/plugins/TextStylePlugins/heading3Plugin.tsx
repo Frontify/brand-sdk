@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createPluginFactory } from '@udecode/plate';
+import { PlatePlugin, createPluginFactory } from '@udecode/plate-core';
 import type { CSSProperties } from 'react';
 import {
     MarkupElement,
@@ -26,7 +26,7 @@ export class Heading3Plugin extends Plugin {
         this.styles = styles;
     }
 
-    plugins() {
+    plugins(): PlatePlugin[] {
         return [createHeading3Plugin(this.styles)];
     }
 }

@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, TText, Value, getPluginType } from '@udecode/plate';
+import { PlateEditor, getPluginType } from '@udecode/plate-core';
+import { TText, Value } from '@udecode/slate';
 import { RichTextButtonStyle, TButtonElement } from '..';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 

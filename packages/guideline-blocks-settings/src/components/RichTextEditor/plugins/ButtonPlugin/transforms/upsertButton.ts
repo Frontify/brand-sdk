@@ -2,7 +2,6 @@
 
 import {
     InsertNodesOptions,
-    PlateEditor,
     TNode,
     TNodeEntry,
     UnwrapNodesOptions,
@@ -13,13 +12,13 @@ import {
     getEditorString,
     getNodeLeaf,
     getNodeProps,
-    getPluginOptions,
-    getPluginType,
-    isDefined,
     isExpanded,
     removeNodes,
     setNodes,
-} from '@udecode/plate';
+} from '@udecode/slate';
+import { isDefined } from '@udecode/utils';
+import { PlateEditor, getPluginOptions, getPluginType } from '@udecode/plate-core';
+
 import { Path } from 'slate';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
 import { RichTextButtonStyle, TButtonElement } from '../types';

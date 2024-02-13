@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createPluginFactory } from '@udecode/plate';
+import { createPluginFactory, PlatePlugin } from '@udecode/plate-core';
 import type { CSSProperties } from 'react';
 import {
     MarkupElement,
@@ -26,7 +26,7 @@ export class Custom1Plugin extends Plugin {
         this.styles = styles;
     }
 
-    plugins() {
+    plugins(): PlatePlugin[] {
         return [createCustom1Plugin(this.styles)];
     }
 }

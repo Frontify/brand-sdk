@@ -1,14 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    PlateEditor,
-    TText,
-    Value,
-    getAboveNode,
-    getEditorString,
-    getPluginType,
-    replaceNodeChildren,
-} from '@udecode/plate';
+import { PlateEditor, getPluginType } from '@udecode/plate-core';
+import { TText, Value, getAboveNode, getEditorString } from '@udecode/slate';
+import { replaceNodeChildren } from '@udecode/slate-utils';
 import { ELEMENT_BUTTON, TButtonElement } from '..';
 import { UpsertButtonOptions } from './upsertButton';
 

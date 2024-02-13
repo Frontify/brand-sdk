@@ -48,7 +48,11 @@ export const LinkSelector = ({
     };
 
     return (
-        <div data-test-id="internal-link-selector" onKeyDown={onPressEnter}>
+        <div
+            onPointerDown={(event) => event.preventDefault()}
+            data-test-id="internal-link-selector"
+            onKeyDown={onPressEnter}
+        >
             <Button
                 icon={<IconLink />}
                 size={buttonSize}

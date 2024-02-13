@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Dispatch, Reducer, useEffect, useReducer } from 'react';
-import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate';
+import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate-core';
 import { InsertModalDispatchType, InsertModalStateProps } from './types';
 import { floatingButtonActions, floatingButtonSelectors } from '../floatingButtonStore';
 import { ELEMENT_BUTTON } from '../../../createButtonPlugin';
@@ -95,7 +95,7 @@ export const useInsertModal = () => {
     };
 
     const onCancel = () => {
-        floatingButtonActions.hide();
+        floatingButtonActions.reset();
     };
 
     const onSave = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent | undefined) => {

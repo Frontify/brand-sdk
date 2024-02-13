@@ -4,7 +4,7 @@ import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
 import type { SinonStub } from 'sinon';
-import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles } from '.';
+import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles, getDefaultPluginsWithLinkChooser } from '.';
 import { convertToRteValue } from '../../helpers';
 
 const RteHtmlSelector = '[data-test-id="rte-content-html"]';
@@ -25,7 +25,7 @@ const appBridge = getAppBridgeBlockStub({
 
 describe('RichTextEditor', () => {
     it('should render a rich text editor in edit mode', () => {
-        mount(<RichTextEditor isEditing />);
+        mount(<RichTextEditor isEditing plugins={getDefaultPluginsWithLinkChooser(appBridge)} />);
         cy.get(RichTextSelector).should('exist');
     });
 

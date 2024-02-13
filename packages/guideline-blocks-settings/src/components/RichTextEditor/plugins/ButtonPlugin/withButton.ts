@@ -1,23 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    AnyObject,
-    EText,
-    PlateEditor,
-    Value,
-    WithOverride,
-    getAboveNode,
-    getNextNodeStartPoint,
-    getPluginType,
-    getPreviousNodeEndPoint,
-    insertNodes,
-    isCollapsed,
-    isEndPoint,
-    isStartPoint,
-    mockPlugin,
-    select,
-    withRemoveEmptyNodes,
-} from '@udecode/plate';
+import { EText, Value, getAboveNode, insertNodes, isCollapsed, isEndPoint, isStartPoint, select } from '@udecode/slate';
+import { getNextNodeStartPoint, getPreviousNodeEndPoint } from '@udecode/slate-utils';
+import { PlateEditor, WithOverride, getPluginType, mockPlugin } from '@udecode/plate-core';
+import { withRemoveEmptyNodes } from '@udecode/plate-normalizers';
 import { Path, Point, Range } from 'slate';
 import { ELEMENT_BUTTON } from './createButtonPlugin';
 
@@ -99,7 +85,7 @@ export const withButton: WithOverride = (editor, { type }) => {
 
     return withRemoveEmptyNodes<Value, PlateEditor<Value>>(
         editor,
-        mockPlugin<AnyObject, Value, PlateEditor<Value>>({
+        mockPlugin<Record<string, any>, Value, PlateEditor<Value>>({
             options: { types: type },
         }),
     );

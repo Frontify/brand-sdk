@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, Value, focusEditor, getPluginOptions } from '@udecode/plate';
+import { PlateEditor, getPluginOptions } from '@udecode/plate-core';
+import { Value } from '@udecode/slate';
+import { focusEditor } from '@udecode/slate-react';
 import { floatingButtonActions, floatingButtonSelectors } from '../components/FloatingButton/floatingButtonStore';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
 import { upsertButton } from '.';
@@ -22,7 +24,7 @@ export const submitFloatingButton = <V extends Value>(editor: PlateEditor<V>) =>
     const buttonStyle = floatingButtonSelectors.buttonStyle();
     const target = floatingButtonSelectors.newTab() ? undefined : '_self';
 
-    floatingButtonActions.hide();
+    floatingButtonActions.reset();
 
     upsertButton(editor, {
         url,

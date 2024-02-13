@@ -1,26 +1,20 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    HTMLPropsAs,
-    getPluginOptions,
-    getSelectionBoundingClientRect,
-    useComposedRef,
-    useEditorRef,
-    useHotkeys,
-} from '@udecode/plate';
+import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate-core';
+import { getSelectionBoundingClientRect } from '@udecode/plate-floating';
+import { useComposedRef } from '@udecode/react-utils';
 import { useEffect } from 'react';
 import { useFocused } from 'slate-react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { triggerFloatingButtonInsert } from '../../utils/triggerFloatingButtonInsert';
 import {
-    FloatingButtonProps,
     floatingButtonActions,
     useFloatingButtonEscape,
     useFloatingButtonSelectors,
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonInsert = ({ floatingOptions, ...props }: FloatingButtonProps): HTMLPropsAs<'div'> => {
+export const useFloatingButtonInsert = ({ floatingOptions, ...props }: any) => {
     const editor = useEditorRef();
     const focused = useFocused();
     const mode = useFloatingButtonSelectors().mode();
