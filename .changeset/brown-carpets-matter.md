@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-chore: Bump tailwindcss to 3.4.1
+chore: bump `tailwindcss` to 3.4.1
