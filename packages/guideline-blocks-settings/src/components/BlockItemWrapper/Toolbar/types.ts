@@ -11,11 +11,6 @@ export type ToolbarProps = {
     isDragging?: boolean;
 };
 
-export type ToolbarFlyoutState = {
-    isOpen: boolean;
-    onOpenChange: (isOpen: boolean) => void;
-};
-
 export type DraghandleToolbarItem = DragHandleToolbarButtonProps;
 
 export type ButtonToolbarItem = ToolbarButtonProps;
