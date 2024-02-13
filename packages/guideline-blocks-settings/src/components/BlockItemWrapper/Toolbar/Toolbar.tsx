@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ToolbarSegment } from './ToolbarSegment';
-import { AttachmentsToolbarButton } from './ToolbarButton/AttachmentsToolbarButton';
+import { AttachmentsToolbarButton } from './AttachmentsToolbarButton';
 import { type ToolbarProps } from './types';
-import { DragHandleToolbarButton, MenuToolbarButton, ToolbarButton } from './ToolbarButton';
+import { ToolbarButton } from './ToolbarButton';
+import { DragHandleToolbarButton } from './DragHandleToolbarButton';
+import { MenuToolbarButton } from './MenuToolbarButton';
 
 export const DEPRECATED_MENU_BUTTON_ID = 'menu';
 

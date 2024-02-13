@@ -4,7 +4,7 @@ import { type MutableRefObject, type ReactNode } from 'react';
 import { useIsDragPreview } from '../context/DragPreviewContext';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { Flyout, FlyoutPlacement, useMemoizedId } from '@frontify/fondue';
-import { BaseToolbarButton } from './BaseToolbarButton';
+import { BaseToolbarButton } from '../BaseToolbarButton';
 import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
 
 export type FlyoutToolbarButtonProps = {

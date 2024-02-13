@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useIsDragPreview } from '../context/DragPreviewContext';
-import { BaseToolbarButton } from './BaseToolbarButton';
+import { BaseToolbarButton } from '../BaseToolbarButton';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 
 export type ToolbarButtonProps = { icon: JSX.Element; tooltip?: string; onClick: () => void };

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ActionMenu, MenuItemContentSize, MenuItemStyle } from '@frontify/fondue';
-import { useToolbarFlyoutState } from './hooks/useToolbarFlyoutState';
+import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
 
 export type ToolbarFlyoutMenuItem = {
     title: string;

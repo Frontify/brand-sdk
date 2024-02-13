@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type DragHandleToolbarButtonProps, type ToolbarButtonProps } from './ToolbarButton';
-import { type ToolbarFlyoutMenuItem } from './ToolbarFlyoutMenu';
+import { type ToolbarFlyoutMenuItem } from './MenuToolbarButton/ToolbarFlyoutMenu';
 
 export type ToolbarProps = {
     items: ToolbarItem[];

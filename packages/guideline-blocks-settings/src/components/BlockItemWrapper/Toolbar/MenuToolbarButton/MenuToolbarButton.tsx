@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconDotsHorizontal16, useMemoizedId } from '@frontify/fondue';
-import { ToolbarFlyoutMenu, ToolbarFlyoutMenuItem } from '../ToolbarFlyoutMenu';
-import { FlyoutToolbarButton } from './FlyoutToolbarButton';
+import { ToolbarFlyoutMenu, ToolbarFlyoutMenuItem } from './ToolbarFlyoutMenu';
+import { FlyoutToolbarButton } from '../FlyoutToolbarButton/FlyoutToolbarButton';
 
 export type MenuToolbarButtonProps = {
     items: ToolbarFlyoutMenuItem[][];

@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Attachments } from '../../../Attachments';
+import { useMemoizedId } from '@frontify/fondue';
+
 import { useAttachmentsContext } from '../../../../hooks';
+import { Attachments } from '../../../Attachments';
+import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
 
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
-import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
-import { useMemoizedId } from '@frontify/fondue';
 
 export const AttachmentsToolbarButton = () => {
     const id = useMemoizedId();
