@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ActionMenu, MenuItemContentSize, MenuItemStyle } from '@frontify/fondue';
-import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
+import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 export type ToolbarFlyoutMenuItem = {
     title: string;
@@ -16,7 +16,7 @@ export type ToolbarFlyoutMenuProps = {
 };
 
 export const ToolbarFlyoutMenu = ({ items, flyoutId }: ToolbarFlyoutMenuProps) => {
-    const { onOpenChange } = useToolbarFlyoutState(flyoutId);
+    const { onOpenChange } = useMultiFlyoutState(flyoutId);
 
     return (
         <ActionMenu

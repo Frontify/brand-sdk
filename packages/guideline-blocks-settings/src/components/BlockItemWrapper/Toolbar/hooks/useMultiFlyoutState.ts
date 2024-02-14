@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { useMutliFlyoutContext } from '../context/useMultiFlyoutContext';
 
-export const useToolbarFlyoutState = (flyoutId: string) => {
+export const useMultiFlyoutState = (flyoutId: string) => {
     const { openFlyoutIds, setOpenFlyoutIds } = useMutliFlyoutContext();
 
     const onOpenChange = useCallback(

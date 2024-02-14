@@ -5,7 +5,7 @@ import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { Flyout, FlyoutPlacement, useMemoizedId } from '@frontify/fondue';
 import { BaseToolbarButton } from '../BaseToolbarButton';
-import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
+import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 export type FlyoutToolbarButtonProps = {
     children: ReactNode;
@@ -26,7 +26,7 @@ export const FlyoutToolbarButton = ({
 }: FlyoutToolbarButtonProps) => {
     const id = useMemoizedId(flyoutId);
 
-    const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
+    const { isOpen, onOpenChange } = useMultiFlyoutState(id);
 
     const isDragPreview = useDragPreviewContext();
 

@@ -4,7 +4,7 @@ import { useMemoizedId } from '@frontify/fondue';
 
 import { useAttachmentsContext } from '../../../../hooks';
 import { Attachments } from '../../../Attachments';
-import { useToolbarFlyoutState } from '../hooks/useToolbarFlyoutState';
+import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
 import { useDragPreviewContext } from '../context/DragPreviewContext';
@@ -21,7 +21,7 @@ export const AttachmentsToolbarButton = ({
     const { appBridge, attachments, onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted } =
         useAttachmentsContext();
 
-    const { isOpen, onOpenChange } = useToolbarFlyoutState(id);
+    const { isOpen, onOpenChange } = useMultiFlyoutState(id);
     const isDragPreview = useDragPreviewContext();
 
     return (
