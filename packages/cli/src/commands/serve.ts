@@ -15,15 +15,10 @@ class PlatformAppDevelopmentServer {
             const viteServer = await createServer({
                 root: process.cwd(),
                 configFile: false,
-                plugins: [
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
-                    react(),
-                ],
+                plugins: [react()],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
                 },
-                base: `http://localhost:${this.port}/`,
             });
 
             const server = await viteServer.listen(this.port, true);
