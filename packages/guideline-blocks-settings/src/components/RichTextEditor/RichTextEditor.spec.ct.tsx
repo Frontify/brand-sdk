@@ -1,11 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
-import type { SinonStub } from 'sinon';
 import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles } from '.';
 import { convertToRteValue } from '../../helpers';
+import { getAppBridgeTestingPackage } from '../../tests/helpers/getAppBridgeTestingPackage';
 
 const RteHtmlSelector = '[data-test-id="rte-content-html"]';
 const RichTextSelector = '[data-test-id="rich-text-editor"]';
@@ -17,13 +16,7 @@ const FloatingLinkModalSelector = '[data-test-id="floating-link-insert"]';
 const FloatingButtonModalSelector = '[data-test-id="floating-button-insert"]';
 const UrlInputSelector = 'input[id="url"]';
 
-const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
-
-const appBridge = getAppBridgeBlockStub({
-    blockId: 1,
-});
-
-describe('RichTextEditor', () => {
+describe('RichTextEditor', async () => {
     it('should render a rich text editor in edit mode', () => {
         mount(<RichTextEditor isEditing />);
         cy.get(RichTextSelector).should('exist');
@@ -54,9 +47,18 @@ describe('RichTextEditor', () => {
         cy.get(RteHtmlSelector).should('not.exist');
     });
 
-    it('should be able to select internal link', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should be able to select internal link', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -77,9 +79,18 @@ describe('RichTextEditor', () => {
         linkTag.should('have.attr', 'target', '_self');
     });
 
-    it('should be able to select internal link with target blank', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should be able to select internal link with target blank', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -101,9 +112,18 @@ describe('RichTextEditor', () => {
         linkTag.should('have.attr', 'target', '_blank');
     });
 
-    it('should prepend the URL with https:// if not exists', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should prepend the URL with https:// if not exists', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -120,9 +140,18 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).find('a[href="https://frontify.com"]').should('exist');
     });
 
-    it('should allow URLs that start with /document/', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should allow URLs that start with /document/', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -140,9 +169,18 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).find('a[href="/document/test"]').should('exist');
     });
 
-    it('should not add https:// to the URL for mailto: links', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should not add https:// to the URL for mailto: links', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -159,9 +197,18 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).find('a[href="mailto:info@frontify.com"]').should('exist');
     });
 
-    it('should create a link with a link typed in the RTE', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should create a link with a link typed in the RTE', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -174,9 +221,18 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).find('a[href="mailto:info@frontify.com"]').should('exist');
     });
 
-    it('should not create a link with a : after a word', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should not create a link with a : after a word', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -189,9 +245,18 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).find('a').should('not.exist');
     });
 
-    it('should allow URLs that start with /document/', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should allow URLs that start with /document/', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor
@@ -208,9 +273,18 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).find('a[href="/document/test"]').should('exist');
     });
 
-    it('should be able to select internal button link', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+    it('should be able to select internal button link', async () => {
+        const { DocumentApiDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+        const apiDocuments = [{ ...DocumentApiDummy.with(1), permanentLink: '/r/document' }];
+
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+
+        // @ts-expect-error Stubbing
+        appBridge.getDocumentGroups = cy.stub().returns([]);
+        // @ts-expect-error Stubbing
+        appBridge.getAllDocuments = cy.stub().returns(Promise.resolve(apiDocuments));
 
         mount(
             <RichTextEditor

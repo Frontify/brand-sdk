@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
 import { Attachments as AttachmentsComponent } from './Attachments';
 import { AttachmentsProps } from './types';
 import { SinonStub } from 'sinon';
+import { getAppBridgeTestingPackage } from '../../tests/helpers/getAppBridgeTestingPackage';
 
 const FlyoutButtonSelector = '[data-test-id="attachments-flyout-button"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';
@@ -15,7 +16,7 @@ const MenuItemSelector = '[data-test-id="menu-item"]';
 const LoadingCircleSelector = '[data-test-id="loading-circle"]';
 
 const Attachments = ({
-    appBridge = getAppBridgeBlockStub(),
+    appBridge,
     onDelete = cy.stub(),
     items,
     onReplaceWithBrowse = cy.stub(),
@@ -23,7 +24,7 @@ const Attachments = ({
     onSorted = cy.stub(),
     onBrowse = cy.stub(),
     onUpload = cy.stub(),
-}: Partial<AttachmentsProps>) => {
+}: Partial<AttachmentsProps> & { appBridge: AttachmentsProps['appBridge'] }) => {
     return (
         <AttachmentsComponent
             appBridge={appBridge}
@@ -49,59 +50,83 @@ const hasOpenAssetChooser = (
     return 'openAssetChooser' in appBridge;
 };
 
-describe('Attachments', () => {
-    it('renders attachments flyout if it is in edit mode', () => {
+describe('Attachments', async () => {
+    it('renders attachments flyout if it is in edit mode', async () => {
+        const { getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
         mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} />);
         cy.get(FlyoutButtonSelector).should('exist');
     });
 
-    it('renders attachments flyout if it has attachments', () => {
-        mount(<Attachments items={[AssetDummy.with(1)]} />);
+    it('renders attachments flyout if it has attachments', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
+        mount(<Attachments appBridge={getAppBridgeBlockStub()} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).should('exist');
     });
 
-    it('does not render attachments flyout if there are no attachments', () => {
-        mount(<Attachments items={[]} />);
+    it('does not render attachments flyout if there are no attachments', async () => {
+        const { getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
+        mount(<Attachments appBridge={getAppBridgeBlockStub()} items={[]} />);
         cy.get(FlyoutButtonSelector).should('not.exist');
     });
 
-    it('renders asset input if in edit mode', () => {
+    it('renders asset input if in edit mode', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
         mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(AssetInputSelector).should('exist');
     });
 
-    it('does not render asset input if in view mode', () => {
-        mount(<Attachments items={[AssetDummy.with(1)]} />);
+    it('does not render asset input if in view mode', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
+        mount(<Attachments appBridge={getAppBridgeBlockStub()} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(AssetInputSelector).should('not.exist');
     });
 
-    it('renders asset action buttons if in edit mode', () => {
+    it('renders asset action buttons if in edit mode', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
         mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(ActionBarSelector).should('exist');
     });
 
-    it('does not render asset action buttons if in view mode', () => {
-        mount(<Attachments items={[AssetDummy.with(1)]} />);
+    it('does not render asset action buttons if in view mode', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
+        mount(<Attachments appBridge={getAppBridgeBlockStub()} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(ActionBarSelector).should('not.exist');
     });
 
-    it('renders an attachment item for each asset', () => {
-        mount(<Attachments items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]} />);
+    it('renders an attachment item for each asset', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
+        mount(
+            <Attachments
+                appBridge={getAppBridgeBlockStub()}
+                items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]}
+            />,
+        );
         cy.get(FlyoutButtonSelector).click();
         cy.get(AttachmentItemSelector).should('have.length', 3);
     });
 
     it('renders loading circle for attachment item', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
         const appBridge = getAppBridgeBlockStub({
             editorState: true,
         });
 
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
-            (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
+            // @ts-expect-error stubbing
+            appBridge.openAssetChooser = cy.stub().callsArgWith(0, AssetDummy.with(4));
         }
 
         cy.clock();
@@ -129,7 +154,9 @@ describe('Attachments', () => {
         cy.get(LoadingCircleSelector).should('not.exist');
     });
 
-    it('renders focus ring on flyout button while tabbing and open it', () => {
+    it('renders focus ring on flyout button while tabbing and open it', async () => {
+        const { AssetDummy, getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
         mount(
             <Attachments
                 appBridge={getAppBridgeBlockStub({ editorState: true })}

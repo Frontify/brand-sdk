@@ -1,5 +1,3 @@
-// @vitest-environment happy-dom
-
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, it, vi } from 'vitest';

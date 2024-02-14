@@ -1,15 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
 import { BlockInjectButton } from './BlockInjectButton';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { getAppBridgeTestingPackage } from '../../tests/helpers/getAppBridgeTestingPackage';
 
 const BlockInjectButtonSelector = '[data-test-id="block-inject-button"]';
 const ActionMenuItemSelector = '[data-test-id="menu-item"]';
 
 describe('Block Inject Button', () => {
-    it('renders a simple block inject button', () => {
+    it('renders a simple block inject button', async () => {
+        const { withAppBridgeBlockStubs } = await getAppBridgeTestingPackage();
+
         const [BlockInjectButtonWithStubs] = withAppBridgeBlockStubs(BlockInjectButton, {});
 
         mount(
@@ -25,7 +27,9 @@ describe('Block Inject Button', () => {
             .should('have.class', 'first:tw-rounded-tl last:tw-rounded-br', 'first:tw-rounded-bl last:tw-rounded-tr');
     });
 
-    it('renders a block inject button with Menu upload and asset', () => {
+    it('renders a block inject button with Menu upload and asset', async () => {
+        const { withAppBridgeBlockStubs } = await getAppBridgeTestingPackage();
+
         const [BlockInjectButtonWithStubs] = withAppBridgeBlockStubs(BlockInjectButton, {});
 
         mount(

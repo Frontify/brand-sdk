@@ -3,9 +3,6 @@
 import { urlRule } from '../../../src';
 import { describe, expect, test } from 'vitest';
 
-/**
- * @vitest-environment happy-dom
- */
 describe('urlRule', () => {
     const data = [
         { value: 'http://www.frontify.com', expected: true },

@@ -4,9 +4,6 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { KeyboardCode, KeyboardCoordinateGetter, SensorContext } from '@dnd-kit/core';
 import { customCoordinatesGetterFactory } from './customCoordinatesGetterFactory';
 
-/**
- * @vitest-environment happy-dom
- */
 describe('customCoordinatesGetterFactory', () => {
     const initialCoordinates = { x: 0, y: 0 };
     const context = {

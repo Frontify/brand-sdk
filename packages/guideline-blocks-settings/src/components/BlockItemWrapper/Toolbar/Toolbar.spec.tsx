@@ -1,23 +1,21 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { render } from '@testing-library/react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
+import { getAppBridgeTestingPackage } from '../../../tests/helpers/getAppBridgeTestingPackage';
 
 import { Toolbar } from './Toolbar';
-
-/**
- * @vitest-environment happy-dom
- */
 
 const ATTACHMENTS_FLYOUT_ID = 'attachments-flyout-content';
 const MENU_FLYOUT_ID = 'menu-item';
 
 const MOCK_ASSET_FIELD_ID = 'attachment';
 
-describe('Toolbar', () => {
+describe('Toolbar', async () => {
+    const { getAppBridgeBlockStub } = await getAppBridgeTestingPackage();
+
     beforeAll(() => {
         vi.stubGlobal(
             'Worker',
