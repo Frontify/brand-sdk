@@ -7,7 +7,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
-import { MutliFlyoutContextProvider } from './context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
 import { DragPreviewContextProvider } from './context/DragPreviewContext';
 
@@ -52,7 +52,7 @@ describe('Toolbar', () => {
         });
 
         const ToolbarWithAttachments = () => (
-            <MutliFlyoutContextProvider
+            <MultiFlyoutContextProvider
                 openFlyoutIds={[DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID]}
                 setOpenFlyoutIds={vi.fn()}
             >
@@ -73,7 +73,7 @@ describe('Toolbar', () => {
                         attachments={{ isEnabled: true }}
                     />
                 </AttachmentsProvider>
-            </MutliFlyoutContextProvider>
+            </MultiFlyoutContextProvider>
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });
@@ -91,7 +91,7 @@ describe('Toolbar', () => {
         });
 
         const ToolbarWithAttachments = () => (
-            <MutliFlyoutContextProvider
+            <MultiFlyoutContextProvider
                 openFlyoutIds={[DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID]}
                 setOpenFlyoutIds={vi.fn()}
             >
@@ -114,7 +114,7 @@ describe('Toolbar', () => {
                         />
                     </AttachmentsProvider>
                 </DragPreviewContextProvider>
-            </MutliFlyoutContextProvider>
+            </MultiFlyoutContextProvider>
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });

@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback } from 'react';
-import { useMutliFlyoutContext } from '../context/MultiFlyoutContext';
+import { useMultiFlyoutContext } from '../context/MultiFlyoutContext';
 
 export const useMultiFlyoutState = (flyoutId: string) => {
-    const { openFlyoutIds, setOpenFlyoutIds } = useMutliFlyoutContext();
+    const { openFlyoutIds, setOpenFlyoutIds } = useMultiFlyoutContext();
 
     const onOpenChange = useCallback(
         (isFlyoutOpen: boolean) => {
