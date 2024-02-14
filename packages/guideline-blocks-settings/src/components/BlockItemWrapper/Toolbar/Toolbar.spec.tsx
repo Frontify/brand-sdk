@@ -7,9 +7,9 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
-import { MutliFlyoutContext } from './context/useMultiFlyoutContext';
+import { MutliFlyoutContextProvider } from './context/MultiFlyoutContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
-import { DragPreviewContext } from './context/DragPreviewContext';
+import { DragPreviewContextProvider } from './context/DragPreviewContext';
 
 /**
  * @vitest-environment happy-dom
@@ -52,11 +52,9 @@ describe('Toolbar', () => {
         });
 
         const ToolbarWithAttachments = () => (
-            <MutliFlyoutContext.Provider
-                value={{
-                    openFlyoutIds: [DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID],
-                    setOpenFlyoutIds: vi.fn(),
-                }}
+            <MutliFlyoutContextProvider
+                openFlyoutIds={[DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID]}
+                setOpenFlyoutIds={vi.fn()}
             >
                 <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
                     <Toolbar
@@ -75,7 +73,7 @@ describe('Toolbar', () => {
                         attachments={{ isEnabled: true }}
                     />
                 </AttachmentsProvider>
-            </MutliFlyoutContext.Provider>
+            </MutliFlyoutContextProvider>
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });
@@ -93,13 +91,11 @@ describe('Toolbar', () => {
         });
 
         const ToolbarWithAttachments = () => (
-            <MutliFlyoutContext.Provider
-                value={{
-                    openFlyoutIds: [DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID],
-                    setOpenFlyoutIds: vi.fn(),
-                }}
+            <MutliFlyoutContextProvider
+                openFlyoutIds={[DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID]}
+                setOpenFlyoutIds={vi.fn()}
             >
-                <DragPreviewContext.Provider value={true}>
+                <DragPreviewContextProvider isDragPreview>
                     <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
                         <Toolbar
                             items={[]}
@@ -117,8 +113,8 @@ describe('Toolbar', () => {
                             attachments={{ isEnabled: true }}
                         />
                     </AttachmentsProvider>
-                </DragPreviewContext.Provider>
-            </MutliFlyoutContext.Provider>
+                </DragPreviewContextProvider>
+            </MutliFlyoutContextProvider>
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });
