@@ -21,6 +21,7 @@ export const AttachmentsButtonTrigger = ({
         ])}
         {...triggerProps}
         ref={triggerRef}
+        data-test-id="attachments-button-trigger"
     >
         <IconPaperclip16 />
         {children}
