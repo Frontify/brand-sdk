@@ -51,8 +51,10 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
     });
 };
 
-export const compilePlatformApp = async ({ outputName, projectPath = '' }: CompilerOptions) => {
+export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {
     const getHash = (text) => createHash('sha256').update(text).digest('hex');
+    const appBridgeVersion = getAppBridgeVersion(projectPath);
+
     const htmlHashPlugin: PluginOption = {
         name: 'html-hash',
         enforce: 'post',
@@ -77,10 +79,51 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
         },
     };
 
-    return build({
+    const settings = await build({
+        plugins: [
+            react(),
+            viteExternalsPlugin({
+                react: 'React',
+                'react-dom': 'ReactDOM',
+            }),
+        ],
+        root: projectPath,
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
+        build: {
+            lib: {
+                entry: entryFile,
+                name: outputName,
+                formats: ['iife'],
+                fileName: () => 'index.js',
+            },
+            rollupOptions: {
+                external: ['react', 'react-dom'],
+                output: {
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                    },
+                    entryFileNames: 'settings.js',
+                    footer: `
+                        window.${outputName} = ${outputName};
+                        window.${outputName}.dependencies = window.${outputName}.packages || {};
+                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
+                    `,
+                },
+            },
+        },
+    });
+
+    const app = await build({
         plugins: [react(), htmlHashPlugin],
         root: projectPath,
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
         build: {
+            emptyOutDir: false,
             rollupOptions: {
                 output: {
                     assetFileNames: () => '[name][extname]',
@@ -90,4 +133,5 @@ export const compilePlatformApp = async ({ outputName, projectPath = '' }: Compi
             },
         },
     });
+    return { app, settings };
 };
