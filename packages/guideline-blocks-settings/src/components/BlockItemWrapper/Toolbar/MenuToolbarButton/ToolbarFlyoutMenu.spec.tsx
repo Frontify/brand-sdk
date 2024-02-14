@@ -4,7 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
 import { ToolbarFlyoutMenu } from './ToolbarFlyoutMenu';
-import { MutliFlyoutContextProvider } from '../context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 
 const MENU_ITEM_ID = 'menu-item';
 
@@ -18,7 +18,7 @@ describe('ToolbarFlyoutMenu', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getAllByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <ToolbarFlyoutMenu
                     items={[
                         [{ title: 'item-1', onClick: vi.fn(), icon: <IconAdobeCreativeCloud /> }],
@@ -26,7 +26,7 @@ describe('ToolbarFlyoutMenu', () => {
                     ]}
                     flyoutId={TEST_FLYOUT_ID}
                 />
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         expect(getAllByTestId(MENU_ITEM_ID)).toHaveLength(2);
@@ -37,7 +37,7 @@ describe('ToolbarFlyoutMenu', () => {
         const onClickStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <ToolbarFlyoutMenu
                     items={[
                         [
@@ -50,7 +50,7 @@ describe('ToolbarFlyoutMenu', () => {
                     ]}
                     flyoutId={TEST_FLYOUT_ID}
                 />
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         expect(getByTestId(MENU_ITEM_ID)).toBeVisible();

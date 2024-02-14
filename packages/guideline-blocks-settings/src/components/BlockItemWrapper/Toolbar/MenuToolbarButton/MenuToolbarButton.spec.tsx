@@ -4,7 +4,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
 import { MenuToolbarButton } from '.';
-import { MutliFlyoutContextProvider } from '../context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 
 const BUTTON_ID = 'block-item-wrapper-toolbar-flyout';
 const MENU_ITEM_ID = 'menu-item';
@@ -30,9 +30,9 @@ describe('MenuToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <MenuToolbarButton items={[]} flyoutId={TEST_FLYOUT_ID} />
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         await fireEvent.click(getByTestId(BUTTON_ID));
@@ -46,7 +46,7 @@ describe('MenuToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getAllByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <MenuToolbarButton
                     items={[
                         [{ title: 'item-1', onClick: vi.fn(), icon: <IconAdobeCreativeCloud /> }],
@@ -54,7 +54,7 @@ describe('MenuToolbarButton', () => {
                     ]}
                     flyoutId={TEST_FLYOUT_ID}
                 />
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         expect(getAllByTestId(MENU_ITEM_ID)).toHaveLength(2);
@@ -64,9 +64,9 @@ describe('MenuToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <MenuToolbarButton items={[]} tooltip={TEST_TOOLTIP} flyoutId={TEST_FLYOUT_ID} />
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         getByTestId(BUTTON_ID).focus();

@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsProvider } from '../../../../hooks/useAttachments';
 import { DragPreviewContextProvider } from '../context/DragPreviewContext';
-import { MutliFlyoutContextProvider } from '../context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 
 import { AttachmentsToolbarButton } from './AttachmentsToolbarButton';
 
@@ -40,13 +40,13 @@ describe('AttachmentsToolbarButton', () => {
     });
     it('should disable tooltip and hide flyout when item is in drag preview context', async () => {
         const { getByTestId, queryByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={vi.fn()}>
+            <MultiFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={vi.fn()}>
                 <DragPreviewContextProvider isDragPreview>
                     <AttachmentsProvider appBridge={STUB_WITH_THREE_ASSETS} assetId={ASSET_ID}>
                         <AttachmentsToolbarButton flyoutId={TEST_FLYOUT_ID} />
                     </AttachmentsProvider>
                 </DragPreviewContextProvider>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
@@ -62,13 +62,13 @@ describe('AttachmentsToolbarButton', () => {
     it('should open flyout onClick', async () => {
         const setOpenFlyoutIdsStub = vi.fn();
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <DragPreviewContextProvider isDragPreview>
                     <AttachmentsProvider appBridge={STUB_WITH_THREE_ASSETS} assetId={ASSET_ID}>
                         <AttachmentsToolbarButton flyoutId={TEST_FLYOUT_ID} />
                     </AttachmentsProvider>
                 </DragPreviewContextProvider>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         await fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));

@@ -3,16 +3,16 @@
 import { renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { useMultiFlyoutState } from './useMultiFlyoutState';
-import { MutliFlyoutContextProvider, MutliFlyoutContextType } from '../context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider, MultiFlyoutContextType } from '../context/MultiFlyoutContext';
 
 const FLYOUT_ID = 'flyout';
 
-const renderMultiFlyoutState = ({ openFlyoutIds, setOpenFlyoutIds }: MutliFlyoutContextType) =>
+const renderMultiFlyoutState = ({ openFlyoutIds, setOpenFlyoutIds }: MultiFlyoutContextType) =>
     renderHook(() => useMultiFlyoutState(FLYOUT_ID), {
         wrapper: ({ children }) => (
-            <MutliFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
+            <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
                 {children}
-            </MutliFlyoutContextProvider>
+            </MultiFlyoutContextProvider>
         ),
     });
 

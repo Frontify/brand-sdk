@@ -3,7 +3,7 @@
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { FlyoutToolbarButton } from './FlyoutToolbarButton';
-import { MutliFlyoutContextProvider } from '../context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
 import { DragPreviewContextProvider } from '../context/DragPreviewContext';
 
@@ -34,11 +34,11 @@ describe('FlyoutToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
                     Children
                 </FlyoutToolbarButton>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         await fireEvent.click(getByTestId(BUTTON_ID));
@@ -52,7 +52,7 @@ describe('FlyoutToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <FlyoutToolbarButton
                     flyoutId={TEST_FLYOUT_ID}
                     icon={<IconAdobeCreativeCloud />}
@@ -62,7 +62,7 @@ describe('FlyoutToolbarButton', () => {
                 >
                     <div data-test-id="content">Content</div>
                 </FlyoutToolbarButton>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         expect(getByTestId('content')).toBeVisible();
@@ -74,11 +74,11 @@ describe('FlyoutToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
                     Children
                 </FlyoutToolbarButton>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         getByTestId(BUTTON_ID).focus();
@@ -91,11 +91,11 @@ describe('FlyoutToolbarButton', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
                 <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
                     Children
                 </FlyoutToolbarButton>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         const icons = [...getByTestId(BUTTON_ID).querySelectorAll('svg')];
@@ -105,7 +105,7 @@ describe('FlyoutToolbarButton', () => {
 
     it('should disable tooltip and flyout when content is inside drag preview', async () => {
         const { getByTestId, queryByTestId } = render(
-            <MutliFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={vi.fn()}>
+            <MultiFlyoutContextProvider openFlyoutIds={[TEST_FLYOUT_ID]} setOpenFlyoutIds={vi.fn()}>
                 <DragPreviewContextProvider isDragPreview>
                     <FlyoutToolbarButton
                         flyoutId={TEST_FLYOUT_ID}
@@ -115,7 +115,7 @@ describe('FlyoutToolbarButton', () => {
                         <div data-test-id="content">Content</div>
                     </FlyoutToolbarButton>
                 </DragPreviewContextProvider>
-            </MutliFlyoutContextProvider>,
+            </MultiFlyoutContextProvider>,
         );
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
