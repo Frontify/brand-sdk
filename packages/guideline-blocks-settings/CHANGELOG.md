@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.32.1
+
+### Patch Changes
+
+- [#747](https://github.com/Frontify/brand-sdk/pull/747) [`447bf26`](https://github.com/Frontify/brand-sdk/commit/447bf26ad6816f354cc9de91f6451cf807458ffb) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump `tailwindcss` to 3.4.1
+
 ## 0.32.0
 
 ### Minor Changes

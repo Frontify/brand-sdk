@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.3.0
+
+### Minor Changes
+
+- [#730](https://github.com/Frontify/brand-sdk/pull/730) [`816751c`](https://github.com/Frontify/brand-sdk/commit/816751c66476dc85af09364344de23f8b5f68483) Thanks [@hochreutenerl](https://github.com/hochreutenerl)! - feat: adds `setAssetIdsByBlockAssetKey` to AppBridgeBlock
+
 ## 3.2.0
 
 ### Minor Changes
