@@ -7,14 +7,25 @@ type BaseToolbarButtonProps = {
     children: ReactNode;
     forceActiveStyle?: boolean;
     cursor?: 'pointer' | 'grab';
+    'data-test-id'?: string;
 } & HTMLAttributes<HTMLButtonElement>;
 
 export const BaseToolbarButton = forwardRef<HTMLButtonElement, BaseToolbarButtonProps>(
-    ({ onClick, children, forceActiveStyle, cursor = 'pointer', ...props }, ref) => (
+    (
+        {
+            onClick,
+            children,
+            forceActiveStyle,
+            cursor = 'pointer',
+            'data-test-id': dataTestId = 'base-toolbar-button',
+            ...props
+        },
+        ref,
+    ) => (
         <button
-            data-test-id="block-item-wrapper-toolbar-btn"
             onClick={onClick}
             className={getToolbarButtonClassNames(cursor, forceActiveStyle)}
+            data-test-id={dataTestId}
             {...props}
             ref={ref}
         >
