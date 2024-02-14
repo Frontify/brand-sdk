@@ -1,10 +1,17 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.2
+
+### Patch Changes
+
+- [#753](https://github.com/Frontify/brand-sdk/pull/753) [`50937f2`](https://github.com/Frontify/brand-sdk/commit/50937f2170f5ee1eab05726e141fc0e932f71865) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds `setAssetIdsByBlockAssetKey` to AppBridgeBlock
+
 ## 4.0.0-alpha.1
 
 ### Patch Changes
 
 - [#742](https://github.com/Frontify/brand-sdk/pull/742) [`5ea66a7`](https://github.com/Frontify/brand-sdk/commit/5ea66a79bac131f5b34f1a1bf60fbe81add6b17f) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add context.template to AppBridgeTheme
+
 ## 3.3.0
 
 ### Minor Changes
