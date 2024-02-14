@@ -6,8 +6,8 @@ import { joinClassNames } from '../../utilities';
 
 import { DEFAULT_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
 import { type BlockItemWrapperProps } from './types';
-import { DragPreviewContext } from './Toolbar/context/DragPreviewContext';
-import { MutliFlyoutContext } from './Toolbar/context/useMultiFlyoutContext';
+import { DragPreviewContextProvider } from './Toolbar/context/DragPreviewContext';
+import { MutliFlyoutContextProvider } from './Toolbar/context/useMultiFlyoutContext';
 
 export const BlockItemWrapper = ({
     children,
@@ -34,8 +34,8 @@ export const BlockItemWrapper = ({
     const shouldToolbarBeVisible = openFlyoutIds.length > 0 || shouldBeShown;
 
     return (
-        <DragPreviewContext.Provider value={isDragging}>
-            <MutliFlyoutContext.Provider value={{ openFlyoutIds, setOpenFlyoutIds }}>
+        <DragPreviewContextProvider isDragPreview={isDragging}>
+            <MutliFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
                 <div
                     ref={wrapperRef}
                     data-test-id="block-item-wrapper"
@@ -74,7 +74,7 @@ export const BlockItemWrapper = ({
                     </div>
                     {children}
                 </div>
-            </MutliFlyoutContext.Provider>
-        </DragPreviewContext.Provider>
+            </MutliFlyoutContextProvider>
+        </DragPreviewContextProvider>
     );
 };
