@@ -7,7 +7,7 @@ import { joinClassNames } from '../../utilities';
 import { DEFAULT_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
 import { type BlockItemWrapperProps } from './types';
 import { DragPreviewContextProvider } from './Toolbar/context/DragPreviewContext';
-import { MutliFlyoutContextProvider } from './Toolbar/context/MultiFlyoutContext';
+import { MultiFlyoutContextProvider } from './Toolbar/context/MultiFlyoutContext';
 
 export const BlockItemWrapper = ({
     children,
@@ -35,7 +35,7 @@ export const BlockItemWrapper = ({
 
     return (
         <DragPreviewContextProvider isDragPreview={isDragging}>
-            <MutliFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
+            <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
                 <div
                     ref={wrapperRef}
                     data-test-id="block-item-wrapper"
@@ -74,7 +74,7 @@ export const BlockItemWrapper = ({
                     </div>
                     {children}
                 </div>
-            </MutliFlyoutContextProvider>
+            </MultiFlyoutContextProvider>
         </DragPreviewContextProvider>
     );
 };
