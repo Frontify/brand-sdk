@@ -24,7 +24,9 @@ describe('FlyoutToolbarButton', () => {
                 screen
             </FlyoutToolbarButton>,
         );
+
         await fireEvent.click(getByTestId(BUTTON_ID));
+
         expect(console.error).toBeCalled();
     });
 
@@ -38,7 +40,9 @@ describe('FlyoutToolbarButton', () => {
                 </FlyoutToolbarButton>
             </MutliFlyoutContextProvider>,
         );
+
         await fireEvent.click(getByTestId(BUTTON_ID));
+
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
         const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
@@ -78,6 +82,7 @@ describe('FlyoutToolbarButton', () => {
         );
 
         getByTestId(BUTTON_ID).focus();
+
         await waitFor(() => expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0'));
         expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TEST_TOOLTIP);
     });
@@ -114,7 +119,9 @@ describe('FlyoutToolbarButton', () => {
         );
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
+
         getByTestId(TOOLTIP_ID).focus();
+
         await waitFor(() => {
             expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
             expect(queryByTestId('content')).toBeNull();

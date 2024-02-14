@@ -38,7 +38,9 @@ describe('DragHandleToolbarButton', () => {
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
         expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TOOLTIP_CONTENT);
+
         getByTestId(TOOLBAR_BUTTON_ID).focus();
+
         await waitFor(() => {
             expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0');
         });
@@ -56,6 +58,7 @@ describe('DragHandleToolbarButton', () => {
         );
 
         await fireEvent.drag(getByTestId(TOOLBAR_BUTTON_ID));
+
         expect(onDragStub).toHaveBeenCalledOnce();
     });
 

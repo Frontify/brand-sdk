@@ -11,6 +11,7 @@ describe('AttachmentsToolbarButtonTrigger', () => {
     afterEach(() => {
         cleanup();
     });
+
     it('should apply active styles when flyout is open', async () => {
         const { getByTestId } = render(
             <AttachmentsToolbarButtonTrigger
@@ -37,6 +38,7 @@ describe('AttachmentsToolbarButtonTrigger', () => {
             </AttachmentsToolbarButtonTrigger>,
         );
         await fireEvent.pointerUp(getByTestId(BUTTON_ID));
+
         expect(onPointerUpStub).toHaveBeenCalledOnce();
     });
 });

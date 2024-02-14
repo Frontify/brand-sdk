@@ -50,7 +50,9 @@ describe('AttachmentsToolbarButton', () => {
         );
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
+
         getByTestId(TOOLBAR_BUTTON_ID).focus();
+
         await waitFor(() => {
             expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
             expect(queryByTestId(FLYOUT_CONTENT_ID)).toBeNull();
@@ -70,6 +72,7 @@ describe('AttachmentsToolbarButton', () => {
         );
 
         await fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));
+
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledOnce();
         const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
@@ -83,7 +86,9 @@ describe('AttachmentsToolbarButton', () => {
         );
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
+
         getByTestId(TOOLTIP_ID).focus();
+
         await waitFor(() => {
             expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0');
         });

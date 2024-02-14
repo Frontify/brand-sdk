@@ -24,7 +24,9 @@ describe('ToolbarButton', () => {
         );
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
+
         getByTestId(TOOLTIP_ID).focus();
+
         await waitFor(() => {
             expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
         });
@@ -37,7 +39,9 @@ describe('ToolbarButton', () => {
 
         expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
         expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TOOLTIP_CONTENT);
+
         getByTestId(TOOLTIP_ID).focus();
+
         await waitFor(() => {
             expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0');
         });
@@ -50,6 +54,7 @@ describe('ToolbarButton', () => {
         );
 
         await fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));
+
         expect(onClickStub).toHaveBeenCalledOnce();
     });
 

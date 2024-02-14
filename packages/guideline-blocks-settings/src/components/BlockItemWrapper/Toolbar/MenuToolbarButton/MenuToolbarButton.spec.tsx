@@ -20,7 +20,9 @@ describe('MenuToolbarButton', () => {
     it('should log error if not inside a flyout provider when opening', async () => {
         vi.spyOn(console, 'error');
         const { getByTestId } = render(<MenuToolbarButton items={[]} />);
+
         await fireEvent.click(getByTestId(BUTTON_ID));
+
         expect(console.error).toBeCalled();
     });
 
@@ -32,7 +34,9 @@ describe('MenuToolbarButton', () => {
                 <MenuToolbarButton items={[]} flyoutId={TEST_FLYOUT_ID} />
             </MutliFlyoutContextProvider>,
         );
+
         await fireEvent.click(getByTestId(BUTTON_ID));
+
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
         const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
@@ -66,6 +70,7 @@ describe('MenuToolbarButton', () => {
         );
 
         getByTestId(BUTTON_ID).focus();
+
         await waitFor(() => expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0'));
         expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TEST_TOOLTIP);
     });
