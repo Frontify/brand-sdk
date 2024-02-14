@@ -9,13 +9,18 @@ export const DEFAULT_MENU_BUTTON_ID = 'menu';
 export type MenuToolbarButtonProps = {
     items: ToolbarFlyoutMenuItem[][];
     flyoutId?: string;
+    tooltip?: string;
 };
 
-export const MenuToolbarButton = ({ items, flyoutId = DEFAULT_MENU_BUTTON_ID }: MenuToolbarButtonProps) => {
+export const MenuToolbarButton = ({
+    items,
+    flyoutId = DEFAULT_MENU_BUTTON_ID,
+    tooltip = 'Options',
+}: MenuToolbarButtonProps) => {
     const id = useMemoizedId(flyoutId);
 
     return (
-        <FlyoutToolbarButton icon={<IconDotsHorizontal16 />} tooltip="Options" flyoutId={id}>
+        <FlyoutToolbarButton icon={<IconDotsHorizontal16 />} tooltip={tooltip} flyoutId={id}>
             <ToolbarFlyoutMenu items={items} flyoutId={id} />
         </FlyoutToolbarButton>
     );

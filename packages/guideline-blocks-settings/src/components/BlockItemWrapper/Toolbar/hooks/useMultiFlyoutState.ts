@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useCallback } from 'react';
-import { useMutliFlyoutContext } from '../context/useMultiFlyoutContext';
+import { useMutliFlyoutContext } from '../context/MultiFlyoutContext';
 
 export const useMultiFlyoutState = (flyoutId: string) => {
     const { openFlyoutIds, setOpenFlyoutIds } = useMutliFlyoutContext();

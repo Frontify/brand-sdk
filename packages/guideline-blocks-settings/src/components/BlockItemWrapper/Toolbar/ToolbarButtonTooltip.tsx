@@ -20,5 +20,6 @@ export const ToolbarButtonTooltip = ({ open, content, children, disabled }: Tool
         position={TooltipPosition.Top}
         content={<div>{content}</div>}
         triggerElement={children}
+        data-test-id="toolbar-button-tooltip"
     />
 );

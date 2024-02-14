@@ -2,7 +2,7 @@
 
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo } from 'react';
 
-type MutliFlyoutContextType = {
+export type MutliFlyoutContextType = {
     openFlyoutIds: string[];
     setOpenFlyoutIds: Dispatch<SetStateAction<string[]>>;
 };

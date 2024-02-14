@@ -5,8 +5,18 @@ import { type AttachmentsTriggerProps } from '../../../Attachments/types';
 
 import { BaseToolbarButton } from '../BaseToolbarButton';
 
-export const AttachmentsToolbarButtonTrigger = ({ children, isFlyoutOpen }: AttachmentsTriggerProps) => (
-    <BaseToolbarButton forceActiveStyle={isFlyoutOpen}>
+export const AttachmentsToolbarButtonTrigger = ({
+    children,
+    isFlyoutOpen,
+    triggerProps,
+    triggerRef,
+}: AttachmentsTriggerProps) => (
+    <BaseToolbarButton
+        forceActiveStyle={isFlyoutOpen}
+        data-test-id="attachments-toolbar-button-trigger"
+        {...triggerProps}
+        ref={triggerRef}
+    >
         <IconPaperclip16 />
         {children}
         <IconCaretDown12 />
