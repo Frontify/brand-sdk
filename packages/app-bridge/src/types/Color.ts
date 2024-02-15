@@ -144,7 +144,6 @@ export type ColorCreate = {
 };
 
 export type ColorPatch = {
-    language?: Nullable<string>;
     name?: Nullable<string>;
     nameCss?: Nullable<string>;
     sort?: number;
