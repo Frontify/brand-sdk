@@ -20,8 +20,11 @@ export const MenuToolbarButton = ({
     const id = useMemoizedId(flyoutId);
 
     return (
-        <FlyoutToolbarButton icon={<IconDotsHorizontal16 />} tooltip={tooltip} flyoutId={id}>
-            <ToolbarFlyoutMenu items={items} flyoutId={id} />
-        </FlyoutToolbarButton>
+        <FlyoutToolbarButton
+            icon={<IconDotsHorizontal16 />}
+            tooltip={tooltip}
+            flyoutId={id}
+            content={<ToolbarFlyoutMenu items={items} flyoutId={id} />}
+        />
     );
 };
