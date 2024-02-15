@@ -20,7 +20,7 @@ return (
 
 The above component should now be written as:
 
-```
+```jsx
 // Inside your component
 const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
 
