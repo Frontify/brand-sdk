@@ -8,7 +8,7 @@ import { BaseToolbarButton } from '../BaseToolbarButton';
 import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 export type FlyoutToolbarButtonProps = {
-    children: ReactNode;
+    content: ReactNode;
     icon: ReactNode;
     tooltip: ReactNode;
     flyoutId: string;
@@ -17,7 +17,7 @@ export type FlyoutToolbarButtonProps = {
 };
 
 export const FlyoutToolbarButton = ({
-    children,
+    content,
     icon,
     tooltip,
     flyoutId,
@@ -53,7 +53,7 @@ export const FlyoutToolbarButton = ({
                         </BaseToolbarButton>
                     )}
                 >
-                    {children}
+                    {content}
                 </Flyout>
             </div>
         </ToolbarButtonTooltip>
