@@ -3,4 +3,12 @@
     <script src="/app.js" type="module"></script>
     <link href="/app.css" rel="stylesheet" />
 </head>
-<div>test</div>
+<div>
+    <script type='module'>
+        import module from '/app.js';
+
+        console.log(module.app);
+    </script>
+</div>
+
+

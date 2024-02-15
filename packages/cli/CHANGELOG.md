@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.1
+
+### Patch Changes
+
+- [#732](https://github.com/Frontify/brand-sdk/pull/732) [`8395479`](https://github.com/Frontify/brand-sdk/commit/83954793533e63a67ee02cb94f24095cd4119e36) Thanks [@julianiff](https://github.com/julianiff)! - feat: adjust serve and compile command
+
 ## 5.6.0
 
 ### Minor Changes

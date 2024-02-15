@@ -19,7 +19,7 @@ importers:
         version: 5.0.6
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
-        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.5)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
       '@vitejs/plugin-react':
         specifier: ^4.2.0
         version: 4.2.0(vite@4.5.0)
@@ -39,8 +39,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       tailwindcss:
-        specifier: ^3.3.5
-        version: 3.3.5(ts-node@10.9.1)
+        specifier: ^3.4.1
+        version: 3.4.1(ts-node@10.9.1)
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.18.11)(typescript@5.3.2)
@@ -252,7 +252,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
-        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.5)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -342,8 +342,8 @@ importers:
         specifier: 17.0.1
         version: 17.0.1
       tailwindcss:
-        specifier: ^3.3.5
-        version: 3.3.5(ts-node@10.9.1)
+        specifier: ^3.4.1
+        version: 3.4.1(ts-node@10.9.1)
       typescript:
         specifier: ^5.3.2
         version: 5.3.2
@@ -407,7 +407,7 @@ importers:
     dependencies:
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
-        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.5)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.3
@@ -1761,11 +1761,11 @@ packages:
     resolution: {integrity: sha512-jVSWvrO2KQ0+enLksjLrvQ512j5LUgycLVzbDiwgIEhEkfne5RuJBjLOa1cWiGpzIj1458Br7cVzCykYFLeJ4g==}
     dependencies:
       postcss: 8.4.31
-      tailwindcss: 3.3.5(ts-node@10.9.1)
+      tailwindcss: 3.4.1(ts-node@10.9.1)
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.3.5)(ts-node@10.9.1)(zustand@3.7.2):
+  /@frontify/fondue@12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2):
     resolution: {integrity: sha512-GoPFZPY8L9xRCYes92fFUX2knD/cxviD2AD56H3ykQfr+lsmuYgyPQ+1TEkem2PmnvwXk+GdytSU0r/7v1FX3Q==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -1813,7 +1813,7 @@ packages:
       '@react-stately/tree': 3.3.4(react@18.2.0)
       '@react-types/dialog': 3.4.5(react@18.2.0)
       '@react-types/shared': 3.16.0(react@18.2.0)
-      '@tailwindcss/forms': 0.5.3(tailwindcss@3.3.5)
+      '@tailwindcss/forms': 0.5.3(tailwindcss@3.4.1)
       '@udecode/plate': 21.5.0(@babel/core@7.23.3)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dnd-html5-backend@15.1.3)(react-dnd@16.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(slate-react@0.98.3)(slate@0.94.1)(styled-components@5.3.6)
       '@udecode/zustood': 1.1.3(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@3.7.2)
       '@xstate/immer': 0.3.1(immer@9.0.12)(xstate@4.28.1)
@@ -3906,13 +3906,13 @@ packages:
     dependencies:
       tslib: 2.6.1
 
-  /@tailwindcss/forms@0.5.3(tailwindcss@3.3.5):
+  /@tailwindcss/forms@0.5.3(tailwindcss@3.4.1):
     resolution: {integrity: sha512-y5mb86JUoiUgBjY/o6FJSFZSEttfb3Q5gllE4xoKjAAD+vBrnIhE4dViwUuow3va8mpH4s9jyUbUbrRGoRdc2Q==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.3.5(ts-node@10.9.1)
+      tailwindcss: 3.4.1(ts-node@10.9.1)
 
   /@testing-library/dom@9.0.0:
     resolution: {integrity: sha512-+/TLgKNFsYUshOY/zXsQOk+PlFQK+eyJ9T13IDVNJEi+M+Un7xlJK+FZKkbGSnf0+7E1G6PlDhkSYQ/GFiruBQ==}
@@ -11433,7 +11433,6 @@ packages:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: true
 
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -11922,27 +11921,27 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /postcss-import@15.1.0(postcss@8.4.31):
+  /postcss-import@15.1.0(postcss@8.4.33):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       postcss: ^8.0.0
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.2
 
-  /postcss-js@4.0.1(postcss@8.4.31):
+  /postcss-js@4.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==}
     engines: {node: ^12 || ^14 || >= 16}
     peerDependencies:
       postcss: ^8.4.21
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.31
+      postcss: 8.4.33
 
-  /postcss-load-config@4.0.1(postcss@8.4.31)(ts-node@10.9.1):
+  /postcss-load-config@4.0.1(postcss@8.4.33)(ts-node@10.9.1):
     resolution: {integrity: sha512-vEJIc8RdiBRu3oRAI0ymerOn+7rPuMvRXslTvZUKZonDHFIczxztIyJ1urxM1x9JXEikvpWWTUUqal5j/8QgvA==}
     engines: {node: '>= 14'}
     peerDependencies:
@@ -11955,17 +11954,17 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.1.0
-      postcss: 8.4.31
+      postcss: 8.4.33
       ts-node: 10.9.1(@types/node@18.18.11)(typescript@5.3.2)
       yaml: 2.3.2
 
-  /postcss-nested@6.0.1(postcss@8.4.31):
+  /postcss-nested@6.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
       postcss-selector-parser: 6.0.11
 
   /postcss-selector-parser@6.0.11:
@@ -11993,7 +11992,6 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: true
 
   /preferred-pm@3.0.3:
     resolution: {integrity: sha512-+wZgbxNES/KlJs9q40F/1sfOd/j7f1O9JaHcW5Dsn3aUUOZg3L2bjpVUcKV2jvtElYfoTuQiNeMfQJ4kwUAhCQ==}
@@ -13275,8 +13273,8 @@ packages:
   /tabbable@6.1.2:
     resolution: {integrity: sha512-qCN98uP7i9z0fIS4amQ5zbGBOq+OSigYeGvPy7NDk8Y9yncqDZ9pRPgfsc2PJIVM9RrJj7GIfuRgmjoUU9zTHQ==}
 
-  /tailwindcss@3.3.5(ts-node@10.9.1):
-    resolution: {integrity: sha512-5SEZU4J7pxZgSkv7FP1zY8i2TIAOooNZ1e/OGtxIEv6GltpoiXUqWvLy89+a10qYTB1N5Ifkuw9lqQkN9sscvA==}
+  /tailwindcss@3.4.1(ts-node@10.9.1):
+    resolution: {integrity: sha512-qAYmXRfk3ENzuPBakNK0SRrUDipP8NQnEY6772uDhflcQz5EhRdD7JNZxyrFHVQNCwULPBn6FNPp9brpO7ctcA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -13294,11 +13292,11 @@ packages:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
-      postcss: 8.4.31
-      postcss-import: 15.1.0(postcss@8.4.31)
-      postcss-js: 4.0.1(postcss@8.4.31)
-      postcss-load-config: 4.0.1(postcss@8.4.31)(ts-node@10.9.1)
-      postcss-nested: 6.0.1(postcss@8.4.31)
+      postcss: 8.4.33
+      postcss-import: 15.1.0(postcss@8.4.33)
+      postcss-js: 4.0.1(postcss@8.4.33)
+      postcss-load-config: 4.0.1(postcss@8.4.33)(ts-node@10.9.1)
+      postcss-nested: 6.0.1(postcss@8.4.33)
       postcss-selector-parser: 6.0.11
       resolve: 1.22.2
       sucrase: 3.32.0

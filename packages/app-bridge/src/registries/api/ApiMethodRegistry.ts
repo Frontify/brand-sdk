@@ -8,6 +8,7 @@ import type {
     GetAssetResourceInformationPayload,
     GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
+import { SetAssetIdsByBlockAssetKeyPayload, SetAssetIdsByBlockAssetKeyResponse } from './SetAssetIdsByBlockAssetKey';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {
@@ -19,5 +20,9 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetResourceInformation: {
         payload: GetAssetResourceInformationPayload;
         response: GetAssetResourceInformationResponse;
+    };
+    setAssetIdsByBlockAssetKey: {
+        payload: SetAssetIdsByBlockAssetKeyPayload;
+        response: SetAssetIdsByBlockAssetKeyResponse;
     };
 }>;
