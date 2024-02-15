@@ -146,7 +146,7 @@ type CmykColor = {
     cyan: Nullable<number>;
     magenta: Nullable<number>;
     yellow: Nullable<number>;
-    key: Nullable<number>;
+    black: Nullable<number>;
     coated: Nullable<string>;
     uncoated: Nullable<string>;
     newspaper: Nullable<string>;
