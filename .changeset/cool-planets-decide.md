@@ -6,7 +6,7 @@
 
 Migration Example:
 
-```
+```jsx
 // Inside your component
 const [flyoutIsOpen, setFlyoutIsOpen] = useState(false);
 const [attachmentsIsOpen, setAttachmentsIsOpen] = useState(false);
