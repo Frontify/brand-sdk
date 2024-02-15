@@ -95,8 +95,7 @@ export type ColorApiPatch = Partial<{
 export type Color = {
     id: number;
     sort: number;
-    color: ColorAsset;
-};
+} & ColorAsset;
 
 // This type should be evolved to Asset in the long run
 export type ColorAsset = {
@@ -107,33 +106,18 @@ export type ColorAsset = {
 export type ColorRevision = {
     nameCss: Nullable<string>;
     hex: Nullable<string>;
-    red: Nullable<number>;
-    green: Nullable<number>;
-    blue: Nullable<number>;
-    alpha: Nullable<number>;
     hue: number;
     saturation: number;
     lightness: Nullable<number>;
-    c: Nullable<number>;
-    m: Nullable<number>;
-    y: Nullable<number>;
-    k: Nullable<number>;
-    pantone: Nullable<string>;
     ral: Nullable<string>;
     oracal: Nullable<string>;
-    pantoneCoated: Nullable<string>;
-    pantoneUncoated: Nullable<string>;
-    cmykCoated: Nullable<string>;
-    cmykUncoated: Nullable<string>;
-    cmykNewspaper: Nullable<string>;
     ncs: Nullable<string>;
-    pantoneCp: Nullable<string>;
-    pantonePlastics: Nullable<string>;
-    pantoneTextile: Nullable<string>;
     hks: Nullable<string>;
     threeM: Nullable<string>;
     lab: Nullable<string>;
-};
+} & Cmyk &
+    Rgba &
+    Pantone;
 
 export type ColorCreate = {
     colorPaletteId: number;
@@ -143,31 +127,33 @@ export type ColorCreate = {
     alpha: number;
 };
 
-export type ColorPatch = {
+export type ColorPatch = Partial<Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'>> & {
     name?: Nullable<string>;
-    nameCss?: Nullable<string>;
     sort?: number;
-    red?: Nullable<number>;
-    green?: Nullable<number>;
-    blue?: Nullable<number>;
-    alpha?: Nullable<number>;
-    c?: Nullable<number>;
-    m?: Nullable<number>;
-    y?: Nullable<number>;
-    k?: Nullable<number>;
-    pantone?: Nullable<string>;
-    ral?: Nullable<string>;
-    oracal?: Nullable<string>;
-    pantoneCoated?: Nullable<string>;
-    pantoneUncoated?: Nullable<string>;
-    cmykCoated?: Nullable<string>;
-    cmykUncoated?: Nullable<string>;
-    cmykNewspaper?: Nullable<string>;
-    ncs?: Nullable<string>;
-    pantoneCp?: Nullable<string>;
-    pantonePlastics?: Nullable<string>;
-    pantoneTextile?: Nullable<string>;
-    hks?: Nullable<string>;
-    threeM?: Nullable<string>;
-    lab?: Nullable<string>;
+};
+
+type Rgba = {
+    red: Nullable<number>;
+    green: Nullable<number>;
+    blue: Nullable<number>;
+    alpha: Nullable<number>;
+};
+
+type Cmyk = {
+    c: Nullable<number>;
+    m: Nullable<number>;
+    y: Nullable<number>;
+    k: Nullable<number>;
+    cmykCoated: Nullable<string>;
+    cmykUncoated: Nullable<string>;
+    cmykNewspaper: Nullable<string>;
+};
+
+type Pantone = {
+    pantone: Nullable<string>;
+    pantoneCoated: Nullable<string>;
+    pantoneUncoated: Nullable<string>;
+    pantoneCp: Nullable<string>;
+    pantonePlastics: Nullable<string>;
+    pantoneTextile: Nullable<string>;
 };
