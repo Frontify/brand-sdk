@@ -1,9 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AppBridgeBlock } from '@frontify/app-bridge';
-import { Plugin, PluginProps } from '@frontify/fondue';
-import { PlatePlugin, createPluginFactory } from '@udecode/plate-core';
-import { RangeBeforeOptions } from '@udecode/slate-utils';
+import { PlatePlugin, Plugin, PluginProps, RangeBeforeOptions, createPluginFactory } from '@frontify/fondue';
 import type { CSSProperties } from 'react';
 import { isValidUrl } from '../../../Link/utils/url';
 import { ButtonMarkupElement } from './ButtonMarkupElement';

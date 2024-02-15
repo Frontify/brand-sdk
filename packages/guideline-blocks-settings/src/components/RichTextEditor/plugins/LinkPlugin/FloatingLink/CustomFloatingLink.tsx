@@ -1,13 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { UseVirtualFloatingOptions, flip, offset } from '@udecode/plate-floating';
 import {
     LinkFloatingToolbarState,
+    UseVirtualFloatingOptions,
+    flip,
+    offset,
     useFloatingLinkEdit,
     useFloatingLinkEditState,
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
-} from '@udecode/plate-link';
+} from '@frontify/fondue';
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
 

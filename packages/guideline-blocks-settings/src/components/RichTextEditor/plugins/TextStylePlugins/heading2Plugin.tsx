@@ -1,16 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlatePlugin, createPluginFactory } from '@udecode/plate-core';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
+    PlatePlugin,
     Plugin,
     PluginProps,
     TextStyleRenderElementProps,
     alignmentClassnames,
+    createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import type { CSSProperties } from 'react';
 import { BlockStyles, TextStyles } from '../styles';
 const ID = 'textstyle-heading2-plugin';
 

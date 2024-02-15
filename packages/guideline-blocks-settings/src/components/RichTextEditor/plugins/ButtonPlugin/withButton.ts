@@ -1,10 +1,25 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { EText, Value, getAboveNode, insertNodes, isCollapsed, isEndPoint, isStartPoint, select } from '@udecode/slate';
-import { getNextNodeStartPoint, getPreviousNodeEndPoint } from '@udecode/slate-utils';
-import { PlateEditor, WithOverride, getPluginType, mockPlugin } from '@udecode/plate-core';
-import { withRemoveEmptyNodes } from '@udecode/plate-normalizers';
-import { Path, Point, Range } from 'slate';
+import {
+    EText,
+    Path,
+    PlateEditor,
+    Point,
+    Range,
+    Value,
+    WithOverride,
+    getAboveNode,
+    getNextNodeStartPoint,
+    getPluginType,
+    getPreviousNodeEndPoint,
+    insertNodes,
+    isCollapsed,
+    isEndPoint,
+    isStartPoint,
+    mockPlugin,
+    select,
+    withRemoveEmptyNodes,
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON } from './createButtonPlugin';
 
 /**

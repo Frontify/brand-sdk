@@ -1,22 +1,23 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlatePlugin, createPluginFactory } from '@udecode/plate-core';
-import { createParagraphPlugin as createPlateParagraphPlugin } from '@udecode/plate-paragraph';
-
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
+    PlatePlugin,
     Plugin,
     PluginProps,
     TextStyleRenderElementProps,
     alignmentClassnames,
+    createParagraphPlugin as createPlateParagraphPlugin,
+    createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+
 import { BlockStyles, TextStyles } from '../styles';
+import { CSSProperties } from 'react';
 
 export class ParagraphPlugin extends Plugin {
-    public styles: CSSProperties = {};
+    public styles = {};
     constructor({ styles = BlockStyles.p, ...props }: PluginProps = {}) {
         super(TextStyles.p, {
             markupElement: new ParagraphMarkupElement(),

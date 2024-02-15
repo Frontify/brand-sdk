@@ -2,9 +2,8 @@
 
 import { EditModal } from './EditButtonModal/EditModal';
 import { InsertButtonModal } from './InsertButtonModal/InsertButtonModal';
-import { UseVirtualFloatingOptions, flip, offset } from '@udecode/plate-floating';
+import { UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue';
 import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
-import { useEditorRef } from '@udecode/plate-core';
 
 const floatingOptions: UseVirtualFloatingOptions = {
     placement: 'bottom-start',

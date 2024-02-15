@@ -1,12 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PluginButtonProps, getHotkeyByPlatform, getTooltip } from '@frontify/fondue';
-import { getPluginType } from '@udecode/plate-core';
-import { isRangeInSameBlock } from '@udecode/slate-utils';
+import {
+    PluginButtonProps,
+    getHotkeyByPlatform,
+    getPluginType,
+    getTooltip,
+    isRangeInSameBlock,
+    someNode,
+    useEditorState,
+    useEventPlateId,
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 import { ButtonToolbarButton } from './ButtonToolbarButton';
-import { useEditorState, useEventPlateId } from '@udecode/plate-core';
-import { someNode } from '@udecode/slate';
 
 export const ButtonButton = ({ editorId, id }: PluginButtonProps) => {
     const editor = useEditorState(useEventPlateId(editorId));

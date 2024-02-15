@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { MouseEvent } from 'React';
-import { useLinkOpenButtonState } from '@udecode/plate-link';
-import { IconPen16, IconTrashBin16 } from '@frontify/fondue';
+import { IconPen16, IconTrashBin16, useLinkOpenButtonState } from '@frontify/fondue';
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
 
 type EditModalProps = {

@@ -1,8 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconPen16, IconTrashBin16 } from '@frontify/fondue';
-import { useEditorRef } from '@udecode/plate-core';
-import { focusEditor } from '@udecode/slate-react';
+import { IconPen16, IconTrashBin16, focusEditor, useEditorRef } from '@frontify/fondue';
 
 import { floatingButtonSelectors } from '../floatingButtonStore';
 import { unwrapButton } from '../../../transforms';

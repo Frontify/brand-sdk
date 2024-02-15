@@ -2,9 +2,13 @@
 
 import { CSSProperties } from 'react';
 import { AppBridgeBlock } from '@frontify/app-bridge';
-import { createLinkPlugin as createPlateLinkPlugin } from '@udecode/plate-link';
-import { PlatePlugin, createPluginFactory } from '@udecode/plate-core';
-import { Plugin, PluginProps } from '@frontify/fondue';
+import {
+    PlatePlugin,
+    Plugin,
+    PluginProps,
+    createLinkPlugin as createPlateLinkPlugin,
+    createPluginFactory,
+} from '@frontify/fondue';
 
 import { CustomFloatingLink } from './FloatingLink/CustomFloatingLink';
 import { LINK_PLUGIN } from './id';

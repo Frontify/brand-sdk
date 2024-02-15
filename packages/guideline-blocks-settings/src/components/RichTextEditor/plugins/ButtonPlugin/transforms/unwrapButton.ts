@@ -1,15 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
+    PlateEditor,
     UnwrapNodesOptions,
     Value,
     getAboveNode,
+    getPluginType,
     isElement,
     splitNodes,
     unwrapNodes,
     withoutNormalizing,
-} from '@udecode/slate';
-import { PlateEditor, getPluginType } from '@udecode/plate-core';
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 
 /**

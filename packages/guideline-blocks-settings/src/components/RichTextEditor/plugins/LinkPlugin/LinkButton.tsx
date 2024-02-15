@@ -1,9 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEditorState, useEventPlateId } from '@udecode/plate-core';
-import { isRangeInSameBlock } from '@udecode/slate-utils';
+import {
+    PluginButtonProps,
+    getHotkeyByPlatform,
+    getTooltip,
+    isRangeInSameBlock,
+    useEditorState,
+    useEventPlateId,
+} from '@frontify/fondue';
 import { LinkToolbarButton } from './LinkToolbarButton';
-import { PluginButtonProps, getHotkeyByPlatform, getTooltip } from '@frontify/fondue';
 
 export const LinkButton = ({ id, editorId }: PluginButtonProps) => {
     const editor = useEditorState(useEventPlateId(editorId));

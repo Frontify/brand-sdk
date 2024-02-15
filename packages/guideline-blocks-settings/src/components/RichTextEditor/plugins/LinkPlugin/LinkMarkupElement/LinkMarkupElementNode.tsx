@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { TLinkElement as TPlateLinkElement } from '@udecode/plate-link';
+import {
+    type PlateRenderElementProps,
+    TLinkElement as TPlateLinkElement,
+    useRichTextEditorContext,
+} from '@frontify/fondue';
 import { LINK_PLUGIN } from '../id';
-import { PlateRenderElementProps } from '@udecode/plate-core';
-import { useRichTextEditorContext } from '@frontify/fondue';
 
 export type TLinkElement = TPlateLinkElement & {
     chosenLink?: {

@@ -1,8 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Value, getEditorString, someNode } from '@udecode/slate';
-import { PlateEditor, getPluginType } from '@udecode/plate-core';
-import { isRangeAcrossBlocks } from '@udecode/slate-utils';
+import { PlateEditor, Value, getEditorString, getPluginType, isRangeAcrossBlocks, someNode } from '@frontify/fondue';
 import { floatingButtonActions, floatingButtonSelectors } from '../components/FloatingButton/floatingButtonStore';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 

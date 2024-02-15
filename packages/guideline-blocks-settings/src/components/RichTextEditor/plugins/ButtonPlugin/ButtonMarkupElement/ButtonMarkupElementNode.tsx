@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateRenderElementProps } from '@udecode/plate-core';
-import { Value } from '@udecode/slate';
+import { type PlateRenderElementProps, Value } from '@frontify/fondue';
 import { CSSProperties, HTMLAttributeAnchorTarget, ReactElement, ReactNode, useState } from 'react';
 import { TButtonElement } from '../types';
 import { BlockButtonStyles } from '../utils';

@@ -2,6 +2,8 @@
 
 import {
     InsertNodesOptions,
+    Path,
+    PlateEditor,
     TNode,
     TNodeEntry,
     UnwrapNodesOptions,
@@ -12,14 +14,14 @@ import {
     getEditorString,
     getNodeLeaf,
     getNodeProps,
+    getPluginOptions,
+    getPluginType,
+    isDefined,
     isExpanded,
     removeNodes,
     setNodes,
-} from '@udecode/slate';
-import { isDefined } from '@udecode/utils';
-import { PlateEditor, getPluginOptions, getPluginType } from '@udecode/plate-core';
+} from '@frontify/fondue';
 
-import { Path } from 'slate';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
 import { RichTextButtonStyle, TButtonElement } from '../types';
 import { CreateButtonNodeOptions } from '../utils/index';

@@ -1,11 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Dispatch, MouseEvent, Reducer, useEffect, useReducer } from 'react';
-import { ELEMENT_LINK, floatingLinkActions, floatingLinkSelectors, submitFloatingLink } from '@udecode/plate-link';
-import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate-core';
+import {
+    CheckboxState,
+    ELEMENT_LINK,
+    floatingLinkActions,
+    floatingLinkSelectors,
+    getPluginOptions,
+    submitFloatingLink,
+    useEditorRef,
+    useHotkeys,
+} from '@frontify/fondue';
 
 import { InsertModalDispatchType, InsertModalStateProps } from './types';
-import { CheckboxState } from '@frontify/fondue';
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import { getLegacyUrl, getUrl } from '../../utils';
 import { isValidUrlOrEmpty } from '../../../../../Link';

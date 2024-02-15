@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { Dispatch, Reducer, useEffect, useReducer } from 'react';
-import { getPluginOptions, useEditorRef, useHotkeys } from '@udecode/plate-core';
+import { CheckboxState, getPluginOptions, useEditorRef, useHotkeys } from '@frontify/fondue';
 import { InsertModalDispatchType, InsertModalStateProps } from './types';
 import { floatingButtonActions, floatingButtonSelectors } from '../floatingButtonStore';
 import { ELEMENT_BUTTON } from '../../../createButtonPlugin';
@@ -9,7 +9,6 @@ import { submitFloatingButton } from '../../../transforms/submitFloatingButton';
 import { RichTextButtonStyle } from '../../../types';
 import { getButtonStyle } from '../../../utils/getButtonStyle';
 import { AppBridgeBlock } from '@frontify/app-bridge';
-import { CheckboxState } from '@frontify/fondue';
 import { addHttps } from '../../../../../../../helpers';
 import { isValidUrlOrEmpty } from '../../../../../../Link/utils/url';
 

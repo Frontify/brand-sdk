@@ -1,11 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useLinkToolbarButton, useLinkToolbarButtonState } from '@udecode/plate-link';
-import { focusEditor } from '@udecode/slate-react';
+import {
+    IconLink16,
+    IconStylingWrapper,
+    ToolbarButton,
+    focusEditor,
+    useEditorRef,
+    useLinkToolbarButton,
+    useLinkToolbarButtonState,
+} from '@frontify/fondue';
 
 import { ReactNode, forwardRef } from 'react';
-import { IconLink16, IconStylingWrapper, ToolbarButton } from '@frontify/fondue';
-import { useEditorRef } from '@udecode/plate-core';
 
 export const LinkToolbarButton = forwardRef<HTMLButtonElement, { disabled: boolean; tooltip: ReactNode }>(
     (rootProps, ref) => {

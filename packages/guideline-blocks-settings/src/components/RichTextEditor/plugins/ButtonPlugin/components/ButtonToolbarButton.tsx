@@ -1,13 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconButton16 } from '@frontify/fondue';
-import { useEditorRef } from '@udecode/plate-core';
-import { focusEditor } from '@udecode/slate-react';
+import { IconButton16, IconStylingWrapper, ToolbarButton, focusEditor, useEditorRef } from '@frontify/fondue';
 
 import { triggerFloatingButton } from '../utils';
 
 import { ReactNode, forwardRef } from 'react';
-import { IconStylingWrapper, ToolbarButton } from '@frontify/fondue';
 
 export const ButtonToolbarButton = forwardRef<
     HTMLButtonElement,

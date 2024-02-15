@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Value, findNode, getEditorString } from '@udecode/slate';
-import { PlateEditor, getPluginType } from '@udecode/plate-core';
+import { PlateEditor, Value, findNode, getEditorString, getPluginType } from '@frontify/fondue';
 import { ELEMENT_BUTTON, TButtonElement } from '..';
 import { floatingButtonActions } from '../components/FloatingButton/floatingButtonStore';
 

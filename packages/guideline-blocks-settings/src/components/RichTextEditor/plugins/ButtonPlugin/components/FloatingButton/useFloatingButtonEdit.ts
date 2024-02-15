@@ -1,9 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getAboveNode, getEndPoint, getStartPoint, someNode } from '@udecode/slate';
-import { getDefaultBoundingClientRect, getRangeBoundingClientRect } from '@udecode/plate-floating';
-import { useComposedRef } from '@udecode/react-utils';
-import { getPluginOptions, getPluginType, useEditorRef, useEditorVersion, useHotkeys } from '@udecode/plate-core';
+import {
+    getAboveNode,
+    getDefaultBoundingClientRect,
+    getEndPoint,
+    getPluginOptions,
+    getPluginType,
+    getRangeBoundingClientRect,
+    getStartPoint,
+    someNode,
+    useComposedRef,
+    useEditorRef,
+    useEditorVersion,
+    useHotkeys,
+} from '@frontify/fondue';
 import { useCallback, useEffect } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
