@@ -117,9 +117,9 @@ export type ColorRevision = {
     hks: Nullable<string>;
     threeM: Nullable<string>;
     lab: Nullable<string>;
-    cmyk: Nullable<CmykColor>;
-    rgba: Nullable<RgbaColor>;
-    pantone: Nullable<PantoneColor>;
+    cmyk: CmykColor;
+    rgba: RgbaColor;
+    pantone: PantoneColor;
 };
 
 export type ColorCreate = {
