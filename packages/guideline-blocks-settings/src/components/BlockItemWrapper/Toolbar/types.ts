@@ -10,8 +10,9 @@ export type ToolbarProps = {
     attachments: { isEnabled: boolean };
 };
 
-export type ToolbarItem =
-    | ({ type: 'dragHandle' } & DragHandleToolbarButtonProps)
-    | ({ type: 'button' } & ToolbarButtonProps)
-    | ({ type: 'flyout' } & FlyoutToolbarButtonProps)
-    | ({ type: 'menu' } & MenuToolbarButtonProps);
+export type DragHandleToolbarItem = { type: 'dragHandle' } & DragHandleToolbarButtonProps;
+export type ButtonToolbarItem = { type: 'button' } & ToolbarButtonProps;
+export type FlyoutToolbarItem = { type: 'flyout' } & FlyoutToolbarButtonProps;
+export type MenuToolbarItem = { type: 'menu' } & MenuToolbarButtonProps;
+
+export type ToolbarItem = DragHandleToolbarItem | ButtonToolbarItem | FlyoutToolbarItem | MenuToolbarItem;
