@@ -25,6 +25,7 @@ import {
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 import type { Asset, ThemeTemplate } from '../types';
+import {AppBridgeBlock} from "../AppBridgeBlock";
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -378,9 +379,52 @@ export const getAppBridgeThemeStub = ({
         openAssetChooser: stub<Parameters<AppBridgeTheme['openAssetChooser']>>().callsFake((callback) => {
             openAssetChooser(callback);
         }),
+        context: stub<Parameters<AppBridgeTheme['context']>>().callsFake((args) => {
+            if (args === undefined) {
+                return {
+                    get: () => [portalId],
+                };
+            } else {
+                switch (args) {
+                    case 'portalId':
+                        return {
+                            get: () => portalId,
+                        };
+                    default:
+                        return {
+                            get: () => {
+                                throw new Error(`Unknown context key: ${args}`);
+                            },
+                        };
+                }
+            }
+        }),
+        state: stub<Parameters<AppBridgeTheme['state']>>().callsFake((args) => {
+            if (args === undefined) {
+                return {
+                    get: () => [themeSettings],
+                    set: () => undefined,
+                };
+            } else {
+                switch (args) {
+                    case 'settings':
+                        return {
+                            get: () => themeSettings,
+                            set: () => undefined,
+                        };
+                    default:
+                        return {
+                            get: () => {
+                                throw new Error(`Unknown context key: ${args}`);
+                            },
+                            set: () => {
+                                throw new Error(`Unknown context key: ${args}`);
+                            }
+                        };
+                }
+            }
+        }),
         api: stub<Parameters<AppBridgeTheme['api']>>().resolves(),
-        state: stub<Parameters<AppBridgeTheme['state']>>().resolves(),
-        context: stub<Parameters<AppBridgeTheme['context']>>().resolves(),
         subscribe: stub<Parameters<AppBridgeTheme['subscribe']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeTheme['dispatch']>>().resolves(),
     };
