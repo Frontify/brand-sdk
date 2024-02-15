@@ -42,7 +42,7 @@ import type {
 import { PrivacySettings } from './types/PrivacySettings';
 
 export type BlockApiMethod = ApiMethodNameValidator<
-    Pick<ApiMethodRegistry, 'getAssetBulkDownloadToken' | 'getCurrentUser'>
+    Pick<ApiMethodRegistry, 'getAssetBulkDownloadToken' | 'getCurrentUser' | 'setAssetIdsByBlockAssetKey'>
 >;
 
 export type BlockCommand = CommandNameValidator<
