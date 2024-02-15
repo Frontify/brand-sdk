@@ -7,6 +7,9 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
+import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
+import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
+import { DragPreviewContextProvider } from './context/DragPreviewContext';
 
 /**
  * @vitest-environment happy-dom
@@ -31,25 +34,13 @@ describe('Toolbar', () => {
 
     it('should not throw error if toolbar does not have attachments enabled', () => {
         expect(() =>
-            render(
-                <Toolbar
-                    items={[]}
-                    flyoutMenu={{ items: [], isOpen: false, onOpenChange: vi.fn() }}
-                    attachments={{ isEnabled: false, isOpen: false, onOpenChange: vi.fn() }}
-                />,
-            ),
+            render(<Toolbar items={[]} flyoutMenu={{ items: [] }} attachments={{ isEnabled: false }} />),
         ).not.toThrowError();
     });
 
     it('should throw error if toolbar does have attachments enabled without provider', () => {
         expect(() =>
-            render(
-                <Toolbar
-                    items={[]}
-                    flyoutMenu={{ items: [], isOpen: false, onOpenChange: vi.fn() }}
-                    attachments={{ isEnabled: true, isOpen: false, onOpenChange: vi.fn() }}
-                />,
-            ),
+            render(<Toolbar items={[]} flyoutMenu={{ items: [] }} attachments={{ isEnabled: true }} />),
         ).toThrowError();
     });
 
@@ -61,26 +52,28 @@ describe('Toolbar', () => {
         });
 
         const ToolbarWithAttachments = () => (
-            <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
-                <Toolbar
-                    items={[]}
-                    flyoutMenu={{
-                        items: [
-                            [
-                                {
-                                    title: 'Replace with upload',
-                                    icon: <div></div>,
-                                    onClick: vi.fn(),
-                                },
+            <MultiFlyoutContextProvider
+                openFlyoutIds={[DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID]}
+                setOpenFlyoutIds={vi.fn()}
+            >
+                <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
+                    <Toolbar
+                        items={[]}
+                        flyoutMenu={{
+                            items: [
+                                [
+                                    {
+                                        title: 'Replace with upload',
+                                        icon: <div></div>,
+                                        onClick: vi.fn(),
+                                    },
+                                ],
                             ],
-                        ],
-                        isOpen: true,
-                        onOpenChange: vi.fn(),
-                    }}
-                    attachments={{ isEnabled: true, isOpen: true, onOpenChange: vi.fn() }}
-                    isDragging={false}
-                />
-            </AttachmentsProvider>
+                        }}
+                        attachments={{ isEnabled: true }}
+                    />
+                </AttachmentsProvider>
+            </MultiFlyoutContextProvider>
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });
@@ -98,26 +91,30 @@ describe('Toolbar', () => {
         });
 
         const ToolbarWithAttachments = () => (
-            <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
-                <Toolbar
-                    items={[]}
-                    flyoutMenu={{
-                        items: [
-                            [
-                                {
-                                    title: 'Replace with upload',
-                                    icon: <div></div>,
-                                    onClick: vi.fn(),
-                                },
-                            ],
-                        ],
-                        isOpen: true,
-                        onOpenChange: vi.fn(),
-                    }}
-                    attachments={{ isEnabled: true, isOpen: true, onOpenChange: vi.fn() }}
-                    isDragging
-                />
-            </AttachmentsProvider>
+            <MultiFlyoutContextProvider
+                openFlyoutIds={[DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID]}
+                setOpenFlyoutIds={vi.fn()}
+            >
+                <DragPreviewContextProvider isDragPreview>
+                    <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
+                        <Toolbar
+                            items={[]}
+                            flyoutMenu={{
+                                items: [
+                                    [
+                                        {
+                                            title: 'Replace with upload',
+                                            icon: <div></div>,
+                                            onClick: vi.fn(),
+                                        },
+                                    ],
+                                ],
+                            }}
+                            attachments={{ isEnabled: true }}
+                        />
+                    </AttachmentsProvider>
+                </DragPreviewContextProvider>
+            </MultiFlyoutContextProvider>
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });
