@@ -33,15 +33,11 @@ describe('Toolbar', () => {
     });
 
     it('should not throw error if toolbar does not have attachments enabled', () => {
-        expect(() =>
-            render(<Toolbar items={[]} flyoutMenu={{ items: [] }} attachments={{ isEnabled: false }} />),
-        ).not.toThrowError();
+        expect(() => render(<Toolbar items={[]} attachments={{ isEnabled: false }} />)).not.toThrowError();
     });
 
     it('should throw error if toolbar does have attachments enabled without provider', () => {
-        expect(() =>
-            render(<Toolbar items={[]} flyoutMenu={{ items: [] }} attachments={{ isEnabled: true }} />),
-        ).toThrowError();
+        expect(() => render(<Toolbar items={[]} attachments={{ isEnabled: true }} />)).toThrowError();
     });
 
     it('should open flyouts if not dragging', async () => {
@@ -58,18 +54,20 @@ describe('Toolbar', () => {
             >
                 <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
                     <Toolbar
-                        items={[]}
-                        flyoutMenu={{
-                            items: [
-                                [
-                                    {
-                                        title: 'Replace with upload',
-                                        icon: <div></div>,
-                                        onClick: vi.fn(),
-                                    },
+                        items={[
+                            {
+                                type: 'menu',
+                                items: [
+                                    [
+                                        {
+                                            title: 'Replace with upload',
+                                            icon: <div></div>,
+                                            onClick: vi.fn(),
+                                        },
+                                    ],
                                 ],
-                            ],
-                        }}
+                            },
+                        ]}
                         attachments={{ isEnabled: true }}
                     />
                 </AttachmentsProvider>
@@ -98,18 +96,20 @@ describe('Toolbar', () => {
                 <DragPreviewContextProvider isDragPreview>
                     <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
                         <Toolbar
-                            items={[]}
-                            flyoutMenu={{
-                                items: [
-                                    [
-                                        {
-                                            title: 'Replace with upload',
-                                            icon: <div></div>,
-                                            onClick: vi.fn(),
-                                        },
+                            items={[
+                                {
+                                    type: 'menu',
+                                    items: [
+                                        [
+                                            {
+                                                title: 'Replace with upload',
+                                                icon: <div></div>,
+                                                onClick: vi.fn(),
+                                            },
+                                        ],
                                     ],
-                                ],
-                            }}
+                                },
+                            ]}
                             attachments={{ isEnabled: true }}
                         />
                     </AttachmentsProvider>
