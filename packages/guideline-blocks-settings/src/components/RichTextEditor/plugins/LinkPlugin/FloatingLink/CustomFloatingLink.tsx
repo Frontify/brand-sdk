@@ -55,13 +55,13 @@ export const CustomFloatingLink = () => {
     return (
         <>
             {insertState.isOpen && !editState.isOpen && (
-                <div ref={insertRef} {...insertProps}>
+                <div ref={insertRef} {...insertProps} style={{ ...insertProps.style, zIndex: 1000 }}>
                     {input}
                 </div>
             )}
 
             {editState.isOpen && (
-                <div ref={editRef} {...editProps}>
+                <div ref={editRef} {...editProps} style={{ ...editProps.style, zIndex: 1000 }}>
                     {editContent}
                 </div>
             )}
