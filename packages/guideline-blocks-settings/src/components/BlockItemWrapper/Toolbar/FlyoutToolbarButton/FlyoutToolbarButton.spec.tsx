@@ -20,9 +20,12 @@ describe('FlyoutToolbarButton', () => {
     it('should log error if not inside a flyout provider when opening', async () => {
         vi.spyOn(console, 'error');
         const { getByTestId } = render(
-            <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
-                screen
-            </FlyoutToolbarButton>,
+            <FlyoutToolbarButton
+                flyoutId={TEST_FLYOUT_ID}
+                icon={<IconAdobeCreativeCloud />}
+                tooltip={TEST_TOOLTIP}
+                content="screen"
+            />,
         );
 
         await fireEvent.click(getByTestId(BUTTON_ID));
@@ -35,9 +38,12 @@ describe('FlyoutToolbarButton', () => {
 
         const { getByTestId } = render(
             <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
-                <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
-                    Children
-                </FlyoutToolbarButton>
+                <FlyoutToolbarButton
+                    flyoutId={TEST_FLYOUT_ID}
+                    icon={<IconAdobeCreativeCloud />}
+                    tooltip={TEST_TOOLTIP}
+                    content="children"
+                />
             </MultiFlyoutContextProvider>,
         );
 
@@ -59,9 +65,8 @@ describe('FlyoutToolbarButton', () => {
                     tooltip={TEST_TOOLTIP}
                     flyoutFooter={<div data-test-id="footer">Footer</div>}
                     flyoutHeader={<div data-test-id="header">Header</div>}
-                >
-                    <div data-test-id="content">Content</div>
-                </FlyoutToolbarButton>
+                    content={<div data-test-id="content">Content</div>}
+                />
             </MultiFlyoutContextProvider>,
         );
 
@@ -75,9 +80,12 @@ describe('FlyoutToolbarButton', () => {
 
         const { getByTestId } = render(
             <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
-                <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
-                    Children
-                </FlyoutToolbarButton>
+                <FlyoutToolbarButton
+                    flyoutId={TEST_FLYOUT_ID}
+                    icon={<IconAdobeCreativeCloud />}
+                    tooltip={TEST_TOOLTIP}
+                    content="children"
+                />
             </MultiFlyoutContextProvider>,
         );
 
@@ -92,9 +100,12 @@ describe('FlyoutToolbarButton', () => {
 
         const { getByTestId } = render(
             <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
-                <FlyoutToolbarButton flyoutId={TEST_FLYOUT_ID} icon={<IconAdobeCreativeCloud />} tooltip={TEST_TOOLTIP}>
-                    Children
-                </FlyoutToolbarButton>
+                <FlyoutToolbarButton
+                    flyoutId={TEST_FLYOUT_ID}
+                    icon={<IconAdobeCreativeCloud />}
+                    tooltip={TEST_TOOLTIP}
+                    content="content"
+                />
             </MultiFlyoutContextProvider>,
         );
 
@@ -111,9 +122,8 @@ describe('FlyoutToolbarButton', () => {
                         flyoutId={TEST_FLYOUT_ID}
                         icon={<IconAdobeCreativeCloud />}
                         tooltip={TEST_TOOLTIP}
-                    >
-                        <div data-test-id="content">Content</div>
-                    </FlyoutToolbarButton>
+                        content={<div data-test-id="content">Content</div>}
+                    />
                 </DragPreviewContextProvider>
             </MultiFlyoutContextProvider>,
         );
