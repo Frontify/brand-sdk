@@ -28,7 +28,7 @@ export const DragHandleToolbarButton = ({
         >
             <BaseToolbarButton
                 ref={setActivatorNodeRef}
-                data-test-id="block-item-wrapper-toolbar-btn"
+                data-test-id="drag-handle-toolbar-button"
                 forceActiveStyle={isDragPreview}
                 cursor="grab"
                 {...draggableProps}
