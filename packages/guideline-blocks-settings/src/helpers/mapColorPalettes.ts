@@ -16,14 +16,12 @@ type V3Color = {
 
 type V4Color = {
     id: number;
-    color: {
-        title: Nullable<string>;
-        revision: {
-            red: Nullable<number>;
-            green: Nullable<number>;
-            blue: Nullable<number>;
-            alpha: Nullable<number>;
-        };
+    title: Nullable<string>;
+    revision: {
+        red: Nullable<number>;
+        green: Nullable<number>;
+        blue: Nullable<number>;
+        alpha: Nullable<number>;
     };
 };
 
@@ -41,12 +39,12 @@ export const mapAppBridgeColorPaletteToFonduePalette = (colorPalette: ColorPalet
 };
 
 const isV4Color = (color: Color): color is V4Color => {
-    return (color as V4Color).color !== undefined;
+    return (color as V4Color).revision !== undefined;
 };
 
 const mapColor = (color: Color) => {
     if (isV4Color(color)) {
-        const { title, revision } = color.color;
+        const { title, revision } = color;
         return {
             alpha: revision.alpha ? revision.alpha / 255 : 1,
             red: revision.red ?? 0,
