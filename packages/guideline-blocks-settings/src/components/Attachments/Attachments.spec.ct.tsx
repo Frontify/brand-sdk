@@ -6,7 +6,7 @@ import { Attachments as AttachmentsComponent } from './Attachments';
 import { AttachmentsProps } from './types';
 import { SinonStub } from 'sinon';
 
-const FlyoutButtonSelector = '[data-test-id="attachments-flyout-button"]';
+const FlyoutButtonSelector = '[data-test-id="attachments-button-trigger"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';
 const ActionBarSelector = '[data-test-id="attachments-actionbar"]';
 const DragHandleSelector = '[data-test-id="attachments-actionbar"] > button';

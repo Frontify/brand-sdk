@@ -26,6 +26,7 @@ describe('useAttachments', async () => {
         const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
             blockId: 2,
             blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
+            editorState: true,
         });
         const { result } = renderHook(() => useAttachments(STUB_WITH_THREE_ASSETS, MOCK_SETTINGS_ID));
 
