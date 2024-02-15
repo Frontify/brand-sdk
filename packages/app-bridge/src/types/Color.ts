@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { PartialDeep } from 'type-fest';
+
 export type ColorApi = {
     id: number;
     creator: number;
@@ -128,7 +130,7 @@ export type ColorCreate = {
     alpha: number;
 };
 
-export type ColorPatch = Partial<Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'>> & {
+export type ColorPatch = PartialDeep<Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'>> & {
     name?: Nullable<string>;
     sort?: number;
 };
