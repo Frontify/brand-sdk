@@ -115,9 +115,9 @@ export type ColorRevision = {
     hks: Nullable<string>;
     threeM: Nullable<string>;
     lab: Nullable<string>;
-    cmyk: Nullable<Cmyk>;
-    rgba: Nullable<Rgba>;
-    pantone: Nullable<Pantone>;
+    cmyk: Nullable<CmykColor>;
+    rgba: Nullable<RgbaColor>;
+    pantone: Nullable<PantoneColor>;
 };
 
 export type ColorCreate = {
@@ -133,14 +133,14 @@ export type ColorPatch = Partial<Omit<ColorRevision, 'hex' | 'hue' | 'saturation
     sort?: number;
 };
 
-type Rgba = {
+type RgbaColor = {
     red: Nullable<number>;
     green: Nullable<number>;
     blue: Nullable<number>;
     alpha: Nullable<number>;
 };
 
-type Cmyk = {
+type CmykColor = {
     cyan: Nullable<number>;
     magenta: Nullable<number>;
     yellow: Nullable<number>;
@@ -150,7 +150,7 @@ type Cmyk = {
     newspaper: Nullable<string>;
 };
 
-type Pantone = {
+type PantoneColor = {
     code: Nullable<string>;
     coated: Nullable<string>;
     uncoated: Nullable<string>;
