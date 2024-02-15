@@ -115,9 +115,10 @@ export type ColorRevision = {
     hks: Nullable<string>;
     threeM: Nullable<string>;
     lab: Nullable<string>;
-} & Cmyk &
-    Rgba &
-    Pantone;
+    cmyk: Nullable<Cmyk>;
+    rgba: Nullable<Rgba>;
+    pantone: Nullable<Pantone>;
+};
 
 export type ColorCreate = {
     colorPaletteId: number;
@@ -140,20 +141,20 @@ type Rgba = {
 };
 
 type Cmyk = {
-    c: Nullable<number>;
-    m: Nullable<number>;
-    y: Nullable<number>;
-    k: Nullable<number>;
-    cmykCoated: Nullable<string>;
-    cmykUncoated: Nullable<string>;
-    cmykNewspaper: Nullable<string>;
+    cyan: Nullable<number>;
+    magenta: Nullable<number>;
+    yellow: Nullable<number>;
+    key: Nullable<number>;
+    coated: Nullable<string>;
+    uncoated: Nullable<string>;
+    newspaper: Nullable<string>;
 };
 
 type Pantone = {
-    pantone: Nullable<string>;
-    pantoneCoated: Nullable<string>;
-    pantoneUncoated: Nullable<string>;
-    pantoneCp: Nullable<string>;
-    pantonePlastics: Nullable<string>;
-    pantoneTextile: Nullable<string>;
+    code: Nullable<string>;
+    coated: Nullable<string>;
+    uncoated: Nullable<string>;
+    cp: Nullable<string>;
+    plastics: Nullable<string>;
+    textile: Nullable<string>;
 };
