@@ -18,10 +18,12 @@ type V4Color = {
     id: number;
     title: Nullable<string>;
     revision: {
-        red: Nullable<number>;
-        green: Nullable<number>;
-        blue: Nullable<number>;
-        alpha: Nullable<number>;
+        rgba: {
+            red: Nullable<number>;
+            green: Nullable<number>;
+            blue: Nullable<number>;
+            alpha: Nullable<number>;
+        };
     };
 };
 
@@ -46,10 +48,10 @@ const mapColor = (color: Color) => {
     if (isV4Color(color)) {
         const { title, revision } = color;
         return {
-            alpha: revision.alpha ? revision.alpha / 255 : 1,
-            red: revision.red ?? 0,
-            green: revision.green ?? 0,
-            blue: revision.blue ?? 0,
+            alpha: revision.rgba.alpha ? revision.rgba.alpha / 255 : 1,
+            red: revision.rgba.red ?? 0,
+            green: revision.rgba.green ?? 0,
+            blue: revision.rgba.blue ?? 0,
             name: title ?? '',
         };
     } else {
