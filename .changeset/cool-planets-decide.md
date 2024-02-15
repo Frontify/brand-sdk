@@ -22,7 +22,7 @@ The above component should now be written as:
 
 ```
 // Inside your component
-const [openFlyoutIds, setOpenFlyoutIds] = useState(false);
+const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
 
 return(
     <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
