@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import {
     DndContext,
     DragEndEvent,
@@ -159,11 +159,15 @@ export const Attachments = ({
                         hug={false}
                         fitContent
                         legacyFooter={false}
-                        trigger={
-                            <TriggerComponent isFlyoutOpen={isFlyoutOpen}>
+                        trigger={(triggerProps, triggerRef) => (
+                            <TriggerComponent
+                                isFlyoutOpen={isFlyoutOpen}
+                                triggerProps={triggerProps}
+                                triggerRef={triggerRef as MutableRefObject<HTMLButtonElement>}
+                            >
                                 <div>{items.length > 0 ? items.length : 'Add'}</div>
                             </TriggerComponent>
-                        }
+                        )}
                     >
                         <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
                             {internalItems.length > 0 && (

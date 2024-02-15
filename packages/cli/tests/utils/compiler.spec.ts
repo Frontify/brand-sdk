@@ -41,21 +41,27 @@ describe('Compiler utils', async () => {
     });
 
     describe('compile PlatformApp', () => {
+        beforeEach(() => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            global.window = {};
+        });
         const testHash = 'mocked hash';
 
         test('should provide a valid build with a index.html', async () => {
-            const outputNameTest = 'test-output';
+            const outputNameTest = 'index';
 
             const result = (await compilePlatformApp({
                 projectPath: rootPath,
-                entryFile: '',
+                entryFile: pathToIndex,
                 outputName: outputNameTest,
-            })) as unknown as { output: { fileName: string }[] };
+            })) as unknown as { app: { output: { fileName: string }[] }; settings: { output: { fileName: string }[] } };
 
             expect(createHash).toHaveBeenCalledWith('sha256');
-            expect(result.output[0].fileName).toBe(`${outputNameTest}.${testHash}.js`);
-            expect(result.output[1].fileName).toBe(`${outputNameTest}.${testHash}.css`);
-            expect(result.output[2].fileName).toBe(`${outputNameTest}.${testHash}.html`);
+            expect(result.app.output[0].fileName).toBe(`${outputNameTest}.${testHash}.js`);
+            expect(result.app.output[1].fileName).toBe(`${outputNameTest}.${testHash}.css`);
+            expect(result.app.output[2].fileName).toBe(`${outputNameTest}.${testHash}.html`);
+            expect(result.settings[0].output[0].fileName).toBe('settings.js');
         });
     });
 });

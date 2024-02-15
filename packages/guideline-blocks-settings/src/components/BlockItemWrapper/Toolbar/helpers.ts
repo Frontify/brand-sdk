@@ -25,7 +25,7 @@ export const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActi
         classNames.push(
             'hover:tw-bg-box-neutral-hover active:tw-bg-box-neutral-pressed',
             'tw-text-text-weak hover:tw-text-box-neutral-inverse-hover active:tw-text-box-neutral-inverse-pressed',
-            cursor === 'grab' ? 'tw-cursor-grab active:tw-cursor-grabbing' : 'tw-cursor-pointer',
+            cursor === 'grab' ? '!tw-cursor-grab active:tw-cursor-grabbing' : 'tw-cursor-pointer',
         );
     }
 

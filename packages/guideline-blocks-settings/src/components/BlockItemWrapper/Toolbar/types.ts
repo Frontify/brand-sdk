@@ -1,38 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type MenuItemStyle } from '@frontify/fondue';
+import { type ToolbarButtonProps } from './ToolbarButton';
+import { type ToolbarFlyoutMenuItem } from './MenuToolbarButton/ToolbarFlyoutMenu';
+import { DragHandleToolbarButtonProps } from '.';
 
 export type ToolbarProps = {
     items: ToolbarItem[];
-    flyoutMenu: ToolbarFlyoutState & { items: FlyoutToolbarItem[][] };
-    attachments: ToolbarFlyoutState & { isEnabled: boolean };
-    isDragging?: boolean;
+    flyoutMenu: { items: ToolbarFlyoutMenuItem[][] };
+    attachments: { isEnabled: boolean };
 };
 
-export type ToolbarFlyoutState = {
-    isOpen: boolean;
-    onOpenChange: (isOpen: boolean) => void;
-};
+export type DraghandleToolbarItem = DragHandleToolbarButtonProps;
 
-type BaseToolbarItem = {
-    icon: JSX.Element;
-    tooltip?: string;
-};
+export type ButtonToolbarItem = ToolbarButtonProps;
 
-type DraghandleToolbarItem = BaseToolbarItem & {
-    draggableProps: Record<string, unknown>;
-    setActivatorNodeRef?: (node: HTMLElement | null) => void;
-};
-
-type ButtonToolbarItem = BaseToolbarItem & {
-    onClick: () => void;
-};
+export type FlyoutToolbarItem = ToolbarFlyoutMenuItem;
 
 export type ToolbarItem = DraghandleToolbarItem | ButtonToolbarItem;
-
-export type FlyoutToolbarItem = {
-    title: string;
-    onClick: () => void;
-    icon: JSX.Element;
-    style?: MenuItemStyle;
-};
