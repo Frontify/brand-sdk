@@ -131,8 +131,8 @@ export type ColorCreate = {
 };
 
 export type ColorPatch = PartialDeep<Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'>> & {
-    name?: Nullable<string>;
-    sort?: number;
+    title: Nullable<string>;
+    sort: number;
 };
 
 type RgbaColor = {
