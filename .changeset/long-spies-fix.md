@@ -2,4 +2,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-Typo fix on fontInput
+fix: typo on fontInput `aligmentChoiceValues` to `alignmentChoiceValues `
