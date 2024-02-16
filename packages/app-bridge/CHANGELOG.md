@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.3
+
+### Patch Changes
+
+- [#734](https://github.com/Frontify/brand-sdk/pull/734) [`029dd26`](https://github.com/Frontify/brand-sdk/commit/029dd26b26734539e80af86bcaa49d2caf9a7771) Thanks [@ragi96](https://github.com/ragi96)! - feat: adjust the color type to have a revision
+
 ## 4.0.0-alpha.2
 
 ### Patch Changes
