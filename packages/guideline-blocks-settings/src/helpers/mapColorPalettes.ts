@@ -3,8 +3,6 @@
 import { ColorPalette } from '@frontify/app-bridge';
 import { Palette } from '@frontify/fondue';
 
-type Nullable<T> = T | null;
-
 type V3Color = {
     id: number;
     name: Nullable<string>;
@@ -41,7 +39,7 @@ export const mapAppBridgeColorPaletteToFonduePalette = (colorPalette: ColorPalet
 };
 
 const isV4Color = (color: Color): color is V4Color => {
-    return (color as V4Color).revision !== undefined;
+    return 'revision' in color;
 };
 
 const mapColor = (color: Color) => {
@@ -54,13 +52,12 @@ const mapColor = (color: Color) => {
             blue: revision.rgba.blue ?? 0,
             name: title ?? '',
         };
-    } else {
-        return {
-            alpha: color.alpha ? color.alpha / 255 : 1,
-            red: color.red ?? 0,
-            green: color.green ?? 0,
-            blue: color.blue ?? 0,
-            name: color.name ?? '',
-        };
     }
+    return {
+        alpha: color.alpha ? color.alpha / 255 : 1,
+        red: color.red ?? 0,
+        green: color.green ?? 0,
+        blue: color.blue ?? 0,
+        name: color.name ?? '',
+    };
 };
