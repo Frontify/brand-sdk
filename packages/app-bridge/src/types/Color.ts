@@ -130,10 +130,12 @@ export type ColorCreate = {
     alpha: number;
 };
 
-export type ColorPatch = PartialDeep<Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'>> & {
-    title: Nullable<string>;
-    sort: number;
-};
+export type ColorPatch = PartialDeep<
+    Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'> & {
+        title: Nullable<string>;
+        sort: number;
+    }
+>;
 
 type RgbaColor = {
     red: Nullable<number>;
