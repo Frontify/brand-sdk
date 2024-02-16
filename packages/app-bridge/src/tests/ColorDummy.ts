@@ -146,7 +146,7 @@ export class ColorCreateDummy {
 export class ColorPatchDummy {
     static red(): ColorPatch {
         return {
-            name: 'Red',
+            title: 'Red',
             sort: 1,
             nameCss: 'red',
             ral: null,
