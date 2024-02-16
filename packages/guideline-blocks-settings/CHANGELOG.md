@@ -1,5 +1,45 @@
 # @frontify/guideline-blocks-settings
 
+## 0.32.2
+
+### Patch Changes
+
+- [#749](https://github.com/Frontify/brand-sdk/pull/749) [`5393e3a`](https://github.com/Frontify/brand-sdk/commit/5393e3aed9822bb00521a22b1cc75a62fafb4a59) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - refactor (Toolbar): split Toolbar into smaller subcomponents. `ToolbarFlyoutState` type has been removed, as well as `flyoutMenu.isOpen`, `flyoutMenu.onOpenChange`, `attachments.isOpen`, `attachments.onOpenChange` props that could be passed to the `Toolbar` compnent. To control the state of open `Flyouts` the `Toolbar` must instead be wrapped in a `MultiFlyoutContextProvider`.
+
+  Migration Example:
+
+  ```jsx
+  // Inside your component
+  const [flyoutIsOpen, setFlyoutIsOpen] = useState(false);
+  const [attachmentsIsOpen, setAttachmentsIsOpen] = useState(false);
+
+  return (
+    <Toolbar
+      flyoutMenu={{ isOpen: flyoutIsOpen, onOpenChange: setFlyoutIsOpen }}
+      attachments={{
+        isOpen: attachmentsIsOpen,
+        onOpenChange: setAttachmentsIsOpen,
+      }}
+    />
+  );
+  ```
+
+  The above component should now be written as:
+
+  ```jsx
+  // Inside your component
+  const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
+
+  return(
+      <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
+          <Toolbar />
+      <MultiFlyoutContextProvider>)
+  ```
+
+- [#757](https://github.com/Frontify/brand-sdk/pull/757) [`07f2dd3`](https://github.com/Frontify/brand-sdk/commit/07f2dd356663f678b8912c9bf669834c515f43f7) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): allow sorting
+
+- [#744](https://github.com/Frontify/brand-sdk/pull/744) [`7aad48f`](https://github.com/Frontify/brand-sdk/commit/7aad48f022aab38577cf0233c108b4997587c939) Thanks [@ragi96](https://github.com/ragi96)! - feat: add support for the new color type of app-bridge v4
+
 ## 0.32.1
 
 ### Patch Changes
