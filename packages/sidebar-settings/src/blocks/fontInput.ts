@@ -48,8 +48,20 @@ export type FontValueBorderRadiusType = {
 
 export type FontInputBlockChoice = { id?: number | string } & Choice;
 
+/**
+ *  @deprecated to be removed in next major release
+ * Please use the no typo option: `alignmentChoiceValues`
+ */
+type deprecatedAligmentChoiceValues = 'aligmentChoiceValues';
+
 export type FontInputChoicePresetValues = Partial<
-    Record<'alignmentChoiceValues' | 'borderRadiusChoiceValues' | 'paddingSizeChoiceValues', FontInputBlockChoice[]>
+    Record<
+        | deprecatedAligmentChoiceValues
+        | 'alignmentChoiceValues'
+        | 'borderRadiusChoiceValues'
+        | 'paddingSizeChoiceValues',
+        FontInputBlockChoice[]
+    >
 >;
 
 export type FontValue = {
