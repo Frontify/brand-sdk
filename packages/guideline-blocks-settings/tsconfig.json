@@ -22,6 +22,6 @@
         "skipLibCheck": true,
         "types": ["cypress", "node", "cypress-real-events"]
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "./setupTests.ts"],
     "exclude": ["node_modules", "dist"]
 }

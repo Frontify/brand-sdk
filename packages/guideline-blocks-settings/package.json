@@ -1,6 +1,6 @@
 {
     "name": "@frontify/guideline-blocks-settings",
-    "version": "0.32.1",
+    "version": "0.32.2",
     "description": "Provides types and helpers for the guideline block development",
     "sideEffects": false,
     "main": "dist/index.umd.js",
@@ -35,6 +35,7 @@
     "devDependencies": {
         "@babel/core": "^7.23.3",
         "@frontify/eslint-config-typescript": "^0.16.2",
+        "@testing-library/jest-dom": "^6.4.2",
         "@testing-library/react": "^14.1.2",
         "@types/node": "^18.18.11",
         "@types/react": "^18.2.38",
