@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.4
+
+### Patch Changes
+
+- Merge main into dev
+
 ## 3.3.1
 
 ### Patch Changes
