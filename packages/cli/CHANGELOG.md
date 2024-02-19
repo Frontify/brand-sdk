@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.2
+
+### Patch Changes
+
+- [#760](https://github.com/Frontify/brand-sdk/pull/760) [`6493f06`](https://github.com/Frontify/brand-sdk/commit/6493f06b934f2ea815fadda3aaf74a7ee76ec60c) Thanks [@julianiff](https://github.com/julianiff)! - chore: update sample apps
+
 ## 5.6.1
 
 ### Patch Changes
