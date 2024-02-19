@@ -325,21 +325,21 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
 
     const duplicateDocumentPage = useCallback(
         async ({ id, documentId, categoryId }: { id: number; documentId: number; categoryId?: number }) => {
-            const result = await appBridge.duplicateDocumentPage(id);
+            const duplicatedDocumentPage = await appBridge.duplicateDocumentPage(id);
 
             window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
-                documentPage: { ...result, documentId, categoryId } as unknown as DocumentPage,
+                documentPage: { ...duplicatedDocumentPage, documentId, categoryId } as unknown as DocumentPage,
                 action: 'add',
             });
 
             if (categoryId) {
                 window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
-                    documentPage: { id: result.id, categoryId },
+                    documentPage: { id: duplicatedDocumentPage.id, categoryId },
                     action: 'add',
                 });
             }
 
-            return result;
+            return duplicatedDocumentPage;
         },
         [appBridge],
     );
