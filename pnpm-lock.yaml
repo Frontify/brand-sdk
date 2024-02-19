@@ -19,7 +19,7 @@ importers:
         version: 5.0.6
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
-        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
       '@vitejs/plugin-react':
         specifier: ^4.2.0
         version: 4.2.0(vite@4.5.0)
@@ -252,7 +252,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
-        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -339,8 +339,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       rollup:
-        specifier: ^3.29.4
-        version: 3.29.4
+        specifier: ^4.0.0
+        version: 4.9.6
       sinon:
         specifier: 17.0.1
         version: 17.0.1
@@ -355,7 +355,7 @@ importers:
         version: 4.5.0(@types/node@18.18.11)
       vite-plugin-dts:
         specifier: ^3.6.3
-        version: 3.6.3(@types/node@18.18.11)(rollup@3.29.4)(typescript@5.3.2)(vite@4.5.0)
+        version: 3.6.3(@types/node@18.18.11)(rollup@4.9.6)(typescript@5.3.2)(vite@4.5.0)
       vite-plugin-externals:
         specifier: ^0.6.2
         version: 0.6.2(vite@4.5.0)
@@ -410,7 +410,7 @@ importers:
     dependencies:
       '@frontify/fondue':
         specifier: 12.0.0-beta.396
-        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
+        version: 12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.3
@@ -447,7 +447,7 @@ importers:
         version: 4.5.0(@types/node@18.18.11)
       vite-plugin-dts:
         specifier: ^3.6.3
-        version: 3.6.3(@types/node@18.18.11)(rollup@3.29.4)(typescript@5.3.2)(vite@4.5.0)
+        version: 3.6.3(@types/node@18.18.11)(rollup@4.9.6)(typescript@5.3.2)(vite@4.5.0)
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(happy-dom@12.10.3)
@@ -1768,7 +1768,7 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2):
+  /@frontify/fondue@12.0.0-beta.396(@babel/core@7.23.3)(@types/node@18.18.11)(@types/react-dom@18.2.16)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.93.0)(slate-hyperscript@0.77.0)(styled-components@5.3.6)(tailwindcss@3.4.1)(ts-node@10.9.1)(zustand@3.7.2):
     resolution: {integrity: sha512-GoPFZPY8L9xRCYes92fFUX2knD/cxviD2AD56H3ykQfr+lsmuYgyPQ+1TEkem2PmnvwXk+GdytSU0r/7v1FX3Q==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -1838,7 +1838,6 @@ packages:
       react-textarea-autosize: 8.5.3(@types/react@18.2.38)(react@18.2.0)
       remark-gfm: 3.0.1
       remark-parse: 10.0.2
-      scheduler: 0.23.0
       slate: 0.94.1
       slate-react: 0.98.3(react-dom@18.2.0)(react@18.2.0)(slate@0.94.1)
       unified: 10.1.2
@@ -1863,6 +1862,7 @@ packages:
       - jotai-xstate
       - jotai-zustand
       - react-native
+      - scheduler
       - slate-history
       - slate-hyperscript
       - styled-components
@@ -3665,7 +3665,7 @@ packages:
       '@react-types/shared': 3.19.0(react@18.2.0)
       react: 18.2.0
 
-  /@rollup/pluginutils@5.0.5(rollup@3.29.4):
+  /@rollup/pluginutils@5.0.5(rollup@4.9.6):
     resolution: {integrity: sha512-6aEYR910NyP73oHiJglti74iRyOwgFU4x3meH/H8OJx6Ry0j6cOVZ5X/wTvub7G7Ao6qaHBEaNsV3GLJkSsF+Q==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -3674,10 +3674,10 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@types/estree': 1.0.0
+      '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 3.29.4
+      rollup: 4.9.6
     dev: true
 
   /@rollup/pluginutils@5.1.0:
@@ -3689,7 +3689,7 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@types/estree': 1.0.0
+      '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
@@ -4059,10 +4059,6 @@ packages:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
       '@types/ms': 0.7.31
-
-  /@types/estree@1.0.0:
-    resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
-    dev: true
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
@@ -9118,7 +9114,7 @@ packages:
   /estree-walker@3.0.3:
     resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
     dependencies:
-      '@types/estree': 1.0.0
+      '@types/estree': 1.0.5
     dev: true
 
   /esutils@2.0.3:
@@ -13993,7 +13989,7 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-dts@3.6.3(@types/node@18.18.11)(rollup@3.29.4)(typescript@5.3.2)(vite@4.5.0):
+  /vite-plugin-dts@3.6.3(@types/node@18.18.11)(rollup@4.9.6)(typescript@5.3.2)(vite@4.5.0):
     resolution: {integrity: sha512-NyRvgobl15rYj65coi/gH7UAEH+CpSjh539DbGb40DfOTZSvDLNYTzc8CK4460W+LqXuMK7+U3JAxRB3ksrNPw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -14004,7 +14000,7 @@ packages:
         optional: true
     dependencies:
       '@microsoft/api-extractor': 7.38.0(@types/node@18.18.11)
-      '@rollup/pluginutils': 5.0.5(rollup@3.29.4)
+      '@rollup/pluginutils': 5.0.5(rollup@4.9.6)
       '@vue/language-core': 1.8.20(typescript@5.3.2)
       debug: 4.3.4(supports-color@5.5.0)
       kolorist: 1.8.0
