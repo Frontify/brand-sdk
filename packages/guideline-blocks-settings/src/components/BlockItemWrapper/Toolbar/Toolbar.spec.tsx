@@ -10,7 +10,7 @@ import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
 import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
-import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
+import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID, ToolbarItem } from '.';
 import { DragPreviewContextProvider } from './context/DragPreviewContext';
 
 /**
@@ -23,6 +23,54 @@ const MENU_FLYOUT_ID = 'menu-item';
 const MOCK_ASSET_FIELD_ID = 'attachment';
 
 describe('Toolbar', () => {
+    const stubs = vi.hoisted(() => ({
+        setOpenFlyoutIds: vi.fn(),
+        onClick: vi.fn(),
+        onDrag: vi.fn(),
+        onKeyDown: vi.fn(),
+    }));
+
+    const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
+        blockId: 1,
+        blockAssets: { [MOCK_ASSET_FIELD_ID]: [] },
+        editorState: true,
+    });
+
+    const FULL_ITEMS: ToolbarItem[] = [
+        {
+            type: 'dragHandle',
+            setActivatorNodeRef: vi.fn(),
+            icon: <IconMoveTo />,
+            draggableProps: { onDrag: stubs.onDrag, onKeyDown: stubs.onKeyDown },
+        },
+        {
+            type: 'button',
+            onClick: stubs.onClick,
+            icon: <IconTrashBin />,
+        },
+        {
+            type: 'flyout',
+            icon: <IconArrowMove16 />,
+            tooltip: 'Move To',
+            content: <div>Content</div>,
+            flyoutHeader: <div>Fixed Header</div>,
+            flyoutFooter: <div>Fixed Footer</div>,
+            flyoutId: 'move',
+        },
+        {
+            type: 'menu',
+            items: [
+                [
+                    {
+                        title: 'Replace with upload',
+                        icon: <div></div>,
+                        onClick: stubs.onClick,
+                    },
+                ],
+            ],
+        },
+    ];
+
     beforeAll(() => {
         vi.stubGlobal(
             'Worker',
@@ -42,58 +90,45 @@ describe('Toolbar', () => {
         expect(() => render(<Toolbar items={[]} attachments={{ isEnabled: true }} />)).toThrowError();
     });
 
-    it('should render every item type', async () => {
-        const setOpenFlyoutIdsStub = vi.fn();
-        const onClickStub = vi.fn();
-        const onDragStub = vi.fn();
-        const onKeyDownStub = vi.fn();
-
-        const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
-            blockId: 1,
-            blockAssets: { [MOCK_ASSET_FIELD_ID]: [] },
-            editorState: true,
-        });
-
+    it('should have every item type accessible by mouse', async () => {
         const ToolbarWithAttachments = () => (
-            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={stubs.setOpenFlyoutIds}>
                 <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
-                    <Toolbar
-                        items={[
-                            {
-                                type: 'dragHandle',
-                                setActivatorNodeRef: vi.fn(),
-                                icon: <IconMoveTo />,
-                                draggableProps: { onDrag: onDragStub, onKeyDown: onKeyDownStub },
-                            },
-                            {
-                                type: 'button',
-                                onClick: onClickStub,
-                                icon: <IconTrashBin />,
-                            },
-                            {
-                                type: 'flyout',
-                                icon: <IconArrowMove16 />,
-                                tooltip: 'Move To',
-                                content: <div>Content</div>,
-                                flyoutHeader: <div>Fixed Header</div>,
-                                flyoutFooter: <div>Fixed Footer</div>,
-                                flyoutId: 'move',
-                            },
-                            {
-                                type: 'menu',
-                                items: [
-                                    [
-                                        {
-                                            title: 'Replace with upload',
-                                            icon: <div></div>,
-                                            onClick: vi.fn(),
-                                        },
-                                    ],
-                                ],
-                            },
-                        ]}
-                        attachments={{ isEnabled: true }}
-                    />
+                    <Toolbar items={FULL_ITEMS} attachments={{ isEnabled: true }} />
+                </AttachmentsProvider>
+            </MultiFlyoutContextProvider>
+        );
+
+        const { getAllByRole } = render(<ToolbarWithAttachments />);
+
+        const buttons = getAllByRole('button');
+        expect(buttons).toHaveLength(5);
+
+        const [attachmentBtn, dragBtn, btn, flyoutBtn, menuBtn] = buttons;
+
+        // Click Interactions
+
+        await fireEvent.click(attachmentBtn);
+        expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(1);
+
+        await fireEvent.drag(dragBtn);
+        expect(stubs.onDrag).toHaveBeenCalledTimes(1);
+
+        await fireEvent.click(btn);
+        expect(stubs.onClick).toHaveBeenCalledTimes(1);
+
+        await fireEvent.click(flyoutBtn);
+        expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(2);
+
+        await fireEvent.click(menuBtn);
+        expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(3);
+    });
+
+    it('should have every item type accessible by keyboard', async () => {
+        const ToolbarWithAttachments = () => (
+            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={stubs.setOpenFlyoutIds}>
+                <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
+                    <Toolbar items={FULL_ITEMS} attachments={{ isEnabled: true }} />
                 </AttachmentsProvider>
             </MultiFlyoutContextProvider>
         );
@@ -107,56 +142,35 @@ describe('Toolbar', () => {
 
         const [attachmentBtn, dragBtn, btn, flyoutBtn, menuBtn] = buttons;
 
-        // Click Interactions
-
-        await fireEvent.click(attachmentBtn);
-        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(1);
-
-        await fireEvent.drag(dragBtn);
-        expect(onDragStub).toHaveBeenCalledTimes(1);
-
-        await fireEvent.click(btn);
-        expect(onClickStub).toHaveBeenCalledTimes(1);
-
-        await fireEvent.click(flyoutBtn);
-        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(2);
-
-        await fireEvent.click(menuBtn);
-        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(3);
-
-        // Keyboard interactions
-
-        vi.clearAllMocks();
-
         await user.keyboard('{Tab}');
 
         expect(attachmentBtn).toHaveFocus();
         await user.keyboard('{Enter}');
-        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(1);
+        expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(1);
 
         await user.keyboard('{Tab}');
 
         expect(dragBtn).toHaveFocus();
         await user.keyboard('{Enter}');
-        expect(onKeyDownStub).toHaveBeenCalledTimes(1);
+        expect(stubs.onKeyDown).toHaveBeenCalledTimes(1);
 
         await user.keyboard('{Tab}');
 
         expect(btn).toHaveFocus();
         await user.keyboard('{Enter}');
-        expect(onClickStub).toHaveBeenCalledTimes(1);
+        expect(stubs.onClick).toHaveBeenCalledTimes(1);
 
         await user.keyboard('{Tab}');
 
         expect(flyoutBtn).toHaveFocus();
         await user.keyboard('{Enter}');
-        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(2);
+        expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(2);
 
         await user.keyboard('{Tab}');
 
         expect(menuBtn).toHaveFocus();
         await user.keyboard('{Enter}');
-        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(3);
+        expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(3);
     });
 
     it('should open flyouts if not dragging', async () => {
