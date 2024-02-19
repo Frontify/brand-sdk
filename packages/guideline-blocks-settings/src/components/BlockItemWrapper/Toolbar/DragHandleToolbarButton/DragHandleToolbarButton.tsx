@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { ReactNode } from 'react';
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../../constants';
 import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { BaseToolbarButton } from '../BaseToolbarButton';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 
 export type DragHandleToolbarButtonProps = {
-    icon: JSX.Element;
+    icon?: ReactNode;
     tooltip?: string;
     draggableProps: Record<string, unknown>;
     setActivatorNodeRef?: (node: HTMLElement | null) => void;

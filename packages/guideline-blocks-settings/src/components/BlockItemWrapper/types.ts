@@ -4,14 +4,13 @@ import { type ReactNode } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { type AttachmentsProvider, type withAttachmentsProvider } from '../../hooks/useAttachments';
-import { type FlyoutToolbarItem, type ToolbarItem } from './Toolbar';
+import { type ToolbarItem } from './Toolbar';
 
 export type BlockItemWrapperProps = {
     children: ReactNode;
     shouldHideWrapper?: boolean;
     shouldHideComponent?: boolean;
     toolbarItems: (ToolbarItem | undefined)[];
-    toolbarFlyoutItems: FlyoutToolbarItem[][];
     isDragging?: boolean;
     shouldFillContainer?: boolean;
     outlineOffset?: number;

@@ -11,7 +11,6 @@ import { MultiFlyoutContextProvider } from './Toolbar/context/MultiFlyoutContext
 
 export const BlockItemWrapper = ({
     children,
-    toolbarFlyoutItems,
     toolbarItems,
     shouldHideWrapper,
     shouldHideComponent = false,
@@ -63,9 +62,6 @@ export const BlockItemWrapper = ({
                         ])}
                     >
                         <Toolbar
-                            flyoutMenu={{
-                                items: toolbarFlyoutItems,
-                            }}
                             attachments={{
                                 isEnabled: showAttachments,
                             }}
