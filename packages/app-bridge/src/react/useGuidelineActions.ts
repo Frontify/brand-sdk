@@ -328,7 +328,7 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
             const result = await appBridge.duplicateDocumentPage(id);
 
             window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
-                documentPage: { ...result, title: result.name, documentId, categoryId } as unknown as DocumentPage,
+                documentPage: { ...result, documentId, categoryId } as unknown as DocumentPage,
                 action: 'add',
             });
 
