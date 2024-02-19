@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.3.1
+
+### Patch Changes
+
+- [#766](https://github.com/Frontify/brand-sdk/pull/766) [`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 4.0.0-alpha.3
 
 ### Patch Changes

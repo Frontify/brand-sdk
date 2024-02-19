@@ -48,8 +48,20 @@ export type FontValueBorderRadiusType = {
 
 export type FontInputBlockChoice = { id?: number | string } & Choice;
 
+/**
+ *  @deprecated to be removed in next major release
+ * Please use the no typo option: `alignmentChoiceValues`
+ */
+type deprecatedAligmentChoiceValues = 'aligmentChoiceValues';
+
 export type FontInputChoicePresetValues = Partial<
-    Record<'aligmentChoiceValues' | 'borderRadiusChoiceValues' | 'paddingSizeChoiceValues', FontInputBlockChoice[]>
+    Record<
+        | deprecatedAligmentChoiceValues
+        | 'alignmentChoiceValues'
+        | 'borderRadiusChoiceValues'
+        | 'paddingSizeChoiceValues',
+        FontInputBlockChoice[]
+    >
 >;
 
 export type FontValue = {
@@ -389,7 +401,7 @@ export type FontInputBlock<AppBridge> = {
      * Choice values presets:
      *    paddingSizeChoiceValues: choices values for padding sizes choices
      *    borderRadiusChoiceValues: choices values for border radius choices
-     *    aligmentChoiceValues: text alignment choices
+     *    alignmentChoiceValues: text alignment choices
      */
     choicePresets?: FontInputChoicePresetValues;
 
