@@ -2,13 +2,19 @@
     "appId": "<Your app ID>",
     "appType": "platform-app",
     "name": "template-platform-app-css-module",
+    "metadata": {
+        "version": 1
+    },
     "surfaces": {
         "mediaLibrary": {
             "assetAction": {
+                "title": "Asset Action",
                 "type": ["image"],
                 "filenameExtension": ["png", "jpeg"]
             },
-            "assetCreation": {}
+            "assetCreation": {
+                "title": "Asset Creation"
+            }
         }
     }
 }

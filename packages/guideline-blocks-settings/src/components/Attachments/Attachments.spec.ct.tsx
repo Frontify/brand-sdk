@@ -9,6 +9,7 @@ import { SinonStub } from 'sinon';
 const FlyoutButtonSelector = '[data-test-id="attachments-button-trigger"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';
 const ActionBarSelector = '[data-test-id="attachments-actionbar"]';
+const DragHandleSelector = '[data-test-id="attachments-actionbar"] > button';
 const FlyoutTriggerSelector = '[data-test-id="attachments-actionbar-flyout"] button';
 const AttachmentItemSelector = '[data-test-id="attachments-item"]';
 const MenuItemSelector = '[data-test-id="menu-item"]';
@@ -139,8 +140,26 @@ describe('Attachments', () => {
         cy.get(FlyoutButtonSelector).click();
         cy.realPress('Tab');
         cy.realPress('Tab');
+        cy.realPress('Tab');
         cy.get(FlyoutTriggerSelector).eq(0).should('have.class', 'focus-visible:tw-ring-blue');
         cy.get(FlyoutTriggerSelector).eq(0).type('{enter}');
         cy.get(MenuItemSelector).should('exist');
+    });
+
+    it('reorders items using only keyboard events', () => {
+        const onSortStub = cy.stub();
+        mount(
+            <Attachments
+                appBridge={getAppBridgeBlockStub({ editorState: true })}
+                items={[{ ...AssetDummy.with(1), title: 'Moved item' }, AssetDummy.with(2), AssetDummy.with(3)]}
+                onSorted={onSortStub}
+            />,
+        );
+        cy.get(FlyoutButtonSelector).click();
+        cy.realPress('Tab');
+        cy.realPress('Tab');
+        cy.realPress('Tab');
+        cy.get(DragHandleSelector).eq(0).type(' {downarrow}{downarrow} ');
+        cy.get(AttachmentItemSelector).eq(1).should('contain.text', 'Moved item');
     });
 });

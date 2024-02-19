@@ -1,14 +1,20 @@
 {
     "appId": "<Your app ID>",
     "appType": "platform-app",
-    "name": "sample-name",
+    "name": "template-platform-app-tailwind",
+    "metadata": {
+        "version": 1
+    },
     "surfaces": {
         "mediaLibrary": {
             "assetAction": {
+                "title": "Asset Action",
                 "type": ["image"],
                 "filenameExtension": ["png", "jpeg"]
             },
-            "assetCreation": {}
+            "assetCreation": {
+                "title": "Asset Creation"
+            }
         }
     }
 }
