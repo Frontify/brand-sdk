@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentPage, DocumentPageDuplicate, DocumentPageDuplicateApi } from '../types';
+import type { DocumentPage } from '../types';
 import { convertObjectCase } from '../utilities';
 
-import { DocumentPageApiDummy, DocumentPageDuplicateApiDummy } from './DocumentPageApiDummy';
+import { DocumentPageApiDummy } from './DocumentPageApiDummy';
 
 export class DocumentPageDummy {
     static with(id: number): DocumentPage {
@@ -15,11 +15,5 @@ export class DocumentPageDummy {
             ...DocumentPageDummy.with(fields.id),
             ...fields,
         } as DocumentPage;
-    }
-}
-
-export class DocumentPageDuplicateDummy {
-    static with(id: number): DocumentPageDuplicate {
-        return convertObjectCase((DocumentPageDuplicateApiDummy.with(id) as DocumentPageDuplicateApi).page, 'camel');
     }
 }
