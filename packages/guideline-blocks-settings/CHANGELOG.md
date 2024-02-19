@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.33.1
+
+### Patch Changes
+
+- [#764](https://github.com/Frontify/brand-sdk/pull/764) [`ecd13ce`](https://github.com/Frontify/brand-sdk/commit/ecd13ced94615a5b9fd0d5d0ae5ff726930c556f) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(Toolbar): export `ToolbarFlyoutMenu` component and `ToolbarFlyoutMenuItem` type
+
 ## 0.33.0
 
 ### Minor Changes
