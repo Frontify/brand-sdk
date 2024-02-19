@@ -111,7 +111,7 @@
 
 ### Patch Changes
 
-- [#749](https://github.com/Frontify/brand-sdk/pull/749) [`5393e3a`](https://github.com/Frontify/brand-sdk/commit/5393e3aed9822bb00521a22b1cc75a62fafb4a59) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - refactor (Toolbar): split Toolbar into smaller subcomponents. `ToolbarFlyoutState` type has been removed, as well as `flyoutMenu.isOpen`, `flyoutMenu.onOpenChange`, `attachments.isOpen`, `attachments.onOpenChange` props that could be passed to the `Toolbar` compnent. To control the state of open `Flyouts` the `Toolbar` must instead be wrapped in a `MultiFlyoutContextProvider`.
+- [#749](https://github.com/Frontify/brand-sdk/pull/749) [`5393e3a`](https://github.com/Frontify/brand-sdk/commit/5393e3aed9822bb00521a22b1cc75a62fafb4a59) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - refactor (Toolbar): split Toolbar into smaller subcomponents. `ToolbarFlyoutState` type has been removed, as well as `flyoutMenu.isOpen`, `flyoutMenu.onOpenChange`, `attachments.isOpen`, `attachments.onOpenChange` props that could be passed to the `Toolbar` component. To control the state of open `Flyouts` the `Toolbar` must instead be wrapped in a `MultiFlyoutContextProvider`.
 
   Migration Example:
 
