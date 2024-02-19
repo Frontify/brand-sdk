@@ -10,8 +10,10 @@ import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { Toolbar } from './Toolbar';
 import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
-import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID, ToolbarItem } from '.';
 import { DragPreviewContextProvider } from './context/DragPreviewContext';
+import { DEFAULT_ATTACHMENTS_BUTTON_ID } from './AttachmentsToolbarButton';
+import { DEFAULT_MENU_BUTTON_ID } from './MenuToolbarButton';
+import { ToolbarItem } from './types';
 
 /**
  * @vitest-environment happy-dom
