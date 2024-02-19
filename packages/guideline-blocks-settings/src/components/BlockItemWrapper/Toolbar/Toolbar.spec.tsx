@@ -1,7 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { IconArrowMove16, IconMoveTo, IconTrashBin } from '@frontify/fondue';
 import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
@@ -10,7 +12,6 @@ import { Toolbar } from './Toolbar';
 import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID, DEFAULT_MENU_BUTTON_ID } from '.';
 import { DragPreviewContextProvider } from './context/DragPreviewContext';
-import { IconArrowMove16, IconMoveTo, IconTrashBin } from '@frontify/fondue';
 
 /**
  * @vitest-environment happy-dom
@@ -45,6 +46,7 @@ describe('Toolbar', () => {
         const setOpenFlyoutIdsStub = vi.fn();
         const onClickStub = vi.fn();
         const onDragStub = vi.fn();
+        const onKeyDownStub = vi.fn();
 
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
@@ -61,7 +63,7 @@ describe('Toolbar', () => {
                                 type: 'dragHandle',
                                 setActivatorNodeRef: vi.fn(),
                                 icon: <IconMoveTo />,
-                                draggableProps: { onDrag: onDragStub },
+                                draggableProps: { onDrag: onDragStub, onKeyDown: onKeyDownStub },
                             },
                             {
                                 type: 'button',
@@ -96,12 +98,16 @@ describe('Toolbar', () => {
             </MultiFlyoutContextProvider>
         );
 
+        const user = userEvent.setup();
+
         const { getAllByRole } = render(<ToolbarWithAttachments />);
 
         const buttons = getAllByRole('button');
         expect(buttons).toHaveLength(5);
 
         const [attachmentBtn, dragBtn, btn, flyoutBtn, menuBtn] = buttons;
+
+        // Click Interactions
 
         await fireEvent.click(attachmentBtn);
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(1);
@@ -116,6 +122,40 @@ describe('Toolbar', () => {
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(2);
 
         await fireEvent.click(menuBtn);
+        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(3);
+
+        // Keyboard interactions
+
+        vi.clearAllMocks();
+
+        await user.keyboard('{Tab}');
+
+        expect(attachmentBtn).toHaveFocus();
+        await user.keyboard('{Enter}');
+        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(1);
+
+        await user.keyboard('{Tab}');
+
+        expect(dragBtn).toHaveFocus();
+        await user.keyboard('{Enter}');
+        expect(onKeyDownStub).toHaveBeenCalledTimes(1);
+
+        await user.keyboard('{Tab}');
+
+        expect(btn).toHaveFocus();
+        await user.keyboard('{Enter}');
+        expect(onClickStub).toHaveBeenCalledTimes(1);
+
+        await user.keyboard('{Tab}');
+
+        expect(flyoutBtn).toHaveFocus();
+        await user.keyboard('{Enter}');
+        expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(2);
+
+        await user.keyboard('{Tab}');
+
+        expect(menuBtn).toHaveFocus();
+        await user.keyboard('{Enter}');
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledTimes(3);
     });
 
