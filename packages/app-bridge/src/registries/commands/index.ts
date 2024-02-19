@@ -8,3 +8,4 @@ export * from './NavigationManager';
 export * from './TemplateChooser';
 export * from './NewPublication';
 export * from './Connection';
+export * from './SearchDialog';

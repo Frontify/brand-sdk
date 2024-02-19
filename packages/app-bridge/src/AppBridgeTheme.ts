@@ -58,7 +58,10 @@ import type {
 export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
 export type ThemeCommand = CommandNameValidator<
-    Pick<CommandRegistry, 'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager'>
+    Pick<
+        CommandRegistry,
+        'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager' | 'openSearchDialog' | 'closeSearchDialog'
+    >
 >;
 
 export type TemplateContext = { templateId: string; type: ThemeTemplate } & (

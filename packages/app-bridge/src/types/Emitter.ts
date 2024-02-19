@@ -28,6 +28,9 @@ export type EmitterEvents = {
         prevBlockAssets: Record<string, Asset[]>;
     };
 
+    'AppBridge:OpenSearchDialog': void;
+    'AppBridge:CloseSearchDialog': void;
+
     'AppBridge:TemplateAssetsUpdated': {
         template: ThemeTemplate;
         documentId?: number;
