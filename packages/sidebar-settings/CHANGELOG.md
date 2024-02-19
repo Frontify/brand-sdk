@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.2
+
+### Patch Changes
+
+- [#759](https://github.com/Frontify/brand-sdk/pull/759) [`7f57867`](https://github.com/Frontify/brand-sdk/commit/7f57867274c7ba21a0a1ab5ecc46852d559d968d) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: typo on fontInput `aligmentChoiceValues` to `alignmentChoiceValues `
+
 ## 0.9.1
 
 ### Patch Changes
