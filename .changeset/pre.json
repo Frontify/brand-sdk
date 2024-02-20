@@ -9,7 +9,9 @@
     "@frontify/platform-app": "0.0.5"
   },
   "changesets": [
+    "cuddly-pets-hammer",
     "kind-fishes-flash",
+    "neat-plants-smile",
     "orange-jokes-listen",
     "pink-bugs-behave",
     "polite-eels-shake",
