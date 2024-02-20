@@ -21,7 +21,7 @@ export const EditModal = () => {
                             triggerFloatingButtonEdit(editor);
                         }}
                         tabIndex={0}
-                        data-test-id={'edit-button-button'}
+                        data-test-id="edit-button-button"
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                     >
                         <IconPen16 />
@@ -33,7 +33,7 @@ export const EditModal = () => {
                             focusEditor(editor, editor.selection ?? undefined);
                         }}
                         tabIndex={0}
-                        data-test-id={'remove-button-button'}
+                        data-test-id="remove-button-button"
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                     >
                         <IconTrashBin16 />

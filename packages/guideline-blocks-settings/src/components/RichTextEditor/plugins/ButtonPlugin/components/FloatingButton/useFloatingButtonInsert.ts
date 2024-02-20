@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
+    UseVirtualFloatingOptions,
     getPluginOptions,
     getSelectionBoundingClientRect,
     useComposedRef,
@@ -18,7 +19,7 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonInsert = ({ floatingOptions, ...props }: any) => {
+export const useFloatingButtonInsert = ({ floatingOptions, ...props }: UseVirtualFloatingOptions) => {
     const editor = useEditorRef();
     const focused = useFocused();
     const mode = useFloatingButtonSelectors().mode();

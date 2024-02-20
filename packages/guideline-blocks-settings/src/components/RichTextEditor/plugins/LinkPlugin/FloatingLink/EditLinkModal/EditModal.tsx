@@ -20,12 +20,12 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
 
     return (
         <div data-test-id="floating-link-edit" className="tw-bg-white tw-rounded tw-shadow tw-p-4 tw-min-w-[400px]">
-            <span data-test-id={'preview-link-flyout'} className="tw-flex tw-justify-between tw-items-center">
+            <span data-test-id="preview-link-flyout" className="tw-flex tw-justify-between tw-items-center">
                 <span className="tw-pointer-events-none">{url}</span>
                 <span className="tw-flex tw-gap-2">
                     <button
                         tabIndex={0}
-                        data-test-id={'edit-link-button'}
+                        data-test-id="edit-link-button"
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                         {...editButtonProps}
                     >
@@ -34,7 +34,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
 
                     <button
                         tabIndex={0}
-                        data-test-id={'remove-link-button'}
+                        data-test-id="remove-link-button"
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                         {...unlinkButtonProps}
                     >

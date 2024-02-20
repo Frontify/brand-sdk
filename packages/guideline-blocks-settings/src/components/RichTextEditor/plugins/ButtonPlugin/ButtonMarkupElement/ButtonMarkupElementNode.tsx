@@ -11,7 +11,7 @@ export const ButtonMarkupElementNode = (props: ButtonRootProps) => {
     const { attributes, children } = props;
     const href = props.element.url || props.element.chosenLink?.searchResult?.link || '';
     const target = props.element.target || '_self';
-    const buttonStyle = (props.element.buttonStyle as string) || 'primary';
+    const buttonStyle = String(props.element.buttonStyle) || 'primary';
     return (
         <HoverableButtonLink
             attributes={attributes}
