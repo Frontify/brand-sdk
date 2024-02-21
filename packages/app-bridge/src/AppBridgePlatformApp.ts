@@ -50,24 +50,22 @@ type AppBaseProps = {
     token: string;
     marketplaceServiceAppId: string;
     connected: boolean;
+    settings: { [key: string]: string };
+    brandId: number;
+    domain: string;
+    parentId: string;
 };
 
-export type PlatformAppContext = AppBaseProps &
-    (
-        | {
-              brandId: string;
-              domain: string;
-              parentId: string;
-              type: 'assetCreation';
-          }
-        | {
-              assetId: string;
-              brandId: string;
-              domain: string;
-              parentId: string;
-              type: 'assetAction';
-          }
-    );
+export type AssetActionContext = {
+    surface: 'assetAction';
+    assetId: string;
+} & AppBaseProps;
+
+export type AssetCreationContext = {
+    surface: 'assetCreation';
+} & AppBaseProps;
+
+export type PlatformAppContext = AssetActionContext | AssetCreationContext;
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
@@ -91,8 +89,9 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         'Context.brandId': new Map(),
         'Context.parentId': new Map(),
         'Context.domain': new Map(),
-        'Context.type': new Map(),
+        'Context.surface': new Map(),
         'Context.connected': new Map(),
+        'Context.settings': new Map(),
     };
 
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
@@ -123,7 +122,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
             notify(Topic.Init, PUBSUB_CHECKSUM, {
                 token: getQueryParameters(window.location.href).token,
-                appBridgeVersion: 'v3',
+                appBridgeVersion: 'v4',
             });
 
             subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ statePort, apiPort, context, state }) => {
