@@ -42,7 +42,6 @@ import type {
     DocumentLinkUpdate,
     DocumentPage,
     DocumentPageCreate,
-    DocumentPageDuplicate,
     DocumentPageTargets,
     DocumentPageUpdate,
     DocumentSection,
@@ -256,7 +255,7 @@ export interface AppBridgeTheme<
         documentCategoryId?: number,
     ): Promise<DocumentPage>;
 
-    duplicateDocumentPage(documentPageId: number): Promise<DocumentPageDuplicate>;
+    duplicateDocumentPage(documentPageId: number): Promise<DocumentPage>;
 
     createCoverPage(coverPage: CoverPageCreate): Promise<CoverPage>;
 

@@ -1,19 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type ToolbarButtonProps } from './ToolbarButton';
-import { type ToolbarFlyoutMenuItem } from './MenuToolbarButton/ToolbarFlyoutMenu';
-import { DragHandleToolbarButtonProps } from '.';
+import { type DragHandleToolbarButtonProps } from './DragHandleToolbarButton';
+import { type FlyoutToolbarButtonProps } from './FlyoutToolbarButton';
+import { type MenuToolbarButtonProps } from './MenuToolbarButton';
 
 export type ToolbarProps = {
     items: ToolbarItem[];
-    flyoutMenu: { items: ToolbarFlyoutMenuItem[][] };
     attachments: { isEnabled: boolean };
 };
 
-export type DraghandleToolbarItem = DragHandleToolbarButtonProps;
+export type DragHandleToolbarItem = { type: 'dragHandle' } & DragHandleToolbarButtonProps;
+export type ButtonToolbarItem = { type: 'button' } & ToolbarButtonProps;
+export type FlyoutToolbarItem = { type: 'flyout' } & FlyoutToolbarButtonProps;
+export type MenuToolbarItem = { type: 'menu' } & MenuToolbarButtonProps;
 
-export type ButtonToolbarItem = ToolbarButtonProps;
-
-export type FlyoutToolbarItem = ToolbarFlyoutMenuItem;
-
-export type ToolbarItem = DraghandleToolbarItem | ButtonToolbarItem;
+export type ToolbarItem = DragHandleToolbarItem | ButtonToolbarItem | FlyoutToolbarItem | MenuToolbarItem;

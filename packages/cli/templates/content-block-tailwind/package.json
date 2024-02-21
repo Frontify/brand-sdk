@@ -10,20 +10,20 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@frontify/app-bridge": "^3.0.0",
+        "@frontify/app-bridge": "^3.3.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@frontify/eslint-config-react": "^0.16.1",
-        "@frontify/frontify-cli": "^5.5.7",
-        "@frontify/guideline-blocks-settings": "^0.29.0",
-        "@types/react": "^18.2.21",
-        "@types/react-dom": "^18.2.7",
-        "autoprefixer": "^10.4.15",
-        "eslint": "^8.48.0",
-        "prettier": "^3.0.3",
-        "tailwindcss": "^3.3.3",
-        "typescript": "^5.2.2"
+        "@frontify/eslint-config-react": "^0.16.2",
+        "@frontify/frontify-cli": "^5.6.2",
+        "@frontify/guideline-blocks-settings": "^0.33.1",
+        "@types/react": "^18.2.56",
+        "@types/react-dom": "^18.2.19",
+        "autoprefixer": "^10.4.17",
+        "eslint": "^8.56.0",
+        "prettier": "^3.2.5",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5.3.3"
     }
 }
