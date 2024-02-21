@@ -1,5 +1,14 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.6
+
+### Patch Changes
+
+- [#772](https://github.com/Frontify/brand-sdk/pull/772) [`3e44c59`](https://github.com/Frontify/brand-sdk/commit/3e44c596628abcad11414eb26a954f4cb6eea097) Thanks [@julianiff](https://github.com/julianiff)! - feat: switch to platformAppBridge to v4
+
+- [#774](https://github.com/Frontify/brand-sdk/pull/774) [`7a80244`](https://github.com/Frontify/brand-sdk/commit/7a80244b2ebf075f93a492513970b3ee2c92dc80) Thanks [@julianiff](https://github.com/julianiff)! - feat: Adjust PlatformAppContext
+  refactor: rename from type to surface
+
 ## 4.0.0-alpha.5
 
 ### Patch Changes
