@@ -4,7 +4,6 @@ import {
     UseVirtualFloatingOptions,
     getPluginOptions,
     getSelectionBoundingClientRect,
-    useComposedRef,
     useEditorRef,
     useFocused,
     useHotkeys,
@@ -19,7 +18,7 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonInsert = ({ floatingOptions, ...props }: UseVirtualFloatingOptions) => {
+export const useFloatingButtonInsert = (floatingOptions: UseVirtualFloatingOptions) => {
     const editor = useEditorRef();
     const focused = useFocused();
     const mode = useFloatingButtonSelectors().mode();
@@ -42,7 +41,7 @@ export const useFloatingButtonInsert = ({ floatingOptions, ...props }: UseVirtua
         [focused],
     );
 
-    const { update, style, floating } = useVirtualFloatingButton({
+    const { update, style } = useVirtualFloatingButton({
         open: open && mode === 'insert',
         getBoundingClientRect: getSelectionBoundingClientRect,
         whileElementsMounted: undefined,
@@ -64,7 +63,5 @@ export const useFloatingButtonInsert = ({ floatingOptions, ...props }: UseVirtua
             ...style,
             zIndex: 1000,
         },
-        ...props,
-        ref: useComposedRef<HTMLElement | null>(props.ref, floating),
     };
 };

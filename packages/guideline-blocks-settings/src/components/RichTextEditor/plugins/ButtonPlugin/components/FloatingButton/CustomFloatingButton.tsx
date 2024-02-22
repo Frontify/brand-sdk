@@ -18,8 +18,8 @@ const floatingOptions: UseVirtualFloatingOptions = {
 };
 
 export const CustomFloatingButton = () => {
-    const { ref: insertRef, ...insertProps } = useFloatingButtonInsert(floatingOptions);
-    const { ref: editRef, ...editProps } = useFloatingButtonEdit(floatingOptions);
+    const insertProps = useFloatingButtonInsert(floatingOptions);
+    const editProps = useFloatingButtonEdit(floatingOptions);
     const editor = useEditorRef();
     const state = useFloatingButtonSelectors();
     const isOpen = state.isOpen(editor.id);
@@ -31,17 +31,9 @@ export const CustomFloatingButton = () => {
 
     return (
         <>
-            {isOpen && mode === 'insert' && (
-                <div ref={insertRef} {...insertProps}>
-                    {input}
-                </div>
-            )}
+            {isOpen && mode === 'insert' && <div {...insertProps}>{input}</div>}
 
-            {isOpen && mode === 'edit' && (
-                <div ref={editRef} {...editProps}>
-                    {editContent}
-                </div>
-            )}
+            {isOpen && mode === 'edit' && <div {...editProps}>{editContent}</div>}
         </>
     );
 };

@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
+    UseVirtualFloatingOptions,
     getAboveNode,
     getDefaultBoundingClientRect,
     getEndPoint,
@@ -9,7 +10,6 @@ import {
     getRangeBoundingClientRect,
     getStartPoint,
     someNode,
-    useComposedRef,
     useEditorRef,
     useEditorVersion,
     useHotkeys,
@@ -27,7 +27,7 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonEdit = ({ floatingOptions, ...props }: any) => {
+export const useFloatingButtonEdit = (floatingOptions: UseVirtualFloatingOptions) => {
     const editor = useEditorRef();
     const mode = useFloatingButtonSelectors().mode();
     const open = useFloatingButtonSelectors().isOpen(editor.id);
@@ -53,7 +53,7 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: any) => {
 
     const isOpen = open && mode === 'edit';
 
-    const { update, style, floating } = useVirtualFloatingButton({
+    const { update, style } = useVirtualFloatingButton({
         open: isOpen,
         getBoundingClientRect,
         ...floatingOptions,
@@ -105,7 +105,5 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: any) => {
             ...style,
             zIndex: 1000,
         },
-        ...props,
-        ref: useComposedRef<HTMLElement | null>(props.ref, floating),
     };
 };
