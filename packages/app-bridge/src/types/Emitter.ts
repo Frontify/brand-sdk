@@ -28,9 +28,6 @@ export type EmitterEvents = {
         prevBlockAssets: Record<string, Asset[]>;
     };
 
-    'AppBridge:OpenSearchDialog': void;
-    'AppBridge:CloseSearchDialog': void;
-
     'AppBridge:TemplateAssetsUpdated': {
         template: ThemeTemplate;
         documentId?: number;
@@ -101,6 +98,9 @@ export type EmitterEvents = {
     'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
     'AppBridge:OpenNavigationManager': void;
+
+    'AppBridge:OpenSearchDialog': void;
+    'AppBridge:CloseSearchDialog': void;
 
     'AppBridge:GuidelineDocumentPage:Action':
         | {
