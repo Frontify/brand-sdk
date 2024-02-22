@@ -17,7 +17,6 @@ import {
     DocumentDummy,
     DocumentGroupDummy,
     DocumentPageDummy,
-    DocumentPageDuplicateDummy,
     DocumentPageTargetsDummy,
     DocumentSectionDummy,
     DocumentTargetsDummy,
@@ -214,7 +213,7 @@ export const getAppBridgeThemeStub = ({
             ColorDummy.yellow(9314),
         ]),
         duplicateDocumentPage: stub<Parameters<AppBridgeTheme['duplicateDocumentPage']>>().resolves(
-            DocumentPageDuplicateDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1),
+            DocumentPageDummy.with(DOCUMENT_PAGE_DUPLICATE_ID_1),
         ),
         getDocumentTargets: stub<Parameters<AppBridgeTheme['getDocumentTargets']>>().resolves(
             DocumentTargetsDummy.with(DOCUMENT_ID_1),

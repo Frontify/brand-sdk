@@ -1,3 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export const test = 1;
+const app = 'this is a block';
+const settings = { some: 'settings' };
+
+export default { app, settings };

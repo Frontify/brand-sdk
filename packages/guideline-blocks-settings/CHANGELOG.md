@@ -1,5 +1,173 @@
 # @frontify/guideline-blocks-settings
 
+## 0.33.2
+
+### Patch Changes
+
+- [#766](https://github.com/Frontify/brand-sdk/pull/766) [`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- Updated dependencies [[`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6)]:
+  - @frontify/sidebar-settings@0.9.3
+
+## 0.33.1
+
+### Patch Changes
+
+- [#764](https://github.com/Frontify/brand-sdk/pull/764) [`ecd13ce`](https://github.com/Frontify/brand-sdk/commit/ecd13ced94615a5b9fd0d5d0ae5ff726930c556f) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(Toolbar): export `ToolbarFlyoutMenu` component and `ToolbarFlyoutMenuItem` type
+
+## 0.33.0
+
+### Minor Changes
+
+- [#756](https://github.com/Frontify/brand-sdk/pull/756) [`dc4b57d`](https://github.com/Frontify/brand-sdk/commit/dc4b57d698e037cac4d6eca75e45f2ef65e96b47) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - feat(Toolbar): extend `items` to include `menu` and `flyout` type. Each `item` must now contain a `type` prop (`"dragHandle"`, `"button"`, `"flyout"`, `"menu"`). The `flyoutItems` prop has been removed as any item in the items array can now be a flyout. This change is also reflected in the `BlockItemWrapper`, where `toolbarFlyoutItems` has now been removed.
+
+  Migration Example:
+
+  ```jsx
+  <Toolbar
+    items={[
+      {
+        icon: <IconArrowMove16 />,
+        draggableProps,
+        setActivatorNodeRef,
+      },
+      {
+        icon: <IconTrashBin16 />,
+        tooltip: "Delete Item",
+        onClick: onRemoveSelf,
+      },
+    ]}
+    flyoutItems={[
+      [
+        {
+          title: "Delete",
+          icon: <IconTrashBin20 />,
+          onClick,
+        },
+      ],
+    ]}
+  />
+  ```
+
+  The above component should now be written as:
+
+  ```jsx
+  <Toolbar
+    items={[
+      {
+        type: "dragHandle",
+        icon: <IconArrowMove16 />,
+        draggableProps,
+        setActivatorNodeRef,
+      },
+      {
+        type: "button",
+        icon: <IconTrashBin16 />,
+        tooltip: "Delete Item",
+        onClick: onRemoveSelf,
+      },
+      {
+        type: "menu",
+        items: [
+          {
+            title: "Delete",
+            icon: <IconTrashBin20 />,
+            onClick,
+          },
+        ],
+        flyoutId: "special-menu",
+      },
+    ]}
+  />
+  ```
+
+  Full "Flyout as a toolbar button" example:
+
+  ```jsx
+  const FlyoutFooterWithCloseButton = ({ flyoutId }) => {
+    // The flyout footer can close the flyout by accessing the flyout context
+    const { onOpenChange } = useMultiFlyoutState(flyoutId);
+
+    return <button onClick={() => onOpenChange(false)}>Cancel</button>;
+  };
+
+  const ExampleToolbar = () => {
+    const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
+
+    return (
+      <MultiFlyoutContextProvider
+        openFlyoutIds={openFlyoutIds}
+        setOpenFlyoutIds={setOpenFlyoutIds}
+      >
+        <Toolbar
+          items={[
+            {
+              type: "flyout",
+              icon: <IconArrowMove16 />,
+              tooltip: "Move To",
+              content: <div>Content</div>,
+              flyoutHeader: <div>Fixed Header</div>,
+              flyoutFooter: <FlyoutFooterWithCloseButton flyoutId="move" />,
+              flyoutId: "move",
+            },
+          ]}
+        />
+      </MultiFlyoutContextProvider>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`7f57867`](https://github.com/Frontify/brand-sdk/commit/7f57867274c7ba21a0a1ab5ecc46852d559d968d)]:
+  - @frontify/sidebar-settings@0.9.2
+
+## 0.32.2
+
+### Patch Changes
+
+- [#749](https://github.com/Frontify/brand-sdk/pull/749) [`5393e3a`](https://github.com/Frontify/brand-sdk/commit/5393e3aed9822bb00521a22b1cc75a62fafb4a59) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - refactor (Toolbar): split Toolbar into smaller subcomponents. `ToolbarFlyoutState` type has been removed, as well as `flyoutMenu.isOpen`, `flyoutMenu.onOpenChange`, `attachments.isOpen`, `attachments.onOpenChange` props that could be passed to the `Toolbar` component. To control the state of open `Flyouts` the `Toolbar` must instead be wrapped in a `MultiFlyoutContextProvider`.
+
+  Migration Example:
+
+  ```jsx
+  // Inside your component
+  const [flyoutIsOpen, setFlyoutIsOpen] = useState(false);
+  const [attachmentsIsOpen, setAttachmentsIsOpen] = useState(false);
+
+  return (
+    <Toolbar
+      flyoutMenu={{ isOpen: flyoutIsOpen, onOpenChange: setFlyoutIsOpen }}
+      attachments={{
+        isOpen: attachmentsIsOpen,
+        onOpenChange: setAttachmentsIsOpen,
+      }}
+    />
+  );
+  ```
+
+  The above component should now be written as:
+
+  ```jsx
+  // Inside your component
+  const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
+
+  return(
+      <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
+          <Toolbar />
+      <MultiFlyoutContextProvider>)
+  ```
+
+- [#757](https://github.com/Frontify/brand-sdk/pull/757) [`07f2dd3`](https://github.com/Frontify/brand-sdk/commit/07f2dd356663f678b8912c9bf669834c515f43f7) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): allow sorting
+
+- [#744](https://github.com/Frontify/brand-sdk/pull/744) [`7aad48f`](https://github.com/Frontify/brand-sdk/commit/7aad48f022aab38577cf0233c108b4997587c939) Thanks [@ragi96](https://github.com/ragi96)! - feat: add support for the new color type of app-bridge v4
+
+## 0.32.1
+
+### Patch Changes
+
+- [#747](https://github.com/Frontify/brand-sdk/pull/747) [`447bf26`](https://github.com/Frontify/brand-sdk/commit/447bf26ad6816f354cc9de91f6451cf807458ffb) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump `tailwindcss` to 3.4.1
+
 ## 0.32.0
 
 ### Minor Changes

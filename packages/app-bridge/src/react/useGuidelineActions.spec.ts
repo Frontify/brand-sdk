@@ -11,7 +11,6 @@ import {
     DocumentDummy,
     DocumentGroupDummy,
     DocumentPageDummy,
-    DocumentPageDuplicateDummy,
     getAppBridgeThemeStub,
 } from '../tests';
 
@@ -725,24 +724,23 @@ describe('useGuidelineActions hook', () => {
     it('should duplicate a page and emit an event', async () => {
         const duplicateDocumentPage = vi.spyOn(useGuidelineActionsStub, 'duplicateDocumentPage');
 
-        const page = {
+        const originalDocumentPage = {
             id: 2341,
             documentId: 10,
+            categoryId: 1138,
         };
 
         act(() => {
-            useGuidelineActionsStub.duplicateDocumentPage(page);
+            useGuidelineActionsStub.duplicateDocumentPage(originalDocumentPage);
         });
 
-        const documentPageDuplicateDummy = DocumentPageDuplicateDummy.with(2341);
-
         await waitFor(() => {
-            expect(duplicateDocumentPage).toHaveBeenCalledWith(page);
+            expect(duplicateDocumentPage).toHaveBeenCalledWith(originalDocumentPage);
             expect(emitSpy).toHaveBeenCalledWith('AppBridge:GuidelineDocumentPage:Action', {
                 documentPage: {
-                    ...documentPageDuplicateDummy,
-                    title: documentPageDuplicateDummy.name,
-                    documentId: page.documentId,
+                    ...DocumentPageDummy.with(originalDocumentPage.id),
+                    documentId: originalDocumentPage.documentId,
+                    categoryId: originalDocumentPage.categoryId,
                 },
                 action: 'add',
             });
