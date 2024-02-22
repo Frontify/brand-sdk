@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MouseEvent } from 'React';
+import { MouseEvent } from 'react';
 import { IconPen16, IconTrashBin16, useLinkOpenButtonState } from '@frontify/fondue';
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
 
