@@ -109,7 +109,7 @@ describe('FlyoutToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        const icons = [...getByTestId(BUTTON_ID).querySelectorAll('svg')];
+        const icons = [...getByTestId(BUTTON_ID).getElementsByTagName('svg')];
         expect(icons).toHaveLength(1);
         expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
     });
