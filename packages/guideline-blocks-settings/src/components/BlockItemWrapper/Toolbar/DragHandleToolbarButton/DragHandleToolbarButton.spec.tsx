@@ -82,7 +82,7 @@ describe('DragHandleToolbarButton', () => {
             <DragHandleToolbarButton tooltip={TOOLTIP_CONTENT} icon={<IconAdobeCreativeCloud />} draggableProps={{}} />,
         );
 
-        const icons = [...getByTestId(TOOLBAR_BUTTON_ID).querySelectorAll('svg')];
+        const icons = [...getByTestId(TOOLBAR_BUTTON_ID).getElementsByTagName('svg')];
         expect(icons).toHaveLength(1);
         expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
     });

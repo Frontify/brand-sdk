@@ -17,7 +17,7 @@ export class CoverPageDummy {
         };
     }
 
-    static withLegacy(id: number, title = 'Legacy Cover Page'): CoverPageUpdateLegacy {
+    static withLegacy(_id: number, title = 'Legacy Cover Page'): CoverPageUpdateLegacy {
         return {
             brandhome_draft: true,
             brandhome_title: title,

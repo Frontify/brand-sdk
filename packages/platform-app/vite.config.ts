@@ -13,6 +13,7 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
+            fileName: (format: string) => `[name].${format}.js`,
         },
         sourcemap: true,
         minify: true,

@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React from 'react';
 import sinon from 'sinon';
 import { afterEach, describe, it } from 'vitest';
 import { cleanup, render } from '@testing-library/react';

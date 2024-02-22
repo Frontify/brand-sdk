@@ -1,8 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 module.exports = {
-    extends: ['@frontify/eslint-config-react'],
+    extends: ['@frontify/eslint-config-typescript'],
     plugins: ['notice'],
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
     overrides: [
         {
             files: ['*.js', '*.ts', '*.tsx'],

@@ -35,6 +35,7 @@ export default defineConfig({
     },
     test: {
         environment: 'happy-dom',
+        css: true,
         coverage: {
             all: true,
             reporter: ['text', 'lcov'],
