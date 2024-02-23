@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { betweenNumericalOrPercentOrAutoRule } from '../../../src/helpers/rules/betweenNumericalOrPercentOrAutoRule';
 import { describe, expect, test } from 'vitest';
+
+import { betweenNumericalOrPercentOrAutoRule } from '../../../src/helpers/rules/betweenNumericalOrPercentOrAutoRule';
 
 describe('betweenNumericalOrPercentOrAutoRule', () => {
     const data = [

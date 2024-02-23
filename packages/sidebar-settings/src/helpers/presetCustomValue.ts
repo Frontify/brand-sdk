@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Bundle } from '../bundle';
+import { type Bundle } from '../bundle';
 
 /**
  * Sets value of custom input to predefined value from the Segmented Controls, if no custom value is set already

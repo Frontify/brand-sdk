@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { minimumNumericalOrPercentRule } from '../../../src/helpers/rules/minimumNumericalOrPercentRule';
 import { describe, expect, test } from 'vitest';
+
+import { minimumNumericalOrPercentRule } from '../../../src/helpers/rules/minimumNumericalOrPercentRule';
 
 describe('minimumNumericalOrPercentRule', () => {
     const data = [

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import React, { ComponentType } from 'react';
+import { ComponentType } from 'react';
 import { AppBridgeTheme } from '../AppBridgeTheme';
 import { getAppBridgeThemeStub, getAppBridgeThemeStubProps } from './AppBridgeThemeStub';
 

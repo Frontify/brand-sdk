@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { minimumNumericalOrPixelRule } from '../../../src/helpers/rules/minimumNumericalOrPixelRule';
 import { describe, expect, test } from 'vitest';
+
+import { minimumNumericalOrPixelRule } from '../../../src/helpers/rules/minimumNumericalOrPixelRule';
 
 describe('minimumNumericalOrPixelRule', () => {
     const data = [

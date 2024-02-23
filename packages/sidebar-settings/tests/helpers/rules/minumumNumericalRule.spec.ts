@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { minimumNumericalRule } from '../../../src/helpers/rules/minimumNumericalRule';
 import { describe, expect, test } from 'vitest';
+
+import { minimumNumericalRule } from '../../../src/helpers/rules/minimumNumericalRule';
 
 describe('minimumNumericalRule', () => {
     const data = [

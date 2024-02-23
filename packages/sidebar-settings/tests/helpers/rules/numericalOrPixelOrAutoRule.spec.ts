@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { numericalOrPixelOrAutoRule } from '../../../src/helpers/rules/numericalOrPixelOrAutoRule';
 import { describe, expect, test } from 'vitest';
+
+import { numericalOrPixelOrAutoRule } from '../../../src/helpers/rules/numericalOrPixelOrAutoRule';
 
 describe('numericalOrPixelOrAutoRule', () => {
     const data = [

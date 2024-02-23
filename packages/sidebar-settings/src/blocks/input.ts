@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ReactElement } from 'react';
+import { type ReactElement } from 'react';
 
-import type { Rule } from '../helpers';
-import type { BaseBlock } from './base';
-import type { IconEnum, TextInputType } from '.';
+import { type Rule } from '../helpers';
+
+import { type BaseBlock } from './base';
+
+import { type IconEnum, type TextInputType } from '.';
 
 export type InputBlock<AppBridge> = {
     /**

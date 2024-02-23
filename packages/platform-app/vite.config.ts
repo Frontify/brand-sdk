@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { defineConfig } from 'vitest/config';
-import dts from 'vite-plugin-dts';
+import { resolve } from 'node:path';
+
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
+
 import { dependencies as dependenciesMap } from './package.json';
 
 const dependencies = Object.keys(dependenciesMap);
@@ -13,6 +15,7 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
+            fileName: (format: string) => `[name].${format}.js`,
         },
         sourcemap: true,
         minify: true,

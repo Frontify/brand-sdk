@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test, vi } from 'vitest';
-import type { Bundle } from '../../src/bundle';
+
+import { type Bundle } from '../../src/bundle';
 import { appendUnit } from '../../src/helpers/appendUnit';
 
 describe('appendUnit', () => {
@@ -10,9 +11,8 @@ describe('appendUnit', () => {
             getBlock() {
                 return { value: 20 };
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             setBlockValue(): void {},
         };
 
@@ -27,9 +27,8 @@ describe('appendUnit', () => {
             getBlock() {
                 return { value: 40 };
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             setBlockValue(): void {},
         };
 
@@ -44,9 +43,8 @@ describe('appendUnit', () => {
             getBlock() {
                 return { value: '20px' };
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             setBlockValue(): void {},
         };
         const setBlockValueSpy = vi.spyOn(bundle, 'setBlockValue');
@@ -60,7 +58,7 @@ describe('appendUnit', () => {
                 return { value: undefined };
             },
             setBlockValue: vi.fn(),
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
         };
         appendUnit(bundle, 'my_setting_id');
@@ -73,7 +71,7 @@ describe('appendUnit', () => {
                 return { value: '' };
             },
             setBlockValue: vi.fn(),
-            // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             getAppBridge(): any {},
         };
         appendUnit(bundle, 'my_setting_id');

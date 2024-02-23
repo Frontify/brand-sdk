@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { maximumNumericalOrPercentRule } from '../../../src/helpers/rules/maximumNumericalOrPercentRule';
 import { describe, expect, test } from 'vitest';
+
+import { maximumNumericalOrPercentRule } from '../../../src/helpers/rules/maximumNumericalOrPercentRule';
 
 describe('maximumNumericalOrPercentRule', () => {
     const data = [

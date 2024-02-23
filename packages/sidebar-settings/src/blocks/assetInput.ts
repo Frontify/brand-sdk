@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetChooserObjectType, AssetChooserProjectType, AssetInputSize, FileExtension } from '.';
-import type { BaseBlock } from './base';
+import { type BaseBlock } from './base';
+
+import { type AssetChooserObjectType, type AssetChooserProjectType, type AssetInputSize, type FileExtension } from '.';
 
 export enum AssetInputSource {
     Library = 'Library',

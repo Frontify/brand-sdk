@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BaseBlock } from './base';
+import { type BaseBlock } from './base';
 
 export type LinkBlock<AppBridge> = {
     /**
