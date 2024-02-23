@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.4.0
+
+### Minor Changes
+
+- [#775](https://github.com/Frontify/brand-sdk/pull/775) [`3837782`](https://github.com/Frontify/brand-sdk/commit/383778258e862fb4fef62bf33aa71db71727aca1) Thanks [@mike85](https://github.com/mike85)! - feat: add open/close search dialog commands to AppBridgeTheme
+
 ## 3.3.2
 
 ### Patch Changes
