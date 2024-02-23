@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.33.5
+
+### Patch Changes
+
+- [`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add the dist folder to published packages
+
+- Updated dependencies [[`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d)]:
+  - @frontify/sidebar-settings@0.9.6
+
 ## 0.33.4
 
 ### Patch Changes
