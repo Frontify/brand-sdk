@@ -63,7 +63,7 @@ describe('ToolbarButton', () => {
             <ToolbarButton onClick={vi.fn()} tooltip={TOOLTIP_CONTENT} icon={<IconAdobeCreativeCloud />} />,
         );
 
-        const icons = [...getByTestId(TOOLBAR_BUTTON_ID).querySelectorAll('svg')];
+        const icons = [...getByTestId(TOOLBAR_BUTTON_ID).getElementsByTagName('svg')];
         expect(icons).toHaveLength(1);
         expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
     });

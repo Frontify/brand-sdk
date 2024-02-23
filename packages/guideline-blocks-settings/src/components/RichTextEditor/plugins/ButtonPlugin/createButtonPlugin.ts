@@ -77,7 +77,7 @@ export const createButtonPlugin = (appBridge: AppBridgeBlock) =>
             triggerFloatingButtonHotkeys: 'command+shift+k, ctrl+shift+k',
             appBridge,
         },
-        then: (editor, { type }) => ({
+        then: (_editor, { type }) => ({
             deserializeHtml: {
                 rules: [
                     {

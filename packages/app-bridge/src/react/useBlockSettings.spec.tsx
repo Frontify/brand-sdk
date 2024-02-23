@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, render, waitFor } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import sinon from 'sinon';
 import { afterEach, describe, expect, it } from 'vitest';
 import type { AppBridgeBlock } from '../AppBridgeBlock';

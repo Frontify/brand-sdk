@@ -9,11 +9,9 @@
         "directory": "packages/app-bridge"
     },
     "sideEffects": false,
-    "main": "dist/index.umd.js",
-    "unpkg": "dist/index.umd.js",
-    "jsdelivr": "dist/index.umd.js",
-    "module": "dist/index.es.js",
-    "types": "dist/index.d.ts",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "files": [
         "dist",
         "package.json.d.ts"
@@ -21,12 +19,12 @@
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/index.mjs",
+            "import": "./dist/index.js",
             "require": "./dist/index.js"
         },
         "./testing": {
             "types": "./dist/testing.d.ts",
-            "import": "./dist/testing.mjs",
+            "import": "./dist/testing.js",
             "require": "./dist/testing.js"
         },
         "./upload-worker": "./dist/upload.worker.js"
