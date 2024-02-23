@@ -9,9 +9,15 @@
         "url": "https://github.com/Frontify/brand-sdk",
         "directory": "packages/sidebar-settings"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "sideEffects": false,
     "main": "./dist/index.es.js",
     "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "vite build",
         "lint": "eslint .",
