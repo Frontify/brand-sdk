@@ -99,6 +99,9 @@ export type EmitterEvents = {
 
     'AppBridge:OpenNavigationManager': void;
 
+    'AppBridge:OpenSearchDialog': void;
+    'AppBridge:CloseSearchDialog': void;
+
     'AppBridge:GuidelineDocumentPage:Action':
         | {
               documentPage: DocumentPage;

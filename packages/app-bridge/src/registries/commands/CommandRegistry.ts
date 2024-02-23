@@ -10,6 +10,8 @@ type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
 type OpenNavigationManager = void;
 type DownloadAsset = Asset;
+type OpenSearchDialog = void;
+type CloseSearchDialog = void;
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -20,4 +22,6 @@ export type CommandRegistry = CommandNameValidator<{
     downloadAsset: DownloadAsset;
     openNavigationManager: OpenNavigationManager;
     openNewPublication: OpenNewPublicationPayload;
+    openSearchDialog: OpenSearchDialog;
+    closeSearchDialog: CloseSearchDialog;
 }>;
