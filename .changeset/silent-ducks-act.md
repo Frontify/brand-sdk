@@ -1,5 +1,5 @@
 ---
-"@frontify/guideline-blocks-settings": patch
+"@frontify/guideline-blocks-settings": minor
 ---
 
 feat(*): update fondue which comes with plate v30
