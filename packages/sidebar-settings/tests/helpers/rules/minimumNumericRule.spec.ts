@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test } from 'vitest';
+
 import { minimumNumericRule } from '../../../src/helpers/rules/minimumNumericRule';
 
 describe('minimumNumericRule', () => {

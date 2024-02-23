@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Rule } from './Rule';
-import { pixelRule } from './pixelRule';
+import { type Rule } from './Rule';
 import { minimumNumericRule } from './minimumNumericRule';
+import { pixelRule } from './pixelRule';
 
 export const minimumPixelRule = (minimumValue: number): Rule<string> => ({
     errorMessage: `Please use a value bigger or equal ${minimumValue} with 'px'`,

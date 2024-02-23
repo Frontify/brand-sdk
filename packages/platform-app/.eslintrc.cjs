@@ -8,6 +8,11 @@ module.exports = {
             version: 'detect',
         },
     },
+    parserOptions: {
+        project: ['./tsconfig.json', './tsconfig.node.json'],
+        tsconfigRootDir: __dirname,
+        sourceType: 'module',
+    },
     overrides: [
         {
             files: ['*.js', '*.ts', '*.tsx'],
@@ -21,6 +26,20 @@ module.exports = {
                         },
                     },
                 ],
+            },
+        },
+        {
+            files: ['**/*.md/**/*'],
+            processor: 'markdown/markdown',
+            parserOptions: {
+                project: null,
+            },
+        },
+        {
+            files: ['**/*.json'],
+            parser: 'jsonc-eslint-parser',
+            parserOptions: {
+                project: null,
             },
         },
     ],

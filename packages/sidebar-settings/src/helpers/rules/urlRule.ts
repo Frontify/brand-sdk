@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Rule } from './Rule';
+import { type Rule } from './Rule';
 
 export const urlRule: Rule<string> = {
     errorMessage: 'Please use a valid url',

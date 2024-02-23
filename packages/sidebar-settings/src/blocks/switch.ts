@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BaseBlock } from './base';
-import type { SettingBlock, SwitchSize } from './index';
+import { type BaseBlock } from './base';
+
+import { type SettingBlock, type SwitchSize } from './index';
 
 export type SwitchBlock<AppBridge> = {
     /**

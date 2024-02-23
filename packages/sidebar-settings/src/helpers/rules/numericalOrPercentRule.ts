@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Rule } from './Rule';
+import { type Rule } from './Rule';
 
 export const numericalOrPercentRule: Rule<string> = {
     errorMessage: "Please use a numerical value with or without '%'",

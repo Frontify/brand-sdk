@@ -1,22 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetInputBlock } from './assetInput';
-import { ChecklistBlock } from './checklist';
-import { ColorInputBlock } from './colorInput';
-import { DropdownBlock } from './dropdown';
-import { FontInputBlock } from './fontInput';
-import { InputBlock } from './input';
-import { LegacyAssetInputBlock } from './legacyAssetInput';
-import { LinkChooserBlock } from './linkChooser';
-import { LinkBlock } from './link';
-import { MultiInputBlock } from './multiInput';
-import { NotificationBlock } from './notification';
-import { SectionHeadingBlock } from './sectionHeading';
-import { SegmentedControlsBlock } from './segmentedControls';
-import { SwitchBlock } from './switch';
-import { TemplateInputBlock } from './templateInput';
-import { LegacyTemplateInputBlock } from './legacyTemplateInput';
-import { TextareaBlock } from './textarea';
+import { type AssetInputBlock } from './assetInput';
+import { type ChecklistBlock } from './checklist';
+import { type ColorInputBlock } from './colorInput';
+import { type DropdownBlock } from './dropdown';
+import { type FontInputBlock } from './fontInput';
+import { type InputBlock } from './input';
+import { type LegacyAssetInputBlock } from './legacyAssetInput';
+import { type LegacyTemplateInputBlock } from './legacyTemplateInput';
+import { type LinkBlock } from './link';
+import { type LinkChooserBlock } from './linkChooser';
+import { type MultiInputBlock } from './multiInput';
+import { type NotificationBlock } from './notification';
+import { type SectionHeadingBlock } from './sectionHeading';
+import { type SegmentedControlsBlock } from './segmentedControls';
+import { type SwitchBlock } from './switch';
+import { type TemplateInputBlock } from './templateInput';
+import { type TextareaBlock } from './textarea';
 
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 

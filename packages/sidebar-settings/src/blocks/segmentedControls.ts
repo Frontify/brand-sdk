@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { ChoicesType } from './choices';
+import { type ChoicesType } from './choices';
 
 /**
  * @deprecated Use `type: 'segmentedControls'` instead.

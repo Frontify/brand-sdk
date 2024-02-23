@@ -1,24 +1,24 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AppBridgePlatformApp } from '@frontify/app-bridge';
-import type {
-    ChecklistBlock as ChecklistBlockSettings,
-    ChoicesType as ChoicesTypeSettings,
-    ColorInputBlock as ColorInputBlockSettings,
-    DropdownBlock as DropdownBlockSettings,
-    InputBlock as InputBlockSettings,
-    MultiInputBlock as MultiInputBlockSettings,
-    NotificationBlock as NotificationBlockSettings,
-    SectionHeadingBlock as SectionHeadingBlockSettings,
-    SegmentedControlsBlock as SegmentedControlsBlockSettings,
-    SettingBlock as SettingBlockSettings,
-    SimpleSettingBlock as SimpleSettingBlockSettings,
-    SwitchBlock as SwitchBlockSettings,
-    TemplateInputBlock as TemplateInputBlockSettings,
-    TextareaBlock as TextareaBlockSettings,
-    ValueOrPromisedValue as ValueOrPromisedValueSettings,
+import { type AppBridgePlatformApp } from '@frontify/app-bridge';
+import {
+    type ChecklistBlock as ChecklistBlockSettings,
+    type ChoicesType as ChoicesTypeSettings,
+    type ColorInputBlock as ColorInputBlockSettings,
+    type DropdownBlock as DropdownBlockSettings,
+    type InputBlock as InputBlockSettings,
+    type MultiInputBlock as MultiInputBlockSettings,
+    type NotificationBlock as NotificationBlockSettings,
+    type SectionHeadingBlock as SectionHeadingBlockSettings,
+    type SegmentedControlsBlock as SegmentedControlsBlockSettings,
+    type SettingBlock as SettingBlockSettings,
+    type SimpleSettingBlock as SimpleSettingBlockSettings,
+    type SwitchBlock as SwitchBlockSettings,
+    type TemplateInputBlock as TemplateInputBlockSettings,
+    type TextareaBlock as TextareaBlockSettings,
+    type ValueOrPromisedValue as ValueOrPromisedValueSettings,
 } from '@frontify/sidebar-settings';
-import { FC } from 'react';
+import { type FC } from 'react';
 
 export * from '@frontify/sidebar-settings';
 

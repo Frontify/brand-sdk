@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Bundle } from '../bundle';
-import { Unit } from './types';
+import { type Bundle } from '../bundle';
+
+import { type Unit } from './types';
 
 /**
  * Checks if value is a numeric value without unit and creates string from value with unit

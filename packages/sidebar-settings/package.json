@@ -1,17 +1,17 @@
 {
     "name": "@frontify/sidebar-settings",
+    "type": "module",
     "version": "0.9.3",
     "description": "Provides types and helpers for the settings sidebar",
-    "sideEffects": false,
-    "type": "module",
-    "main": "./dist/index.es.js",
-    "types": "./dist/index.d.ts",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
         "url": "https://github.com/Frontify/brand-sdk",
         "directory": "packages/sidebar-settings"
     },
+    "sideEffects": false,
+    "main": "./dist/index.es.js",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "build": "vite build",
         "lint": "eslint .",
@@ -22,10 +22,17 @@
         "test": "vitest run",
         "test:watch": "vitest"
     },
+    "peerDependencies": {
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "dependencies": {
+        "@frontify/fondue": "12.0.0-beta.404"
+    },
     "devDependencies": {
         "@babel/core": "^7.23.9",
         "@frontify/eslint-config-typescript": "^0.16.2",
-        "@types/react": "^18.2.57",
+        "@types/react": "^18.2.58",
         "@types/react-dom": "^18.2.19",
         "eslint": "^8.56.0",
         "eslint-plugin-notice": "^0.9.10",
@@ -36,12 +43,5 @@
         "vite": "^5.1.4",
         "vite-plugin-dts": "^3.7.3",
         "vitest": "^1.3.1"
-    },
-    "dependencies": {
-        "@frontify/fondue": "12.0.0-beta.404"
-    },
-    "peerDependencies": {
-        "react": "^18",
-        "react-dom": "^18"
     }
 }

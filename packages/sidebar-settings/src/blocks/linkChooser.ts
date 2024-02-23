@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { SearchResult as SearchResultFondue } from '@frontify/fondue';
-import type { BaseBlock } from './base';
+import { type SearchResult as SearchResultFondue } from '@frontify/fondue';
+
+import { type BaseBlock } from './base';
 
 export type SearchResult = SearchResultFondue;
 

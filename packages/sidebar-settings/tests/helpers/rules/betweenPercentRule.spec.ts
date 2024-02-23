@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { betweenPercentRule } from '../../../src/helpers/rules/betweenPercentRule';
 import { describe, expect, test } from 'vitest';
+
+import { betweenPercentRule } from '../../../src/helpers/rules/betweenPercentRule';
 
 describe('betweenPercentRule', () => {
     const data = [
