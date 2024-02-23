@@ -5,9 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  '@udecode/plate-emoji@30.5.3':
+  '@udecode/plate-emoji@30.7.0':
     hash: dh5teqvvykulbav3j7foi74cke
-    path: patches/@udecode__plate-emoji@30.5.3.patch
+    path: patches/@udecode__plate-emoji@30.7.0.patch
 
 importers:
 
@@ -23,8 +23,8 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
       '@frontify/fondue':
-        specifier: 12.0.0-beta.405
-        version: 12.0.0-beta.405(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.406
+        version: 12.0.0-beta.406(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@4.5.2)
@@ -256,8 +256,8 @@ importers:
         specifier: ^3.0.0 || ^4.0.0-alpha.0
         version: 3.4.0(react-dom@18.2.0)(react@18.2.0)(sinon@17.0.1)
       '@frontify/fondue':
-        specifier: 12.0.0-beta.405
-        version: 12.0.0-beta.405(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.406
+        version: 12.0.0-beta.406(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -405,8 +405,8 @@ importers:
   packages/sidebar-settings:
     dependencies:
       '@frontify/fondue':
-        specifier: 12.0.0-beta.405
-        version: 12.0.0-beta.405(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.406
+        version: 12.0.0-beta.406(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.9
@@ -1660,8 +1660,8 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.405(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1):
-    resolution: {integrity: sha512-7h5DuD+Vf+zznLPWG/G7UYgwK8kEZQyp1+R04mPehuXbUrvgkX4abwcoGndVFIbr/qoNS6BzitczBOgK2TpvJQ==}
+  /@frontify/fondue@12.0.0-beta.406(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1):
+    resolution: {integrity: sha512-3pP3O11V5KTusSlS/5RLYJUIjNyhP3s7IEqCbfjO3IFo/W85KjNqJS/thiKYQ/TgcFVYrVUd0HloeoCtH9s3nw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
@@ -1716,10 +1716,10 @@ packages:
       '@udecode/plate-autoformat': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-basic-marks': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-break': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
-      '@udecode/plate-code-block': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
+      '@udecode/plate-code-block': 30.7.0(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-combobox': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-core': 30.4.5(@types/react@18.2.58)(immer@9.0.12)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
-      '@udecode/plate-emoji': 30.5.3(patch_hash=dh5teqvvykulbav3j7foi74cke)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
+      '@udecode/plate-emoji': 30.7.0(patch_hash=dh5teqvvykulbav3j7foi74cke)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-floating': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-indent': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-link': 30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
@@ -4219,8 +4219,8 @@ packages:
       slate-hyperscript: 0.100.0(slate@0.102.0)
       slate-react: 0.102.0(react-dom@18.2.0)(react@18.2.0)(slate@0.102.0)
 
-  /@udecode/plate-code-block@30.5.3(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
-    resolution: {integrity: sha512-zZRwUbj46wbi9uwiNbM8aDHzD1gIcgBehmhM9hJXBRgI46dQTII6GZgdDczihYaooulL7QkTeXCkNDcco0f4sw==}
+  /@udecode/plate-code-block@30.7.0(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
+    resolution: {integrity: sha512-/wodH5+SH9eALLIiUAkcwRE2EO4eIBIe5bIoCYMToe3dwaDF4MVHwBU5jZLzi6cy9osar396CQfPmW1j63MJLQ==}
     peerDependencies:
       '@udecode/plate-common': '>=30.4.5 < 31'
       react: '>=16.8.0'
@@ -4326,8 +4326,8 @@ packages:
       - react-native
       - scheduler
 
-  /@udecode/plate-emoji@30.5.3(patch_hash=dh5teqvvykulbav3j7foi74cke)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
-    resolution: {integrity: sha512-uStdINJmHj+2q5oFF1su9SPXsw7BQxRO/G1j2GxpjIHYyr20BuG5T+PMLjOl+YQTUjOovb8pzWE0iobloF8CsA==}
+  /@udecode/plate-emoji@30.7.0(patch_hash=dh5teqvvykulbav3j7foi74cke)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
+    resolution: {integrity: sha512-wQSd82O03qNnVfEO6XDd7d87tdZzHl9c8b7rNxuCLV1onWWnrztWO3cJgsSWY/Urkg6NxhUZovanQmEoKwx9uQ==}
     peerDependencies:
       '@udecode/plate-common': '>=30.4.5 < 31'
       react: '>=16.8.0'
