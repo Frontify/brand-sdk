@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.4.2
+
+### Patch Changes
+
+- [`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add the dist folder to published packages
+
 ## 3.4.1
 
 ### Patch Changes
