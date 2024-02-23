@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Bundle } from '../bundle';
+import { type Bundle } from '../bundle';
 
 export type ValueOrPromisedValue<AppBridge, FieldType> =
     | FieldType

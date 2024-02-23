@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type Rule } from './Rule';
 import { numericalOrPercentRule } from './numericalOrPercentRule';
-import { Rule } from './Rule';
 
 export const maximumNumericalOrPercentRule = (maximumValue: number): Rule<string> => ({
     errorMessage: `Please use a value smaller than ${maximumValue}`,

@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ReactElement } from 'react';
+import { type ReactElement } from 'react';
 
-import type { IconEnum } from '.';
-import type { BaseBlock, ValueOrPromisedValue } from './base';
+import { type BaseBlock, type ValueOrPromisedValue } from './base';
+
+import { type IconEnum } from '.';
 
 export type Choice = {
     /**

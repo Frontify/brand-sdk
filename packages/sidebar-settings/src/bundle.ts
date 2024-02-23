@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { SettingBlock } from './blocks';
+import { type SettingBlock } from './blocks';
 
 export type SettingValue<AppBridge> = {
     value?: SettingBlock<AppBridge>['value'];

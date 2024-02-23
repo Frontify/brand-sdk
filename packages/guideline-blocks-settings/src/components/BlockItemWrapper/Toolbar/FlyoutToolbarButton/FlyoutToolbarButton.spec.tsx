@@ -12,10 +12,10 @@ const TOOLTIP_ID = 'toolbar-button-tooltip';
 
 const TEST_FLYOUT_ID = 'test';
 const TEST_TOOLTIP = 'tooltip';
+
 /**
  * @vitest-environment happy-dom
  */
-
 describe('FlyoutToolbarButton', () => {
     it('should log error if not inside a flyout provider when opening', async () => {
         vi.spyOn(console, 'error');
@@ -109,7 +109,7 @@ describe('FlyoutToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        const icons = [...getByTestId(BUTTON_ID).querySelectorAll('svg')];
+        const icons = [...getByTestId(BUTTON_ID).getElementsByTagName('svg')];
         expect(icons).toHaveLength(1);
         expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
     });

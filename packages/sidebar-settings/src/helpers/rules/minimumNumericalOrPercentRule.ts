@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Rule } from './Rule';
-import { numericalOrPercentRule } from './numericalOrPercentRule';
+import { type Rule } from './Rule';
 import { minimumNumericRule } from './minimumNumericRule';
+import { numericalOrPercentRule } from './numericalOrPercentRule';
 
 export const minimumNumericalOrPercentRule = (minimumValue: number): Rule<string> => ({
     errorMessage: `Please use a value bigger or than ${minimumValue}`,
