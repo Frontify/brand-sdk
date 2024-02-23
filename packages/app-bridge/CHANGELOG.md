@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 3.4.1
+
+### Patch Changes
+
+- [`b0424c0`](https://github.com/Frontify/brand-sdk/commit/b0424c0a6dc1beef011c0d32124f53aed2e2a4b7) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [#776](https://github.com/Frontify/brand-sdk/pull/776) [`29ef8e1`](https://github.com/Frontify/brand-sdk/commit/29ef8e1e64a6372d580af06a86ef39ca2052662a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Remove CJS to embrace ESM
+
 ## 3.4.0
 
 ### Minor Changes
