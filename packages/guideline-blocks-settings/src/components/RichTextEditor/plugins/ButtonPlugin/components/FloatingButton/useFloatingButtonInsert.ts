@@ -18,7 +18,9 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonInsert = (floatingOptions: UseVirtualFloatingOptions) => {
+export const useFloatingButtonInsert = (
+    floatingOptions: UseVirtualFloatingOptions,
+): React.HTMLAttributes<HTMLDivElement> => {
     const editor = useEditorRef();
     const focused = useFocused();
     const mode = useFloatingButtonSelectors().mode();

@@ -27,7 +27,9 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonEdit = (floatingOptions: UseVirtualFloatingOptions) => {
+export const useFloatingButtonEdit = (
+    floatingOptions: UseVirtualFloatingOptions,
+): React.HTMLAttributes<HTMLDivElement> => {
     const editor = useEditorRef();
     const mode = useFloatingButtonSelectors().mode();
     const open = useFloatingButtonSelectors().isOpen(editor.id);
