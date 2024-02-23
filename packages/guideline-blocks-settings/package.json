@@ -52,7 +52,7 @@
         "@react-aria/focus": "^3.14.0",
         "@react-stately/overlays": "^3.6.1",
         "@udecode/plate": "^21.5.0",
-        "slate": "^0.94.1",
+        "slate": "^0.102.0",
         "slate-react": "^0.98.3"
     },
     "devDependencies": {
