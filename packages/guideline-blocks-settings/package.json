@@ -1,7 +1,7 @@
 {
     "name": "@frontify/guideline-blocks-settings",
     "type": "module",
-    "version": "0.33.3",
+    "version": "0.33.5",
     "description": "Provides types and helpers for the guideline block development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -10,6 +10,12 @@
         "directory": "packages/guideline-blocks-settings"
     },
     "sideEffects": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "dist"
+    ],
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",

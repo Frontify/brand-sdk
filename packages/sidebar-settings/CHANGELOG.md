@@ -1,5 +1,17 @@
 # @frontify/sidebar-settings
 
+## 0.9.6
+
+### Patch Changes
+
+- [`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add the dist folder to published packages
+
+## 0.9.5
+
+### Patch Changes
+
+- [`de53c69`](https://github.com/Frontify/brand-sdk/commit/de53c69b43e3f0a9b245cc2b193d6edef390dc00) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix broken build produced in `dev` branch
+
 ## 0.9.4
 
 ### Patch Changes

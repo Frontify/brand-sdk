@@ -1,7 +1,7 @@
 {
     "name": "@frontify/platform-app",
     "type": "module",
-    "version": "0.0.8",
+    "version": "0.0.10",
     "description": "Provides the types for the Apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -15,6 +15,9 @@
     "publishConfig": {
         "access": "public"
     },
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "vite build",
         "lint": "eslint .",
