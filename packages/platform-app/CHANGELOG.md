@@ -1,5 +1,14 @@
 # @frontify/platform-app
 
+## 0.0.9
+
+### Patch Changes
+
+- [`de53c69`](https://github.com/Frontify/brand-sdk/commit/de53c69b43e3f0a9b245cc2b193d6edef390dc00) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix broken build produced in `dev` branch
+
+- Updated dependencies [[`de53c69`](https://github.com/Frontify/brand-sdk/commit/de53c69b43e3f0a9b245cc2b193d6edef390dc00)]:
+  - @frontify/sidebar-settings@0.9.5
+
 ## 0.0.8
 
 ### Patch Changes
