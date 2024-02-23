@@ -14,7 +14,7 @@ const ChildSelector = '[data-test-id="block-item-wrapper-child"]';
 describe('Block Item Wrapper', () => {
     it('should render the wrapper and the children', () => {
         mount(
-            <BlockItemWrapper toolbarFlyoutItems={[]} toolbarItems={[]}>
+            <BlockItemWrapper toolbarItems={[]}>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
             </BlockItemWrapper>,
         );
@@ -24,7 +24,7 @@ describe('Block Item Wrapper', () => {
 
     it('should render the outline class', () => {
         mount(
-            <BlockItemWrapper toolbarFlyoutItems={[]} toolbarItems={[]}>
+            <BlockItemWrapper toolbarItems={[]}>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
             </BlockItemWrapper>,
         );
@@ -33,7 +33,7 @@ describe('Block Item Wrapper', () => {
 
     it('should not render the outline class if the hide prop is set', () => {
         mount(
-            <BlockItemWrapper toolbarFlyoutItems={[]} toolbarItems={[]} shouldHideWrapper>
+            <BlockItemWrapper toolbarItems={[]} shouldHideWrapper>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
             </BlockItemWrapper>,
         );
@@ -43,10 +43,9 @@ describe('Block Item Wrapper', () => {
     it('should render the right amount of toolbar items', () => {
         mount(
             <BlockItemWrapper
-                toolbarFlyoutItems={[]}
                 toolbarItems={[
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -58,30 +57,33 @@ describe('Block Item Wrapper', () => {
     it('should render the flyout button with the right amount of menu items', () => {
         mount(
             <BlockItemWrapper
-                toolbarFlyoutItems={[
-                    [
-                        {
-                            icon: <IconMagnifier16 />,
-                            onClick: cy.stub(),
-                            title: 'Test title',
-                        },
-                    ],
-                    [
-                        {
-                            icon: <IconMagnifier16 />,
-                            onClick: cy.stub(),
-                            title: 'Test title',
-                        },
-                        {
-                            icon: <IconMagnifier16 />,
-                            onClick: cy.stub(),
-                            title: 'Test title',
-                        },
-                    ],
-                ]}
                 toolbarItems={[
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    {
+                        type: 'menu',
+                        items: [
+                            [
+                                {
+                                    icon: <IconMagnifier16 />,
+                                    onClick: cy.stub(),
+                                    title: 'Test title',
+                                },
+                            ],
+                            [
+                                {
+                                    icon: <IconMagnifier16 />,
+                                    onClick: cy.stub(),
+                                    title: 'Test title',
+                                },
+                                {
+                                    icon: <IconMagnifier16 />,
+                                    onClick: cy.stub(),
+                                    title: 'Test title',
+                                },
+                            ],
+                        ],
+                    },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-mt-8 tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -96,10 +98,9 @@ describe('Block Item Wrapper', () => {
     it('should render the outline if a toolbar button is focused', () => {
         mount(
             <BlockItemWrapper
-                toolbarFlyoutItems={[]}
                 toolbarItems={[
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -112,11 +113,10 @@ describe('Block Item Wrapper', () => {
     it('should render the toolbar if a button is focused', () => {
         mount(
             <BlockItemWrapper
-                toolbarFlyoutItems={[]}
                 shouldHideComponent={false}
                 toolbarItems={[
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -129,10 +129,9 @@ describe('Block Item Wrapper', () => {
     it('should render the outline and the toolbar if enabled', () => {
         mount(
             <BlockItemWrapper
-                toolbarFlyoutItems={[]}
                 toolbarItems={[
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
                 shouldBeShown
             >

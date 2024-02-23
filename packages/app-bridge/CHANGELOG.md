@@ -1,5 +1,17 @@
 # @frontify/app-bridge
 
+## 3.3.2
+
+### Patch Changes
+
+- [#769](https://github.com/Frontify/brand-sdk/pull/769) [`dde3283`](https://github.com/Frontify/brand-sdk/commit/dde328355d240a730ba6a6d465166c0ecc773548) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix: document page duplication return type
+
+## 3.3.1
+
+### Patch Changes
+
+- [#766](https://github.com/Frontify/brand-sdk/pull/766) [`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
 ## 3.3.0
 
 ### Minor Changes
