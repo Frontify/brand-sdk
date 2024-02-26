@@ -10,11 +10,12 @@ import {
     getRangeBoundingClientRect,
     getStartPoint,
     someNode,
+    useComposedRef,
     useEditorRef,
     useEditorVersion,
     useHotkeys,
 } from '@frontify/fondue';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, type Ref } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
@@ -29,7 +30,7 @@ import {
 
 export const useFloatingButtonEdit = (
     floatingOptions: UseVirtualFloatingOptions,
-): React.HTMLAttributes<HTMLDivElement> => {
+): React.HTMLAttributes<HTMLDivElement> & { ref: Ref<HTMLDivElement> } => {
     const editor = useEditorRef();
     const mode = useFloatingButtonSelectors().mode();
     const open = useFloatingButtonSelectors().isOpen(editor.id);
@@ -55,7 +56,7 @@ export const useFloatingButtonEdit = (
 
     const isOpen = open && mode === 'edit';
 
-    const { update, style } = useVirtualFloatingButton({
+    const { update, style, floating } = useVirtualFloatingButton({
         open: isOpen,
         getBoundingClientRect,
         ...floatingOptions,
@@ -107,5 +108,6 @@ export const useFloatingButtonEdit = (
             ...style,
             zIndex: 1000,
         },
+        ref: useComposedRef<HTMLElement | null>(floating),
     };
 };

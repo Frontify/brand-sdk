@@ -4,11 +4,12 @@ import {
     UseVirtualFloatingOptions,
     getPluginOptions,
     getSelectionBoundingClientRect,
+    useComposedRef,
     useEditorRef,
     useFocused,
     useHotkeys,
 } from '@frontify/fondue';
-import { useEffect } from 'react';
+import { useEffect, type Ref } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { triggerFloatingButtonInsert } from '../../utils/triggerFloatingButtonInsert';
 import {
@@ -20,7 +21,7 @@ import {
 
 export const useFloatingButtonInsert = (
     floatingOptions: UseVirtualFloatingOptions,
-): React.HTMLAttributes<HTMLDivElement> => {
+): React.HTMLAttributes<HTMLDivElement> & { ref: Ref<HTMLDivElement> } => {
     const editor = useEditorRef();
     const focused = useFocused();
     const mode = useFloatingButtonSelectors().mode();
@@ -43,7 +44,7 @@ export const useFloatingButtonInsert = (
         [focused],
     );
 
-    const { update, style } = useVirtualFloatingButton({
+    const { update, style, floating } = useVirtualFloatingButton({
         open: open && mode === 'insert',
         getBoundingClientRect: getSelectionBoundingClientRect,
         whileElementsMounted: undefined,
@@ -65,5 +66,6 @@ export const useFloatingButtonInsert = (
             ...style,
             zIndex: 1000,
         },
+        ref: useComposedRef<HTMLElement | null>(floating),
     };
 };
