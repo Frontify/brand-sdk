@@ -1,5 +1,19 @@
 # @frontify/frontify-cli
 
+## 5.6.5
+
+### Patch Changes
+
+- [`de53c69`](https://github.com/Frontify/brand-sdk/commit/de53c69b43e3f0a9b245cc2b193d6edef390dc00) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix broken build produced in `dev` branch
+
+## 5.6.4
+
+### Patch Changes
+
+- [`b0424c0`](https://github.com/Frontify/brand-sdk/commit/b0424c0a6dc1beef011c0d32124f53aed2e2a4b7) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+- [#788](https://github.com/Frontify/brand-sdk/pull/788) [`db5151e`](https://github.com/Frontify/brand-sdk/commit/db5151eccbee139fc086ad7d34b7ef832095bb2f) Thanks [@ragi96](https://github.com/ragi96)! - Fix: adjust templates
+
 ## 5.6.3
 
 ### Patch Changes
