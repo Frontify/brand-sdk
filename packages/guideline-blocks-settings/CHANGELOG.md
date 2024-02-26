@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.0
+
+### Minor Changes
+
+- [#750](https://github.com/Frontify/brand-sdk/pull/750) [`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): update fondue which comes with plate v30
+
+  @udecode/plate libraries are no longer used as a direct dependency, instead all required parts are now imported from @frontify/fondue
+
+### Patch Changes
+
+- Updated dependencies [[`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32)]:
+  - @frontify/sidebar-settings@0.9.7
+
 ## 0.33.5
 
 ### Patch Changes
