@@ -9,7 +9,7 @@ import {
     useFocused,
     useHotkeys,
 } from '@frontify/fondue';
-import { useEffect, type Ref } from 'react';
+import { type Ref, useEffect } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { triggerFloatingButtonInsert } from '../../utils/triggerFloatingButtonInsert';
 import {

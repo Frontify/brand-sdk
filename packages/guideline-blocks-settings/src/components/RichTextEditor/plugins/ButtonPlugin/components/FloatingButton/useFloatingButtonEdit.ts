@@ -15,7 +15,7 @@ import {
     useEditorVersion,
     useHotkeys,
 } from '@frontify/fondue';
-import { useCallback, useEffect, type Ref } from 'react';
+import { type Ref, useCallback, useEffect } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
