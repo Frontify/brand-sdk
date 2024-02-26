@@ -1,12 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { UseVirtualFloatingOptions, flip, offset, useVirtualFloating } from '@udecode/plate';
+import { UseVirtualFloatingOptions, flip, offset, useVirtualFloating } from '@frontify/fondue';
+import { CSSProperties, type Ref } from 'react';
 
 const OFFSET_Y = 12;
 const OFFSET_X = -22;
 const PADDING = 96;
 
-export const useVirtualFloatingButton = (floatingOptions?: UseVirtualFloatingOptions) =>
+export const useVirtualFloatingButton = (
+    floatingOptions?: UseVirtualFloatingOptions,
+): { style: CSSProperties; update: () => void; floating: Ref<HTMLDivElement> } =>
     useVirtualFloating({
         placement: 'bottom-start',
         middleware: [

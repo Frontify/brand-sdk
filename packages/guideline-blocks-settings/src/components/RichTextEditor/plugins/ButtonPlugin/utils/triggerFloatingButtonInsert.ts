@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, Value, getEditorString, getPluginType, isRangeAcrossBlocks, someNode } from '@udecode/plate';
+import { PlateEditor, Value, getEditorString, getPluginType, isRangeAcrossBlocks, someNode } from '@frontify/fondue';
 import { floatingButtonActions, floatingButtonSelectors } from '../components/FloatingButton/floatingButtonStore';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 
@@ -39,7 +39,6 @@ export const triggerFloatingButtonInsert = <V extends Value>(
     if (hasButton) {
         return;
     }
-
     floatingButtonActions.text(getEditorString(editor, editor.selection));
     floatingButtonActions.show('insert', editor.id);
 };

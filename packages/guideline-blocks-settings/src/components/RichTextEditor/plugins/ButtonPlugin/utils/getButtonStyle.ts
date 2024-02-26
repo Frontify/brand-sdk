@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, getAboveNode } from '@udecode/plate';
+import { PlateEditor, getAboveNode } from '@frontify/fondue';
 import { ELEMENT_BUTTON, RichTextButtonStyle, TButtonElement } from '..';
 
 export const getButtonStyle = (editor: PlateEditor): RichTextButtonStyle => {

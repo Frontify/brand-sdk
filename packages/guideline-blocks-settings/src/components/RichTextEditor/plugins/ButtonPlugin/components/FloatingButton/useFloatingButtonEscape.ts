@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { focusEditor, useEditorRef, useHotkeys } from '@udecode/plate';
+import { focusEditor, useEditorRef, useHotkeys } from '@frontify/fondue';
 import { floatingButtonActions, floatingButtonSelectors } from './floatingButtonStore';
 
 export const useFloatingButtonEscape = () => {
@@ -19,7 +19,7 @@ export const useFloatingButtonEscape = () => {
                 return;
             }
 
-            floatingButtonActions.hide();
+            floatingButtonActions.reset();
         },
         {
             enableOnFormTags: ['INPUT'],

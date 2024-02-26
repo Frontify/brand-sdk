@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { ELEMENT_LINK, PlateEditor, getAboveNode } from '@frontify/fondue';
-import { TLinkElement } from '../../RichTextEditor/plugins/LinkPlugin/types';
+import { TLinkElement } from '../types';
 
 const getLinkNode = (editor: PlateEditor, cb: (link: TLinkElement) => string): string => {
     const linkNode = getAboveNode<TLinkElement>(editor, { match: { type: ELEMENT_LINK } });
@@ -25,6 +25,6 @@ export const getUrlFromLinkOrLegacyLink = (link: TLinkElement): string => {
     return link.url || link.chosenLink?.searchResult?.link || '';
 };
 
-export const getLinkFromEditor = (editor: PlateEditor) => {
+export const getUrlFromEditor = (editor: PlateEditor) => {
     return getLinkNode(editor, getUrlFromLinkOrLegacyLink);
 };

@@ -1,16 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateRenderElementProps, createPluginFactory } from '@udecode/plate';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
+    PlatePlugin,
+    type PlateRenderElementProps,
     Plugin,
     PluginProps,
     TextStyleRenderElementProps,
     alignmentClassnames,
+    createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import type { CSSProperties } from 'react';
 import { BlockStyles, TextStyles } from '../styles';
 
 const ID = 'textstyle-heading1-plugin';
@@ -25,7 +27,7 @@ export class Heading1Plugin extends Plugin {
         this.styles = styles;
     }
 
-    plugins() {
+    plugins(): PlatePlugin[] {
         return [createHeading1Plugin(this.styles)];
     }
 }

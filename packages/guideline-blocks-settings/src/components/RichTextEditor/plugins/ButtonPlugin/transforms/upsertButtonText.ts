@@ -8,7 +8,7 @@ import {
     getEditorString,
     getPluginType,
     replaceNodeChildren,
-} from '@udecode/plate';
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON, TButtonElement } from '..';
 import { UpsertButtonOptions } from './upsertButton';
 

@@ -10,7 +10,7 @@ import {
     splitNodes,
     unwrapNodes,
     withoutNormalizing,
-} from '@udecode/plate';
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 
 /**

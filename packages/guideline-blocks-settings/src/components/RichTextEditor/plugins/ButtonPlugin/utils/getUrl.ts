@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, getAboveNode } from '@udecode/plate';
+import { PlateEditor, getAboveNode } from '@frontify/fondue';
 import { ELEMENT_BUTTON, TButtonElement } from '..';
 
 const getLinkNode = (editor: PlateEditor, cb: (link: TButtonElement) => string): string => {
