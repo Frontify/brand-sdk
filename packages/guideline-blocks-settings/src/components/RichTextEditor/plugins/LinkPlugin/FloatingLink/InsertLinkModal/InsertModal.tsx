@@ -7,6 +7,7 @@ import {
     ButtonEmphasis,
     ButtonSize,
     ButtonStyle,
+    FloatingModalWrapper,
     FormControl,
     IconCheckMark20,
     TextInput,
@@ -41,7 +42,7 @@ export const InsertModal = ({
     appBridge,
     children,
 }: Props): ReactElement => (
-    <div data-test-id={testId} className="tw-bg-white tw-rounded tw-shadow tw-p-7 tw-min-w-[400px] tw-overflow-y-auto">
+    <FloatingModalWrapper data-test-id={testId} padding="28px" minWidth="400px">
         <FormControl
             label={{
                 children: 'Text',
@@ -84,5 +85,5 @@ export const InsertModal = ({
                 </Button>
             </div>
         </div>
-    </div>
+    </FloatingModalWrapper>
 );

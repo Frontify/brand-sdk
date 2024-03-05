@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { MouseEvent } from 'react';
-import { IconPen16, IconTrashBin16, useLinkOpenButtonState } from '@frontify/fondue';
+import { FloatingModalWrapper, IconPen16, IconTrashBin16, useLinkOpenButtonState } from '@frontify/fondue';
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
 
 type EditModalProps = {
@@ -19,7 +19,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
     const url = element ? getUrlFromLinkOrLegacyLink(element) : '';
 
     return (
-        <div data-test-id="floating-link-edit" className="tw-bg-white tw-rounded tw-shadow tw-p-4 tw-min-w-[400px]">
+        <FloatingModalWrapper data-test-id="floating-link-edit" padding="16px" minWidth="400px">
             <span data-test-id="preview-link-flyout" className="tw-flex tw-justify-between tw-items-center">
                 <span className="tw-pointer-events-none">{url}</span>
                 <span className="tw-flex tw-gap-2">
@@ -42,6 +42,6 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                     </button>
                 </span>
             </span>
-        </div>
+        </FloatingModalWrapper>
     );
 };

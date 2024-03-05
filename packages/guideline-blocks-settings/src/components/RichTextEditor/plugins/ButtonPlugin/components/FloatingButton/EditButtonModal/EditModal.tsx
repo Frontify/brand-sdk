@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconPen16, IconTrashBin16, focusEditor, useEditorRef } from '@frontify/fondue';
+import { FloatingModalWrapper, IconPen16, IconTrashBin16, focusEditor, useEditorRef } from '@frontify/fondue';
 
 import { floatingButtonSelectors } from '../floatingButtonStore';
 import { unwrapButton } from '../../../transforms';
@@ -9,10 +9,7 @@ import { triggerFloatingButtonEdit } from '../../../utils';
 export const EditModal = () => {
     const editor = useEditorRef();
     return (
-        <div
-            data-test-id="floating-button-edit"
-            className="tw-bg-white tw-text-text tw-rounded tw-shadow tw-p-4 tw-min-w-[400px]"
-        >
+        <FloatingModalWrapper padding="16px" minWidth="400px" data-test-id="floating-button-edit">
             <span data-test-id="preview-button-flyout" className="tw-flex tw-justify-between tw-items-center">
                 <span className="tw-pointer-events-none">{floatingButtonSelectors.url()}</span>
                 <span className="tw-flex tw-gap-2">
@@ -40,6 +37,6 @@ export const EditModal = () => {
                     </button>
                 </span>
             </span>
-        </div>
+        </FloatingModalWrapper>
     );
 };
