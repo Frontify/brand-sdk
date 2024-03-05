@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.8
+
+### Patch Changes
+
+- [#800](https://github.com/Frontify/brand-sdk/pull/800) [`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to 12.0.0-beta.410
+
 ## 5.6.7
 
 ### Patch Changes

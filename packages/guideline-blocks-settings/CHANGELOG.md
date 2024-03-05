@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.2
+
+### Patch Changes
+
+- [#800](https://github.com/Frontify/brand-sdk/pull/800) [`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to 12.0.0-beta.410
+
+- [#801](https://github.com/Frontify/brand-sdk/pull/801) [`51d5537`](https://github.com/Frontify/brand-sdk/commit/51d55375a86547f1036c4c892da97f6cb64b1e88) Thanks [@SamCreasey](https://github.com/SamCreasey)! - perf(RichTextEditor): Stabilize props to avoid unneccessary rerenders.
+
+- Updated dependencies [[`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c)]:
+  - @frontify/sidebar-settings@0.9.9
+
 ## 0.34.1
 
 ### Patch Changes
