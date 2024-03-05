@@ -6,4 +6,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-chore: bump @frontify/fondue to ^12.0.0-beta-411
+chore: bump @frontify/fondue to ^12.0.0-beta.411
