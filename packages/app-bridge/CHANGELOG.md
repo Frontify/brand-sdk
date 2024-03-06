@@ -1,5 +1,15 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.10
+
+### Minor Changes
+
+- [#808](https://github.com/Frontify/brand-sdk/pull/808) [`4529beb`](https://github.com/Frontify/brand-sdk/commit/4529beb4b9f20ba94c7d6226257b422d6b560d5a) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add navigateToDocumentSection command to AppBridgeTheme
+
+### Patch Changes
+
+- [#810](https://github.com/Frontify/brand-sdk/pull/810) [`0ac69ea`](https://github.com/Frontify/brand-sdk/commit/0ac69eaa52ba58a5be06ce75afa63cf5838e958b) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: useGroupedDocuments and useUngroupedDocuments flaky tests
+
 ## 4.0.0-alpha.9
 
 ### Patch Changes
