@@ -59,7 +59,12 @@ export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'get
 export type ThemeCommand = CommandNameValidator<
     Pick<
         CommandRegistry,
-        'closeAssetChooser' | 'openAssetChooser' | 'openNavigationManager' | 'openSearchDialog' | 'closeSearchDialog'
+        | 'closeAssetChooser'
+        | 'openAssetChooser'
+        | 'openNavigationManager'
+        | 'openSearchDialog'
+        | 'closeSearchDialog'
+        | 'navigateToDocumentSection'
     >
 >;
 
