@@ -29,18 +29,18 @@ describe('useGroupedDocument', () => {
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-
-            expect(result.current.documents).toEqual([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
+        ]);
     });
 
     it('should not fetch grouped documents on mount if not enabled', () => {
@@ -71,18 +71,18 @@ describe('useGroupedDocument', () => {
         rerender();
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-
-            expect(result.current.documents).toEqual([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
+        ]);
     });
 
     it('should update document if a page is added', async () => {
@@ -101,17 +101,17 @@ describe('useGroupedDocument', () => {
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
-
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.documents).toEqual([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                OLD_DOCUMENT,
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            OLD_DOCUMENT,
+        ]);
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -168,9 +168,11 @@ describe('useGroupedDocument', () => {
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -217,17 +219,18 @@ describe('useGroupedDocument', () => {
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.documents).toEqual([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                OLD_DOCUMENT,
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            OLD_DOCUMENT,
+        ]);
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -284,9 +287,11 @@ describe('useGroupedDocument', () => {
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -347,12 +352,13 @@ describe('useGroupedDocument', () => {
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.documents).toEqual([DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([DOCUMENT_1, DOCUMENT_2, DOCUMENT_3, DOCUMENT_4]);
 
         // Trigger a "document category added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:MoveEvent', {

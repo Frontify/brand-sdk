@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
 import { RichTextEditorProps } from './types';
@@ -20,12 +20,23 @@ export const RichTextEditor = ({
 }: RichTextEditorProps) => {
     const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
 
-    const saveText = (newContent: string) => {
-        if (onTextChange && newContent !== value) {
-            onTextChange(newContent);
+    const handleTextChange = useCallback(
+        (newContent: string) => {
+            if (onTextChange && newContent !== value) {
+                onTextChange(newContent);
+            }
+            setShouldPreventPageLeave(false);
+        },
+        [onTextChange, value],
+    );
+
+    const handleValueChange = useCallback(() => setShouldPreventPageLeave(true), []);
+
+    const handleHideExternalFloatingModals = useCallback((editorId: string) => {
+        if (floatingButtonSelectors.isOpen(editorId)) {
+            floatingButtonActions.reset();
         }
-        setShouldPreventPageLeave(false);
-    };
+    }, []);
 
     useEffect(() => {
         const unloadHandler = (event: BeforeUnloadEvent) => {
@@ -48,13 +59,9 @@ export const RichTextEditor = ({
                 border={false}
                 placeholder={placeholder}
                 plugins={plugins}
-                onValueChanged={() => setShouldPreventPageLeave(true)}
-                onTextChange={saveText}
-                hideExternalFloatingModals={(editorId: string) => {
-                    if (floatingButtonSelectors.isOpen(editorId)) {
-                        floatingButtonActions.reset();
-                    }
-                }}
+                onValueChanged={handleValueChange}
+                onTextChange={handleTextChange}
+                hideExternalFloatingModals={handleHideExternalFloatingModals}
             />
         );
     }

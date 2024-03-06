@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '@frontify/app-bridge';
-import { CheckboxState } from '@frontify/fondue';
+import { Dispatch, MouseEvent, Reducer, useEffect, useReducer } from 'react';
 import {
+    CheckboxState,
     ELEMENT_LINK,
     floatingLinkActions,
     floatingLinkSelectors,
@@ -10,12 +10,13 @@ import {
     submitFloatingLink,
     useEditorRef,
     useHotkeys,
-} from '@udecode/plate';
-import { Dispatch, Reducer, useEffect, useReducer } from 'react';
-import { getLegacyUrl, getUrl } from '../../../../../Link/utils';
+} from '@frontify/fondue';
+
 import { InsertModalDispatchType, InsertModalStateProps } from './types';
+import { AppBridgeBlock } from '@frontify/app-bridge';
+import { getLegacyUrl, getUrl } from '../../utils';
+import { isValidUrlOrEmpty } from '../../../../../Link';
 import { addHttps } from '../../../../../../helpers';
-import { isValidUrlOrEmpty } from '../../../../../Link/utils/url';
 
 const initialState: InsertModalStateProps = {
     url: '',
@@ -60,12 +61,12 @@ export const useInsertModal = () => {
     useEffect(() => {
         const legacyUrl = getLegacyUrl(editor);
         const url = getUrl(editor);
-
+        const isNewTab = floatingLinkSelectors.newTab();
         dispatch({
             type: 'INIT',
             payload: {
                 text: floatingLinkSelectors.text(),
-                newTab: floatingLinkSelectors.newTab() ? CheckboxState.Checked : CheckboxState.Unchecked,
+                newTab: isNewTab ? CheckboxState.Checked : CheckboxState.Unchecked,
                 url: legacyUrl && url === '' ? legacyUrl : floatingLinkSelectors.url(),
             },
         });
@@ -90,18 +91,16 @@ export const useInsertModal = () => {
     };
 
     const onCancel = () => {
-        floatingLinkActions.hide();
+        floatingLinkActions.reset();
     };
 
-    const onSave = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent | undefined) => {
+    const onSave = (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent> | KeyboardEvent | undefined) => {
         if (!isValidUrlOrEmpty(state.url) || !hasValues) {
             return;
         }
 
-        const urlToSave = addHttps(state.url);
-
         floatingLinkActions.text(state.text);
-        floatingLinkActions.url(urlToSave);
+        floatingLinkActions.url(addHttps(state.url));
         floatingLinkActions.newTab(state.newTab === CheckboxState.Checked);
 
         if (submitFloatingLink(editor)) {
@@ -122,15 +121,5 @@ export const useInsertModal = () => {
         [],
     );
 
-    return {
-        state,
-        onTextChange,
-        onUrlChange,
-        onToggleTab,
-        onCancel,
-        onSave,
-        hasValues,
-        isValidUrlOrEmpty,
-        appBridge,
-    };
+    return { state, onTextChange, onUrlChange, onToggleTab, onCancel, onSave, hasValues, isValidUrlOrEmpty, appBridge };
 };

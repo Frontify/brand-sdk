@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { AppBridgeBlock } from '@frontify/app-bridge';
-import { Plugin, PluginProps } from '@frontify/fondue';
-import { RangeBeforeOptions, createPluginFactory } from '@udecode/plate';
+import { PlatePlugin, Plugin, PluginProps, RangeBeforeOptions, createPluginFactory } from '@frontify/fondue';
 import type { CSSProperties } from 'react';
 import { isValidUrl } from '../../../Link/utils/url';
 import { ButtonMarkupElement } from './ButtonMarkupElement';
@@ -57,7 +56,7 @@ export interface ButtonPlugin {
 /**
  * Enables support for hyperlinks.
  */
-export const createButtonPlugin = (appBridge: AppBridgeBlock) =>
+export const createButtonPlugin = (appBridge: AppBridgeBlock): PlatePlugin =>
     createPluginFactory({
         key: ELEMENT_BUTTON,
         isElement: true,

@@ -1,5 +1,38 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.2
+
+### Patch Changes
+
+- [#800](https://github.com/Frontify/brand-sdk/pull/800) [`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to 12.0.0-beta.410
+
+- [#801](https://github.com/Frontify/brand-sdk/pull/801) [`51d5537`](https://github.com/Frontify/brand-sdk/commit/51d55375a86547f1036c4c892da97f6cb64b1e88) Thanks [@SamCreasey](https://github.com/SamCreasey)! - perf(RichTextEditor): Stabilize props to avoid unneccessary rerenders.
+
+- Updated dependencies [[`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c)]:
+  - @frontify/sidebar-settings@0.9.9
+
+## 0.34.1
+
+### Patch Changes
+
+- [#796](https://github.com/Frontify/brand-sdk/pull/796) [`d24dcf3`](https://github.com/Frontify/brand-sdk/commit/d24dcf3fd78a871229e64b82690084ccfbd521ce) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
+- Updated dependencies [[`d24dcf3`](https://github.com/Frontify/brand-sdk/commit/d24dcf3fd78a871229e64b82690084ccfbd521ce)]:
+  - @frontify/sidebar-settings@0.9.8
+
+## 0.34.0
+
+### Minor Changes
+
+- [#750](https://github.com/Frontify/brand-sdk/pull/750) [`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): update fondue which comes with plate v30
+
+  @udecode/plate libraries are no longer used as a direct dependency, instead all required parts are now imported from @frontify/fondue
+
+### Patch Changes
+
+- Updated dependencies [[`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32)]:
+  - @frontify/sidebar-settings@0.9.7
+
 ## 0.33.5
 
 ### Patch Changes

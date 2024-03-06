@@ -1,17 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateRenderElementProps, createPluginFactory } from '@udecode/plate';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
+    PlatePlugin,
+    type PlateRenderElementProps,
     Plugin,
     PluginProps,
     TextStyleRenderElementProps,
     TextStyles,
     alignmentClassnames,
+    createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import type { CSSProperties } from 'react';
 import { BlockStyles } from '../styles';
 
 const ID = 'textstyle-custom3-plugin';
@@ -27,7 +29,7 @@ export class Custom3Plugin extends Plugin {
         this.styles = styles;
     }
 
-    plugins() {
+    plugins(): PlatePlugin[] {
         return [createCustom3Plugin(this.styles)];
     }
 }

@@ -1,26 +1,27 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { MouseEvent, ReactElement, ReactNode } from 'react';
 import { AppBridgeBlock } from '@frontify/app-bridge';
 import {
     Button,
     ButtonEmphasis,
     ButtonSize,
     ButtonStyle,
+    FloatingModalWrapper,
     FormControl,
     IconCheckMark20,
     TextInput,
 } from '@frontify/fondue';
-import { FC, ReactNode } from 'react';
 import { InsertModalStateProps } from './types';
-import { LinkInput } from '../../../../../Link/LinkInput';
+import { LinkInput } from '../../../../../Link';
 
-type InsertModalProps = {
+type Props = {
     state: InsertModalStateProps;
     onTextChange: (value: string) => void;
     onUrlChange: (value: string) => void;
     onToggleTab: (checked: boolean) => void;
     onCancel: () => void;
-    onSave: (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | KeyboardEvent | undefined) => void;
+    onSave: (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent> | KeyboardEvent | undefined) => void;
     hasValues: boolean;
     isValidUrlOrEmpty: (url: string) => boolean;
     testId?: string;
@@ -28,7 +29,7 @@ type InsertModalProps = {
     appBridge: AppBridgeBlock;
 };
 
-export const InsertModal: FC<InsertModalProps> = ({
+export const InsertModal = ({
     state,
     onTextChange,
     onUrlChange,
@@ -40,8 +41,8 @@ export const InsertModal: FC<InsertModalProps> = ({
     testId,
     appBridge,
     children,
-}) => (
-    <div data-test-id={testId} className="tw-bg-white tw-rounded tw-shadow tw-p-7 tw-min-w-[400px] tw-overflow-y-auto">
+}: Props): ReactElement => (
+    <FloatingModalWrapper data-test-id={testId} padding="28px" minWidth="400px">
         <FormControl
             label={{
                 children: 'Text',
@@ -78,11 +79,11 @@ export const InsertModal: FC<InsertModalProps> = ({
                     onClick={onSave}
                     size={ButtonSize.Medium}
                     icon={<IconCheckMark20 />}
-                    disabled={!hasValues || !isValidUrlOrEmpty(state?.url)}
+                    disabled={!isValidUrlOrEmpty(state?.url) || !hasValues}
                 >
                     Save
                 </Button>
             </div>
         </div>
-    </div>
+    </FloatingModalWrapper>
 );

@@ -2,6 +2,7 @@
 
 import {
     InsertNodesOptions,
+    Path,
     PlateEditor,
     TNode,
     TNodeEntry,
@@ -19,8 +20,8 @@ import {
     isExpanded,
     removeNodes,
     setNodes,
-} from '@udecode/plate';
-import { Path } from 'slate';
+} from '@frontify/fondue';
+
 import { ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
 import { RichTextButtonStyle, TButtonElement } from '../types';
 import { CreateButtonNodeOptions } from '../utils/index';

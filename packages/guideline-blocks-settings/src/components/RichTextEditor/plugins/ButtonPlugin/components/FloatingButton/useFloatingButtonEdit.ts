@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    HTMLPropsAs,
+    UseVirtualFloatingOptions,
     getAboveNode,
     getDefaultBoundingClientRect,
     getEndPoint,
@@ -12,15 +12,14 @@ import {
     someNode,
     useComposedRef,
     useEditorRef,
+    useEditorVersion,
     useHotkeys,
-    usePlateSelectors,
-} from '@udecode/plate';
-import { useCallback, useEffect } from 'react';
+} from '@frontify/fondue';
+import { type Ref, useCallback, useEffect } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
 import {
-    FloatingButtonProps,
     floatingButtonActions,
     floatingButtonSelectors,
     useFloatingButtonEnter,
@@ -29,11 +28,13 @@ import {
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingButtonProps): HTMLPropsAs<'div'> => {
+export const useFloatingButtonEdit = (
+    floatingOptions: UseVirtualFloatingOptions,
+): React.HTMLAttributes<HTMLDivElement> & { ref: Ref<HTMLDivElement> } => {
     const editor = useEditorRef();
-    const keyEditor = usePlateSelectors(editor.id).keyEditor();
     const mode = useFloatingButtonSelectors().mode();
     const open = useFloatingButtonSelectors().isOpen(editor.id);
+    const version = useEditorVersion();
 
     const { triggerFloatingButtonHotkeys } = getPluginOptions<ButtonPlugin>(editor, ELEMENT_BUTTON);
 
@@ -79,9 +80,9 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingBut
         }
 
         if (floatingButtonSelectors.mode() === 'edit') {
-            floatingButtonActions.hide();
+            floatingButtonActions.reset();
         }
-    }, [editor, keyEditor, update]);
+    }, [editor, version, update]);
 
     useHotkeys(
         triggerFloatingButtonHotkeys,
@@ -107,7 +108,6 @@ export const useFloatingButtonEdit = ({ floatingOptions, ...props }: FloatingBut
             ...style,
             zIndex: 1000,
         },
-        ...props,
-        ref: useComposedRef<HTMLElement | null>(props.ref, floating),
+        ref: useComposedRef<HTMLElement | null>(floating),
     };
 };

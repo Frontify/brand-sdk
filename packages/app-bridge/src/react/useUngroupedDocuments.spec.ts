@@ -73,18 +73,19 @@ describe('useUngroupedDocuments', () => {
         rerender();
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.documents).toEqual([
-                DocumentDummy.with(DOCUMENT_ID_1),
-                DocumentDummy.with(DOCUMENT_ID_2),
-                DocumentDummy.with(DOCUMENT_ID_3),
-                DocumentDummy.with(DOCUMENT_ID_4),
-                DocumentDummy.with(DOCUMENT_ID_5),
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.with(DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            DocumentDummy.with(DOCUMENT_ID_4),
+            DocumentDummy.with(DOCUMENT_ID_5),
+        ]);
     });
 
     it('should update document if a page is added', async () => {
@@ -113,17 +114,17 @@ describe('useUngroupedDocuments', () => {
         const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
-
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.documents).toEqual([
-                DocumentDummy.with(DOCUMENT_ID_1),
-                DocumentDummy.with(DOCUMENT_ID_2),
-                DocumentDummy.with(DOCUMENT_ID_3),
-                OLD_DOCUMENT,
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.with(DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            OLD_DOCUMENT,
+        ]);
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -180,9 +181,11 @@ describe('useUngroupedDocuments', () => {
         const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -239,17 +242,18 @@ describe('useUngroupedDocuments', () => {
         const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.documents).toEqual([
-                DocumentDummy.with(DOCUMENT_ID_1),
-                DocumentDummy.with(DOCUMENT_ID_2),
-                DocumentDummy.with(DOCUMENT_ID_3),
-                OLD_DOCUMENT,
-            ]);
+            expect(spy).toHaveBeenCalledOnce();
         });
+
+        expect(result.current.documents).toEqual([
+            DocumentDummy.with(DOCUMENT_ID_1),
+            DocumentDummy.with(DOCUMENT_ID_2),
+            DocumentDummy.with(DOCUMENT_ID_3),
+            OLD_DOCUMENT,
+        ]);
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -306,9 +310,11 @@ describe('useUngroupedDocuments', () => {
         const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
 
         // Mock the response of the second call
         spy.mockImplementationOnce(() =>
@@ -378,9 +384,11 @@ describe('useUngroupedDocuments', () => {
         const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
 
         // Trigger a "document category added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:MoveEvent', {
@@ -436,9 +444,11 @@ describe('useUngroupedDocuments', () => {
         const { result } = renderHook(() => useUngroupedDocuments(appBridge, { enabled: true }));
 
         expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
 
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
+        await waitFor(() => {
+            expect(result.current.isLoading).toBe(false);
+            expect(spy).toHaveBeenCalledOnce();
+        });
 
         // Trigger a "document category added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentGroup:MoveEvent', {

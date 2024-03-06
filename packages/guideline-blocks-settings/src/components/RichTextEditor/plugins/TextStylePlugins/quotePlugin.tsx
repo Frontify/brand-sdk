@@ -1,16 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createPluginFactory } from '@udecode/plate';
-import type { CSSProperties } from 'react';
 import {
     MarkupElement,
+    PlatePlugin,
     Plugin,
     PluginProps,
     TextStyleRenderElementProps,
     alignmentClassnames,
+    createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import type { CSSProperties } from 'react';
 import { BlockStyles, TextStyles } from '../styles';
 
 const ID = 'textstyle-quote-plugin';
@@ -26,7 +27,7 @@ export class QuotePlugin extends Plugin {
         this.styles = styles;
     }
 
-    plugins() {
+    plugins(): PlatePlugin[] {
         return [createQuotePlugin(this.styles)];
     }
 }
@@ -50,7 +51,7 @@ export const QuoteMarkupElementNode = ({ element, attributes, children, styles }
     );
 };
 
-export const createQuotePlugin = (styles: CSSProperties) =>
+export const createQuotePlugin = (styles: CSSProperties): PlatePlugin =>
     createPluginFactory({
         key: TextStyles.quote,
         isElement: true,

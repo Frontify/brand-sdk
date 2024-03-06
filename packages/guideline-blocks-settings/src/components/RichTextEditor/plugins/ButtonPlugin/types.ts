@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { TLinkElement } from '@udecode/plate';
+import { TLinkElement } from '@frontify/fondue';
 
 export type TButtonElement = TLinkElement & {
     chosenLink?: {

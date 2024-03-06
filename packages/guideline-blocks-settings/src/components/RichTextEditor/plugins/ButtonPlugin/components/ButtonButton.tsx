@@ -1,20 +1,37 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconButton16, PluginButtonProps, buttonStyles } from '@frontify/fondue';
-import { getPluginType } from '@udecode/plate';
+import {
+    PluginButtonProps,
+    getHotkeyByPlatform,
+    getPluginType,
+    getTooltip,
+    isRangeInSameBlock,
+    someNode,
+    useEditorState,
+    useEventPlateId,
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 import { ButtonToolbarButton } from './ButtonToolbarButton';
 
-export const ButtonButton = ({ editor, id }: PluginButtonProps) => (
-    <div data-plugin-id={id}>
-        <ButtonToolbarButton
-            type={getPluginType(editor, ELEMENT_BUTTON)}
-            icon={
-                <span className="tw-p-2 tw-h-8 tw-justify-center tw-items-center tw-flex">
-                    <IconButton16 />
-                </span>
-            }
-            styles={buttonStyles}
-        />
-    </div>
-);
+export const ButtonButton = ({ editorId, id }: PluginButtonProps) => {
+    const editor = useEditorState(useEventPlateId(editorId));
+    const isEnabled = !!isRangeInSameBlock(editor, {
+        at: editor.selection,
+    });
+    const type = getPluginType(editor, ELEMENT_BUTTON);
+    const isLink = !!editor?.selection && someNode(editor, { match: { type } });
+
+    return (
+        <div data-plugin-id={id}>
+            <ButtonToolbarButton
+                pressed={isLink}
+                disabled={!isEnabled} // maybe pressed
+                tooltip={getTooltip(
+                    isEnabled
+                        ? `Button\n${getHotkeyByPlatform('Ctrl+Shift+K')}`
+                        : 'Buttons can only be set for a single text block.',
+                )}
+            />
+        </div>
+    );
+};

@@ -1,35 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { HTMLPropsAs, PlateRenderElementProps, Value, useElementProps } from '@udecode/plate';
+import { type PlateRenderElementProps, Value } from '@frontify/fondue';
 import { CSSProperties, HTMLAttributeAnchorTarget, ReactElement, ReactNode, useState } from 'react';
-import { RichTextButtonStyle, TButtonElement } from '../types';
+import { TButtonElement } from '../types';
 import { BlockButtonStyles } from '../utils';
 
-export type ButtonRootProps = PlateRenderElementProps<Value, TButtonElement> & HTMLPropsAs<'a'>;
-
-const useButton = (props: ButtonRootProps): HTMLPropsAs<'a'> & { buttonStyle: RichTextButtonStyle } => {
-    const _props = useElementProps<TButtonElement, 'a'>({
-        ...props,
-        elementToAttributes: (element) => ({
-            url: element.href,
-            buttonStyle: element.buttonStyle || 'primary',
-            target: element.target || '_blank',
-        }),
-    });
-
-    return {
-        ...(_props as HTMLPropsAs<'a'> & { buttonStyle: RichTextButtonStyle }),
-        // quick fix: hovering <a> with href loses the editor focus
-        onMouseOver: (e) => {
-            e.stopPropagation();
-        },
-    };
-};
+export type ButtonRootProps = PlateRenderElementProps<Value, TButtonElement>;
 
 export const ButtonMarkupElementNode = (props: ButtonRootProps) => {
-    const { href, target, buttonStyle } = useButton(props);
     const { attributes, children } = props;
-
+    const href = props.element.url || props.element.chosenLink?.searchResult?.link || '';
+    const target = props.element.target || '_self';
+    const buttonStyle = String(props.element.buttonStyle) || 'primary';
     return (
         <HoverableButtonLink
             attributes={attributes}
