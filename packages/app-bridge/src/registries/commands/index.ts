@@ -9,3 +9,4 @@ export * from './NavigationManager';
 export * from './NewPublication';
 export * from './SearchDialog';
 export * from './TemplateChooser';
+export * from './NavigateToDocumentSection';
