@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    AnyObject,
     EText,
+    Path,
     PlateEditor,
+    Point,
+    Range,
     Value,
     WithOverride,
     getAboveNode,
@@ -17,8 +19,7 @@ import {
     mockPlugin,
     select,
     withRemoveEmptyNodes,
-} from '@udecode/plate';
-import { Path, Point, Range } from 'slate';
+} from '@frontify/fondue';
 import { ELEMENT_BUTTON } from './createButtonPlugin';
 
 /**
@@ -99,7 +100,7 @@ export const withButton: WithOverride = (editor, { type }) => {
 
     return withRemoveEmptyNodes<Value, PlateEditor<Value>>(
         editor,
-        mockPlugin<AnyObject, Value, PlateEditor<Value>>({
+        mockPlugin<Record<string, any>, Value, PlateEditor<Value>>({
             options: { types: type },
         }),
     );

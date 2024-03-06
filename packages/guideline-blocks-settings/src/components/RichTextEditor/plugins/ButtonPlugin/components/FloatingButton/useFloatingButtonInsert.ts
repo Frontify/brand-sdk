@@ -1,26 +1,27 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    HTMLPropsAs,
+    UseVirtualFloatingOptions,
     getPluginOptions,
     getSelectionBoundingClientRect,
     useComposedRef,
     useEditorRef,
+    useFocused,
     useHotkeys,
-} from '@udecode/plate';
-import { useEffect } from 'react';
-import { useFocused } from 'slate-react';
+} from '@frontify/fondue';
+import { type Ref, useEffect } from 'react';
 import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { triggerFloatingButtonInsert } from '../../utils/triggerFloatingButtonInsert';
 import {
-    FloatingButtonProps,
     floatingButtonActions,
     useFloatingButtonEscape,
     useFloatingButtonSelectors,
     useVirtualFloatingButton,
 } from '.';
 
-export const useFloatingButtonInsert = ({ floatingOptions, ...props }: FloatingButtonProps): HTMLPropsAs<'div'> => {
+export const useFloatingButtonInsert = (
+    floatingOptions: UseVirtualFloatingOptions,
+): React.HTMLAttributes<HTMLDivElement> & { ref: Ref<HTMLDivElement> } => {
     const editor = useEditorRef();
     const focused = useFocused();
     const mode = useFloatingButtonSelectors().mode();
@@ -65,7 +66,6 @@ export const useFloatingButtonInsert = ({ floatingOptions, ...props }: FloatingB
             ...style,
             zIndex: 1000,
         },
-        ...props,
-        ref: useComposedRef<HTMLElement | null>(props.ref, floating),
+        ref: useComposedRef<HTMLElement | null>(floating),
     };
 };

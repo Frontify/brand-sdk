@@ -1,18 +1,23 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import { AppBridgeBlock } from '@frontify/app-bridge';
-import { Plugin, PluginProps } from '@frontify/fondue';
-import { createLinkPlugin as createPlateLinkPlugin, createPluginFactory } from '@udecode/plate';
+import {
+    PlatePlugin,
+    Plugin,
+    PluginProps,
+    createLinkPlugin as createPlateLinkPlugin,
+    createPluginFactory,
+} from '@frontify/fondue';
 
 import { CustomFloatingLink } from './FloatingLink/CustomFloatingLink';
 import { LINK_PLUGIN } from './id';
 import { LinkButton } from './LinkButton';
 import { LinkMarkupElement } from './LinkMarkupElement';
-import { isValidUrl } from '../../../Link/utils/url';
 import { BlockStyles } from '../styles';
+import { isValidUrl } from '../../../Link';
 
-export const createLinkPlugin = (appBridge: AppBridgeBlock) =>
+export const createLinkPlugin = (appBridge: AppBridgeBlock): PlatePlugin =>
     createPluginFactory({
         ...createPlateLinkPlugin(),
         renderAfterEditable: CustomFloatingLink,
@@ -23,7 +28,8 @@ export const createLinkPlugin = (appBridge: AppBridgeBlock) =>
                 skipInvalid: true,
                 afterMatch: true,
             },
-            triggerFloatingLinkHotkeys: 'command+k, ctrl+k',
+            triggerFloatingLinkHotkeys: 'meta+k, ctrl+k',
+            keepSelectedTextOnPaste: true,
             appBridge,
         },
     })();
@@ -31,19 +37,19 @@ export const createLinkPlugin = (appBridge: AppBridgeBlock) =>
 export type LinkPluginProps = PluginProps & { appBridge: AppBridgeBlock };
 
 export class LinkPlugin extends Plugin {
-    private appBridge: AppBridgeBlock;
     public styles: CSSProperties = {};
-    constructor(props?: LinkPluginProps, styles = BlockStyles[LINK_PLUGIN]) {
+    private appBridge: AppBridgeBlock;
+    constructor({ styles = BlockStyles[LINK_PLUGIN], ...props }: LinkPluginProps) {
         super(LINK_PLUGIN, {
             button: LinkButton,
             markupElement: new LinkMarkupElement(),
             ...props,
         });
         this.styles = styles;
-        this.appBridge = props?.appBridge as AppBridgeBlock;
+        this.appBridge = props.appBridge;
     }
 
-    plugins() {
+    plugins(): PlatePlugin[] {
         return [createLinkPlugin(this.appBridge)];
     }
 }

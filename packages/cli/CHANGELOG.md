@@ -1,5 +1,23 @@
 # @frontify/frontify-cli
 
+## 5.6.8
+
+### Patch Changes
+
+- [#800](https://github.com/Frontify/brand-sdk/pull/800) [`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to 12.0.0-beta.410
+
+## 5.6.7
+
+### Patch Changes
+
+- [#796](https://github.com/Frontify/brand-sdk/pull/796) [`d24dcf3`](https://github.com/Frontify/brand-sdk/commit/d24dcf3fd78a871229e64b82690084ccfbd521ce) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
+## 5.6.6
+
+### Patch Changes
+
+- [#750](https://github.com/Frontify/brand-sdk/pull/750) [`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
+
 ## 5.6.5
 
 ### Patch Changes
