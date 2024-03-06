@@ -1,5 +1,16 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.3
+
+### Patch Changes
+
+- [#803](https://github.com/Frontify/brand-sdk/pull/803) [`b4a72a2`](https://github.com/Frontify/brand-sdk/commit/b4a72a23c7ea5aa65beb1b264fb36930c0493ba1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(RichTextEditor): replace outer-most modal element with `FloatingModalWrapper`.
+
+- [#803](https://github.com/Frontify/brand-sdk/pull/803) [`b4a72a2`](https://github.com/Frontify/brand-sdk/commit/b4a72a23c7ea5aa65beb1b264fb36930c0493ba1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to ^12.0.0-beta.411
+
+- Updated dependencies [[`b4a72a2`](https://github.com/Frontify/brand-sdk/commit/b4a72a23c7ea5aa65beb1b264fb36930c0493ba1)]:
+  - @frontify/sidebar-settings@0.9.10
+
 ## 0.34.2
 
 ### Patch Changes
