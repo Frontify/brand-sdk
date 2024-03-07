@@ -338,6 +338,8 @@ export interface AppBridgeTheme<
 
     getDocumentGroups(): Promise<DocumentGroup[]>;
 
+    getDocumentPageById(documentPageId: number): Promise<DocumentPage>;
+
     getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
 
     getDocumentPagesByDocumentCategoryId(documentCategoryId: number): Promise<DocumentPage[]>;

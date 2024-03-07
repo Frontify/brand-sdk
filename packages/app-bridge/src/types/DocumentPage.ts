@@ -59,13 +59,15 @@ type DocumentPageRequest = {
     linkUrl?: Nullable<string>;
     categoryId?: Nullable<number>;
     visibility?: DocumentPageVisibility;
+    heading?: string;
+    subheading?: string;
 };
 
 export type DocumentPageCreate = Omit<SetRequired<DocumentPageRequest, 'title' | 'documentId'>, 'id'>;
 
 export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
-    'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
+    'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility' | 'heading' | 'subheading'
 >;
 
 export type DocumentPageDelete = Pick<DocumentPageRequest, 'id' | 'documentId' | 'categoryId'>;

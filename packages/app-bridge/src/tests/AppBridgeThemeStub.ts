@@ -143,6 +143,9 @@ export const getAppBridgeThemeStub = ({
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_2, 0),
             DocumentGroupDummy.with(DOCUMENT_GROUP_ID_3, 2),
         ]),
+        getDocumentPageById: stub<Parameters<AppBridgeTheme['getDocumentPageById']>>().resolves(
+            DocumentPageDummy.with(1),
+        ),
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeTheme['getDocumentPagesByDocumentId']>>().resolves([
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_1),
             DocumentPageDummy.with(DOCUMENT_PAGE_ID_2),
