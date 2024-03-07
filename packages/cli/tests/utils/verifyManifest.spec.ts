@@ -337,7 +337,7 @@ describe('Verify Platform App Manifest', () => {
             async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
-    
+
     it('should throw when secret object is not correct without label', async () => {
         await expect(
             async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_LABEL, platformAppManifestSchemaV1),
