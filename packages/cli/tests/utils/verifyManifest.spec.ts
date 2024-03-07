@@ -144,6 +144,110 @@ const MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION = {
     },
 };
 
+const VALID_MANIFEST_WITH_SECRETS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ label: 'first label', key: 'first-key' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const VALID_MANIFEST_WITH_EMPTY_SECRETS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const VALID_MANIFEST_WITH_NO_SECRETS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_WRONG_KEY_FORMAT = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ label: 'first label', key: 'first key %' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_SECRET_BUT_NO_KEY = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ label: 'first label' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     it('should validate a valid manifest', async () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
@@ -189,6 +293,33 @@ describe('Verify Platform App Manifest', () => {
     it('should throw error when asset creation title is too long', async () => {
         await expect(
             async () => await verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should accept a secret array with label and key', async () => {
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_SECRETS, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should accept an empty secrets array', async () => {
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_EMPTY_SECRETS, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should validate when no secret property is present', async () => {
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_NO_SECRETS, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should throw when secret object is not correct', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when key formatting is invalid', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_WRONG_KEY_FORMAT, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 });
