@@ -248,6 +248,27 @@ const MANIFEST_WITH_SECRET_BUT_NO_KEY = {
     },
 };
 
+const MANIFEST_WITH_SECRET_BUT_NO_LABEL = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ key: 'first-key' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     it('should validate a valid manifest', async () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
@@ -311,9 +332,14 @@ describe('Verify Platform App Manifest', () => {
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw when secret object is not correct', async () => {
+    it('should throw when secret object is not correct without ey', async () => {
         await expect(
             async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+    it('should throw when secret object is not correct without label', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_LABEL, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 
