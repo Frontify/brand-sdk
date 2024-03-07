@@ -18,18 +18,18 @@ const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 
 
 const appType = z.enum(['content-block', 'platform-app', 'theme']);
 
-const SecretSchema = object({
+const secretSchema = object({
     label: string(),
     key: string().refine((value) => /^[\w-]+$/.test(value), {
         message: "The key should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
     }),
 });
-const SecretsArraySchema = array(SecretSchema);
+const secretsArraySchema = array(secretSchema);
 
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
-    secrets: SecretsArraySchema.optional(),
+    secrets: secretsArraySchema.optional(),
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({
