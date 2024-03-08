@@ -332,7 +332,7 @@ describe('Verify Platform App Manifest', () => {
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw when secret object is not correct without ey', async () => {
+    it('should throw when secret object is not correct without key', async () => {
         await expect(
             async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1),
         ).rejects.toThrow();
