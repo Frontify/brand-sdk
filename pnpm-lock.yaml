@@ -23,8 +23,8 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
       '@frontify/fondue':
-        specifier: 12.0.0-beta.411
-        version: 12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.415
+        version: 12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@4.5.2)
@@ -256,8 +256,8 @@ importers:
         specifier: ^3.0.0 || ^4.0.0-alpha.0
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: 12.0.0-beta.411
-        version: 12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.415
+        version: 12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -408,8 +408,8 @@ importers:
   packages/sidebar-settings:
     dependencies:
       '@frontify/fondue':
-        specifier: 12.0.0-beta.411
-        version: 12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.415
+        version: 12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.9
@@ -1000,7 +1000,7 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
-      tslib: 2.6.1
+      tslib: 2.6.2
 
   /@dnd-kit/core@6.1.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-J3cQBClB4TVxwGo3KEjssGEXNJqGVWx17aRTZ1ob0FliR5IjYgTxl5YJbKTzA6IzrtelotH19v6y7uoIRUZPSg==}
@@ -1726,8 +1726,8 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1):
-    resolution: {integrity: sha512-DhYiqJ66jR+5DUE2r7bpb4B/f5Bekk4lihlqEVbre4NMh4x/Ilt1dJMU22akCWYu3TF3B9yaqngpwsLkKC1tIQ==}
+  /@frontify/fondue@12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1):
+    resolution: {integrity: sha512-PCrScuVehc5/9AzPEacTd7IVOnX6E1eV/I/LaIDwwGVQH1x0Ca0OAUwHRVEtSqw2ZlYrcflPtR4wYfiO87EaFA==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
@@ -3909,7 +3909,7 @@ packages:
   /@swc/helpers@0.5.1:
     resolution: {integrity: sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==}
     dependencies:
-      tslib: 2.6.1
+      tslib: 2.6.2
 
   /@tailwindcss/forms@0.5.7(tailwindcss@3.4.1):
     resolution: {integrity: sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==}
@@ -4103,7 +4103,7 @@ packages:
   /@types/mdast@3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
-      '@types/unist': 2.0.6
+      '@types/unist': 3.0.2
 
   /@types/minimist@1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
@@ -10838,7 +10838,7 @@ packages:
   /resolve@1.19.0:
     resolution: {integrity: sha512-rArEXAgsBG4UgRGcynxWIWKFvh/XZCcS8UJdHhwy91zwAvCZIbcs+vAbflgBnNjYMs/i/i+/Ux6IZhML1yPvxg==}
     dependencies:
-      is-core-module: 2.12.0
+      is-core-module: 2.13.1
       path-parse: 1.0.7
     dev: true
 

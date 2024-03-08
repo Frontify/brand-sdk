@@ -33,7 +33,7 @@
         "react-dom": "^18"
     },
     "dependencies": {
-        "@frontify/fondue": "12.0.0-beta.411"
+        "@frontify/fondue": "12.0.0-beta.415"
     },
     "devDependencies": {
         "@babel/core": "^7.23.9",
