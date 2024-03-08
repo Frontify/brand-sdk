@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 5.6.10
+
+### Patch Changes
+
+- [#812](https://github.com/Frontify/brand-sdk/pull/812) [`67b5ca1`](https://github.com/Frontify/brand-sdk/commit/67b5ca134b86ccddd0d2ab8a36b5b08261a4d9b3) Thanks [@julianiff](https://github.com/julianiff)! - feat: add manifest secret key validator
+
+- [#815](https://github.com/Frontify/brand-sdk/pull/815) [`17491e9`](https://github.com/Frontify/brand-sdk/commit/17491e923d9b66d158ee03003b3ac47899e6423f) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.0.0-beta.415
+
 ## 5.6.9
 
 ### Patch Changes
