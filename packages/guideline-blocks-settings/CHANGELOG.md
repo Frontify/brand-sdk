@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.5
+
+### Patch Changes
+
+- [#817](https://github.com/Frontify/brand-sdk/pull/817) [`7307201`](https://github.com/Frontify/brand-sdk/commit/7307201f42889938c2a68664abebbc1da21ae9e4) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(RichTextEditor): using the new `useIsInViewport` hook the RichTextEditor will now only be initialized once the component enters the viewport.
+
 ## 0.34.4
 
 ### Patch Changes

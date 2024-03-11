@@ -1,5 +1,21 @@
 # @frontify/app-bridge
 
+## 3.5.1
+
+### Patch Changes
+
+- [#818](https://github.com/Frontify/brand-sdk/pull/818) [`c25d717`](https://github.com/Frontify/brand-sdk/commit/c25d71757e44406c065c65374d1d800a6d5694de) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(useBlockSettings): `setBlockSettings` has been wrapped in a `useCallback` so it can be safely used as a dependency in react hooks. The following code will no longer cause unexpected rerenders.
+
+  ```jsx
+  const Component = () => {
+    const [blockSettings, setBlockSettings] = useBlockSettings(appBridge);
+
+    useEffect(() => {
+      setBlockSettings({ ...blockSettings });
+    }, [setBlockSettings]);
+  };
+  ```
+
 ## 3.5.0
 
 ### Minor Changes
