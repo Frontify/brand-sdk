@@ -29,6 +29,23 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).should('exist');
     });
 
+    it('should only render a rich text editor when inside viewport and editing', () => {
+        cy.viewport(500, 500);
+
+        mount(
+            <div style={{ paddingTop: '600px' }}>
+                <RichTextEditor isEditing plugins={getDefaultPluginsWithLinkChooser(appBridge)} />
+            </div>,
+        );
+        cy.get(RteHtmlSelector).should('exist');
+        cy.get(RichTextSelector).should('not.exist');
+        cy.document().then((document) => {
+            document.querySelector(RteHtmlSelector)?.scrollIntoView();
+        });
+        cy.get(RteHtmlSelector).should('not.exist');
+        cy.get(RichTextSelector).should('exist');
+    });
+
     it('should render a rich text html in view mode', () => {
         mount(<RichTextEditor isEditing={false} value="test" />);
         cy.get(RteHtmlSelector).should('exist');
