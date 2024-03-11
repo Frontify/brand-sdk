@@ -24,10 +24,10 @@ const InternalRichTextEditor = memo(
 
         const handleTextChange = useCallback(
             (newContent: string) => {
-                if (onTextChange && newContent !== value) {
-                    onTextChange(newContent);
+                if (newContent !== value) {
+                    onTextChange?.(newContent);
+                    setShouldPreventPageLeave(false);
                 }
-                setShouldPreventPageLeave(false);
             },
             [onTextChange, value],
         );

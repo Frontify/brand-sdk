@@ -18,12 +18,10 @@ export const useIsInViewport = <T extends Element>({
 
         let isInViewport = false;
 
-        const intersectionObserver = new IntersectionObserver((entries) => {
-            for (const entry of entries) {
-                if (entry.isIntersecting !== isInViewport) {
-                    isInViewport = entry.isIntersecting;
-                    onChange(entry.isIntersecting);
-                }
+        const intersectionObserver = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting !== isInViewport) {
+                isInViewport = entry.isIntersecting;
+                onChange(entry.isIntersecting);
             }
         });
 
