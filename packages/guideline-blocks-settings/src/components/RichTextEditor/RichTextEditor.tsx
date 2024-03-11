@@ -43,7 +43,7 @@ const InternalRichTextEditor = memo(
         useEffect(() => {
             const unloadHandler = (event: BeforeUnloadEvent) => {
                 event.preventDefault();
-                return (event.returnValue = 'Unprocessed changes');
+                event.returnValue = 'Unprocessed changes';
             };
 
             if (shouldPreventPageLeave) {
