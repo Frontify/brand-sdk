@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { mergeDeep } from '../utilities/object';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
@@ -31,17 +31,20 @@ export const useBlockSettings = <T = Record<string, unknown>>(
         };
     }, [blockId]);
 
-    const updateBlockSettings = async (blockSettingsUpdate: Partial<T>) => {
-        try {
-            await appBridge.updateBlockSettings(blockSettingsUpdate);
-            window.emitter.emit('AppBridge:BlockSettingsUpdated', {
-                blockId,
-                blockSettings: mergeDeep(blockSettings, blockSettingsUpdate),
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    const updateBlockSettings = useCallback(
+        async (blockSettingsUpdate: Partial<T>) => {
+            try {
+                await appBridge.updateBlockSettings(blockSettingsUpdate);
+                window.emitter.emit('AppBridge:BlockSettingsUpdated', {
+                    blockId,
+                    blockSettings: mergeDeep(blockSettings, blockSettingsUpdate),
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        [appBridge, blockId, blockSettings],
+    );
 
     return [blockSettings, updateBlockSettings];
 };
