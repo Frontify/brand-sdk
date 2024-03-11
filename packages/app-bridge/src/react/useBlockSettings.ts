@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { mergeDeep } from '../utilities/object';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
@@ -14,13 +14,18 @@ export const useBlockSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeBlock,
 ): [T, (newSettings: Partial<T>) => Promise<void>] => {
     const blockId = appBridge.context('blockId').get();
-    const [blockSettings, setBlockSettings] = useState<T>(structuredClone(window.blockSettings[blockId]) as T);
+
+    // Save blockSettings in a ref so updateBlockSettings can safely be used as a react dependency
+    const blockSettingsRef = useRef<T>(structuredClone(window.blockSettings[blockId]) as T);
+    const [blockSettings, setBlockSettings] = useState<T>(blockSettingsRef.current);
 
     // Add listener for block settings updates
     useEffect(() => {
         const updateBlockSettingsFromEvent = (event: BlockSettingsUpdateEvent) => {
             if (event.blockId === blockId) {
-                setBlockSettings({ ...event.blockSettings } as T);
+                const blockSettings = { ...event.blockSettings } as T;
+                setBlockSettings(blockSettings);
+                blockSettingsRef.current = blockSettings;
             }
         };
 
@@ -37,13 +42,14 @@ export const useBlockSettings = <T = Record<string, unknown>>(
                 await appBridge.updateBlockSettings(blockSettingsUpdate);
                 window.emitter.emit('AppBridge:BlockSettingsUpdated', {
                     blockId,
-                    blockSettings: mergeDeep(blockSettings, blockSettingsUpdate),
+                    blockSettings: mergeDeep(blockSettingsRef.current, blockSettingsUpdate),
                 });
             } catch (error) {
                 console.error(error);
             }
         },
-        [appBridge, blockId, blockSettings],
+        // Stable reference to appBridge and blockId. These are not expected to change.
+        [appBridge, blockId],
     );
 
     return [blockSettings, updateBlockSettings];
