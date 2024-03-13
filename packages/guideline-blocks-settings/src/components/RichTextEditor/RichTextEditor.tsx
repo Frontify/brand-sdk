@@ -1,69 +1,100 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
 import { RichTextEditorProps } from './types';
 import { SerializedText } from './SerializedText';
 import { floatingButtonActions, floatingButtonSelectors } from './plugins/ButtonPlugin/components';
+import { useIsInViewport } from '../../hooks/useIsInViewport';
 
-export const RichTextEditor = ({
-    id = 'rte',
-    isEditing,
-    value,
-    columns,
-    gap,
-    placeholder,
-    plugins,
-    onTextChange,
-    showSerializedText,
-}: RichTextEditorProps) => {
-    const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
+const InternalRichTextEditor = memo(
+    ({
+        id = 'rte',
+        isEnabled,
+        value,
+        columns,
+        gap,
+        placeholder,
+        plugins,
+        onTextChange,
+        showSerializedText,
+    }: Omit<RichTextEditorProps, 'isEditing'> & { isEnabled: boolean }) => {
+        const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
 
-    const handleTextChange = useCallback(
-        (newContent: string) => {
-            if (onTextChange && newContent !== value) {
-                onTextChange(newContent);
+        const handleTextChange = useCallback(
+            (newContent: string) => {
+                if (newContent !== value) {
+                    onTextChange?.(newContent);
+                }
+                setShouldPreventPageLeave(false);
+            },
+            [onTextChange, value],
+        );
+
+        const handleValueChange = useCallback(() => setShouldPreventPageLeave(true), []);
+
+        const handleHideExternalFloatingModals = useCallback((editorId: string) => {
+            if (floatingButtonSelectors.isOpen(editorId)) {
+                floatingButtonActions.reset();
             }
-            setShouldPreventPageLeave(false);
-        },
-        [onTextChange, value],
-    );
+        }, []);
 
-    const handleValueChange = useCallback(() => setShouldPreventPageLeave(true), []);
+        useEffect(() => {
+            const unloadHandler = (event: BeforeUnloadEvent) => {
+                event.preventDefault();
+                event.returnValue = 'Unprocessed changes';
+            };
 
-    const handleHideExternalFloatingModals = useCallback((editorId: string) => {
-        if (floatingButtonSelectors.isOpen(editorId)) {
-            floatingButtonActions.reset();
+            if (shouldPreventPageLeave) {
+                window.addEventListener('beforeunload', unloadHandler);
+            }
+
+            return () => window.removeEventListener('beforeunload', unloadHandler);
+        }, [shouldPreventPageLeave]);
+
+        if (isEnabled) {
+            return (
+                <FondueRichTextEditor
+                    id={id}
+                    value={value}
+                    border={false}
+                    placeholder={placeholder}
+                    plugins={plugins}
+                    onValueChanged={handleValueChange}
+                    onTextChange={handleTextChange}
+                    hideExternalFloatingModals={handleHideExternalFloatingModals}
+                />
+            );
+        }
+        return <SerializedText value={value} columns={columns} gap={gap} show={showSerializedText} plugins={plugins} />;
+    },
+);
+InternalRichTextEditor.displayName = 'InternalRichTextEditor';
+
+export const RichTextEditor = (props: RichTextEditorProps) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+
+    const { isEditing, ...internalRteProps } = props;
+
+    const onViewportVisibilityChange = useCallback((isInViewport: boolean) => {
+        if (isInViewport) {
+            setHasEnteredViewport(true);
         }
     }, []);
 
+    useIsInViewport({ ref, disabled: !isEditing, onChange: onViewportVisibilityChange });
+
     useEffect(() => {
-        const unloadHandler = (event: BeforeUnloadEvent) => {
-            event.preventDefault();
-            return (event.returnValue = 'Unprocessed changes');
-        };
-
-        if (shouldPreventPageLeave) {
-            window.addEventListener('beforeunload', unloadHandler);
+        if (!isEditing) {
+            setHasEnteredViewport(false);
         }
+    }, [isEditing]);
 
-        return () => window.removeEventListener('beforeunload', unloadHandler);
-    }, [shouldPreventPageLeave]);
-
-    if (isEditing) {
-        return (
-            <FondueRichTextEditor
-                id={id}
-                value={value}
-                border={false}
-                placeholder={placeholder}
-                plugins={plugins}
-                onValueChanged={handleValueChange}
-                onTextChange={handleTextChange}
-                hideExternalFloatingModals={handleHideExternalFloatingModals}
-            />
-        );
-    }
-    return <SerializedText value={value} columns={columns} gap={gap} show={showSerializedText} plugins={plugins} />;
+    return (
+        <div className="tw-block tw-w-full" ref={ref}>
+            <InternalRichTextEditor {...internalRteProps} isEnabled={isEditing && hasEnteredViewport} />
+        </div>
+    );
 };

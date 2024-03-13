@@ -1,5 +1,19 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.6
+
+### Patch Changes
+
+- [#822](https://github.com/Frontify/brand-sdk/pull/822) [`b8ca543`](https://github.com/Frontify/brand-sdk/commit/b8ca54328becb5a084833bbdfdb3a7a2c9ea3d09) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(RichTextEditor): always reset page leave when text changes. This fixes an issue introduced in v0.34.5.
+
+- [#823](https://github.com/Frontify/brand-sdk/pull/823) [`a7a39ba`](https://github.com/Frontify/brand-sdk/commit/a7a39ba8d6de66bc56da497d043d73b860aa77b6) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(RichTextEditor): Reset `hasEnteredViewport` state every time view mode is entered
+
+## 0.34.5
+
+### Patch Changes
+
+- [#817](https://github.com/Frontify/brand-sdk/pull/817) [`7307201`](https://github.com/Frontify/brand-sdk/commit/7307201f42889938c2a68664abebbc1da21ae9e4) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(RichTextEditor): using the new `useIsInViewport` hook the RichTextEditor will now only be initialized once the component enters the viewport.
+
 ## 0.34.4
 
 ### Patch Changes
