@@ -87,8 +87,10 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
     useIsInViewport({ ref, disabled: !isEditing, onChange: onViewportVisibilityChange });
 
     useEffect(() => {
-        setHasEnteredViewport(false);
-    }, []);
+        if (!isEditing) {
+            setHasEnteredViewport(false);
+        }
+    }, [isEditing]);
 
     return (
         <div className="tw-block tw-w-full" ref={ref}>
