@@ -88,7 +88,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
     useEffect(() => {
         setHasEnteredViewport(false);
-    }, []);
+    }, [isEditing]);
 
     return (
         <div className="tw-block tw-w-full" ref={ref}>
