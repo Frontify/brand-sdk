@@ -2,7 +2,7 @@
 
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
-import { type AppBridgeBlock, BlockEvent } from '../AppBridgeBlock';
+import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
 import { type Template, type TemplateLegacy, type User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
@@ -14,7 +14,7 @@ import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
-import { EventCallbackParameter } from '../';
+import { type EventCallbackParameter } from '../';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
