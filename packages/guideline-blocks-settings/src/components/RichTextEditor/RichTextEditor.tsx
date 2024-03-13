@@ -26,8 +26,8 @@ const InternalRichTextEditor = memo(
             (newContent: string) => {
                 if (newContent !== value) {
                     onTextChange?.(newContent);
-                    setShouldPreventPageLeave(false);
                 }
+                setShouldPreventPageLeave(false);
             },
             [onTextChange, value],
         );
