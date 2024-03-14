@@ -2,7 +2,7 @@
 
 import mitt, { Emitter } from 'mitt';
 import { SinonStubbedInstance, spy, stub } from 'sinon';
-import { type AppBridgeBlock, type BlockContext, type BlockState } from '../AppBridgeBlock';
+import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
 import { type Template, type TemplateLegacy, type User } from '../types';
 import { EmitterEvents } from '../types/Emitter';
 import type { Asset } from '../types/Asset';
@@ -14,6 +14,7 @@ import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
+import { type EventCallbackParameter } from '../AppBridge';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -27,20 +28,13 @@ export type getAppBridgeBlockStubProps = {
     blockId?: number;
     sectionId?: number;
     projectId?: number;
+    isAuthenticated?: boolean;
     user?: User;
     language?: string;
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
     unsubscribe?: () => void;
 };
-
-type subscribeCallbackArguments = Record<string, unknown> & {
-    assets: Asset[];
-    template: TemplateLegacy;
-} & BlockState &
-    number &
-    [number | undefined, number | undefined] &
-    BlockContext;
 
 export const getAppBridgeBlockStub = ({
     blockSettings = {},
@@ -49,6 +43,7 @@ export const getAppBridgeBlockStub = ({
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
     projectId = PROJECT_ID,
+    isAuthenticated = true,
     user = UserDummy.with(USER_ID),
     language = 'en',
     privacySettings = {
@@ -184,7 +179,7 @@ export const getAppBridgeBlockStub = ({
         context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
             if (args === undefined) {
                 return {
-                    get: () => [blockId, sectionId],
+                    get: () => [blockId, sectionId, isAuthenticated],
                 };
             } else {
                 switch (args) {
@@ -195,6 +190,11 @@ export const getAppBridgeBlockStub = ({
                     case 'sectionId':
                         return {
                             get: () => sectionId,
+                        };
+
+                    case 'isAuthenticated':
+                        return {
+                            get: () => isAuthenticated,
                         };
                     default:
                         return {
@@ -208,9 +208,11 @@ export const getAppBridgeBlockStub = ({
 
         subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().callsFake((eventName, callback) => {
             if (eventName === 'assetsChosen') {
-                callback({ assets: [AssetDummy.with(123)] } as subscribeCallbackArguments);
+                (callback as EventCallbackParameter<'assetsChosen', BlockEvent>)({ assets: [AssetDummy.with(123)] });
             } else if (eventName === 'templateChosen') {
-                callback({ template: TemplateLegacyDummy.with(234) } as subscribeCallbackArguments);
+                (callback as EventCallbackParameter<'templateChosen', BlockEvent>)({
+                    template: TemplateLegacyDummy.with(234),
+                });
             }
             return unsubscribe;
         }),

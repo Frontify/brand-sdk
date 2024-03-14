@@ -17,9 +17,33 @@ const iconLibraryFilenameExtension = z.enum(['svg']);
 const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 'png', 'tif', 'tiff']);
 
 const appType = z.enum(['content-block', 'platform-app', 'theme']);
+
+const secretSchema = object({
+    label: string(),
+    key: string().refine((value) => /^[\w-]+$/.test(value), {
+        message: "The key should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
+    }),
+});
+const secretsArraySchema = array(secretSchema);
+
+const proxyOptionsSchema = object({
+    method: z.enum(['GET', 'POST', 'PUT', 'DELETE']),
+    headers: z.record(string()),
+    body: z.any(),
+});
+
+const proxyNetworkCallSchema = object({
+    id: string(),
+    resource: string().url(),
+    options: proxyOptionsSchema,
+});
+const proxyNetworkCallArraySchema = array(proxyNetworkCallSchema);
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
+    secrets: secretsArraySchema.optional(),
+    proxyNetworkCall: proxyNetworkCallArraySchema.optional(),
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({

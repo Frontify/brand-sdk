@@ -15,6 +15,37 @@
 ### Patch Changes
 
 - Merge main into dev
+## 3.5.2
+
+### Patch Changes
+
+- [#825](https://github.com/Frontify/brand-sdk/pull/825) [`8430626`](https://github.com/Frontify/brand-sdk/commit/8430626870f7fb139d2b10b4f1f26040be1c6bbc) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(AppBridgeBlock): add `isAuthenticated` to `BlockContext` type
+
+## 3.5.1
+
+### Patch Changes
+
+- [#818](https://github.com/Frontify/brand-sdk/pull/818) [`c25d717`](https://github.com/Frontify/brand-sdk/commit/c25d71757e44406c065c65374d1d800a6d5694de) Thanks [@SamCreasey](https://github.com/SamCreasey)! - fix(useBlockSettings): `setBlockSettings` has been wrapped in a `useCallback` so it can be safely used as a dependency in react hooks. The following code will no longer cause unexpected rerenders.
+
+  ```jsx
+  const Component = () => {
+    const [blockSettings, setBlockSettings] = useBlockSettings(appBridge);
+
+    useEffect(() => {
+      setBlockSettings({ ...blockSettings });
+    }, [setBlockSettings]);
+  };
+  ```
+
+## 3.5.0
+
+### Minor Changes
+
+- [#807](https://github.com/Frontify/brand-sdk/pull/807) [`909e0f5`](https://github.com/Frontify/brand-sdk/commit/909e0f5ef98e7bd1da6b0d96e32fdcde74a87d8d) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add navigateToDocumentSection command to AppBridgeTheme
+
+### Patch Changes
+
+- [#806](https://github.com/Frontify/brand-sdk/pull/806) [`5115dfd`](https://github.com/Frontify/brand-sdk/commit/5115dfda65ce87e53a26831e05034534d50a05be) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: useGroupedDocuments and useUngroupedDocuments flaky tests
 
 ## 3.4.2
 

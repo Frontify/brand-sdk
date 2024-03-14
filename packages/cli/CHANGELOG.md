@@ -1,5 +1,25 @@
 # @frontify/frontify-cli
 
+## 5.6.11
+
+### Patch Changes
+
+- [#827](https://github.com/Frontify/brand-sdk/pull/827) [`f3a7dc2`](https://github.com/Frontify/brand-sdk/commit/f3a7dc24090fec27ee2d5a780131bc1a2feb2d24) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds validator for the proxyNetworkCall
+
+## 5.6.10
+
+### Patch Changes
+
+- [#812](https://github.com/Frontify/brand-sdk/pull/812) [`67b5ca1`](https://github.com/Frontify/brand-sdk/commit/67b5ca134b86ccddd0d2ab8a36b5b08261a4d9b3) Thanks [@julianiff](https://github.com/julianiff)! - feat: add manifest secret key validator
+
+- [#815](https://github.com/Frontify/brand-sdk/pull/815) [`17491e9`](https://github.com/Frontify/brand-sdk/commit/17491e923d9b66d158ee03003b3ac47899e6423f) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.0.0-beta.415
+
+## 5.6.9
+
+### Patch Changes
+
+- [#803](https://github.com/Frontify/brand-sdk/pull/803) [`b4a72a2`](https://github.com/Frontify/brand-sdk/commit/b4a72a23c7ea5aa65beb1b264fb36930c0493ba1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to ^12.0.0-beta.411
+
 ## 5.6.8
 
 ### Patch Changes

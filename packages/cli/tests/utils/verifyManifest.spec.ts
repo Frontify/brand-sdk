@@ -144,6 +144,262 @@ const MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION = {
     },
 };
 
+const VALID_MANIFEST_WITH_SECRETS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ label: 'first label', key: 'first-key' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const VALID_MANIFEST_WITH_EMPTY_SECRETS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const VALID_MANIFEST_WITH_NO_SECRETS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_WRONG_KEY_FORMAT = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ label: 'first label', key: 'first key %' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_SECRET_BUT_NO_KEY = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ label: 'first label' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_SECRET_BUT_NO_LABEL = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [{ key: 'first-key' }],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const generateManifestWithProxyNetworkCall = (proxyNetworkCall) => {
+    return {
+        appType: 'platform-app',
+        appId: 'abcdabcdabcdabcdabcdabcda',
+        proxyNetworkCall,
+        surfaces: {
+            mediaLibrary: {
+                assetAction: {
+                    title: 'action title',
+                    type: ['image', 'video'],
+                    filenameExtension: ['png'],
+                },
+                assetCreation: {
+                    title: 'action title',
+                },
+            },
+        },
+        metadata: {
+            version: 1,
+        },
+    };
+};
+
+const MANIFEST_WITH_PROXY = generateManifestWithProxyNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+    {
+        id: 'example-user-api',
+        resource: 'https://api.example.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_NOT_ARRAY_PROXY = generateManifestWithProxyNetworkCall({
+    id: 'frontify-user-api',
+    resource: 'https://api.frontify.com/api/user',
+    options: {
+        method: 'POST',
+        headers: {
+            'x-frontify-auth-header': '$OPEN_API',
+        },
+        body: 'example body data',
+    },
+});
+
+const MANIFEST_WITH_PROXY_NO_ID = generateManifestWithProxyNetworkCall([
+    {
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_PROXY_NO_RESOURCE = generateManifestWithProxyNetworkCall([
+    {
+        id: 'frontify-user-api',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_PROXY_INCORRECT_RESOURCE = generateManifestWithProxyNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'something-random',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_PROXY_NO_OPTIONS = generateManifestWithProxyNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+    },
+]);
+
+const MANIFEST_WITH_PROXY_NO_METHOD = generateManifestWithProxyNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_PROXY_NO_HEADERS = generateManifestWithProxyNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            body: 'example body data',
+        },
+    },
+]);
+
 describe('Verify Platform App Manifest', () => {
     it('should validate a valid manifest', async () => {
         const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
@@ -189,6 +445,86 @@ describe('Verify Platform App Manifest', () => {
     it('should throw error when asset creation title is too long', async () => {
         await expect(
             async () => await verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should accept a secret array with label and key', async () => {
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_SECRETS, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should accept an empty secrets array', async () => {
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_EMPTY_SECRETS, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should validate when no secret property is present', async () => {
+        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_NO_SECRETS, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should throw when secret object is not correct without key', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw when secret object is not correct without label', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_LABEL, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when key formatting is invalid', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_WRONG_KEY_FORMAT, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should accept an array of ProxyCallNetwork objects', async () => {
+        const verifiedManifest = await verifyManifest(MANIFEST_WITH_PROXY, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should throw error when proxyCallNetwork is not an array', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_NOT_ARRAY_PROXY, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when proxyCallNetwork object is not correct without id', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_ID, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when proxyCallNetwork object is not correct without resource', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_RESOURCE, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw an error when resource is incorrect', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_PROXY_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when proxyCallNetwork object is not correct without options', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_OPTIONS, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when proxyCallNetwork object is not correct without method', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_METHOD, platformAppManifestSchemaV1),
+        ).rejects.toThrow();
+    });
+
+    it('should throw error when proxyCallNetwork object is not correct without headers', async () => {
+        await expect(
+            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_HEADERS, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 });
