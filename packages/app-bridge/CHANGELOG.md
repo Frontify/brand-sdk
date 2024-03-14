@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.11
+
+### Minor Changes
+
+- [#830](https://github.com/Frontify/brand-sdk/pull/830) [`e14ef89`](https://github.com/Frontify/brand-sdk/commit/e14ef895606e72af066e614983b61ca8778c108d) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlock): add `isAuthenticated` to `BlockContext` type
+
 ## 4.0.0-alpha.10
 
 ### Minor Changes
@@ -15,6 +21,7 @@
 ### Patch Changes
 
 - Merge main into dev
+
 ## 3.5.2
 
 ### Patch Changes
