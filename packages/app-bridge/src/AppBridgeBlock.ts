@@ -69,6 +69,7 @@ export type BlockContext = {
     portalId: number;
     blockId: number;
     sectionId?: number;
+    isAuthenticated: boolean;
 };
 
 export type BlockEvent = EventNameValidator<
