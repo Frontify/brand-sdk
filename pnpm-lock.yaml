@@ -23,8 +23,8 @@ importers:
         specifier: ^5.0.7
         version: 5.0.7
       '@frontify/fondue':
-        specifier: 12.0.0-beta.411
-        version: 12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.415
+        version: 12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@4.5.2)
@@ -256,8 +256,8 @@ importers:
         specifier: ^3.0.0 || ^4.0.0-alpha.0
         version: link:../app-bridge
       '@frontify/fondue':
-        specifier: 12.0.0-beta.411
-        version: 12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.415
+        version: 12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -408,8 +408,8 @@ importers:
   packages/sidebar-settings:
     dependencies:
       '@frontify/fondue':
-        specifier: 12.0.0-beta.411
-        version: 12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
+        specifier: 12.0.0-beta.415
+        version: 12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1)
     devDependencies:
       '@babel/core':
         specifier: ^7.23.9
@@ -1726,8 +1726,8 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.411(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1):
-    resolution: {integrity: sha512-DhYiqJ66jR+5DUE2r7bpb4B/f5Bekk4lihlqEVbre4NMh4x/Ilt1dJMU22akCWYu3TF3B9yaqngpwsLkKC1tIQ==}
+  /@frontify/fondue@12.0.0-beta.415(@types/node@18.19.18)(@types/react-dom@18.2.19)(@types/react@18.2.58)(@udecode/plate-common@30.4.5)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.1)(ts-node@10.9.2)(zustand@4.5.1):
+    resolution: {integrity: sha512-PCrScuVehc5/9AzPEacTd7IVOnX6E1eV/I/LaIDwwGVQH1x0Ca0OAUwHRVEtSqw2ZlYrcflPtR4wYfiO87EaFA==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
