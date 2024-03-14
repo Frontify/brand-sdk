@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.11
+
+### Patch Changes
+
+- [#827](https://github.com/Frontify/brand-sdk/pull/827) [`f3a7dc2`](https://github.com/Frontify/brand-sdk/commit/f3a7dc24090fec27ee2d5a780131bc1a2feb2d24) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds validator for the proxyNetworkCall
+
 ## 5.6.10
 
 ### Patch Changes

@@ -26,10 +26,24 @@ const secretSchema = object({
 });
 const secretsArraySchema = array(secretSchema);
 
+const proxyOptionsSchema = object({
+    method: z.enum(['GET', 'POST', 'PUT', 'DELETE']),
+    headers: z.record(string()),
+    body: z.any(),
+});
+
+const proxyNetworkCallSchema = object({
+    id: string(),
+    resource: string().url(),
+    options: proxyOptionsSchema,
+});
+const proxyNetworkCallArraySchema = array(proxyNetworkCallSchema);
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
     secrets: secretsArraySchema.optional(),
+    proxyNetworkCall: proxyNetworkCallArraySchema.optional(),
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({
