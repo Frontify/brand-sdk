@@ -49,6 +49,11 @@ export type AssetInputBlock<AppBridge> = {
     mode?: AssetInputMode;
 
     /**
+     * Whether the Delete option is present in the options dropdown
+     */
+    allowDelete?: boolean;
+
+    /**
      * The size of the input.
      */
     size?: 'small' | 'large' | AssetInputSize;
