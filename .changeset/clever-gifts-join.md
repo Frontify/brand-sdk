@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-feat(AppBridgePlatformApp): add the proxyMethodCall method
+feat(AppBridgePlatformApp): add the `proxyMethodCall` method
