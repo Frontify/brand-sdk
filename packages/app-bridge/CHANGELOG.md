@@ -21,6 +21,11 @@
 ### Patch Changes
 
 - Merge main into dev
+## 3.5.3
+
+### Patch Changes
+
+- [#834](https://github.com/Frontify/brand-sdk/pull/834) [`1612681`](https://github.com/Frontify/brand-sdk/commit/1612681472c6eff8b732aed10c33d0ac83269b83) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: useTemplateAssets hook to return themeAsset as well
 
 ## 3.5.2
 
