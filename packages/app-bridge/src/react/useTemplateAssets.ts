@@ -198,6 +198,7 @@ export const useTemplateAssets = (
 
     return {
         templateAssets: mergedThemeAndTemplateAssets,
+        themeAssets,
         customizedTemplateAssetsKeys,
         addAssetIdsToKey,
         deleteAssetIdsFromKey,
