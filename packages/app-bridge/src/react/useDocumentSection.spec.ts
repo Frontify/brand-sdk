@@ -120,6 +120,28 @@ describe('useDocumentSection', () => {
                 expect(result.current.navigationItems).toEqual([documentSections[1]]);
             });
         });
+
+        it("should add the section to the end of the array if the insertAfterSectionId doesn't exist", async () => {
+            const NEW_SECTION = DocumentSectionDummy.with(535);
+
+            const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
+
+            await waitFor(() => {
+                expect(result.current.documentSections).toEqual(documentSections);
+            });
+
+            window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
+                action: 'add',
+                documentPageId: DOCUMENT_PAGE_ID,
+                documentSection: NEW_SECTION,
+                insertAfterSectionId: 123,
+            });
+
+            await waitFor(() => {
+                expect(result.current.documentSections).toEqual([...documentSections, NEW_SECTION]);
+                expect(result.current.navigationItems).toEqual([documentSections[1], NEW_SECTION]);
+            });
+        });
     });
 
     describe('when a section is updated', () => {

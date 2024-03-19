@@ -20,7 +20,7 @@ const insertSectionIntoArray = (
     if (index >= 0) {
         return [...previousSections.slice(0, index + 1), documentSection, ...previousSections.slice(index + 1)];
     }
-    return previousSections;
+    return [...previousSections, documentSection];
 };
 
 const updateSectionInArray = (
