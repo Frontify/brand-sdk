@@ -46,7 +46,7 @@ export const useDocumentSection = (appBridge: AppBridgeBlock | AppBridgeTheme, d
     }, [appBridge, documentPageId]);
 
     useEffect(() => {
-        const handleSectionUpdateEvent = (event: EmitterEvents['AppBridge:GuidelineDocumentSection:Action']) => {
+        const handleSectionEvent = (event: EmitterEvents['AppBridge:GuidelineDocumentSection:Action']) => {
             if (event.documentPageId !== documentPageId) {
                 return;
             }
@@ -68,10 +68,10 @@ export const useDocumentSection = (appBridge: AppBridgeBlock | AppBridgeTheme, d
             }
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentSection:Action', handleSectionUpdateEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentSection:Action', handleSectionEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentSection:Action', handleSectionUpdateEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentSection:Action', handleSectionEvent);
         };
     }, [documentPageId]);
 
