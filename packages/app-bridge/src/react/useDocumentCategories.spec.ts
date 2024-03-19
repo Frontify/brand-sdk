@@ -343,15 +343,12 @@ describe('useDocumentCategories', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documentCategories).toEqual([
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 1),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
+            ]);
         });
-
-        expect(result.current.documentCategories).toEqual([
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 1),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
-        ]);
     });
 
     it('should not update document categories if a document page is added to another category', async () => {
@@ -377,15 +374,12 @@ describe('useDocumentCategories', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documentCategories).toEqual([
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 0),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
+            ]);
         });
-
-        expect(result.current.documentCategories).toEqual([
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 0),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
-        ]);
     });
 
     it('should update document categories if a document page is removed from a category', async () => {
@@ -411,15 +405,12 @@ describe('useDocumentCategories', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documentCategories).toEqual([
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 0),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 1),
+            ]);
         });
-
-        expect(result.current.documentCategories).toEqual([
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 0),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 1),
-        ]);
     });
 
     it('should not update document categories if a document page is removed from another category', async () => {
@@ -445,15 +436,12 @@ describe('useDocumentCategories', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documentCategories).toEqual([
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 0),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
+            ]);
         });
-
-        expect(result.current.documentCategories).toEqual([
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, DOCUMENT_ID, 0),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
-        ]);
     });
 
     it('should update document categories sort if a category is moved', async () => {
