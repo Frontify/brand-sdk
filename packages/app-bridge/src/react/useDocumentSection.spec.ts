@@ -2,7 +2,7 @@
 
 import { renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { Mock, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
 import { AppBridgeBlock, AppBridgeTheme } from '../';
@@ -47,6 +47,23 @@ describe('useDocumentSection', () => {
         await waitFor(() => {
             expect(result.current.navigationItems).toEqual([documentSections[1]]);
         });
+    });
+
+    it('should add and remove event listener correctly', async () => {
+        vi.spyOn(window.emitter, 'on');
+        vi.spyOn(window.emitter, 'off');
+        const { unmount } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
+
+        const handleSectionEvent = (window.emitter.on as Mock).mock.calls[0][1];
+
+        expect(window.emitter.on).toHaveBeenCalledWith('AppBridge:GuidelineDocumentSection:Action', handleSectionEvent);
+
+        unmount();
+
+        expect(window.emitter.off).toHaveBeenCalledWith(
+            'AppBridge:GuidelineDocumentSection:Action',
+            handleSectionEvent,
+        );
     });
 
     describe('when a section is added', () => {
