@@ -19,7 +19,7 @@ export type DocumentSectionApi = {
 
 export type DocumentSection = {
     id: number;
-    title: string;
+    title: Nullable<string>;
     slug: string;
     sort: number;
     permanentLink: string;
