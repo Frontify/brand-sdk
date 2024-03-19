@@ -33,7 +33,22 @@ const updateSectionInArray = (
 const deleteSectionFromArray = (previousSections: DocumentSection[], sectionIdToDelete: number) =>
     previousSections.filter((section) => section.id !== sectionIdToDelete);
 
-export const useDocumentSection = (appBridge: AppBridgeBlock | AppBridgeTheme, documentPageId: number) => {
+type UseDocumentSectionReturn = {
+    /**
+     * The complete list of document sections that belong to the document page with the given documentPageId.
+     */
+    documentSections: DocumentSection[];
+    /**
+     * A filtered list of document sections which removes any sections that do not have a readable title.
+     * Use this array for creating a navigation menu for the document page.
+     */
+    navigationItems: DocumentSection[];
+};
+
+export const useDocumentSection = (
+    appBridge: AppBridgeBlock | AppBridgeTheme,
+    documentPageId: number,
+): UseDocumentSectionReturn => {
     const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
     const navigationItems = useMemo(() => getNavigationItems(documentSections), [documentSections]);
 
