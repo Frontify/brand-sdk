@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.12
+
+### Patch Changes
+
+- [#832](https://github.com/Frontify/brand-sdk/pull/832) [`b116dec`](https://github.com/Frontify/brand-sdk/commit/b116decf09a486d5c25e8f9cf9e4213cd2c65d3c) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add assetInput 'allowDelete' optional prop
+
 ## 0.9.11
 
 ### Patch Changes
