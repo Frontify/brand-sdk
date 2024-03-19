@@ -14,7 +14,7 @@ import type { BrandportalLink } from './BrandportalLink';
 import type { PrivacySettings } from './PrivacySettings';
 import type { Template } from './Template';
 import type { ThemeTemplate } from './ThemeTemplate';
-import { DocumentSection } from '.';
+import type { DocumentSection } from './DocumentSection';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
