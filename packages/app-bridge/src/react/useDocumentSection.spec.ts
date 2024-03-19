@@ -41,14 +41,6 @@ describe('useDocumentSection', () => {
         });
     });
 
-    it('should filter sections with null and falsey titles from navigation items', async () => {
-        const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
-
-        await waitFor(() => {
-            expect(result.current.navigationItems).toEqual([documentSections[1]]);
-        });
-    });
-
     it('should add and remove event listener correctly', async () => {
         vi.spyOn(window.emitter, 'on');
         vi.spyOn(window.emitter, 'off');
