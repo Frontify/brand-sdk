@@ -3,7 +3,7 @@
 import { type DocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
-import { InitiallyExpandedItems } from '../';
+import { DocumentSectionWithTitle, InitiallyExpandedItems } from '../';
 import { SectionLink } from './SectionLink';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
 
@@ -27,7 +27,7 @@ export const PageLink = ({
     getDocumentSectionsByDocumentPageId,
 }: PageLinkProps) => {
     const [isExpanded, setIsExpanded] = useState(page.id === itemsToExpandInitially.documentId);
-    const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
+    const [documentSections, setDocumentSections] = useState<DocumentSectionWithTitle[]>([]);
     const isActive = page.permanentLink === selectedUrl;
 
     useEffect(() => {
@@ -86,11 +86,7 @@ export const PageLink = ({
                     return (
                         <SectionLink
                             key={section.id}
-                            section={{
-                                title: section.title ?? '',
-                                permanentLink: section.permanentLink,
-                                id: section.id,
-                            }}
+                            section={section}
                             selectedUrl={selectedUrl}
                             onSelectUrl={onSelectUrl}
                         />
