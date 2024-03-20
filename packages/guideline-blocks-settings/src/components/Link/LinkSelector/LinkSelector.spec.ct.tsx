@@ -150,7 +150,7 @@ describe('Link Selector', () => {
             Promise.resolve([
                 apiSections[0],
                 // @frontify/app-bridge v4+ supports nullable titles
-                { ...apiSections[1], title: null } as DocumentSection,
+                { ...apiSections[1], title: null } as unknown as DocumentSection,
                 { ...apiSections[2], title: ' ' },
                 { ...apiSections[3], title: '' },
             ]),
