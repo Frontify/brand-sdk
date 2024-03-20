@@ -5,8 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { AppBridgeBlock } from '../AppBridgeBlock';
 import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentSection, EmitterEvents } from '../types';
-
-const getNavigationItems = (sections: DocumentSection[]) => sections.filter((section) => !!section.title?.trim());
+import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
 
 const insertSectionIntoArray = (
     previousSections: DocumentSection[],
@@ -50,7 +49,10 @@ export const useDocumentSection = (
     documentPageId: number,
 ): UseDocumentSectionReturn => {
     const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
-    const navigationItems = useMemo(() => getNavigationItems(documentSections), [documentSections]);
+    const navigationItems = useMemo(
+        () => filterDocumentSectionsWithUnreadableTitles(documentSections),
+        [documentSections],
+    );
 
     useEffect(() => {
         const fetchDocumentSection = async (documentPageId: number) => {

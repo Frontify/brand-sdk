@@ -33,7 +33,7 @@ describe('useDocumentSection', () => {
         });
     });
 
-    it('should filter sections with null and falsey titles from navigation items', async () => {
+    it('should filter sections with null and unreadable titles from navigation items', async () => {
         const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
 
         await waitFor(() => {
@@ -44,6 +44,7 @@ describe('useDocumentSection', () => {
     it('should add and remove event listener correctly', async () => {
         vi.spyOn(window.emitter, 'on');
         vi.spyOn(window.emitter, 'off');
+
         const { unmount } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
 
         const handleSectionEvent = (window.emitter.on as Mock).mock.calls[0][1];
@@ -81,7 +82,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should add the section after the section with matching id to insertAfterSectionId', async () => {
+        it('should add the section after the section matching insertAfterSectionId', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -130,7 +131,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it("should add the section to the end of the array if the insertAfterSectionId doesn't exist", async () => {
+        it('should add the section to the end of the array if no section matches insertAfterSectionId', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -154,7 +155,7 @@ describe('useDocumentSection', () => {
     });
 
     describe('when a section is updated', () => {
-        it('should update the section with matching id', async () => {
+        it('should update the section that matches sectionId', async () => {
             const UPDATED_SECTION = DocumentSectionDummy.withFields({
                 id: documentSections[1].id,
                 title: 'Updated Title',
@@ -185,7 +186,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should remove section from navigation items if title becomes falsey', async () => {
+        it('should remove section from navigation items if title becomes unreadable', async () => {
             const UPDATED_SECTION = DocumentSectionDummy.withFields({
                 id: documentSections[1].id,
                 title: '  ',
@@ -265,7 +266,7 @@ describe('useDocumentSection', () => {
     });
 
     describe('when a section is deleted', () => {
-        it('should remove the section with matching id', async () => {
+        it('should remove the section that matches sectionId', async () => {
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
 
             await waitFor(() => {
@@ -284,7 +285,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should not remove section if document page id is incorrect', async () => {
+        it('should not remove section if documentPageId is incorrect', async () => {
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
 
             await waitFor(() => {
