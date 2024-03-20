@@ -7,7 +7,7 @@ export type DocumentSectionApi = {
     revision: unknown;
     slug: string;
     sort: number;
-    title: string;
+    title: Nullable<string>;
     creator: number;
     created: string;
     modifier: Nullable<number>;

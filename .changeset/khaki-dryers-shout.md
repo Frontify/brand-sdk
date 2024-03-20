@@ -2,4 +2,4 @@
 "@frontify/app-bridge": major
 ---
 
-feat: modify `DocumentSection` type to allow title to be `null`.
+feat: modify `DocumentSection` and `DocumentSectionApi` type to allow `title` to be `null`.
