@@ -139,7 +139,7 @@ describe('Link Selector', () => {
         cy.get(SectionLinkSelector).should('have.length', 4);
     });
 
-    it('filters out sections that have unreadable titles', () => {
+    it('should filter out sections that have unreadable titles', () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
