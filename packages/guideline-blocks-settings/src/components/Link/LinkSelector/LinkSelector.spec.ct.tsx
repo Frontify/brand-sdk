@@ -3,6 +3,7 @@
 import {
     DocumentApiDummy,
     DocumentPageApiDummy,
+    type DocumentSection,
     DocumentSectionApiDummy,
     getAppBridgeBlockStub,
 } from '@frontify/app-bridge';
@@ -136,6 +137,38 @@ describe('Link Selector', () => {
         cy.get(DocumentLinkSelector).eq(0).find(DocumentTreeItemToggleSelector).click();
         cy.get(PageLinkSelector).eq(0).find('button').click();
         cy.get(SectionLinkSelector).should('have.length', 4);
+    });
+
+    it('filters out sections that have unreadable titles', () => {
+        const appBridge = getAppBridgeBlockStub({
+            blockId: 1,
+        });
+        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
+        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+        (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
+        (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(
+            Promise.resolve([
+                apiSections[0],
+                // @frontify/app-bridge v4+ supports nullable titles
+                { ...apiSections[1], title: null } as DocumentSection,
+                { ...apiSections[2], title: ' ' },
+                { ...apiSections[3], title: '' },
+            ]),
+        );
+
+        mount(
+            <LinkSelector
+                getAllDocuments={appBridge.getAllDocuments}
+                getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
+                getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
+                url=""
+                onUrlChange={cy.stub()}
+            />,
+        );
+        cy.get(LinkSelectorButtonSelector).click();
+        cy.get(DocumentLinkSelector).eq(0).find(DocumentTreeItemToggleSelector).click();
+        cy.get(PageLinkSelector).eq(0).find('button').click();
+        cy.get(SectionLinkSelector).should('have.length', 1);
     });
 
     it('renders the selected section immediately if it is preselected', () => {
