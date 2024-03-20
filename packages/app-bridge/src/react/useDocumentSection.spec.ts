@@ -60,7 +60,7 @@ describe('useDocumentSection', () => {
     });
 
     describe('when a section is added', () => {
-        it('should add the section to the start of the documentSections if insertAfterSectionId is null', async () => {
+        it('should add the section to the start of the documentSections if previousSectionId is null', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -73,7 +73,7 @@ describe('useDocumentSection', () => {
                 action: 'add',
                 documentPageId: DOCUMENT_PAGE_ID,
                 documentSection: NEW_SECTION,
-                insertAfterSectionId: null,
+                previousSectionId: null,
             });
 
             await waitFor(() => {
@@ -82,7 +82,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should add the section after the section matching insertAfterSectionId', async () => {
+        it('should add the section after the section matching previousSectionId', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -95,7 +95,7 @@ describe('useDocumentSection', () => {
                 action: 'add',
                 documentPageId: DOCUMENT_PAGE_ID,
                 documentSection: NEW_SECTION,
-                insertAfterSectionId: documentSections[1].id,
+                previousSectionId: documentSections[1].id,
             });
 
             await waitFor(() => {
@@ -122,7 +122,7 @@ describe('useDocumentSection', () => {
                 action: 'add',
                 documentPageId: DOCUMENT_PAGE_ID + 1,
                 documentSection: NEW_SECTION,
-                insertAfterSectionId: documentSections[1].id,
+                previousSectionId: documentSections[1].id,
             });
 
             await waitFor(() => {
@@ -131,7 +131,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should add the section to the end of the array if no section matches insertAfterSectionId', async () => {
+        it('should add the section to the end of the array if no section matches previousSectionId', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -144,7 +144,7 @@ describe('useDocumentSection', () => {
                 action: 'add',
                 documentPageId: DOCUMENT_PAGE_ID,
                 documentSection: NEW_SECTION,
-                insertAfterSectionId: 123,
+                previousSectionId: 123,
             });
 
             await waitFor(() => {

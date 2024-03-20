@@ -10,12 +10,12 @@ import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
 const insertSectionIntoArray = (
     previousSections: DocumentSection[],
     documentSection: DocumentSection,
-    insertAfterSectionId: Nullable<number>,
+    previousSectionId: Nullable<number>,
 ) => {
-    if (insertAfterSectionId === null) {
+    if (previousSectionId === null) {
         return [documentSection, ...previousSections];
     }
-    const index = previousSections.findIndex((section) => section.id === insertAfterSectionId);
+    const index = previousSections.findIndex((section) => section.id === previousSectionId);
     if (index >= 0) {
         return [...previousSections.slice(0, index + 1), documentSection, ...previousSections.slice(index + 1)];
     }
@@ -68,9 +68,9 @@ export const useDocumentSection = (
                 return;
             }
             if (event.action === 'add') {
-                const { documentSection, insertAfterSectionId } = event;
+                const { documentSection, previousSectionId } = event;
                 setDocumentSections((previousSections) =>
-                    insertSectionIntoArray(previousSections, documentSection, insertAfterSectionId),
+                    insertSectionIntoArray(previousSections, documentSection, previousSectionId),
                 );
             }
             if (event.action === 'update') {

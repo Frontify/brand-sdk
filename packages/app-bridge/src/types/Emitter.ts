@@ -115,7 +115,7 @@ export type EmitterEvents = {
     'AppBridge:GuidelineDocumentSection:Action':
         | {
               documentSection: DocumentSection;
-              insertAfterSectionId: Nullable<number>;
+              previousSectionId: Nullable<number>;
               documentPageId: number;
               action: 'add';
           }
