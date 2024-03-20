@@ -32,7 +32,8 @@ export const PageLink = ({
     useEffect(() => {
         const fetchDocumentSections = async () => {
             const sections = await getDocumentSectionsByDocumentPageId(page.id);
-            setDocumentSections(sections);
+            const sectionsWithReadableTitles = sections.filter((section) => !!section.title?.trim());
+            setDocumentSections(sectionsWithReadableTitles);
         };
 
         fetchDocumentSections();
