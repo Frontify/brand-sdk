@@ -46,8 +46,7 @@ export const PageLink = ({
         }
     }, [itemsToExpandInitially, page.id]);
 
-    const sectionsArray = [...documentSections.values()];
-    const hasSections = sectionsArray.length > 0;
+    const hasSections = documentSections.length > 0;
 
     return (
         <>
@@ -82,12 +81,16 @@ export const PageLink = ({
                 </div>
             </button>
             {isExpanded &&
-                sectionsArray.length > 0 &&
-                sectionsArray.map((section) => {
+                documentSections.length > 0 &&
+                documentSections.map((section) => {
                     return (
                         <SectionLink
                             key={section.id}
-                            section={section}
+                            section={{
+                                title: section.title ?? '',
+                                permanentLink: section.permanentLink,
+                                id: section.id,
+                            }}
                             selectedUrl={selectedUrl}
                             onSelectUrl={onSelectUrl}
                         />
