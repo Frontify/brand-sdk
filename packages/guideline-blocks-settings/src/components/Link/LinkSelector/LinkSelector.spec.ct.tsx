@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
+    type AppBridgeBlock,
     DocumentApiDummy,
     DocumentPageApiDummy,
-    type DocumentSection,
     DocumentSectionApiDummy,
     getAppBridgeBlockStub,
 } from '@frontify/app-bridge';
@@ -34,6 +34,10 @@ const apiSections = [
     { ...DocumentSectionApiDummy.with(3), permanentLink: '/8' },
     { ...DocumentSectionApiDummy.with(4), permanentLink: '/9' },
 ];
+
+const isAppBridgeV3Stub = async (appBridge: AppBridgeBlock) => {
+    return (await appBridge.getDocumentSectionsByDocumentPageId(1)) === undefined;
+};
 
 describe('Link Selector', () => {
     it('renders the link selector button', () => {
@@ -139,22 +143,19 @@ describe('Link Selector', () => {
         cy.get(SectionLinkSelector).should('have.length', 4);
     });
 
-    it('should filter out sections that have unreadable titles', () => {
+    it('should filter out sections that have unreadable titles', async () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
-        (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(
-            Promise.resolve([
-                apiSections[0],
-                // @frontify/app-bridge v4+ supports nullable titles
-                { ...apiSections[1], title: null } as unknown as DocumentSection,
-                { ...apiSections[2], title: ' ' },
-                { ...apiSections[3], title: '' },
-            ]),
-        );
+
+        if (await isAppBridgeV3Stub(appBridge)) {
+            (appBridge.getDocumentSectionsByDocumentPageId as SinonStub).returns(
+                Promise.resolve([apiSections[0], { ...apiSections[2], title: ' ' }, { ...apiSections[3], title: '' }]),
+            );
+        }
 
         mount(
             <LinkSelector
