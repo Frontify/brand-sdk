@@ -1,10 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Document, DocumentPage, DocumentSection } from '@frontify/app-bridge';
+import { type Document, type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
 import { ReactElement, useEffect, useState } from 'react';
-import { DocumentLink } from './DocumentLink';
-import { LoadingIndicator } from './LoadingIndicator';
+
+import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
 import { InitiallyExpandedItems } from '../';
+
+import { LoadingIndicator } from './LoadingIndicator';
+import { DocumentLink } from './DocumentLink';
 
 type DocumentLinksProps = {
     selectedUrl: string;
@@ -28,16 +31,14 @@ export const DocumentLinks = ({
         pageId: undefined,
     });
 
-    const documentArray = [...documents.values()];
-
     useEffect(() => {
-        if (selectedUrl && documentArray.length > 0) {
+        if (selectedUrl && documents.length > 0) {
             findLocationOfSelectedUrl().then((items) => {
                 setItemsToExpandInitially(items);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [documentArray.length]);
+    }, [documents.length]);
 
     useEffect(() => {
         getAllDocuments()
@@ -54,22 +55,23 @@ export const DocumentLinks = ({
             documentId: undefined,
             pageId: undefined,
         };
-        const selectedUrlIsDocument = documentArray.find((document) => document.permanentLink === selectedUrl);
+        const selectedUrlIsDocument = documents.find((document) => document.permanentLink === selectedUrl);
         if (selectedUrlIsDocument) {
             return itemsToExpand;
         }
-        for (const document of documentArray) {
+        for (const document of documents) {
             const pages = await getDocumentPagesByDocumentId(document.id);
-            const pagesArray = [...pages.values()];
-            const selectedUrlIsPage = !!pagesArray.find((page) => page.permanentLink === selectedUrl);
+            const selectedUrlIsPage = !!pages.find((page) => page.permanentLink === selectedUrl);
             if (selectedUrlIsPage) {
                 itemsToExpand.documentId = document.id;
                 return itemsToExpand;
             }
-            for (const page of pagesArray) {
+            for (const page of pages) {
                 const sections = await getDocumentSectionsByDocumentPageId(page.id);
-                const sectionsArray = [...sections.values()];
-                const selectedUrlIsSection = !!sectionsArray.find((section) => section.permanentLink === selectedUrl);
+                const sectionsWithReadableTitles = filterDocumentSectionsWithUnreadableTitles(sections);
+                const selectedUrlIsSection = !!sectionsWithReadableTitles.find(
+                    (section) => section.permanentLink === selectedUrl,
+                );
                 if (selectedUrlIsSection) {
                     itemsToExpand.documentId = document.id;
                     itemsToExpand.pageId = page.id;
@@ -84,7 +86,7 @@ export const DocumentLinks = ({
         <LoadingIndicator />
     ) : (
         <>
-            {documentArray.map((document) => {
+            {documents.map((document) => {
                 return (
                     <DocumentLink
                         key={document.id}
