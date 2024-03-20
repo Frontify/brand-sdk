@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type DocumentSection, DocumentSectionDummy } from '@frontify/app-bridge';
-import { filterDocumentSectionsWithUnreadableTitles } from './filterDocumentSectionsWithUnreadableTitles';
 import { describe, expect, it } from 'vitest';
+
+import { filterDocumentSectionsWithUnreadableTitles } from './filterDocumentSectionsWithUnreadableTitles';
 
 const documentSections = [
     { ...DocumentSectionDummy.with(244), title: null },
