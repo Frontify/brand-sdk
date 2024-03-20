@@ -5,6 +5,7 @@ import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 import { InitiallyExpandedItems } from '../';
 import { SectionLink } from './SectionLink';
+import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
 
 type PageLinkProps = {
     page: {
@@ -32,7 +33,7 @@ export const PageLink = ({
     useEffect(() => {
         const fetchDocumentSections = async () => {
             const sections = await getDocumentSectionsByDocumentPageId(page.id);
-            const sectionsWithReadableTitles = sections.filter((section) => !!section.title?.trim());
+            const sectionsWithReadableTitles = filterDocumentSectionsWithUnreadableTitles(sections);
             setDocumentSections(sectionsWithReadableTitles);
         };
 

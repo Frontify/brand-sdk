@@ -5,6 +5,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { DocumentLink } from './DocumentLink';
 import { LoadingIndicator } from './LoadingIndicator';
 import { InitiallyExpandedItems } from '../';
+import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
 
 type DocumentLinksProps = {
     selectedUrl: string;
@@ -65,7 +66,7 @@ export const DocumentLinks = ({
             }
             for (const page of pages) {
                 const sections = await getDocumentSectionsByDocumentPageId(page.id);
-                const sectionsWithReadableTitles = sections.filter((section) => !!section.title?.trim());
+                const sectionsWithReadableTitles = filterDocumentSectionsWithUnreadableTitles(sections);
                 const selectedUrlIsSection = !!sectionsWithReadableTitles.find(
                     (section) => section.permanentLink === selectedUrl,
                 );
