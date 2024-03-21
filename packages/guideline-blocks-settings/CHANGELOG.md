@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.8
+
+### Patch Changes
+
+- [#842](https://github.com/Frontify/brand-sdk/pull/842) [`0a86be7`](https://github.com/Frontify/brand-sdk/commit/0a86be761b5d3283d275d11dc8ba684821d8c17d) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(LinkSelector): Internal section links will now not be shown if they have an unreadable title, such as an empty string.
+
 ## 0.34.7
 
 ### Patch Changes
