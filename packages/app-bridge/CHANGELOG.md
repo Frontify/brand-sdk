@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.5.5
+
+### Patch Changes
+
+- [#843](https://github.com/Frontify/brand-sdk/pull/843) [`3109e66`](https://github.com/Frontify/brand-sdk/commit/3109e66248fb9185c312d8170055452dce796bc4) Thanks [@julianiff](https://github.com/julianiff)! - chore: move up to v4
+
 ## 3.5.4
 
 ### Patch Changes
