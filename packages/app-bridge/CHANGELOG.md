@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.5.4
+
+### Patch Changes
+
+- [#821](https://github.com/Frontify/brand-sdk/pull/821) [`efde7a5`](https://github.com/Frontify/brand-sdk/commit/efde7a511b3d4fbbe17af5f0e41982d003743b35) Thanks [@imoutaharik](https://github.com/imoutaharik)! - feat(AppBridgePlatformApp): add the `proxyMethodCall` method
+
 ## 3.5.3
 
 ### Patch Changes
