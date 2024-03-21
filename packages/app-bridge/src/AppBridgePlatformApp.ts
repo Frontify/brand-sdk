@@ -123,7 +123,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
 
             notify(Topic.Init, PUBSUB_CHECKSUM, {
                 token: getQueryParameters(window.location.href).token,
-                appBridgeVersion: 'v3',
+                appBridgeVersion: 'v4',
             });
 
             subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ statePort, apiPort, context, state }) => {
