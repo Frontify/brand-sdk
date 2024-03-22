@@ -3,8 +3,9 @@
 import { type DocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
-import { InitiallyExpandedItems } from '../';
+import { DocumentSectionWithTitle, InitiallyExpandedItems } from '../';
 import { SectionLink } from './SectionLink';
+import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
 
 type PageLinkProps = {
     page: {
@@ -26,13 +27,14 @@ export const PageLink = ({
     getDocumentSectionsByDocumentPageId,
 }: PageLinkProps) => {
     const [isExpanded, setIsExpanded] = useState(page.id === itemsToExpandInitially.documentId);
-    const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
+    const [documentSections, setDocumentSections] = useState<DocumentSectionWithTitle[]>([]);
     const isActive = page.permanentLink === selectedUrl;
 
     useEffect(() => {
         const fetchDocumentSections = async () => {
             const sections = await getDocumentSectionsByDocumentPageId(page.id);
-            setDocumentSections(sections);
+            const sectionsWithReadableTitles = filterDocumentSectionsWithUnreadableTitles(sections);
+            setDocumentSections(sectionsWithReadableTitles);
         };
 
         fetchDocumentSections();
@@ -44,8 +46,7 @@ export const PageLink = ({
         }
     }, [itemsToExpandInitially, page.id]);
 
-    const sectionsArray = [...documentSections.values()];
-    const hasSections = sectionsArray.length > 0;
+    const hasSections = documentSections.length > 0;
 
     return (
         <>
@@ -80,8 +81,8 @@ export const PageLink = ({
                 </div>
             </button>
             {isExpanded &&
-                sectionsArray.length > 0 &&
-                sectionsArray.map((section) => {
+                documentSections.length > 0 &&
+                documentSections.map((section) => {
                     return (
                         <SectionLink
                             key={section.id}
