@@ -14,8 +14,8 @@ const DOCUMENT_PAGE_ID = 45;
 const documentSections = [
     DocumentSectionDummy.withFields({ id: 464, title: null }),
     DocumentSectionDummy.withFields({ id: 356, title: 'New Title' }),
-    DocumentSectionDummy.withFields({ id: 37675, title: ' ' }),
-    DocumentSectionDummy.withFields({ id: 37675, title: '' }),
+    DocumentSectionDummy.withFields({ id: 376, title: ' ' }),
+    DocumentSectionDummy.withFields({ id: 174, title: '' }),
 ];
 
 describe('useDocumentSection', () => {
@@ -109,6 +109,7 @@ describe('useDocumentSection', () => {
                     documentSections[1],
                     NEW_SECTION,
                     documentSections[2],
+                    documentSections[3],
                 ]);
                 expect(result.current.navigationItems).toEqual([documentSections[1], NEW_SECTION]);
             });
@@ -192,6 +193,7 @@ describe('useDocumentSection', () => {
                     documentSections[0],
                     UPDATED_SECTION,
                     documentSections[2],
+                    documentSections[3],
                 ]);
                 expect(result.current.navigationItems).toEqual([UPDATED_SECTION]);
             });
@@ -299,7 +301,11 @@ describe('useDocumentSection', () => {
             });
 
             await waitFor(() => {
-                expect(result.current.documentSections).toEqual([documentSections[0], documentSections[2]]);
+                expect(result.current.documentSections).toEqual([
+                    documentSections[0],
+                    documentSections[2],
+                    documentSections[3],
+                ]);
                 expect(result.current.navigationItems).toEqual([]);
             });
         });
