@@ -15,6 +15,7 @@ const documentSections = [
     DocumentSectionDummy.withFields({ id: 464, title: null }),
     DocumentSectionDummy.withFields({ id: 356, title: 'New Title' }),
     DocumentSectionDummy.withFields({ id: 37675, title: ' ' }),
+    DocumentSectionDummy.withFields({ id: 37675, title: '' }),
 ];
 
 describe('useDocumentSection', () => {
@@ -71,9 +72,11 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'add',
-                documentPageId: DOCUMENT_PAGE_ID,
-                documentSection: NEW_SECTION,
-                previousSectionId: null,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    documentSection: NEW_SECTION,
+                    previousSectionId: null,
+                },
             });
 
             await waitFor(() => {
@@ -93,9 +96,11 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'add',
-                documentPageId: DOCUMENT_PAGE_ID,
-                documentSection: NEW_SECTION,
-                previousSectionId: documentSections[1].id,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    documentSection: NEW_SECTION,
+                    previousSectionId: documentSections[1].id,
+                },
             });
 
             await waitFor(() => {
@@ -120,9 +125,11 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'add',
-                documentPageId: DOCUMENT_PAGE_ID + 1,
-                documentSection: NEW_SECTION,
-                previousSectionId: documentSections[1].id,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID + 1,
+                    documentSection: NEW_SECTION,
+                    previousSectionId: documentSections[1].id,
+                },
             });
 
             await waitFor(() => {
@@ -142,9 +149,11 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'add',
-                documentPageId: DOCUMENT_PAGE_ID,
-                documentSection: NEW_SECTION,
-                previousSectionId: 123,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    documentSection: NEW_SECTION,
+                    previousSectionId: 123,
+                },
             });
 
             await waitFor(() => {
@@ -170,10 +179,12 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'update',
-                documentPageId: DOCUMENT_PAGE_ID,
-                sectionId: UPDATED_SECTION.id,
-                title: UPDATED_SECTION.title,
-                slug: UPDATED_SECTION.slug,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    sectionId: UPDATED_SECTION.id,
+                    title: UPDATED_SECTION.title,
+                    slug: UPDATED_SECTION.slug,
+                },
             });
 
             await waitFor(() => {
@@ -201,10 +212,12 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'update',
-                documentPageId: DOCUMENT_PAGE_ID,
-                sectionId: UPDATED_SECTION.id,
-                title: UPDATED_SECTION.title,
-                slug: UPDATED_SECTION.slug,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    sectionId: UPDATED_SECTION.id,
+                    title: UPDATED_SECTION.title,
+                    slug: UPDATED_SECTION.slug,
+                },
             });
 
             await waitFor(() => {
@@ -227,10 +240,12 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'update',
-                documentPageId: DOCUMENT_PAGE_ID,
-                sectionId: UPDATED_SECTION.id,
-                title: UPDATED_SECTION.title,
-                slug: UPDATED_SECTION.slug,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    sectionId: UPDATED_SECTION.id,
+                    title: UPDATED_SECTION.title,
+                    slug: UPDATED_SECTION.slug,
+                },
             });
 
             await waitFor(() => {
@@ -253,10 +268,12 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'update',
-                documentPageId: DOCUMENT_PAGE_ID + 1,
-                sectionId: UPDATED_SECTION.id,
-                title: UPDATED_SECTION.title,
-                slug: UPDATED_SECTION.slug,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID + 1,
+                    sectionId: UPDATED_SECTION.id,
+                    title: UPDATED_SECTION.title,
+                    slug: UPDATED_SECTION.slug,
+                },
             });
 
             await waitFor(() => {
@@ -275,8 +292,10 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'delete',
-                documentPageId: DOCUMENT_PAGE_ID,
-                sectionId: documentSections[1].id,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID,
+                    sectionId: documentSections[1].id,
+                },
             });
 
             await waitFor(() => {
@@ -294,8 +313,10 @@ describe('useDocumentSection', () => {
 
             window.emitter.emit('AppBridge:GuidelineDocumentSection:Action', {
                 action: 'delete',
-                documentPageId: DOCUMENT_PAGE_ID + 1,
-                sectionId: documentSections[1].id,
+                payload: {
+                    documentPageId: DOCUMENT_PAGE_ID + 1,
+                    sectionId: documentSections[1].id,
+                },
             });
 
             await waitFor(() => {

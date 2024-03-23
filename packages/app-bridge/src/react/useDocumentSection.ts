@@ -63,25 +63,36 @@ export const useDocumentSection = (
     }, [appBridge, documentPageId]);
 
     useEffect(() => {
-        const handleSectionEvent = (event: EmitterEvents['AppBridge:GuidelineDocumentSection:Action']) => {
-            if (event.documentPageId !== documentPageId) {
+        const handleSectionEvent = ({
+            action,
+            payload,
+        }: EmitterEvents['AppBridge:GuidelineDocumentSection:Action']) => {
+            if (payload.documentPageId !== documentPageId) {
                 return;
             }
-            if (event.action === 'add') {
-                const { documentSection, previousSectionId } = event;
-                setDocumentSections((previousSections) =>
-                    insertSectionIntoArray(previousSections, documentSection, previousSectionId),
-                );
-            }
-            if (event.action === 'update') {
-                const { sectionId, title, slug } = event;
-                setDocumentSections((previousSections) =>
-                    updateSectionInArray(previousSections, sectionId, title, slug),
-                );
-            }
-            if (event.action === 'delete') {
-                const { sectionId } = event;
-                setDocumentSections((previousSections) => deleteSectionFromArray(previousSections, sectionId));
+            switch (action) {
+                case 'add':
+                    {
+                        const { documentSection, previousSectionId } = payload;
+                        setDocumentSections((previousSections) =>
+                            insertSectionIntoArray(previousSections, documentSection, previousSectionId),
+                        );
+                    }
+                    break;
+                case 'update':
+                    {
+                        const { sectionId, title, slug } = payload;
+                        setDocumentSections((previousSections) =>
+                            updateSectionInArray(previousSections, sectionId, title, slug),
+                        );
+                    }
+                    break;
+                case 'delete':
+                    {
+                        const { sectionId } = payload;
+                        setDocumentSections((previousSections) => deleteSectionFromArray(previousSections, sectionId));
+                    }
+                    break;
             }
         };
 

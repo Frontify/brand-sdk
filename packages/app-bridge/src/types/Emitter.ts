@@ -14,7 +14,11 @@ import type { BrandportalLink } from './BrandportalLink';
 import type { PrivacySettings } from './PrivacySettings';
 import type { Template } from './Template';
 import type { ThemeTemplate } from './ThemeTemplate';
-import type { DocumentSection } from './DocumentSection';
+import type {
+    AddDocumentSectionPayload,
+    DeleteDocumentSectionPayload,
+    UpdateDocumentSectionPayload,
+} from './DocumentSection';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
@@ -114,22 +118,16 @@ export type EmitterEvents = {
           };
     'AppBridge:GuidelineDocumentSection:Action':
         | {
-              documentSection: DocumentSection;
-              previousSectionId: Nullable<number>;
-              documentPageId: number;
               action: 'add';
+              payload: AddDocumentSectionPayload;
           }
         | {
-              sectionId: number;
-              title: Nullable<string>;
-              slug: string;
-              documentPageId: number;
               action: 'update';
+              payload: UpdateDocumentSectionPayload;
           }
         | {
-              sectionId: number;
-              documentPageId: number;
               action: 'delete';
+              payload: DeleteDocumentSectionPayload;
           };
 
     'AppBridge:GuidelineDocumentCategory:Action':
