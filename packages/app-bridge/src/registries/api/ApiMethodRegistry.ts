@@ -9,6 +9,7 @@ import type {
     GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
 import { SetAssetIdsByBlockAssetKeyPayload, SetAssetIdsByBlockAssetKeyResponse } from './SetAssetIdsByBlockAssetKey';
+import { GetProxyNetworkCallPayload, GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {
@@ -25,4 +26,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         payload: SetAssetIdsByBlockAssetKeyPayload;
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
+    getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
 }>;

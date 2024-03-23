@@ -113,16 +113,6 @@ describe('useGroupedDocument', () => {
             OLD_DOCUMENT,
         ]);
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                NEW_DOCUMENT,
-            ]),
-        );
-
         // Trigger a "document page added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
             action: 'add',
@@ -130,16 +120,13 @@ describe('useGroupedDocument', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documents).toEqual([
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+                NEW_DOCUMENT,
+            ]);
         });
-
-        expect(result.current.documents).toEqual([
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-            NEW_DOCUMENT,
-        ]);
     });
 
     it('should update document if a page is deleted', async () => {
@@ -174,16 +161,6 @@ describe('useGroupedDocument', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                NEW_DOCUMENT,
-            ]),
-        );
-
         // Trigger a "document page added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:DocumentPageAction', {
             action: 'delete',
@@ -191,16 +168,13 @@ describe('useGroupedDocument', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documents).toEqual([
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+                NEW_DOCUMENT,
+            ]);
         });
-
-        expect(result.current.documents).toEqual([
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-            NEW_DOCUMENT,
-        ]);
     });
 
     it('should update document if a category is added', async () => {
@@ -232,16 +206,6 @@ describe('useGroupedDocument', () => {
             OLD_DOCUMENT,
         ]);
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                NEW_DOCUMENT,
-            ]),
-        );
-
         // Trigger a "document category added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:DocumentCategoryAction', {
             action: 'add',
@@ -249,16 +213,13 @@ describe('useGroupedDocument', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documents).toEqual([
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+                NEW_DOCUMENT,
+            ]);
         });
-
-        expect(result.current.documents).toEqual([
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-            NEW_DOCUMENT,
-        ]);
     });
 
     it('should update document if a category is deleted', async () => {
@@ -293,16 +254,6 @@ describe('useGroupedDocument', () => {
             expect(spy).toHaveBeenCalledOnce();
         });
 
-        // Mock the response of the second call
-        spy.mockImplementationOnce(() =>
-            Promise.resolve([
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-                NEW_DOCUMENT,
-            ]),
-        );
-
         // Trigger a "document category added" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocument:DocumentCategoryAction', {
             action: 'delete',
@@ -310,16 +261,13 @@ describe('useGroupedDocument', () => {
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
+            expect(result.current.documents).toEqual([
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+                DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+                NEW_DOCUMENT,
+            ]);
         });
-
-        expect(result.current.documents).toEqual([
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-            NEW_DOCUMENT,
-        ]);
     });
 
     it('should update document sorting if a document is moved', async () => {

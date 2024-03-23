@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.13
+
+### Patch Changes
+
+- [#843](https://github.com/Frontify/brand-sdk/pull/843) [`3109e66`](https://github.com/Frontify/brand-sdk/commit/3109e66248fb9185c312d8170055452dce796bc4) Thanks [@julianiff](https://github.com/julianiff)! - chore: move up to v4
+
+- [`0d9d0af`](https://github.com/Frontify/brand-sdk/commit/0d9d0afe4fc55b0e0c5b1e397aeaf77e7e8c4a69) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Merge main into dev
+
 ## 4.0.0-alpha.12
 
 ### Patch Changes
@@ -27,6 +35,12 @@
 ### Patch Changes
 
 - Merge main into dev
+
+## 3.5.4
+
+### Patch Changes
+
+- [#821](https://github.com/Frontify/brand-sdk/pull/821) [`efde7a5`](https://github.com/Frontify/brand-sdk/commit/efde7a511b3d4fbbe17af5f0e41982d003743b35) Thanks [@imoutaharik](https://github.com/imoutaharik)! - feat(AppBridgePlatformApp): add the `proxyMethodCall` method
 
 ## 3.5.3
 
