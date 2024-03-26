@@ -182,7 +182,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    documentSectionId: UPDATED_SECTION.id,
+                    id: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -216,7 +216,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    documentSectionId: UPDATED_SECTION.id,
+                    id: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -244,7 +244,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    documentSectionId: UPDATED_SECTION.id,
+                    id: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -272,7 +272,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID + 1,
-                    documentSectionId: UPDATED_SECTION.id,
+                    id: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -296,7 +296,7 @@ describe('useDocumentSection', () => {
                 action: 'delete',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    documentSectionId: documentSections[1].id,
+                    id: documentSections[1].id,
                 },
             });
 
@@ -321,7 +321,7 @@ describe('useDocumentSection', () => {
                 action: 'delete',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID + 1,
-                    documentSectionId: documentSections[1].id,
+                    id: documentSections[1].id,
                 },
             });
 

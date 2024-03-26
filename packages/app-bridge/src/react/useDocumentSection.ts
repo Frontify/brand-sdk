@@ -27,19 +27,17 @@ const insertDocumentSectionIntoArray = (
 };
 
 const updateDocumentSectionInArray = (
-    previousSections: DocumentSection[],
+    previousDocumentSections: DocumentSection[],
     documentSectionIdToUpdate: number,
     title: Nullable<string>,
     slug: string,
 ) =>
-    previousSections.map((section) =>
-        section.id === documentSectionIdToUpdate ? { ...section, title, slug } : section,
+    previousDocumentSections.map((documentSection) =>
+        documentSection.id === documentSectionIdToUpdate ? { ...documentSection, title, slug } : documentSection,
     );
 
-const deleteDocumentSectionFromArray = (
-    previousDocumentSections: DocumentSection[],
-    documentSectionIdToDelete: number,
-) => previousDocumentSections.filter((documentSection) => documentSection.id !== documentSectionIdToDelete);
+const deleteDocumentSectionFromArray = (previousDocumentSections: DocumentSection[], IdToDelete: number) =>
+    previousDocumentSections.filter((documentSection) => documentSection.id !== IdToDelete);
 
 type UseDocumentSectionReturn = {
     /**
@@ -94,18 +92,16 @@ export const useDocumentSection = (
                     break;
                 case 'update':
                     {
-                        const { documentSectionId, title, slug } = payload;
+                        const { id, title, slug } = payload;
                         setDocumentSections((previousSections) =>
-                            updateDocumentSectionInArray(previousSections, documentSectionId, title, slug),
+                            updateDocumentSectionInArray(previousSections, id, title, slug),
                         );
                     }
                     break;
                 case 'delete':
                     {
-                        const { documentSectionId } = payload;
-                        setDocumentSections((previousSections) =>
-                            deleteDocumentSectionFromArray(previousSections, documentSectionId),
-                        );
+                        const { id } = payload;
+                        setDocumentSections((previousSections) => deleteDocumentSectionFromArray(previousSections, id));
                     }
                     break;
             }

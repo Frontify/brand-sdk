@@ -32,13 +32,13 @@ export type AddDocumentSectionPayload = {
 };
 
 export type UpdateDocumentSectionPayload = {
-    documentSectionId: number;
+    id: number;
     title: Nullable<string>;
     slug: string;
     documentPageId: number;
 };
 
 export type DeleteDocumentSectionPayload = {
-    documentSectionId: number;
+    id: number;
     documentPageId: number;
 };
