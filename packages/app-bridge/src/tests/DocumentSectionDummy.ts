@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentSection } from '../types';
+import { type DocumentSection } from '../types';
 
 export class DocumentSectionDummy {
     static with(id: number): DocumentSection {
@@ -10,6 +10,12 @@ export class DocumentSectionDummy {
             slug: `document-section-dummy-${id}`,
             sort: 1,
             permanentLink: `/r/document-section-${id}`,
+        };
+    }
+    static withFields({ id, ...otherFields }: Partial<DocumentSection>): DocumentSection {
+        return {
+            ...DocumentSectionDummy.with(id ?? 1),
+            ...otherFields,
         };
     }
 }

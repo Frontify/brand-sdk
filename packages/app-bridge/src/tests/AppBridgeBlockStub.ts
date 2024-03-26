@@ -15,6 +15,7 @@ import { PrivacySettings } from '../types/PrivacySettings';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 import { type EventCallbackParameter } from '../AppBridge';
+import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
@@ -217,6 +218,15 @@ export const getAppBridgeBlockStub = ({
             return unsubscribe;
         }),
 
+        getDocumentSectionsByDocumentPageId: stub<
+            Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>
+        >().resolves([
+            DocumentSectionApiDummy.withFields({ id: 1, title: null }),
+            DocumentSectionApiDummy.withFields({ id: 2, title: 'Title' }),
+            DocumentSectionApiDummy.withFields({ id: 3, title: '  ' }),
+            DocumentSectionApiDummy.withFields({ id: 4, title: '' }),
+        ]),
+
         // TODO: Stub the following methods
         createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
         deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
@@ -233,8 +243,6 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>>().resolves(),
         getUncategorizedDocumentPagesByDocumentId:
             stub<Parameters<AppBridgeBlock['getUncategorizedDocumentPagesByDocumentId']>>().resolves(),
-        getDocumentSectionsByDocumentPageId:
-            stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
