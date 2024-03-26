@@ -371,6 +371,16 @@ const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpoi
     },
 ]);
 
+const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpointNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'GET',
+        },
+    },
+]);
+
 const MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS = generateManifestWithEndpointNetworkCall([
     {
         id: 'frontify-user-api',
@@ -474,6 +484,14 @@ describe('Verify Platform App Manifest', () => {
 
     it('should accept an array of network endpoint objects', async () => {
         const verifiedManifest = await verifyManifest(MANIFEST_WITH_NETWORK_CALL, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should accept an array of network endpoint without header and b ody', async () => {
+        const verifiedManifest = await verifyManifest(
+            MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
+            platformAppManifestSchemaV1,
+        );
         expect(!!verifiedManifest).toBe(true);
     });
 
