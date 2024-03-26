@@ -47,7 +47,6 @@ export const getBorderSettings = (options?: BorderSettingsType): SettingBlock =>
             {
                 id: selectionId,
                 type: 'multiInput',
-                onChange: (bundle) => appendUnit(bundle, widthId),
                 layout: MultiInputLayout.Columns,
                 lastItemFullWidth: true,
                 blocks: [
@@ -76,6 +75,7 @@ export const getBorderSettings = (options?: BorderSettingsType): SettingBlock =>
                         defaultValue: BORDER_WIDTH_DEFAULT_VALUE,
                         rules: [numericalOrPixelRule, maximumNumericalOrPixelOrAutoRule(500)],
                         placeholder: 'e.g. 3px',
+                        onChange: (bundle) => appendUnit(bundle, widthId),
                     },
                     {
                         id: colorId,
