@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.9
+
+### Patch Changes
+
+- [#848](https://github.com/Frontify/brand-sdk/pull/848) [`68533d1`](https://github.com/Frontify/brand-sdk/commit/68533d15490c0ac313f43b68472dfa44bea8b5c6) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix: border settings does not add px automatically
+
 ## 0.34.8
 
 ### Patch Changes
