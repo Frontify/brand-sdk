@@ -9,21 +9,21 @@ import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
 
 const insertDocumentSectionIntoArray = (
     previousDocumentSections: DocumentSection[],
-    documentSection: DocumentSection,
+    newDocumentSection: DocumentSection,
     previousDocumentSectionId: Nullable<number>,
 ) => {
     if (previousDocumentSectionId === null) {
-        return [documentSection, ...previousDocumentSections];
+        return [newDocumentSection, ...previousDocumentSections];
     }
     const index = previousDocumentSections.findIndex((section) => section.id === previousDocumentSectionId);
     if (index >= 0) {
         return [
             ...previousDocumentSections.slice(0, index + 1),
-            documentSection,
+            newDocumentSection,
             ...previousDocumentSections.slice(index + 1),
         ];
     }
-    return [...previousDocumentSections, documentSection];
+    return [...previousDocumentSections, newDocumentSection];
 };
 
 const updateDocumentSectionInArray = (
