@@ -487,7 +487,7 @@ describe('Verify Platform App Manifest', () => {
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should accept an array of network endpoint without header and b ody', async () => {
+    it('should accept an array of network endpoint without header and body', async () => {
         const verifiedManifest = await verifyManifest(
             MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
             platformAppManifestSchemaV1,
