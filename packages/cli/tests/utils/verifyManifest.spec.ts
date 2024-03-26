@@ -269,11 +269,13 @@ const MANIFEST_WITH_SECRET_BUT_NO_LABEL = {
     },
 };
 
-const generateManifestWithProxyNetworkCall = (proxyNetworkCall) => {
+const generateManifestWithEndpointNetworkCall = (networkEndpoints) => {
     return {
         appType: 'platform-app',
         appId: 'abcdabcdabcdabcdabcdabcda',
-        proxyNetworkCall,
+        network: {
+            endpoints: networkEndpoints,
+        },
         surfaces: {
             mediaLibrary: {
                 assetAction: {
@@ -292,7 +294,7 @@ const generateManifestWithProxyNetworkCall = (proxyNetworkCall) => {
     };
 };
 
-const MANIFEST_WITH_PROXY = generateManifestWithProxyNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
     {
         id: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
@@ -317,7 +319,7 @@ const MANIFEST_WITH_PROXY = generateManifestWithProxyNetworkCall([
     },
 ]);
 
-const MANIFEST_WITH_NOT_ARRAY_PROXY = generateManifestWithProxyNetworkCall({
+const MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL = generateManifestWithEndpointNetworkCall({
     id: 'frontify-user-api',
     resource: 'https://api.frontify.com/api/user',
     options: {
@@ -329,7 +331,7 @@ const MANIFEST_WITH_NOT_ARRAY_PROXY = generateManifestWithProxyNetworkCall({
     },
 });
 
-const MANIFEST_WITH_PROXY_NO_ID = generateManifestWithProxyNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_NO_ID = generateManifestWithEndpointNetworkCall([
     {
         resource: 'https://api.frontify.com/api/user',
         options: {
@@ -342,7 +344,7 @@ const MANIFEST_WITH_PROXY_NO_ID = generateManifestWithProxyNetworkCall([
     },
 ]);
 
-const MANIFEST_WITH_PROXY_NO_RESOURCE = generateManifestWithProxyNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
         id: 'frontify-user-api',
         options: {
@@ -355,7 +357,7 @@ const MANIFEST_WITH_PROXY_NO_RESOURCE = generateManifestWithProxyNetworkCall([
     },
 ]);
 
-const MANIFEST_WITH_PROXY_INCORRECT_RESOURCE = generateManifestWithProxyNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
         id: 'frontify-user-api',
         resource: 'something-random',
@@ -369,14 +371,24 @@ const MANIFEST_WITH_PROXY_INCORRECT_RESOURCE = generateManifestWithProxyNetworkC
     },
 ]);
 
-const MANIFEST_WITH_PROXY_NO_OPTIONS = generateManifestWithProxyNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpointNetworkCall([
+    {
+        id: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'GET',
+        },
+    },
+]);
+
+const MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS = generateManifestWithEndpointNetworkCall([
     {
         id: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
     },
 ]);
 
-const MANIFEST_WITH_PROXY_NO_METHOD = generateManifestWithProxyNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetworkCall([
     {
         id: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
@@ -384,17 +396,6 @@ const MANIFEST_WITH_PROXY_NO_METHOD = generateManifestWithProxyNetworkCall([
             headers: {
                 'x-frontify-auth-header': '$OPEN_API',
             },
-            body: 'example body data',
-        },
-    },
-]);
-
-const MANIFEST_WITH_PROXY_NO_HEADERS = generateManifestWithProxyNetworkCall([
-    {
-        id: 'frontify-user-api',
-        resource: 'https://api.frontify.com/api/user',
-        options: {
-            method: 'POST',
             body: 'example body data',
         },
     },
@@ -481,50 +482,53 @@ describe('Verify Platform App Manifest', () => {
         ).rejects.toThrow();
     });
 
-    it('should accept an array of ProxyCallNetwork objects', async () => {
-        const verifiedManifest = await verifyManifest(MANIFEST_WITH_PROXY, platformAppManifestSchemaV1);
+    it('should accept an array of network endpoint objects', async () => {
+        const verifiedManifest = await verifyManifest(MANIFEST_WITH_NETWORK_CALL, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw error when proxyCallNetwork is not an array', async () => {
+    it('should accept an array of network endpoint without header and body', async () => {
+        const verifiedManifest = await verifyManifest(
+            MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
+            platformAppManifestSchemaV1,
+        );
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should throw error when network endpoint is not an array', async () => {
         await expect(
-            async () => await verifyManifest(MANIFEST_WITH_NOT_ARRAY_PROXY, platformAppManifestSchemaV1),
+            async () => await verifyManifest(MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 
-    it('should throw error when proxyCallNetwork object is not correct without id', async () => {
+    it('should throw error when network endpoint object is not correct without id', async () => {
         await expect(
-            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_ID, platformAppManifestSchemaV1),
+            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_ID, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 
-    it('should throw error when proxyCallNetwork object is not correct without resource', async () => {
+    it('should throw error when network endpoint object is not correct without resource', async () => {
         await expect(
-            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_RESOURCE, platformAppManifestSchemaV1),
+            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 
     it('should throw an error when resource is incorrect', async () => {
         await expect(
-            async () => await verifyManifest(MANIFEST_WITH_PROXY_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
+            async () =>
+                await verifyManifest(MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 
-    it('should throw error when proxyCallNetwork object is not correct without options', async () => {
+    it('should throw error when network endpoint object is not correct without options', async () => {
         await expect(
-            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_OPTIONS, platformAppManifestSchemaV1),
+            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 
-    it('should throw error when proxyCallNetwork object is not correct without method', async () => {
+    it('should throw error when network endpoint object is not correct without method', async () => {
         await expect(
-            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_METHOD, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
-    });
-
-    it('should throw error when proxyCallNetwork object is not correct without headers', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_PROXY_NO_HEADERS, platformAppManifestSchemaV1),
+            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_METHOD, platformAppManifestSchemaV1),
         ).rejects.toThrow();
     });
 });
