@@ -1,5 +1,17 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.14
+
+### Major Changes
+
+- [#841](https://github.com/Frontify/brand-sdk/pull/841) [`d88b50d`](https://github.com/Frontify/brand-sdk/commit/d88b50dd6e2235262dbae7250db053f9052228d1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat: modify `DocumentSection` and `DocumentSectionApi` type to allow `title` to be `null`.
+
+### Patch Changes
+
+- [#841](https://github.com/Frontify/brand-sdk/pull/841) [`d88b50d`](https://github.com/Frontify/brand-sdk/commit/d88b50dd6e2235262dbae7250db053f9052228d1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - feat(useDocumentSection): Subscribe hook to emitter event listeners. A new emitter type, `AppBridge:GuidelineDocumentSection:Action` has been added. This emitter can be used to add and remove items from the sections saved in the hook state.
+
+  - feat(useDocumentSection): `navigationItems` is now returned from this hook. This array filters out sections with an unreadable title and should be used to create section navigation links.
+
 ## 4.0.0-alpha.13
 
 ### Patch Changes
