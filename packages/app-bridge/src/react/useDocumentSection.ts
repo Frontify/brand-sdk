@@ -7,30 +7,39 @@ import type { AppBridgeTheme } from '../AppBridgeTheme';
 import type { DocumentSection, EmitterEvents } from '../types';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
 
-const insertSectionIntoArray = (
-    previousSections: DocumentSection[],
+const insertDocumentSectionIntoArray = (
+    previousDocumentSections: DocumentSection[],
     documentSection: DocumentSection,
-    previousSectionId: Nullable<number>,
+    previousDocumentSectionId: Nullable<number>,
 ) => {
-    if (previousSectionId === null) {
-        return [documentSection, ...previousSections];
+    if (previousDocumentSectionId === null) {
+        return [documentSection, ...previousDocumentSections];
     }
-    const index = previousSections.findIndex((section) => section.id === previousSectionId);
+    const index = previousDocumentSections.findIndex((section) => section.id === previousDocumentSectionId);
     if (index >= 0) {
-        return [...previousSections.slice(0, index + 1), documentSection, ...previousSections.slice(index + 1)];
+        return [
+            ...previousDocumentSections.slice(0, index + 1),
+            documentSection,
+            ...previousDocumentSections.slice(index + 1),
+        ];
     }
-    return [...previousSections, documentSection];
+    return [...previousDocumentSections, documentSection];
 };
 
-const updateSectionInArray = (
+const updateDocumentSectionInArray = (
     previousSections: DocumentSection[],
-    sectionIdToUpdate: number,
+    documentSectionIdToUpdate: number,
     title: Nullable<string>,
     slug: string,
-) => previousSections.map((section) => (section.id === sectionIdToUpdate ? { ...section, title, slug } : section));
+) =>
+    previousSections.map((section) =>
+        section.id === documentSectionIdToUpdate ? { ...section, title, slug } : section,
+    );
 
-const deleteSectionFromArray = (previousSections: DocumentSection[], sectionIdToDelete: number) =>
-    previousSections.filter((section) => section.id !== sectionIdToDelete);
+const deleteDocumentSectionFromArray = (
+    previousDocumentSections: DocumentSection[],
+    documentSectionIdToDelete: number,
+) => previousDocumentSections.filter((documentSection) => documentSection.id !== documentSectionIdToDelete);
 
 type UseDocumentSectionReturn = {
     /**
@@ -63,7 +72,7 @@ export const useDocumentSection = (
     }, [appBridge, documentPageId]);
 
     useEffect(() => {
-        const handleSectionEvent = ({
+        const handleDocumentSectionEvent = ({
             action,
             payload,
         }: EmitterEvents['AppBridge:GuidelineDocumentSection:Action']) => {
@@ -73,33 +82,39 @@ export const useDocumentSection = (
             switch (action) {
                 case 'add':
                     {
-                        const { documentSection, previousSectionId } = payload;
+                        const { documentSection, previousDocumentSectionId } = payload;
                         setDocumentSections((previousSections) =>
-                            insertSectionIntoArray(previousSections, documentSection, previousSectionId),
+                            insertDocumentSectionIntoArray(
+                                previousSections,
+                                documentSection,
+                                previousDocumentSectionId,
+                            ),
                         );
                     }
                     break;
                 case 'update':
                     {
-                        const { sectionId, title, slug } = payload;
+                        const { documentSectionId, title, slug } = payload;
                         setDocumentSections((previousSections) =>
-                            updateSectionInArray(previousSections, sectionId, title, slug),
+                            updateDocumentSectionInArray(previousSections, documentSectionId, title, slug),
                         );
                     }
                     break;
                 case 'delete':
                     {
-                        const { sectionId } = payload;
-                        setDocumentSections((previousSections) => deleteSectionFromArray(previousSections, sectionId));
+                        const { documentSectionId } = payload;
+                        setDocumentSections((previousSections) =>
+                            deleteDocumentSectionFromArray(previousSections, documentSectionId),
+                        );
                     }
                     break;
             }
         };
 
-        window.emitter.on('AppBridge:GuidelineDocumentSection:Action', handleSectionEvent);
+        window.emitter.on('AppBridge:GuidelineDocumentSection:Action', handleDocumentSectionEvent);
 
         return () => {
-            window.emitter.off('AppBridge:GuidelineDocumentSection:Action', handleSectionEvent);
+            window.emitter.off('AppBridge:GuidelineDocumentSection:Action', handleDocumentSectionEvent);
         };
     }, [documentPageId]);
 

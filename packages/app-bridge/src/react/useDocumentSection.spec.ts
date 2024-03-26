@@ -60,8 +60,8 @@ describe('useDocumentSection', () => {
         );
     });
 
-    describe('when a section is added', () => {
-        it('should add the section to the start of the documentSections if previousSectionId is null', async () => {
+    describe('when a document section is added', () => {
+        it('should add the document section to the start of the documentSections if previousSectionId is null', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -75,7 +75,7 @@ describe('useDocumentSection', () => {
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
                     documentSection: NEW_SECTION,
-                    previousSectionId: null,
+                    previousDocumentSectionId: null,
                 },
             });
 
@@ -85,7 +85,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should add the section after the section matching previousSectionId', async () => {
+        it('should add the document section after the section matching previousSectionId', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -99,7 +99,7 @@ describe('useDocumentSection', () => {
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
                     documentSection: NEW_SECTION,
-                    previousSectionId: documentSections[1].id,
+                    previousDocumentSectionId: documentSections[1].id,
                 },
             });
 
@@ -115,7 +115,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should not add the section to the array if the documentPageId is incorrect', async () => {
+        it('should not add the document section to the array if the documentPageId is incorrect', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -129,7 +129,7 @@ describe('useDocumentSection', () => {
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID + 1,
                     documentSection: NEW_SECTION,
-                    previousSectionId: documentSections[1].id,
+                    previousDocumentSectionId: documentSections[1].id,
                 },
             });
 
@@ -139,7 +139,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should add the section to the end of the array if no section matches previousSectionId', async () => {
+        it('should add the document section to the end of the array if no section matches previousSectionId', async () => {
             const NEW_SECTION = DocumentSectionDummy.with(535);
 
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
@@ -153,7 +153,7 @@ describe('useDocumentSection', () => {
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
                     documentSection: NEW_SECTION,
-                    previousSectionId: 123,
+                    previousDocumentSectionId: 123,
                 },
             });
 
@@ -164,8 +164,8 @@ describe('useDocumentSection', () => {
         });
     });
 
-    describe('when a section is updated', () => {
-        it('should update the section that matches sectionId', async () => {
+    describe('when a document section is updated', () => {
+        it('should update the document section that matches sectionId', async () => {
             const UPDATED_SECTION = DocumentSectionDummy.withFields({
                 id: documentSections[1].id,
                 title: 'Updated Title',
@@ -182,7 +182,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    sectionId: UPDATED_SECTION.id,
+                    documentSectionId: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -199,7 +199,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should remove section from navigation items if title becomes unreadable', async () => {
+        it('should remove document section from navigation items if title becomes unreadable', async () => {
             const UPDATED_SECTION = DocumentSectionDummy.withFields({
                 id: documentSections[1].id,
                 title: '  ',
@@ -216,7 +216,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    sectionId: UPDATED_SECTION.id,
+                    documentSectionId: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -227,7 +227,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should add section to navigation items if title becomes truthy', async () => {
+        it('should add document section to navigation items if title becomes truthy', async () => {
             const UPDATED_SECTION = DocumentSectionDummy.withFields({
                 id: documentSections[2].id,
                 title: 'Updated Title',
@@ -244,7 +244,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    sectionId: UPDATED_SECTION.id,
+                    documentSectionId: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -272,7 +272,7 @@ describe('useDocumentSection', () => {
                 action: 'update',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID + 1,
-                    sectionId: UPDATED_SECTION.id,
+                    documentSectionId: UPDATED_SECTION.id,
                     title: UPDATED_SECTION.title,
                     slug: UPDATED_SECTION.slug,
                 },
@@ -284,7 +284,7 @@ describe('useDocumentSection', () => {
         });
     });
 
-    describe('when a section is deleted', () => {
+    describe('when a document section is deleted', () => {
         it('should remove the section that matches sectionId', async () => {
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
 
@@ -296,7 +296,7 @@ describe('useDocumentSection', () => {
                 action: 'delete',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID,
-                    sectionId: documentSections[1].id,
+                    documentSectionId: documentSections[1].id,
                 },
             });
 
@@ -310,7 +310,7 @@ describe('useDocumentSection', () => {
             });
         });
 
-        it('should not remove section if documentPageId is incorrect', async () => {
+        it('should not remove document section if documentPageId is incorrect', async () => {
             const { result } = renderHook(() => useDocumentSection(appBridge, DOCUMENT_PAGE_ID));
 
             await waitFor(() => {
@@ -321,7 +321,7 @@ describe('useDocumentSection', () => {
                 action: 'delete',
                 payload: {
                     documentPageId: DOCUMENT_PAGE_ID + 1,
-                    sectionId: documentSections[1].id,
+                    documentSectionId: documentSections[1].id,
                 },
             });
 

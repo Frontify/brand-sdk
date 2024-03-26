@@ -27,18 +27,18 @@ export type DocumentSection = {
 
 export type AddDocumentSectionPayload = {
     documentSection: DocumentSection;
-    previousSectionId: Nullable<number>;
+    previousDocumentSectionId: Nullable<number>;
     documentPageId: number;
 };
 
 export type UpdateDocumentSectionPayload = {
-    sectionId: number;
+    documentSectionId: number;
     title: Nullable<string>;
     slug: string;
     documentPageId: number;
 };
 
 export type DeleteDocumentSectionPayload = {
-    sectionId: number;
+    documentSectionId: number;
     documentPageId: number;
 };
