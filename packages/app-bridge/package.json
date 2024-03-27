@@ -50,7 +50,7 @@
         "type-fest": "^4.10.3"
     },
     "devDependencies": {
-        "@frontify/eslint-config-react": "^0.16.1",
+        "@frontify/eslint-config-react": "^0.17.0",
         "@testing-library/react": "^14.2.1",
         "@types/lodash-es": "^4.17.12",
         "@types/react": "^18.2.58",
