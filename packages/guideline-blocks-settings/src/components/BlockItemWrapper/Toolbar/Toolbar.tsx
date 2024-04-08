@@ -18,19 +18,21 @@ export const Toolbar = ({ items, attachments }: ToolbarProps) => (
                 <AttachmentsToolbarButton />
             </ToolbarSegment>
         )}
-        <ToolbarSegment>
-            {items.map((item) => {
-                if (item.type === 'dragHandle') {
-                    return <DragHandleToolbarButton key={item.tooltip + item.type} {...item} />;
-                }
-                if (item.type === 'menu') {
-                    return <MenuToolbarButton key={item.tooltip + item.type} {...item} />;
-                }
-                if (item.type === 'flyout') {
-                    return <FlyoutToolbarButton key={item.tooltip + item.type} {...item} />;
-                }
-                return <ToolbarButton key={item.tooltip + item.type} {...item} />;
-            })}
-        </ToolbarSegment>
+        {items.length > 0 && (
+            <ToolbarSegment>
+                {items.map((item) => {
+                    switch (item.type) {
+                        case 'dragHandle':
+                            return <DragHandleToolbarButton key={item.tooltip + item.type} {...item} />;
+                        case 'menu':
+                            return <MenuToolbarButton key={item.tooltip + item.type} {...item} />;
+                        case 'flyout':
+                            return <FlyoutToolbarButton key={item.tooltip + item.type} {...item} />;
+                        default:
+                            return <ToolbarButton key={item.tooltip + item.type} {...item} />;
+                    }
+                })}
+            </ToolbarSegment>
+        )}
     </div>
 );
