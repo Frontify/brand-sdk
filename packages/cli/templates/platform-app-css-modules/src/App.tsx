@@ -1,5 +1,6 @@
+import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
 import { useEffect, useState } from 'react';
-import { PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
+
 import style from './style.module.css';
 
 export const App = () => {
@@ -17,7 +18,7 @@ export const App = () => {
     return (
         <div className={style.container}>
             A Frontify Platform App in React with CSS Modules
-            <span className={style.text}>Entrypoint: {context?.type}</span>.
+            <span className={style.text}>Entrypoint: {context?.surface}</span>.
         </div>
     );
 };

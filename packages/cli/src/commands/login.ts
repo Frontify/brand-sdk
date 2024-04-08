@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import Fastify from 'fastify';
 import FastifyCors from '@fastify/cors';
+import Fastify from 'fastify';
 import open from 'open';
 
-import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils/index.js';
+import { Configuration, HttpClient, Logger, getUser, getValidInstanceUrl } from '../utils/index';
 
 export interface OauthRandomCodeChallenge {
     secret: string;

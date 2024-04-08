@@ -1,23 +1,25 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import pc from 'picocolors';
+import { join } from 'node:path';
+
 import fastGlob from 'fast-glob';
 import open from 'open';
-import { join } from 'node:path';
+import pc from 'picocolors';
+
+import { type HttpClientError } from '../errors/HttpClientError';
 import {
-    CompilerOptions,
+    type CompilerOptions,
     Configuration,
     HttpClient,
     Logger,
-    UserInfo,
+    type UserInfo,
     getUser,
     promiseExec,
     reactiveJson,
     readFileAsBase64,
     readFileLinesAsArray,
-} from '../utils/index.js';
-import { HttpClientError } from '../errors/HttpClientError.js';
-import { platformAppManifestSchemaV1, verifyManifest } from '../utils/verifyManifest.js';
+} from '../utils/index';
+import { platformAppManifestSchemaV1, verifyManifest } from '../utils/verifyManifest';
 
 type Options = {
     dryRun?: boolean;
@@ -80,7 +82,7 @@ export const createDeployment = async (
             const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
             const { appId } =
                 manifestContent.appType === 'platform-app'
-                    ? await verifyManifest(manifestContent, platformAppManifestSchemaV1)
+                    ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
                     : manifestContent;
 
             if (!noVerify) {

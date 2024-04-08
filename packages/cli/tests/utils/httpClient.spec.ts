@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { beforeAll, describe, expect, test } from 'vitest';
 import nock from 'nock';
+import { beforeAll, describe, expect, test } from 'vitest';
 
-import { HttpClient } from '../../src/utils/httpClient.js';
+import { HttpClient } from '../../src/utils/httpClient';
 
 const BODY_OBJECT = { some: 'body', told: 'me' };
 const TEST_BASE_URL = 'testing.frontify.test';
