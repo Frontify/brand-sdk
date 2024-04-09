@@ -103,6 +103,7 @@ describe('Attachments', () => {
         });
 
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
+            // eslint-disable-next-line @typescript-eslint/require-await
             (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
         }
 
