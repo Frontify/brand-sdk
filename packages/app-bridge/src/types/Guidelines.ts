@@ -6,6 +6,8 @@ export interface CoverPage {
     id(): number;
     title(language?: string): string;
     isPublished(): boolean;
+    isHiddenInNavigation(): boolean;
+    url(language?: string): string;
 }
 
 export interface DocumentGroup {
