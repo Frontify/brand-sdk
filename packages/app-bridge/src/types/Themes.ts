@@ -10,7 +10,7 @@ export interface CoverPage {
 
 export interface DocumentGroup {
     id(): number;
-    name(language?: string): string;
+    title(language?: string): string;
     children(): (Document | DocumentLibrary | DocumentLink)[];
 }
 
