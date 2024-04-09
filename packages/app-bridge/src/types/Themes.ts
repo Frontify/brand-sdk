@@ -57,7 +57,6 @@ export interface DocumentPageLink {
     id(): number;
     title(language?: string): string;
     url(): string;
-    shouldOpenInNewTab(): boolean;
 }
 
 export interface DocumentPageHeading {
