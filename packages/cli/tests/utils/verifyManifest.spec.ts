@@ -409,7 +409,7 @@ describe('Verify Platform App Manifest', () => {
     });
 
     it('should throw error when wrong file extension is present in IconLibrary', () => {
-        expect(() => verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManifestSchemaV1)).rejects.toThrow();
+        expect(() => verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManifestSchemaV1)).toThrow();
     });
 
     it('should throw error when forbidden extensions are in the manifest', () => {
@@ -417,7 +417,7 @@ describe('Verify Platform App Manifest', () => {
     });
 
     it('should throw error when forbidden extensions are in the Logo Library manifest', () => {
-        expect(() => verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManifestSchemaV1)).rejects.toThrow();
+        expect(() => verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManifestSchemaV1)).toThrow();
     });
 
     it('should throw error when version number is a float', () => {
@@ -425,7 +425,7 @@ describe('Verify Platform App Manifest', () => {
     });
 
     it('should throw error when appId is not of length 25', () => {
-        expect(() => verifyManifest(MANIFEST_WITH_SHORT_ID, platformAppManifestSchemaV1)).rejects.toThrow();
+        expect(() => verifyManifest(MANIFEST_WITH_SHORT_ID, platformAppManifestSchemaV1)).toThrow();
     });
 
     it('should throw error when asset action title is too long', () => {
