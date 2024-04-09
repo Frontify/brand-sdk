@@ -2,9 +2,10 @@
 
 import { useRef, useState } from 'react';
 
-import type { Asset, FileApi } from '../types';
-import { useFileUpload } from './useFileUpload';
 import { createAssetByFileId } from '../repositories/AssetRepository';
+import { type Asset, type FileApi } from '../types';
+
+import { useFileUpload } from './useFileUpload';
 
 export type UseAssetUploadParameters = {
     onUploadProgress?: (event: MessageEvent) => void;

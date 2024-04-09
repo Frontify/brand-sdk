@@ -1,12 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type AppBridgeBlock } from '@frontify/app-bridge';
+import { type MultiInputBlock, MultiInputLayout } from '@frontify/sidebar-settings';
 import { describe, expect, it } from 'vitest';
-import { getBorderSettings } from './border';
-import { MultiInputBlock, MultiInputLayout } from '@frontify/sidebar-settings';
+
+import { type SwitchBlock } from '../';
 import { BorderStyle } from '../settings';
 import { BORDER_COLOR_DEFAULT_VALUE } from '../settings/defaultValues';
-import { SwitchBlock } from '../';
-import { AppBridgeBlock } from '@frontify/app-bridge';
+
+import { getBorderSettings } from './border';
 
 describe('getBorderSettings', () => {
     it('should return border settings without arguments', () => {

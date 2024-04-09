@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Radius } from '../../settings/types';
-import { getRadiusStyles } from './getRadiusStyles';
 import { describe, expect, it } from 'vitest';
+
+import { Radius } from '../../settings/types';
+
+import { getRadiusStyles } from './getRadiusStyles';
 
 describe('getRadiusStyles', () => {
     it('should return border radius 0px', () => {

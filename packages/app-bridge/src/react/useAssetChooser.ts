@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type EventUnsubscribeFunction } from '../AppBridge';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { closeAssetChooser, openAssetChooser } from '../registries/commands/AssetChooser';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Asset, AssetChooserOptions } from '../types';
-import { EventUnsubscribeFunction } from '../AppBridge';
+import { type Asset, type AssetChooserOptions } from '../types';
 
 type UseAssetChooserType = {
     openAssetChooser: (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => void;

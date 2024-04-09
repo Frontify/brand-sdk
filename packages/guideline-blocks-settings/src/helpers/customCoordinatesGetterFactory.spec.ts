@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { KeyboardCode, type KeyboardCoordinateGetter, type SensorContext } from '@dnd-kit/core';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { KeyboardCode, KeyboardCoordinateGetter, SensorContext } from '@dnd-kit/core';
+
 import { customCoordinatesGetterFactory } from './customCoordinatesGetterFactory';
 
 /**

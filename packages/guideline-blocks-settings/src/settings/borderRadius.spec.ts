@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
+
+import { type SwitchBlock } from '..';
+
 import { Radius, getBorderRadiusSettings } from '.';
-import { SwitchBlock } from '..';
 
 describe('getBorderRadiusSettings', () => {
     it('should return border radius settings without arguments', () => {

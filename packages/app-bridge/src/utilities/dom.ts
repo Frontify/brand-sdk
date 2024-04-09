@@ -4,7 +4,7 @@ export const getDatasetByElement = <T = Record<string, unknown>>(element: HTMLEl
     const jqueryDataset = Object.keys(element)
         .filter((property) => property.startsWith('jQuery'))
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
+        // @ts-ignore
         .reduce((stack, key) => ({ ...stack, ...element[key] }), {});
     return { ...element.dataset, ...jqueryDataset } as T;
 };

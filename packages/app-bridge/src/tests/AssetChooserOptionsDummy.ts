@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetChooserObjectType, AssetChooserOptions, AssetChooserProjectType, FileExtension } from '../types';
+import { AssetChooserObjectType, type AssetChooserOptions, AssetChooserProjectType, FileExtension } from '../types';
 
 export class AssetChooserOptionsDummy {
     static default(): AssetChooserOptions {

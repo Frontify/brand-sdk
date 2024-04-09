@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    UseVirtualFloatingOptions,
+    type UseVirtualFloatingOptions,
     getAboveNode,
     getDefaultBoundingClientRect,
     getEndPoint,
@@ -16,9 +16,11 @@ import {
     useHotkeys,
 } from '@frontify/fondue';
 import { type Ref, useCallback, useEffect } from 'react';
-import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
+
+import { type ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { getUrlFromEditor } from '../../utils';
 import { triggerFloatingButtonEdit } from '../../utils/triggerFloatingButtonEdit';
+
 import {
     floatingButtonActions,
     floatingButtonSelectors,

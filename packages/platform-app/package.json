@@ -38,9 +38,9 @@
     },
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/eslint-config-basic": "0.19.0",
+        "@frontify/eslint-config-react": "0.17.6",
         "@types/react": "^18.2.58",
-        "eslint": "^8.56.0",
+        "eslint": "^8.57.0",
         "eslint-plugin-notice": "^0.9.10",
         "prettier": "^3.2.5",
         "react": "^18.2.0",

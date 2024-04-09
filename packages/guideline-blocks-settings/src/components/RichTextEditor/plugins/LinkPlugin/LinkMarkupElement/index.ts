@@ -2,7 +2,7 @@
 
 import { ELEMENT_LINK, MarkupElement, type PlateRenderElementProps } from '@frontify/fondue';
 
-import { LinkMarkupElementNode, TLinkElement } from './LinkMarkupElementNode';
+import { LinkMarkupElementNode, type TLinkElement } from './LinkMarkupElementNode';
 
 export class LinkMarkupElement extends MarkupElement {
     constructor(

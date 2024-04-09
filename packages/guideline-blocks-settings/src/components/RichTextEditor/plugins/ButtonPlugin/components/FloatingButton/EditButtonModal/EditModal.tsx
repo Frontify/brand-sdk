@@ -2,9 +2,9 @@
 
 import { FloatingModalWrapper, IconPen16, IconTrashBin16, focusEditor, useEditorRef } from '@frontify/fondue';
 
-import { floatingButtonSelectors } from '../floatingButtonStore';
 import { unwrapButton } from '../../../transforms';
 import { triggerFloatingButtonEdit } from '../../../utils';
+import { floatingButtonSelectors } from '../floatingButtonStore';
 
 export const EditModal = () => {
     const editor = useEditorRef();

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DispatchHandlerParameter } from '../../AppBridge';
-import { CommandRegistry } from './CommandRegistry';
+import { type DispatchHandlerParameter } from '../../AppBridge';
+
+import { type CommandRegistry } from './CommandRegistry';
 
 export const downloadAsset = (
     asset: CommandRegistry['downloadAsset'],

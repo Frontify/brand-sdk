@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import type { FileApi } from '../types';
+import { type FileApi } from '../types';
 import Worker from '../workers/upload.worker.js?worker&inline';
 
 export type UseFileUploadParameters = {

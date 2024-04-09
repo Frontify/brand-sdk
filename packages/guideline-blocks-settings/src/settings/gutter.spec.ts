@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
+
+import { type SwitchBlock } from '..';
+
 import { GutterSpacing, getGutterSettings } from '.';
-import { SwitchBlock } from '..';
 
 describe('getGutterSettings', () => {
     it('should return gutter settings without arguments', () => {

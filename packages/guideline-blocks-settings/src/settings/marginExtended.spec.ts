@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type AppBridgeBlock } from '@frontify/app-bridge';
+import { type MultiInputBlock, MultiInputLayout } from '@frontify/sidebar-settings';
 import { describe, expect, it } from 'vitest';
-import { MultiInputBlock, MultiInputLayout } from '@frontify/sidebar-settings';
+
+import { type SwitchBlock } from '..';
+
 import { Margin, getMarginExtendedSettings } from '.';
-import { SwitchBlock } from '..';
-import { AppBridgeBlock } from '@frontify/app-bridge';
 
 describe('getMarginExtendedSettings', () => {
     it('should return extended margin settings without arguments', () => {

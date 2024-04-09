@@ -2,34 +2,34 @@
 
 import './styles.css';
 
-import type { FC } from 'react';
-import type { AppBridgeBlock } from '@frontify/app-bridge';
-import type {
-    AssetInputBlock as AssetInputBlockSidebarSettings,
-    BaseBlock as BaseBlockSidebarSettings,
-    Bundle as BundleSidebarSettings,
-    ChecklistBlock as ChecklistBlockSidebarSettings,
-    ChoicesType as ChoicesTypeSidebarSettings,
-    ColorInputBlock as ColorInputBlockSidebarSettings,
-    DropdownBlock as DropdownBlockSidebarSettings,
-    DynamicSettingBlock as DynamicSettingBlockSidebarSettings,
-    DynamicSupportedBlock as DynamicSupportedBlockSidebarSettings,
-    FontInputBlock as FontInputBlockSidebarSettings,
-    InputBlock as InputBlockSidebarSettings,
-    LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
-    LinkBlock as LinkBlockSidebarSettings,
-    LinkChooserBlock as LinkChooserBlockSidebarSettings,
-    MultiInputBlock as MultiInputBlockSidebarSettings,
-    NotificationBlock as NotificationBlockSidebarSettings,
-    SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
-    SegmentedControlsBlock as SegmentedControlsBlockSidebarSettings,
-    SettingBlock as SettingBlockSidebarSettings,
-    SimpleSettingBlock as SimpleSettingBlockSidebarSettings,
-    SwitchBlock as SwitchBlockSidebarSettings,
-    TemplateInputBlock as TemplateInputBlockSidebarSettings,
-    TextareaBlock as TextareaBlockSidebarSettings,
-    ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
+import { type AppBridgeBlock } from '@frontify/app-bridge';
+import {
+    type AssetInputBlock as AssetInputBlockSidebarSettings,
+    type BaseBlock as BaseBlockSidebarSettings,
+    type Bundle as BundleSidebarSettings,
+    type ChecklistBlock as ChecklistBlockSidebarSettings,
+    type ChoicesType as ChoicesTypeSidebarSettings,
+    type ColorInputBlock as ColorInputBlockSidebarSettings,
+    type DropdownBlock as DropdownBlockSidebarSettings,
+    type DynamicSettingBlock as DynamicSettingBlockSidebarSettings,
+    type DynamicSupportedBlock as DynamicSupportedBlockSidebarSettings,
+    type FontInputBlock as FontInputBlockSidebarSettings,
+    type InputBlock as InputBlockSidebarSettings,
+    type LegacyAssetInputBlock as LegacyAssetInputBlockSidebarSettings,
+    type LinkBlock as LinkBlockSidebarSettings,
+    type LinkChooserBlock as LinkChooserBlockSidebarSettings,
+    type MultiInputBlock as MultiInputBlockSidebarSettings,
+    type NotificationBlock as NotificationBlockSidebarSettings,
+    type SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
+    type SegmentedControlsBlock as SegmentedControlsBlockSidebarSettings,
+    type SettingBlock as SettingBlockSidebarSettings,
+    type SimpleSettingBlock as SimpleSettingBlockSidebarSettings,
+    type SwitchBlock as SwitchBlockSidebarSettings,
+    type TemplateInputBlock as TemplateInputBlockSidebarSettings,
+    type TextareaBlock as TextareaBlockSidebarSettings,
+    type ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
 } from '@frontify/sidebar-settings';
+import { type FC } from 'react';
 
 export * from '@frontify/sidebar-settings';
 

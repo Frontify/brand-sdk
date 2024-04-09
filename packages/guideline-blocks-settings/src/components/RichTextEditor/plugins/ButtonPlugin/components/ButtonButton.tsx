@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    PluginButtonProps,
+    type PluginButtonProps,
     getHotkeyByPlatform,
     getPluginType,
     getTooltip,
@@ -10,7 +10,9 @@ import {
     useEditorState,
     useEventPlateId,
 } from '@frontify/fondue';
+
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
+
 import { ButtonToolbarButton } from './ButtonToolbarButton';
 
 export const ButtonButton = ({ editorId, id }: PluginButtonProps) => {

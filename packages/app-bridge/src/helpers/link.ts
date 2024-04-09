@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CoverPage, Document, DocumentCategory, DocumentPage } from '../types';
+import { type CoverPage, type Document, type DocumentCategory, type DocumentPage } from '../types';
 
 export const computeCoverPageLink = ({
     coverPage,

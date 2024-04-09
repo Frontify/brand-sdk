@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 module.exports = {
+    root: true,
     extends: ['@frontify/eslint-config-basic'],
     plugins: ['notice'],
     settings: {
@@ -31,13 +32,6 @@ module.exports = {
         {
             files: ['**/*.md/**/*'],
             processor: 'markdown/markdown',
-            parserOptions: {
-                project: null,
-            },
-        },
-        {
-            files: ['**/*.json'],
-            parser: 'jsonc-eslint-parser',
             parserOptions: {
                 project: null,
             },

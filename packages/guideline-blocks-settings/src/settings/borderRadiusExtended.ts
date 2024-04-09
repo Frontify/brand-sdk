@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MultiInputLayout, SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
+import { MultiInputLayout, type SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
+
 import { getBorderRadiusSlider } from './borderRadius';
-import { Radius, radiusStyleMap } from './types';
+import { type Radius, radiusStyleMap } from './types';
 
 /**
  * Returns border radius settings: border radius switch, radius slider, custom radius inputs for every corner

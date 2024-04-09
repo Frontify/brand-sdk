@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { join } from 'node:path';
-import { reactiveJson } from './reactiveJson.js';
-import { PackageJson } from './npm.js';
+
+import { type PackageJson } from './npm';
+import { reactiveJson } from './reactiveJson';
 
 export const getAppBridgeVersion = (rootPath: string) => {
     const packageJson = reactiveJson<PackageJson>(join(rootPath, 'package.json'));

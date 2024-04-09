@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PluginComposer } from '@frontify/fondue';
+import { type PluginComposer } from '@frontify/fondue';
 
 export type RichTextEditorProps = {
     id?: string;

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, Value, findNode, getEditorString, getPluginType } from '@frontify/fondue';
-import { ELEMENT_BUTTON, TButtonElement } from '..';
+import { type PlateEditor, type Value, findNode, getEditorString, getPluginType } from '@frontify/fondue';
+
+import { ELEMENT_BUTTON, type TButtonElement } from '..';
 import { floatingButtonActions } from '../components/FloatingButton/floatingButtonStore';
 
 export const triggerFloatingButtonEdit = <V extends Value>(editor: PlateEditor<V>) => {

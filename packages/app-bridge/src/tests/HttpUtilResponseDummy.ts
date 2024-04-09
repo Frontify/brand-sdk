@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { HttpUtilResponse } from '../utilities';
+import { type HttpUtilResponse } from '../utilities';
 
 export class HttpUtilResponseDummy {
     static successWith<T>(data: T): HttpUtilResponse<T> {

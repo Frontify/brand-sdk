@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
-import { mount } from 'cypress/react18';
-import { LinkInput } from './LinkInput';
 import { ButtonSize, CheckboxState } from '@frontify/fondue';
+import { mount } from 'cypress/react18';
+
+import { LinkInput } from './LinkInput';
 
 const LINK_INPUT_ID = '[data-test-id="link-input"]';
 const TEXT_INPUT_ID = '[data-test-id="text-input"]';

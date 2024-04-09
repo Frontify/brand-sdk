@@ -2,6 +2,7 @@
 
 import { readability } from '@ctrl/tinycolor';
 import { describe, expect, test } from 'vitest';
+
 import { getReadableColor } from './getReadableColor';
 
 describe('getReadableColor', () => {

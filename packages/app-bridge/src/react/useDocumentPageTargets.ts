@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
-import { DocumentPageTargets } from '../types';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type DocumentPageTargets } from '../types';
 
 export type UseDocumentPageTargetsReturnType = {
     documentPageTargets: Nullable<DocumentPageTargets>;

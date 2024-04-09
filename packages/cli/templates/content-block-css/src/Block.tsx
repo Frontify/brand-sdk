@@ -1,6 +1,6 @@
-import type { FC } from 'react';
 import { useBlockSettings } from '@frontify/app-bridge';
-import type { BlockProps } from '@frontify/guideline-blocks-settings';
+import { type BlockProps } from '@frontify/guideline-blocks-settings';
+import { type FC } from 'react';
 
 import './style.css';
 

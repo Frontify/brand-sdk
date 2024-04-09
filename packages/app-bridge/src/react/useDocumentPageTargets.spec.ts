@@ -3,10 +3,11 @@
 import { act, renderHook } from '@testing-library/react';
 import mitt from 'mitt';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
 
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { DocumentPageTargetsDummy } from '../tests';
+
 import { useDocumentPageTargets } from './useDocumentPageTargets';
 
 const DOCUMENT_PAGE_ID = 345;

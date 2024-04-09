@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    EText,
+    type EText,
     Path,
-    PlateEditor,
-    Point,
-    Range,
-    Value,
-    WithOverride,
+    type PlateEditor,
+    type Point,
+    type Range,
+    type Value,
+    type WithOverride,
     getAboveNode,
     getNextNodeStartPoint,
     getPluginType,
@@ -20,6 +20,7 @@ import {
     select,
     withRemoveEmptyNodes,
 } from '@frontify/fondue';
+
 import { ELEMENT_BUTTON } from './createButtonPlugin';
 
 /**

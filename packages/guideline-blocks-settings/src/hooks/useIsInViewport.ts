@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { RefObject, useEffect } from 'react';
+import { type RefObject, useEffect } from 'react';
 
 export const useIsInViewport = <T extends Element>({
     ref,

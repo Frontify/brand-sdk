@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
-import { mount } from 'cypress/react18';
-import { BlockInjectButton } from './BlockInjectButton';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { mount } from 'cypress/react18';
+
+import { BlockInjectButton } from './BlockInjectButton';
 
 const BlockInjectButtonSelector = '[data-test-id="block-inject-button"]';
 const ActionMenuItemSelector = '[data-test-id="menu-item"]';

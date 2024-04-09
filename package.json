@@ -8,7 +8,7 @@
         "build:guideline-blocks-settings": "pnpm --stream --filter {packages/guideline-blocks-settings} build",
         "build:platform-app": "pnpm --stream --filter {packages/platform-app} build",
         "build:cli": "pnpm --stream --filter {packages/cli} build",
-        "lint": "pnpm --stream --filter {packages/**} --parallel lint",
+        "lint": "pnpm --stream --filter {packages/**} --parallel lint --quiet",
         "lint:fix": "pnpm --stream --filter {packages/**} --parallel lint:fix",
         "test": "pnpm --stream --filter {packages/**} test",
         "test:components": "cypress run --component",

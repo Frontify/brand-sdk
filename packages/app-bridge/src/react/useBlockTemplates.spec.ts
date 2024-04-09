@@ -1,15 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { SinonStub } from 'sinon';
-import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { type SinonStub } from 'sinon';
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { TemplateDummy, getAppBridgeBlockStub } from '../tests';
+
 import { useBlockTemplates } from './useBlockTemplates';
 
 describe('useBlockTemplates hook', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -58,7 +58,7 @@ describe('useBlockTemplates hook', () => {
             expect(deleteCall.lastArg).toEqual([1, 2]);
             expect(addCall.firstArg).toEqual('key');
             expect(addCall.lastArg).toEqual([2, 1]);
-            expect(result.current.blockTemplates['key'].map((template) => template.id)).toEqual([2, 1]);
+            expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([2, 1]);
         });
     });
 
@@ -74,7 +74,7 @@ describe('useBlockTemplates hook', () => {
         });
 
         await waitFor(async () => {
-            expect(result.current.blockTemplates['key'].map((template) => template.id)).toEqual([1, 2]);
+            expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([1, 2]);
         });
 
         expect(result.current.error).toEqual(errorMessage);
@@ -107,7 +107,7 @@ describe('useBlockTemplates hook', () => {
         waitFor(() => {
             expect(call.firstArg).toEqual('key');
             expect(call.lastArg).toEqual([2]);
-            expect(result.current.blockTemplates['key'].map(({ id }) => id)).toEqual([1, 2]);
+            expect(result.current.blockTemplates.key.map(({ id }) => id)).toEqual([1, 2]);
         });
     });
 

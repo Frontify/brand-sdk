@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CheckboxState } from '@frontify/fondue';
-import { RichTextButtonStyle } from '../../../types';
+import { type CheckboxState } from '@frontify/fondue';
+
+import { type RichTextButtonStyle } from '../../../types';
 
 export type InsertModalDispatchType = { type: string; payload?: Partial<InsertModalStateProps> };
 
