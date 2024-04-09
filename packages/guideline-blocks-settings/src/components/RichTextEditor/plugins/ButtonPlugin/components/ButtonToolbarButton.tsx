@@ -1,10 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconButton16, IconStylingWrapper, ToolbarButton, focusEditor, useEditorRef } from '@frontify/fondue';
+import { type ReactNode, forwardRef } from 'react';
 
 import { triggerFloatingButton } from '../utils';
-
-import { ReactNode, forwardRef } from 'react';
 
 export const ButtonToolbarButton = forwardRef<
     HTMLButtonElement,

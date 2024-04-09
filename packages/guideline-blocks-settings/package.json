@@ -13,9 +13,6 @@
     "publishConfig": {
         "access": "public"
     },
-    "files": [
-        "dist"
-    ],
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -26,6 +23,9 @@
     },
     "main": "./dist/index.es.js",
     "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "vite build",
         "lint": "eslint .",
@@ -54,7 +54,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.23.9",
-        "@frontify/eslint-config-react": "^0.16.1",
+        "@frontify/eslint-config-react": "0.17.6",
         "@testing-library/jest-dom": "^6.4.2",
         "@testing-library/react": "^14.2.1",
         "@testing-library/user-event": "14.5.2",

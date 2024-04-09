@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { type CamelCasedPropertiesDeep, type RequireAtLeastOne, type SetOptional, type Simplify } from 'type-fest';
 
-import type { CamelCasedPropertiesDeep, RequireAtLeastOne, SetOptional, Simplify } from 'type-fest';
-import { SingleTargetApi } from './Targets';
+import { type SingleTargetApi } from './Targets';
 
 export type DocumentLibraryMode =
     | 'MEDIALIBRARY'

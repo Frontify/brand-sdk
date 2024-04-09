@@ -1,13 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    PluginButtonProps,
+    type PluginButtonProps,
     getHotkeyByPlatform,
     getTooltip,
     isRangeInSameBlock,
     useEditorState,
     useEventPlateId,
 } from '@frontify/fondue';
+
 import { LinkToolbarButton } from './LinkToolbarButton';
 
 export const LinkButton = ({ id, editorId }: PluginButtonProps) => {

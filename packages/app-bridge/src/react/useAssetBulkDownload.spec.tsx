@@ -1,17 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import sinon, { stub } from 'sinon';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
+
 import { AssetBulkDownloadState, useAssetBulkDownload } from './useAssetBulkDownload';
-import { AppBridgeBlock } from '../AppBridgeBlock';
 
 const appBridgeError = new Error('Something went wrong');
 
 describe('useAssetBulkDownload', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 

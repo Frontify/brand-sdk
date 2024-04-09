@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentTargets } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type DocumentTargets } from '../types';
 
 export type UseDocumentTargetsReturnType = {
     documentTargets: Nullable<DocumentTargets>;

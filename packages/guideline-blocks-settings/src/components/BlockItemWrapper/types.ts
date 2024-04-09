@@ -4,6 +4,7 @@ import { type ReactNode } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { type AttachmentsProvider, type withAttachmentsProvider } from '../../hooks/useAttachments';
+
 import { type ToolbarItem } from './Toolbar';
 
 export type BlockItemWrapperProps = {

@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Document, DocumentPage, DocumentSection } from '@frontify/app-bridge';
+import { type Document, type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
 import { Button, ButtonEmphasis, ButtonSize, ButtonStyle, ButtonType, IconLink, Modal } from '@frontify/fondue';
 import { useOverlayTriggerState } from '@react-stately/overlays';
-import { KeyboardEvent, ReactElement, useEffect, useState } from 'react';
+import { type KeyboardEvent, type ReactElement, useEffect, useState } from 'react';
+
 import { DocumentLinks } from './DocumentLinks';
 
 type LinkSelectorProps = {
@@ -48,6 +49,7 @@ export const LinkSelector = ({
     };
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
             onPointerDown={(event) => event.preventDefault()}
             data-test-id="internal-link-selector"

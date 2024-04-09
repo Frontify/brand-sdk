@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { toShortRgba } from './toShortRgba';
 import { describe, expect, test } from 'vitest';
+
+import { toShortRgba } from './toShortRgba';
 
 describe('toShortRgba', () => {
     const data = [

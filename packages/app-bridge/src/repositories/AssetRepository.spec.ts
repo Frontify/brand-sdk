@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { HttpClient } from '../utilities/httpClient';
+
 import { AssetApiDummy, AssetDummy, HttpUtilResponseDummy } from '../tests';
+import { HttpClient } from '../utilities/httpClient';
+
 import { createAssetByFileId, mapAssetApiToAsset } from './AssetRepository';
 
 const ASSET_ID = 222;

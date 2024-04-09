@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Simplify } from 'type-fest';
+import { type Simplify } from 'type-fest';
 
-import type { ApiVerb, CommandVerb, EventVerb } from './registries/verbs';
+import { type ApiVerb, type CommandVerb, type EventVerb } from './registries/verbs';
 
 type NameContextList = 'Command' | 'API Method' | 'Event';
 type WrongNamePattern<ApiMethodName, NameContext extends NameContextList> = ApiMethodName extends string

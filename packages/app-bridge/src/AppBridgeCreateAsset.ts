@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetApi, NotifyData, OauthTokens, PostExternalAssetParams } from './types';
-import { Topic } from './types';
+import { Topic, type AssetApi, type NotifyData, type OauthTokens, type PostExternalAssetParams } from './types';
 import { generateRandomString, notify, subscribe } from './utilities';
 
 const PUBSUB_TOKEN = generateRandomString();

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Asset } from '../types/Asset';
+import { type Asset } from '../types/Asset';
 
 export class AssetDummy {
     static with(id: number): Asset {

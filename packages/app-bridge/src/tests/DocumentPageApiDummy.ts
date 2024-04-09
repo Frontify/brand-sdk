@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentPageApi, DocumentPageVisibility } from '../types';
+import { type DocumentPageApi, DocumentPageVisibility } from '../types';
 
 export class DocumentPageApiDummy {
     static with(id: number): DocumentPageApi {

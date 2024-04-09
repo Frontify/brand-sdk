@@ -1,12 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ToolbarSegment } from './ToolbarSegment';
 import { AttachmentsToolbarButton } from './AttachmentsToolbarButton';
-import { type ToolbarProps } from './types';
-import { ToolbarButton } from './ToolbarButton';
 import { DragHandleToolbarButton } from './DragHandleToolbarButton';
 import { FlyoutToolbarButton } from './FlyoutToolbarButton';
 import { MenuToolbarButton } from './MenuToolbarButton';
+import { ToolbarButton } from './ToolbarButton';
+import { ToolbarSegment } from './ToolbarSegment';
+import { type ToolbarProps } from './types';
 
 export const Toolbar = ({ items, attachments }: ToolbarProps) => (
     <div

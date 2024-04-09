@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type KeyboardSensorOptions } from '@dnd-kit/core';
 import { renderHook } from '@testing-library/react';
-import { useDndSensors } from './useDndSensors';
 import { describe, expect, it } from 'vitest';
-import { KeyboardSensorOptions } from '@dnd-kit/core';
+
+import { useDndSensors } from './useDndSensors';
 
 /**
  * @vitest-environment happy-dom

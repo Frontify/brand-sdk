@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    PlateEditor,
-    UnwrapNodesOptions,
-    Value,
+    type PlateEditor,
+    type UnwrapNodesOptions,
+    type Value,
     getAboveNode,
     getPluginType,
     isElement,
@@ -11,6 +11,7 @@ import {
     unwrapNodes,
     withoutNormalizing,
 } from '@frontify/fondue';
+
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 
 /**

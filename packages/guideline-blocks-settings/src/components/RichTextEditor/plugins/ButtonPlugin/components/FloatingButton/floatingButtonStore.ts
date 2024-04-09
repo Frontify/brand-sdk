@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { createStore } from '@frontify/fondue';
-import { RichTextButtonStyle } from '../../types';
+
+import { type RichTextButtonStyle } from '../../types';
 
 export type FloatingButtonMode = '' | 'insert' | 'edit';
 

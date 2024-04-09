@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, beforeAll, describe, expect, it, test, vi } from 'vitest';
+
 import { AppBridgeCreateAsset } from './AppBridgeCreateAsset';
 import { Topic } from './types';
+import { generateRandomString } from './utilities/hash';
 import { notify } from './utilities/notify';
 import { subscribe } from './utilities/subscribe';
-import { generateRandomString } from './utilities/hash';
 
 const TOKEN = 'AjY34F87Dsat^J';
 const EXPECTED_RESULT = { test: 'passed' };

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getBackgroundColorStyles } from './getBackgroundColorStyles';
 import { describe, expect, it } from 'vitest';
+
+import { getBackgroundColorStyles } from './getBackgroundColorStyles';
 
 describe('getBackgroundColorStyles', () => {
     it('should return a rgba background color', () => {

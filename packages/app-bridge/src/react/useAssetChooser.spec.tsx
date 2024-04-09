@@ -1,14 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { cleanup, render } from '@testing-library/react';
 import sinon from 'sinon';
 import { afterEach, describe, it } from 'vitest';
-import { cleanup, render } from '@testing-library/react';
 
-import type { Asset } from '../types/Asset';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { AssetDummy } from '../tests/AssetDummy';
-import { AppBridgeBlock } from '../AppBridgeBlock';
-import { useAssetChooser } from './useAssetChooser';
 import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+import { type Asset } from '../types/Asset';
+
+import { useAssetChooser } from './useAssetChooser';
 
 const OPEN_ASSET_CHOOSER_BUTTON_ID = 'open-asset-chooser';
 const CLOSE_ASSET_CHOOSER_BUTTON_ID = 'close-asset-chooser';

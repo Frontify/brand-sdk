@@ -8,12 +8,12 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
-import { Toolbar } from './Toolbar';
-import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
-import { DragPreviewContextProvider } from './context/DragPreviewContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID } from './AttachmentsToolbarButton';
 import { DEFAULT_MENU_BUTTON_ID } from './MenuToolbarButton';
-import { ToolbarItem } from './types';
+import { Toolbar } from './Toolbar';
+import { DragPreviewContextProvider } from './context/DragPreviewContext';
+import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
+import { type ToolbarItem } from './types';
 
 /**
  * @vitest-environment happy-dom

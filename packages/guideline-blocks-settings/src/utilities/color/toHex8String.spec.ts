@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { toHex8String } from './toHex8String';
 import { describe, expect, test } from 'vitest';
+
+import { toHex8String } from './toHex8String';
 
 describe('toHex8String', () => {
     const data = [

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    UseVirtualFloatingOptions,
+    type UseVirtualFloatingOptions,
     getPluginOptions,
     getSelectionBoundingClientRect,
     useComposedRef,
@@ -10,8 +10,10 @@ import {
     useHotkeys,
 } from '@frontify/fondue';
 import { type Ref, useEffect } from 'react';
-import { ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
+
+import { type ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
 import { triggerFloatingButtonInsert } from '../../utils/triggerFloatingButtonInsert';
+
 import {
     floatingButtonActions,
     useFloatingButtonEscape,

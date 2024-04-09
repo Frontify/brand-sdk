@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
 
 export const useEditorState = (appBridge: AppBridgeBlock | AppBridgeTheme): boolean => {
     const [editorState, setEditorState] = useState(appBridge.getEditorState());

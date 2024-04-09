@@ -1,11 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { defineConfig } from 'vitest/config';
+import { resolve } from 'node:path';
+
 import react from '@vitejs/plugin-react';
-import { PreRenderedAsset } from 'rollup';
-import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
-import { resolve } from 'path';
+import { type PreRenderedAsset } from 'rollup';
 import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
+
+import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
 
 const dependencies = Object.keys(dependenciesMap);
 const peerDependencies = Object.keys(peerDependenciesMap);

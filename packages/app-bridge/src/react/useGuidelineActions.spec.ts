@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt from 'mitt';
 import { act, renderHook, waitFor } from '@testing-library/react';
-import { SpyInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import mitt from 'mitt';
+import { type SpyInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
     BrandportalLinkDummy,
@@ -13,32 +13,32 @@ import {
     DocumentPageDummy,
     getAppBridgeThemeStub,
 } from '../tests';
-
-import { useGuidelineActions } from './useGuidelineActions';
 import {
-    BrandportalLink,
-    CoverPage,
-    CoverPageCreate,
-    CoverPageUpdate,
-    DocumentCategoryCreate,
-    DocumentCategoryUpdate,
-    DocumentGroupCreate,
-    DocumentGroupUpdate,
-    DocumentLibraryCreate,
-    DocumentLibraryUpdate,
-    DocumentLinkCreate,
-    DocumentLinkUpdate,
-    DocumentPageCreate,
-    DocumentPageUpdate,
-    DocumentStandardCreate,
-    DocumentStandardUpdate,
+    type BrandportalLink,
+    type CoverPage,
+    type CoverPageCreate,
+    type CoverPageUpdate,
+    type DocumentCategoryCreate,
+    type DocumentCategoryUpdate,
+    type DocumentGroupCreate,
+    type DocumentGroupUpdate,
+    type DocumentLibraryCreate,
+    type DocumentLibraryUpdate,
+    type DocumentLinkCreate,
+    type DocumentLinkUpdate,
+    type DocumentPageCreate,
+    type DocumentPageUpdate,
+    type DocumentStandardCreate,
+    type DocumentStandardUpdate,
 } from '../types';
-import { useUncategorizedDocumentPages } from './useUncategorizedDocumentPages';
+
 import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
-import { useUngroupedDocuments } from './useUngroupedDocuments';
-import { useGroupedDocuments } from './useGroupedDocuments';
-import { useDocumentGroups } from './useDocumentGroups';
 import { useDocumentCategories } from './useDocumentCategories';
+import { useDocumentGroups } from './useDocumentGroups';
+import { useGroupedDocuments } from './useGroupedDocuments';
+import { useGuidelineActions } from './useGuidelineActions';
+import { useUncategorizedDocumentPages } from './useUncategorizedDocumentPages';
+import { useUngroupedDocuments } from './useUngroupedDocuments';
 
 const DOCUMENT_ID_1 = 6456;
 const DOCUMENT_ID_2 = 34532;

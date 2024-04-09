@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 module.exports = {
+    root: true,
     extends: ['@frontify/eslint-config-basic'],
     plugins: ['notice'],
     parserOptions: {

@@ -5,9 +5,9 @@ import { type ReactElement, useRef, useState } from 'react';
 import { joinClassNames } from '../../utilities';
 
 import { DEFAULT_MENU_BUTTON_ID, Toolbar, type ToolbarItem } from './Toolbar';
-import { type BlockItemWrapperProps } from './types';
 import { DragPreviewContextProvider } from './Toolbar/context/DragPreviewContext';
 import { MultiFlyoutContextProvider } from './Toolbar/context/MultiFlyoutContext';
+import { type BlockItemWrapperProps } from './types';
 
 export const BlockItemWrapper = ({
     children,

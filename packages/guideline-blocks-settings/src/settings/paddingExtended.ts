@@ -2,12 +2,13 @@
 
 import {
     MultiInputLayout,
-    SettingBlock,
+    type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
     numericalOrPixelRule,
     presetCustomValue,
 } from '../';
+
 import { PADDING_DEFAULT_PLACEHOLDER } from './defaultValues';
 import { getPaddingSlider } from './padding';
 import { paddingStyleMap } from './types';

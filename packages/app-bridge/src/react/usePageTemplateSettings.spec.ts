@@ -2,9 +2,11 @@
 
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { getAppBridgeThemeStub } from '../tests';
+import { type ThemeTemplate } from '../types';
+
 import { usePageTemplateSettings } from './usePageTemplateSettings';
-import type { ThemeTemplate } from '../types';
 
 const DOCUMENT_ID = 3462;
 const THEME_SETTINGS = {
@@ -31,7 +33,7 @@ const PAGE_SETTINGS_WITH_NULL_OVERRIDES = {
 
 describe('usePageTemplateSettings', () => {
     beforeEach(() => {
-        vi.spyOn(console, 'error').mockImplementation(() => void 0);
+        vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {
@@ -39,7 +41,7 @@ describe('usePageTemplateSettings', () => {
         cleanup();
     });
 
-    const loadUsePageTemplateSettings = async (
+    const loadUsePageTemplateSettings = (
         pageTemplateSettings: Record<string, unknown>,
         template: Parameters<typeof usePageTemplateSettings>[1],
         documentId?: Parameters<typeof usePageTemplateSettings>[2],
@@ -55,7 +57,7 @@ describe('usePageTemplateSettings', () => {
     };
 
     it('returns the page settings for cover page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover');
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover');
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -66,7 +68,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('updates the page settings for cover page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover');
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover');
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -88,7 +90,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns the page settings for document page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -99,7 +101,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns `null` for document page if no document page id passed', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage');
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage');
 
         expect(result.current.isLoading).toEqual(false);
 
@@ -112,7 +114,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('updates the page settings for document page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'documentPage', DOCUMENT_ID);
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -134,7 +136,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns the page settings for library page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library', DOCUMENT_ID);
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'library', DOCUMENT_ID);
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -145,7 +147,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('returns `null` for library page if no document id passed', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library');
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'library');
 
         expect(result.current.isLoading).toEqual(false);
 
@@ -158,7 +160,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('updates the page settings for library page', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library', DOCUMENT_ID);
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'library', DOCUMENT_ID);
 
         expect(result.current.isLoading).toEqual(true);
 
@@ -180,7 +182,7 @@ describe('usePageTemplateSettings', () => {
     });
 
     it('logs an error when trying to update document or library page without a documentId', async () => {
-        const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'library');
+        const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'library');
 
         expect(result.current.isLoading).toEqual(false);
 
@@ -201,7 +203,7 @@ describe('usePageTemplateSettings', () => {
 
     describe('Theme and Page template overrides', () => {
         it('returns the page template settings merged with theme settings and the list of custom overrides', async () => {
-            const { result } = await loadUsePageTemplateSettings(
+            const { result } = loadUsePageTemplateSettings(
                 PAGE_SETTINGS_WITH_OVERRIDES,
                 'documentPage',
                 DOCUMENT_ID,
@@ -219,7 +221,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns the page template settings merged with theme settings and no overrides', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, THEME_SETTINGS);
+            const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, THEME_SETTINGS);
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -234,7 +236,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns an empty object if no theme settins and no page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings({}, 'cover', undefined, {
+            const { result } = loadUsePageTemplateSettings({}, 'cover', undefined, {
                 documentPage: {},
                 cover: {},
                 library: {},
@@ -250,7 +252,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns only the theme settings if no page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings({}, 'cover', undefined, THEME_SETTINGS);
+            const { result } = loadUsePageTemplateSettings({}, 'cover', undefined, THEME_SETTINGS);
 
             expect(result.current.isLoading).toEqual(true);
 
@@ -262,7 +264,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns only the page template settings if no theme settings', async () => {
-            const { result } = await loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, {
+            const { result } = loadUsePageTemplateSettings(PAGE_SETTINGS, 'cover', undefined, {
                 documentPage: {},
                 cover: {},
                 library: {},
@@ -278,7 +280,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns theme setting value if page template override is null', async () => {
-            const { result } = await loadUsePageTemplateSettings(
+            const { result } = loadUsePageTemplateSettings(
                 PAGE_SETTINGS_WITH_NULL_OVERRIDES,
                 'documentPage',
                 DOCUMENT_ID,
@@ -298,7 +300,7 @@ describe('usePageTemplateSettings', () => {
         });
 
         it('returns the theme setting if the override is deleted (reset) from page template settings', async () => {
-            const { result } = await loadUsePageTemplateSettings(
+            const { result } = loadUsePageTemplateSettings(
                 PAGE_SETTINGS_WITH_OVERRIDES,
                 'documentPage',
                 DOCUMENT_ID,

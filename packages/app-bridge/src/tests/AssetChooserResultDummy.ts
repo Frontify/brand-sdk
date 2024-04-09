@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetChooserResult } from '../types';
+import { type AssetChooserResult } from '../types';
 
 export class AssetChooserResultDummy {
     static with(id: number): AssetChooserResult {
