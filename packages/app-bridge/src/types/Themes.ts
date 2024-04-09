@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { LinkSettingsDisplay, LinkSettingsIconPosition } from './Document.ts';
+import { type LinkSettingsDisplay, type LinkSettingsIconPosition } from './Document.ts';
 
 export interface CoverPage {
     id(): number;
@@ -11,7 +11,7 @@ export interface CoverPage {
 export interface DocumentGroup {
     id(): number;
     name(language?: string): string;
-    children(): Document[] | DocumentLibrary[] | DocumentLink[];
+    children(): (Document | DocumentLibrary | DocumentLink)[];
 }
 
 export interface Document {
@@ -42,7 +42,7 @@ export interface PageCategory {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
-    children(): DocumentPage[] | DocumentPageLink[];
+    children(): (DocumentPage | DocumentPageLink)[];
 }
 
 export interface DocumentPage {
