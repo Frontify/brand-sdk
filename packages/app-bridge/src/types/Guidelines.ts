@@ -2,7 +2,7 @@
 
 import { type LinkSettingsDisplay, type LinkSettingsIconPosition } from './Document.ts';
 
-export interface CoverPage {
+export interface GuidelinesCoverPage {
     id(): number;
     title(language?: string): string;
     isPublished(): boolean;
@@ -10,27 +10,27 @@ export interface CoverPage {
     url(language?: string): string;
 }
 
-export interface DocumentGroup {
+export interface GuidelinesDocumentGroup {
     id(): number;
     title(language?: string): string;
-    children(): (Document | DocumentLibrary | DocumentLink)[];
+    children(): (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[];
 }
 
-export interface Document {
-    id(): number;
-    title(language?: string): string;
-    slug(language?: string): string;
-    url(language?: string): string;
-}
-
-export interface DocumentLibrary {
+export interface GuidelinesDocument {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
 }
 
-export interface DocumentLink {
+export interface GuidelinesDocumentLibrary {
+    id(): number;
+    title(language?: string): string;
+    slug(language?: string): string;
+    url(language?: string): string;
+}
+
+export interface GuidelinesDocumentLink {
     id(): number;
     title(language?: string): string;
     url(): string;
@@ -40,28 +40,28 @@ export interface DocumentLink {
     shouldOpenInNewTab(): boolean;
 }
 
-export interface PageCategory {
+export interface GuidelinesPageCategory {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
-    children(): (DocumentPage | DocumentPageLink)[];
+    children(): (GuidelinesDocumentPage | GuidelinesDocumentPageLink)[];
 }
 
-export interface DocumentPage {
+export interface GuidelinesDocumentPage {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    headings(): DocumentPageHeading[];
+    headings(): GuidelinesDocumentPageHeading[];
 }
 
-export interface DocumentPageLink {
+export interface GuidelinesDocumentPageLink {
     id(): number;
     title(language?: string): string;
     url(): string;
 }
 
-export interface DocumentPageHeading {
+export interface GuidelinesDocumentPageHeading {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
