@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    SettingBlock,
+    type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
     numericalOrPixelRule,
     presetCustomValue,
 } from '../';
+
 import { PADDING_DEFAULT_PLACEHOLDER } from './defaultValues';
 import { Padding, paddingStyleMap } from './types';
 

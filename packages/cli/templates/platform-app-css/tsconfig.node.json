@@ -5,6 +5,7 @@
         "module": "ESNext",
         "moduleResolution": "bundler",
         "allowSyntheticDefaultImports": true,
-        "jsx": "react-jsx"
-    }
+        "strict": true
+    },
+    "include": [".eslintrc.cjs"]
 }

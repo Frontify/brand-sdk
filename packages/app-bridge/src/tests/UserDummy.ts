@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { User } from '../types/User';
+import { type User } from '../types/User';
 
 export class UserDummy {
     static with(id: number): User {

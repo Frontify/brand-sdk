@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { TextStyles } from '../styles';
+
 import {
     Custom1Plugin,
     Custom2Plugin,
@@ -13,7 +15,6 @@ import {
     ParagraphPlugin,
     QuotePlugin,
 } from '.';
-import { TextStyles } from '../styles';
 
 export const TextStylePluginsWithoutImage = [
     new Heading1Plugin(),

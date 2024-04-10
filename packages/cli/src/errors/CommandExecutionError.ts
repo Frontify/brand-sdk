@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Logger } from '../utils/logger.js';
+import { Logger } from '../utils/logger';
 
 export default class CommandExecutionError extends Error {
     readonly name = 'CommandExecutionError';

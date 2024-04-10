@@ -4,10 +4,10 @@ import { useMemoizedId } from '@frontify/fondue';
 
 import { useAttachmentsContext } from '../../../../hooks';
 import { Attachments } from '../../../Attachments';
+import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
-import { useDragPreviewContext } from '../context/DragPreviewContext';
 
 export const DEFAULT_ATTACHMENTS_BUTTON_ID = 'attachments';
 

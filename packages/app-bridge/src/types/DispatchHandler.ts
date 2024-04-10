@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { AssetChooserOptions, OpenNewPublicationPayload } from './Terrific';
+import { type AssetChooserOptions, type OpenNewPublicationPayload } from './Terrific';
 
 export type DispatchPayload = {
     openAssetChooser?: AssetChooserOptions;

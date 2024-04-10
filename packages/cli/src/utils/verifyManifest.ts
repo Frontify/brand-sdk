@@ -4,7 +4,7 @@ import { array, number, object, string, z } from 'zod';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
-    `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
+    `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include: ${forbiddenExtensions.join(', ')}.`;
 
 const assetCreationShape = object({
     title: string().min(1).max(40),
@@ -104,7 +104,7 @@ export const platformAppManifestSchemaV1 = object({
     }),
 });
 
-export const verifyManifest = async (manifest: unknown, schema: typeof platformAppManifestSchemaV1) => {
+export const verifyManifest = (manifest: unknown, schema: typeof platformAppManifestSchemaV1) => {
     const validatedManifest = schema.safeParse(manifest);
 
     if (!validatedManifest.success) {

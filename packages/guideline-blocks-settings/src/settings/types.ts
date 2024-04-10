@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Color } from '@frontify/sidebar-settings';
+import { type Color } from '@frontify/sidebar-settings';
 
 export enum BorderStyle {
     Solid = 'Solid',

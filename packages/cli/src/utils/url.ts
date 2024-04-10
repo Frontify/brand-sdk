@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { URL } from 'node:url';
-import InvalidInstanceUrlError from '../errors/InvalidInstanceUrlError.js';
+
+import InvalidInstanceUrlError from '../errors/InvalidInstanceUrlError';
 
 export const getValidInstanceUrl = (url: string): string => {
     try {

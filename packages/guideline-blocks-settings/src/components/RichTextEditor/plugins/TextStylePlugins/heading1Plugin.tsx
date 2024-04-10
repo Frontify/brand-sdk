@@ -2,17 +2,18 @@
 
 import {
     MarkupElement,
-    PlatePlugin,
+    type PlatePlugin,
     type PlateRenderElementProps,
     Plugin,
-    PluginProps,
-    TextStyleRenderElementProps,
+    type PluginProps,
+    type TextStyleRenderElementProps,
     alignmentClassnames,
     createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
+
 import { BlockStyles, TextStyles } from '../styles';
 
 const ID = 'textstyle-heading1-plugin';

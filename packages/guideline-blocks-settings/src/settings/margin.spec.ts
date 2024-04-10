@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
+
+import { type SwitchBlock } from '..';
+
 import { Margin, getMarginSettings } from '.';
-import { SwitchBlock } from '..';
 
 describe('getMarginSettings', () => {
     it('should return margin settings without arguments', () => {

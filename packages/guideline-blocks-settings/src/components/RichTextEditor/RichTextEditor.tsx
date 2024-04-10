@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
-import { RichTextEditorProps } from './types';
+import { useIsInViewport } from '../../hooks/useIsInViewport';
+
 import { SerializedText } from './SerializedText';
 import { floatingButtonActions, floatingButtonSelectors } from './plugins/ButtonPlugin/components';
-import { useIsInViewport } from '../../hooks/useIsInViewport';
+import { type RichTextEditorProps } from './types';
 
 const InternalRichTextEditor = memo(
     ({

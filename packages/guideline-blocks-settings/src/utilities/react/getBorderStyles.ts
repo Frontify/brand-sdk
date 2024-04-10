@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CSSProperties } from 'react';
-import type { Color } from '@frontify/fondue';
+import { type Color } from '@frontify/fondue';
+import { type CSSProperties } from 'react';
 
-import { BorderStyle, borderStyleMap } from '../../settings/types';
 import { BORDER_COLOR_DEFAULT_VALUE } from '../../settings/defaultValues';
+import { BorderStyle, borderStyleMap } from '../../settings/types';
 import { toRgbaString } from '../color';
 
 export const getBorderStyles = (

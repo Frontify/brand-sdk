@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { UserApi } from '../types';
+import { type UserApi } from '../types';
 
 export class UserApiDummy {
     static with(id: number): UserApi {

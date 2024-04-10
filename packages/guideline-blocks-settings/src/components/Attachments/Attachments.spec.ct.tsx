@@ -2,9 +2,10 @@
 
 import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
+import { type SinonStub } from 'sinon';
+
 import { Attachments as AttachmentsComponent } from './Attachments';
-import { AttachmentsProps } from './types';
-import { SinonStub } from 'sinon';
+import { type AttachmentsProps } from './types';
 
 const FlyoutButtonSelector = '[data-test-id="attachments-button-trigger"]';
 const AssetInputSelector = '[data-test-id="asset-input-placeholder"]';
@@ -102,6 +103,7 @@ describe('Attachments', () => {
         });
 
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
         }
 

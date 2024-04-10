@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep } from 'type-fest';
+import { type CamelCasedPropertiesDeep } from 'type-fest';
 
 export type Template = {
     id: number;

@@ -1,9 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '@frontify/app-bridge';
-import { PlatePlugin, Plugin, PluginProps, RangeBeforeOptions, createPluginFactory } from '@frontify/fondue';
-import type { CSSProperties } from 'react';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
+import {
+    type PlatePlugin,
+    Plugin,
+    type PluginProps,
+    type RangeBeforeOptions,
+    createPluginFactory,
+} from '@frontify/fondue';
+import { type CSSProperties } from 'react';
+
 import { isValidUrl } from '../../../Link/utils/url';
+
 import { ButtonMarkupElement } from './ButtonMarkupElement';
 import { ButtonButton } from './components/ButtonButton';
 import { CustomFloatingButton } from './components/FloatingButton/CustomFloatingButton';
@@ -13,7 +21,7 @@ import { withButton } from './withButton';
 export const ELEMENT_BUTTON = 'button';
 export const BUTTON_PLUGIN = 'button-plugin';
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface ButtonPlugin {
     forceSubmit?: boolean;
 
@@ -97,7 +105,7 @@ export type ButtonPluginProps = Omit<PluginProps, 'styles'> & {
     styles?: Record<string, CSSProperties & { hover?: CSSProperties }>;
 } & { appBridge: AppBridgeBlock };
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class ButtonPlugin extends Plugin {
     public styles: CSSProperties = {};
     private appBridge: AppBridgeBlock;
@@ -108,7 +116,7 @@ export class ButtonPlugin extends Plugin {
             ...props,
         });
         this.styles = styles;
-        this.appBridge = props?.appBridge as AppBridgeBlock;
+        this.appBridge = props?.appBridge;
     }
 
     plugins() {

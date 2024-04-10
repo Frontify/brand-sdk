@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentPage, DocumentSection } from '@frontify/app-bridge';
-import { useEffect, useState } from 'react';
-import { PageLinks } from './PageLinks';
+import { type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
 import { IconColorFan16, merge } from '@frontify/fondue';
-import { InitiallyExpandedItems } from '../';
+import { useEffect, useState } from 'react';
+
+import { type InitiallyExpandedItems } from '../';
+
+import { PageLinks } from './PageLinks';
 
 type DocumentLinkProps = {
     document: {
@@ -48,6 +50,7 @@ export const DocumentLink = ({
                 ])}
                 onClick={() => onSelectUrl(document.permanentLink)}
             >
+                {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
                 <button
                     role="button"
                     tabIndex={0}

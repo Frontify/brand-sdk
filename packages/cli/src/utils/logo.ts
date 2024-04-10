@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+/* eslint-disable no-useless-escape */
 export const printLogo = (): void => {
     console.log(`
      ______               _   _  __
@@ -12,3 +13,4 @@ export const printLogo = (): void => {
                                     |___/
     `);
 };
+/* eslint-enable no-useless-escape */

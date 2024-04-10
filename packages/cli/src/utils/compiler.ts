@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { createHash } from 'node:crypto';
+
 import react from '@vitejs/plugin-react';
-import { PluginOption, build } from 'vite';
+import { type PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
-import { createHash } from 'crypto';
-import { getAppBridgeVersion } from './appBridgeVersion.js';
+
+import { getAppBridgeVersion } from './appBridgeVersion';
 
 export type CompilerOptions = {
     projectPath: string;

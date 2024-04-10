@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import {
     AlignCenterPlugin,
     AlignJustifyPlugin,
@@ -20,6 +20,7 @@ import {
     UnderlinePlugin,
     UnorderedListPlugin,
 } from '@frontify/fondue';
+
 import { ButtonPlugin, LinkPlugin, TextStylePluginsWithoutImage, TextStylesWithoutImage } from '../plugins';
 
 export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {

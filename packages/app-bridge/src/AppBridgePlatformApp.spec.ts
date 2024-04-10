@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { notify } from './utilities';
+
 import { AppBridgePlatformApp } from './AppBridgePlatformApp';
 import { InitializationError } from './errors';
 import { openConnection } from './registries';
+import { notify } from './utilities';
 
 const TOKEN = 'AjY34F87Dsat^J';
 

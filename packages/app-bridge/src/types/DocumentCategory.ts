@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CamelCasedPropertiesDeep, RequireAtLeastOne } from 'type-fest';
+import { type CamelCasedPropertiesDeep, type RequireAtLeastOne } from 'type-fest';
 
 export type DocumentCategoryApi = {
     id: number;

@@ -1,5 +1,11 @@
 # @frontify/platform-app
 
+## 0.1.0
+
+### Minor Changes
+
+- [#851](https://github.com/Frontify/brand-sdk/pull/851) [`b29b41a`](https://github.com/Frontify/brand-sdk/commit/b29b41af4ae61e01e71c0d82653c6b3e00e87ccb) Thanks [@julianiff](https://github.com/julianiff)! - feat: restrict settings options
+
 ## 0.0.16
 
 ### Patch Changes

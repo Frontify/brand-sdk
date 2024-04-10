@@ -1,21 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CSSProperties } from 'react';
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import {
-    PlatePlugin,
+    type PlatePlugin,
     Plugin,
-    PluginProps,
+    type PluginProps,
     createLinkPlugin as createPlateLinkPlugin,
     createPluginFactory,
 } from '@frontify/fondue';
+import { type CSSProperties } from 'react';
+
+import { isValidUrl } from '../../../Link';
+import { BlockStyles } from '../styles';
 
 import { CustomFloatingLink } from './FloatingLink/CustomFloatingLink';
-import { LINK_PLUGIN } from './id';
 import { LinkButton } from './LinkButton';
 import { LinkMarkupElement } from './LinkMarkupElement';
-import { BlockStyles } from '../styles';
-import { isValidUrl } from '../../../Link';
+import { LINK_PLUGIN } from './id';
 
 export const createLinkPlugin = (appBridge: AppBridgeBlock): PlatePlugin =>
     createPluginFactory({

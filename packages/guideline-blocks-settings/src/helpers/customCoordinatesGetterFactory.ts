@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { KeyboardCode, KeyboardCoordinateGetter } from '@dnd-kit/core';
+import { KeyboardCode, type KeyboardCoordinateGetter } from '@dnd-kit/core';
 
 const directions: string[] = [KeyboardCode.Down, KeyboardCode.Right, KeyboardCode.Up, KeyboardCode.Left];
 

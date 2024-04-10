@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type DocumentCategory } from '../types';
 import { convertObjectCase } from '../utilities';
-import type { DocumentCategory } from '../types';
 
 import { DocumentCategoryApiDummy } from './DocumentCategoryApiDummy';
 

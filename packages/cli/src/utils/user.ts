@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import pc from 'picocolors';
-import { HttpClient } from './httpClient.js';
-import { Logger } from './logger.js';
-import { Configuration } from './configuration.js';
+
+import { Configuration } from './configuration';
+import { HttpClient } from './httpClient';
+import { Logger } from './logger';
 
 export interface UserInfo {
     name: string;

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CoverPage, CoverPageUpdateLegacy } from '../types';
+import { type CoverPage, type CoverPageUpdateLegacy } from '../types';
 import { convertObjectCase } from '../utilities';
+
 import { CoverPageApiDummy } from './CoverPageApiDummy';
 
 export class CoverPageDummy {

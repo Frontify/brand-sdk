@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type GuidelineSearchResult } from '../types';
 import { convertObjectCase } from '../utilities';
-import type { GuidelineSearchResult } from '../types';
 
 import { GuidelineSearchResultApiDummy } from './GuidelineSearchResultApiDummy';
 

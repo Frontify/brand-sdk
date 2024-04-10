@@ -2,6 +2,7 @@
 
 import { renderHook } from '@testing-library/react';
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { useIsInViewport } from './useIsInViewport';
 
 describe('useIsInViewport', () => {
