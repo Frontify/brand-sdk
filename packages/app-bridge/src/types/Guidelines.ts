@@ -8,12 +8,14 @@ export interface GuidelinesCoverPage {
     isPublished(): boolean;
     isHiddenInNavigation(): boolean;
     url(language?: string): string;
+    type: 'cover-page';
 }
 
 export interface GuidelinesDocumentGroup {
     id(): number;
     title(language?: string): string;
     children(): (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[];
+    type: 'document-group';
 }
 
 export interface GuidelinesDocument {
@@ -21,6 +23,7 @@ export interface GuidelinesDocument {
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
+    type: 'document';
 }
 
 export interface GuidelinesDocumentLibrary {
@@ -28,6 +31,7 @@ export interface GuidelinesDocumentLibrary {
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
+    type: 'document-library';
 }
 
 export interface GuidelinesDocumentLink {
@@ -38,6 +42,7 @@ export interface GuidelinesDocumentLink {
     iconPosition(): LinkSettingsIconPosition;
     customIconUrl(): Nullable<string>;
     shouldOpenInNewTab(): boolean;
+    type: 'document-link';
 }
 
 export interface GuidelinesPageCategory {
@@ -45,6 +50,7 @@ export interface GuidelinesPageCategory {
     title(language?: string): string;
     slug(language?: string): string;
     children(): (GuidelinesDocumentPage | GuidelinesDocumentPageLink)[];
+    type: 'page-category';
 }
 
 export interface GuidelinesDocumentPage {
@@ -53,16 +59,19 @@ export interface GuidelinesDocumentPage {
     slug(language?: string): string;
     url(language?: string): string;
     headings(): GuidelinesDocumentPageHeading[];
+    type: 'document-page';
 }
 
 export interface GuidelinesDocumentPageLink {
     id(): number;
     title(language?: string): string;
     url(): string;
+    type: 'document-page-link';
 }
 
 export interface GuidelinesDocumentPageHeading {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
+    type: 'document-page-heading';
 }
