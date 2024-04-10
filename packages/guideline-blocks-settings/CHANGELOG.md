@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.10
+
+### Patch Changes
+
+- [#852](https://github.com/Frontify/brand-sdk/pull/852) [`28f5ec2`](https://github.com/Frontify/brand-sdk/commit/28f5ec282a14bd22871b84570c00630ba07dfa14) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockItemWrapper): hide toolbar segment if there are no items
+
 ## 0.34.9
 
 ### Patch Changes

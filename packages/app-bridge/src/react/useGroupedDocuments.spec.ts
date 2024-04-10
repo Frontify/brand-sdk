@@ -2,8 +2,8 @@
 
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { DocumentDummy, getAppBridgeThemeStub } from '../tests';
 

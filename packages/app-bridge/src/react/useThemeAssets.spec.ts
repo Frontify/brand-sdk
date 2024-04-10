@@ -1,18 +1,18 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { SinonStub } from 'sinon';
-import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { type SinonStub } from 'sinon';
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { type Asset, type ThemeTemplate } from '..';
 import { AssetDummy, getAppBridgeThemeStub } from '../tests';
+
 import { useThemeAssets } from './useThemeAssets';
-import { Asset, ThemeTemplate } from '..';
 
 const DOCUMENT_PAGE_TEMPLATE = 'documentPage';
 
 describe('useThemeAssets hook', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -21,7 +21,7 @@ describe('useThemeAssets hook', () => {
         cleanup();
     });
 
-    const loadUseThemeAssets = async (existingAssets: Asset[] | any, template: ThemeTemplate, keyName: string) => {
+    const loadUseThemeAssets = async (existingAssets: Asset[], template: ThemeTemplate, keyName: string) => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeThemeStub({
             themeAssets: { [keyName]: existingAssets },
@@ -29,6 +29,7 @@ describe('useThemeAssets hook', () => {
 
         const { result, rerender } = renderHook(() => useThemeAssets(appBridgeStub, template));
 
+        // eslint-disable-next-line @typescript-eslint/require-await
         await act(async () => {
             rerender();
         });
@@ -71,7 +72,7 @@ describe('useThemeAssets hook', () => {
             expect(deleteCall.args[1]).toEqual([1, 2]);
             expect(addCall.firstArg).toEqual('key');
             expect(addCall.args[1]).toEqual([2, 1]);
-            expect(result.current.themeAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+            expect(result.current.themeAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
         });
     });
 
@@ -109,7 +110,7 @@ describe('useThemeAssets hook', () => {
         });
 
         await waitFor(async () => {
-            expect(result.current.themeAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+            expect(result.current.themeAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
         });
 
         expect(console.error).toHaveBeenCalledOnce();
@@ -141,7 +142,7 @@ describe('useThemeAssets hook', () => {
         await waitFor(() => {
             expect(call.firstArg).toEqual('key');
             expect(call.args[1]).toEqual([2]);
-            expect(result.current.themeAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+            expect(result.current.themeAssets.key.map(({ id }) => id)).toEqual([1, 2]);
         });
     });
 

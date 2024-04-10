@@ -2,7 +2,7 @@
 
 import { FetchError } from '../errors/NotifyError';
 import { TimeoutReachedError } from '../errors/TimeoutReachedError';
-import { CrossDocumentMessageResponse, Topic } from '../types';
+import { type CrossDocumentMessageResponse, type Topic } from '../types';
 
 export type SubscribeOptions = {
     timeout?: number;

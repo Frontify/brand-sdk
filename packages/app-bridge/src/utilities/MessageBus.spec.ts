@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it, vi } from 'vitest';
+
 import { MessageBus } from './MessageBus';
 
 describe('MessageBus', () => {

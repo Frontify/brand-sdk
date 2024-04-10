@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, Value, focusEditor, getPluginOptions } from '@frontify/fondue';
+import { type PlateEditor, type Value, focusEditor, getPluginOptions } from '@frontify/fondue';
+
 import { floatingButtonActions, floatingButtonSelectors } from '../components/FloatingButton/floatingButtonStore';
-import { ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
+import { type ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
+
 import { upsertButton } from '.';
 
 export const submitFloatingButton = <V extends Value>(editor: PlateEditor<V>) => {

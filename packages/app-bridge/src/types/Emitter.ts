@@ -1,19 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { BlockSettingsUpdateEvent } from '../react/useBlockSettings';
+import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
-import type { Asset } from './Asset';
-import type { Color } from './Color';
-import type { Document } from './Document';
-import type { DocumentPage } from './DocumentPage';
-import type { ColorPalette } from './ColorPalette';
-import type { CoverPage } from './CoverPage';
-import type { DocumentGroup } from './DocumentGroup';
-import type { DocumentCategory } from './DocumentCategory';
-import type { BrandportalLink } from './BrandportalLink';
-import type { PrivacySettings } from './PrivacySettings';
-import type { Template } from './Template';
-import type { ThemeTemplate } from './ThemeTemplate';
+import { type Asset } from './Asset';
+import { type BrandportalLink } from './BrandportalLink';
+import { type Color } from './Color';
+import { type ColorPalette } from './ColorPalette';
+import { type CoverPage } from './CoverPage';
+import { type Document } from './Document';
+import { type DocumentCategory } from './DocumentCategory';
+import { type DocumentGroup } from './DocumentGroup';
+import { type DocumentPage } from './DocumentPage';
+import { type PrivacySettings } from './PrivacySettings';
+import { type Template } from './Template';
+import { type ThemeTemplate } from './ThemeTemplate';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 

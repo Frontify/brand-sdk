@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CamelCasedPropertiesDeep } from 'type-fest';
+import { type CamelCasedPropertiesDeep } from 'type-fest';
 
-import { DocumentLibraryMode } from './Document';
+import { type DocumentLibraryMode } from './Document';
 
 export type ProjectApi = {
     id: number;

@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type Document, type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
-import { ReactElement, useEffect, useState } from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 
+import { type InitiallyExpandedItems } from '../';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
-import { InitiallyExpandedItems } from '../';
 
-import { LoadingIndicator } from './LoadingIndicator';
 import { DocumentLink } from './DocumentLink';
+import { LoadingIndicator } from './LoadingIndicator';
 
 type DocumentLinksProps = {
     selectedUrl: string;

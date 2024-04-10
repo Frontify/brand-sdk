@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useState } from 'react';
+
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 
 type UseLanguageReturn = {

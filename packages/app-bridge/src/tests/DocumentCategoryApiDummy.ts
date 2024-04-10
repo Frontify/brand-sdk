@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentCategoryApi } from '../types';
+import { type DocumentCategoryApi } from '../types';
 
 export class DocumentCategoryApiDummy {
     static with(id: number, document_pages: number[] = []): DocumentCategoryApi {

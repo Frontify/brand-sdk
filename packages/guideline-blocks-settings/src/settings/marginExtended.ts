@@ -2,12 +2,13 @@
 
 import {
     MultiInputLayout,
-    SettingBlock,
+    type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
     numericalOrPixelRule,
     presetCustomValue,
 } from '../';
+
 import { MARGIN_DEFAULT_PLACEHOLDER } from './defaultValues';
 import { getMarginSlider } from './margin';
 import { marginStyleMap } from './types';

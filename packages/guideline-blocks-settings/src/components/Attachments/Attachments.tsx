@@ -1,11 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MutableRefObject, useEffect, useState } from 'react';
 import {
     DndContext,
-    DragEndEvent,
+    type DragEndEvent,
     DragOverlay,
-    DragStartEvent,
+    type DragStartEvent,
     KeyboardSensor,
     PointerSensor,
     closestCenter,
@@ -14,7 +13,7 @@ import {
 } from '@dnd-kit/core';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
-import { Asset, useAssetChooser, useAssetUpload, useEditorState } from '@frontify/app-bridge';
+import { type Asset, useAssetChooser, useAssetUpload, useEditorState } from '@frontify/app-bridge';
 import {
     AssetInput,
     AssetInputSize,
@@ -23,10 +22,11 @@ import {
     LegacyTooltip as Tooltip,
     TooltipPosition,
 } from '@frontify/fondue';
+import { type MutableRefObject, useEffect, useState } from 'react';
 
 import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
-import { type AttachmentsProps } from './types';
 import { AttachmentsButtonTrigger } from './AttachmentsButtonTrigger';
+import { type AttachmentsProps } from './types';
 
 export const Attachments = ({
     items = [],
@@ -154,7 +154,7 @@ export const Attachments = ({
                 <div data-test-id="attachments-flyout-button">
                     <Flyout
                         placement={FlyoutPlacement.BottomRight}
-                        onOpenChange={(isOpen) => handleFlyoutOpenChange(!!draggedItem ? true : isOpen)}
+                        onOpenChange={(isOpen) => handleFlyoutOpenChange(draggedItem ? true : isOpen)}
                         isOpen={isFlyoutOpen}
                         hug={false}
                         fitContent

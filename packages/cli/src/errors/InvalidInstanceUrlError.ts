@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Logger } from '../utils/logger.js';
+import { Logger } from '../utils/logger';
 
 export default class InvalidInstanceUrlError extends Error {
     readonly name = 'InvalidInstanceUrlError';

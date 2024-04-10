@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type EventUnsubscribeFunction } from '../AppBridge';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { closeTemplateChooser, openTemplateChooser } from '../registries/commands/TemplateChooser';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { TemplateLegacy } from '../types/TemplateLegacy';
-import { EventUnsubscribeFunction } from '../AppBridge';
+import { type TemplateLegacy } from '../types/TemplateLegacy';
 
 type UseTemplateChooserType = {
     openTemplateChooser: (callback: (selectedTemplate: TemplateLegacy) => void) => void;

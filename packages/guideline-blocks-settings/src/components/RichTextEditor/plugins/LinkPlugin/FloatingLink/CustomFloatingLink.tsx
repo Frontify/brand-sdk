@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    LinkFloatingToolbarState,
-    UseVirtualFloatingOptions,
+    type LinkFloatingToolbarState,
+    type UseVirtualFloatingOptions,
     flip,
     offset,
     useFloatingLinkEdit,
@@ -10,6 +10,7 @@ import {
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
 } from '@frontify/fondue';
+
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
 

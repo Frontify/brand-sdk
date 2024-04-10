@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ColorInput, TinyColor } from '@ctrl/tinycolor';
+import { type ColorInput, TinyColor } from '@ctrl/tinycolor';
+import { type Color } from '@frontify/sidebar-settings';
+
 import { toShortRgba } from './toShortRgba';
-import { Color } from '@frontify/sidebar-settings';
 
 /**
  * Calculates if text should be in a light color depending on color (e.g. background-color)

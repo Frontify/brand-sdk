@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconDotsHorizontal16, useMemoizedId } from '@frontify/fondue';
-import { ToolbarFlyoutMenu, ToolbarFlyoutMenuItem } from './ToolbarFlyoutMenu';
+
 import { FlyoutToolbarButton } from '../FlyoutToolbarButton/FlyoutToolbarButton';
+
+import { ToolbarFlyoutMenu, type ToolbarFlyoutMenuItem } from './ToolbarFlyoutMenu';
 
 export const DEFAULT_MENU_BUTTON_ID = 'menu';
 

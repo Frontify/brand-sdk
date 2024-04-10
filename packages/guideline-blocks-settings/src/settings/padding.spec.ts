@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
+
+import { type SwitchBlock } from '..';
+
 import { Padding, getPaddingSettings } from '.';
-import { SwitchBlock } from '..';
 
 describe('getPaddingSettings', () => {
     it('should return padding settings without arguments', () => {

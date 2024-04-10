@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PlateEditor, Value, WrapNodesOptions, getPluginType, wrapNodes } from '@frontify/fondue';
-import { ELEMENT_BUTTON, RichTextButtonStyle, TButtonElement } from '..';
+import { type PlateEditor, type Value, type WrapNodesOptions, getPluginType, wrapNodes } from '@frontify/fondue';
+
+import { ELEMENT_BUTTON, type RichTextButtonStyle, type TButtonElement } from '..';
 
 export interface WrapButtonOptions<V extends Value = Value> extends WrapNodesOptions<V> {
     url: string;

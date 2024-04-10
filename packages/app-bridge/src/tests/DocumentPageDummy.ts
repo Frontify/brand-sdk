@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentPage } from '../types';
+import { type DocumentPage } from '../types';
 import { convertObjectCase } from '../utilities';
 
 import { DocumentPageApiDummy } from './DocumentPageApiDummy';

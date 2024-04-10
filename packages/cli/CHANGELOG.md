@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.12
+
+### Patch Changes
+
+- [#846](https://github.com/Frontify/brand-sdk/pull/846) [`137605b`](https://github.com/Frontify/brand-sdk/commit/137605b4600bf2b8dbb1cc3921cef8f948936704) Thanks [@julianiff](https://github.com/julianiff)! - fix: update naming to fit network endpoints naming
+
 ## 5.6.11
 
 ### Patch Changes

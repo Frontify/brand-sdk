@@ -2,9 +2,10 @@
 
 import {
     type PlateRenderElementProps,
-    TLinkElement as TPlateLinkElement,
+    type TLinkElement as TPlateLinkElement,
     useRichTextEditorContext,
 } from '@frontify/fondue';
+
 import { LINK_PLUGIN } from '../id';
 
 export type TLinkElement = TPlateLinkElement & {

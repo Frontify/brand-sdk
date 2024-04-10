@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentGroup, EmitterEvents } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type DocumentGroup, type EmitterEvents } from '../types';
 
 type DocumentGroupDocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
 type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocument:Action'];

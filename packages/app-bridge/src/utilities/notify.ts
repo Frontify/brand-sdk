@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { NotifyData, NotifyOptions } from '../types';
+import { type NotifyData, type NotifyOptions } from '../types';
 
 export function notify<T>(topic: string, token: string, data?: NotifyData<T>, options?: NotifyOptions): void {
     const parentWindow = window.top;

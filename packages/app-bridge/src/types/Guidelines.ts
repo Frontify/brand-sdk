@@ -23,6 +23,7 @@ export interface GuidelinesDocument {
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
+    parentId(): Nullable<number>;
     type: 'document';
 }
 
@@ -31,6 +32,7 @@ export interface GuidelinesDocumentLibrary {
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
+    parentId(): Nullable<number>;
     type: 'document-library';
 }
 
@@ -42,6 +44,7 @@ export interface GuidelinesDocumentLink {
     iconPosition(): LinkSettingsIconPosition;
     customIconUrl(): Nullable<string>;
     shouldOpenInNewTab(): boolean;
+    parentId(): Nullable<number>;
     type: 'document-link';
 }
 

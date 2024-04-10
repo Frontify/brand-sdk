@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { SnakeCasedPropertiesDeep } from 'type-fest';
-import type { Asset, AssetApi } from './Asset';
+import { type SnakeCasedPropertiesDeep } from 'type-fest';
+
+import { type Asset, type AssetApi } from './Asset';
 
 export type PageTemplateAssetApi = Omit<SnakeCasedPropertiesDeep<PageTemplateAsset>, 'asset'> & { asset: AssetApi };
 
