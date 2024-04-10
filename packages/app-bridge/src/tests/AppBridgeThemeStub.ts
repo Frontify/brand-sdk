@@ -24,6 +24,7 @@ import {
 } from '.';
 import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 import type { Asset, ThemeTemplate } from '../types';
+import { NavigationTreeDummy } from './NavigationTreeDummy';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
@@ -370,6 +371,9 @@ export const getAppBridgeThemeStub = ({
                 GuidelineSearchResultDummy.with(`${query}-1`),
                 GuidelineSearchResultDummy.with(`${query}-3`),
             ]);
+        }),
+        getPortalNavigation: stub<Parameters<AppBridgeTheme['getPortalNavigation']>>().callsFake(async () => {
+            return Promise.resolve(NavigationTreeDummy.default());
         }),
         closeAssetChooser: stub<Parameters<AppBridgeTheme['closeAssetChooser']>>().callsFake(() => {
             closeAssetChooser();

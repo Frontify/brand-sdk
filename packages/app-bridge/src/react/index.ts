@@ -34,3 +34,4 @@ export * from './useThemeAssets';
 export * from './useThemeSettings';
 export * from './useUncategorizedDocumentPages';
 export * from './useUngroupedDocuments';
+export * from './usePortalNavigation';

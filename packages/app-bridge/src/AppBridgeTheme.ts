@@ -53,6 +53,7 @@ import type {
     TargetsUpdate,
     ThemeTemplate,
 } from './types';
+import { NavigationTree } from './types/NavigationTree';
 
 export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
@@ -351,4 +352,6 @@ export interface AppBridgeTheme<
     getDocumentTargets(documentId: number): Promise<DocumentTargets>;
 
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
+
+    getPortalNavigation(): Promise<NavigationTree>;
 }
