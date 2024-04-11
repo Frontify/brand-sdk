@@ -33,5 +33,10 @@
         "typescript": "^5.4.4",
         "vite": "^4.5.2",
         "vitest": "^1.4.0"
+    },
+    "pnpm": {
+        "patchedDependencies": {
+            "@udecode/plate-emoji@31.0.0": "patches/@udecode__plate-emoji@31.0.0.patch"
+        }
     }
 }
