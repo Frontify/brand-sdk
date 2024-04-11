@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@udecode/plate-emoji@31.0.0':
+    hash: zd65gtokaotoa2xfhortjmkmjm
+    path: patches/@udecode__plate-emoji@31.0.0.patch
+
 importers:
 
   .:
@@ -19,7 +24,7 @@ importers:
         version: 5.0.7
       '@frontify/fondue':
         specifier: 12.0.0-beta.427
-        version: 12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.1)
+        version: 12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.2)
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@4.5.3)
@@ -252,7 +257,7 @@ importers:
         version: link:../app-bridge
       '@frontify/fondue':
         specifier: 12.0.0-beta.427
-        version: 12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.1)
+        version: 12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.2)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -404,7 +409,7 @@ importers:
     dependencies:
       '@frontify/fondue':
         specifier: 12.0.0-beta.427
-        version: 12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.1)
+        version: 12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.2)
     devDependencies:
       '@babel/core':
         specifier: ^7.24.4
@@ -1728,7 +1733,7 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
-  /@frontify/fondue@12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.1):
+  /@frontify/fondue@12.0.0-beta.427(@types/node@18.19.31)(@types/react-dom@18.2.24)(@types/react@18.2.75)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(tailwindcss@3.4.3)(ts-node@10.9.2)(zustand@4.5.2):
     resolution: {integrity: sha512-Y8aOPzGTQoVh39h/l8esv6Q2F9sO9Z934qw2bz1nsyOMmE9GzyS63SYeTv3AQO5t/cFB53DVPlWprqbR9zMqGQ==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -1787,7 +1792,7 @@ packages:
       '@udecode/plate-code-block': 31.3.4(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-combobox': 31.0.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-core': 31.3.2(@types/react@18.2.75)(immer@9.0.21)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
-      '@udecode/plate-emoji': 31.0.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
+      '@udecode/plate-emoji': 31.0.0(patch_hash=zd65gtokaotoa2xfhortjmkmjm)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-floating': 31.0.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-indent': 31.1.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/plate-link': 31.0.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
@@ -1801,7 +1806,7 @@ packages:
       '@udecode/slate-react': 31.0.0(@types/react@18.2.75)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-react@0.102.0)(slate@0.102.0)
       '@udecode/slate-utils': 31.3.2(slate-history@0.100.0)(slate@0.102.0)
       '@udecode/utils': 31.0.0
-      '@udecode/zustood': 2.0.0(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.5.1)
+      '@udecode/zustood': 2.0.0(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.5.2)
       '@xstate/immer': 0.3.3(immer@9.0.21)(xstate@4.38.3)
       '@xstate/react': 1.6.3(@types/react@18.2.75)(react@18.2.0)(xstate@4.38.3)
       date-fns: 3.6.0
@@ -4519,7 +4524,7 @@ packages:
       - react-native
       - scheduler
 
-  /@udecode/plate-emoji@31.0.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
+  /@udecode/plate-emoji@31.0.0(patch_hash=zd65gtokaotoa2xfhortjmkmjm)(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
     resolution: {integrity: sha512-I9cy3WQWpKIZ4tVcgmbqJ2wnsTN3JubzfYkQEHQIfHejNE3UgHwu/8zcQh+TTb0b4BJ8yE9BY7vN7HVouarvPw==}
     peerDependencies:
       '@udecode/plate-common': '>=31.0.0'
@@ -4539,6 +4544,7 @@ packages:
       slate-history: 0.100.0(slate@0.102.0)
       slate-hyperscript: 0.100.0(slate@0.102.0)
       slate-react: 0.102.0(react-dom@18.2.0)(react@18.2.0)(slate@0.102.0)
+    patched: true
 
   /@udecode/plate-floating@31.0.0(@udecode/plate-common@31.3.2)(react-dom@18.2.0)(react@18.2.0)(slate-history@0.100.0)(slate-hyperscript@0.100.0)(slate-react@0.102.0)(slate@0.102.0):
     resolution: {integrity: sha512-k1KZjpGCH+x/rDCSUZ1Kd4ttPc/35Xp/T+pmI2jYQ48dlorYQPJSuJxpFE/cpBp1g8G2lLh4xbH5BTYR1bypAQ==}
@@ -4789,14 +4795,14 @@ packages:
   /@udecode/utils@31.0.0:
     resolution: {integrity: sha512-06JTl1UAm3mzLLAx8hdMUFw4XRQG727z9JoJ9PeBnmFb9q4Cg3DdmbFnhVJMrBPWlyOwoHtPrBjnanTFeiP36Q==}
 
-  /@udecode/zustood@2.0.0(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.5.1):
+  /@udecode/zustood@2.0.0(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)(zustand@4.5.2):
     resolution: {integrity: sha512-zMmEhP55PHVxIsMWuBf7LbNUTkGDPAGeCtcbJUD+k47ubkLR/yg0hjQh0hD0DARl2X86U+SJNe628qxVtMARVw==}
     peerDependencies:
       zustand: '>=4.3.9'
     dependencies:
       immer: 10.0.4
       react-tracked: 1.7.11(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      zustand: 4.5.1(@types/react@18.2.75)(immer@9.0.21)(react@18.2.0)
+      zustand: 4.5.2(@types/react@18.2.75)(immer@9.0.21)(react@18.2.0)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -12642,26 +12648,6 @@ packages:
       - react-dom
       - react-native
       - scheduler
-
-  /zustand@4.5.1(@types/react@18.2.75)(immer@9.0.21)(react@18.2.0):
-    resolution: {integrity: sha512-XlauQmH64xXSC1qGYNv00ODaQ3B+tNPoy22jv2diYiP4eoDKr9LA+Bh5Bc3gplTrFdb6JVI+N4kc1DZ/tbtfPg==}
-    engines: {node: '>=12.7.0'}
-    peerDependencies:
-      '@types/react': '>=16.8'
-      immer: '>=9.0.6'
-      react: '>=16.8'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      immer:
-        optional: true
-      react:
-        optional: true
-    dependencies:
-      '@types/react': 18.2.75
-      immer: 9.0.21
-      react: 18.2.0
-      use-sync-external-store: 1.2.0(react@18.2.0)
 
   /zustand@4.5.2(@types/react@18.2.75)(immer@9.0.21)(react@18.2.0):
     resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
