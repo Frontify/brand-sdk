@@ -67,6 +67,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: built-artifacts
+                  path: packages
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -101,6 +102,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: built-artifacts
+                  path: packages
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -135,6 +137,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: built-artifacts
+                  path: packages
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -182,6 +185,7 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   name: built-artifacts
+                  path: packages
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
