@@ -8,7 +8,7 @@ on:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-    lint:
+    build:
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -32,6 +32,41 @@ jobs:
 
             - name: Build the packages
               run: pnpm build
+
+            - name: Cache the built artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: built-artifacts
+                  path: packages/*/dist
+                  if-no-files-found: error
+
+    lint:
+        needs: build
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout default branch
+              uses: actions/checkout@v4
+
+            - name: Use pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                  version: latest
+
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version-file: ".nvmrc"
+                  cache: "pnpm"
+
+            - name: Install npm dependencies
+              run: pnpm i --frozen-lockfile
+
+            - name: Download built artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: built-artifacts
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -40,6 +75,7 @@ jobs:
               run: pnpm lint
 
     typecheck:
+        needs: build
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -61,8 +97,10 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
-            - name: Build the packages
-              run: pnpm build
+            - name: Download built artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: built-artifacts
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -71,6 +109,7 @@ jobs:
               run: pnpm typecheck
 
     unit-tests:
+        needs: build
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -92,8 +131,10 @@ jobs:
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 
-            - name: Build the packages
-              run: pnpm build
+            - name: Download built artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: built-artifacts
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -102,6 +143,7 @@ jobs:
               run: pnpm test
 
     component-tests:
+        needs: build
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -136,8 +178,10 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
-            - name: Build local dependencies
-              run: pnpm build:app-bridge && pnpm build:sidebar-settings
+            - name: Download built artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: built-artifacts
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
