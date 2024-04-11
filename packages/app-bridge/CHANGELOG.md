@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 3.5.6
+
+### Patch Changes
+
+- [#853](https://github.com/Frontify/brand-sdk/pull/853) [`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update eslint and lint fix all files
+
+- [#855](https://github.com/Frontify/brand-sdk/pull/855) [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump dependencies
+
 ## 3.5.5
 
 ### Patch Changes
