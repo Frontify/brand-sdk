@@ -7,10 +7,6 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
-env:
-    NODE_VERSION: 18
-    CI: true
-
 jobs:
     lint:
         runs-on: ubuntu-latest
@@ -25,14 +21,17 @@ jobs:
               with:
                   version: latest
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
                   cache: "pnpm"
 
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
+
+            - name: Build the packages
+              run: pnpm build
 
             - name: Add app-bridge dependency for guideline-blocks-settings
               run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
@@ -53,10 +52,10 @@ jobs:
               with:
                   version: latest
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
                   cache: "pnpm"
 
             - name: Install npm dependencies
@@ -84,10 +83,10 @@ jobs:
               with:
                   version: latest
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
                   cache: "pnpm"
 
             - name: Install npm dependencies
@@ -110,10 +109,10 @@ jobs:
             - name: Checkout current commit
               uses: actions/checkout@v4
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
 
             - name: Use pnpm
               uses: pnpm/action-setup@v3
@@ -165,10 +164,10 @@ jobs:
               with:
                   version: latest
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
                   cache: "pnpm"
 
             - name: Install npm dependencies
