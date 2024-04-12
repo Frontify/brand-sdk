@@ -3,6 +3,7 @@
 import { produce } from 'immer';
 import debounce from 'lodash-es/debounce';
 import { useCallback, useEffect, useState } from 'react';
+
 import { type AppBridgeTheme } from 'src/AppBridgeTheme';
 import { type EmitterEvents } from 'src/types/Emitter';
 import { type NavigationTreeClassTypes, type NavigationTree } from 'src/types/NavigationTree';

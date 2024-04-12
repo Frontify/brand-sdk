@@ -2,12 +2,11 @@
 
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
-import { getAppBridgeThemeStub } from '../tests';
+import { NavigationTreeDummy, getAppBridgeThemeStub } from '../tests';
 import { usePortalNavigation } from './usePortalNavigation';
-import { NavigationTreeDummy } from '../tests/NavigationTreeDummy';
 
 const DEFAULT_NAVIGATION_TREE = NavigationTreeDummy.default();
 
