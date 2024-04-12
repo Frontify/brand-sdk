@@ -12,7 +12,7 @@ import {
 import { type NavigationTree } from '../types/NavigationTree';
 
 class GuidelinesCoverPageClass implements GuidelinesCoverPage {
-    readonly type: 'cover-page' = 'cover-page';
+    readonly type = 'cover-page' as const;
     readonly #id: number;
     readonly #title: string;
     readonly #isPublished: boolean = false;
@@ -43,7 +43,7 @@ class GuidelinesCoverPageClass implements GuidelinesCoverPage {
 }
 
 class GuidelinesDocumentGroupClass implements GuidelinesDocumentGroup {
-    readonly type: 'document-group' = 'document-group';
+    readonly type = 'document-group' as const;
     readonly #id: number;
     readonly #title: string;
     readonly #children: (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[] = [];
@@ -70,7 +70,7 @@ class GuidelinesDocumentGroupClass implements GuidelinesDocumentGroup {
 }
 
 class GuidelinesDocumentClass implements GuidelinesDocument {
-    readonly type: 'document' = 'document';
+    readonly type = 'document' as const;
     readonly #id: number;
     readonly #title: string;
     readonly #parent: Nullable<number>;
@@ -99,7 +99,7 @@ class GuidelinesDocumentClass implements GuidelinesDocument {
 }
 
 class GuidelinesDocumentLibraryClass implements GuidelinesDocumentLibrary {
-    readonly type: 'document-library' = 'document-library';
+    readonly type = 'document-library' as const;
     readonly #id: number;
     readonly #title: string;
     readonly #parent: Nullable<number>;
@@ -128,7 +128,7 @@ class GuidelinesDocumentLibraryClass implements GuidelinesDocumentLibrary {
 }
 
 class GuidelinesDocumentLinkClass implements GuidelinesDocumentLink {
-    readonly type: 'document-link' = 'document-link';
+    readonly type = 'document-link' as const;
     readonly #id: number;
     readonly #title: string;
     readonly #displayMode: LinkSettingsDisplay = LinkSettingsDisplay.TextOnly;

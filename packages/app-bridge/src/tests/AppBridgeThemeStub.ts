@@ -23,10 +23,9 @@ import {
     DocumentPageTargetsDummy,
     DocumentSectionDummy,
     DocumentTargetsDummy,
+    NavigationTreeDummy,
     UpdateTargetsDummy,
 } from '.';
-
-import { NavigationTreeDummy } from './NavigationTreeDummy';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;
