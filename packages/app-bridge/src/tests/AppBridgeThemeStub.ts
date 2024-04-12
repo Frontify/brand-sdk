@@ -26,8 +26,6 @@ import {
     UpdateTargetsDummy,
 } from '.';
 
-import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
-import type { Asset, ThemeTemplate } from '../types';
 import { NavigationTreeDummy } from './NavigationTreeDummy';
 
 const BRAND_ID = 234551;

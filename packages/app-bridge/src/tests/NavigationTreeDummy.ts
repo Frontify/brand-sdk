@@ -46,12 +46,12 @@ class GuidelinesDocumentGroupClass implements GuidelinesDocumentGroup {
     readonly type: 'document-group' = 'document-group';
     readonly #id: number;
     readonly #title: string;
-    readonly #children: (GuidelinesDocumentClass | GuidelinesDocumentLibraryClass | GuidelinesDocumentLinkClass)[] = [];
+    readonly #children: (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[] = [];
 
     constructor(
         id: number,
         title: string,
-        children: (GuidelinesDocumentClass | GuidelinesDocumentLibraryClass | GuidelinesDocumentLinkClass)[],
+        children: (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[],
     ) {
         this.#id = id;
         this.#title = title;
@@ -73,10 +73,12 @@ class GuidelinesDocumentClass implements GuidelinesDocument {
     readonly type: 'document' = 'document';
     readonly #id: number;
     readonly #title: string;
+    readonly #parent: Nullable<number>;
 
-    constructor(id: number, title: string) {
+    constructor(id: number, title: string, parent: Nullable<number> = null) {
         this.#id = id;
         this.#title = title;
+        this.#parent = parent;
     }
 
     id() {
@@ -90,6 +92,9 @@ class GuidelinesDocumentClass implements GuidelinesDocument {
     }
     url(language?: string) {
         return `http://domain.com/document/${this.#id}/${language ?? 'default'}/`;
+    }
+    parentId() {
+        return this.#parent;
     }
 }
 
@@ -97,10 +102,12 @@ class GuidelinesDocumentLibraryClass implements GuidelinesDocumentLibrary {
     readonly type: 'document-library' = 'document-library';
     readonly #id: number;
     readonly #title: string;
+    readonly #parent: Nullable<number>;
 
-    constructor(id: number, title: string) {
+    constructor(id: number, title: string, parent: Nullable<number> = null) {
         this.#id = id;
         this.#title = title;
+        this.#parent = parent;
     }
 
     id() {
@@ -114,6 +121,9 @@ class GuidelinesDocumentLibraryClass implements GuidelinesDocumentLibrary {
     }
     url(language?: string) {
         return `http://domain.com/document/${this.#id}/${language ?? 'default'}/`;
+    }
+    parentId() {
+        return this.#parent;
     }
 }
 
@@ -124,10 +134,12 @@ class GuidelinesDocumentLinkClass implements GuidelinesDocumentLink {
     readonly #displayMode: LinkSettingsDisplay = LinkSettingsDisplay.TextOnly;
     readonly #icoPosition: LinkSettingsIconPosition = LinkSettingsIconPosition.Left;
     readonly #openNewTab: boolean = true;
+    readonly #parent: Nullable<number>;
 
-    constructor(id: number, title: string) {
+    constructor(id: number, title: string, parent: Nullable<number> = null) {
         this.#id = id;
         this.#title = title;
+        this.#parent = parent;
     }
 
     id() {
@@ -151,6 +163,9 @@ class GuidelinesDocumentLinkClass implements GuidelinesDocumentLink {
     }
     shouldOpenInNewTab() {
         return this.#openNewTab;
+    }
+    parentId() {
+        return this.#parent;
     }
 }
 
@@ -176,20 +191,28 @@ class GuidelinesDocumentGroupClassDummy {
 }
 
 class GuidelinesDocumentClassDummy {
-    static with(id: number, title = 'guideline document'): GuidelinesDocumentClass {
-        return new GuidelinesDocumentClass(id, title);
+    static with(id: number, title = 'guideline document', parentId: Nullable<number> = null): GuidelinesDocumentClass {
+        return new GuidelinesDocumentClass(id, title, parentId);
     }
 }
 
 class GuidelinesDocumentLibraryClassDummy {
-    static with(id: number, title = 'guideline document library'): GuidelinesDocumentLibraryClass {
-        return new GuidelinesDocumentLibraryClass(id, title);
+    static with(
+        id: number,
+        title = 'guideline document library',
+        parentId: Nullable<number> = null,
+    ): GuidelinesDocumentLibraryClass {
+        return new GuidelinesDocumentLibraryClass(id, title, parentId);
     }
 }
 
 class GuidelinesDocumentLinkClassDummy {
-    static with(id: number, title = 'guideline document library'): GuidelinesDocumentLinkClass {
-        return new GuidelinesDocumentLinkClass(id, title);
+    static with(
+        id: number,
+        title = 'guideline document library',
+        parentId: Nullable<number> = null,
+    ): GuidelinesDocumentLinkClass {
+        return new GuidelinesDocumentLinkClass(id, title, parentId);
     }
 }
 
@@ -200,9 +223,9 @@ export class NavigationTreeDummy {
             GuidelinesDocumentClassDummy.with(101, 'document-101'),
             GuidelinesDocumentClassDummy.with(102, 'document-102'),
             GuidelinesDocumentGroupClassDummy.with(200, 'document-group-200', [
-                GuidelinesDocumentClassDummy.with(201, 'document-201'),
-                GuidelinesDocumentClassDummy.with(202, 'document-203'),
-                GuidelinesDocumentClassDummy.with(204, 'document-204'),
+                GuidelinesDocumentClassDummy.with(201, 'document-201', 200),
+                GuidelinesDocumentClassDummy.with(202, 'document-203', 200),
+                GuidelinesDocumentClassDummy.with(204, 'document-204', 200),
             ]),
             GuidelinesDocumentLinkClassDummy.with(111, 'document-link-111'),
             GuidelinesDocumentLibraryClassDummy.with(121, 'document-library-121'),
