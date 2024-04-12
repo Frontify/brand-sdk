@@ -149,7 +149,7 @@ class GuidelinesDocumentLinkClass implements GuidelinesDocumentLink {
         return `${this.#title} - ${language ?? 'default'}`;
     }
     url() {
-        return `http://some-external-domain.com/page`;
+        return 'http://some-external-domain.com/page';
     }
 
     displayMode() {
