@@ -1,17 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type GuidelinesDocument,
-    type GuidelinesDocumentGroup,
-    type GuidelinesDocumentLibrary,
-    type GuidelinesDocumentLink,
+    type GuidelineDocument,
+    type GuidelineDocumentGroup,
+    type GuidelineDocumentLibrary,
+    type GuidelineDocumentLink,
     LinkSettingsDisplay,
     LinkSettingsIconPosition,
-    type GuidelinesCoverPage,
+    type GuidelineCoverPage,
 } from '../types';
 import { type NavigationTree } from '../types/NavigationTree';
 
-class GuidelinesCoverPageClass implements GuidelinesCoverPage {
+class GuidelineCoverPageClass implements GuidelineCoverPage {
     readonly type = 'cover-page' as const;
     readonly #id: number;
     readonly #title: string;
@@ -42,16 +42,16 @@ class GuidelinesCoverPageClass implements GuidelinesCoverPage {
     }
 }
 
-class GuidelinesDocumentGroupClass implements GuidelinesDocumentGroup {
+class GuidelineDocumentGroupClass implements GuidelineDocumentGroup {
     readonly type = 'document-group' as const;
     readonly #id: number;
     readonly #title: string;
-    readonly #children: (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[] = [];
+    readonly #children: (GuidelineDocument | GuidelineDocumentLibrary | GuidelineDocumentLink)[] = [];
 
     constructor(
         id: number,
         title: string,
-        children: (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[],
+        children: (GuidelineDocument | GuidelineDocumentLibrary | GuidelineDocumentLink)[],
     ) {
         this.#id = id;
         this.#title = title;
@@ -69,7 +69,7 @@ class GuidelinesDocumentGroupClass implements GuidelinesDocumentGroup {
     }
 }
 
-class GuidelinesDocumentClass implements GuidelinesDocument {
+class GuidelineDocumentClass implements GuidelineDocument {
     readonly type = 'document' as const;
     readonly #id: number;
     readonly #title: string;
@@ -98,7 +98,7 @@ class GuidelinesDocumentClass implements GuidelinesDocument {
     }
 }
 
-class GuidelinesDocumentLibraryClass implements GuidelinesDocumentLibrary {
+class GuidelineDocumentLibraryClass implements GuidelineDocumentLibrary {
     readonly type = 'document-library' as const;
     readonly #id: number;
     readonly #title: string;
@@ -127,7 +127,7 @@ class GuidelinesDocumentLibraryClass implements GuidelinesDocumentLibrary {
     }
 }
 
-class GuidelinesDocumentLinkClass implements GuidelinesDocumentLink {
+class GuidelineDocumentLinkClass implements GuidelineDocumentLink {
     readonly type = 'document-link' as const;
     readonly #id: number;
     readonly #title: string;
@@ -169,66 +169,66 @@ class GuidelinesDocumentLinkClass implements GuidelinesDocumentLink {
     }
 }
 
-class GuidelinesCoverPageClassDummy {
+class GuidelineCoverPageClassDummy {
     static with(
         id: number,
         title = 'Cover Page Name',
         published = false,
         hiddenFromNavigation = false,
-    ): GuidelinesCoverPageClass {
-        return new GuidelinesCoverPageClass(id, title, published, hiddenFromNavigation);
+    ): GuidelineCoverPageClass {
+        return new GuidelineCoverPageClass(id, title, published, hiddenFromNavigation);
     }
 }
 
-class GuidelinesDocumentGroupClassDummy {
+class GuidelineDocumentGroupClassDummy {
     static with(
         id: number,
         title = 'guideline document group',
-        children: (GuidelinesDocumentClass | GuidelinesDocumentLibraryClass | GuidelinesDocumentLinkClass)[] = [],
-    ): GuidelinesDocumentGroupClass {
-        return new GuidelinesDocumentGroupClass(id, title, children);
+        children: (GuidelineDocumentClass | GuidelineDocumentLibraryClass | GuidelineDocumentLinkClass)[] = [],
+    ): GuidelineDocumentGroupClass {
+        return new GuidelineDocumentGroupClass(id, title, children);
     }
 }
 
-class GuidelinesDocumentClassDummy {
-    static with(id: number, title = 'guideline document', parentId: Nullable<number> = null): GuidelinesDocumentClass {
-        return new GuidelinesDocumentClass(id, title, parentId);
+class GuidelineDocumentClassDummy {
+    static with(id: number, title = 'guideline document', parentId: Nullable<number> = null): GuidelineDocumentClass {
+        return new GuidelineDocumentClass(id, title, parentId);
     }
 }
 
-class GuidelinesDocumentLibraryClassDummy {
+class GuidelineDocumentLibraryClassDummy {
     static with(
         id: number,
         title = 'guideline document library',
         parentId: Nullable<number> = null,
-    ): GuidelinesDocumentLibraryClass {
-        return new GuidelinesDocumentLibraryClass(id, title, parentId);
+    ): GuidelineDocumentLibraryClass {
+        return new GuidelineDocumentLibraryClass(id, title, parentId);
     }
 }
 
-class GuidelinesDocumentLinkClassDummy {
+class GuidelineDocumentLinkClassDummy {
     static with(
         id: number,
         title = 'guideline document library',
         parentId: Nullable<number> = null,
-    ): GuidelinesDocumentLinkClass {
-        return new GuidelinesDocumentLinkClass(id, title, parentId);
+    ): GuidelineDocumentLinkClass {
+        return new GuidelineDocumentLinkClass(id, title, parentId);
     }
 }
 
 export class NavigationTreeDummy {
     static default(): NavigationTree {
         return [
-            GuidelinesCoverPageClassDummy.with(5, 'the Cover Page', true, false),
-            GuidelinesDocumentClassDummy.with(101, 'document-101'),
-            GuidelinesDocumentClassDummy.with(102, 'document-102'),
-            GuidelinesDocumentGroupClassDummy.with(200, 'document-group-200', [
-                GuidelinesDocumentClassDummy.with(201, 'document-201', 200),
-                GuidelinesDocumentClassDummy.with(202, 'document-203', 200),
-                GuidelinesDocumentClassDummy.with(204, 'document-204', 200),
+            GuidelineCoverPageClassDummy.with(5, 'the Cover Page', true, false),
+            GuidelineDocumentClassDummy.with(101, 'document-101'),
+            GuidelineDocumentClassDummy.with(102, 'document-102'),
+            GuidelineDocumentGroupClassDummy.with(200, 'document-group-200', [
+                GuidelineDocumentClassDummy.with(201, 'document-201', 200),
+                GuidelineDocumentClassDummy.with(202, 'document-203', 200),
+                GuidelineDocumentClassDummy.with(204, 'document-204', 200),
             ]),
-            GuidelinesDocumentLinkClassDummy.with(111, 'document-link-111'),
-            GuidelinesDocumentLibraryClassDummy.with(121, 'document-library-121'),
+            GuidelineDocumentLinkClassDummy.with(111, 'document-link-111'),
+            GuidelineDocumentLibraryClassDummy.with(121, 'document-library-121'),
         ];
     }
 }
