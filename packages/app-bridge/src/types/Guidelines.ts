@@ -2,7 +2,7 @@
 
 import { type LinkSettingsDisplay, type LinkSettingsIconPosition } from './Document.ts';
 
-export interface GuidelinesCoverPage {
+export interface GuidelineCoverPage {
     id(): number;
     title(language?: string): string;
     isPublished(): boolean;
@@ -11,14 +11,14 @@ export interface GuidelinesCoverPage {
     type: 'cover-page';
 }
 
-export interface GuidelinesDocumentGroup {
+export interface GuidelineDocumentGroup {
     id(): number;
     title(language?: string): string;
-    children(): (GuidelinesDocument | GuidelinesDocumentLibrary | GuidelinesDocumentLink)[];
+    children(): (GuidelineDocument | GuidelineDocumentLibrary | GuidelineDocumentLink)[];
     type: 'document-group';
 }
 
-export interface GuidelinesDocument {
+export interface GuidelineDocument {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
@@ -27,7 +27,7 @@ export interface GuidelinesDocument {
     type: 'document';
 }
 
-export interface GuidelinesDocumentLibrary {
+export interface GuidelineDocumentLibrary {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
@@ -36,7 +36,7 @@ export interface GuidelinesDocumentLibrary {
     type: 'document-library';
 }
 
-export interface GuidelinesDocumentLink {
+export interface GuidelineDocumentLink {
     id(): number;
     title(language?: string): string;
     url(): string;
@@ -48,31 +48,31 @@ export interface GuidelinesDocumentLink {
     type: 'document-link';
 }
 
-export interface GuidelinesPageCategory {
+export interface GuidelinePageCategory {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
-    children(): (GuidelinesDocumentPage | GuidelinesDocumentPageLink)[];
+    children(): (GuidelineDocumentPage | GuidelineDocumentPageLink)[];
     type: 'page-category';
 }
 
-export interface GuidelinesDocumentPage {
+export interface GuidelineDocumentPage {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    headings(): GuidelinesDocumentPageHeading[];
+    headings(): GuidelineDocumentPageHeading[];
     type: 'document-page';
 }
 
-export interface GuidelinesDocumentPageLink {
+export interface GuidelineDocumentPageLink {
     id(): number;
     title(language?: string): string;
     url(): string;
     type: 'document-page-link';
 }
 
-export interface GuidelinesDocumentPageHeading {
+export interface GuidelineDocumentPageHeading {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
