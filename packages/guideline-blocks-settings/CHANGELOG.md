@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.11
+
+### Patch Changes
+
+- [#853](https://github.com/Frontify/brand-sdk/pull/853) [`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update eslint and lint fix all files
+
+- [#857](https://github.com/Frontify/brand-sdk/pull/857) [`7d818d8`](https://github.com/Frontify/brand-sdk/commit/7d818d88eb5b18da2015c3a9f823350e507be3be) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.0.0-beta.427`
+
+- [#855](https://github.com/Frontify/brand-sdk/pull/855) [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump dependencies
+
+- Updated dependencies [[`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab), [`7d818d8`](https://github.com/Frontify/brand-sdk/commit/7d818d88eb5b18da2015c3a9f823350e507be3be), [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c)]:
+  - @frontify/sidebar-settings@0.9.13
+
 ## 0.34.10
 
 ### Patch Changes
