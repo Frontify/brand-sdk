@@ -20,6 +20,7 @@ export * from './File';
 export * from './FileExtension';
 export * from './FileExtensionSets';
 export * from './FileType';
+export * from './Guideline';
 export * from './GuidelineSearchResult';
 export * from './Language';
 export * from './Notify';
