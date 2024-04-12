@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test } from 'vitest';
-import { logoutUser } from '../../src/commands/logout.js';
-import { Configuration } from '../../src/utils/index.js';
+
+import { logoutUser } from '../../src/commands/logout';
+import { Configuration } from '../../src/utils/index';
 
 const DUMMY_TOKENS = {
     token_type: 'Bearer',
@@ -13,8 +14,8 @@ const DUMMY_TOKENS = {
 
 describe('Logout command', () => {
     describe('logoutUser', () => {
-        test('should disconnect user and delete tokens', async () => {
-            //TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
+        test('should disconnect user and delete tokens', () => {
+            // TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
             const oldTokens = Configuration.get('tokens') || {};
             Configuration.set('tokens', DUMMY_TOKENS);
             logoutUser();

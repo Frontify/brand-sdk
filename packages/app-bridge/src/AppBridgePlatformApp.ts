@@ -1,29 +1,28 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type {
-    ApiHandlerParameter,
-    ApiMethodNameValidator,
-    ApiReturn,
-    AppBridge,
-    CommandNameValidator,
-    ContextAsEventName,
-    ContextReturn,
-    DispatchHandlerParameter,
-    EventCallbackParameter,
-    EventNameParameter,
-    EventNameValidator,
-    EventUnsubscribeFunction,
-    StateAsEventName,
-    StateReturn,
-    SubscribeMap,
+import {
+    type ApiHandlerParameter,
+    type ApiMethodNameValidator,
+    type ApiReturn,
+    type AppBridge,
+    type CommandNameValidator,
+    type ContextAsEventName,
+    type ContextReturn,
+    type DispatchHandlerParameter,
+    type EventCallbackParameter,
+    type EventNameParameter,
+    type EventNameValidator,
+    type EventUnsubscribeFunction,
+    type StateAsEventName,
+    type StateReturn,
+    type SubscribeMap,
 } from './AppBridge';
-import { Topic } from './types';
-import { ErrorMessageBus, IMessageBus, MessageBus } from './utilities/MessageBus';
-import { generateRandomString, notify, subscribe } from './utilities';
-import { getQueryParameters } from './utilities/queryParams';
-import type { ApiMethodRegistry } from './registries';
-import { openConnection } from './registries';
 import { InitializationError } from './errors';
+import { type ApiMethodRegistry, openConnection } from './registries';
+import { Topic } from './types';
+import { generateRandomString, notify, subscribe } from './utilities';
+import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
+import { getQueryParameters } from './utilities/queryParams';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<
     Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset' | 'getProxyNetworkCall'>

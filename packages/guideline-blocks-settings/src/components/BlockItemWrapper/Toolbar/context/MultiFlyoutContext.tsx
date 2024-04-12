@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useMemo } from 'react';
+import { type Dispatch, type ReactNode, type SetStateAction, createContext, useContext, useMemo } from 'react';
 
 export type MultiFlyoutContextType = {
     openFlyoutIds: string[];

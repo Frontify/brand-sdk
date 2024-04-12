@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Color } from '@frontify/fondue';
+import { type Color } from '@frontify/fondue';
+
+import { type SettingBlock } from '../';
+
 import { BACKGROUND_COLOR_DEFAULT_VALUE } from './defaultValues';
-import { SettingBlock } from '../';
 
 type BackgroundSettingsType = {
     id?: string;
@@ -29,7 +31,7 @@ type BackgroundSettingsType = {
 export const getBackgroundSettings = (options?: BackgroundSettingsType): SettingBlock => {
     const hasId = options?.id ? `hasBackground${options.id}` : 'hasBackground';
     const colorId = options?.id ? `backgroundColor${options.id}` : 'backgroundColor';
-    const defaultColor = !!options?.preventDefaultColor
+    const defaultColor = options?.preventDefaultColor
         ? undefined
         : options?.defaultColor || BACKGROUND_COLOR_DEFAULT_VALUE;
     const label = options?.label ? options.label : 'Background';

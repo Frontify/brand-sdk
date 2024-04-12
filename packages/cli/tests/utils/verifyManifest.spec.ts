@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
-import { platformAppManifestSchemaV1, verifyManifest } from '../../src/utils/verifyManifest.js';
+
+import { platformAppManifestSchemaV1, verifyManifest } from '../../src/utils/verifyManifest';
 
 const VALID_MANIFEST = {
     appType: 'platform-app',
@@ -402,133 +403,104 @@ const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetwork
 ]);
 
 describe('Verify Platform App Manifest', () => {
-    it('should validate a valid manifest', async () => {
-        const verifiedManifest = await verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
+    it('should validate a valid manifest', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw error when wrong file extension is present in IconLibrary', async () => {
-        await expect(
-            async () => await verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when wrong file extension is present in IconLibrary', () => {
+        expect(() => verifyManifest(ICON_LIBRARY_MANIFEST, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when forbidden extensions are in the manifest', async () => {
-        await expect(
-            async () => await verifyManifest(MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when forbidden extensions are in the manifest', () => {
+        expect(() => verifyManifest(MEDIA_LIBRARY_FORBIDDEN_EXTENSIONS, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when forbidden extensions are in the Logo Library manifest', async () => {
-        await expect(
-            async () => await verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when forbidden extensions are in the Logo Library manifest', () => {
+        expect(() => verifyManifest(LOGO_LIBRARY_MANIFEST, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when version number is a float', async () => {
-        await expect(
-            async () => await verifyManifest(VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when version number is a float', () => {
+        expect(() => verifyManifest(VERSION_NUMBER_IS_INTEGER_WITH_DECIMAL, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when appId is not of length 25', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_SHORT_ID, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when appId is not of length 25', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_SHORT_ID, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when asset action title is too long', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_ACTION, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when asset action title is too long', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_ACTION, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when asset creation title is too long', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when asset creation title is too long', () => {
+        expect(() =>
+            verifyManifest(MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION, platformAppManifestSchemaV1),
+        ).toThrow();
     });
 
-    it('should accept a secret array with label and key', async () => {
-        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_SECRETS, platformAppManifestSchemaV1);
+    it('should accept a secret array with label and key', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_WITH_SECRETS, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should accept an empty secrets array', async () => {
-        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_EMPTY_SECRETS, platformAppManifestSchemaV1);
+    it('should accept an empty secrets array', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_WITH_EMPTY_SECRETS, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should validate when no secret property is present', async () => {
-        const verifiedManifest = await verifyManifest(VALID_MANIFEST_WITH_NO_SECRETS, platformAppManifestSchemaV1);
+    it('should validate when no secret property is present', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_WITH_NO_SECRETS, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw when secret object is not correct without key', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw when secret object is not correct without key', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_KEY, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw when secret object is not correct without label', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_LABEL, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw when secret object is not correct without label', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_SECRET_BUT_NO_LABEL, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when key formatting is invalid', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_WRONG_KEY_FORMAT, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when key formatting is invalid', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_WRONG_KEY_FORMAT, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should accept an array of network endpoint objects', async () => {
-        const verifiedManifest = await verifyManifest(MANIFEST_WITH_NETWORK_CALL, platformAppManifestSchemaV1);
+    it('should accept an array of network endpoint objects', () => {
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_NETWORK_CALL, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should accept an array of network endpoint without header and body', async () => {
-        const verifiedManifest = await verifyManifest(
+    it('should accept an array of network endpoint without header and body', () => {
+        const verifiedManifest = verifyManifest(
             MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
             platformAppManifestSchemaV1,
         );
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw error when network endpoint is not an array', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when network endpoint is not an array', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when network endpoint object is not correct without id', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_ID, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when network endpoint object is not correct without id', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_ID, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when network endpoint object is not correct without resource', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when network endpoint object is not correct without resource', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw an error when resource is incorrect', async () => {
-        await expect(
-            async () =>
-                await verifyManifest(MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw an error when resource is incorrect', () => {
+        expect(() =>
+            verifyManifest(MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
+        ).toThrow();
     });
 
-    it('should throw error when network endpoint object is not correct without options', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when network endpoint object is not correct without options', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when network endpoint object is not correct without method', async () => {
-        await expect(
-            async () => await verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_METHOD, platformAppManifestSchemaV1),
-        ).rejects.toThrow();
+    it('should throw error when network endpoint object is not correct without method', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_METHOD, platformAppManifestSchemaV1)).toThrow();
     });
 });

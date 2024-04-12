@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { afterEach, describe, expect, test, vi } from 'vitest';
+
 import { getDatasetByClassName } from './dom';
 
 const createElementWithClass = (className: string) => {
@@ -44,7 +45,7 @@ describe('getDatasetByClassName', () => {
         const domElement = createElementWithClass(className);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
+        // @ts-ignore
         domElement.jQuery12345678 = dataset;
 
         expect(getDatasetByClassName(className)).toEqual(dataset);
@@ -55,7 +56,7 @@ describe('getDatasetByClassName', () => {
         const domElement = createElementWithClassAndAttribute(className, 'data-dom-attribute', 'value');
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
+        // @ts-ignore
         domElement.jQuery12345678 = { jQueryAttribute: 'value' };
 
         const dataset = { jQueryAttribute: 'value', domAttribute: 'value' };

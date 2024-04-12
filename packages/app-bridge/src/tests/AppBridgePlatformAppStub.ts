@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { SinonStubbedInstance, stub } from 'sinon';
+import { type SinonStubbedInstance, stub } from 'sinon';
 
-import { IAppBridgePlatformApp } from '../AppBridgePlatformApp';
+import { type IAppBridgePlatformApp } from '../AppBridgePlatformApp';
 
 export type getAppBridgePlatformAppStubProps = {
     //

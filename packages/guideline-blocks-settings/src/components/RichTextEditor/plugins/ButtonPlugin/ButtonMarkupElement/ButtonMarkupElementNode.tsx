@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlateRenderElementProps, Value } from '@frontify/fondue';
-import { CSSProperties, HTMLAttributeAnchorTarget, ReactElement, ReactNode, useState } from 'react';
-import { TButtonElement } from '../types';
+import { type PlateRenderElementProps, type Value } from '@frontify/fondue';
+import { type CSSProperties, type HTMLAttributeAnchorTarget, type ReactElement, type ReactNode, useState } from 'react';
+
+import { type TButtonElement } from '../types';
 import { BlockButtonStyles } from '../utils';
 
 export type ButtonRootProps = PlateRenderElementProps<Value, TButtonElement>;

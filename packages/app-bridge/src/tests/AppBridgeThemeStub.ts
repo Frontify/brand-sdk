@@ -1,11 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt, { Emitter } from 'mitt';
-import { SinonStubbedInstance, spy, stub } from 'sinon';
+import mitt, { type Emitter } from 'mitt';
+import { type SinonStubbedInstance, spy, stub } from 'sinon';
 
-import { EmitterEvents } from '../types/Emitter';
-import { AppBridgeTheme } from '../AppBridgeTheme';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type Asset, type ThemeTemplate } from '../types';
+import { type EmitterEvents } from '../types/Emitter';
 import { mergeDeep } from '../utilities';
+
+import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
 
 import {
     AssetDummy,
@@ -22,8 +25,6 @@ import {
     DocumentTargetsDummy,
     UpdateTargetsDummy,
 } from '.';
-import { GuidelineSearchResultDummy } from './GuidelineSearchResultDummy';
-import type { Asset, ThemeTemplate } from '../types';
 
 const BRAND_ID = 234551;
 const PROJECT_ID = 3452;

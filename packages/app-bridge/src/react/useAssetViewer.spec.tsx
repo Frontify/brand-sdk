@@ -2,7 +2,9 @@
 
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
+
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
+
 import { useAssetViewer } from './useAssetViewer';
 
 describe('useAssetViewer', () => {

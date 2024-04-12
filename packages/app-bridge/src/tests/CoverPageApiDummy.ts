@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CoverPageApi } from '../types';
+import { type CoverPageApi } from '../types';
 
 export class CoverPageApiDummy {
     static with(id: number, title = 'Cover Page Name'): CoverPageApi {

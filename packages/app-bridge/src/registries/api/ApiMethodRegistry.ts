@@ -1,15 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { ApiMethodNameValidator } from '../../AppBridge';
-import type { GetAssetBulkDownloadTokenPayload, GetAssetBulkDownloadTokenResponse } from './GetAssetBulkDownloadToken';
-import type { GetCurrentUserPayload, GetCurrentUserResponse } from './GetCurrentUser';
-import { CreateAssetPayload, CreateAssetResponse } from './CreateAsset';
-import type {
-    GetAssetResourceInformationPayload,
-    GetAssetResourceInformationResponse,
+import { type ApiMethodNameValidator } from '../../AppBridge';
+
+import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
+import {
+    type GetAssetBulkDownloadTokenPayload,
+    type GetAssetBulkDownloadTokenResponse,
+} from './GetAssetBulkDownloadToken';
+import {
+    type GetAssetResourceInformationPayload,
+    type GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
-import { SetAssetIdsByBlockAssetKeyPayload, SetAssetIdsByBlockAssetKeyResponse } from './SetAssetIdsByBlockAssetKey';
-import { GetProxyNetworkCallPayload, GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
+import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
+import { type GetProxyNetworkCallPayload, type GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
+import {
+    type SetAssetIdsByBlockAssetKeyPayload,
+    type SetAssetIdsByBlockAssetKeyResponse,
+} from './SetAssetIdsByBlockAssetKey';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {

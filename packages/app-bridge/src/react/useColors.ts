@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type Color, type ColorCreate, type ColorPatch } from '../types';
 import { compareObjects } from '../utilities';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Color, ColorCreate, ColorPatch } from '../types';
 
 export type UseColorsReturnType = {
     colorsByPaletteId: Color[];

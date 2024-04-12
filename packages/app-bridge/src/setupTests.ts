@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { configure } from '@testing-library/react';
-import { beforeAll } from 'vitest';
 import { enableMapSet } from 'immer';
+import { beforeAll } from 'vitest';
 
-import { TerrificComponent } from './types';
+import { type TerrificComponent } from './types';
 
 enableMapSet();
 

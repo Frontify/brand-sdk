@@ -3,8 +3,9 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { useLanguage } from './useLanguage';
 import { getAppBridgeThemeStub } from '../tests/AppBridgeThemeStub';
+
+import { useLanguage } from './useLanguage';
 
 describe('useLanguage', () => {
     it('should return default language initially', () => {

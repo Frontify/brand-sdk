@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type AppBridgePlatformApp } from '@frontify/app-bridge';
 import {
     type ChecklistBlock as ChecklistBlockSettings,
     type ColorInputBlock as ColorInputBlockSettings,
     type DropdownBlock as DropdownBlockSettings,
-    DynamicSettingBlock,
+    type DynamicSettingBlock,
     type InputBlock as InputBlockSettings,
     type MultiInputBlock as MultiInputBlockSettings,
     type NotificationBlock as NotificationBlockSettings,
@@ -14,9 +15,7 @@ import {
     type SwitchBlock as SwitchBlockSettings,
     type TextareaBlock as TextareaBlockSettings,
 } from '@frontify/sidebar-settings';
-
 import { type FC } from 'react';
-import { type AppBridgePlatformApp } from '@frontify/app-bridge';
 
 export type ChecklistBlock = ChecklistBlockSettings<AppBridgePlatformApp>;
 export type ColorInputBlock = ColorInputBlockSettings<AppBridgePlatformApp>;

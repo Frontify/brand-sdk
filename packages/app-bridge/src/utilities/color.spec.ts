@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
+
 import { rgbObjectToRgbString, rgbStringToRgbObject } from './color';
 
 describe('Color', () => {

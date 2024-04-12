@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Color, ColorApi } from './Color';
+import { type Color, type ColorApi } from './Color';
 
 export type ColorPaletteApi = {
     id: number;

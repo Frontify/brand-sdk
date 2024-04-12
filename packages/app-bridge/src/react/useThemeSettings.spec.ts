@@ -1,11 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, renderHook, waitFor } from '@testing-library/react';
+import { type SinonStub } from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { getAppBridgeThemeStub } from '../tests';
+import { type ThemeTemplate } from '../types';
+
 import { useThemeSettings } from './useThemeSettings';
-import { SinonStub } from 'sinon';
-import type { ThemeTemplate } from '../types';
 
 const THEME_SETTINGS = {
     cover: {
@@ -18,7 +20,6 @@ const THEME_SETTINGS = {
 
 describe('useThemeSettings', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 

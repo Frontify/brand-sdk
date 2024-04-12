@@ -1,14 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { cleanup, render } from '@testing-library/react';
 import sinon from 'sinon';
 import { afterEach, describe, it } from 'vitest';
-import { cleanup, render } from '@testing-library/react';
 
-import { TemplateLegacy } from '../types/TemplateLegacy';
-import { AppBridgeBlock } from '../AppBridgeBlock';
-import { useTemplateChooser } from './useTemplateChooser';
-import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { TemplateLegacyDummy } from '../tests/TemplateLegacyDummy';
+import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+import { type TemplateLegacy } from '../types/TemplateLegacy';
+
+import { useTemplateChooser } from './useTemplateChooser';
 
 const OPEN_TEMPLATE_CHOOSER_BUTTON_ID = 'open-template-chooser';
 const CLOSE_TEMPLATE_CHOOSER_BUTTON_ID = 'close-template-chooser';

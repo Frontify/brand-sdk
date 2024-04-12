@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+
 import { customCoordinatesGetterFactory } from '../helpers/customCoordinatesGetterFactory';
 
 const keyboardCodes = {

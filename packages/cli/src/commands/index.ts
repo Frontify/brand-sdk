@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export * from './deploy.js';
-export * from './login.js';
-export * from './logout.js';
-export * from './serve.js';
-export * from './create.js';
+export * from './deploy';
+export * from './login';
+export * from './logout';
+export * from './serve';
+export * from './create';

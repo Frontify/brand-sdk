@@ -8,12 +8,12 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
-import { Toolbar } from './Toolbar';
-import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
-import { DragPreviewContextProvider } from './context/DragPreviewContext';
 import { DEFAULT_ATTACHMENTS_BUTTON_ID } from './AttachmentsToolbarButton';
 import { DEFAULT_MENU_BUTTON_ID } from './MenuToolbarButton';
-import { ToolbarItem } from './types';
+import { Toolbar } from './Toolbar';
+import { DragPreviewContextProvider } from './context/DragPreviewContext';
+import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
+import { type ToolbarItem } from './types';
 
 /**
  * @vitest-environment happy-dom
@@ -21,7 +21,7 @@ import { ToolbarItem } from './types';
 
 const ATTACHMENTS_FLYOUT_ID = 'attachments-flyout-content';
 const MENU_FLYOUT_ID = 'menu-item';
-
+const TOOLBAR_SEGMENT_ID = 'block-item-wrapper-toolbar-segment';
 const MOCK_ASSET_FIELD_ID = 'attachment';
 
 describe('Toolbar', () => {
@@ -86,6 +86,16 @@ describe('Toolbar', () => {
 
     it('should not throw error if toolbar does not have attachments enabled', () => {
         expect(() => render(<Toolbar items={[]} attachments={{ isEnabled: false }} />)).not.toThrowError();
+    });
+
+    it('should render toolbar segment there are items in it', () => {
+        const { queryByTestId } = render(<Toolbar items={FULL_ITEMS} attachments={{ isEnabled: false }} />);
+        expect(queryByTestId(TOOLBAR_SEGMENT_ID)).toBeTruthy();
+    });
+
+    it('should not render toolbar segment if there are no items in it', () => {
+        const { queryByTestId } = render(<Toolbar items={[]} attachments={{ isEnabled: false }} />);
+        expect(queryByTestId(TOOLBAR_SEGMENT_ID)).toBeNull();
     });
 
     it('should throw error if toolbar does have attachments enabled without provider', () => {

@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { ColorDummy, getAppBridgeBlockStub } from '../tests';
+
 import { useColors } from './useColors';
 
 const COLOR_PALETTE_ID = 1;

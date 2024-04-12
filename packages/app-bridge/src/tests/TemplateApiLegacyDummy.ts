@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { TemplateApiLegacy } from '../types';
+import { type TemplateApiLegacy } from '../types';
 
 export class TemplateApiLegacyDummy {
     static with(id: number): TemplateApiLegacy {

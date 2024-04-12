@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { describe, expect, it } from 'vitest';
-import { mapAppBridgeColorPalettesToFonduePalettes } from './mapColorPalettes';
 import { ColorDummy } from '@frontify/app-bridge';
+import { describe, expect, it } from 'vitest';
+
+import { mapAppBridgeColorPalettesToFonduePalettes } from './mapColorPalettes';
 
 describe('mapAppBridgeColorPalettesToFonduePalettes', () => {
     it('should map app bridge color palette to fondue palette', () => {

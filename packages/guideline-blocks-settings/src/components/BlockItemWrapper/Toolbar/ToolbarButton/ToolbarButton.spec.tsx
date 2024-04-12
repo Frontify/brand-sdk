@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { IconAdobeCreativeCloud } from '@frontify/fondue';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { ToolbarButton } from './ToolbarButton';
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+
 import { DragPreviewContextProvider } from '../context/DragPreviewContext';
+
+import { ToolbarButton } from './ToolbarButton';
 
 const TOOLBAR_BUTTON_ID = 'block-item-wrapper-toolbar-btn';
 const TOOLTIP_ID = 'toolbar-button-tooltip';

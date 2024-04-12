@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { joinClassNames } from './joinClassNames';
 import { describe, expect, test } from 'vitest';
+
+import { joinClassNames } from './joinClassNames';
 
 describe('joinClassNames', () => {
     const data = [

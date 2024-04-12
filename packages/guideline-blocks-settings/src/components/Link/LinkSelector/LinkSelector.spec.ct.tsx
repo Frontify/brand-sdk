@@ -8,8 +8,9 @@ import {
     getAppBridgeBlockStub,
 } from '@frontify/app-bridge';
 import { mount } from 'cypress/react18';
+import { type SinonStub } from 'sinon';
+
 import { LinkSelector } from './LinkSelector';
-import type { SinonStub } from 'sinon';
 
 const LinkSelectorSelector = '[data-test-id="internal-link-selector"]';
 const LinkSelectorButtonSelector = '[data-test-id="internal-link-selector"] > button';

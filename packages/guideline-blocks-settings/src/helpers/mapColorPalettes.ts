@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ColorPalette } from '@frontify/app-bridge';
-import { Palette } from '@frontify/fondue';
+import { type ColorPalette } from '@frontify/app-bridge';
+import { type Palette } from '@frontify/fondue';
 
 type Nullable<T> = T | null;
 

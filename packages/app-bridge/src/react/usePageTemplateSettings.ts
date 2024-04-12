@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { EmitterEvents, ThemeTemplate } from '../types';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type EmitterEvents, type ThemeTemplate } from '../types';
+
 import { useThemeSettings } from './';
 
 export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, unknown>>(
@@ -71,8 +72,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
             ) {
                 overrides.push(field);
             } else {
-                (mergedSettings as Record<string, unknown>)[field] =
-                    templateThemeSettings[field as keyof typeof templateThemeSettings];
+                (mergedSettings as Record<string, unknown>)[field] = templateThemeSettings[field];
             }
         }
 

@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
 import { serializeRawToHtmlAsync } from '@frontify/fondue';
-import { SerializedTextProps } from './types';
+import { useEffect, useState } from 'react';
+
+import { type SerializedTextProps } from './types';
 
 export const SerializedText = ({ value = '', gap, columns, show = true, plugins }: SerializedTextProps) => {
     const [html, setHtml] = useState<string | null>(null);

@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { focusEditor, useEditorRef, useHotkeys } from '@frontify/fondue';
+
 import { floatingButtonActions, floatingButtonSelectors } from './floatingButtonStore';
 
 export const useFloatingButtonEscape = () => {
