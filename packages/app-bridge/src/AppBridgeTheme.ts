@@ -20,6 +20,7 @@ import { type ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
 import {
+    type NavigationTree,
     type Asset,
     type AssetChooserOptions,
     type BrandportalLink,
@@ -53,7 +54,6 @@ import {
     type TargetsUpdate,
     type ThemeTemplate,
 } from './types';
-import { type NavigationTree } from './types/NavigationTree';
 
 export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 
