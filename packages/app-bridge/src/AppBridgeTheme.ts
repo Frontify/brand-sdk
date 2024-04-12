@@ -53,7 +53,7 @@ import {
     type TargetsUpdate,
     type ThemeTemplate,
 } from './types';
-import { NavigationTree } from './types/NavigationTree';
+import { type NavigationTree } from './types/NavigationTree';
 
 export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
 

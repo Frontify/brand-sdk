@@ -32,71 +32,39 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
 
     useEffect(() => {
         const handleCoverPageAction = (event: EmitterEvents['AppBridge:GuidelineCoverPage:Action']) => {
-            switch (event.action) {
-                case 'delete':
-                    setNavigationItems(
-                        produce((draft) => {
-                            const itemDraftIndex = draft.findIndex((item) => item.type === 'cover-page');
-                            if (itemDraftIndex !== -1) {
-                                draft.splice(itemDraftIndex, 1);
-                            }
-                        }),
-                    );
-                    break;
-
-                case 'update':
-                case 'add':
-                // do nothing
+            if (event.action === 'delete') {
+                setNavigationItems(
+                    produce((draft) => {
+                        return deleteItem(draft, 'cover-page', null);
+                    }),
+                );
             }
 
             debounce(refetch, 100);
         };
 
         const handleDocumentGroupAction = (event: EmitterEvents['AppBridge:GuidelineDocumentGroup:Action']) => {
-            switch (event.action) {
-                case 'delete':
-                    setNavigationItems(
-                        produce((draft) => {
-                            const itemDraftIndex = draft.findIndex(
-                                (item) => item.type === 'document-group' && item.id() === event.documentGroup.id,
-                            );
-                            if (itemDraftIndex !== -1) {
-                                draft.splice(itemDraftIndex, 1);
-                            }
-                            return draft;
-                        }),
-                    );
-                    break;
-
-                case 'update':
-                case 'add':
-                // do nothing
+            if (event.action === 'delete') {
+                setNavigationItems(
+                    produce((draft) => {
+                        return deleteItem(draft, 'document-group', event.documentGroup.id);
+                    }),
+                );
             }
 
             debounce(refetch, 100);
         };
 
         const handleDocumentAction = (event: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
-            switch (event.action) {
-                case 'delete':
-                    setNavigationItems(
-                        produce((draft) => {
-                            if (!event.document.documentGroupId) {
-                                const itemDraftIndex = draft.findIndex(
-                                    (item) => item.type === 'document' && item.id() === event.document.id,
-                                );
-                                if (itemDraftIndex !== -1) {
-                                    draft.splice(itemDraftIndex, 1);
-                                }
-                            }
-                            return draft;
-                        }),
-                    );
-                    break;
-
-                case 'update':
-                case 'add':
-                // do nothing
+            if (event.action === 'delete') {
+                setNavigationItems(
+                    produce((draft) => {
+                        if (!event.document.documentGroupId) {
+                            return deleteItem(draft, 'document', event.document.id);
+                        }
+                        return draft;
+                    }),
+                );
             }
 
             debounce(refetch, 100);
@@ -146,6 +114,17 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
     }, [navigationItems, refetch]);
 
     return { navigationItems, refetch, isLoading };
+};
+
+const deleteItem = (draft: NavigationTree, type: NavigationTreeClassTypes, itemId: Nullable<number>) => {
+    const itemDraftIndex = draft.findIndex((item) =>
+        !itemId ? item.type === type : item.type === type && item.id() === itemId,
+    );
+    if (itemDraftIndex !== -1) {
+        draft.splice(itemDraftIndex, 1);
+    }
+
+    return draft;
 };
 
 const previewItemPosition = (

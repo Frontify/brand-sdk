@@ -11,10 +11,6 @@ import { NavigationTreeDummy } from '../tests/NavigationTreeDummy';
 const DEFAULT_NAVIGATION_TREE = NavigationTreeDummy.default();
 
 describe('usePortalNavigation', () => {
-    afterEach(() => {
-        vi.resetAllMocks();
-    });
-
     it('should return the preview and refetch when the cover page is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getPortalNavigation');
@@ -27,9 +23,9 @@ describe('usePortalNavigation', () => {
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
         });
 
-        const groupIndex = DEFAULT_NAVIGATION_TREE.findIndex((item) => item.type === 'cover-page');
+        const coverPageIndex = DEFAULT_NAVIGATION_TREE.findIndex((item) => item.type === 'cover-page');
         const updatedNavigationTree = [...DEFAULT_NAVIGATION_TREE];
-        updatedNavigationTree.splice(groupIndex, 1);
+        updatedNavigationTree.splice(coverPageIndex, 1);
 
         // Trigger a "cover page deleted" event
         window.emitter.emit('AppBridge:GuidelineCoverPage:Action', { action: 'delete' });
@@ -107,9 +103,9 @@ describe('usePortalNavigation', () => {
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
         });
 
-        const groupIndex = DEFAULT_NAVIGATION_TREE.findIndex((item) => item.id() === 101);
+        const documentIndex = DEFAULT_NAVIGATION_TREE.findIndex((item) => item.id() === 101);
         const updatedNavigationTree = [...DEFAULT_NAVIGATION_TREE];
-        updatedNavigationTree.splice(groupIndex, 1);
+        updatedNavigationTree.splice(documentIndex, 1);
 
         // Trigger a "document deleted" event
         window.emitter.emit('AppBridge:GuidelineDocument:Action', {
