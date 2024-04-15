@@ -21,7 +21,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
 
     const refetch = useCallback(async () => {
         setIsLoading(true);
-        setNavigationItems(await appBridge.getPortalNavigation());
+        setNavigationItems(await appBridge.api({ name: 'getPortalNavigation' }));
         setIsLoading(false);
     }, [appBridge]);
 
