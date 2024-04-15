@@ -8,18 +8,11 @@ import {
     type GuidelineDocumentLink,
 } from './Guideline';
 
-export type NavigationTree = (
+export type PortalNavigationItem =
     | GuidelineCoverPage
     | GuidelineDocumentGroup
     | GuidelineDocument
     | GuidelineDocumentLibrary
-    | GuidelineDocumentLink
-)[];
+    | GuidelineDocumentLink;
 
-export type NavigationTreeClassTypes = (
-    | GuidelineCoverPage
-    | GuidelineDocumentGroup
-    | GuidelineDocument
-    | GuidelineDocumentLibrary
-    | GuidelineDocumentLink
-)['type'];
+export type PortalNavigationItemTypes = PortalNavigationItem['type'];

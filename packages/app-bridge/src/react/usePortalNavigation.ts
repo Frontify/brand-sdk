@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type EmitterEvents } from '../types/Emitter';
-import { type NavigationTreeClassTypes, type NavigationTree } from '../types/NavigationTree';
+import { type PortalNavigationItemTypes, type PortalNavigationItem } from '../types/NavigationTree';
 
 type Options = {
     /**
@@ -16,7 +16,7 @@ type Options = {
 };
 
 export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options = { enabled: true }) => {
-    const [navigationItems, setNavigationItems] = useState<NavigationTree>([]);
+    const [navigationItems, setNavigationItems] = useState<PortalNavigationItem[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refetch = useCallback(async () => {
@@ -71,7 +71,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
             debounce(refetch, 100);
         };
 
-        const handlerDocumentGroupMoveEventPreview = (
+        const handleDocumentGroupMoveEventPreview = (
             event: EmitterEvents['AppBridge:GuidelineDocumentGroup:MoveEvent'],
         ) => {
             setNavigationItems(
@@ -96,7 +96,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
         window.emitter.on('AppBridge:GuidelineCoverPage:Action', handleCoverPageAction);
 
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupAction);
-        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
 
         window.emitter.on('AppBridge:GuidelineDocument:Action', handleDocumentAction);
         window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handleDocumentMoveEventPreview);
@@ -106,7 +106,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
             window.emitter.off('AppBridge:GuidelineCoverPage:Action', handleCoverPageAction);
 
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupAction);
-            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
 
             window.emitter.off('AppBridge:GuidelineDocument:Action', handleDocumentAction);
             window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handleDocumentMoveEventPreview);
@@ -117,7 +117,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
     return { navigationItems, refetch, isLoading };
 };
 
-const deleteItem = (draft: NavigationTree, type: NavigationTreeClassTypes, itemId: Nullable<number>) => {
+const deleteItem = (draft: PortalNavigationItem[], type: PortalNavigationItemTypes, itemId: Nullable<number>) => {
     const itemDraftIndex = draft.findIndex((item) =>
         !itemId ? item.type === type : item.type === type && item.id() === itemId,
     );
@@ -129,12 +129,12 @@ const deleteItem = (draft: NavigationTree, type: NavigationTreeClassTypes, itemI
 };
 
 const previewItemPosition = (
-    draft: NavigationTree,
+    draft: PortalNavigationItem[],
     itemMoved:
         | EmitterEvents['AppBridge:GuidelineDocument:MoveEvent']['document']
         | EmitterEvents['AppBridge:GuidelineDocumentGroup:MoveEvent']['documentGroup'],
     newPosition: number,
-    allowedTypes: NavigationTreeClassTypes[],
+    allowedTypes: PortalNavigationItemTypes[],
 ) => {
     const itemDraftIndex = draft.findIndex((item) => allowedTypes.includes(item.type) && item.id() === itemMoved.id);
 

@@ -20,7 +20,6 @@ import { type ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
 import {
-    type NavigationTree,
     type Asset,
     type AssetChooserOptions,
     type BrandportalLink,
@@ -352,6 +351,4 @@ export interface AppBridgeTheme<
     getDocumentTargets(documentId: number): Promise<DocumentTargets>;
 
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
-
-    getPortalNavigation(): Promise<NavigationTree>;
 }

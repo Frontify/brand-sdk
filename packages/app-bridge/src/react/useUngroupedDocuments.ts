@@ -85,7 +85,7 @@ export const useUngroupedDocuments = (
             setDocuments(produce((draft) => previewDocumentSort(draft, event.document, event.position)));
         };
 
-        const handlerDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
+        const handleDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
             setDocuments(produce((draft) => previewDocumentGroupSort(draft, event?.documentGroup, event.position)));
         };
 
@@ -112,7 +112,7 @@ export const useUngroupedDocuments = (
         window.emitter.on('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
         window.emitter.on('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
         window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
-        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocument:Action', handler);
@@ -121,7 +121,7 @@ export const useUngroupedDocuments = (
             window.emitter.off('AppBridge:GuidelineDocument:DocumentCategoryAction', handleDocumentCategoryEvent);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', handleDocumentGroupUpdateEvent);
             window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
-            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
         };
     }, [documents, options.enabled, refetch]);
 

@@ -9,7 +9,7 @@ import {
     LinkSettingsIconPosition,
     type GuidelineCoverPage,
 } from '../types';
-import { type NavigationTree } from '../types/NavigationTree';
+import { type PortalNavigationItem } from '../types/NavigationTree';
 
 class GuidelineCoverPageClass implements GuidelineCoverPage {
     readonly type = 'cover-page' as const;
@@ -217,7 +217,7 @@ class GuidelineDocumentLinkClassDummy {
 }
 
 export class NavigationTreeDummy {
-    static default(): NavigationTree {
+    static default(): PortalNavigationItem[] {
         return [
             GuidelineCoverPageClassDummy.with(5, 'the Cover Page', true, false),
             GuidelineDocumentClassDummy.with(101, 'document-101'),
