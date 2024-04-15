@@ -12,7 +12,7 @@ import {
 import { type NavigationTree } from '../types/NavigationTree';
 
 class GuidelineCoverPageClass implements GuidelineCoverPage {
-    readonly type = 'cover-page' as const;
+    readonly type = 'cover-page';
     readonly #id: number;
     readonly #title: string;
     readonly #isPublished: boolean = false;
@@ -43,7 +43,7 @@ class GuidelineCoverPageClass implements GuidelineCoverPage {
 }
 
 class GuidelineDocumentGroupClass implements GuidelineDocumentGroup {
-    readonly type = 'document-group' as const;
+    readonly type = 'document-group';
     readonly #id: number;
     readonly #title: string;
     readonly #children: (GuidelineDocument | GuidelineDocumentLibrary | GuidelineDocumentLink)[] = [];
@@ -70,7 +70,7 @@ class GuidelineDocumentGroupClass implements GuidelineDocumentGroup {
 }
 
 class GuidelineDocumentClass implements GuidelineDocument {
-    readonly type = 'document' as const;
+    readonly type = 'document';
     readonly #id: number;
     readonly #title: string;
     readonly #parent: Nullable<number>;
@@ -99,7 +99,7 @@ class GuidelineDocumentClass implements GuidelineDocument {
 }
 
 class GuidelineDocumentLibraryClass implements GuidelineDocumentLibrary {
-    readonly type = 'document-library' as const;
+    readonly type = 'document-library';
     readonly #id: number;
     readonly #title: string;
     readonly #parent: Nullable<number>;
@@ -128,7 +128,7 @@ class GuidelineDocumentLibraryClass implements GuidelineDocumentLibrary {
 }
 
 class GuidelineDocumentLinkClass implements GuidelineDocumentLink {
-    readonly type = 'document-link' as const;
+    readonly type = 'document-link';
     readonly #id: number;
     readonly #title: string;
     readonly #displayMode: LinkSettingsDisplay = LinkSettingsDisplay.TextOnly;
