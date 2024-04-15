@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type PortalNavigationItem } from '../../types';
 import { type ApiMethodNameValidator } from '../../AppBridge';
 
 import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
@@ -34,4 +35,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
     getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
+    getPortalNavigation: { payload: never; response: PortalNavigationItem[] };
 }>;

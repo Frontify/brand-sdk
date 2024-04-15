@@ -54,7 +54,7 @@ import {
     type ThemeTemplate,
 } from './types';
 
-export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser'>>;
+export type ThemeApiMethod = ApiMethodNameValidator<Pick<ApiMethodRegistry, 'getCurrentUser' | 'getPortalNavigation'>>;
 
 export type ThemeCommand = CommandNameValidator<
     Pick<
