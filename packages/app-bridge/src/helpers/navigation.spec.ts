@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
+
 import { filterDocumentSectionsWithUnreadableTitles } from './navigation';
 
 const documentSections = [

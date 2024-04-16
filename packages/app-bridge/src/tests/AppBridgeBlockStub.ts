@@ -3,6 +3,7 @@
 import mitt, { type Emitter } from 'mitt';
 import { type SinonStubbedInstance, spy, stub } from 'sinon';
 
+import { type EventCallbackParameter } from '../AppBridge';
 import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
 import { type Template, type TemplateLegacy, type User } from '../types';
 import { type Asset } from '../types/Asset';
@@ -10,14 +11,13 @@ import { type EmitterEvents } from '../types/Emitter';
 import { type PrivacySettings } from '../types/PrivacySettings';
 
 import { AssetDummy } from './AssetDummy';
-import { UserDummy } from './UserDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { ColorDummy } from './ColorDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
-import { type EventCallbackParameter } from '../AppBridge';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
+import { UserDummy } from './UserDummy';
 
 const BLOCK_ID = 3452;
 const SECTION_ID = 2341;

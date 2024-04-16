@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PartialDeep } from 'type-fest';
+import { type PartialDeep } from 'type-fest';
 
 export type ColorApi = {
     id: number;

@@ -2,10 +2,11 @@
 
 import { renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
-import { Mock, beforeAll, describe, expect, it, vi } from 'vitest';
+import { type Mock, beforeAll, describe, expect, it, vi } from 'vitest';
+
+import { type AppBridgeBlock, type AppBridgeTheme } from '../';
 
 import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
-import { AppBridgeBlock, AppBridgeTheme } from '../';
 
 import { useDocumentSection } from './useDocumentSection';
 

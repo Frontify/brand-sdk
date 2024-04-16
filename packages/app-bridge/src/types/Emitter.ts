@@ -14,10 +14,10 @@ import { type DocumentPage } from './DocumentPage';
 import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type ThemeTemplate } from './ThemeTemplate';
-import type {
-    AddDocumentSectionPayload,
-    DeleteDocumentSectionPayload,
-    UpdateDocumentSectionPayload,
+import {
+    type AddDocumentSectionPayload,
+    type DeleteDocumentSectionPayload,
+    type UpdateDocumentSectionPayload,
 } from './DocumentSection';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
