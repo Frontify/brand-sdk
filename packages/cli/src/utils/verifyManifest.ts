@@ -54,12 +54,12 @@ export function resetEndpointNameSet() {
 }
 const endpointCallSchema = object({
     name: string().refine(
-        (id) => {
-            if (endpointNameSet.has(id)) {
+        (name) => {
+            if (endpointNameSet.has(name)) {
                 return false;
             }
 
-            endpointNameSet.add(id);
+            endpointNameSet.add(name);
             return true;
         },
         {
