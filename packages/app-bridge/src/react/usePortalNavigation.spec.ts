@@ -17,9 +17,11 @@ describe('usePortalNavigation', () => {
         const spy = vi.spyOn(appBridge, 'api');
 
         spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
+
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -37,6 +39,7 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should return the preview and refetch when a documet group is deleted', async () => {
@@ -48,6 +51,7 @@ describe('usePortalNavigation', () => {
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -68,6 +72,7 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should return the previous tree and refetch when an incorrect documet group id is deleted', async () => {
@@ -79,6 +84,7 @@ describe('usePortalNavigation', () => {
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -95,6 +101,7 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should return the preview and refetch when a documet at root level is deleted', async () => {
@@ -106,6 +113,7 @@ describe('usePortalNavigation', () => {
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -126,6 +134,7 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should return the same tree and refetch when a documet within a group is deleted', async () => {
@@ -137,6 +146,7 @@ describe('usePortalNavigation', () => {
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -153,6 +163,7 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should fetch the navigation tree on mount', async () => {
@@ -165,6 +176,7 @@ describe('usePortalNavigation', () => {
 
         expect(result.current.isLoading).toBe(true);
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
@@ -181,6 +193,7 @@ describe('usePortalNavigation', () => {
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
         });
@@ -209,6 +222,7 @@ describe('usePortalNavigation', () => {
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
         });
@@ -261,6 +275,7 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should return the same tree when a document is moved within/in/out a group', async () => {
@@ -290,5 +305,6 @@ describe('usePortalNavigation', () => {
         });
 
         expect(spy).toHaveBeenCalledOnce();
+        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 });
