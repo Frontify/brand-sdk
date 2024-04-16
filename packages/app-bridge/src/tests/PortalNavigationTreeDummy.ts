@@ -216,7 +216,7 @@ class GuidelineDocumentLinkClassDummy {
     }
 }
 
-export class NavigationTreeDummy {
+export class PortalNavigationTreeDummy {
     static default(): PortalNavigationItem[] {
         return [
             GuidelineCoverPageClassDummy.with(5, 'the Cover Page', true, false),

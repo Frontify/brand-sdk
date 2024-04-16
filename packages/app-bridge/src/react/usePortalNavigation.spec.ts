@@ -5,11 +5,11 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { NavigationTreeDummy, getAppBridgeThemeStub } from '../tests';
+import { PortalNavigationTreeDummy, getAppBridgeThemeStub } from '../tests';
 
 import { usePortalNavigation } from './usePortalNavigation';
 
-const DEFAULT_NAVIGATION_TREE = NavigationTreeDummy.default();
+const DEFAULT_NAVIGATION_TREE = PortalNavigationTreeDummy.default();
 
 describe('usePortalNavigation', () => {
     it('should return the preview and refetch when the cover page is deleted', async () => {

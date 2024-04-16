@@ -38,4 +38,4 @@ export * from './UserApiDummy';
 export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
 export * from './withAppBridgeThemeStubs';
-export * from './NavigationTreeDummy';
+export * from './PortalNavigationTreeDummy';

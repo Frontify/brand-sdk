@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type EmitterEvents } from '../types/Emitter';
-import { type PortalNavigationItem, type PortalNavigationItemTypes } from '../types/Guideline';
+import { type PortalNavigationItem } from '../types/Guideline';
 
 type Options = {
     /**
@@ -117,7 +117,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
     return { navigationItems, refetch, isLoading };
 };
 
-const deleteItem = (draft: PortalNavigationItem[], type: PortalNavigationItemTypes, itemId: Nullable<number>) => {
+const deleteItem = (draft: PortalNavigationItem[], type: PortalNavigationItem['type'], itemId: Nullable<number>) => {
     const itemDraftIndex = draft.findIndex((item) =>
         !itemId ? item.type === type : item.type === type && item.id() === itemId,
     );
@@ -134,7 +134,7 @@ const previewItemPosition = (
         | EmitterEvents['AppBridge:GuidelineDocument:MoveEvent']['document']
         | EmitterEvents['AppBridge:GuidelineDocumentGroup:MoveEvent']['documentGroup'],
     newPosition: number,
-    allowedTypes: PortalNavigationItemTypes[],
+    allowedTypes: PortalNavigationItem['type'][],
 ) => {
     const itemDraftIndex = draft.findIndex((item) => allowedTypes.includes(item.type) && item.id() === itemMoved.id);
 

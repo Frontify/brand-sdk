@@ -85,5 +85,3 @@ export type PortalNavigationItem =
     | GuidelineDocument
     | GuidelineDocumentLibrary
     | GuidelineDocumentLink;
-
-export type PortalNavigationItemTypes = PortalNavigationItem['type'];
