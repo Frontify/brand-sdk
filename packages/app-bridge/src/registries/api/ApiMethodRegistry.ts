@@ -12,12 +12,12 @@ import {
     type GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
+import { type GetPortalNavigationResponse } from './GetPortalNavigation';
 import { type GetProxyNetworkCallPayload, type GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,
 } from './SetAssetIdsByBlockAssetKey';
-import { GetPortalNavigationResponse } from './GetPortalNavigation';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {
