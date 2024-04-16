@@ -18,6 +18,7 @@ import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,
 } from './SetAssetIdsByBlockAssetKey';
+import { type GetDocumentNavigationPayload, type GetDocumentNavigationResponse } from './GetDocumentNavigation.ts';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getAssetBulkDownloadToken: {
@@ -35,5 +36,6 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
     getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
+    getDocumentNavigation: { payload: GetDocumentNavigationPayload; response: GetDocumentNavigationResponse };
     getPortalNavigation: { payload: never; response: GetPortalNavigationResponse };
 }>;
