@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-feat: add usePortalNavigation hook
+feat(AppBridgeTheme): add usePortalNavigation hook
