@@ -23,7 +23,6 @@ import {
     DocumentPageTargetsDummy,
     DocumentSectionDummy,
     DocumentTargetsDummy,
-    NavigationTreeDummy,
     UpdateTargetsDummy,
 } from '.';
 
