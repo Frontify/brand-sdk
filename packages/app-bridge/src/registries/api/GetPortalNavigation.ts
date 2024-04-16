@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { PortalNavigationItem } from '../../types/NavigationTree';
+import { type PortalNavigationItem } from '../../types/Guideline';
 
 export type GetPortalNavigationResponse = PortalNavigationItem[];
 

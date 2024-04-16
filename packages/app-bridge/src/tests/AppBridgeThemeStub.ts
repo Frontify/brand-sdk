@@ -373,9 +373,6 @@ export const getAppBridgeThemeStub = ({
                 GuidelineSearchResultDummy.with(`${query}-3`),
             ]);
         }),
-        getPortalNavigation: stub<Parameters<AppBridgeTheme['getPortalNavigation']>>().callsFake(async () => {
-            return Promise.resolve(NavigationTreeDummy.default());
-        }),
         closeAssetChooser: stub<Parameters<AppBridgeTheme['closeAssetChooser']>>().callsFake(() => {
             closeAssetChooser();
         }),

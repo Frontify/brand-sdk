@@ -8,8 +8,8 @@ import {
     LinkSettingsDisplay,
     LinkSettingsIconPosition,
     type GuidelineCoverPage,
+    type PortalNavigationItem,
 } from '../types';
-import { type PortalNavigationItem } from '../types/NavigationTree';
 
 class GuidelineCoverPageClass implements GuidelineCoverPage {
     readonly type = 'cover-page' as const;

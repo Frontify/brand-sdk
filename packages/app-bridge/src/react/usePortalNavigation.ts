@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type EmitterEvents } from '../types/Emitter';
-import { type PortalNavigationItemTypes, type PortalNavigationItem } from '../types/NavigationTree';
+import { type PortalNavigationItem, type PortalNavigationItemTypes } from '../types/Guideline';
 
 type Options = {
     /**

@@ -23,7 +23,6 @@ export * from './FileType';
 export * from './Guideline';
 export * from './GuidelineSearchResult';
 export * from './Language';
-export * from './NavigationTree';
 export * from './Notify';
 export * from './OauthTokens';
 export * from './PageTemplateAsset';

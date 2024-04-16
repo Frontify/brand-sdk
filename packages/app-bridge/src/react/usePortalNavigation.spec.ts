@@ -14,8 +14,9 @@ const DEFAULT_NAVIGATION_TREE = NavigationTreeDummy.default();
 describe('usePortalNavigation', () => {
     it('should return the preview and refetch when the cover page is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
 
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
@@ -40,7 +41,9 @@ describe('usePortalNavigation', () => {
 
     it('should return the preview and refetch when a documet group is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -69,7 +72,9 @@ describe('usePortalNavigation', () => {
 
     it('should return the previous tree and refetch when an incorrect documet group id is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -94,7 +99,9 @@ describe('usePortalNavigation', () => {
 
     it('should return the preview and refetch when a documet at root level is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -123,7 +130,9 @@ describe('usePortalNavigation', () => {
 
     it('should return the same tree and refetch when a documet within a group is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -148,7 +157,9 @@ describe('usePortalNavigation', () => {
 
     it('should fetch the navigation tree on mount', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -163,7 +174,9 @@ describe('usePortalNavigation', () => {
 
     it('should refetch if targets in documents change', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -189,7 +202,9 @@ describe('usePortalNavigation', () => {
 
     it('should show document group in new position and refetch when a document group is moved', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -218,7 +233,9 @@ describe('usePortalNavigation', () => {
 
     it('should show document in new position when a document is moved at root level', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
@@ -248,7 +265,9 @@ describe('usePortalNavigation', () => {
 
     it('should return the same tree when a document is moved within/in/out a group', async () => {
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getPortalNavigation');
+        const spy = vi.spyOn(appBridge, 'api');
+
+        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 

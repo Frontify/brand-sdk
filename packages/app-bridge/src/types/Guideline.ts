@@ -78,3 +78,12 @@ export interface GuidelineDocumentPageHeading {
     slug(language?: string): string;
     type: 'document-page-heading';
 }
+
+export type PortalNavigationItem =
+    | GuidelineCoverPage
+    | GuidelineDocumentGroup
+    | GuidelineDocument
+    | GuidelineDocumentLibrary
+    | GuidelineDocumentLink;
+
+export type PortalNavigationItemTypes = PortalNavigationItem['type'];
