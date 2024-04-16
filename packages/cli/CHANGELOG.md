@@ -1,5 +1,25 @@
 # @frontify/frontify-cli
 
+## 5.6.13
+
+### Patch Changes
+
+- [#853](https://github.com/Frontify/brand-sdk/pull/853) [`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update dependencies in CLI and templates
+
+- [#853](https://github.com/Frontify/brand-sdk/pull/853) [`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update eslint and lint fix all files
+
+- [#853](https://github.com/Frontify/brand-sdk/pull/853) [`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: add `type: module` for ESM
+
+- [#857](https://github.com/Frontify/brand-sdk/pull/857) [`7d818d8`](https://github.com/Frontify/brand-sdk/commit/7d818d88eb5b18da2015c3a9f823350e507be3be) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.0.0-beta.427`
+
+- [#855](https://github.com/Frontify/brand-sdk/pull/855) [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump dependencies
+
+## 5.6.12
+
+### Patch Changes
+
+- [#846](https://github.com/Frontify/brand-sdk/pull/846) [`137605b`](https://github.com/Frontify/brand-sdk/commit/137605b4600bf2b8dbb1cc3921cef8f948936704) Thanks [@julianiff](https://github.com/julianiff)! - fix: update naming to fit network endpoints naming
+
 ## 5.6.11
 
 ### Patch Changes

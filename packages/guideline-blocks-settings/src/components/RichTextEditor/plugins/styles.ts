@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { CSSProperties } from 'react';
-import { LINK_PLUGIN } from './LinkPlugin/id';
+import { type CSSProperties } from 'react';
+
 import { BlockButtonStyles } from './ButtonPlugin';
+import { LINK_PLUGIN } from './LinkPlugin/id';
 
 export enum TextStyles {
     heading1 = 'heading1',

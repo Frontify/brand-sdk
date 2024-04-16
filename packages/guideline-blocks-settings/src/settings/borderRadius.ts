@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
+import { type SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
 
 import { Radius, radiusStyleMap } from './types';
 

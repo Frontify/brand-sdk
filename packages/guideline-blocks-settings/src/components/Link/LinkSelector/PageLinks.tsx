@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentPage, DocumentSection } from '@frontify/app-bridge';
-import { ReactElement, useEffect, useState } from 'react';
-import { InitiallyExpandedItems } from '../';
-import { PageLink } from './PageLink';
+import { type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
+import { type ReactElement, useEffect, useState } from 'react';
+
+import { type InitiallyExpandedItems } from '../';
+
 import { LoadingIndicator } from './LoadingIndicator';
+import { PageLink } from './PageLink';
 
 type PageLinksProps = {
     documentId: number;

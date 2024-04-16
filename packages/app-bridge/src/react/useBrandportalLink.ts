@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { BrandportalLink, EmitterAction } from '../types';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type BrandportalLink, type EmitterAction } from '../types';
 
 const defaultState: BrandportalLink = {
     enabled: false,

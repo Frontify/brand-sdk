@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type FileExtension, FileExtensionSets } from '@frontify/app-bridge';
 import {
     ActionMenu,
     Flyout,
@@ -9,10 +10,11 @@ import {
     LoadingCircle,
     MenuItemContentSize,
 } from '@frontify/fondue';
-import { DragEventHandler, MouseEventHandler, useRef, useState } from 'react';
+import { type DragEventHandler, type MouseEventHandler, useRef, useState } from 'react';
+
 import { joinClassNames } from '../../utilities/react/joinClassNames';
-import { BlockInjectButtonProps } from './types';
-import { FileExtension, FileExtensionSets } from '@frontify/app-bridge';
+
+import { type BlockInjectButtonProps } from './types';
 
 export const BlockInjectButton = ({
     onDrop,
@@ -123,8 +125,7 @@ export const BlockInjectButton = ({
         >
             {isLoading ? (
                 <LoadingCircle />
-            ) : // eslint-disable-next-line unicorn/no-nested-ternary
-            errorMsg ? (
+            ) : errorMsg ? (
                 <div className=" tw-flex tw-items-center tw-justify-center tw-text-red-60 tw-font-medium">
                     <IconExclamationMarkTriangle />
                     {errorMsg}

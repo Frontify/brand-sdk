@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { cleanup, fireEvent, render } from '@testing-library/react';
+import { type MutableRefObject } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
-import { MutableRefObject } from 'react';
 
 const BUTTON_ID = 'attachments-toolbar-button-trigger';
 

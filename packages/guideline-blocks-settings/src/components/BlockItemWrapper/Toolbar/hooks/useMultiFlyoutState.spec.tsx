@@ -2,8 +2,10 @@
 
 import { renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+
+import { MultiFlyoutContextProvider, type MultiFlyoutContextType } from '../context/MultiFlyoutContext';
+
 import { useMultiFlyoutState } from './useMultiFlyoutState';
-import { MultiFlyoutContextProvider, MultiFlyoutContextType } from '../context/MultiFlyoutContext';
 
 const FLYOUT_ID = 'flyout';
 

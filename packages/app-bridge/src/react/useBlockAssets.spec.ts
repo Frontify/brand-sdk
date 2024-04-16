@@ -1,15 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import sinon, { SinonStub } from 'sinon';
-import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import sinon, { type SinonStub } from 'sinon';
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
+
 import { useBlockAssets } from './useBlockAssets';
 
 describe('useBlockAssets hook', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -55,7 +55,7 @@ describe('useBlockAssets hook', () => {
                 name: 'setAssetIdsByBlockAssetKey',
                 payload: { key: 'key', assetIds: [2, 1] },
             });
-            expect(result.current.blockAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+            expect(result.current.blockAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
         });
     });
 
@@ -70,7 +70,7 @@ describe('useBlockAssets hook', () => {
         });
 
         await waitFor(async () => {
-            expect(result.current.blockAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+            expect(result.current.blockAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
         });
 
         expect(console.error).toHaveBeenCalledOnce();
@@ -103,7 +103,7 @@ describe('useBlockAssets hook', () => {
         waitFor(() => {
             expect(call.firstArg).toEqual('key');
             expect(call.lastArg).toEqual([2]);
-            expect(result.current.blockAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+            expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1, 2]);
         });
     });
 

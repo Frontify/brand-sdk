@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Asset, AssetApi } from '../types';
+import { type Asset, type AssetApi } from '../types';
 import { HttpClient } from '../utilities';
 
 export const createAssetByFileId = async (fileId: string, projectId: number, setId?: number): Promise<Asset> => {

@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { usePlatformAppBridge } from './usePlatformAppBridge';
 import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import { usePlatformAppBridge } from './usePlatformAppBridge';
 
 describe('usePlatformAppBridge', () => {
     const TOKEN = 'AjY34F87Dsat^J';

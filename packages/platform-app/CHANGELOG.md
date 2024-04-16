@@ -1,5 +1,22 @@
 # @frontify/platform-app
 
+## 0.1.1
+
+### Patch Changes
+
+- [#853](https://github.com/Frontify/brand-sdk/pull/853) [`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update eslint and lint fix all files
+
+- [#855](https://github.com/Frontify/brand-sdk/pull/855) [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump dependencies
+
+- Updated dependencies [[`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab), [`7d818d8`](https://github.com/Frontify/brand-sdk/commit/7d818d88eb5b18da2015c3a9f823350e507be3be), [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c)]:
+  - @frontify/sidebar-settings@0.9.13
+
+## 0.1.0
+
+### Minor Changes
+
+- [#851](https://github.com/Frontify/brand-sdk/pull/851) [`b29b41a`](https://github.com/Frontify/brand-sdk/commit/b29b41af4ae61e01e71c0d82653c6b3e00e87ccb) Thanks [@julianiff](https://github.com/julianiff)! - feat: restrict settings options
+
 ## 0.0.16
 
 ### Patch Changes

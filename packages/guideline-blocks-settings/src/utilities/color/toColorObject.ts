@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Color } from '@frontify/fondue';
 import { TinyColor } from '@ctrl/tinycolor';
+import { type Color } from '@frontify/fondue';
 
 /**
  * Maps color strings to color objects.

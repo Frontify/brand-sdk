@@ -1,9 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MutableRefObject, forwardRef, useEffect, useState } from 'react';
-import { Asset, useAssetUpload, useFileInput } from '@frontify/app-bridge';
 import { useSortable } from '@dnd-kit/sortable';
-
+import { type Asset, useAssetUpload, useFileInput } from '@frontify/app-bridge';
 import {
     ActionMenu,
     Button,
@@ -25,9 +23,12 @@ import {
     MenuItemContentSize,
     MenuItemStyle,
 } from '@frontify/fondue';
-import { AttachmentItemProps, SortableAttachmentItemProps } from './types';
-import { joinClassNames } from '../../utilities';
 import { useFocusRing } from '@react-aria/focus';
+import { type MutableRefObject, forwardRef, useEffect, useState } from 'react';
+
+import { joinClassNames } from '../../utilities';
+
+import { type AttachmentItemProps, type SortableAttachmentItemProps } from './types';
 
 const getDecorator = (type: string) => {
     if (type === 'IMAGE') {

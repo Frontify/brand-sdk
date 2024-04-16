@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { TextStyles } from '@frontify/fondue';
+import { type TextStyles } from '@frontify/fondue';
 import { describe, expect, it } from 'vitest';
+
 import { convertToRteValue } from './convertToRichTextValue';
 
 describe('String converted to Richtext value', () => {

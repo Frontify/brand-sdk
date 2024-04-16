@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    SettingBlock,
+    type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
     numericalOrPixelRule,
     presetCustomValue,
 } from '../';
+
 import { MARGIN_DEFAULT_PLACEHOLDER } from './defaultValues';
 import { Margin, marginStyleMap } from './types';
 

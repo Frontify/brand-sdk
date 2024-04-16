@@ -1,17 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt, { Emitter } from 'mitt';
-import { SinonStubbedInstance, spy, stub } from 'sinon';
+import mitt, { type Emitter } from 'mitt';
+import { type SinonStubbedInstance, spy, stub } from 'sinon';
+
 import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
 import { type Template, type TemplateLegacy, type User } from '../types';
-import { EmitterEvents } from '../types/Emitter';
-import type { Asset } from '../types/Asset';
+import { type Asset } from '../types/Asset';
+import { type EmitterEvents } from '../types/Emitter';
+import { type PrivacySettings } from '../types/PrivacySettings';
+
 import { AssetDummy } from './AssetDummy';
 import { UserDummy } from './UserDummy';
-import { ColorPaletteDummy } from './ColorPaletteDummy';
-import { ColorDummy } from './ColorDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
-import { PrivacySettings } from '../types/PrivacySettings';
+import { ColorDummy } from './ColorDummy';
+import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 import { type EventCallbackParameter } from '../AppBridge';

@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, test, vi } from 'vitest';
-import { printLogo } from '../../src/utils/logo.js';
+
+import { printLogo } from '../../src/utils/logo';
 
 describe('Logo utils', () => {
     describe('printLogo', () => {

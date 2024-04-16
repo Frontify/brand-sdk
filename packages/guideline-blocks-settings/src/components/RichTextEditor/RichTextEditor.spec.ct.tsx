@@ -3,9 +3,11 @@
 import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
-import type { SinonStub } from 'sinon';
-import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles, getDefaultPluginsWithLinkChooser } from '.';
+import { type SinonStub } from 'sinon';
+
 import { convertToRteValue } from '../../helpers';
+
+import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles, getDefaultPluginsWithLinkChooser } from '.';
 
 const RteHtmlSelector = '[data-test-id="rte-content-html"]';
 const RichTextSelector = '[data-test-id="rich-text-editor"]';

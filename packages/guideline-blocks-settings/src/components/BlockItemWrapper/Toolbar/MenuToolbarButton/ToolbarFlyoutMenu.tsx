@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ActionMenu, MenuItemContentSize, MenuItemStyle } from '@frontify/fondue';
+import { ActionMenu, MenuItemContentSize, type MenuItemStyle } from '@frontify/fondue';
+
 import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 export type ToolbarFlyoutMenuItem = {

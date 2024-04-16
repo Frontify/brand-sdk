@@ -2,18 +2,19 @@
 
 import {
     MarkupElement,
-    PlatePlugin,
+    type PlatePlugin,
     type PlateRenderElementProps,
     Plugin,
-    PluginProps,
-    TextStyleRenderElementProps,
+    type PluginProps,
+    type TextStyleRenderElementProps,
     TextStyles,
     alignmentClassnames,
     createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
+
 import { BlockStyles } from '../styles';
 
 const ID = 'textstyle-custom3-plugin';

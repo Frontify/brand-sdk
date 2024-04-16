@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
 export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProperties }> = {
     buttonPrimary: {

@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { DocumentPage, EmitterEvents } from '../types';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type DocumentPage, type EmitterEvents } from '../types';
 
-import { DocumentPageTargetEvent } from './useDocumentPageTargets';
+import { type DocumentPageTargetEvent } from './useDocumentPageTargets';
 
 type DocumentPagesMoveEvent = EmitterEvents['AppBridge:GuidelineDocumentPage:MoveEvent'];
 

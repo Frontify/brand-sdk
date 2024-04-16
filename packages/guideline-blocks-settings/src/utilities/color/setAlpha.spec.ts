@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { setAlpha } from './setAlpha';
 import { describe, expect, test } from 'vitest';
+
+import { setAlpha } from './setAlpha';
 
 describe('setAlpha', () => {
     const data = [

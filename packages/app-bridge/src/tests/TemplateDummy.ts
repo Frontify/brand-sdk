@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { Template } from '../types';
+import { type Template } from '../types';
 import { convertObjectCase } from '../utilities';
 
 export class TemplateDummy {

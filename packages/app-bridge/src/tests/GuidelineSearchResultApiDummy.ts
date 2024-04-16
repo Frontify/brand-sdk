@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { GuidelineSearchResultApi } from '../types';
+import { type GuidelineSearchResultApi } from '../types';
 
 export class GuidelineSearchResultApiDummy {
     static with(query: string): GuidelineSearchResultApi {

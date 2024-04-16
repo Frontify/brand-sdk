@@ -1,45 +1,46 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type {
-    ApiHandlerParameter,
-    ApiMethodNameValidator,
-    ApiReturn,
-    AppBridge,
-    CommandNameValidator,
-    ContextAsEventName,
-    ContextReturn,
-    DispatchHandlerParameter,
-    EventCallbackParameter,
-    EventNameParameter,
-    EventNameValidator,
-    EventUnsubscribeFunction,
-    StateAsEventName,
-    StateReturn,
+import {
+    type ApiHandlerParameter,
+    type ApiMethodNameValidator,
+    type ApiReturn,
+    type AppBridge,
+    type CommandNameValidator,
+    type ContextAsEventName,
+    type ContextReturn,
+    type DispatchHandlerParameter,
+    type EventCallbackParameter,
+    type EventNameParameter,
+    type EventNameValidator,
+    type EventUnsubscribeFunction,
+    type StateAsEventName,
+    type StateReturn,
 } from './AppBridge';
-import type { ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
-import type { CommandRegistry } from './registries/commands/CommandRegistry';
-import type { EventRegistry } from './registries/events/EventRegistry';
-import type {
-    Asset,
-    BulkDownload,
-    Color,
-    ColorCreate,
-    ColorPalette,
-    ColorPaletteCreate,
-    ColorPalettePatch,
-    ColorPatch,
-    Document,
-    DocumentCategory,
-    DocumentGroup,
-    DocumentPage,
-    DocumentPageTargets,
-    DocumentSection,
-    DocumentTargets,
-    Template,
-    TemplateLegacy,
-    User,
+import { type ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
+import { type CommandRegistry } from './registries/commands/CommandRegistry';
+import { type EventRegistry } from './registries/events/EventRegistry';
+import {
+    type Asset,
+    type AssetChooserOptions,
+    type BulkDownload,
+    type Color,
+    type ColorCreate,
+    type ColorPalette,
+    type ColorPaletteCreate,
+    type ColorPalettePatch,
+    type ColorPatch,
+    type Document,
+    type DocumentCategory,
+    type DocumentGroup,
+    type DocumentPage,
+    type DocumentPageTargets,
+    type DocumentSection,
+    type DocumentTargets,
+    type Template,
+    type TemplateLegacy,
+    type User,
 } from './types';
-import { PrivacySettings } from './types/PrivacySettings';
+import { type PrivacySettings } from './types/PrivacySettings';
 
 export type BlockApiMethod = ApiMethodNameValidator<
     Pick<ApiMethodRegistry, 'getAssetBulkDownloadToken' | 'getCurrentUser' | 'setAssetIdsByBlockAssetKey'>

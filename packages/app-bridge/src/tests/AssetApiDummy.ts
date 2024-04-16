@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetApi } from '../types';
+import { type AssetApi } from '../types';
 
 export class AssetApiDummy {
     static with(id: number): AssetApi {

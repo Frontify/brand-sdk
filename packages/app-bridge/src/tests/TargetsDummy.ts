@@ -2,6 +2,7 @@
 
 // import { Targets } from '../types';
 import { convertObjectCase } from '../utilities';
+
 import { DocumentPageTargetsApiDummy, DocumentTargetsApiDummy } from './TargetsApiDummy';
 
 export class DocumentTargetsDummy {

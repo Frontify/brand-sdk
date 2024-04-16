@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MouseEvent } from 'react';
 import { FloatingModalWrapper, IconPen16, IconTrashBin16, useLinkOpenButtonState } from '@frontify/fondue';
+import { type MouseEvent } from 'react';
+
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
 
 type EditModalProps = {

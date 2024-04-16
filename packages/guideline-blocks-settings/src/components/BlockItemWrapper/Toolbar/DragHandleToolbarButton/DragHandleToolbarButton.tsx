@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type ReactNode } from 'react';
+
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../../constants';
-import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { BaseToolbarButton } from '../BaseToolbarButton';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
+import { useDragPreviewContext } from '../context/DragPreviewContext';
 
 export type DragHandleToolbarButtonProps = {
     icon?: ReactNode;

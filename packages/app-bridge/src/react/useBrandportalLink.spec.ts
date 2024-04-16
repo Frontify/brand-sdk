@@ -5,8 +5,9 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { useBrandportalLink } from './useBrandportalLink';
 import { BrandportalLinkDummy, getAppBridgeThemeStub } from '../tests';
+
+import { useBrandportalLink } from './useBrandportalLink';
 
 describe('useBrandportalLink', () => {
     afterEach(() => {

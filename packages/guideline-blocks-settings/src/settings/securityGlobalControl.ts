@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { SettingBlock, createFooter } from '..';
-import { Security } from './types';
+import { type SettingBlock, createFooter } from '..';
+
 import { getSecurityGlobalControlId } from './securityDownloadable';
+import { Security } from './types';
 
 /**
  * Returns segment controls for global security settings.
