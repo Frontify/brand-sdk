@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { renderHook, waitFor } from '@testing-library/react';
-
 import mitt from 'mitt';
 import { type Mock, beforeAll, describe, expect, it, vi } from 'vitest';
 
