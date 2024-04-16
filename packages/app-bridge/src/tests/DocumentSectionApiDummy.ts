@@ -21,4 +21,10 @@ export class DocumentSectionApiDummy {
             permanent_link: `/r/document-section-${id}`,
         };
     }
+    static withFields({ id, ...otherFields }: Partial<DocumentSectionApi>): DocumentSectionApi {
+        return {
+            ...DocumentSectionApiDummy.with(id ?? 1),
+            ...otherFields,
+        };
+    }
 }

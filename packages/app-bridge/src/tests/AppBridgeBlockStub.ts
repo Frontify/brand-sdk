@@ -14,6 +14,7 @@ import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { ColorDummy } from './ColorDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
+import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 import { UserDummy } from './UserDummy';
@@ -237,6 +238,15 @@ export const getAppBridgeBlockStub = ({
             return unsubscribe;
         }),
 
+        getDocumentSectionsByDocumentPageId: stub<
+            Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>
+        >().resolves([
+            DocumentSectionApiDummy.withFields({ id: 1, title: null }),
+            DocumentSectionApiDummy.withFields({ id: 2, title: 'Title' }),
+            DocumentSectionApiDummy.withFields({ id: 3, title: '  ' }),
+            DocumentSectionApiDummy.withFields({ id: 4, title: '' }),
+        ]),
+
         // TODO: Stub the following methods
         closeTemplateChooser: stub<Parameters<AppBridgeBlock['closeTemplateChooser']>>(),
         openTemplateChooser: stub<Parameters<AppBridgeBlock['openTemplateChooser']>>(),
@@ -256,8 +266,6 @@ export const getAppBridgeBlockStub = ({
             stub<Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>>().resolves(),
         getUncategorizedDocumentPagesByDocumentId:
             stub<Parameters<AppBridgeBlock['getUncategorizedDocumentPagesByDocumentId']>>().resolves(),
-        getDocumentSectionsByDocumentPageId:
-            stub<Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>>().resolves(),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
