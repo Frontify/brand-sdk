@@ -61,7 +61,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             );
         };
 
-        const handlerDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
+        const handleDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
             setDocumentGroups(
                 produce((draft) => previewDocumentGroupsSort(draft, event.documentGroup, event.position)),
             );
@@ -71,14 +71,14 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
         window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
         window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
-        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
             window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
-            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
         };
     }, [documentGroups.size, refetch]);
 

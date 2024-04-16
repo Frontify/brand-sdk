@@ -12,6 +12,7 @@ import {
     type GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
+import { type GetPortalNavigationResponse } from './GetPortalNavigation';
 import { type GetProxyNetworkCallPayload, type GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
@@ -34,4 +35,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
     getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
+    getPortalNavigation: { payload: never; response: GetPortalNavigationResponse };
 }>;
