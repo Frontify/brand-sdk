@@ -21,7 +21,6 @@ import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
 import {
     type Asset,
-    type AssetChooserOptions,
     type BulkDownload,
     type Color,
     type ColorCreate,
