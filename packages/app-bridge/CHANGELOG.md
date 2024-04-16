@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.5.7
+
+### Patch Changes
+
+- [#856](https://github.com/Frontify/brand-sdk/pull/856) [`b2060ff`](https://github.com/Frontify/brand-sdk/commit/b2060ff02448ca127c34d0745f363ff8bd06ec77) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): add usePortalNavigation hook
+
 ## 3.5.6
 
 ### Patch Changes
