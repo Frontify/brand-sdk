@@ -18,20 +18,20 @@ const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 
 
 const appType = z.enum(['content-block', 'platform-app', 'theme']);
 
-const secretIdSet = new Set();
-export function resetSecretIdSet() {
-    secretIdSet.clear();
+const secretKeySet = new Set();
+export function resetSecretKeySet() {
+    secretKeySet.clear();
 }
 
 const secretSchema = object({
     label: string(),
     key: string().refine(
         (key) => {
-            if (secretIdSet.has(key)) {
+            if (secretKeySet.has(key)) {
                 return false;
             }
 
-            secretIdSet.add(key);
+            secretKeySet.add(key);
             return /^[\w-]+$/.test(key);
         },
         {
@@ -48,18 +48,18 @@ const requestOptionsSchema = object({
     body: z.any().optional(),
 });
 
-const endpointIdSet = new Set();
-export function resetEndpointIdSet() {
-    endpointIdSet.clear();
+const endpointNameSet = new Set();
+export function resetEndpointNameSet() {
+    endpointNameSet.clear();
 }
 const endpointCallSchema = object({
-    id: string().refine(
+    name: string().refine(
         (id) => {
-            if (endpointIdSet.has(id)) {
+            if (endpointNameSet.has(id)) {
                 return false;
             }
 
-            endpointIdSet.add(id);
+            endpointNameSet.add(id);
             return true;
         },
         {

@@ -4,8 +4,8 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import {
     platformAppManifestSchemaV1,
-    resetEndpointIdSet,
-    resetSecretIdSet,
+    resetEndpointNameSet,
+    resetSecretKeySet,
     verifyManifest,
 } from '../../src/utils/verifyManifest';
 
@@ -302,7 +302,7 @@ const generateManifestWithEndpointNetworkCall = (networkEndpoints) => {
 
 const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -313,7 +313,7 @@ const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
         },
     },
     {
-        id: 'example-user-api',
+        name: 'example-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
@@ -325,9 +325,9 @@ const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
     },
 ]);
 
-const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_ID = generateManifestWithEndpointNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -338,7 +338,7 @@ const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_ID = generateManifestWithEndpointNetw
         },
     },
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
@@ -351,7 +351,7 @@ const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_ID = generateManifestWithEndpointNetw
 ]);
 
 const MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL = generateManifestWithEndpointNetworkCall({
-    id: 'frontify-user-api',
+    name: 'frontify-user-api',
     resource: 'https://api.frontify.com/api/user',
     options: {
         method: 'POST',
@@ -377,7 +377,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_ID = generateManifestWithEndpointNetworkCall
 
 const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         options: {
             method: 'POST',
             headers: {
@@ -390,7 +390,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetwo
 
 const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'something-random',
         options: {
             method: 'POST',
@@ -404,7 +404,7 @@ const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpoi
 
 const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'GET',
@@ -414,14 +414,14 @@ const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpo
 
 const MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
     },
 ]);
 
 const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             headers: {
@@ -458,8 +458,8 @@ const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
 
 describe('Verify Platform App Manifest', () => {
     beforeEach(() => {
-        resetSecretIdSet();
-        resetEndpointIdSet();
+        resetSecretKeySet();
+        resetEndpointNameSet();
     });
 
     it('should validate a valid manifest', () => {
@@ -563,8 +563,8 @@ describe('Verify Platform App Manifest', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_METHOD, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw error when network endpoint object has duplicate IDs', () => {
-        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_DUPLICATE_ID, platformAppManifestSchemaV1)).toThrow();
+    it('should throw error when network endpoint object has duplicate Names', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME, platformAppManifestSchemaV1)).toThrow();
     });
 
     it('should throw error when secret object has duplicate KEYs', () => {
