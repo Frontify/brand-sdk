@@ -432,6 +432,54 @@ const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetwork
     },
 ]);
 
+const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT = generateManifestWithEndpointNetworkCall([
+    {
+        name: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: 'x-frontify-auth-header',
+            body: 'example body data',
+        },
+    },
+    {
+        name: 'example-user-api',
+        resource: 'https://api.example.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT = generateManifestWithEndpointNetworkCall([
+    {
+        name: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': { test: '$OPEN_API' },
+            },
+            body: 'example body data',
+        },
+    },
+    {
+        name: 'example-user-api',
+        resource: 'https://api.example.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
 const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
@@ -569,5 +617,17 @@ describe('Verify Platform App Manifest', () => {
 
     it('should throw error when secret object has duplicate KEYs', () => {
         expect(() => verifyManifest(MANIFEST_WITH_DUPLICATE_SECRET_KEY, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should throw error when header is not an object of strings key value', () => {
+        expect(() =>
+            verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT, platformAppManifestSchemaV1),
+        ).toThrow();
+    });
+
+    it('should throw error when header is not an object of strings key value', () => {
+        expect(() =>
+            verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT, platformAppManifestSchemaV1),
+        ).toThrow();
     });
 });
