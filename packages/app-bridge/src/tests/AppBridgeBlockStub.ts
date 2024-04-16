@@ -14,9 +14,9 @@ import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { ColorDummy } from './ColorDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
+import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
-import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { UserDummy } from './UserDummy';
 
 const BLOCK_ID = 3452;
