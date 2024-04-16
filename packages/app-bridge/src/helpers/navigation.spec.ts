@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { filterDocumentSectionsWithUnreadableTitles } from './navigation';
-import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
 import { describe, expect, it } from 'vitest';
+
+import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
+import { filterDocumentSectionsWithUnreadableTitles } from './navigation';
 
 const documentSections = [
     DocumentSectionDummy.withFields({ id: 464, title: null }),
