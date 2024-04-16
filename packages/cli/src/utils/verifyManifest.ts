@@ -60,7 +60,7 @@ const endpointCallSchema = object({
             }
 
             endpointNameSet.add(name);
-            return true;
+            return /^[\w-]*$/.test(name);
         },
         {
             message: 'Endpoint ID must be unique',
