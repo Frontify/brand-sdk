@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { SnakeCasedPropertiesDeep } from 'type-fest';
-import { Template } from './Template';
+import { type SnakeCasedPropertiesDeep } from 'type-fest';
+
+import { type Template } from './Template';
 
 export type DocumentBlockTemplateApi = Omit<SnakeCasedPropertiesDeep<DocumentBlockTemplate>, 'template'> & {
     template: Template;

@@ -4,7 +4,7 @@ import { array, number, object, string, z } from 'zod';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
-    `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include "${forbiddenExtensions}".`;
+    `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include: ${forbiddenExtensions.join(', ')}.`;
 
 const assetCreationShape = object({
     title: string().min(1).max(40),
@@ -26,24 +26,25 @@ const secretSchema = object({
 });
 const secretsArraySchema = array(secretSchema);
 
-const proxyOptionsSchema = object({
+const requestOptionsSchema = object({
     method: z.enum(['GET', 'POST', 'PUT', 'DELETE']),
-    headers: z.record(string()),
-    body: z.any(),
+    headers: z.record(string()).optional(),
+    body: z.any().optional(),
 });
 
-const proxyNetworkCallSchema = object({
+const endpointCallSchema = object({
     id: string(),
     resource: string().url(),
-    options: proxyOptionsSchema,
+    options: requestOptionsSchema,
 });
-const proxyNetworkCallArraySchema = array(proxyNetworkCallSchema);
 
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
     secrets: secretsArraySchema.optional(),
-    proxyNetworkCall: proxyNetworkCallArraySchema.optional(),
+    network: object({
+        endpoints: array(endpointCallSchema).optional(),
+    }).optional(),
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({
@@ -103,7 +104,7 @@ export const platformAppManifestSchemaV1 = object({
     }),
 });
 
-export const verifyManifest = async (manifest: unknown, schema: typeof platformAppManifestSchemaV1) => {
+export const verifyManifest = (manifest: unknown, schema: typeof platformAppManifestSchemaV1) => {
     const validatedManifest = schema.safeParse(manifest);
 
     if (!validatedManifest.success) {

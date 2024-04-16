@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { LegacyTooltip as Tooltip, TooltipPosition } from '@frontify/fondue';
-import { ReactElement, ReactNode } from 'react';
+import { type ReactElement, type ReactNode } from 'react';
 
 type ToolbarButtonTooltipProps = {
     content: ReactNode;

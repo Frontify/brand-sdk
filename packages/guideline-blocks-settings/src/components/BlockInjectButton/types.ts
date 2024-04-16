@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { FileType } from '@frontify/app-bridge';
+import { type FileType } from '@frontify/app-bridge';
 
 export type BlockInjectButtonProps = {
     isLoading?: boolean;

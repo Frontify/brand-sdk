@@ -3,9 +3,11 @@
 import { type DocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
-import { DocumentSectionWithTitle, InitiallyExpandedItems } from '../';
-import { SectionLink } from './SectionLink';
+
+import { type DocumentSectionWithTitle, type InitiallyExpandedItems } from '../';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
+
+import { SectionLink } from './SectionLink';
 
 type PageLinkProps = {
     page: {

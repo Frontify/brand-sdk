@@ -10,10 +10,6 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
-env:
-    NODE_VERSION: 18
-    CI: true
-
 jobs:
     lint-typecheck:
         runs-on: ubuntu-latest
@@ -30,14 +26,14 @@ jobs:
                   fetch-depth: 0
 
             - name: Use pnpm
-              uses: pnpm/action-setup@v2
+              uses: pnpm/action-setup@v3
               with:
-                  version: latest
+                  version: 8
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
                   cache: "pnpm"
 
             - name: Install npm dependencies
@@ -72,15 +68,15 @@ jobs:
             - name: Checkout current commit
               uses: actions/checkout@v4
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
 
             - name: Use pnpm
-              uses: pnpm/action-setup@v2.4.0
+              uses: pnpm/action-setup@v3
               with:
-                  version: latest
+                  version: 8
                   run_install: false
 
             - name: Get pnpm store directory
@@ -124,15 +120,15 @@ jobs:
             - name: Checkout current commit
               uses: actions/checkout@v4
 
-            - name: Use Node.js ${{ env.NODE_VERSION }}
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: ${{ env.NODE_VERSION }}
+                  node-version-file: ".nvmrc"
 
             - name: Use pnpm
-              uses: pnpm/action-setup@v2.4.0
+              uses: pnpm/action-setup@v3
               with:
-                  version: latest
+                  version: 8
                   run_install: false
 
             - name: Get pnpm store directory

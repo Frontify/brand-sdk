@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { FormControl } from '@frontify/fondue';
-import { CSSProperties, ReactElement, ReactNode, useState } from 'react';
+import { type CSSProperties, type ReactElement, type ReactNode, useState } from 'react';
+
 import { InsertModal } from '../../../../LinkPlugin/FloatingLink/InsertLinkModal/InsertModal';
-import { useInsertModal } from './useInsertModal';
 import { BlockStyles } from '../../../../styles';
+
+import { useInsertModal } from './useInsertModal';
 
 export const InsertButtonModal = () => {
     const modalProps = useInsertModal();

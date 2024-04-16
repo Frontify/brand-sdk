@@ -1,11 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
+import { useCallback, useEffect, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentGroup, EmitterEvents } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type DocumentGroup, type EmitterEvents } from '../types';
 
 type DocumentGroupDocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
 type DocumentEvent = EmitterEvents['AppBridge:GuidelineDocument:Action'];
@@ -61,7 +61,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
             );
         };
 
-        const handlerDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
+        const handleDocumentGroupMoveEventPreview = (event: DocumentGroupMoveEvent) => {
             setDocumentGroups(
                 produce((draft) => previewDocumentGroupsSort(draft, event.documentGroup, event.position)),
             );
@@ -71,14 +71,14 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, op
         window.emitter.on('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
         window.emitter.on('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
         window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
-        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+        window.emitter.on('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentGroup:Action', refetch);
             window.emitter.off('AppBridge:GuidelineDocumentGroup:DocumentAction', handleDocumentEventUpdates);
             window.emitter.off('AppBridge:GuidelineDocument:Action', handlerDocumentMoveEvent);
             window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handlerDocumentMoveEventPreview);
-            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handlerDocumentGroupMoveEventPreview);
+            window.emitter.off('AppBridge:GuidelineDocumentGroup:MoveEvent', handleDocumentGroupMoveEventPreview);
         };
     }, [documentGroups.size, refetch]);
 

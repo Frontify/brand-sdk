@@ -1,11 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { IconAdobeCreativeCloud } from '@frontify/fondue';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { FlyoutToolbarButton } from './FlyoutToolbarButton';
-import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+
 import { DragPreviewContextProvider } from '../context/DragPreviewContext';
+import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
+
+import { FlyoutToolbarButton } from './FlyoutToolbarButton';
 
 const BUTTON_ID = 'block-item-wrapper-toolbar-flyout';
 const TOOLTIP_ID = 'toolbar-button-tooltip';

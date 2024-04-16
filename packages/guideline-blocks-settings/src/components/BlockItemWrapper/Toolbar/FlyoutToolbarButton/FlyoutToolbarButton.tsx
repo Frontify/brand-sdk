@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type MutableRefObject, type ReactNode } from 'react';
-import { useDragPreviewContext } from '../context/DragPreviewContext';
-import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { Flyout, FlyoutPlacement, useMemoizedId } from '@frontify/fondue';
+import { type MutableRefObject, type ReactNode } from 'react';
+
 import { BaseToolbarButton } from '../BaseToolbarButton';
+import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
+import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
 
 export type FlyoutToolbarButtonProps = {

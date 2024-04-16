@@ -3,9 +3,10 @@
 import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
-import { Logger } from '../utils/logger.js';
-import { getAppBridgeVersion } from '../utils/appBridgeVersion.js';
+
 import pkg from '../../package.json';
+import { getAppBridgeVersion } from '../utils/appBridgeVersion';
+import { Logger } from '../utils/logger';
 
 class PlatformAppDevelopmentServer {
     constructor(private readonly port: number) {}
@@ -43,7 +44,7 @@ class DevelopmentServer {
                 root: process.cwd(),
                 plugins: [
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
+                    // @ts-ignore
                     react(),
                     viteExternalsPlugin({
                         react: 'React',

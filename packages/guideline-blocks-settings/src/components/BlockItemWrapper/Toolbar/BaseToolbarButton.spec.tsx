@@ -2,6 +2,7 @@
 
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { BaseToolbarButton } from './BaseToolbarButton';
 
 const BUTTON_ID = 'base-toolbar-button';

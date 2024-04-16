@@ -1,5 +1,6 @@
-import { App } from './App';
 import { defineApp } from '@frontify/platform-app';
+
+import { App } from './App';
 import { settings } from './settings';
 import '@frontify/fondue/style';
 

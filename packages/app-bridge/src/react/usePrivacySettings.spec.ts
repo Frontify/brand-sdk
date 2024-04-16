@@ -3,8 +3,10 @@
 import { renderHook } from '@testing-library/react';
 import mitt from 'mitt';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { usePrivacySettings } from './usePrivacySettings';
+
 import { getAppBridgeBlockStub } from '../tests';
+
+import { usePrivacySettings } from './usePrivacySettings';
 
 describe('usePrivacySettings', () => {
     beforeEach(() => {

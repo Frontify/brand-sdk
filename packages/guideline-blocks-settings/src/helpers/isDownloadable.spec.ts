@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { describe, expect, it } from 'vitest';
-import { isDownloadable } from './isDownloadable';
+
 import { Security } from '../settings/types';
+
+import { isDownloadable } from './isDownloadable';
 
 describe('isDownloadable', () => {
     it('should return false if global is false and downloadable is false', () => {

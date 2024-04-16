@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { SettingBlock } from '../';
+import { type SettingBlock } from '../';
+
 import { Security } from './types';
 
 /**

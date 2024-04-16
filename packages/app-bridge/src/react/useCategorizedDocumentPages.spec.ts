@@ -2,12 +2,13 @@
 
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { DocumentPageDummy, getAppBridgeThemeStub } from '../tests';
+import { type DocumentPage } from '../types';
+
 import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
-import { DocumentPage } from '../types';
 
 const DOCUMENT_CATEGORY_ID = 23455;
 const ANOTHER_DOCUMENT_CATEGORY_ID = 4534656;

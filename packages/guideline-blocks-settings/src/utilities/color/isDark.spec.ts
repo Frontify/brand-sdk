@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { isDark } from './isDark';
 import { describe, expect, test } from 'vitest';
+
+import { isDark } from './isDark';
 
 describe('isDark', () => {
     const data = [

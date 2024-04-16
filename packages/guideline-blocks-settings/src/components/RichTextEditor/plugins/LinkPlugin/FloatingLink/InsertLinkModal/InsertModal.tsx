@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MouseEvent, ReactElement, ReactNode } from 'react';
-import { AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock } from '@frontify/app-bridge';
 import {
     Button,
     ButtonEmphasis,
@@ -12,8 +11,11 @@ import {
     IconCheckMark20,
     TextInput,
 } from '@frontify/fondue';
-import { InsertModalStateProps } from './types';
+import { type MouseEvent, type ReactElement, type ReactNode } from 'react';
+
 import { LinkInput } from '../../../../../Link';
+
+import { type InsertModalStateProps } from './types';
 
 type Props = {
     state: InsertModalStateProps;

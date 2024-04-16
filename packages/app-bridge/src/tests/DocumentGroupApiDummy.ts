@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import type { DocumentGroupApi } from '../types';
+import { type DocumentGroupApi } from '../types';
 
 export class DocumentGroupApiDummy {
     static with(id: number, numberOfDocuments = 0): DocumentGroupApi {

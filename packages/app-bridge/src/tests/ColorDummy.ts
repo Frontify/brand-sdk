@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Color, ColorCreate, ColorPatch } from '../types/Color';
+import { type Color, type ColorCreate, type ColorPatch } from '../types/Color';
 
 export class ColorDummy {
     static red(id = 767): Color {

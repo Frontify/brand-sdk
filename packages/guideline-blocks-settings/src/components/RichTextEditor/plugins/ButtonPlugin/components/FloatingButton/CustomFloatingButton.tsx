@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue';
+
+import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
+
 import { EditModal } from './EditButtonModal/EditModal';
 import { InsertButtonModal } from './InsertButtonModal/InsertButtonModal';
-import { UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue';
-import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
 const floatingOptions: UseVirtualFloatingOptions = {
     placement: 'bottom-start',

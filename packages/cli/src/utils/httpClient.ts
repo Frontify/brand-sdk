@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import fetch from 'node-fetch';
-import { HttpClientError } from '../errors/HttpClientError.js';
+
+import { HttpClientError } from '../errors/HttpClientError';
 
 interface RequestOptions {
     headers?: {
@@ -37,18 +38,20 @@ export class HttpClient {
             const contentType = response.headers.get('Content-Type');
 
             switch (contentType) {
-                case 'application/json':
+                case 'application/json': {
                     const responseJson = await response.json();
                     if (!responseJson) {
                         return undefined as T;
                     }
                     return responseJson as T;
-                default:
+                }
+                default: {
                     const responseText = await response.text();
                     if (!responseText) {
                         return undefined as T;
                     }
                     return responseText as T;
+                }
             }
         } else {
             const errorData = (await response.json()) as { sucess: false; error: string };

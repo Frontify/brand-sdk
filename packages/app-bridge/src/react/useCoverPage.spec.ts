@@ -5,10 +5,10 @@
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import type { CoverPage, CoverPageUpdate } from '../types';
+import { CoverPageDummy, getAppBridgeThemeStub } from '../tests';
+import { type CoverPage, type CoverPageUpdate } from '../types';
 
 import { useCoverPage } from './useCoverPage';
-import { CoverPageDummy, getAppBridgeThemeStub } from '../tests';
 
 describe('useCoverPage', () => {
     afterEach(() => {

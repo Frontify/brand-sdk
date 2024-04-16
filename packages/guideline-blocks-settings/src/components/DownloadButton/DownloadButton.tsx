@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DownloadButtonProps } from './types';
-import { useFocusRing } from '@react-aria/focus';
 import { FOCUS_STYLE, IconArrowCircleDown16, LegacyTooltip as Tooltip, TooltipPosition } from '@frontify/fondue';
+import { useFocusRing } from '@react-aria/focus';
+
 import { joinClassNames } from '../../utilities';
+
+import { type DownloadButtonProps } from './types';
 
 export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
     const { isFocused, focusProps } = useFocusRing();

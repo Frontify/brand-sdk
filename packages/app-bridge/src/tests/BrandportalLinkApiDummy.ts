@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { BrandportalLinkApi } from '../types';
+import { type BrandportalLinkApi } from '../types';
 
 export class BrandportalLinkApiDummy {
     static get(): BrandportalLinkApi {

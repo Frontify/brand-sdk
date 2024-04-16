@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentSectionApi } from '../types';
+import { type DocumentSectionApi } from '../types';
 
 export class DocumentSectionApiDummy {
     static with(id: number): DocumentSectionApi {

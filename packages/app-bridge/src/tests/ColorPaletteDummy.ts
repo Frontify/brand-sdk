@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ColorPalette, ColorPaletteCreate, ColorPalettePatch } from '../types/ColorPalette';
+import { type ColorPalette, type ColorPaletteCreate, type ColorPalettePatch } from '../types/ColorPalette';
+
 import { ColorDummy } from './ColorDummy';
 
 export class ColorPaletteDummy {

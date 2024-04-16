@@ -2,19 +2,19 @@
 
 import {
     MarkupElement,
-    PlatePlugin,
+    type PlatePlugin,
     Plugin,
-    PluginProps,
-    TextStyleRenderElementProps,
+    type PluginProps,
+    type TextStyleRenderElementProps,
     alignmentClassnames,
     createParagraphPlugin as createPlateParagraphPlugin,
     createPluginFactory,
     getColumnBreakClasses,
     merge,
 } from '@frontify/fondue';
+import { type CSSProperties } from 'react';
 
 import { BlockStyles, TextStyles } from '../styles';
-import { CSSProperties } from 'react';
 
 export class ParagraphPlugin extends Plugin {
     public styles = {};

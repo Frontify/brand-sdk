@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { SinonStub } from 'sinon';
-import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { type SinonStub } from 'sinon';
+import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { type ThemeTemplate } from '..';
 import { AssetDummy, getAppBridgeThemeStub } from '../tests';
+
 import { useTemplateAssets } from './useTemplateAssets';
-import { ThemeTemplate } from '..';
 
 const DOCUMENT_ID = 16;
 const DOCUMENT_PAGE_ID = 568;
@@ -25,7 +26,6 @@ const TEMPLATE_ASSETS = {
 
 describe('useTemplateAssets hook', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
@@ -93,7 +93,7 @@ describe('useTemplateAssets hook', () => {
                 expect(addCall.firstArg).toEqual(DOCUMENT_PAGE_ID);
                 expect(addCall.args[1]).toEqual('key');
                 expect(addCall.lastArg).toEqual([2, 1]);
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
             });
         });
 
@@ -111,7 +111,7 @@ describe('useTemplateAssets hook', () => {
             });
 
             await waitFor(async () => {
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
             expect(console.error).toHaveBeenCalledOnce();
@@ -147,7 +147,7 @@ describe('useTemplateAssets hook', () => {
                 expect(call.firstArg).toEqual(DOCUMENT_PAGE_ID);
                 expect(call.args[1]).toEqual('key');
                 expect(call.lastArg).toEqual([2]);
-                expect(result.current.templateAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map(({ id }) => id)).toEqual([1, 2]);
             });
         });
 
@@ -206,7 +206,7 @@ describe('useTemplateAssets hook', () => {
                 expect(addCall.firstArg).toEqual(DOCUMENT_ID);
                 expect(addCall.args[1]).toEqual('key');
                 expect(addCall.lastArg).toEqual([2, 1]);
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
             });
         });
 
@@ -224,7 +224,7 @@ describe('useTemplateAssets hook', () => {
             });
 
             await waitFor(async () => {
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
             expect(console.error).toHaveBeenCalledOnce();
@@ -260,7 +260,7 @@ describe('useTemplateAssets hook', () => {
                 expect(call.firstArg).toEqual(DOCUMENT_ID);
                 expect(call.args[1]).toEqual('key');
                 expect(call.lastArg).toEqual([2]);
-                expect(result.current.templateAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map(({ id }) => id)).toEqual([1, 2]);
             });
         });
 
@@ -316,7 +316,7 @@ describe('useTemplateAssets hook', () => {
                 expect(deleteCall.lastArg).toEqual([1, 2]);
                 expect(addCall.firstArg).toEqual('key');
                 expect(addCall.lastArg).toEqual([2, 1]);
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([2, 1]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([2, 1]);
             });
         });
 
@@ -334,7 +334,7 @@ describe('useTemplateAssets hook', () => {
             });
 
             await waitFor(async () => {
-                expect(result.current.templateAssets['key'].map((asset) => asset.id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
             expect(console.error).toHaveBeenCalledOnce();
@@ -369,7 +369,7 @@ describe('useTemplateAssets hook', () => {
             await waitFor(() => {
                 expect(call.firstArg).toEqual('key');
                 expect(call.lastArg).toEqual([2]);
-                expect(result.current.templateAssets['key'].map(({ id }) => id)).toEqual([1, 2]);
+                expect(result.current.templateAssets.key.map(({ id }) => id)).toEqual([1, 2]);
             });
         });
 

@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useRef, useState } from 'react';
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { Asset } from '../types';
+
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type Asset } from '../types';
 
 export enum AssetBulkDownloadState {
     Init = 'init',

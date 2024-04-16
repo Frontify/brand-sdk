@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { CoverPage, EmitterAction } from '../types';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
+import { type CoverPage, type EmitterAction } from '../types';
 
 export type UseCoverPageReturnType = {
     coverPage: Nullable<CoverPage>;

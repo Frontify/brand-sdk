@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { InitializationError, TimeoutReachedError } from '../errors';
-import { SUBSCRIBE_TIMEOUT } from './subscribe';
+
 import { generateRandomString } from './hash';
+import { SUBSCRIBE_TIMEOUT } from './subscribe';
 
 export interface IMessageBus {
     post(message: { parameter: unknown }): unknown;

@@ -1,9 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mockFs from 'mock-fs';
 import { readFileSync } from 'node:fs';
+
+import mockFs from 'mock-fs';
 import { afterEach, beforeEach, describe, expect, test } from 'vitest';
-import { reactiveJson } from '../../src/utils/reactiveJson.js';
+
+import { reactiveJson } from '../../src/utils/reactiveJson';
 
 const testString = '{ "some": "body" }';
 const testObject = JSON.parse(testString);

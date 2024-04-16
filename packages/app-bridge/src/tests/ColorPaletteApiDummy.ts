@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ColorPaletteApi, ColorPaletteApiCreate, ColorPaletteApiPatch } from '../types';
+import { type ColorPaletteApi, type ColorPaletteApiCreate, type ColorPaletteApiPatch } from '../types';
+
 import { ColorApiDummy } from './ColorApiDummy';
 
 export class ColorPaletteApiDummy {

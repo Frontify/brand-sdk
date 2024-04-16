@@ -2,8 +2,8 @@
 
 import { resolve } from 'node:path';
 
-import { isDirectoryEmpty } from './file.js';
-import { reactiveJson } from './reactiveJson.js';
+import { isDirectoryEmpty } from './file';
+import { reactiveJson } from './reactiveJson';
 
 export type PackageJson = {
     name: string;

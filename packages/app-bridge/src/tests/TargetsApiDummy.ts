@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentPageTargetsApi, DocumentTargetsApi, SingleTargetApi } from '../types';
+import { type DocumentPageTargetsApi, type DocumentTargetsApi, type SingleTargetApi } from '../types';
 
 export class SingleTargetApiDummy {
     static target(value: number): SingleTargetApi {

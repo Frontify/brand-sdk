@@ -1,10 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { IconAdobeCreativeCloud } from '@frontify/fondue';
 import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
-import { ToolbarFlyoutMenu } from './ToolbarFlyoutMenu';
+
 import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
+
+import { ToolbarFlyoutMenu } from './ToolbarFlyoutMenu';
 
 const MENU_ITEM_ID = 'menu-item';
 

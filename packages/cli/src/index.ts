@@ -1,21 +1,23 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { join } from 'node:path';
+import { exit } from 'node:process';
+
 import { cac } from 'cac';
 import prompts from 'prompts';
-import { exit } from 'node:process';
-import { join } from 'node:path';
+
+import pkg from '../package.json';
 
 import {
-    AppManifest,
+    type AppManifest,
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
     createNewApp,
     loginUser,
     logoutUser,
-} from './commands/index.js';
-import { compileBlock, compilePlatformApp, getValidInstanceUrl, isValidName, reactiveJson } from './utils/index.js';
-import pkg from '../package.json';
+} from './commands/index';
+import { compileBlock, compilePlatformApp, getValidInstanceUrl, isValidName, reactiveJson } from './utils/index';
 
 const cli = cac(pkg.name.split('/')[1]);
 

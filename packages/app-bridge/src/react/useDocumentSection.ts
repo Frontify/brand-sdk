@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-import type { AppBridgeBlock } from '../AppBridgeBlock';
-import type { AppBridgeTheme } from '../AppBridgeTheme';
-import type { DocumentSection, EmitterEvents } from '../types';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
+import { type DocumentSection, type EmitterEvents } from '../types';
 
 const insertDocumentSectionIntoArray = (
     previousDocumentSections: DocumentSection[],

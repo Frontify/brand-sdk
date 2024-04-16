@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { createHash } from 'node:crypto';
+
 import { beforeEach, describe, expect, test, vi } from 'vitest';
-import { compileBlock, compilePlatformApp } from '../../src/utils/compiler.js';
-import { createHash } from 'crypto';
+
+import { compileBlock, compilePlatformApp } from '../../src/utils/compiler';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
@@ -22,10 +24,8 @@ vi.mock('crypto', () => ({
     })),
 }));
 
-describe('Compiler utils', async () => {
+describe('Compiler utils', () => {
     beforeEach(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
         global.window = {};
     });
 
@@ -42,8 +42,6 @@ describe('Compiler utils', async () => {
 
     describe('compile PlatformApp', () => {
         beforeEach(() => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            //@ts-ignore
             global.window = {};
         });
         const testHash = 'mocked hash';
