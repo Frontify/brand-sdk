@@ -6,6 +6,7 @@ import { type Mock, beforeAll, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock, type AppBridgeTheme } from '../';
 import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
+
 import { useDocumentSection } from './useDocumentSection';
 
 const DOCUMENT_PAGE_ID = 45;
