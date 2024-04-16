@@ -3,7 +3,6 @@
     "author": "Frontify Developers <developers@frontify.com>",
     "version": "4.0.0-alpha.14",
     "description": "Package to establish communication between Frontify and marketplace apps",
-    "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
         "url": "https://github.com/Frontify/brand-sdk",
