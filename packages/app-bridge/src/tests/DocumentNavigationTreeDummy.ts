@@ -183,4 +183,21 @@ export class DocumentNavigationTreeDummy {
             DocumentPageDummy.with({ id: 2 }),
         ];
     }
+
+    static alternative(): DocumentNavigationItem[] {
+        return [
+            DocumentPageCategoryDummy.with({
+                id: 1,
+                children: [
+                    DocumentPageDummy.with({
+                        id: 1,
+                        headings: [DocumentPageHeadingDummy.with({ id: 2 }), DocumentPageHeadingDummy.with({ id: 3 })],
+                    }),
+                    DocumentPageLinkDummy.with({ id: 2 }),
+                ],
+            }),
+            DocumentPageDummy.with({ id: 2, headings: [DocumentPageHeadingDummy.with({ id: 1 })] }),
+            DocumentPageLinkDummy.with({ id: 6 }),
+        ];
+    }
 }
