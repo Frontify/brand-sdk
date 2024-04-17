@@ -69,7 +69,7 @@ class GuidelineDocumentGroupClass implements GuidelineDocumentGroup {
     }
 }
 
-class GuidelineDocumentClass implements GuidelineDocument {
+export class GuidelineDocumentClass implements GuidelineDocument {
     readonly type = 'document' as const;
     readonly #id: number;
     readonly #title: string;
@@ -190,7 +190,7 @@ class GuidelineDocumentGroupClassDummy {
     }
 }
 
-class GuidelineDocumentClassDummy {
+export class GuidelineDocumentClassDummy {
     static with(id: number, title = 'guideline document', parentId: Nullable<number> = null): GuidelineDocumentClass {
         return new GuidelineDocumentClass(id, title, parentId);
     }
