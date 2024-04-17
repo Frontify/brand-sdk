@@ -12,4 +12,10 @@ export class DocumentSectionDummy {
             permanentLink: `/r/document-section-${id}`,
         };
     }
+    static withFields({ id, ...otherFields }: Partial<DocumentSection>): DocumentSection {
+        return {
+            ...DocumentSectionDummy.with(id ?? 1),
+            ...otherFields,
+        };
+    }
 }

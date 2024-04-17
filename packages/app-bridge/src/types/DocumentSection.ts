@@ -24,3 +24,21 @@ export type DocumentSection = {
     sort: number;
     permanentLink: string;
 };
+
+export type AddDocumentSectionPayload = {
+    documentSection: DocumentSection;
+    previousDocumentSectionId: Nullable<number>;
+    documentPageId: number;
+};
+
+export type UpdateDocumentSectionPayload = {
+    id: number;
+    title: string;
+    slug: string;
+    documentPageId: number;
+};
+
+export type DeleteDocumentSectionPayload = {
+    id: number;
+    documentPageId: number;
+};

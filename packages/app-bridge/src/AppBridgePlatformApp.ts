@@ -49,24 +49,22 @@ type AppBaseProps = {
     token: string;
     marketplaceServiceAppId: string;
     connected: boolean;
+    settings: { [key: string]: string };
+    brandId: number;
+    domain: string;
+    parentId: string;
 };
 
-export type PlatformAppContext = AppBaseProps &
-    (
-        | {
-              brandId: string;
-              domain: string;
-              parentId: string;
-              type: 'assetCreation';
-          }
-        | {
-              assetId: string;
-              brandId: string;
-              domain: string;
-              parentId: string;
-              type: 'assetAction';
-          }
-    );
+export type AssetActionContext = {
+    surface: 'assetAction';
+    assetId: string;
+} & AppBaseProps;
+
+export type AssetCreationContext = {
+    surface: 'assetCreation';
+} & AppBaseProps;
+
+export type PlatformAppContext = AssetActionContext | AssetCreationContext;
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
@@ -79,6 +77,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
     private localState: PlatformAppState = { settings: {} };
+    private maxRetries: number = 5;
 
     private readonly subscribeMap: SubscribeMap<PlatformAppEvent> = {
         'State.*': new Map(),
@@ -90,8 +89,9 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         'Context.brandId': new Map(),
         'Context.parentId': new Map(),
         'Context.domain': new Map(),
-        'Context.type': new Map(),
+        'Context.surface': new Map(),
         'Context.connected': new Map(),
+        'Context.settings': new Map(),
     };
 
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
@@ -118,25 +118,37 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 return;
             }
 
-            const PUBSUB_CHECKSUM = generateRandomString();
+            const checksum = generateRandomString();
 
-            notify(Topic.Init, PUBSUB_CHECKSUM, {
+            notify(Topic.Init, checksum, {
                 token: getQueryParameters(window.location.href).token,
                 appBridgeVersion: 'v4',
             });
 
-            subscribe<InitializeEvent>(Topic.Init, PUBSUB_CHECKSUM).then(({ statePort, apiPort, context, state }) => {
-                this.apiMessageBus = new MessageBus(apiPort);
-                this.stateMessageBus = new MessageBus(statePort);
+            await this.attemptSubscription(1, checksum);
+        }
+    }
 
-                this.localContext = context;
-                this.localState = state;
-                this.initialized = true;
+    private async attemptSubscription(attempt: number, checksum: string): Promise<void> {
+        try {
+            const { statePort, apiPort, context, state } = await subscribe<InitializeEvent>(Topic.Init, checksum);
 
-                this.callSubscribedTopic('Context.connected', [true, false]);
-                this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
-                this.callSubscribedTopic('State.*', [this.localState, this.localState]);
-            });
+            this.apiMessageBus = new MessageBus(apiPort);
+            this.stateMessageBus = new MessageBus(statePort);
+
+            this.localContext = context;
+            this.localState = state;
+            this.initialized = true;
+
+            this.callSubscribedTopic('Context.connected', [true, false]);
+            this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
+            this.callSubscribedTopic('State.*', [this.localState, this.localState]);
+        } catch (error) {
+            if (attempt < this.maxRetries) {
+                await this.attemptSubscription(attempt + 1, checksum);
+            } else {
+                console.error('Could not connect to the platform.');
+            }
         }
     }
 
