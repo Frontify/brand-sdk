@@ -2,8 +2,9 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { getDocumentNavigation } from './GetDocumentNavigation';
 import { GuidelineDocumentClass, GuidelineDocumentClassDummy } from '../../tests';
+
+import { getDocumentNavigation } from './GetDocumentNavigation';
 
 describe('GetDocumentNavigation', () => {
     it('should return correct method name', () => {
