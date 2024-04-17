@@ -9,13 +9,12 @@ import {
 } from '../types';
 
 class DocumentPageCategoryDummy implements GuidelinePageCategory {
-    type: 'page-category';
+    readonly type = 'page-category' as const;
 
     readonly #id: number;
     readonly #children: (GuidelineDocumentPage | GuidelineDocumentPageLink)[];
 
     constructor(id: number, children?: (GuidelineDocumentPage | GuidelineDocumentPageLink)[]) {
-        this.type = 'page-category';
         this.#id = id;
         this.#children = children ?? [];
     }
@@ -38,13 +37,12 @@ class DocumentPageCategoryDummy implements GuidelinePageCategory {
 }
 
 class DocumentPageDummy implements GuidelineDocumentPage {
-    type: 'document-page';
+    readonly type = 'document-page' as const;
 
     readonly #id: number;
     readonly #headings: GuidelineDocumentPageHeading[];
 
     constructor(id: number, headings?: GuidelineDocumentPageHeading[]) {
-        this.type = 'document-page';
         this.#id = id ?? 1234;
         this.#headings = headings ?? [];
     }
@@ -71,12 +69,11 @@ class DocumentPageDummy implements GuidelineDocumentPage {
 }
 
 class DocumentPageLinkDummy implements GuidelineDocumentPageLink {
-    type: 'document-page-link';
+    readonly type = 'document-page-link' as const;
 
     readonly #id: number;
 
     constructor(id: number) {
-        this.type = 'document-page-link';
         this.#id = id;
     }
 
