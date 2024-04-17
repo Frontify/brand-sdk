@@ -6,7 +6,7 @@ import { getPortalNavigation } from './GetPortalNavigation';
 
 describe('GetPortalNavigation', () => {
     it('should return correct method name', () => {
-        const portatNavigationCall = getPortalNavigation();
-        expect(portatNavigationCall.name).toBe('getPortalNavigation');
+        const portalNavigationCall = getPortalNavigation();
+        expect(portalNavigationCall.name).toBe('getPortalNavigation');
     });
 });

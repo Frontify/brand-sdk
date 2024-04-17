@@ -7,4 +7,5 @@ export * from './GetAssetResourceInformation';
 export * from './GetCurrentUser';
 export * from './SetAssetIdsByBlockAssetKey';
 export * from './GetProxyNetworkCall';
+export * from './GetDocumentNavigation';
 export * from './GetPortalNavigation';
