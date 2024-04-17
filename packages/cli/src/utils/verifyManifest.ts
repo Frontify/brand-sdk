@@ -36,7 +36,7 @@ const secretSchema = object({
         },
         {
             message:
-                "The key should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
+                "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
         },
     ),
 });
@@ -63,7 +63,7 @@ const endpointCallSchema = object({
             return /^[\w-]*$/.test(name);
         },
         {
-            message: 'Endpoint ID must be unique',
+            message: 'Endpoint name must be unique',
         },
     ),
     resource: string().url(),
