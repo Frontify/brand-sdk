@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.5.8
+
+### Patch Changes
+
+-   [#868](https://github.com/Frontify/brand-sdk/pull/868) [`88fb3c3`](https://github.com/Frontify/brand-sdk/commit/88fb3c3b0235d9fc89c9a352273bacfaf53fdb0e) Thanks [@mike85](https://github.com/mike85)! - feat(AppBridgeTheme): add useDocumentNavigation hook
+
 ## 4.0.0-alpha.14
 
 ### Major Changes

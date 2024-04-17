@@ -42,7 +42,7 @@ describe('useDocumentSection', () => {
         });
     });
 
-    it('should add and remove event listener correctly', async () => {
+    it('should add and remove event listener correctly', () => {
         vi.spyOn(window.emitter, 'on');
         vi.spyOn(window.emitter, 'off');
 

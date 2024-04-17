@@ -78,32 +78,25 @@ export const useDocumentSection = (
                 return;
             }
             switch (action) {
-                case 'add':
-                    {
-                        const { documentSection, previousDocumentSectionId } = payload;
-                        setDocumentSections((previousSections) =>
-                            insertDocumentSectionIntoArray(
-                                previousSections,
-                                documentSection,
-                                previousDocumentSectionId,
-                            ),
-                        );
-                    }
+                case 'add': {
+                    const { documentSection, previousDocumentSectionId } = payload;
+                    setDocumentSections((previousSections) =>
+                        insertDocumentSectionIntoArray(previousSections, documentSection, previousDocumentSectionId),
+                    );
                     break;
-                case 'update':
-                    {
-                        const { id, title, slug } = payload;
-                        setDocumentSections((previousSections) =>
-                            updateDocumentSectionInArray(previousSections, id, title, slug),
-                        );
-                    }
+                }
+                case 'update': {
+                    const { id, title, slug } = payload;
+                    setDocumentSections((previousSections) =>
+                        updateDocumentSectionInArray(previousSections, id, title, slug),
+                    );
                     break;
-                case 'delete':
-                    {
-                        const { id } = payload;
-                        setDocumentSections((previousSections) => deleteDocumentSectionFromArray(previousSections, id));
-                    }
+                }
+                case 'delete': {
+                    const { id } = payload;
+                    setDocumentSections((previousSections) => deleteDocumentSectionFromArray(previousSections, id));
                     break;
+                }
             }
         };
 
