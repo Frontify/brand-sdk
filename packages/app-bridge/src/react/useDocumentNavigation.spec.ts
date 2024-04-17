@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { renderHook, waitFor } from '@testing-library/react';
-import { DocumentPage, DocumentSection, GuidelineDocument, type DocumentCategory } from 'src/types';
+import type { DocumentPage, DocumentSection, GuidelineDocument, DocumentCategory } from 'src/types';
 import { describe, expect, it, vi } from 'vitest';
 
 import { getAppBridgeThemeStub, DocumentNavigationTreeDummy } from '../tests';
