@@ -40,8 +40,8 @@ class DocumentPageCategoryDummy implements GuidelinePageCategory {
 class DocumentPageDummy implements GuidelineDocumentPage {
     type: 'document-page';
 
-    readonly #id;
-    readonly #headings;
+    readonly #id: number;
+    readonly #headings: GuidelineDocumentPageHeading[];
 
     constructor(id: number, headings?: GuidelineDocumentPageHeading[]) {
         this.type = 'document-page';
