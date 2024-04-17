@@ -91,12 +91,11 @@ class DocumentPageLinkDummy implements GuidelineDocumentPageLink {
 }
 
 class DocumentPageHeadingDummy implements GuidelineDocumentPageHeading {
-    type: 'document-page-heading';
+    readonly type = 'document-page-heading' as const;
 
     readonly #id;
 
     constructor(id: number) {
-        this.type = 'document-page-heading';
         this.#id = id;
     }
 
