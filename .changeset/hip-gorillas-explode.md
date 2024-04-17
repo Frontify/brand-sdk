@@ -2,4 +2,4 @@
 "@frontify/app-bridge": minor
 ---
 
-adds creationFormUri type to template type
+feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
