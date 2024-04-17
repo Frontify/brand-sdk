@@ -32,7 +32,7 @@ describe('useDocumentNavigation', () => {
         expect(result.current.isLoading).toBe(true);
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(expectRefetch ? false : true);
+            expect(result.current.isLoading).toBe(!expectRefetch);
             expect(result.current.navigationItems).toEqual(expectRefetch ? DocumentNavigationTreeDummy.default() : []);
         });
 
