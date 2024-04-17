@@ -10,7 +10,7 @@ export class TemplateDummy {
             name: 'A template',
             description: 'A description',
             previewUrl: 'https://preview.url',
-            creationFormUri: `/publishing/template/${String(id)}?referer=test.frontify.com`,
+            creationFormUri: `/publishing/template/${id}?referer=test.frontify.com`,
             projectId: 23,
             pages: [
                 convertObjectCase(
