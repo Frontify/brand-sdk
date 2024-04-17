@@ -241,8 +241,8 @@ export const getAppBridgeBlockStub = ({
         getDocumentSectionsByDocumentPageId: stub<
             Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>
         >().resolves([
-            DocumentSectionApiDummy.withFields({ id: 1, title: null }),
-            DocumentSectionApiDummy.withFields({ id: 2, title: 'Title' }),
+            DocumentSectionApiDummy.withFields({ id: 1, title: 'Title 1' }),
+            DocumentSectionApiDummy.withFields({ id: 2, title: 'Title 2' }),
             DocumentSectionApiDummy.withFields({ id: 3, title: '  ' }),
             DocumentSectionApiDummy.withFields({ id: 4, title: '' }),
         ]),

@@ -7,7 +7,7 @@ export type DocumentSectionApi = {
     revision: unknown;
     slug: string;
     sort: number;
-    title: Nullable<string>;
+    title: string;
     creator: number;
     created: string;
     modifier: Nullable<number>;
@@ -19,7 +19,7 @@ export type DocumentSectionApi = {
 
 export type DocumentSection = {
     id: number;
-    title: Nullable<string>;
+    title: string;
     slug: string;
     sort: number;
     permanentLink: string;
@@ -33,7 +33,7 @@ export type AddDocumentSectionPayload = {
 
 export type UpdateDocumentSectionPayload = {
     id: number;
-    title: Nullable<string>;
+    title: string;
     slug: string;
     documentPageId: number;
 };
