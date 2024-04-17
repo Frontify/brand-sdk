@@ -9,195 +9,136 @@ import {
 } from '../types';
 
 class DocumentPageCategoryDummy implements GuidelinePageCategory {
-    static with({
-        id,
-        title,
-        slug,
-        children,
-    }: {
-        id?: number;
-        title?: string;
-        slug?: string;
-        children?: (GuidelineDocumentPage | GuidelineDocumentPageLink)[];
-    }): GuidelinePageCategory {
-        return new DocumentPageCategoryDummy(id ?? 1234, title ?? 'Dummy Title', slug ?? 'dummy-slug', children ?? []);
-    }
-
     type: 'page-category';
 
-    private constructor(
-        private readonly _id: number,
-        private readonly _title: string,
-        private readonly _slug: string,
-        private readonly _children: (GuidelineDocumentPage | GuidelineDocumentPageLink)[],
-    ) {
+    readonly #id: number;
+    readonly #children: (GuidelineDocumentPage | GuidelineDocumentPageLink)[];
+
+    constructor(id: number, children?: (GuidelineDocumentPage | GuidelineDocumentPageLink)[]) {
         this.type = 'page-category';
+        this.#id = id;
+        this.#children = children ?? [];
     }
 
     id(): number {
-        return this._id;
+        return this.#id;
     }
 
     title(): string {
-        return this._title;
+        return 'Dummy title';
     }
 
     slug(): string {
-        return this._slug;
+        return 'dummy slug';
     }
 
     children(): (GuidelineDocumentPage | GuidelineDocumentPageLink)[] {
-        return this._children;
+        return this.#children;
     }
 }
 
 class DocumentPageDummy implements GuidelineDocumentPage {
-    static with({
-        id,
-        title,
-        slug,
-        url,
-        headings,
-    }: {
-        id?: number;
-        title?: string;
-        slug?: string;
-        url?: string;
-        headings?: GuidelineDocumentPageHeading[];
-    }): GuidelineDocumentPage {
-        return new DocumentPageDummy(
-            id ?? 1234,
-            title ?? 'Dummy Title',
-            slug ?? 'dummy-slug',
-            url ?? 'dummy url',
-            headings ?? [],
-        );
-    }
-
     type: 'document-page';
 
-    private constructor(
-        private readonly _id: number,
-        private readonly _title: string,
-        private readonly _slug: string,
-        private readonly _url: string,
-        private readonly _headings: GuidelineDocumentPageHeading[],
-    ) {
+    readonly #id;
+    readonly #headings;
+
+    constructor(id: number, headings?: GuidelineDocumentPageHeading[]) {
         this.type = 'document-page';
+        this.#id = id ?? 1234;
+        this.#headings = headings ?? [];
     }
 
     id(): number {
-        return this._id;
+        return this.#id;
     }
 
     title(): string {
-        return this._title;
+        return 'Dummy title';
     }
 
     slug(): string {
-        return this._slug;
+        return 'dummy slug';
     }
 
     url(): string {
-        return this._url;
+        return 'dummy url';
     }
 
     headings(): GuidelineDocumentPageHeading[] {
-        return this._headings;
+        return this.#headings;
     }
 }
 
 class DocumentPageLinkDummy implements GuidelineDocumentPageLink {
-    static with({ id, title, url }: { id?: number; title?: string; url?: string }): GuidelineDocumentPageLink {
-        return new DocumentPageLinkDummy(id ?? 1234, title ?? 'Dummy Title', url ?? 'dummy url');
-    }
-
     type: 'document-page-link';
 
-    private constructor(
-        private readonly _id: number,
-        private readonly _title: string,
-        private readonly _url: string,
-    ) {
+    readonly #id: number;
+
+    constructor(id: number) {
         this.type = 'document-page-link';
+        this.#id = id;
     }
 
     id(): number {
-        return this._id;
+        return this.#id;
     }
 
     title(): string {
-        return this._title;
+        return 'Dummy title';
     }
 
     url(): string {
-        return this._url;
+        return 'dummy url';
     }
 }
 
 class DocumentPageHeadingDummy implements GuidelineDocumentPageHeading {
-    static with({ id, title, slug }: { id?: number; title?: string; slug?: string }): GuidelineDocumentPageHeading {
-        return new DocumentPageHeadingDummy(id ?? 1234, title ?? 'Dummy Title', slug ?? 'dummy slug');
-    }
-
     type: 'document-page-heading';
 
-    private constructor(
-        private readonly _id: number,
-        private readonly _title: string,
-        private readonly _slug: string,
-    ) {
+    readonly #id;
+
+    constructor(id: number) {
         this.type = 'document-page-heading';
+        this.#id = id;
     }
 
     id(): number {
-        return this._id;
+        return this.#id;
     }
 
     title(): string {
-        return this._title;
+        return 'Dummy title';
     }
 
     slug(): string {
-        return this._slug;
+        return 'dummy slug';
     }
 }
 
 export class DocumentNavigationTreeDummy {
     static default(): DocumentNavigationItem[] {
         return [
-            DocumentPageCategoryDummy.with({
-                id: 1,
-                children: [
-                    DocumentPageDummy.with({
-                        id: 1,
-                        headings: [
-                            DocumentPageHeadingDummy.with({ id: 1 }),
-                            DocumentPageHeadingDummy.with({ id: 2 }),
-                            DocumentPageHeadingDummy.with({ id: 3 }),
-                        ],
-                    }),
-                    DocumentPageLinkDummy.with({ id: 2 }),
-                ],
-            }),
-            DocumentPageDummy.with({ id: 2 }),
+            new DocumentPageCategoryDummy(1, [
+                new DocumentPageDummy(1, [
+                    new DocumentPageHeadingDummy(1),
+                    new DocumentPageHeadingDummy(2),
+                    new DocumentPageHeadingDummy(3),
+                ]),
+                new DocumentPageLinkDummy(2),
+            ]),
+            new DocumentPageDummy(3),
         ];
     }
 
     static alternative(): DocumentNavigationItem[] {
         return [
-            DocumentPageCategoryDummy.with({
-                id: 1,
-                children: [
-                    DocumentPageDummy.with({
-                        id: 1,
-                        headings: [DocumentPageHeadingDummy.with({ id: 2 }), DocumentPageHeadingDummy.with({ id: 3 })],
-                    }),
-                    DocumentPageLinkDummy.with({ id: 2 }),
-                ],
-            }),
-            DocumentPageDummy.with({ id: 2, headings: [DocumentPageHeadingDummy.with({ id: 1 })] }),
-            DocumentPageLinkDummy.with({ id: 6 }),
+            new DocumentPageCategoryDummy(1, [
+                new DocumentPageDummy(1, [new DocumentPageHeadingDummy(2), new DocumentPageHeadingDummy(3)]),
+                new DocumentPageLinkDummy(2),
+            ]),
+            new DocumentPageDummy(2, [new DocumentPageHeadingDummy(1)]),
+            new DocumentPageLinkDummy(6),
         ];
     }
 }
