@@ -43,11 +43,9 @@ describe('useDocumentNavigation', () => {
 
     const testEventHandler = async (emitEvent: () => void) => {
         const document = <GuidelineDocument>{ id: () => 1138 };
-        const initialTree = DocumentNavigationTreeDummy.default();
-        const updatedTree = DocumentNavigationTreeDummy.alternative();
 
         const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'api').mockResolvedValue(initialTree);
+        const spy = vi.spyOn(appBridge, 'api').mockResolvedValue(DocumentNavigationTreeDummy.default());
 
         const { result } = renderHook(() => useDocumentNavigation(appBridge, document));
 
@@ -55,20 +53,20 @@ describe('useDocumentNavigation', () => {
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
-            expect(result.current.navigationItems).toEqual(initialTree);
+            expect(result.current.navigationItems).toEqual(DocumentNavigationTreeDummy.default());
         });
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getDocumentNavigation', payload: { document } });
 
-        spy.mockResolvedValueOnce(updatedTree);
+        spy.mockResolvedValueOnce(DocumentNavigationTreeDummy.alternative());
 
         emitEvent();
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(spy).toHaveBeenCalledTimes(2);
-            expect(result.current.navigationItems).toEqual(updatedTree);
+            expect(result.current.navigationItems).toEqual(DocumentNavigationTreeDummy.alternative());
         });
     };
 
