@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.16
+
+### Patch Changes
+
+- [#877](https://github.com/Frontify/brand-sdk/pull/877) [`1dd80ad`](https://github.com/Frontify/brand-sdk/commit/1dd80ad39568e96e97ab73c04feee3a949764ae9) Thanks [@mike85](https://github.com/mike85)! - feat(usePageTemplateSettings): returns also templateThemeSettings
+
 ## 3.5.9
 
 ### Patch Changes
