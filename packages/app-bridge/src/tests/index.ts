@@ -39,3 +39,4 @@ export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
 export * from './withAppBridgeThemeStubs';
 export * from './PortalNavigationTreeDummy';
+export * from './DocumentNavigationTreeDummy';

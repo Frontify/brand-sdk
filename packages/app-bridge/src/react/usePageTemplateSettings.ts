@@ -110,6 +110,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
 
     return {
         pageTemplateSettings: mergedThemeAndPageTemplateSettings,
+        templateThemeSettings,
         customizedPageTemplateSettingsKeys,
         updatePageTemplateSettings,
         isLoading,
