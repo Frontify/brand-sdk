@@ -18,11 +18,27 @@ const logoLibraryFilenameExtension = z.enum(['svg', 'jpg', 'jpeg', 'ai', 'eps', 
 
 const appType = z.enum(['content-block', 'platform-app', 'theme']);
 
+const secretKeySet = new Set();
+export function resetSecretKeySet() {
+    secretKeySet.clear();
+}
+
 const secretSchema = object({
     label: string(),
-    key: string().refine((value) => /^[\w-]+$/.test(value), {
-        message: "The key should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
-    }),
+    key: string().refine(
+        (key) => {
+            if (secretKeySet.has(key)) {
+                return false;
+            }
+
+            secretKeySet.add(key);
+            return /^[\w-]+$/.test(key);
+        },
+        {
+            message:
+                "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
+        },
+    ),
 });
 const secretsArraySchema = array(secretSchema);
 
@@ -32,8 +48,24 @@ const requestOptionsSchema = object({
     body: z.any().optional(),
 });
 
+const endpointNameSet = new Set();
+export function resetEndpointNameSet() {
+    endpointNameSet.clear();
+}
 const endpointCallSchema = object({
-    id: string(),
+    name: string().refine(
+        (name) => {
+            if (endpointNameSet.has(name)) {
+                return false;
+            }
+
+            endpointNameSet.add(name);
+            return /^[\w-]*$/.test(name);
+        },
+        {
+            message: 'Endpoint name must be unique',
+        },
+    ),
     resource: string().url(),
     options: requestOptionsSchema,
 });
