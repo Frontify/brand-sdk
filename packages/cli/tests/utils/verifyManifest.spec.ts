@@ -1,8 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-import { platformAppManifestSchemaV1, verifyManifest } from '../../src/utils/verifyManifest';
+import {
+    platformAppManifestSchemaV1,
+    resetEndpointNameSet,
+    resetSecretKeySet,
+    verifyManifest,
+} from '../../src/utils/verifyManifest';
 
 const VALID_MANIFEST = {
     appType: 'platform-app',
@@ -297,7 +302,7 @@ const generateManifestWithEndpointNetworkCall = (networkEndpoints) => {
 
 const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -308,7 +313,32 @@ const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
         },
     },
     {
-        id: 'example-user-api',
+        name: 'example-user-api',
+        resource: 'https://api.example.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME = generateManifestWithEndpointNetworkCall([
+    {
+        name: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+    {
+        name: 'frontify-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
@@ -321,7 +351,7 @@ const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
 ]);
 
 const MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL = generateManifestWithEndpointNetworkCall({
-    id: 'frontify-user-api',
+    name: 'frontify-user-api',
     resource: 'https://api.frontify.com/api/user',
     options: {
         method: 'POST',
@@ -347,7 +377,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_ID = generateManifestWithEndpointNetworkCall
 
 const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         options: {
             method: 'POST',
             headers: {
@@ -360,7 +390,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetwo
 
 const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'something-random',
         options: {
             method: 'POST',
@@ -374,7 +404,7 @@ const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpoi
 
 const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'GET',
@@ -384,14 +414,14 @@ const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpo
 
 const MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
     },
 ]);
 
 const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             headers: {
@@ -402,7 +432,84 @@ const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetwork
     },
 ]);
 
+const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT = generateManifestWithEndpointNetworkCall([
+    {
+        name: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: 'x-frontify-auth-header',
+            body: 'example body data',
+        },
+    },
+    {
+        name: 'example-user-api',
+        resource: 'https://api.example.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT = generateManifestWithEndpointNetworkCall([
+    {
+        name: 'frontify-user-api',
+        resource: 'https://api.frontify.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': { test: '$OPEN_API' },
+            },
+            body: 'example body data',
+        },
+    },
+    {
+        name: 'example-user-api',
+        resource: 'https://api.example.com/api/user',
+        options: {
+            method: 'POST',
+            headers: {
+                'x-frontify-auth-header': '$OPEN_API',
+            },
+            body: 'example body data',
+        },
+    },
+]);
+
+const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [
+        { label: 'test label', key: 'DUPLICATE_KEY' },
+        { label: 'another label', key: 'DUPLICATE_KEY' },
+    ],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
+    beforeEach(() => {
+        resetSecretKeySet();
+        resetEndpointNameSet();
+    });
+
     it('should validate a valid manifest', () => {
         const verifiedManifest = verifyManifest(VALID_MANIFEST, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
@@ -502,5 +609,25 @@ describe('Verify Platform App Manifest', () => {
 
     it('should throw error when network endpoint object is not correct without method', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_METHOD, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should throw error when network endpoint object has duplicate Names', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should throw error when secret object has duplicate KEYs', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_DUPLICATE_SECRET_KEY, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should throw error when header is not an object of strings key value', () => {
+        expect(() =>
+            verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT, platformAppManifestSchemaV1),
+        ).toThrow();
+    });
+
+    it('should throw error when header is not an object of strings key value', () => {
+        expect(() =>
+            verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT, platformAppManifestSchemaV1),
+        ).toThrow();
     });
 });

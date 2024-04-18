@@ -12,7 +12,7 @@ import {
     type GetAssetResourceInformationResponse,
 } from './GetAssetResourceInformation';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
-import { type GetDocumentNavigationPayload, type GetDocumentNavigationResponse } from './GetDocumentNavigation.ts';
+import { type GetDocumentNavigationPayload, type GetDocumentNavigationResponse } from './GetDocumentNavigation';
 import { type GetPortalNavigationResponse } from './GetPortalNavigation';
 import { type GetProxyNetworkCallPayload, type GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
 import {
