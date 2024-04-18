@@ -37,5 +37,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     };
     getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
     getDocumentNavigation: { payload: GetDocumentNavigationPayload; response: GetDocumentNavigationResponse };
-    getPortalNavigation: { payload: never; response: GetPortalNavigationResponse };
+    getPortalNavigation: { payload: void; response: GetPortalNavigationResponse };
 }>;
