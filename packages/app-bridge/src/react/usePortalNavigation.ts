@@ -2,7 +2,7 @@
 
 import { produce } from 'immer';
 import debounce from 'lodash-es/debounce';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type EmitterEvents } from '../types/Emitter';
@@ -25,8 +25,18 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
         setIsLoading(false);
     }, [appBridge]);
 
+    const debouncedRefetch = useMemo(
+        () =>
+            debounce(() => {
+                // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                refetch();
+            }, 100),
+        [refetch],
+    );
+
     useEffect(() => {
         if (options.enabled) {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             refetch();
         }
     }, [options.enabled, refetch]);
@@ -41,7 +51,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
                 );
             }
 
-            debounce(refetch, 100);
+            debouncedRefetch();
         };
 
         const handleDocumentGroupAction = (event: EmitterEvents['AppBridge:GuidelineDocumentGroup:Action']) => {
@@ -53,7 +63,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
                 );
             }
 
-            debounce(refetch, 100);
+            debouncedRefetch();
         };
 
         const handleDocumentAction = (event: EmitterEvents['AppBridge:GuidelineDocument:Action']) => {
@@ -68,7 +78,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
                 );
             }
 
-            debounce(refetch, 100);
+            debouncedRefetch();
         };
 
         const handleDocumentGroupMoveEventPreview = (
@@ -100,7 +110,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
 
         window.emitter.on('AppBridge:GuidelineDocument:Action', handleDocumentAction);
         window.emitter.on('AppBridge:GuidelineDocument:MoveEvent', handleDocumentMoveEventPreview);
-        window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', refetch);
+        window.emitter.on('AppBridge:GuidelineDocumentTargets:Action', debouncedRefetch);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineCoverPage:Action', handleCoverPageAction);
@@ -110,9 +120,9 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
 
             window.emitter.off('AppBridge:GuidelineDocument:Action', handleDocumentAction);
             window.emitter.off('AppBridge:GuidelineDocument:MoveEvent', handleDocumentMoveEventPreview);
-            window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', refetch);
+            window.emitter.off('AppBridge:GuidelineDocumentTargets:Action', debouncedRefetch);
         };
-    }, [navigationItems, refetch]);
+    }, [navigationItems, debouncedRefetch]);
 
     return { navigationItems, refetch, isLoading };
 };
@@ -121,6 +131,7 @@ const deleteItem = (draft: PortalNavigationItem[], type: PortalNavigationItem['t
     const itemDraftIndex = draft.findIndex((item) =>
         !itemId ? item.type === type : item.type === type && item.id() === itemId,
     );
+
     if (itemDraftIndex !== -1) {
         draft.splice(itemDraftIndex, 1);
     }
