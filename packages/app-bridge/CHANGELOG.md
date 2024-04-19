@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.6.0
+
+### Minor Changes
+
+- [#871](https://github.com/Frontify/brand-sdk/pull/871) [`cc7532a`](https://github.com/Frontify/brand-sdk/commit/cc7532ae5a3803f12997887e9f1ca9993e9f8e7c) Thanks [@ryancarville](https://github.com/ryancarville)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+
 ## 3.5.9
 
 ### Patch Changes
