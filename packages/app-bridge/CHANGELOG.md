@@ -6,6 +6,12 @@
 
 - [#877](https://github.com/Frontify/brand-sdk/pull/877) [`1dd80ad`](https://github.com/Frontify/brand-sdk/commit/1dd80ad39568e96e97ab73c04feee3a949764ae9) Thanks [@mike85](https://github.com/mike85)! - feat(usePageTemplateSettings): returns also templateThemeSettings
 
+## 3.6.0
+
+### Minor Changes
+
+- [#871](https://github.com/Frontify/brand-sdk/pull/871) [`cc7532a`](https://github.com/Frontify/brand-sdk/commit/cc7532ae5a3803f12997887e9f1ca9993e9f8e7c) Thanks [@ryancarville](https://github.com/ryancarville)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+
 ## 3.5.9
 
 ### Patch Changes

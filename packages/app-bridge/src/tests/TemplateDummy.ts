@@ -10,6 +10,7 @@ export class TemplateDummy {
             name: 'A template',
             description: 'A description',
             previewUrl: 'https://preview.url',
+            creationFormUri: `/publishing/template/${id}`,
             projectId: 23,
             pages: [
                 convertObjectCase(
