@@ -9,12 +9,6 @@ import { getAppBridgeThemeStub, DocumentNavigationTreeDummy } from '../tests';
 
 import { useDocumentNavigation } from './useDocumentNavigation';
 
-vi.mock('lodash-es/debounce', () => {
-    return {
-        default: (callback: () => void) => callback(),
-    };
-});
-
 describe('useDocumentNavigation', () => {
     const testInitialRender = async ({
         expectRefetch,
@@ -88,10 +82,37 @@ describe('useDocumentNavigation', () => {
             });
         }));
 
+    it('should refetch when the "AppBridge:GuidelineDocumentCategory:DocumentPageAction" event occurs', () =>
+        testEventHandler(() => {
+            window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
+                action: 'add',
+                documentPage: { categoryId: 0, id: 0 },
+            });
+        }));
+
+    it('should refetch when the "AppBridge:GuidelineDocumentCategory:MoveEvent" event occurs', () =>
+        testEventHandler(() => {
+            window.emitter.emit('AppBridge:GuidelineDocumentCategory:MoveEvent', {
+                action: 'movePreview',
+                documentId: 0,
+                documentCategory: <DocumentCategory>{},
+                position: 0,
+            });
+        }));
+
     it('should refetch when the "AppBridge:GuidelineDocumentPage:Action" event occurs', () =>
         testEventHandler(() => {
             window.emitter.emit('AppBridge:GuidelineDocumentPage:Action', {
                 action: 'add',
+                documentPage: <DocumentPage>{},
+            });
+        }));
+
+    it('should refetch when the "AppBridge:GuidelineDocumentPage:MoveEvent" event occurs', () =>
+        testEventHandler(() => {
+            window.emitter.emit('AppBridge:GuidelineDocumentPage:MoveEvent', {
+                action: 'movePreview',
+                documentId: 0,
                 documentPage: <DocumentPage>{},
             });
         }));

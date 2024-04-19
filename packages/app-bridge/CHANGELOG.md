@@ -1,22 +1,31 @@
 # @frontify/app-bridge
 
+=======
+
+## 3.6.1
+
+### Patch Changes
+
+- [#882](https://github.com/Frontify/brand-sdk/pull/882) [`f6897fb`](https://github.com/Frontify/brand-sdk/commit/f6897fb6b758c03053fcf88805f100c3c0b33d1e) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+  fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+  
 ## 4.0.0-alpha.17
 
 ### Minor Changes
 
 - [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
 
-## 4.0.0-alpha.16
-
-### Patch Changes
-
-- [#877](https://github.com/Frontify/brand-sdk/pull/877) [`1dd80ad`](https://github.com/Frontify/brand-sdk/commit/1dd80ad39568e96e97ab73c04feee3a949764ae9) Thanks [@mike85](https://github.com/mike85)! - feat(usePageTemplateSettings): returns also templateThemeSettings
-
 ## 3.6.0
 
 ### Minor Changes
 
 - [#871](https://github.com/Frontify/brand-sdk/pull/871) [`cc7532a`](https://github.com/Frontify/brand-sdk/commit/cc7532ae5a3803f12997887e9f1ca9993e9f8e7c) Thanks [@ryancarville](https://github.com/ryancarville)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+
+## 4.0.0-alpha.16
+
+### Patch Changes
+
+- [#877](https://github.com/Frontify/brand-sdk/pull/877) [`1dd80ad`](https://github.com/Frontify/brand-sdk/commit/1dd80ad39568e96e97ab73c04feee3a949764ae9) Thanks [@mike85](https://github.com/mike85)! - feat(usePageTemplateSettings): returns also templateThemeSettings
 
 ## 3.5.9
 

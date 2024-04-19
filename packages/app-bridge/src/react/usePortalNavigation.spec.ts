@@ -22,6 +22,7 @@ describe('usePortalNavigation', () => {
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
+
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -31,18 +32,19 @@ describe('usePortalNavigation', () => {
         const updatedNavigationTree = [...DEFAULT_NAVIGATION_TREE];
         updatedNavigationTree.splice(coverPageIndex, 1);
 
+        spy.mockResolvedValueOnce(updatedNavigationTree);
+
         // Trigger a "cover page deleted" event
         window.emitter.emit('AppBridge:GuidelineCoverPage:Action', { action: 'delete' });
 
         await waitFor(() => {
+            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
             expect(result.current.navigationItems).toEqual(updatedNavigationTree);
         });
-
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
-    it('should return the preview and refetch when a documet group is deleted', async () => {
+    it('should return the preview and refetch when a document group is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'api');
 
@@ -52,6 +54,7 @@ describe('usePortalNavigation', () => {
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
+
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -61,6 +64,8 @@ describe('usePortalNavigation', () => {
         const updatedNavigationTree = [...DEFAULT_NAVIGATION_TREE];
         updatedNavigationTree.splice(groupIndex, 1);
 
+        spy.mockResolvedValueOnce(updatedNavigationTree);
+
         // Trigger a "document group deleted" event
         window.emitter.emit('AppBridge:GuidelineDocumentGroup:Action', {
             documentGroup: { id: 200 },
@@ -68,23 +73,20 @@ describe('usePortalNavigation', () => {
         });
 
         await waitFor(() => {
+            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
             expect(result.current.navigationItems).toEqual(updatedNavigationTree);
         });
-
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
-    it('should return the previous tree and refetch when an incorrect documet group id is deleted', async () => {
+    it('should return the previous tree and refetch when an incorrect document group id is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'api');
 
-        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
+        spy.mockResolvedValue(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -97,14 +99,13 @@ describe('usePortalNavigation', () => {
         });
 
         await waitFor(() => {
+            expect(spy).toHaveBeenCalledTimes(2);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
+            expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
         });
-
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
-    it('should return the preview and refetch when a documet at root level is deleted', async () => {
+    it('should return the preview and refetch when a document at root level is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'api');
 
@@ -114,6 +115,7 @@ describe('usePortalNavigation', () => {
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
+
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -123,6 +125,8 @@ describe('usePortalNavigation', () => {
         const updatedNavigationTree = [...DEFAULT_NAVIGATION_TREE];
         updatedNavigationTree.splice(documentIndex, 1);
 
+        spy.mockResolvedValueOnce(updatedNavigationTree);
+
         // Trigger a "document deleted" event
         window.emitter.emit('AppBridge:GuidelineDocument:Action', {
             document: { id: 101 },
@@ -130,23 +134,23 @@ describe('usePortalNavigation', () => {
         });
 
         await waitFor(() => {
+            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
             expect(result.current.navigationItems).toEqual(updatedNavigationTree);
         });
-
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
-    it('should return the same tree and refetch when a documet within a group is deleted', async () => {
+    it('should return the same tree and refetch when a document within a group is deleted', async () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'api');
 
-        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
+        spy.mockResolvedValue(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
+
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
@@ -159,11 +163,10 @@ describe('usePortalNavigation', () => {
         });
 
         await waitFor(() => {
+            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
             expect(result.current.navigationItems).toEqual(DEFAULT_NAVIGATION_TREE);
         });
-
-        expect(spy).toHaveBeenCalledOnce();
-        expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
     });
 
     it('should fetch the navigation tree on mount', async () => {
@@ -188,28 +191,26 @@ describe('usePortalNavigation', () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'api');
 
-        spy.mockResolvedValueOnce(DEFAULT_NAVIGATION_TREE);
+        spy.mockResolvedValue(DEFAULT_NAVIGATION_TREE);
 
         const { result } = renderHook(() => usePortalNavigation(appBridge));
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
+
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
         });
 
         // Trigger a "document targets changed" event
         window.emitter.emit('AppBridge:GuidelineDocumentTargets:Action', {
-            payload: {
-                targets: [],
-                documentIds: [],
-            },
+            payload: { targets: [], documentIds: [] },
             action: 'update',
         });
 
         await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
             expect(spy).toHaveBeenCalledTimes(2);
+            expect(result.current.isLoading).toBe(false);
         });
     });
 
@@ -223,6 +224,7 @@ describe('usePortalNavigation', () => {
 
         expect(spy).toHaveBeenCalledOnce();
         expect(spy).toHaveBeenCalledWith({ name: 'getPortalNavigation' });
+
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
         });
@@ -232,6 +234,8 @@ describe('usePortalNavigation', () => {
         const updatedNavigationTree = [...DEFAULT_NAVIGATION_TREE];
         const movedGroup = updatedNavigationTree.splice(groupIndex, 1);
         updatedNavigationTree.splice(NEW_POSITION, 0, ...movedGroup);
+
+        spy.mockResolvedValueOnce(updatedNavigationTree);
 
         // Trigger a "document group is moved" event
         window.emitter.emit('AppBridge:GuidelineDocumentGroup:MoveEvent', {
