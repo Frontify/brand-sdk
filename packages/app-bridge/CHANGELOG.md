@@ -1,5 +1,12 @@
 # @frontify/app-bridge
 
+## 3.6.1
+
+### Patch Changes
+
+- [#882](https://github.com/Frontify/brand-sdk/pull/882) [`f6897fb`](https://github.com/Frontify/brand-sdk/commit/f6897fb6b758c03053fcf88805f100c3c0b33d1e) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+  fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+
 ## 3.6.0
 
 ### Minor Changes
