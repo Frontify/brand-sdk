@@ -217,6 +217,7 @@ describe('usePageTemplateSettings', () => {
                     ...PAGE_SETTINGS_WITH_OVERRIDES,
                 });
                 expect(result.current.customizedPageTemplateSettingsKeys).toEqual(['customThemeSetting']);
+                expect(result.current.templateThemeSettings).toEqual(THEME_SETTINGS.documentPage);
             });
         });
 

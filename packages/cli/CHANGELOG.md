@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.14
+
+### Patch Changes
+
+- [#862](https://github.com/Frontify/brand-sdk/pull/862) [`d6f716d`](https://github.com/Frontify/brand-sdk/commit/d6f716d759841e9fa5f0cc08526f65fb210f557e) Thanks [@julianiff](https://github.com/julianiff)! - feat: add secret and endpoint restrictions
+
 ## 5.6.13
 
 ### Patch Changes
