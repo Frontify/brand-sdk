@@ -8,6 +8,7 @@ export type Template = {
     description: string;
     projectId: number;
     previewUrl: string;
+    creationFormUri: string;
     pages: TemplatePage[];
 };
 
