@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import debounce from 'lodash-es/debounce';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type GuidelineDocument, type DocumentNavigationItem } from '../types/Guideline';
@@ -34,21 +34,38 @@ export const useDocumentNavigation = (
         }
     }, [options.enabled, refetch]);
 
-    useEffect(() => {
-        const debouncedRefetch = () => debounce(refetch, 100);
+    const debouncedRefetch = useMemo(
+        () =>
+            debounce(() => {
+                // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                refetch();
+            }, 100),
+        [refetch],
+    );
 
+    useEffect(() => {
         window.emitter.on('AppBridge:GuidelineDocumentCategory:Action', debouncedRefetch);
+        window.emitter.on('AppBridge:GuidelineDocumentCategory:DocumentPageAction', debouncedRefetch);
+        window.emitter.on('AppBridge:GuidelineDocumentCategory:MoveEvent', debouncedRefetch);
+
         window.emitter.on('AppBridge:GuidelineDocumentPage:Action', debouncedRefetch);
+        window.emitter.on('AppBridge:GuidelineDocumentPage:MoveEvent', debouncedRefetch);
         window.emitter.on('AppBridge:GuidelineDocumentPageTargets:Action', debouncedRefetch);
+
         window.emitter.on('AppBridge:GuidelineDocumentSection:Action', debouncedRefetch);
 
         return () => {
             window.emitter.off('AppBridge:GuidelineDocumentCategory:Action', debouncedRefetch);
+            window.emitter.off('AppBridge:GuidelineDocumentCategory:DocumentPageAction', debouncedRefetch);
+            window.emitter.off('AppBridge:GuidelineDocumentCategory:MoveEvent', debouncedRefetch);
+
             window.emitter.off('AppBridge:GuidelineDocumentPage:Action', debouncedRefetch);
+            window.emitter.off('AppBridge:GuidelineDocumentPage:MoveEvent', debouncedRefetch);
             window.emitter.off('AppBridge:GuidelineDocumentPageTargets:Action', debouncedRefetch);
+
             window.emitter.off('AppBridge:GuidelineDocumentSection:Action', debouncedRefetch);
         };
-    }, [navigationItems, refetch]);
+    }, [navigationItems, debouncedRefetch]);
 
     return { navigationItems, refetch, isLoading };
 };
