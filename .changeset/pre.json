@@ -1,0 +1,36 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@frontify/app-bridge": "3.0.0",
+    "@frontify/frontify-cli": "5.5.3",
+    "@frontify/guideline-blocks-settings": "0.29.16",
+    "@frontify/sidebar-settings": "0.8.1",
+    "@frontify/platform-app": "0.0.5"
+  },
+  "changesets": [
+    "cuddly-pets-hammer",
+    "giant-shrimps-dream",
+    "hip-days-applaud",
+    "khaki-dryers-shout",
+    "kind-fishes-flash",
+    "light-crews-report",
+    "lovely-books-hear",
+    "neat-plants-smile",
+    "nervous-walls-repair",
+    "orange-jokes-listen",
+    "pink-bugs-behave",
+    "pink-geckos-change",
+    "polite-eels-shake",
+    "pretty-items-marry",
+    "shaggy-mugs-speak",
+    "smart-suns-type",
+    "smooth-planets-pay",
+    "stale-hairs-wash",
+    "strong-tools-check",
+    "tricky-boats-sip",
+    "warm-hounds-refuse",
+    "wild-bags-judge",
+    "witty-rivers-smile"
+  ]
+}
