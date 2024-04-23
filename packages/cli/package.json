@@ -1,7 +1,7 @@
 {
     "name": "@frontify/frontify-cli",
     "type": "module",
-    "version": "5.6.15",
+    "version": "5.6.16",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
