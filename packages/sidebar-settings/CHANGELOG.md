@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.14
+
+### Patch Changes
+
+- [#890](https://github.com/Frontify/brand-sdk/pull/890) [`c7712e8`](https://github.com/Frontify/brand-sdk/commit/c7712e84ec90b6db1b23a23c56db63ed90d812bc) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.0.7`
+
 ## 0.9.13
 
 ### Patch Changes
