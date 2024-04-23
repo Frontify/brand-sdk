@@ -12,8 +12,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge": "4.0.0-alpha.14",
-        "@frontify/fondue": "12.0.0-beta.427",
-        "@frontify/fondue-tokens": "^3.4.0",
+        "@frontify/fondue": "12.0.7",
         "@frontify/platform-app": "^0.1.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
