@@ -167,7 +167,7 @@ export type EventUnsubscribeFunction = () => void;
 export interface AppBridge<
     ApiMethod extends ApiMethodNamePattern,
     Command extends CommandNamePattern,
-    State extends Record<string, Record<string, unknown>>,
+    State extends Record<string, unknown> | Record<string, Record<string, unknown>>,
     Context extends Record<string, unknown>,
     Event extends EventNamePattern,
 > {

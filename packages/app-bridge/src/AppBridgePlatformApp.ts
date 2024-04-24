@@ -34,9 +34,7 @@ export type PlatformAppCommandRegistry = CommandNameValidator<{
 
 export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandRegistry, 'openConnection'>>;
 
-export type PlatformAppState = {
-    settings: Record<string, unknown>;
-};
+export type PlatformAppState = Record<string, unknown>;
 
 type InitializeEvent = {
     apiPort: MessagePort;
