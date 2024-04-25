@@ -60,7 +60,7 @@ describe('AppBridgePlatformApp', () => {
     it('should return empty state when not inititalized', async () => {
         const platformApp = new AppBridgePlatformApp();
         const state = platformApp.state().get();
-        expect(state).toEqual({ settings: {} });
+        expect(state).toEqual({ settings: {}, userState: {} });
     });
 
     it('should return state after app is initialized', async () => {
