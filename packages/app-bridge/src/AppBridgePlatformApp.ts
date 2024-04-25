@@ -36,6 +36,7 @@ export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandReg
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
+    userState: Record<string, unknown>;
 };
 
 type InitializeEvent = {
@@ -49,7 +50,6 @@ type AppBaseProps = {
     token: string;
     marketplaceServiceAppId: string;
     connected: boolean;
-    settings: { [key: string]: string };
     brandId: number;
     domain: string;
     parentId: string;
@@ -76,12 +76,13 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
     private stateMessageBus: IMessageBus = new ErrorMessageBus();
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
-    private localState: PlatformAppState = { settings: {} };
+    private localState: PlatformAppState = { settings: {}, userState: {} };
     private maxRetries: number = 5;
 
     private readonly subscribeMap: SubscribeMap<PlatformAppEvent> = {
         'State.*': new Map(),
         'State.settings': new Map(),
+        'State.userState': new Map(),
         'Context.*': new Map(),
         'Context.marketplaceServiceAppId': new Map(),
         'Context.token': new Map(),
@@ -91,7 +92,6 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         'Context.domain': new Map(),
         'Context.surface': new Map(),
         'Context.connected': new Map(),
-        'Context.settings': new Map(),
     };
 
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
@@ -176,10 +176,17 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         };
     }
 
-    private async setInternalState(state: Promise<PlatformAppState>): Promise<void> {
+    private async setInternalState(
+        state: Promise<PlatformAppState>,
+        key?: keyof PlatformAppState | void,
+    ): Promise<void> {
         const prevState = this.localState;
         this.localState = await state;
-        this.callSubscribedTopic('State.*', [this.localState, prevState]);
+        if (key) {
+            this.callSubscribedTopic(`State.${key}`, [this.localState, prevState]);
+        } else {
+            this.callSubscribedTopic('State.*', [this.localState, prevState]);
+        }
     }
 
     state(): StateReturn<PlatformAppState, void>;
@@ -204,9 +211,10 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             get: () => this.localState[key],
             set: (nextState: PlatformAppState[Key]) => {
                 const newState = this.stateMessageBus.post({
-                    parameter: { nextState },
+                    parameter: { key, nextState },
                 }) as Promise<PlatformAppState>;
-                this.setInternalState(newState);
+
+                this.setInternalState(newState, key);
             },
             subscribe: (callback: (nextState: PlatformAppState[Key], previousState: PlatformAppState[Key]) => void) => {
                 return this.subscribe(`State.${key}`, callback);
