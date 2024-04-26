@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.19
+
+### Patch Changes
+
+- [#895](https://github.com/Frontify/brand-sdk/pull/895) [`b31a73d`](https://github.com/Frontify/brand-sdk/commit/b31a73d1756f01374682552a3013173f3c8f5384) Thanks [@julianiff](https://github.com/julianiff)! - feat: add user state variable
+
 ## 4.0.0-alpha.18
 
 ### Patch Changes
