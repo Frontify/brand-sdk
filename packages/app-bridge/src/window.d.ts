@@ -2,6 +2,7 @@
 
 import type { Emitter } from 'mitt';
 import type { EmitterEvents, TerrificComponent, TerrificEvent } from './types';
+import { AppBridgePlatformApp } from './AppBridgePlatformApp.ts';
 
 declare global {
     interface Window {
@@ -56,6 +57,12 @@ declare global {
 declare namespace Cypress {
     interface AUTWindow {
         emitter: Emitter<EmitterEvents>;
+    }
+}
+
+declare global {
+    interface Window {
+        appBridgePlatformApp: AppBridgePlatformApp;
     }
 }
 
