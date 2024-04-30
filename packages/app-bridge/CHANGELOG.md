@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.6.3
+
+### Patch Changes
+
+- [#903](https://github.com/Frontify/brand-sdk/pull/903) [`b8c5bb7`](https://github.com/Frontify/brand-sdk/commit/b8c5bb7156a58f6fa020dd56fa1cb6a016440666) Thanks [@Kenny806](https://github.com/Kenny806)! - feat(AppBridgeTheme): add isSearchDialogOpen to context
+
 ## 3.6.2
 
 ### Patch Changes
