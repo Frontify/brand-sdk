@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.34.14
+
+### Patch Changes
+
+- [#901](https://github.com/Frontify/brand-sdk/pull/901) [`2bfb9f6`](https://github.com/Frontify/brand-sdk/commit/2bfb9f6f8028df00e571f87b4be288b579bf53ad) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(BlockItemWrapper): memoize BlockItemWrapper component
+
 ## 0.34.13
 
 ### Patch Changes
