@@ -6,6 +6,7 @@ import { AppBridgePlatformApp } from './AppBridgePlatformApp.ts';
 
 declare global {
     interface Window {
+        appBridgePlatformApp: AppBridgePlatformApp;
         APPLICATION_CONFIG: {
             version: string;
             bugsnagKey: string | null;
@@ -57,12 +58,6 @@ declare global {
 declare namespace Cypress {
     interface AUTWindow {
         emitter: Emitter<EmitterEvents>;
-    }
-}
-
-declare global {
-    interface Window {
-        appBridgePlatformApp: AppBridgePlatformApp;
     }
 }
 
