@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { usePlatformAppBridge } from './usePlatformAppBridge';
@@ -14,7 +14,7 @@ describe('usePlatformAppBridge', () => {
             statePort: { onmessage: vi.fn() },
             apiPort: { onmessage: vi.fn() },
             context: { parentId: 'parentId-test', connected: true },
-            state: { settings: 'settings-test' },
+            state: { settings: 'settings-test', userState: 'test' },
         }),
     }));
 
@@ -29,5 +29,12 @@ describe('usePlatformAppBridge', () => {
     it('should return undefined platformApp if not initiated', async () => {
         const { result } = renderHook(() => usePlatformAppBridge());
         expect(result.current).toBeUndefined();
+    });
+
+    it('should return platformApp after initiation and waiting', async () => {
+        const { result } = renderHook(() => usePlatformAppBridge());
+        await waitFor(() => {
+            expect(result.current).toBeDefined();
+        });
     });
 });
