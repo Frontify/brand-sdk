@@ -31,25 +31,3 @@ describe('usePlatformAppBridge', () => {
         expect(result.current).toBeUndefined();
     });
 });
-
-describe('usePlatformAppBridge', () => {
-    const TOKEN = 'AjY34F87Dsat^J';
-
-    window.location.search = `?token=${TOKEN}`;
-    vi.mock('../utilities/subscribe', () => ({
-        subscribe: vi.fn().mockResolvedValue({
-            statePort: { onmessage: vi.fn() },
-            apiPort: { onmessage: vi.fn() },
-            context: { parentId: 'parentId-test', connected: true },
-            state: { settings: 'settings-test', userState: 'test' },
-        }),
-    }));
-
-    vi.mock('../utilities/notify', () => ({
-        notify: vi.fn(),
-    }));
-
-    afterEach(() => {
-        vi.clearAllMocks();
-    });
-});
