@@ -28,6 +28,19 @@
 
 - [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
 
+## 3.6.2
+
+### Patch Changes
+
+- [#892](https://github.com/Frontify/brand-sdk/pull/892) [`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `vite` to `5.2.10`
+
+## 3.6.1
+
+### Patch Changes
+
+- [#882](https://github.com/Frontify/brand-sdk/pull/882) [`f6897fb`](https://github.com/Frontify/brand-sdk/commit/f6897fb6b758c03053fcf88805f100c3c0b33d1e) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+  fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+
 ## 3.6.0
 
 ### Minor Changes
