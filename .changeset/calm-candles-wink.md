@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-Feat/only one app bridge per iframe
+feat(AppBridgePlatformApp): only one app bridge per iframe
