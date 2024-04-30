@@ -91,6 +91,7 @@ export type ThemeContext = {
     isEditing: boolean;
     isPublicLink: boolean;
     isAuthenticated: boolean;
+    isSearchDialogOpen: boolean;
     languages: Language[];
     template: TemplateContext | null;
 };
