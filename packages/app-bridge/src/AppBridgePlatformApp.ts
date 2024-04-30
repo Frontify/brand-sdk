@@ -94,6 +94,14 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
         'Context.connected': new Map(),
     };
 
+    constructor() {
+        if (window.appBridgePlatformApp) {
+            return window.appBridgePlatformApp;
+        }
+
+        window.appBridgePlatformApp = this;
+    }
+
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
     ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
