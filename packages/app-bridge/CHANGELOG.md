@@ -1,5 +1,15 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.20
+
+### Patch Changes
+
+- [#900](https://github.com/Frontify/brand-sdk/pull/900) [`9294b16`](https://github.com/Frontify/brand-sdk/commit/9294b164ad2b3fc502004e3d8d86ee29737ac822) Thanks [@julianiff](https://github.com/julianiff)! - feat(AppBridgePlatformApp): only one app bridge per iframe
+
+- [#864](https://github.com/Frontify/brand-sdk/pull/864) [`2a5b9cf`](https://github.com/Frontify/brand-sdk/commit/2a5b9cfb1e73331a3a4d39550a3a26de8a7e0c94) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: merge `main` into `dev`
+
+- [#864](https://github.com/Frontify/brand-sdk/pull/864) [`2a5b9cf`](https://github.com/Frontify/brand-sdk/commit/2a5b9cfb1e73331a3a4d39550a3a26de8a7e0c94) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeTheme): add isSearchDialogOpen to context
+
 ## 4.0.0-alpha.19
 
 ### Patch Changes
