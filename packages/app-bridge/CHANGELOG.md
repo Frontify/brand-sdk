@@ -13,7 +13,11 @@
 - [#884](https://github.com/Frontify/brand-sdk/pull/884) [`4fe96c8`](https://github.com/Frontify/brand-sdk/commit/4fe96c8808d1b85541dd6cc5ed2711bc5a47f4eb) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
   fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
 
-=======
+## 3.6.2
+
+### Patch Changes
+
+- [#892](https://github.com/Frontify/brand-sdk/pull/892) [`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `vite` to `5.2.10`
 
 ## 3.6.1
 
