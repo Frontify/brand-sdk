@@ -1,5 +1,21 @@
 # @frontify/platform-app
 
+## 0.1.3
+
+### Patch Changes
+
+- [#892](https://github.com/Frontify/brand-sdk/pull/892) [`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `vite` to `5.2.10`
+
+- Updated dependencies [[`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d)]:
+  - @frontify/sidebar-settings@0.9.15
+
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`c7712e8`](https://github.com/Frontify/brand-sdk/commit/c7712e84ec90b6db1b23a23c56db63ed90d812bc)]:
+  - @frontify/sidebar-settings@0.9.14
+
 ## 0.1.1
 
 ### Patch Changes

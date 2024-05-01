@@ -1,5 +1,17 @@
 # @frontify/frontify-cli
 
+## 5.6.16
+
+### Patch Changes
+
+- [#892](https://github.com/Frontify/brand-sdk/pull/892) [`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `vite` to `5.2.10`
+
+## 5.6.15
+
+### Patch Changes
+
+- [#890](https://github.com/Frontify/brand-sdk/pull/890) [`c7712e8`](https://github.com/Frontify/brand-sdk/commit/c7712e84ec90b6db1b23a23c56db63ed90d812bc) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.0.7`
+
 ## 5.6.14
 
 ### Patch Changes
