@@ -4,4 +4,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-chore: bump @frontify/fondue to 12.0.10
+chore: bump `@frontify/fondue` to `12.0.10`
