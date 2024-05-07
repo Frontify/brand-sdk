@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { renderHook } from '@testing-library/react';
-import { getAppBridgeBlockStub } from '../tests';
 import { describe, expect, it, vi } from 'vitest';
+
+import { getAppBridgeBlockStub } from '../tests';
+
 import { useAfterInsertion } from './useAfterInsertion';
 
 describe('useAfterInsertion', () => {

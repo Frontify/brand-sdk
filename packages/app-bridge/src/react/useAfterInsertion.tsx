@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect } from 'react';
-import { AppBridgeBlock } from '../AppBridgeBlock';
+
+import { type AppBridgeBlock } from '../AppBridgeBlock';
 
 /**
  * Hook to execute a callback after the block has been inserted.
