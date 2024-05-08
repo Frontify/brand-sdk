@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.21
+
+### Patch Changes
+
+- [#910](https://github.com/Frontify/brand-sdk/pull/910) [`0723d89`](https://github.com/Frontify/brand-sdk/commit/0723d89575f47682bc146661e693651f61965c8c) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: (AppBridgeTheme) update appBridgeThemeStub with context and state
+
 ## 4.0.0-alpha.20
 
 ### Patch Changes
