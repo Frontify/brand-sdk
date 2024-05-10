@@ -2,8 +2,7 @@
 "@frontify/app-bridge": minor
 ---
 
-feat(useAfterInsertion):
-New hook to execute a callback after the block has been inserted, can be used to focus a specific element for faster editing. The callback is only executed when the third argument is true (default).
+feat(useAfterInsertion): A new hook to execute a callback after the block has been inserted, can be used to focus a specific element for faster editing. The callback is only executed when the third argument is true (default).
 
 ```jsx
 const ExampleBlock = ({ appBridge }: BlockProps) => {
