@@ -22,6 +22,7 @@ export type AssetApi = {
     project_type: Nullable<string>;
     token: string;
     revision_id: Nullable<number>;
+    background_color: Nullable<string>;
 };
 
 export type Asset = {
@@ -45,4 +46,5 @@ export type Asset = {
     token: string;
     projectType: Nullable<string>;
     revisionId: Nullable<number>;
+    backgroundColor: Nullable<string>;
 };

@@ -35,6 +35,16 @@
 
 -   # [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
 
+## 3.7.0
+
+### Minor Changes
+
+- [#912](https://github.com/Frontify/brand-sdk/pull/912) [`fa18d35`](https://github.com/Frontify/brand-sdk/commit/fa18d35a554f32d561d7ed33d3e2e5fa3fb90a89) Thanks [@bojangles-m](https://github.com/bojangles-m)! - feat: added additional prop `project_color_id` to the `GuidelineSearchResultApi`.
+
+### Patch Changes
+
+- [#913](https://github.com/Frontify/brand-sdk/pull/913) [`bf41e48`](https://github.com/Frontify/brand-sdk/commit/bf41e480d93b75084deee811099cc3ea094696fb) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds nullable `backgroundColor` to the `asset`
+
 ## 3.6.3
 
 ### Patch Changes

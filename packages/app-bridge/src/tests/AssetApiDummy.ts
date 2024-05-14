@@ -26,6 +26,7 @@ export class AssetApiDummy {
             width: 640,
             token: '--token--',
             revision_id: 1,
+            background_color: 'rgba(115, 210, 210, 255)',
         };
     }
 }
