@@ -9,7 +9,7 @@ import { useAfterInsertion } from './useAfterInsertion';
 
 describe('useAfterInsertion', () => {
     it('should execute a callback after the block has been inserted', () => {
-        const appBridge = getAppBridgeBlockStub({ isNew: true });
+        const appBridge = getAppBridgeBlockStub({ isNewlyInserted: true });
         const callbackStub = vi.fn();
         renderHook(() => useAfterInsertion(appBridge, callbackStub));
 
@@ -17,7 +17,7 @@ describe('useAfterInsertion', () => {
     });
 
     it('should not execute a callback if the block is not newly inserted', () => {
-        const appBridge = getAppBridgeBlockStub({ isNew: false });
+        const appBridge = getAppBridgeBlockStub({ isNewlyInserted: false });
         const callbackStub = vi.fn();
         renderHook(() => useAfterInsertion(appBridge, callbackStub));
 
@@ -25,7 +25,7 @@ describe('useAfterInsertion', () => {
     });
 
     it('should execute callback if the hook is enabled', () => {
-        const appBridge = getAppBridgeBlockStub({ isNew: true });
+        const appBridge = getAppBridgeBlockStub({ isNewlyInserted: true });
         const callbackStub = vi.fn();
         renderHook(() => useAfterInsertion(appBridge, callbackStub, true));
 
@@ -33,7 +33,7 @@ describe('useAfterInsertion', () => {
     });
 
     it('should not execute callback if the hook is disabled', () => {
-        const appBridge = getAppBridgeBlockStub({ isNew: true });
+        const appBridge = getAppBridgeBlockStub({ isNewlyInserted: true });
         const callbackStub = vi.fn();
         renderHook(() => useAfterInsertion(appBridge, callbackStub, false));
 

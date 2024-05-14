@@ -33,7 +33,7 @@ export type getAppBridgeBlockStubProps = {
     blockId?: number;
     sectionId?: number;
     projectId?: number;
-    isNew?: boolean;
+    isNewlyInserted?: boolean;
     isAuthenticated?: boolean;
     user?: User;
     language?: string;
@@ -51,7 +51,7 @@ export const getAppBridgeBlockStub = ({
     blockId = BLOCK_ID,
     sectionId = SECTION_ID,
     projectId = PROJECT_ID,
-    isNew = false,
+    isNewlyInserted = false,
     isAuthenticated = true,
     user = UserDummy.with(USER_ID),
     language = 'en',
@@ -219,9 +219,9 @@ export const getAppBridgeBlockStub = ({
                         return {
                             get: () => isAuthenticated,
                         };
-                    case 'isNew':
+                    case 'isNewlyInserted':
                         return {
-                            get: () => isNew,
+                            get: () => isNewlyInserted,
                         };
                     default:
                         return {

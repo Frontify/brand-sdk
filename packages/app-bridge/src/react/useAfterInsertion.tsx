@@ -6,11 +6,12 @@ import { type AppBridgeBlock } from '../AppBridgeBlock';
 
 export const useAfterInsertion = <T extends AppBridgeBlock>(appBridge: T, callback: () => void, enabled = true) => {
     useEffect(() => {
-        const isNew = appBridge.context('isNew').get();
-        if (enabled && isNew) {
+        const isNewlyInserted = appBridge.context('isNewlyInserted').get();
+        if (enabled && isNewlyInserted) {
             callback();
         }
-    }, [enabled, callback, appBridge]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enabled, appBridge]);
 
     return appBridge;
 };

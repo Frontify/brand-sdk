@@ -70,7 +70,7 @@ export type BlockContext = {
     blockId: number;
     sectionId?: number;
     isAuthenticated: boolean;
-    isNew: boolean;
+    isNewlyInserted: boolean;
 };
 
 export type BlockEvent = EventNameValidator<
