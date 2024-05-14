@@ -25,6 +25,7 @@ export class AssetDummy {
             token: '--token--',
             projectType: 'STYLEGUIDE',
             revisionId: 1,
+            backgroundColor: 'rgba(115, 210, 210, 255)',
         };
     }
 }
