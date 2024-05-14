@@ -22,6 +22,7 @@ export class GuidelineSearchResultApiDummy {
             section_slug: null,
             section_title: null,
             color_hex: undefined,
+            project_color_id: undefined,
         };
     }
 }
