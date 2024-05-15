@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.9.0
+
+### Minor Changes
+
+- [#921](https://github.com/Frontify/brand-sdk/pull/921) [`17af9f1`](https://github.com/Frontify/brand-sdk/commit/17af9f135a85b55f7e7757a112adf34125d03502) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `ìsDownloadProtected` to the `Asset`
+
 ## 3.8.0
 
 ### Minor Changes
