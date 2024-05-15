@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.9.1
+
+### Patch Changes
+
+- [#920](https://github.com/Frontify/brand-sdk/pull/920) [`c2477e7`](https://github.com/Frontify/brand-sdk/commit/c2477e76f7c221ae5435c783f3ef85ceb6295ca0) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(assetViewer): add isDownloadable option to asset viewer
+
 ## 3.9.0
 
 ### Minor Changes
