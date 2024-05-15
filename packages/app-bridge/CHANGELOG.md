@@ -41,6 +41,30 @@
 
 - # [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
 
+## 3.8.0
+
+### Minor Changes
+
+- [#909](https://github.com/Frontify/brand-sdk/pull/909) [`14b9fdf`](https://github.com/Frontify/brand-sdk/commit/14b9fdfb5bc58b482350109d1eee1a8c4ff942d6) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(useAfterInsertion): A new hook to execute a callback after a block has been inserted, can be used to focus a specific element for faster editing. The callback is only executed when the third argument is true (default). This hook is only usable with instances of AppBridgeBlock.
+
+  ```jsx
+  const ExampleBlock = ({ appBridge }: BlockProps) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [data, setData] = useState(null);
+    const hasData = data !== null;
+
+    useEffect(() => {
+      getAsyncData().then((data) => setData(data));
+    }, []);
+
+    useAfterInsertion(appBridge, () => buttonRef.current?.focus(), hasData);
+
+    return hasData ?
+      <button ref={buttonRef} onClick={() => console.log("Creating new item...")}>Create New Item</button> :
+      <div>Loading...</div>;
+  };
+  ```
+
 ## 3.7.0
 
 ### Minor Changes
