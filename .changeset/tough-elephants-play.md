@@ -2,4 +2,4 @@
 "@frontify/app-bridge": minor
 ---
 
-feat: add `ìsDownloadProtected` to the asset
+feat: add `ìsDownloadProtected` to the `Asset`
