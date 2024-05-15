@@ -6,7 +6,8 @@ import { type CommandRegistry } from './CommandRegistry';
 
 export const openAssetViewer = ({
     token,
+    isDownloadable,
 }: CommandRegistry['openAssetViewer']): DispatchHandlerParameter<'openAssetViewer', CommandRegistry> => ({
     name: 'openAssetViewer',
-    payload: { token },
+    payload: { token, isDownloadable },
 });

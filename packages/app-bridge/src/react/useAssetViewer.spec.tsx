@@ -31,7 +31,7 @@ describe('useAssetViewer', () => {
             expect(
                 appBridgeStub.dispatch.calledOnceWithExactly({
                     name: 'openAssetViewer',
-                    payload: { token: asset.token },
+                    payload: { token: asset.token, isDownloadable: undefined },
                 }),
             ).toBe(true);
         });

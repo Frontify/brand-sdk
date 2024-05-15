@@ -59,3 +59,8 @@ export type AssetChooserOptions = {
           selectedValueIds?: (number | string)[];
       }
 );
+
+export type AssetViewerOptions = {
+    token: string;
+    isDownloadable?: boolean;
+};
