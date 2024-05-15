@@ -18,6 +18,7 @@ import {
 } from './DocumentSection';
 import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
+import { type AssetViewerOptions } from './Terrific';
 import { type ThemeTemplate } from './ThemeTemplate';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
@@ -176,9 +177,7 @@ export type EmitterEvents = {
         action: 'update';
     };
 
-    'AppBridge:ViewerOpened': {
-        token: string;
-    };
+    'AppBridge:ViewerOpened': AssetViewerOptions;
 
     'AppBridge:GuidelineDocumentPage:MoveEvent': {
         documentPage: DocumentPage | { id: number; sort?: Nullable<number> };
