@@ -26,6 +26,7 @@ export class AssetDummy {
             projectType: 'STYLEGUIDE',
             revisionId: 1,
             backgroundColor: 'rgba(115, 210, 210, 255)',
+            isDownloadProtected: false,
         };
     }
 }

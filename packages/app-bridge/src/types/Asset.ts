@@ -23,6 +23,7 @@ export type AssetApi = {
     token: string;
     revision_id: Nullable<number>;
     background_color: Nullable<string>;
+    is_download_protected: boolean;
 };
 
 export type Asset = {
@@ -47,4 +48,5 @@ export type Asset = {
     projectType: Nullable<string>;
     revisionId: Nullable<number>;
     backgroundColor: Nullable<string>;
+    isDownloadProtected: boolean;
 };
