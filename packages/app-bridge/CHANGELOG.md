@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.24
+
+### Patch Changes
+
+- chore: merge main to dev
+
 ## 4.0.0-alpha.23
 
 ### Patch Changes
