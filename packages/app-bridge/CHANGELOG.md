@@ -53,6 +53,12 @@
 
 - # [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
 
+## 3.9.1
+
+### Patch Changes
+
+- [#920](https://github.com/Frontify/brand-sdk/pull/920) [`c2477e7`](https://github.com/Frontify/brand-sdk/commit/c2477e76f7c221ae5435c783f3ef85ceb6295ca0) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(assetViewer): add isDownloadable option to asset viewer
+
 ## 3.9.0
 
 ### Minor Changes

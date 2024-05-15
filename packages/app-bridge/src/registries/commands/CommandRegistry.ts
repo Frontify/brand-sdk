@@ -1,11 +1,16 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type CommandNameValidator } from '../../AppBridge';
-import { type Asset, type AssetChooserOptions, type OpenNewPublicationPayload } from '../../types';
+import {
+    type AssetViewerOptions,
+    type Asset,
+    type AssetChooserOptions,
+    type OpenNewPublicationPayload,
+} from '../../types';
 
 type OpenAssetChooserPayload = AssetChooserOptions;
 type CloseAssetChooserPayload = void;
-type OpenAssetViewerPayload = { token: string };
+type OpenAssetViewerPayload = AssetViewerOptions;
 type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
 type OpenNavigationManager = void;
