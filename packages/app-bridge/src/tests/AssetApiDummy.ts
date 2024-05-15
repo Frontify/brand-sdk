@@ -27,6 +27,7 @@ export class AssetApiDummy {
             token: '--token--',
             revision_id: 1,
             background_color: 'rgba(115, 210, 210, 255)',
+            is_download_protected: false,
         };
     }
 }
