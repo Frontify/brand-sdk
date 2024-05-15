@@ -1,5 +1,45 @@
 # @frontify/app-bridge
 
+## 3.9.0
+
+### Minor Changes
+
+- [#921](https://github.com/Frontify/brand-sdk/pull/921) [`17af9f1`](https://github.com/Frontify/brand-sdk/commit/17af9f135a85b55f7e7757a112adf34125d03502) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `ìsDownloadProtected` to the `Asset`
+
+## 3.8.0
+
+### Minor Changes
+
+- [#909](https://github.com/Frontify/brand-sdk/pull/909) [`14b9fdf`](https://github.com/Frontify/brand-sdk/commit/14b9fdfb5bc58b482350109d1eee1a8c4ff942d6) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat(useAfterInsertion): A new hook to execute a callback after a block has been inserted, can be used to focus a specific element for faster editing. The callback is only executed when the third argument is true (default). This hook is only usable with instances of AppBridgeBlock.
+
+  ```jsx
+  const ExampleBlock = ({ appBridge }: BlockProps) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [data, setData] = useState(null);
+    const hasData = data !== null;
+
+    useEffect(() => {
+      getAsyncData().then((data) => setData(data));
+    }, []);
+
+    useAfterInsertion(appBridge, () => buttonRef.current?.focus(), hasData);
+
+    return hasData ?
+      <button ref={buttonRef} onClick={() => console.log("Creating new item...")}>Create New Item</button> :
+      <div>Loading...</div>;
+  };
+  ```
+
+## 3.7.0
+
+### Minor Changes
+
+- [#912](https://github.com/Frontify/brand-sdk/pull/912) [`fa18d35`](https://github.com/Frontify/brand-sdk/commit/fa18d35a554f32d561d7ed33d3e2e5fa3fb90a89) Thanks [@bojangles-m](https://github.com/bojangles-m)! - feat: added additional prop `project_color_id` to the `GuidelineSearchResultApi`.
+
+### Patch Changes
+
+- [#913](https://github.com/Frontify/brand-sdk/pull/913) [`bf41e48`](https://github.com/Frontify/brand-sdk/commit/bf41e480d93b75084deee811099cc3ea094696fb) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds nullable `backgroundColor` to the `asset`
+
 ## 3.6.3
 
 ### Patch Changes

@@ -28,6 +28,7 @@ export type GuidelineSearchResultApi = {
     section_slug: string | null;
     section_title: string | null;
     color_hex?: string;
+    project_color_id?: string;
 };
 
 export type GuidelineSearchResult = CamelCasedPropertiesDeep<GuidelineSearchResultApi>;

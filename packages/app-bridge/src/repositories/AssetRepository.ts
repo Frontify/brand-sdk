@@ -35,5 +35,7 @@ export const mapAssetApiToAsset = (asset: AssetApi): Asset => {
         token: asset.token,
         projectType: asset.project_type,
         revisionId: asset.revision_id,
+        backgroundColor: asset.background_color,
+        isDownloadProtected: asset.is_download_protected,
     };
 };
