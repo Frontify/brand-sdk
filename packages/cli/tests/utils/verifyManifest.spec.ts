@@ -153,7 +153,7 @@ const MANIFEST_WITH_TOO_LONG_TITLE_ASSET_CREATION = {
 const VALID_MANIFEST_WITH_SECRETS = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
-    secrets: [{ label: 'first label', key: 'first-key' }],
+    secrets: [{ label: 'first label', key: 'first_key' }],
     surfaces: {
         mediaLibrary: {
             assetAction: {

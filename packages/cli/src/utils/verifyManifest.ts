@@ -32,11 +32,11 @@ const secretSchema = object({
             }
 
             secretKeySet.add(key);
-            return /^[\w-]+$/.test(key);
+            return /^\w+$/.test(key);
         },
         {
             message:
-                "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9, '-' and '_' without any spaces",
+                "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-0 and '_' without any spaces",
         },
     ),
 });
