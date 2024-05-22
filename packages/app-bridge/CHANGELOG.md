@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.26
+
+### Patch Changes
+
+- [#929](https://github.com/Frontify/brand-sdk/pull/929) [`414ea40`](https://github.com/Frontify/brand-sdk/commit/414ea4092d5446815df032a87471829801604634) Thanks [@julianiff](https://github.com/julianiff)! - refactor: Method to reflect feature
+
 ## 4.0.0-alpha.25
 
 ### Patch Changes
