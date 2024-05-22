@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.6.18-alpha.0
+
+### Patch Changes
+
+- [#927](https://github.com/Frontify/brand-sdk/pull/927) [`76bf464`](https://github.com/Frontify/brand-sdk/commit/76bf4644605534c40ed30d8ab6f242682c0a7b41) Thanks [@julianiff](https://github.com/julianiff)! - Fix: adjust regex to be more strict
+
 ## 5.6.17
 
 ### Patch Changes

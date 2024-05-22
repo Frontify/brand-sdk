@@ -9,6 +9,7 @@
     "@frontify/platform-app": "0.0.5"
   },
   "changesets": [
+    "blue-lions-brush",
     "calm-candles-wink",
     "cuddly-pets-hammer",
     "five-mangos-search",
@@ -30,6 +31,7 @@
     "pink-geckos-change",
     "polite-eels-shake",
     "pretty-items-marry",
+    "red-islands-report",
     "shaggy-mugs-speak",
     "shy-jobs-protect",
     "smart-suns-type",
