@@ -2,4 +2,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-chore: change regex on main
+fix: change regex to be more restrictive
