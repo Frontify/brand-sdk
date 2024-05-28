@@ -26,7 +26,8 @@ export function resetSecretKeySet() {
 const secretSchema = object({
     label: string(),
     key: string()
-        .max(100)
+        .min(1)
+        .max(80)
         .refine(
             (key) => {
                 if (secretKeySet.has(key)) {
