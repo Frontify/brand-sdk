@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
         "composite": true,
-        "skipLibCheck": true,
         "module": "ESNext",
-        "moduleResolution": "bundler",
+        "moduleResolution": "Node",
         "allowSyntheticDefaultImports": true,
-        "strict": true
+        "resolveJsonModule": true,
+        "baseUrl": ".",
+        "lib": ["ESNext"]
     },
     "include": [".eslintrc.cjs", "postcss.config.cjs", "tailwind.config.ts"]
 }
