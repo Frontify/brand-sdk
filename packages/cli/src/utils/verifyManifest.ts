@@ -25,20 +25,22 @@ export function resetSecretKeySet() {
 
 const secretSchema = object({
     label: string(),
-    key: string().refine(
-        (key) => {
-            if (secretKeySet.has(key)) {
-                return false;
-            }
+    key: string()
+        .max(100)
+        .refine(
+            (key) => {
+                if (secretKeySet.has(key)) {
+                    return false;
+                }
 
-            secretKeySet.add(key);
-            return /^\w+$/.test(key);
-        },
-        {
-            message:
-                "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9 and '_' without any spaces",
-        },
-    ),
+                secretKeySet.add(key);
+                return /^\w+$/.test(key);
+            },
+            {
+                message:
+                    "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9 and '_' without any spaces",
+            },
+        ),
 });
 const secretsArraySchema = array(secretSchema);
 
@@ -53,14 +55,14 @@ export function resetEndpointNameSet() {
     endpointNameSet.clear();
 }
 const endpointCallSchema = object({
-    name: string().refine(
-        (name) => {
-            if (endpointNameSet.has(name)) {
+    id: string().refine(
+        (id) => {
+            if (endpointNameSet.has(id)) {
                 return false;
             }
 
-            endpointNameSet.add(name);
-            return /^[\w-]*$/.test(name);
+            endpointNameSet.add(id);
+            return /^[\w-]*$/.test(id);
         },
         {
             message: 'Endpoint name must be unique',
