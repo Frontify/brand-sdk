@@ -7,7 +7,7 @@ export type GetSecureRequestPayload = {
 
 export type GetSecureRequestResponse = {
     data: unknown;
-    header: Record<string, string>;
+    statusText: string;
     status: string;
 };
 
