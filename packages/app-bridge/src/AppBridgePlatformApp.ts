@@ -25,7 +25,7 @@ import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/Messa
 import { getQueryParameters } from './utilities/queryParams';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<
-    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset' | 'getSecretRequest'>
+    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset' | 'getSecureRequest'>
 >;
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{
