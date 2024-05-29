@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.28
+
+### Patch Changes
+
+- [#939](https://github.com/Frontify/brand-sdk/pull/939) [`7ea653c`](https://github.com/Frontify/brand-sdk/commit/7ea653ca17f2a16c72e8ee5525580eaee0d6405a) Thanks [@julianiff](https://github.com/julianiff)! - refactor: rename brandsdk name from secretRequest to secureRequest
+
 ## 4.0.0-alpha.27
 
 ### Patch Changes
