@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { getSecureRequest } from './GetSecureRequest.ts';
+import { getSecureRequest } from './GetSecureRequest';
 
 describe('GetSecureRequest', () => {
     it('should return correct method name', () => {

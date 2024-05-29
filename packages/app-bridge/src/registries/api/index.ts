@@ -6,6 +6,6 @@ export * from './CreateAsset';
 export * from './GetAssetResourceInformation';
 export * from './GetCurrentUser';
 export * from './SetAssetIdsByBlockAssetKey';
-export * from './GetSecureRequest.ts';
+export * from './GetSecureRequest';
 export * from './GetDocumentNavigation';
 export * from './GetPortalNavigation';
