@@ -480,6 +480,32 @@ const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT = generateManifes
     },
 ]);
 
+const MANIFEST_WITH_TOO_LONG_SECRET_KEY = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [
+        {
+            label: 'test label',
+            key: 'SUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEY',
+        },
+    ],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
@@ -629,5 +655,8 @@ describe('Verify Platform App Manifest', () => {
         expect(() =>
             verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT, platformAppManifestSchemaV1),
         ).toThrow();
+    });
+    it('should throw error when secret key is too long', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_TOO_LONG_SECRET_KEY, platformAppManifestSchemaV1)).toThrow();
     });
 });
