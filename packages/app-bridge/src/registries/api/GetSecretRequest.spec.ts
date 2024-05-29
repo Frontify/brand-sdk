@@ -2,14 +2,14 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { getSecretRequest } from './GetSecretRequest.ts';
+import { getSecureRequest } from './GetSecureRequest.ts';
 
-describe('GetSecretRequest', () => {
+describe('GetSecureRequest', () => {
     it('should return correct method name', () => {
         const TEST_ID = 'user-api';
-        const secretRequest = getSecretRequest({ endpoint: TEST_ID, requestParams: 'data' });
-        expect(secretRequest.name).toBe('getSecretRequest');
-        expect(secretRequest.payload).toStrictEqual({
+        const secureRequest = getSecureRequest({ endpoint: TEST_ID, requestParams: 'data' });
+        expect(secureRequest.name).toBe('getSecureRequest');
+        expect(secureRequest.payload).toStrictEqual({
             endpoint: TEST_ID,
             requestParams: 'data',
         });
