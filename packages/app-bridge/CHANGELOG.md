@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.27
+
+### Patch Changes
+
+- [#937](https://github.com/Frontify/brand-sdk/pull/937) [`341886e`](https://github.com/Frontify/brand-sdk/commit/341886e9d16184048f9285d692df5177bfd2d0d1) Thanks [@julianiff](https://github.com/julianiff)! - chore: rename brand sdk name
+
 ## 4.0.0-alpha.26
 
 ### Patch Changes
