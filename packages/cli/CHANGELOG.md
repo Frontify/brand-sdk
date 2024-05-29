@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 5.6.18
+
+### Patch Changes
+
+- [#931](https://github.com/Frontify/brand-sdk/pull/931) [`a005421`](https://github.com/Frontify/brand-sdk/commit/a00542163dce5b4034af362bbc6aeb8e2ba86474) Thanks [@julianiff](https://github.com/julianiff)! - fix: change regex to be more restrictive
+
+- [#935](https://github.com/Frontify/brand-sdk/pull/935) [`3ca09bb`](https://github.com/Frontify/brand-sdk/commit/3ca09bb3b248a0ce27f49e8548821626ff609410) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: add `@type/node` in the platform app templates
+
+- [#936](https://github.com/Frontify/brand-sdk/pull/936) [`b90ad75`](https://github.com/Frontify/brand-sdk/commit/b90ad75b7f196456358476f17a35e0c0959a788d) Thanks [@julianiff](https://github.com/julianiff)! - chore: Limit secret length
+
 ## 5.6.17
 
 ### Patch Changes
