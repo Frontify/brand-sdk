@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.29
+
+### Patch Changes
+
+- [#941](https://github.com/Frontify/brand-sdk/pull/941) [`4e643ec`](https://github.com/Frontify/brand-sdk/commit/4e643ec9414e5671f877c556b68436a1a06569cb) Thanks [@julianiff](https://github.com/julianiff)! - Feat: adjust secure request response
+
 ## 4.0.0-alpha.28
 
 ### Patch Changes
