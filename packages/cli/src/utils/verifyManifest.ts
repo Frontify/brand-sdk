@@ -56,14 +56,14 @@ export function resetEndpointNameSet() {
     endpointNameSet.clear();
 }
 const endpointCallSchema = object({
-    id: string().refine(
-        (id) => {
-            if (endpointNameSet.has(id)) {
+    name: string().refine(
+        (name) => {
+            if (endpointNameSet.has(name)) {
                 return false;
             }
 
-            endpointNameSet.add(id);
-            return /^[\w-]*$/.test(id);
+            endpointNameSet.add(name);
+            return /^[\w-]*$/.test(name);
         },
         {
             message: 'Endpoint name must be unique',

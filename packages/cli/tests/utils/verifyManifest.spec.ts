@@ -302,7 +302,7 @@ const generateManifestWithEndpointNetworkCall = (networkEndpoints) => {
 
 const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -313,7 +313,7 @@ const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
         },
     },
     {
-        id: 'example-user-api',
+        name: 'example-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
@@ -327,7 +327,7 @@ const MANIFEST_WITH_NETWORK_CALL = generateManifestWithEndpointNetworkCall([
 
 const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -338,7 +338,7 @@ const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME = generateManifestWithEndpointNe
         },
     },
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
@@ -351,7 +351,7 @@ const MANIFEST_WITH_NETWORK_CALL_DUPLICATE_NAME = generateManifestWithEndpointNe
 ]);
 
 const MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL = generateManifestWithEndpointNetworkCall({
-    id: 'frontify-user-api',
+    name: 'frontify-user-api',
     resource: 'https://api.frontify.com/api/user',
     options: {
         method: 'POST',
@@ -377,7 +377,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_ID = generateManifestWithEndpointNetworkCall
 
 const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         options: {
             method: 'POST',
             headers: {
@@ -390,7 +390,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetwo
 
 const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'something-random',
         options: {
             method: 'POST',
@@ -404,7 +404,7 @@ const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpoi
 
 const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'GET',
@@ -414,14 +414,14 @@ const MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY = generateManifestWithEndpo
 
 const MANIFEST_WITH_NETWORK_CALL_NO_OPTIONS = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
     },
 ]);
 
 const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             headers: {
@@ -434,7 +434,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_METHOD = generateManifestWithEndpointNetwork
 
 const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -443,7 +443,7 @@ const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT = generateManifestWithEndpo
         },
     },
     {
-        id: 'example-user-api',
+        name: 'example-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
@@ -457,7 +457,7 @@ const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_OBJECT = generateManifestWithEndpo
 
 const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT = generateManifestWithEndpointNetworkCall([
     {
-        id: 'frontify-user-api',
+        name: 'frontify-user-api',
         resource: 'https://api.frontify.com/api/user',
         options: {
             method: 'POST',
@@ -468,7 +468,7 @@ const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT = generateManifes
         },
     },
     {
-        id: 'example-user-api',
+        name: 'example-user-api',
         resource: 'https://api.example.com/api/user',
         options: {
             method: 'POST',
