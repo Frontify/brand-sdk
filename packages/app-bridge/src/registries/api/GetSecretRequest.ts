@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 export type GetSecretRequestPayload = {
-    id: string;
+    endpoint: string;
     requestParams: unknown;
 };
 

@@ -7,10 +7,10 @@ import { getSecretRequest } from './GetSecretRequest.ts';
 describe('GetSecretRequest', () => {
     it('should return correct method name', () => {
         const TEST_ID = 'user-api';
-        const secretRequest = getSecretRequest({ id: TEST_ID, requestParams: 'data' });
+        const secretRequest = getSecretRequest({ endpoint: TEST_ID, requestParams: 'data' });
         expect(secretRequest.name).toBe('getSecretRequest');
         expect(secretRequest.payload).toStrictEqual({
-            id: TEST_ID,
+            endpoint: TEST_ID,
             requestParams: 'data',
         });
     });
