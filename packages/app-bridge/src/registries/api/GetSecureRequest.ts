@@ -7,6 +7,8 @@ export type GetSecureRequestPayload = {
 
 export type GetSecureRequestResponse = {
     data: unknown;
+    statusText: string;
+    status: string;
 };
 
 export const getSecureRequest = (payload: GetSecureRequestPayload) => ({
