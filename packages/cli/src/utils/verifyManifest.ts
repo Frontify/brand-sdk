@@ -73,11 +73,18 @@ const endpointCallSchema = object({
     options: requestOptionsSchema,
 });
 
+const hostnameRegex = /^[\d.A-Za-z-]+\.[A-Za-z]{2,}$/;
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
     secrets: secretsArraySchema.optional(),
     network: object({
+        allowedHosts: array(
+            string().refine((value) => hostnameRegex.test(value), {
+                message: 'Invalid host format',
+            }),
+        ).optional(),
         endpoints: array(endpointCallSchema).optional(),
     }).optional(),
     surfaces: object({

@@ -530,6 +530,75 @@ const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
     },
 };
 
+const VALID_MANIFEST_NETWORK_HOST = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['google.ch', 'frontify.com', 'api.openai.com'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_HOST = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['google.ch/test'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_HOST_HTTPS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['https://google.ch'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     beforeEach(() => {
         resetSecretKeySet();
@@ -602,6 +671,10 @@ describe('Verify Platform App Manifest', () => {
         const verifiedManifest = verifyManifest(MANIFEST_WITH_NETWORK_CALL, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
+    it('should accept an array of valid hosts', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_NETWORK_HOST, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
 
     it('should accept an array of network endpoint without header and body', () => {
         const verifiedManifest = verifyManifest(
@@ -656,7 +729,16 @@ describe('Verify Platform App Manifest', () => {
             verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT, platformAppManifestSchemaV1),
         ).toThrow();
     });
+
     it('should throw error when secret key is too long', () => {
         expect(() => verifyManifest(MANIFEST_WITH_TOO_LONG_SECRET_KEY, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName', () => {
+        expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName', () => {
+        expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST_HTTPS, platformAppManifestSchemaV1)).toThrow();
     });
 });
