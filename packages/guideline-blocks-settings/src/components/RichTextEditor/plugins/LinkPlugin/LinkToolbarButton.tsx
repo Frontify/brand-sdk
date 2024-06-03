@@ -18,7 +18,8 @@ export const LinkToolbarButton = forwardRef<HTMLButtonElement, { disabled: boole
         const { props } = useLinkToolbarButton(state);
         return (
             <ToolbarButton
-                onMouseDown={() => {
+                onMouseDown={(event) => {
+                    event.preventDefault();
                     focusEditor(editor, editor.selection ?? editor.prevSelection ?? undefined);
                 }}
                 ref={ref}
