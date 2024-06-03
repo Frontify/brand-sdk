@@ -73,7 +73,8 @@ const endpointCallSchema = object({
     options: requestOptionsSchema,
 });
 
-const hostnameRegex = /^(([A-Za-z]|[A-Za-z][\dA-Za-z-]*[\dA-Za-z])\.)*([A-Za-z]|[A-Za-z][\dA-Za-z-]*[\dA-Za-z])$/;
+const hostnameRegex =
+    /^(([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])\.)*([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])$/;
 
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
