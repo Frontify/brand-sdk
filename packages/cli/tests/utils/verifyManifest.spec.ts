@@ -534,7 +534,7 @@ const VALID_MANIFEST_NETWORK_HOST = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
     network: {
-        allowedHosts: ['google.ch', 'frontify.com', 'api.openai.com'],
+        allowedHosts: ['google.ch', 'frontify.com', 'api.openai.com', 'test.open.api.example.com'],
     },
     surfaces: {
         mediaLibrary: {
@@ -581,6 +581,52 @@ const INVALID_MANIFEST_NETWORK_HOST_HTTPS = {
     appId: 'abcdabcdabcdabcdabcdabcda',
     network: {
         allowedHosts: ['https://google.ch'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_ALLOWED_HOST_DOUBLE_DOT = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['example..com'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['exa_mple.com'],
     },
     surfaces: {
         mediaLibrary: {
@@ -740,5 +786,17 @@ describe('Verify Platform App Manifest', () => {
 
     it('should detect when it is not a valid hostName', () => {
         expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST_HTTPS, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName with 2 dots', () => {
+        expect(() =>
+            verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_DOUBLE_DOT, platformAppManifestSchemaV1),
+        ).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName with underscore', () => {
+        expect(() =>
+            verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE, platformAppManifestSchemaV1),
+        ).toThrow();
     });
 });
