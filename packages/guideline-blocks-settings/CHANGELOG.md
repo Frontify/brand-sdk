@@ -1,5 +1,19 @@
 # @frontify/guideline-blocks-settings
 
+## 0.35.0
+
+### Minor Changes
+
+- [#949](https://github.com/Frontify/brand-sdk/pull/949) [`1d67cc1`](https://github.com/Frontify/brand-sdk/commit/1d67cc1f8e0cd5387b914d61d944e9756542a6e6) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(tailwind): introduce container queries
+  `@frontify/guideline-block-settings/tailwind` can now be used as a tailwind preset in your tailwind.config.ts file to enable container queries. On how to use them refer to tailwind documentation: https://github.com/tailwindlabs/tailwindcss-container-queries
+
+### Patch Changes
+
+- [#948](https://github.com/Frontify/brand-sdk/pull/948) [`cc7f942`](https://github.com/Frontify/brand-sdk/commit/cc7f9427df1a3d8d621850adff4c3d59f2f8e308) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): on safari the first click is not recognized
+
+- Updated dependencies [[`7baceff`](https://github.com/Frontify/brand-sdk/commit/7baceffc87773e9f6a1e169aa45151b92c614cbc)]:
+  - @frontify/sidebar-settings@0.9.17
+
 ## 0.34.15
 
 ### Patch Changes

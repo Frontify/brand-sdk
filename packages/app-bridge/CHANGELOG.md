@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.9.2
+
+### Patch Changes
+
+- [#950](https://github.com/Frontify/brand-sdk/pull/950) [`d938929`](https://github.com/Frontify/brand-sdk/commit/d9389295b856b93d73e5defdd2a347964e1b5377) Thanks [@hochreutenerl](https://github.com/hochreutenerl)! - fix: remove unused properties from `DocumentSectionApi`
+
 ## 3.9.1
 
 ### Patch Changes
