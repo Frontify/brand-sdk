@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-Remove (internally) unused properties from DocumentSectionApi
+fix: remove unused properties from `DocumentSectionApi`
