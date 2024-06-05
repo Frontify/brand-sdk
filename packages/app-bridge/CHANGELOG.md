@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.30
+
+### Patch Changes
+
+- chore: merge branch `main` into dev
+
 ## 4.0.0-alpha.29
 
 ### Patch Changes
@@ -82,6 +88,7 @@
 ### Minor Changes
 
 - # [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+
 ## 3.9.2
 
 ### Patch Changes
