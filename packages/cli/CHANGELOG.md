@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 5.6.19
+
+### Patch Changes
+
+- [#945](https://github.com/Frontify/brand-sdk/pull/945) [`c095277`](https://github.com/Frontify/brand-sdk/commit/c0952770c001fb1ea4dc20996ff3c90ec2499d73) Thanks [@julianiff](https://github.com/julianiff)! - feat: add new property allowedHosts to manifest
+
+- [#943](https://github.com/Frontify/brand-sdk/pull/943) [`0814fc2`](https://github.com/Frontify/brand-sdk/commit/0814fc2aefbb69074a119a59ae3f16c1d8f8afd0) Thanks [@julianiff](https://github.com/julianiff)! - chore: bump dependency `@frontify/frontify-cli` to `^5.6.19`, `@frontify/fondue` to `^12.1.2`and `@frontify/app-bridge` to `4.0.0-alpha.29` for the templates .
+
 ## 5.6.18
 
 ### Patch Changes
