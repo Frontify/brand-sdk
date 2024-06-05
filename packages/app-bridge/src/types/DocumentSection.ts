@@ -4,7 +4,6 @@ export type DocumentSectionApi = {
     id: number;
     document_id: number;
     page_id: number;
-    revision: unknown;
     slug: string;
     sort: number;
     title: Nullable<string>;
@@ -12,7 +11,6 @@ export type DocumentSectionApi = {
     created: string;
     modifier: Nullable<number>;
     modified: Nullable<string>;
-    valid_from: string;
     valid_to: Nullable<string>;
     permanent_link: string;
 };

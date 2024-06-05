@@ -15,7 +15,8 @@ export const ButtonToolbarButton = forwardRef<
         <ToolbarButton
             ref={ref}
             {...rootProps}
-            onMouseDown={() => {
+            onMouseDown={(event) => {
+                event.preventDefault();
                 focusEditor(editor, editor.selection ?? editor.prevSelection ?? undefined);
             }}
             onClick={() => {

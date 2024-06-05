@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.17
+
+### Patch Changes
+
+- [#944](https://github.com/Frontify/brand-sdk/pull/944) [`7baceff`](https://github.com/Frontify/brand-sdk/commit/7baceffc87773e9f6a1e169aa45151b92c614cbc) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - refactor: decouple Fondue from the sidebar settings
+
 ## 0.9.16
 
 ### Patch Changes

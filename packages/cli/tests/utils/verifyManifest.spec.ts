@@ -480,6 +480,32 @@ const MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT = generateManifes
     },
 ]);
 
+const MANIFEST_WITH_TOO_LONG_SECRET_KEY = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    secrets: [
+        {
+            label: 'test label',
+            key: 'SUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEYSUPER_LONG_KEY',
+        },
+    ],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
@@ -487,6 +513,121 @@ const MANIFEST_WITH_DUPLICATE_SECRET_KEY = {
         { label: 'test label', key: 'DUPLICATE_KEY' },
         { label: 'another label', key: 'DUPLICATE_KEY' },
     ],
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const VALID_MANIFEST_NETWORK_HOST = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['google.ch', 'frontify.com', 'api.openai.com', 'test.open.api.example.com'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_HOST = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['google.ch/test'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_HOST_HTTPS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['https://google.ch'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_ALLOWED_HOST_DOUBLE_DOT = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['example..com'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    network: {
+        allowedHosts: ['exa_mple.com'],
+    },
     surfaces: {
         mediaLibrary: {
             assetAction: {
@@ -576,6 +717,10 @@ describe('Verify Platform App Manifest', () => {
         const verifiedManifest = verifyManifest(MANIFEST_WITH_NETWORK_CALL, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
+    it('should accept an array of valid hosts', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_NETWORK_HOST, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
 
     it('should accept an array of network endpoint without header and body', () => {
         const verifiedManifest = verifyManifest(
@@ -628,6 +773,30 @@ describe('Verify Platform App Manifest', () => {
     it('should throw error when header is not an object of strings key value', () => {
         expect(() =>
             verifyManifest(MANIFEST_WITH_NETWORK_CALL_WRONG_HEADER_AS_NESTED_OBJECT, platformAppManifestSchemaV1),
+        ).toThrow();
+    });
+
+    it('should throw error when secret key is too long', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_TOO_LONG_SECRET_KEY, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName', () => {
+        expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName', () => {
+        expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST_HTTPS, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName with 2 dots', () => {
+        expect(() =>
+            verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_DOUBLE_DOT, platformAppManifestSchemaV1),
+        ).toThrow();
+    });
+
+    it('should detect when it is not a valid hostName with underscore', () => {
+        expect(() =>
+            verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE, platformAppManifestSchemaV1),
         ).toThrow();
     });
 });

@@ -6,6 +6,7 @@ module.exports = {
     corePlugins: {
         preflight: false,
     },
+    plugins: [require('@tailwindcss/container-queries')],
     theme: {
         extend: {
             colors: {
@@ -21,6 +22,11 @@ module.exports = {
                 'blank-state-pressed-inverse': '#F1F1F1',
                 'blank-state-line': '#A3A5A5',
                 'blank-state-line-hover': '#1A1C1C',
+            },
+            containers: {
+                sm: '440px',
+                md: '740px',
+                lg: '1240px',
             },
         },
     },

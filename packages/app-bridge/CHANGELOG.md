@@ -82,6 +82,11 @@
 ### Minor Changes
 
 - # [#864](https://github.com/Frontify/brand-sdk/pull/864) [`c46694a`](https://github.com/Frontify/brand-sdk/commit/c46694abe2ce06d78e8bd27ef832e92244116108) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+## 3.9.2
+
+### Patch Changes
+
+- [#950](https://github.com/Frontify/brand-sdk/pull/950) [`d938929`](https://github.com/Frontify/brand-sdk/commit/d9389295b856b93d73e5defdd2a347964e1b5377) Thanks [@hochreutenerl](https://github.com/hochreutenerl)! - fix: remove unused properties from `DocumentSectionApi`
 
 ## 3.9.1
 

@@ -1,7 +1,7 @@
 {
     "name": "@frontify/guideline-blocks-settings",
     "type": "module",
-    "version": "0.34.15",
+    "version": "0.35.0",
     "description": "Provides types and helpers for the guideline block development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -19,12 +19,14 @@
             "require": "./dist/index.umd.js",
             "import": "./dist/index.es.js"
         },
-        "./styles": "./dist/styles.css"
+        "./styles": "./dist/styles.css",
+        "./tailwind": "./tailwind.config.ts"
     },
     "main": "./dist/index.es.js",
     "types": "./dist/index.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "tailwind.config.ts"
     ],
     "scripts": {
         "build": "vite build",
@@ -55,6 +57,7 @@
     "devDependencies": {
         "@babel/core": "^7.24.4",
         "@frontify/eslint-config-react": "0.17.6",
+        "@tailwindcss/container-queries": "^0.1.1",
         "@testing-library/jest-dom": "^6.4.2",
         "@testing-library/react": "^14.3.0",
         "@testing-library/user-event": "14.5.2",

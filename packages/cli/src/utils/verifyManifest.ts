@@ -25,20 +25,23 @@ export function resetSecretKeySet() {
 
 const secretSchema = object({
     label: string(),
-    key: string().refine(
-        (key) => {
-            if (secretKeySet.has(key)) {
-                return false;
-            }
+    key: string()
+        .min(1)
+        .max(80)
+        .refine(
+            (key) => {
+                if (secretKeySet.has(key)) {
+                    return false;
+                }
 
-            secretKeySet.add(key);
-            return /^\w+$/.test(key);
-        },
-        {
-            message:
-                "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9 and '_' without any spaces",
-        },
-    ),
+                secretKeySet.add(key);
+                return /^\w+$/.test(key);
+            },
+            {
+                message:
+                    "Secret Key must be unique and should only contain letters from a-z, A-Z, numbers from 0-9 and '_' without any spaces",
+            },
+        ),
 });
 const secretsArraySchema = array(secretSchema);
 
@@ -70,11 +73,19 @@ const endpointCallSchema = object({
     options: requestOptionsSchema,
 });
 
+const hostnameRegex =
+    /^(([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])\.)*([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])$/;
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
     secrets: secretsArraySchema.optional(),
     network: object({
+        allowedHosts: array(
+            string().refine((value) => hostnameRegex.test(value), {
+                message: 'Invalid host format',
+            }),
+        ).optional(),
         endpoints: array(endpointCallSchema).optional(),
     }).optional(),
     surfaces: object({
