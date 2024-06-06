@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-fix(*): move container query plugin to a public dependency
+fix(*): move `@tailwindcss/container-queries` to a public dependency
