@@ -8,6 +8,7 @@ let progressAll = {
     loaded: 0,
     total: 0,
 };
+let skipConversion = false;
 const uploadChunkQueue = [];
 let isUploading = false;
 
@@ -138,7 +139,7 @@ function init() {
             process();
         }
     };
-    xhr.send(JSON.stringify({ files: filesMetadataAdd }));
+    xhr.send(JSON.stringify({ files: filesMetadataAdd, skipConversion  }));
 }
 
 function process() {
@@ -229,6 +230,7 @@ function reset() {
     files = [];
     filesMetadata = [];
     filesMetadataAdd = [];
+    skipConversion = false;
     progress = [];
     progressAll = {
         loaded: 0,
@@ -242,6 +244,8 @@ function reset() {
 }
 
 self.onmessage = function (event) {
+    skipConversion = 'skipConversion' in event.data ? event.data.skipConversion : false;
+
     // Allows to add files during ongoing uploads
     filesMetadataAdd = [];
 

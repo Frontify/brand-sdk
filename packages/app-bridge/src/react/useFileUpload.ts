@@ -23,7 +23,10 @@ enum WorkerEvent {
     OnFileFail = 'onFileFail',
 }
 
-export type UseFileUploadReturnTypes = [(files: FileList | File) => void, { results: FileApi[]; doneAll: boolean }];
+export type UseFileUploadReturnTypes = [
+    (files: FileList | File, skipConversion?: boolean) => void,
+    { results: FileApi[]; doneAll: boolean },
+];
 
 export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadReturnTypes => {
     const results = useRef<FileApi[]>([]);
@@ -115,7 +118,7 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
         results.current = [];
     };
 
-    const uploadFiles = (files: FileList | File) => {
+    const uploadFiles = (files: FileList | File, skipConversion: boolean = false) => {
         resetState();
         const fileArray = getFilesAsArray(files);
 
@@ -125,6 +128,7 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
 
         const message = {
             files: fileArray,
+            skipConversion,
         };
 
         if (workerRef?.current) {
