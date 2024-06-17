@@ -33,6 +33,7 @@ export interface AppBridgeTheme {
     ): EventUnsubscribeFunction;
 
     /**
+     * @deprecated
      * Search in the current Guideline for a given query.
      * @param query - The query to search for.
      * @param order - The order in which the results should be returned. Defaults to 'relevance'.
