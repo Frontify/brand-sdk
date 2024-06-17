@@ -37,7 +37,6 @@ export type Context = {
     template: TemplateContext | null;
 };
 
-export type ApiVerb = 'get' | 'create' | 'update' | 'delete' | 'add' | 'remove' | 'set';
 export type CommandVerb = 'open' | 'close' | 'navigate' | 'download';
 export type EventVerb = 'chosen';
 
