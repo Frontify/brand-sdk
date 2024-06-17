@@ -1,12 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-enum LinkSettingsDisplay {
+export enum LinkSettingsDisplay {
     TextAndIcon = 'ICON_TEXT',
     IconOnly = 'ICON',
     TextOnly = 'TEXT',
 }
 
-enum LinkSettingsIconPosition {
+export enum LinkSettingsIconPosition {
     Right = 'RIGHT',
     Left = 'LEFT',
 }
