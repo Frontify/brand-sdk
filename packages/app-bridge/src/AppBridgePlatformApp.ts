@@ -144,7 +144,9 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             this.apiMessageBus = new MessageBus(apiPort);
             this.stateMessageBus = new MessageBus(statePort);
 
-            statePort.onmessage = this.onStateChangeListener;
+            statePort.onmessage = (event: MessageEvent<{ token: string; message: Record<string, unknown> }>) => {
+                this.onStateChangeListener(event);
+            };
 
             this.localContext = context;
             this.localState = state;
