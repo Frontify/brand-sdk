@@ -144,6 +144,10 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             this.apiMessageBus = new MessageBus(apiPort);
             this.stateMessageBus = new MessageBus(statePort);
 
+            statePort.onmessage = (event: MessageEvent<{ token: string; message: Record<string, unknown> }>) => {
+                this.onStateChangeListener(event);
+            };
+
             this.localContext = context;
             this.localState = state;
             this.initialized = true;
@@ -255,6 +259,20 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
                 // @ts-expect-error if there are multiple parameters, we spread them in the callback call
                 callback(...(Array.isArray(callbackParameters) ? callbackParameters : [callbackParameters]));
             }
+        }
+    }
+
+    private onStateChangeListener(event: MessageEvent<{ token: string; message: Record<string, unknown> }>) {
+        const { token } = event.data;
+
+        if (token === 'DEV_UPDATE_STATE' && 'settings' in event.data.message && 'userState' in event.data.message) {
+            const message = event.data.message as PlatformAppState;
+
+            this.callSubscribedTopic('State.*', [message, this.localState]);
+            this.callSubscribedTopic('State.settings', [message.settings, this.localState.settings]);
+            this.callSubscribedTopic('State.userState', [message.userState, this.localState.userState]);
+
+            this.localState = message;
         }
     }
 }
