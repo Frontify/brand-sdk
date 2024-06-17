@@ -272,10 +272,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             this.callSubscribedTopic('State.settings', [message.settings, this.localState.settings]);
             this.callSubscribedTopic('State.userState', [message.userState, this.localState.userState]);
 
-            this.localState = message as {
-                settings: Record<string, unknown>;
-                userState: Record<string, unknown>;
-            };
+            this.localState = message;
         }
     }
 }
