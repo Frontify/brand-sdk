@@ -19,7 +19,7 @@ class PlatformAppDevelopmentServer {
                 entryPoints: ['./src/index.ts'],
                 outfile: './dist/dev-settings.js',
                 minify: true,
-                globalName: 'devsettings',
+                globalName: 'devSettings',
                 format: 'iife',
                 bundle: true,
                 loader: {
