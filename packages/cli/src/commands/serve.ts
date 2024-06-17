@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
+import * as esbuild from 'esbuild';
+import globToRegExp from 'glob-to-regexp';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
@@ -13,16 +15,45 @@ class PlatformAppDevelopmentServer {
 
     async serve(): Promise<void> {
         try {
-            const viteServer = await createServer({
-                root: process.cwd(),
-                configFile: false,
-                plugins: [react()],
-                define: {
-                    'process.env.NODE_ENV': JSON.stringify('development'),
+            const settingsSchema = await esbuild.context({
+                entryPoints: ['./src/index.ts'],
+                outfile: './dist/dev-settings.js',
+                minify: true,
+                globalName: 'devsettings',
+                format: 'iife',
+                bundle: true,
+                loader: {
+                    '.css': 'empty',
                 },
             });
 
-            const server = await viteServer.listen(this.port, true);
+            const viteServerDev = await createServer({
+                root: process.cwd(),
+                configFile: false,
+                define: {
+                    'process.env.NODE_ENV': JSON.stringify('development'),
+                },
+                plugins: [
+                    react(),
+                    {
+                        name: 'prebuild-commands',
+                        handleHotUpdate: ({ file, server }) => {
+                            const filePattern = globToRegExp('**/settings.ts');
+                            const filePattern2 = globToRegExp('**/index.ts');
+                            if (filePattern.test(file) || filePattern2.test(file)) {
+                                // if the change is either in settings.ts or index.ts do a rebuild to load settings
+                                settingsSchema.rebuild();
+                                server.restart();
+                            }
+                        },
+                        buildStart: () => {
+                            settingsSchema.rebuild();
+                        },
+                    },
+                ],
+            });
+
+            const server = await viteServerDev.listen(this.port, true);
             server.printUrls();
         } catch (error) {
             console.error(error);
