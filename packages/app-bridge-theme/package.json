@@ -15,11 +15,6 @@
             "types": "./dist/index.d.ts",
             "require": "./dist/index.js",
             "import": "./dist/index.js"
-        },
-        "./testing": {
-            "types": "./dist/testing.d.ts",
-            "require": "./dist/testing.js",
-            "import": "./dist/testing.js"
         }
     },
     "main": "./dist/index.js",
@@ -46,8 +41,7 @@
         "react": "^18",
         "sinon": "^15 || ^16 || ^17"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.17.6",
         "@testing-library/react": "^14.3.0",
@@ -59,6 +53,7 @@
         "eslint-plugin-notice": "^0.9.10",
         "prettier": "^3.2.5",
         "react": "^18.2.0",
+        "ts-json-as-const": "^1.0.7",
         "typescript": "^5.4.4",
         "vite": "^5.2.10",
         "vite-plugin-dts": "^3.8.1",

@@ -14,15 +14,14 @@ export const globals = {
 };
 
 export default defineConfig({
-    plugins: [
-        dts({ insertTypesEntry: true, rollupTypes: true }),
-    ],
+    plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
     build: {
         lib: {
             entry: {
                 index: './src/index.ts',
-                testing: './src/tests/index.ts',
+                // testing: './src/tests/index.ts',
             },
+            name: 'app-bridge-theme',
         },
         sourcemap: true,
         minify: true,
