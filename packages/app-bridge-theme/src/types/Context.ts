@@ -2,6 +2,7 @@
 
 import { type EventUnsubscribeFunction } from 'src/types';
 
+import { type Asset } from './Asset';
 import {
     type GuidelineCoverPage,
     type GuidelineDocument,
@@ -32,7 +33,7 @@ export type Context = {
     template: TemplateContext | null;
     settings: {
         templateSettings: Record<string, unknown>;
-        templateAssets: Record<string, unknown>;
+        templateAssets: Record<string, Asset[]>;
     };
 };
 
