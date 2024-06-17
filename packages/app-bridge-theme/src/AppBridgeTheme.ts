@@ -3,15 +3,12 @@
 import {
     type Command,
     type DispatchHandlerParameter,
-    type StateReturn,
-    type ContextReturn,
-    type Event,
+    type AppBridgeThemeEvent,
     type EventNameParameter,
     type EventCallbackParameter,
     type EventUnsubscribeFunction,
-    type State,
-    type Context,
 } from './types';
+import { type ContextReturn, type Context } from './types/Context';
 import { type GuidelineSearchResult } from './types/GuidelineSearchResult';
 
 export interface AppBridgeTheme {
@@ -19,17 +16,13 @@ export interface AppBridgeTheme {
         dispatchHandler: DispatchHandlerParameter<CommandName, Command>,
     ): Promise<void>;
 
-    state(): StateReturn<State, void>;
-    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
-    state(key?: keyof State | void): unknown;
-
     context(): ContextReturn<Context, void>;
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
     context(key?: keyof Context | void): unknown;
 
-    subscribe<EventName extends keyof Event>(
-        eventName: EventNameParameter<EventName, Event>,
-        callback: EventCallbackParameter<EventName, Event>,
+    subscribe<EventName extends keyof AppBridgeThemeEvent>(
+        eventName: EventNameParameter<EventName, AppBridgeThemeEvent>,
+        callback: EventCallbackParameter<EventName, AppBridgeThemeEvent>,
     ): EventUnsubscribeFunction;
 
     /**

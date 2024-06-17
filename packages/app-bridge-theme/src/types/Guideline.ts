@@ -1,6 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type LinkSettingsDisplay, type LinkSettingsIconPosition } from './Document';
+enum LinkSettingsDisplay {
+    TextAndIcon = 'ICON_TEXT',
+    IconOnly = 'ICON',
+    TextOnly = 'TEXT',
+}
+
+enum LinkSettingsIconPosition {
+    Right = 'RIGHT',
+    Left = 'LEFT',
+}
 
 export interface GuidelineCoverPage {
     id(): number;
