@@ -142,10 +142,6 @@ importers:
         version: 1.4.0(@types/node@18.19.31)(@vitest/ui@1.4.0)(happy-dom@13.10.1)(terser@5.30.4)
 
   packages/app-bridge-theme:
-    dependencies:
-      sinon:
-        specifier: ^15 || ^16 || ^17
-        version: 17.0.1
     devDependencies:
       '@frontify/eslint-config-react':
         specifier: ^0.17.6
@@ -159,12 +155,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.24
         version: 18.2.24
-      '@vitest/coverage-v8':
-        specifier: ^1.4.0
-        version: 1.4.0(vitest@1.4.0(@types/node@18.19.31)(@vitest/ui@1.4.0)(happy-dom@13.10.1)(terser@5.30.4))
-      '@vitest/ui':
-        specifier: ^1.4.0
-        version: 1.4.0(vitest@1.4.0)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -192,9 +182,6 @@ importers:
       vite-plugin-dts:
         specifier: ^3.8.1
         version: 3.8.1(@types/node@18.19.31)(rollup@4.14.1)(typescript@5.4.4)(vite@5.2.10(@types/node@18.19.31)(terser@5.30.4))
-      vitest:
-        specifier: ^1.4.0
-        version: 1.4.0(@types/node@18.19.31)(@vitest/ui@1.4.0)(happy-dom@13.10.1)(terser@5.30.4)
 
   packages/cli:
     dependencies:

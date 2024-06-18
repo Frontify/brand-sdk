@@ -41,14 +41,3 @@ jobs:
 
             - name: Lint code
               run: pnpm --stream --filter {packages/app-bridge-theme} lint
-
-            - name: Test code
-              run: pnpm --stream --filter {packages/app-bridge-theme} test:coverage
-
-            - name: SonarCloud Scan
-              uses: sonarsource/sonarcloud-github-action@master
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              with:
-                  projectBaseDir: ./packages/app-bridge-theme

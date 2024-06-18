@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
-import { defineConfig } from 'vitest/config';
 
 import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
 
@@ -19,7 +19,6 @@ export default defineConfig({
         lib: {
             entry: {
                 index: './src/index.ts',
-                // testing: './src/tests/index.ts',
             },
             name: 'app-bridge-theme',
         },
@@ -28,15 +27,5 @@ export default defineConfig({
         rollupOptions: {
             external: [...dependencies, ...peerDependencies],
         },
-    },
-    test: {
-        css: true,
-        coverage: {
-            all: true,
-            reporter: ['text', 'lcov'],
-            include: ['src/**/*.ts', 'src/**/*.tsx'],
-            exclude: ['src/**/spec.ts', 'src/**/spec.tsx'],
-        },
-        setupFiles: ['./src/setupTests.ts'],
     },
 });
