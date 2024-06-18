@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.31
+
+### Patch Changes
+
+- [#956](https://github.com/Frontify/brand-sdk/pull/956) [`2491b6e`](https://github.com/Frontify/brand-sdk/commit/2491b6e88fc41ca8eafff5e41ec181247a968c46) Thanks [@julianiff](https://github.com/julianiff)! - feat: adds state listener to allow push from parent
+
 ## 4.0.0-alpha.30
 
 ### Patch Changes
