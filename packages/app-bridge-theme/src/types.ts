@@ -72,3 +72,7 @@ export type EventCallbackParameter<EventName, AppBridgeThemeEvent> = EventName e
     : () => void;
 
 export type EventUnsubscribeFunction = () => void;
+
+export type SubscribeMap<Event> = {
+    [EventName in keyof Event as EventName]: Map<EventCallbackParameter<keyof Event, Event>, boolean>;
+};
