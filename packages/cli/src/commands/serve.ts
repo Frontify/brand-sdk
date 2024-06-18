@@ -4,7 +4,6 @@ import path from 'node:path';
 
 import react from '@vitejs/plugin-react';
 import * as esbuild from 'esbuild';
-import globToRegExp from 'glob-to-regexp';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
