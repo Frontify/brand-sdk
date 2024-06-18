@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CommandNameValidator } from 'src/types';
+import { type CommandNameValidator } from '../types/Command.ts';
 
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;

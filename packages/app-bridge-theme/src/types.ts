@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type EventCallbackParameter } from './types/Event.ts';
+import { type EventCallbackParameter } from './types/Event';
 
 type NameContextList = 'Command' | 'Event';
 export type WrongNamePattern<ApiMethodName, NameContext extends NameContextList> = ApiMethodName extends string

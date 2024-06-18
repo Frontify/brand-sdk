@@ -2,10 +2,10 @@
 
 import { type Simplify } from 'type-fest';
 
-import { type EventRegistry } from '../registries/EventRegistry.ts';
-import { type ObjectNameValidator, type WrongNamePattern } from '../types.ts';
+import { type EventRegistry } from '../registries/EventRegistry';
+import { type ObjectNameValidator, type WrongNamePattern } from '../types';
 
-import { type Context } from './Context.ts';
+import { type Context } from './Context';
 
 type EventVerb = 'chosen';
 

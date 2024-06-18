@@ -2,8 +2,8 @@
 
 import { type Simplify } from 'type-fest';
 
-import { type CommandRegistry } from '../commands';
-import { type ObjectNameValidator, type WrongNamePattern } from '../types.ts';
+import { type CommandRegistry } from '../registries/CommandRegistry';
+import { type ObjectNameValidator, type WrongNamePattern } from '../types';
 
 type CommandVerb = 'open' | 'close' | 'navigate' | 'download';
 

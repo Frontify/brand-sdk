@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type EventUnsubscribeFunction } from 'src/types';
-
 import { type Asset } from './Asset';
+import { type EventUnsubscribeFunction } from './Event';
 import {
     type GuidelineCoverPage,
     type GuidelineDocument,
