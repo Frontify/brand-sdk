@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import path from 'node:path';
+
 import react from '@vitejs/plugin-react';
 import * as esbuild from 'esbuild';
 import globToRegExp from 'glob-to-regexp';
@@ -11,12 +13,15 @@ import { getAppBridgeVersion } from '../utils/appBridgeVersion';
 import { Logger } from '../utils/logger';
 
 class PlatformAppDevelopmentServer {
-    constructor(private readonly port: number) {}
+    constructor(
+        private readonly entryFilePath: string,
+        private readonly port: number,
+    ) {}
 
     async serve(): Promise<void> {
         try {
             const settingsSchema = await esbuild.context({
-                entryPoints: ['./src/index.ts'],
+                entryPoints: [this.entryFilePath],
                 outfile: './dist/dev-settings.js',
                 minify: true,
                 globalName: 'devSettings',
@@ -38,9 +43,9 @@ class PlatformAppDevelopmentServer {
                     {
                         name: 'prebuild-commands',
                         handleHotUpdate: ({ file, server }) => {
-                            const filePattern = globToRegExp('**/settings.ts');
-                            const filePattern2 = globToRegExp('**/index.ts');
-                            if (filePattern.test(file) || filePattern2.test(file)) {
+                            const relativeFilePath = path.relative(process.cwd(), file);
+
+                            if (relativeFilePath === 'src/settings.ts' || relativeFilePath === 'src/index.ts') {
                                 // if the change is either in settings.ts or index.ts do a rebuild to load settings
                                 settingsSchema.rebuild();
                                 server.restart();
@@ -146,9 +151,9 @@ export const createDevelopmentServer = async (
     await developmentServer.serve();
 };
 
-export const createDevelopmentServerForPlatformApp = async (port: number): Promise<void> => {
+export const createDevelopmentServerForPlatformApp = async (entryFilePath: string, port: number): Promise<void> => {
     Logger.info('Starting the development server for Apps...');
 
-    const developmentServer = new PlatformAppDevelopmentServer(port);
+    const developmentServer = new PlatformAppDevelopmentServer(entryFilePath, port);
     await developmentServer.serve();
 };
