@@ -6,7 +6,8 @@
     "@frontify/frontify-cli": "5.5.3",
     "@frontify/guideline-blocks-settings": "0.29.16",
     "@frontify/sidebar-settings": "0.8.1",
-    "@frontify/platform-app": "0.0.5"
+    "@frontify/platform-app": "0.0.5",
+    "@frontify/app-bridge-theme": "1.0.0-alpha.1"
   },
   "changesets": [
     "calm-candles-wink",
@@ -30,6 +31,7 @@
     "orange-jokes-listen",
     "pink-bugs-behave",
     "pink-geckos-change",
+    "pink-lobsters-beg",
     "polite-eels-shake",
     "pretty-items-marry",
     "red-islands-report",
@@ -41,6 +43,7 @@
     "spicy-books-shout",
     "stale-hairs-wash",
     "strong-tools-check",
+    "ten-guests-wash",
     "tough-nails-shout",
     "tricky-boats-sip",
     "warm-hounds-refuse",
