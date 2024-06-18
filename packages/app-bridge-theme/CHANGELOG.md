@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.3
+
+### Patch Changes
+
+- [#965](https://github.com/Frontify/brand-sdk/pull/965) [`578e3e4`](https://github.com/Frontify/brand-sdk/commit/578e3e40025b1fbc88959181759257fe0e71d874) Thanks [@Kenny806](https://github.com/Kenny806)! - Added a SubscribeMap type
+
 ## 0.0.0-alpha.2
 
 ### Patch Changes
