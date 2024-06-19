@@ -2,9 +2,9 @@
 
 import { type Simplify } from 'type-fest';
 
-import { type EventRegistry } from '../registries/EventRegistry';
-import { type ObjectNameValidator, type WrongNamePattern } from '../types';
+import { type EventRegistry } from '../registries';
 
+import { type ObjectNameValidator, type WrongNamePattern } from './Common';
 import { type Context } from './Context';
 
 type EventVerb = 'chosen';
@@ -45,3 +45,7 @@ export type EventCallbackParameter<EventName, AppBridgeThemeEvent> = EventName e
     : () => void;
 
 export type EventUnsubscribeFunction = () => void;
+
+export type SubscribeMap<Event> = {
+    [EventName in keyof Event as EventName]: Map<EventCallbackParameter<keyof Event, Event>, boolean>;
+};

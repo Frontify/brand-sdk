@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Asset } from '../types/Asset';
-import { type EventNameValidator } from '../types/Event';
+import { type Asset, type EventNameValidator } from '../types';
 
 export type EventRegistry = EventNameValidator<{
     assetsChosen: { assets: Asset[] };
