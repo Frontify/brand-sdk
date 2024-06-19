@@ -2,19 +2,14 @@
 
 import { type Asset } from './Asset';
 import { type EventUnsubscribeFunction } from './Event';
-import {
-    type GuidelineCoverPage,
-    type GuidelineDocument,
-    type GuidelineDocumentLibrary,
-    type GuidelineDocumentPage,
-} from './Guideline';
+import { type CoverPage, type Document, type DocumentLibrary, type DocumentPage } from './Guideline';
 import { type Language } from './Language';
 import { type ThemeTemplate } from './ThemeTemplate';
 
 export type TemplateContext = { templateId: string; type: ThemeTemplate } & (
-    | { type: 'documentPage'; document: GuidelineDocument; documentPage: GuidelineDocumentPage }
-    | { type: 'library'; document: GuidelineDocumentLibrary }
-    | { type: 'cover'; coverPage: GuidelineCoverPage }
+    | { type: 'documentPage'; document: Document; documentPage: DocumentPage }
+    | { type: 'library'; document: DocumentLibrary }
+    | { type: 'cover'; coverPage: CoverPage }
 );
 
 export type Context = {
