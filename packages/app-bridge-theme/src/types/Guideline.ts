@@ -25,7 +25,7 @@ export interface CoverPage extends CoverPageBase {}
 interface DocumentGroupBase {
     id(): number;
     title(language?: string): string;
-    children(): (Document | DocumentLibrary | DocumentLinkNavigationItem)[];
+    children(): (DocumentNavigationItem | DocumentLibraryNavigationItem | DocumentLinkNavigationItem)[];
     type: 'document-group';
 }
 export interface DocumentGroupNavigationItem extends DocumentGroupBase {}
