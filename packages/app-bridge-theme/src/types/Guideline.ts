@@ -88,6 +88,12 @@ export interface GuidelineDocumentPageHeading {
     type: 'document-page-heading';
 }
 
+export interface GuidelineBrandPortalLink {
+    isEnabled(): boolean;
+    title(language?: string): string;
+    url(language?: string): string;
+}
+
 export type PortalNavigationItem =
     | GuidelineCoverPage
     | GuidelineDocumentGroup
