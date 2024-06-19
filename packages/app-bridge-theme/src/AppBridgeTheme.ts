@@ -1,14 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    type Command,
-    type DispatchHandlerParameter,
-    type AppBridgeThemeEvent,
-    type EventNameParameter,
-    type EventCallbackParameter,
-    type EventUnsubscribeFunction,
-} from './types';
+import { type Command, type DispatchHandlerParameter } from './types/Command';
 import { type ContextReturn, type Context } from './types/Context';
+import {
+    type AppBridgeThemeEvent,
+    type EventCallbackParameter,
+    type EventNameParameter,
+    type EventUnsubscribeFunction,
+} from './types/Event';
 import { type GuidelineSearchResult } from './types/GuidelineSearchResult';
 
 export interface AppBridgeTheme {

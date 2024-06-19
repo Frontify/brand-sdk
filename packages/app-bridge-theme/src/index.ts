@@ -3,4 +3,3 @@
 export * from './AppBridgeTheme';
 export * from './types/index';
 export * from './types';
-export * from './commands';
