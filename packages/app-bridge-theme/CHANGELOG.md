@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.4
+
+### Patch Changes
+
+- [#967](https://github.com/Frontify/brand-sdk/pull/967) [`599df4f`](https://github.com/Frontify/brand-sdk/commit/599df4fd1db1ad43a8163538513c36a9ab3e938a) Thanks [@Kenny806](https://github.com/Kenny806)! - fix: extend AppBridgeThemeEvent to include assetsChosen
+
 ## 0.0.0-alpha.3
 
 ### Patch Changes
