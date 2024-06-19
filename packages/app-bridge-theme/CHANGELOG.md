@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.5
+
+### Patch Changes
+
+- [#971](https://github.com/Frontify/brand-sdk/pull/971) [`08b3506`](https://github.com/Frontify/brand-sdk/commit/08b3506f1b8dba87fed1b6eb3f379bf619327d45) Thanks [@Kenny806](https://github.com/Kenny806)! - fix: exports
+
 ## 0.0.0-alpha.4
 
 ### Patch Changes
