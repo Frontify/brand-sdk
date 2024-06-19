@@ -2,4 +2,4 @@
 "@frontify/app-bridge-theme": patch
 ---
 
-Fixed exports
+fix: exports

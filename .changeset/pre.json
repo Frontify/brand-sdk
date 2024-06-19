@@ -10,6 +10,7 @@
     "@frontify/app-bridge-theme": "1.0.0-alpha.1"
   },
   "changesets": [
+    "angry-dolphins-fry",
     "calm-candles-wink",
     "clever-suns-laugh",
     "cuddly-pets-hammer",
