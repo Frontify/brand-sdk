@@ -52,7 +52,7 @@ interface DocumentLibraryBase {
 export interface DocumentLibraryNavigationItem extends DocumentLibraryBase {}
 export interface DocumentLibrary extends DocumentLibraryBase {}
 
-interface DocumentLinkBase {
+export interface DocumentLinkNavigationItem {
     id(): number;
     title(language?: string): string;
     url(): string;
@@ -63,16 +63,14 @@ interface DocumentLinkBase {
     parentId(): Nullable<number>;
     type: 'document-link';
 }
-export interface DocumentLinkNavigationItem extends DocumentLinkBase {}
 
-interface PageCategoryBase {
+export interface PageCategoryNavigationItem {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
-    children(): (DocumentPageNavigationItem | DocumentPageHeadingNavigationItem)[];
+    children(): (DocumentPageNavigationItem | DocumentPageLinkNavigationItem)[];
     type: 'page-category';
 }
-export interface PageCategoryNavigationItem extends PageCategoryBase {}
 
 interface DocumentPageBase {
     id(): number;
@@ -86,21 +84,19 @@ export interface DocumentPageNavigationItem extends DocumentPageBase {
 }
 export interface DocumentPage extends DocumentPageBase {}
 
-interface DocumentPageLinkBase {
+export interface DocumentPageLinkNavigationItem {
     id(): number;
     title(language?: string): string;
     url(): string;
     type: 'document-page-link';
 }
-export interface DocumentPageLinkNavigationItem extends DocumentPageLinkBase {}
 
-interface DocumentPageHeadingBase {
+export interface DocumentPageHeadingNavigationItem {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     type: 'document-page-heading';
 }
-export interface DocumentPageHeadingNavigationItem extends DocumentPageHeadingBase {}
 
 export interface BrandPortalLink {
     isEnabled(): boolean;
