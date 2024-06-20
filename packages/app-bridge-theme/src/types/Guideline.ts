@@ -11,7 +11,7 @@ export enum LinkSettingsIconPosition {
     Left = 'LEFT',
 }
 
-export interface GuidelineCoverPage {
+interface CoverPageBase {
     id(): number;
     title(language?: string): string;
     isPublished(): boolean;
@@ -19,33 +19,45 @@ export interface GuidelineCoverPage {
     url(language?: string): string;
     type: 'cover-page';
 }
+export interface CoverPageNavigationItem extends CoverPageBase {}
+export interface CoverPage extends CoverPageBase {}
 
-export interface GuidelineDocumentGroup {
+export interface DocumentGroupNavigationItem {
     id(): number;
     title(language?: string): string;
-    children(): (GuidelineDocument | GuidelineDocumentLibrary | GuidelineDocumentLink)[];
+    children(): (DocumentNavigationItem | DocumentLibraryNavigationItem | DocumentLinkNavigationItem)[];
     type: 'document-group';
 }
 
-export interface GuidelineDocument {
+interface DocumentBase {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    parentId(): Nullable<number>;
     type: 'document';
 }
+export interface DocumentNavigationItem extends DocumentBase {
+    parentId(): Nullable<number>;
+}
+export interface Document extends DocumentBase {
+    documentGroupId(): Nullable<number>;
+}
 
-export interface GuidelineDocumentLibrary {
+interface DocumentLibraryBase {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    parentId(): Nullable<number>;
     type: 'document-library';
 }
+export interface DocumentLibraryNavigationItem extends DocumentLibraryBase {
+    parentId(): Nullable<number>;
+}
+export interface DocumentLibrary extends DocumentLibraryBase {
+    documentGroupId(): Nullable<number>;
+}
 
-export interface GuidelineDocumentLink {
+export interface DocumentLinkNavigationItem {
     id(): number;
     title(language?: string): string;
     url(): string;
@@ -57,52 +69,57 @@ export interface GuidelineDocumentLink {
     type: 'document-link';
 }
 
-export interface GuidelinePageCategory {
+export interface PageCategoryNavigationItem {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
-    children(): (GuidelineDocumentPage | GuidelineDocumentPageLink)[];
+    children(): (DocumentPageNavigationItem | DocumentPageLinkNavigationItem)[];
     type: 'page-category';
 }
 
-export interface GuidelineDocumentPage {
+interface DocumentPageBase {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    headings(): GuidelineDocumentPageHeading[];
     type: 'document-page';
 }
+export interface DocumentPageNavigationItem extends DocumentPageBase {
+    headings(): DocumentPageHeadingNavigationItem[];
+}
+export interface DocumentPage extends DocumentPageBase {
+    categoryId(): Nullable<number>;
+    documentId(): number;
+}
 
-export interface GuidelineDocumentPageLink {
+export interface DocumentPageLinkNavigationItem {
     id(): number;
     title(language?: string): string;
     url(): string;
     type: 'document-page-link';
 }
 
-export interface GuidelineDocumentPageHeading {
+export interface DocumentPageHeadingNavigationItem {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     type: 'document-page-heading';
 }
 
-export interface GuidelineBrandPortalLink {
+export interface BrandPortalLink {
     isEnabled(): boolean;
     title(language?: string): string;
     url(language?: string): string;
 }
 
 export type PortalNavigationItem =
-    | GuidelineCoverPage
-    | GuidelineDocumentGroup
-    | GuidelineDocument
-    | GuidelineDocumentLibrary
-    | GuidelineDocumentLink;
+    | CoverPageNavigationItem
+    | DocumentGroupNavigationItem
+    | DocumentNavigationItem
+    | DocumentLibraryNavigationItem
+    | DocumentLinkNavigationItem;
 
-export type DocumentNavigationItem =
-    | GuidelinePageCategory
-    | GuidelineDocumentPage
-    | GuidelineDocumentPageLink
-    | GuidelineDocumentPageHeading;
+export type DocumentChildNavigationItem =
+    | PageCategoryNavigationItem
+    | DocumentPageNavigationItem
+    | DocumentPageLinkNavigationItem;
