@@ -16,6 +16,7 @@ const InternalRichTextEditor = memo(
         value,
         columns,
         gap,
+        customClass,
         placeholder,
         plugins,
         onTextChange,
@@ -68,7 +69,16 @@ const InternalRichTextEditor = memo(
                 />
             );
         }
-        return <SerializedText value={value} columns={columns} gap={gap} show={showSerializedText} plugins={plugins} />;
+        return (
+            <SerializedText
+                value={value}
+                columns={columns}
+                gap={gap}
+                customClass={customClass}
+                show={showSerializedText}
+                plugins={plugins}
+            />
+        );
     },
 );
 InternalRichTextEditor.displayName = 'InternalRichTextEditor';
