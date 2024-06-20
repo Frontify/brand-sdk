@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.6
+
+### Patch Changes
+
+- [#974](https://github.com/Frontify/brand-sdk/pull/974) [`508f51e`](https://github.com/Frontify/brand-sdk/commit/508f51e1de4d091f8761f4b7897940574d819eee) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: templateContext and NavigationItem types
+
 ## 0.0.0-alpha.5
 
 ### Patch Changes
