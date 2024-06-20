@@ -34,22 +34,28 @@ interface DocumentBase {
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    parentId(): Nullable<number>;
     type: 'document';
 }
-export interface DocumentNavigationItem extends DocumentBase {}
-export interface Document extends DocumentBase {}
+export interface DocumentNavigationItem extends DocumentBase {
+    parentId(): Nullable<number>;
+}
+export interface Document extends DocumentBase {
+    documentGroupId(): Nullable<number>;
+}
 
 interface DocumentLibraryBase {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
-    parentId(): Nullable<number>;
     type: 'document-library';
 }
-export interface DocumentLibraryNavigationItem extends DocumentLibraryBase {}
-export interface DocumentLibrary extends DocumentLibraryBase {}
+export interface DocumentLibraryNavigationItem extends DocumentLibraryBase {
+    parentId(): Nullable<number>;
+}
+export interface DocumentLibrary extends DocumentLibraryBase {
+    documentGroupId(): Nullable<number>;
+}
 
 export interface DocumentLinkNavigationItem {
     id(): number;
@@ -81,7 +87,10 @@ interface DocumentPageBase {
 export interface DocumentPageNavigationItem extends DocumentPageBase {
     headings(): DocumentPageHeadingNavigationItem[];
 }
-export interface DocumentPage extends DocumentPageBase {}
+export interface DocumentPage extends DocumentPageBase {
+    categoryId(): Nullable<number>;
+    documentId(): number;
+}
 
 export interface DocumentPageLinkNavigationItem {
     id(): number;
