@@ -22,13 +22,12 @@ interface CoverPageBase {
 export interface CoverPageNavigationItem extends CoverPageBase {}
 export interface CoverPage extends CoverPageBase {}
 
-interface DocumentGroupBase {
+export interface DocumentGroupNavigationItem {
     id(): number;
     title(language?: string): string;
     children(): (DocumentNavigationItem | DocumentLibraryNavigationItem | DocumentLinkNavigationItem)[];
     type: 'document-group';
 }
-export interface DocumentGroupNavigationItem extends DocumentGroupBase {}
 
 interface DocumentBase {
     id(): number;
