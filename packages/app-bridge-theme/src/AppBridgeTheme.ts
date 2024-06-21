@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type CommandRegistry } from './registries';
 import {
     type AppBridgeThemeEvent,
     type Context,
@@ -10,7 +11,6 @@ import {
     type EventUnsubscribeFunction,
     type GuidelineSearchResult,
 } from './types';
-import {CommandRegistry} from "./registries";
 
 export interface AppBridgeTheme {
     dispatch<CommandName extends keyof CommandRegistry>(
