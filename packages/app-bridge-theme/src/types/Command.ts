@@ -1,31 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Simplify } from 'type-fest';
-
 import { type CommandRegistry } from '../registries';
 
-import { type ObjectNameValidator, type WrongNamePattern } from './Common';
-
-type CommandVerb = 'open' | 'close' | 'navigate' | 'download';
-
-type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
-
-export type CommandNameValidator<CommandNameObject> = Simplify<
-    ObjectNameValidator<CommandNameObject, CommandNamePattern, 'Command'>
->;
-
-export type Command = CommandNameValidator<
-    Pick<CommandRegistry, 'openSearchDialog' | 'closeSearchDialog' | 'navigateToDocumentSection'>
->;
+import { type WrongNamePattern } from './Common';
 
 type DispatchHandler<
-    CommandName extends keyof CommandNamePattern,
-    Command extends CommandNamePattern,
-> = Command[CommandName] extends void ? { name: CommandName } : { name: CommandName; payload: Command[CommandName] };
+    CommandName extends keyof CommandRegistry,
+    TCommand extends CommandRegistry,
+> = TCommand[CommandName] extends void ? { name: CommandName } : { name: CommandName; payload: TCommand[CommandName] };
 
 export type DispatchHandlerParameter<
     CommandName,
-    Command extends CommandNamePattern,
-> = CommandName extends keyof CommandNamePattern
-    ? DispatchHandler<CommandName, Command>
+    TCommand extends CommandRegistry,
+> = CommandName extends keyof CommandRegistry
+    ? DispatchHandler<CommandName, TCommand>
     : WrongNamePattern<CommandName, 'Command'>;
