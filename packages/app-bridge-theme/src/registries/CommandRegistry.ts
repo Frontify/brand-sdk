@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {ObjectNameValidator} from '../types';
-import {Simplify} from "type-fest";
+import { type Simplify } from 'type-fest';
+
+import { type ObjectNameValidator } from '../types';
 
 export type CommandRegistry = CommandNameValidator<{
     openSearchDialog: string[];
