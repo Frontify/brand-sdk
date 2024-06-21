@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.7
+
+### Patch Changes
+
+- [#978](https://github.com/Frontify/brand-sdk/pull/978) [`5eb0306`](https://github.com/Frontify/brand-sdk/commit/5eb030695cc105a3ed514a5b38840b015a8d85ac) Thanks [@Kenny806](https://github.com/Kenny806)! - feat: add a navigate command
+
 ## 0.0.0-alpha.6
 
 ### Patch Changes
