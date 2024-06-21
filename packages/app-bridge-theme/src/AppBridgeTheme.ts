@@ -2,7 +2,6 @@
 
 import {
     type AppBridgeThemeEvent,
-    type Command,
     type Context,
     type ContextReturn,
     type DispatchHandlerParameter,
@@ -11,10 +10,11 @@ import {
     type EventUnsubscribeFunction,
     type GuidelineSearchResult,
 } from './types';
+import {CommandRegistry} from "./registries";
 
 export interface AppBridgeTheme {
-    dispatch<CommandName extends keyof Command>(
-        dispatchHandler: DispatchHandlerParameter<CommandName, Command>,
+    dispatch<CommandName extends keyof CommandRegistry>(
+        dispatchHandler: DispatchHandlerParameter<CommandName, CommandRegistry>,
     ): Promise<void>;
 
     context(): ContextReturn<Context, void>;
