@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CommandNameValidator } from '../types';
+import {ObjectNameValidator} from '../types';
+import {Simplify} from "type-fest";
 
 export type CommandRegistry = CommandNameValidator<{
     openSearchDialog: string[];
@@ -8,3 +9,11 @@ export type CommandRegistry = CommandNameValidator<{
     navigate: string;
     navigateToDocumentSection: number | string;
 }>;
+
+type CommandNameValidator<CommandNameObject> = Simplify<
+    ObjectNameValidator<CommandNameObject, CommandNamePattern, 'Command'>
+>;
+
+type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
+
+type CommandVerb = 'open' | 'close' | 'navigate' | 'download';

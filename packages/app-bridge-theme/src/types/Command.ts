@@ -1,18 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Simplify } from 'type-fest';
-
 import { type CommandRegistry } from '../registries';
 
-import { type ObjectNameValidator, type WrongNamePattern } from './Common';
-
-type CommandVerb = 'open' | 'close' | 'navigate' | 'download';
-
-type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
-
-export type CommandNameValidator<CommandNameObject> = Simplify<
-    ObjectNameValidator<CommandNameObject, CommandNamePattern, 'Command'>
->;
+import { type WrongNamePattern } from './Common';
 
 type DispatchHandler<
     CommandName extends keyof CommandRegistry,
