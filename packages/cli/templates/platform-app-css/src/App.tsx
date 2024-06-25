@@ -1,22 +1,12 @@
-import { type PlatformAppContext, usePlatformAppBridge } from '@frontify/app-bridge';
-import { useEffect, useState } from 'react';
+import { AppBridgePlatformApp } from '@frontify/app-bridge';
 
 export const App = () => {
-    const appBridge = usePlatformAppBridge();
-    const [context, setContext] = useState<PlatformAppContext>();
-
-    useEffect(() => {
-        if (!appBridge) {
-            return;
-        }
-
-        setContext(appBridge.context().get());
-    }, [appBridge]);
+    const appBridge = new AppBridgePlatformApp();
 
     return (
         <div className="container">
             A Frontify Platform App in React with pure CSS
-            <span className="container__text">Entrypoint: {context?.surface}</span>.
+            <span className="container__text">Entrypoint: {appBridge.context().get().surface}</span>.
         </div>
     );
 };
