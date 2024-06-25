@@ -5,7 +5,7 @@ import { type Simplify } from 'type-fest';
 import { type ObjectNameValidator } from '../types';
 
 export type CommandRegistry = CommandNameValidator<{
-    openSearchDialog: string[];
+    openSearchDialog: void;
     closeSearchDialog: void;
     navigate: string;
     navigateToDocumentSection: number | string;
