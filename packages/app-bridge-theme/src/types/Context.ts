@@ -2,7 +2,14 @@
 
 import { type Asset } from './Asset';
 import { type EventUnsubscribeFunction } from './Event';
-import { type CoverPage, type Document, type DocumentLibrary, type DocumentPage } from './Guideline';
+import {
+    type PortalNavigationItem,
+    type BrandPortalLink,
+    type CoverPage,
+    type Document,
+    type DocumentLibrary,
+    type DocumentPage,
+} from './Guideline';
 import { type Language } from './Language';
 import { type ThemeTemplate } from './ThemeTemplate';
 
@@ -14,8 +21,10 @@ export type TemplateContext = { templateId: string; type: ThemeTemplate } & (
 
 export type Context = {
     brandId: number;
+    brandPortalLink: BrandPortalLink | null;
     projectId: number;
     portalId: number;
+    portalNavigation: PortalNavigationItem[] | null;
     portalToken: string | null;
     currentLanguage: string;
     defaultLanguage: string;
