@@ -7,6 +7,7 @@ import { useIsInViewport } from '../../hooks/useIsInViewport';
 
 import { SerializedText } from './SerializedText';
 import { floatingButtonActions, floatingButtonSelectors } from './plugins/ButtonPlugin/components';
+import { getResponsiveColumnClasses } from './plugins/ColumnBreakPlugin/helpers';
 import { type RichTextEditorProps } from './types';
 
 const InternalRichTextEditor = memo(
@@ -21,6 +22,7 @@ const InternalRichTextEditor = memo(
         onTextChange,
         showSerializedText,
     }: Omit<RichTextEditorProps, 'isEditing'> & { isEnabled: boolean }) => {
+        const customClass = getResponsiveColumnClasses(columns);
         const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
 
         const handleTextChange = useCallback(
@@ -68,7 +70,15 @@ const InternalRichTextEditor = memo(
                 />
             );
         }
-        return <SerializedText value={value} columns={columns} gap={gap} show={showSerializedText} plugins={plugins} />;
+        return (
+            <SerializedText
+                value={value}
+                gap={gap}
+                customClass={customClass}
+                show={showSerializedText}
+                plugins={plugins}
+            />
+        );
     },
 );
 InternalRichTextEditor.displayName = 'InternalRichTextEditor';
@@ -94,7 +104,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
     }, [isEditing]);
 
     return (
-        <div className="tw-block tw-w-full" ref={ref}>
+        <div className="tw-block tw-w-full tw-@container" ref={ref}>
             <InternalRichTextEditor {...internalRteProps} isEnabled={isEditing && hasEnteredViewport} />
         </div>
     );
