@@ -103,6 +103,7 @@ describe('Attachments', () => {
         });
 
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
         }
 
