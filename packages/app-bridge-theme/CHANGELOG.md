@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.9
+
+### Patch Changes
+
+- [#983](https://github.com/Frontify/brand-sdk/pull/983) [`57b2f90`](https://github.com/Frontify/brand-sdk/commit/57b2f90c8042e05774e57c1065fc86242f468f48) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: AppBridgeTheme command typing
+
 ## 0.0.0-alpha.8
 
 ### Patch Changes
