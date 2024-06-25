@@ -22,6 +22,7 @@ export type GuidelineSearchResultApi = {
     document_id: number;
     document_slug: string;
     document_title: string;
+    guideline_title: string;
     portal_id: number;
     portal_token: string | null;
     section_id: string | null;

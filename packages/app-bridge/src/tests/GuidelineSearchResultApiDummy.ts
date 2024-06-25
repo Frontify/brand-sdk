@@ -16,6 +16,7 @@ export class GuidelineSearchResultApiDummy {
             document_id: 1,
             document_slug: 'document-slug',
             document_title: 'Document Title',
+            guideline_title: 'Guideline Title',
             portal_id: 1,
             portal_token: 'portal-token',
             section_id: null,
