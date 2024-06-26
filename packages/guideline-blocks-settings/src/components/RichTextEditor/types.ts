@@ -17,7 +17,7 @@ export type RichTextEditorProps = {
 export type SerializedTextProps = {
     value?: string;
     show?: boolean;
-    columns?: number;
     gap?: string;
+    customClass?: string;
     plugins?: PluginComposer;
 };

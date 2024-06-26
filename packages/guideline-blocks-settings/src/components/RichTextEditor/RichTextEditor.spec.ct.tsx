@@ -7,10 +7,19 @@ import { type SinonStub } from 'sinon';
 
 import { convertToRteValue } from '../../helpers';
 
-import { ButtonPlugin, LinkPlugin, RichTextEditor, TextStyles, getDefaultPluginsWithLinkChooser } from '.';
+import {
+    BreakAfterPlugin,
+    ButtonPlugin,
+    LinkPlugin,
+    RichTextEditor,
+    TextStyles,
+    getDefaultPluginsWithLinkChooser,
+} from '.';
 
 const RteHtmlSelector = '[data-test-id="rte-content-html"]';
 const RichTextSelector = '[data-test-id="rich-text-editor"]';
+const RichTextContentSelector = '[data-test-id="rich-text-editor"] [contenteditable]';
+const RichTextContainerSelector = '[data-test-id="rich-text-editor-container"]';
 const ButtonSelector = '[data-test-id="button"]';
 const CheckboxSelector = '[data-test-id="checkbox-icon-box"]';
 const ToolbarButtonSelector = '[data-testid="ToolbarButton"]';
@@ -246,5 +255,40 @@ describe('RichTextEditor', () => {
         cy.get(ButtonSelector).last().click();
         cy.get(FloatingButtonModalSelector).find(ButtonSelector).last().click();
         cy.get(RichTextSelector).find('a[href="/r/document"]').should('exist');
+    });
+
+    it('should render responsive columns in edit mode', () => {
+        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
+        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+
+        mount(
+            <RichTextEditor
+                isEditing={true}
+                plugins={new PluginComposer().setPlugin([new BreakAfterPlugin({ columns: 4, gap: 30 })])}
+                value={convertToRteValue('p', 'Hello there!')}
+            />,
+        );
+        cy.get(RichTextContainerSelector).should('have.class', 'tw-@container');
+        cy.get(RichTextContentSelector).should('have.class', 'tw-columns-1 @sm:!tw-columns-2 @md:!tw-columns-4');
+        cy.get(RichTextContentSelector).should('have.css', 'column-gap', '30px');
+    });
+
+    it('should render responsive columns in view mode', () => {
+        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
+        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
+
+        mount(
+            <RichTextEditor
+                isEditing={false}
+                columns={4}
+                gap="30px"
+                plugins={new PluginComposer().setPlugin([new BreakAfterPlugin({ columns: 2, gap: 30 })])}
+                value={convertToRteValue('p', 'Hello there!')}
+            />,
+        );
+
+        cy.get(RichTextContainerSelector).should('have.class', 'tw-@container');
+        cy.get(`${RteHtmlSelector} > div`).should('have.class', 'tw-columns-1 @sm:!tw-columns-2 @md:!tw-columns-4');
+        cy.get(`${RteHtmlSelector} > div`).should('have.css', 'column-gap', '30px');
     });
 });
