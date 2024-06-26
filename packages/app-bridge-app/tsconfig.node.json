@@ -8,6 +8,5 @@
         "lib": ["ESNext"],
         "target": "ESNext"
     },
-    "include": [".eslintrc.cjs",
-        "vite.config.mts", "package.json"]
+    "include": [".eslintrc.cjs", "vite.config.mts", "package.json"]
 }

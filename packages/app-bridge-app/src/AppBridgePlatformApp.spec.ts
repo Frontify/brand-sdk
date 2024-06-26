@@ -50,13 +50,6 @@ describe('AppBridgePlatformApp', () => {
         platformApp.dispatch(openConnection());
     });
 
-    it.skip('should throw an error when api is not initialized', async () => {
-        window.location.search = `?token=${TOKEN}`;
-
-        const platformApp = new AppBridgePlatformApp();
-        expect(() => platformApp.api({ name: 'getCurrentUser' })).throw();
-    });
-
     it('should return empty state when not inititalized', async () => {
         const platformApp = new AppBridgePlatformApp();
         const state = platformApp.state().get();
@@ -85,25 +78,6 @@ describe('AppBridgePlatformApp', () => {
             expect(connected).toBe(true);
             expect(context).toEqual({ parentId: 'parentId-test', connected: true });
             expect(parentId).toEqual('parentId-test');
-        });
-        platformApp.dispatch(openConnection());
-    });
-
-    it('should return correct object when subscribing to context', async () => {
-        window.location.search = `?token=${TOKEN}`;
-        const platformApp = new AppBridgePlatformApp();
-        platformApp.context().subscribe((context) => {
-            expect({ parentId: 'parentId-test', connected: true }).toStrictEqual(context);
-        });
-        platformApp.dispatch(openConnection());
-    });
-
-    it('should return correct object when subscribing to context', async () => {
-        window.location.search = `?token=${TOKEN}`;
-        const platformApp = new AppBridgePlatformApp();
-        platformApp.context().subscribe((context) => {
-            expect({ parentId: 'parentId-test', connected: true }).toStrictEqual(context);
-            platformApp.dispatch(openConnection());
         });
         platformApp.dispatch(openConnection());
     });
