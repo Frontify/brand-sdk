@@ -1,5 +1,5 @@
 ---
-"@frontify/guideline-blocks-settings": patch
+"@frontify/guideline-blocks-settings": minor
 ---
 
 feat(RTE): add custom column break plugin
