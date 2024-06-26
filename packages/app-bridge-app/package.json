@@ -32,8 +32,7 @@
         "react": "^18",
         "react-dom": "^18"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
         "@frontify/eslint-config-react": "^0.17.6",
