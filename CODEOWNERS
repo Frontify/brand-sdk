@@ -153,6 +153,7 @@ packages/cli/templates/platform-app-tailwind @Frontify/apps-and-integrations
 # Platform Apps types
 packages/platform-app @Frontify/apps-and-integrations
 packages/app-bridge-app @Frontify/apps-and-integrations
+
 # Guideline Blocks Settings
 packages/guideline-blocks-settings @Frontify/content-and-blocks
 
