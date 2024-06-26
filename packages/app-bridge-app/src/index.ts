@@ -4,3 +4,4 @@ export * from './AppBridgePlatformApp';
 export * from './errors';
 export * from './registries';
 export * from './utilities';
+export * from './react/renderReactApp';

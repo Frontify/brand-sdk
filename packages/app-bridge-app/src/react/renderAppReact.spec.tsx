@@ -3,8 +3,9 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, it, vi, beforeEach, afterEach, expect } from 'vitest';
 
-import * as AppBridge from './AppBridgePlatformApp'; // Adjust the import path
-import { type AppBridgePlatformApp } from './AppBridgePlatformApp';
+import * as AppBridge from '../AppBridgePlatformApp.ts'; // Adjust the import path
+import { type AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
+
 import { renderReactApp } from './renderReactApp.ts';
 
 const AppTest = () => {

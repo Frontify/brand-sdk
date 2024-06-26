@@ -4,7 +4,7 @@ import { type PlatformAppConfigExport } from '@frontify/platform-app';
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { AppBridgePlatformApp } from './AppBridgePlatformApp.ts';
+import { AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 
 export const renderReactApp = (module: PlatformAppConfigExport, elementRoot = 'root') => {
     const appBridge = new AppBridgePlatformApp();
