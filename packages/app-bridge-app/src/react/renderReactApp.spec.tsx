@@ -3,7 +3,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, it, vi, beforeEach, afterEach, expect } from 'vitest';
 
-import * as AppBridge from '../AppBridgePlatformApp.ts'; // Adjust the import path
+import * as AppBridge from '../AppBridgePlatformApp.ts';
 import { type AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 
 import { renderReactApp } from './renderReactApp.ts';
