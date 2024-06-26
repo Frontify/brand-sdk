@@ -32,14 +32,15 @@
         "react": "^18",
         "react-dom": "^18"
     },
-    "dependencies": {
-    },
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
         "@frontify/eslint-config-react": "^0.17.6",
+        "@testing-library/react": "^14.3.0",
         "@types/react": "^18.2.75",
         "eslint": "^8.57.0",
         "eslint-plugin-notice": "^0.9.10",
+        "happy-dom": "^13.10.1",
+        "immer": "^10.0.4",
         "prettier": "^3.2.5",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
