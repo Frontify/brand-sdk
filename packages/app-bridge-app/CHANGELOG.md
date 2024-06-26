@@ -1,0 +1,1 @@
+# @frontify/app-bridge-app
