@@ -5,14 +5,14 @@ import { useEffect, useState } from 'react';
 
 import { type SerializedTextProps } from './types';
 
-export const SerializedText = ({ value = '', gap, columns, show = true, plugins }: SerializedTextProps) => {
+export const SerializedText = ({ value = '', gap, customClass, show = true, plugins }: SerializedTextProps) => {
     const [html, setHtml] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            setHtml(await serializeRawToHtmlAsync(value, plugins, columns, gap));
+            setHtml(await serializeRawToHtmlAsync(value, plugins, undefined, gap, customClass));
         })();
-    }, [value, columns, gap, plugins]);
+    }, [value, gap, plugins, customClass]);
 
     if (!show || html === '<br />') {
         return null;
