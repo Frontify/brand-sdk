@@ -33,7 +33,6 @@
         "react-dom": "^18"
     },
     "dependencies": {
-        "type-fest": "^4.15.0"
     },
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
