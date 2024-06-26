@@ -7,25 +7,25 @@ import { type AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 
 import { appSettings } from './appSettings.ts';
 
-describe('appSettings', () => {
-    it('should return the settings object and an object setter', () => {
+describe('appUserState', () => {
+    it('should return the userState object and an object setter', () => {
         const setMock = vi.fn();
         vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementationOnce(
             () =>
                 ({
                     state: () => ({
-                        get: vi.fn().mockImplementation(() => ({ 'test-settings': 'output' })),
+                        get: vi.fn().mockImplementation(() => ({ 'test-userState': 'output' })),
                         set: setMock,
                     }),
                 }) as unknown as AppBridgePlatformApp,
         );
-        const testSetter = { 'test-settings': 'fun' };
+        const testSetter = { 'test-userState': 'fun' };
 
         const [settings, setSettings] = appSettings<{
-            'test-settings': string;
+            'test-userState': string;
             'another-settings': string;
         }>();
-        expect(settings['test-settings']).toBe('output');
+        expect(settings['test-userState']).toBe('output');
 
         setSettings(testSetter);
         expect(setMock).toHaveBeenCalledWith(testSetter);
