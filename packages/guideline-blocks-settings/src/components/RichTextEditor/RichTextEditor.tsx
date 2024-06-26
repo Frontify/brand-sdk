@@ -104,7 +104,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
     }, [isEditing]);
 
     return (
-        <div className="tw-block tw-w-full tw-@container" ref={ref}>
+        <div data-test-id="rich-text-editor-container" className="tw-block tw-w-full tw-@container" ref={ref}>
             <InternalRichTextEditor {...internalRteProps} isEnabled={isEditing && hasEnteredViewport} />
         </div>
     );
