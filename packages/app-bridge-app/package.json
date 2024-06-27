@@ -10,7 +10,7 @@
         "directory": "packages/app-bridge-app"
     },
     "sideEffects": false,
-    "main": "./dist/index.es.js",
+    "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "publishConfig": {
         "access": "public"
