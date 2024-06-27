@@ -2,4 +2,4 @@
 "@frontify/app-bridge-app": patch
 ---
 
-chore: rename token
+feat: Adds utility methods and an updated renderReact method
