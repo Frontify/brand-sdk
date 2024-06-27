@@ -1,5 +1,15 @@
 # @frontify/app-bridge-app
 
+## 0.0.3
+
+### Patch Changes
+
+-   [#998](https://github.com/Frontify/brand-sdk/pull/998) [`39b4f32`](https://github.com/Frontify/brand-sdk/commit/39b4f32e6b96bc5a1d39517f268e930995ab960c) Thanks [@julianiff](https://github.com/julianiff)! - feat: Adds utility methods and an updated renderReact method
+
+-   [#995](https://github.com/Frontify/brand-sdk/pull/995) [`99b28d3`](https://github.com/Frontify/brand-sdk/commit/99b28d3baec9ff928daf8847514202f85be3e64f) Thanks [@julianiff](https://github.com/julianiff)! - feat: add renderAppReact utility
+
+-   [#996](https://github.com/Frontify/brand-sdk/pull/996) [`f1c7360`](https://github.com/Frontify/brand-sdk/commit/f1c7360ea59e49f13170f80d6ce51dad7b30f23e) Thanks [@julianiff](https://github.com/julianiff)! - feat: add typed settings
+
 ## 0.0.2
 
 ### Patch Changes
