@@ -190,7 +190,7 @@ export class AppBridgePlatformApp {
                             message: {
                                 parameter: { nextState },
                             },
-                            token: 'set-state',
+                            token: 'state',
                         });
                     }
                 },
@@ -208,7 +208,7 @@ export class AppBridgePlatformApp {
                         message: {
                             parameter: { key, nextState },
                         },
-                        token: 'set-state',
+                        token: 'state',
                     });
                 }
             },
