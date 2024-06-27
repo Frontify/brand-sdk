@@ -2,6 +2,7 @@
 
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+
 import { peerDependencies as peerDependenciesMap } from './package.json';
 
 const peerDependencies = Object.keys(peerDependenciesMap);
@@ -22,7 +23,7 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [ ...peerDependencies],
+            external: [...peerDependencies],
         },
     },
     test: {
