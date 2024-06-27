@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type CommandNameValidator,
     type ApiHandlerParameter,
     type ApiMethodNameValidator,
     type ApiReturn,
+    type CommandNameValidator,
     type ContextAsEventName,
     type ContextReturn,
     type DispatchHandlerParameter,
@@ -74,7 +74,7 @@ export type PlatformAppEvent = EventNameValidator<
 
 export class AppBridgePlatformApp {
     private apiMessageBus: IMessageBus = new ErrorMessageBus();
-    private stateMessageBus: IMessageBus = new ErrorMessageBus();
+    private statePort: MessagePort | undefined;
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
     private localState: PlatformAppState = { settings: {}, userState: {} };
@@ -143,9 +143,9 @@ export class AppBridgePlatformApp {
             const { statePort, apiPort, context, state } = await subscribe<InitializeEvent>(Topic.Init, checksum);
 
             this.apiMessageBus = new MessageBus(apiPort);
-            this.stateMessageBus = new MessageBus(statePort);
 
-            statePort.onmessage = (event: MessageEvent<{ token: string; message: Record<string, unknown> }>) => {
+            this.statePort = statePort;
+            this.statePort.onmessage = (event: MessageEvent<{ message: PlatformAppState }>) => {
                 this.onStateChangeListener(event);
             };
 
@@ -178,19 +178,6 @@ export class AppBridgePlatformApp {
         };
     }
 
-    private async setInternalState(
-        state: Promise<PlatformAppState>,
-        key?: keyof PlatformAppState | void,
-    ): Promise<void> {
-        const prevState = this.localState;
-        this.localState = await state;
-        if (key) {
-            this.callSubscribedTopic(`State.${key}`, [this.localState, prevState]);
-        } else {
-            this.callSubscribedTopic('State.*', [this.localState, prevState]);
-        }
-    }
-
     state(): StateReturn<PlatformAppState, void>;
     state<Key extends keyof PlatformAppState>(key: Key): StateReturn<PlatformAppState, Key>;
     state<Key extends keyof PlatformAppState>(key?: keyof PlatformAppState | void): unknown {
@@ -198,10 +185,14 @@ export class AppBridgePlatformApp {
             return {
                 get: () => this.localState,
                 set: (nextState: PlatformAppState) => {
-                    const newState = this.stateMessageBus.post({
-                        parameter: { nextState },
-                    }) as Promise<PlatformAppState>;
-                    this.setInternalState(newState).catch(() => console.log('cannot set Internal State'));
+                    if (this.statePort) {
+                        this.statePort.postMessage({
+                            message: {
+                                parameter: { nextState },
+                            },
+                            token: 'set-state',
+                        });
+                    }
                 },
                 subscribe: (callback: (nextState: PlatformAppState, previousState: PlatformAppState) => void) => {
                     return this.subscribe('State.*', callback);
@@ -212,11 +203,14 @@ export class AppBridgePlatformApp {
         return {
             get: () => this.localState[key],
             set: (nextState: PlatformAppState[Key]) => {
-                const newState = this.stateMessageBus.post({
-                    parameter: { key, nextState },
-                }) as Promise<PlatformAppState>;
-
-                this.setInternalState(newState, key).catch(() => console.log('cannot set Internal State'));
+                if (this.statePort) {
+                    this.statePort.postMessage({
+                        message: {
+                            parameter: { key, nextState },
+                        },
+                        token: 'set-state',
+                    });
+                }
             },
             subscribe: (callback: (nextState: PlatformAppState[Key], previousState: PlatformAppState[Key]) => void) => {
                 return this.subscribe(`State.${key}`, callback);
@@ -252,17 +246,15 @@ export class AppBridgePlatformApp {
         }
     }
 
-    private onStateChangeListener(event: MessageEvent<{ token: string; message: Record<string, unknown> }>) {
-        const { token } = event.data;
+    private onStateChangeListener(event: MessageEvent<{ message: PlatformAppState; key?: 'settings' | 'userState' }>) {
+        const { message, key } = event.data;
 
-        if (token === 'DEV_UPDATE_STATE' && 'settings' in event.data.message && 'userState' in event.data.message) {
-            const message = event.data.message as PlatformAppState;
-
+        if (!key) {
             this.callSubscribedTopic('State.*', [message, this.localState]);
-            this.callSubscribedTopic('State.settings', [message.settings, this.localState.settings]);
-            this.callSubscribedTopic('State.userState', [message.userState, this.localState.userState]);
-
-            this.localState = message;
+        } else {
+            this.callSubscribedTopic(`State.${key}`, [message[key], this.localState[key]]);
         }
+
+        this.localState = message;
     }
 }
