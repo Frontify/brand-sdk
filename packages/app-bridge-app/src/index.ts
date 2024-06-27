@@ -7,3 +7,4 @@ export * from './utilities';
 export * from './react/appUserState';
 export * from './react/appSettings';
 export * from './react/appContext';
+export * from './react/renderReactApp';
