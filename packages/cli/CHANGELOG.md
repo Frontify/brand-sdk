@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 5.4.0
+
+### Minor Changes
+
+- [#600](https://github.com/Frontify/brand-sdk/pull/600) [`4599249`](https://github.com/Frontify/brand-sdk/commit/45992493e16789688e3447fe0cf1d2feb9f3fcea) Thanks [@julianiff](https://github.com/julianiff)! - feat: add platform App cli deploy command
+
+### Patch Changes
+
+- [#599](https://github.com/Frontify/brand-sdk/pull/599) [`6332d4e`](https://github.com/Frontify/brand-sdk/commit/6332d4e64cd30ac1dbb38c24cf14cebfc5e62820) Thanks [@julianiff](https://github.com/julianiff)! - feat: add flag to run serve as a platformApp
+
 ## 5.3.17
 
 ### Patch Changes
