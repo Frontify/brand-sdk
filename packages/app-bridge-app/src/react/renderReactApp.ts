@@ -6,17 +6,17 @@ import { createRoot } from 'react-dom/client';
 
 import { AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 
-export const renderReactApp = (module: PlatformAppConfigExport, elementRoot = 'root') => {
+export const renderReactApp = (module: PlatformAppConfigExport) => {
     const appBridge = new AppBridgePlatformApp();
 
     appBridge.subscribe('Context.connected', () => {
-        const rootElement = document.getElementById(elementRoot);
+        const rootElement = document.getElementById('root');
 
         if (rootElement) {
             const root = createRoot(rootElement);
             root.render(createElement(module.app));
         } else {
-            throw new Error(`Element with id ${elementRoot} not found`);
+            throw new Error("Element with id 'root' not found");
         }
     });
 

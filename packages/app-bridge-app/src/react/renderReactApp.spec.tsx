@@ -66,27 +66,4 @@ describe('renderAppReact', () => {
             expect(screen.getAllByTestId('test-id')).toBeDefined;
         });
     });
-
-    it('Should not render any component and throw an Error when the elementRoot doesnt exist', async () => {
-        let callbackMock: () => void;
-        let nameMock = '';
-
-        vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementationOnce(
-            () =>
-                ({
-                    subscribe: (name: string, callback: () => void) => {
-                        callbackMock = callback;
-                        nameMock = name;
-                    },
-                    dispatch: vi.fn(),
-                }) as unknown as AppBridgePlatformApp,
-        );
-
-        renderReactApp({ app: AppTest, settings: {} }, 'no-root');
-
-        await waitFor(() => {
-            expect(() => callbackMock()).toThrowError();
-            expect(nameMock).toBe('Context.connected');
-        });
-    });
 });
