@@ -7,6 +7,5 @@ import { AppBridgePlatformApp, type AssetActionContext, type AssetCreationContex
  */
 export const appContext = <T extends AssetActionContext | AssetCreationContext>(): T => {
     const appBridge = new AppBridgePlatformApp();
-
     return appBridge.context().get() as T;
 };

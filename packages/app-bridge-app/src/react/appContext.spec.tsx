@@ -17,14 +17,19 @@ describe('appContext', () => {
             () =>
                 ({
                     context: () => ({
-                        get: vi.fn().mockImplementation(() => ({ assetId: 'test-123' })),
+                        get: vi.fn().mockImplementation(() => ({ surface: 'assetAction', assetId: 'test-123' })),
                     }),
                 }) as unknown as AppBridgePlatformApp,
         );
 
-        const context = appContext<AssetActionContext>();
+        const context = appContext();
 
-        expect(context.assetId).toBe('test-123');
+        if (context.surface === 'assetAction') {
+            expect(context.assetId).toBe('test-123');
+        }
+
+        const genericContext = appContext<AssetActionContext>();
+        expect(genericContext.assetId).toBe('test-123');
     });
     it('should have type of AssetCreation when adding AssetCreationContext generic', () => {
         vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementationOnce(

@@ -5,7 +5,7 @@ import { describe, it, vi, expect } from 'vitest';
 import * as AppBridge from '../AppBridgePlatformApp.ts';
 import { type AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 
-import { appSettings } from './appSettings.ts';
+import { appUserState } from './appUserState.ts';
 
 describe('appUserState', () => {
     it('should return the userState object and an object setter', () => {
@@ -21,13 +21,13 @@ describe('appUserState', () => {
         );
         const testSetter = { 'test-userState': 'fun' };
 
-        const [settings, setSettings] = appSettings<{
+        const [userState, setUserState] = appUserState<{
             'test-userState': string;
             'another-settings': string;
         }>();
-        expect(settings['test-userState']).toBe('output');
+        expect(userState['test-userState']).toBe('output');
 
-        setSettings(testSetter);
+        setUserState(testSetter);
         expect(setMock).toHaveBeenCalledWith(testSetter);
     });
 });
