@@ -10,7 +10,7 @@
         "directory": "packages/app-bridge-app"
     },
     "sideEffects": false,
-    "main": "./dist/index.es.js",
+    "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "publishConfig": {
         "access": "public"
@@ -35,18 +35,20 @@
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
         "@frontify/eslint-config-react": "^0.17.6",
-        "@testing-library/react": "^14.3.0",
-        "@types/react": "^18.2.75",
+        "@frontify/platform-app": "workspace:^",
+        "@testing-library/react": "^14.3.1",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.2.24",
         "eslint": "^8.57.0",
         "eslint-plugin-notice": "^0.9.10",
         "happy-dom": "^13.10.1",
-        "immer": "^10.0.4",
-        "prettier": "^3.2.5",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "typescript": "^5.4.4",
-        "vite": "^5.2.10",
-        "vite-plugin-dts": "^3.8.1",
-        "vitest": "^1.4.0"
+        "immer": "^10.1.1",
+        "prettier": "^3.3.2",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "typescript": "^5.5.2",
+        "vite": "^5.3.1",
+        "vite-plugin-dts": "^3.9.1",
+        "vitest": "^1.6.0"
     }
 }
