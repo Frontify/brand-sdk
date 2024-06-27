@@ -13,7 +13,7 @@ import { appContext } from './appContext.ts';
 
 describe('appContext', () => {
     it('should have type of AssetActionContext when adding AssetActionContext generic', () => {
-        vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementationOnce(
+        vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementation(
             () =>
                 ({
                     context: () => ({
