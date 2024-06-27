@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.35.1
+
+### Patch Changes
+
+- [#952](https://github.com/Frontify/brand-sdk/pull/952) [`a0f07c9`](https://github.com/Frontify/brand-sdk/commit/a0f07c9077f7d1c766b6b78df1e7a5ce1babca82) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(\*): move `@tailwindcss/container-queries` to a public dependency
+
 ## 0.35.0
 
 ### Minor Changes

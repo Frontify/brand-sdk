@@ -1,6 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import path from 'node:path';
+
 import react from '@vitejs/plugin-react';
+import * as esbuild from 'esbuild';
 import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
@@ -9,20 +12,52 @@ import { getAppBridgeVersion } from '../utils/appBridgeVersion';
 import { Logger } from '../utils/logger';
 
 class PlatformAppDevelopmentServer {
-    constructor(private readonly port: number) {}
+    constructor(
+        private readonly entryFilePath: string,
+        private readonly port: number,
+    ) {}
 
     async serve(): Promise<void> {
         try {
-            const viteServer = await createServer({
-                root: process.cwd(),
-                configFile: false,
-                plugins: [react()],
-                define: {
-                    'process.env.NODE_ENV': JSON.stringify('development'),
+            const settingsSchema = await esbuild.context({
+                entryPoints: [this.entryFilePath],
+                outfile: './dist/dev-settings.js',
+                minify: true,
+                globalName: 'devSettings',
+                format: 'iife',
+                bundle: true,
+                loader: {
+                    '.css': 'empty',
                 },
             });
 
-            const server = await viteServer.listen(this.port, true);
+            const viteServerDev = await createServer({
+                root: process.cwd(),
+                configFile: false,
+                define: {
+                    'process.env.NODE_ENV': JSON.stringify('development'),
+                },
+                plugins: [
+                    react(),
+                    {
+                        name: 'prebuild-commands',
+                        handleHotUpdate: ({ file, server }) => {
+                            const relativeFilePath = path.relative(process.cwd(), file);
+
+                            if (relativeFilePath === 'src/settings.ts' || relativeFilePath === 'src/index.ts') {
+                                // if the change is either in settings.ts or index.ts do a rebuild to load settings
+                                settingsSchema.rebuild();
+                                server.restart();
+                            }
+                        },
+                        buildStart: () => {
+                            settingsSchema.rebuild();
+                        },
+                    },
+                ],
+            });
+
+            const server = await viteServerDev.listen(this.port, true);
             server.printUrls();
         } catch (error) {
             console.error(error);
@@ -115,9 +150,9 @@ export const createDevelopmentServer = async (
     await developmentServer.serve();
 };
 
-export const createDevelopmentServerForPlatformApp = async (port: number): Promise<void> => {
+export const createDevelopmentServerForPlatformApp = async (entryFilePath: string, port: number): Promise<void> => {
     Logger.info('Starting the development server for Apps...');
 
-    const developmentServer = new PlatformAppDevelopmentServer(port);
+    const developmentServer = new PlatformAppDevelopmentServer(entryFilePath, port);
     await developmentServer.serve();
 };

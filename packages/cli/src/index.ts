@@ -88,7 +88,7 @@ cli.command('serve', 'serve the app locally')
         const appType = options.appType || manifest.appType;
 
         if (appType === 'platform-app') {
-            await createDevelopmentServerForPlatformApp(options.port);
+            await createDevelopmentServerForPlatformApp(options.entryPath, options.port);
         } else {
             await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
         }

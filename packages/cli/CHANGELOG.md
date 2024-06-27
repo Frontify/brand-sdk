@@ -1,5 +1,17 @@
 # @frontify/frontify-cli
 
+## 5.7.1
+
+### Patch Changes
+
+- [#968](https://github.com/Frontify/brand-sdk/pull/968) [`6d0c3dd`](https://github.com/Frontify/brand-sdk/commit/6d0c3dd22ffdf15d2c04b8fb6a57cef65e3f0001) Thanks [@julianiff](https://github.com/julianiff)! - chore: update templates
+
+## 5.7.0
+
+### Minor Changes
+
+- [#955](https://github.com/Frontify/brand-sdk/pull/955) [`739a7a5`](https://github.com/Frontify/brand-sdk/commit/739a7a51515b78f2732d486673c824166369fcfc) Thanks [@julianiff](https://github.com/julianiff)! - feat: add additional build step for platform Apps to also serve settings while in development mode
+
 ## 5.6.19
 
 ### Patch Changes
