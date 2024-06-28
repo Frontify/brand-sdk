@@ -1,14 +1,14 @@
 diff --git a/dist/index.mjs b/dist/index.mjs
-index efc12cbd4f1e8f06dc724d8921b5d7d9c244de33..69173eec772ff448d0cee3fce922ab76f0edca75 100644
+index 3db72c864241a438a9ed3ea2860c311edcc2c410..1f8db9d86cf6e80d0c19312d145da847021e9bf6 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
-@@ -348,10 +348,10 @@ var EmojiFloatingGridBuilder = class {
+@@ -312,10 +312,10 @@ var EmojiFloatingGridBuilder = class {
  };
-
+ 
  // src/utils/EmojiLibrary/EmojiFloatingLibrary.ts
 -import emojiMartData2 from "@emoji-mart/data";
 +import emojiMartData2 from "@emoji-mart/data" assert { type: "json" };
-
+ 
  // src/utils/EmojiLibrary/EmojiInlineLibrary.ts
 -import emojiMartData from "@emoji-mart/data";
 +import emojiMartData from "@emoji-mart/data" assert { type: "json" };

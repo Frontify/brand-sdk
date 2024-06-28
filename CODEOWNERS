@@ -162,9 +162,10 @@ packages/cli/templates/platform-app-css @Frontify/apps-and-integrations
 packages/cli/templates/platform-app-css-modules @Frontify/apps-and-integrations
 packages/cli/templates/platform-app-tailwind @Frontify/apps-and-integrations
 
-# Platform Apps types
+# Platform Apps
 
 packages/platform-app @Frontify/apps-and-integrations
+packages/app-bridge-app @Frontify/apps-and-integrations
 
 # Guideline Blocks Settings
 
