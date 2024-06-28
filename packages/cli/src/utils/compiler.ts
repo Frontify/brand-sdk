@@ -7,11 +7,51 @@ import { type PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from './appBridgeVersion';
+import { getAppBridgeThemeVersion } from './appBridgeThemeVersion';
 
 export type CompilerOptions = {
     projectPath: string;
     entryFile: string;
     outputName: string;
+};
+
+export const compileTheme = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
+    const appBridgeVersion = getAppBridgeThemeVersion(projectPath);
+    return build({
+        plugins: [
+            react(),
+            viteExternalsPlugin({
+                react: 'React',
+                'react-dom': 'ReactDOM',
+            }),
+        ],
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
+        root: projectPath,
+        build: {
+            lib: {
+                name: outputName,
+                entry: entryFile,
+                formats: ['iife'],
+                fileName: () => 'index.js',
+            },
+            rollupOptions: {
+                external: ['react', 'react-dom'],
+                output: {
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                    },
+                    footer: `
+                        window.${outputName} = ${outputName};
+                        window.${outputName}.dependencies = window.${outputName}.packages || {};
+                        window.${outputName}.dependencies['@frontify/app-bridge-theme'] = '${appBridgeVersion}';
+                    `,
+                },
+            },
+        },
+    });
 };
 
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
