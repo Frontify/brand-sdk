@@ -141,6 +141,9 @@ packages/app-bridge/src/window.d.ts @Frontify/content-and-blocks @Frontify/theme
 packages/cli/src/commands/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 packages/cli/src/errors/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 packages/cli/src/utils/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
+packages/cli/src/servers/blockDevelopmentServer.ts @Frontify/content-and-blocks
+packages/cli/src/servers/platformAppDevelopmentServer.ts @Frontify/apps-and-integrations
+packages/cli/src/servers/themeDevelopmentServer.ts @Frontify/themes-and-navigation
 
 ## Templates
 packages/cli/templates/content-block-css @Frontify/content-and-blocks
