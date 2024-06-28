@@ -1,0 +1,61 @@
+{
+    "name": "@frontify/app-bridge-app",
+    "type": "module",
+    "version": "0.0.5",
+    "description": "Package to establish communication between Frontify and apps",
+    "author": "Frontify Developers <developers@frontify.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Frontify/brand-sdk",
+        "directory": "packages/app-bridge-app"
+    },
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.js",
+            "import": "./dist/index.js"
+        }
+    },
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "vite build",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "prettier": "prettier --check .",
+        "prettier:fix": "prettier --write .",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "peerDependencies": {
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "devDependencies": {
+        "@frontify/app-bridge": "workspace:^",
+        "@frontify/eslint-config-react": "^0.17.6",
+        "@frontify/platform-app": "workspace:^",
+        "@testing-library/react": "^14.3.1",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.2.24",
+        "eslint": "^8.57.0",
+        "eslint-plugin-notice": "^0.9.10",
+        "happy-dom": "^13.10.1",
+        "immer": "^10.1.1",
+        "prettier": "^3.3.2",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "typescript": "^5.5.2",
+        "vite": "^5.3.1",
+        "vite-plugin-dts": "^3.9.1",
+        "vitest": "^1.6.0"
+    }
+}
