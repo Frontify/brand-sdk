@@ -1,10 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Logger } from '../utils/logger';
-
 import { BlockDevelopmentServer } from '../servers/blockDevelopmentServer';
 import { PlatformAppDevelopmentServer } from '../servers/platformAppDevelopmentServer';
 import { ThemeDevelopmentServer } from '../servers/themeDevelopmentServer';
+import { Logger } from '../utils/logger';
 
 export const createDevelopmentServer = async (
     entryFilePath: string,
