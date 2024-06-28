@@ -6,8 +6,8 @@ import react from '@vitejs/plugin-react';
 import { type PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
-import { getAppBridgeVersion } from './appBridgeVersion';
 import { getAppBridgeThemeVersion } from './appBridgeThemeVersion';
+import { getAppBridgeVersion } from './appBridgeVersion';
 
 export type CompilerOptions = {
     projectPath: string;
