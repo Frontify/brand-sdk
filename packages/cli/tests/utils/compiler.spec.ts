@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { compileBlock, compilePlatformApp } from '../../src/utils/compiler';
+import { compileBlock, compilePlatformApp, compileTheme } from '../../src/utils/compiler';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
@@ -33,10 +33,20 @@ describe('Compiler utils', () => {
         test('should provide a valid build with block, settings and appBridge version', async () => {
             await compileBlock({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
             await import(outputFile);
+
             expect(global.window).toHaveProperty('index');
             expect(global.window?.index.block).toBe('this is a block');
             expect(global.window?.index.settings).toMatchObject({ some: 'settings' });
             expect(global.window?.index.dependencies['@frontify/app-bridge']).toBe('^3.0.0-beta.99');
+        });
+    });
+
+    describe('compile Theme', () => {
+        test('should provide a valid build with theme', async () => {
+            const result = await compileTheme({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
+
+            expect(result[0].output[0].exports).toStrictEqual(['default']);
+            expect(result[0].output[0].fileName).toBe('index.js');
         });
     });
 
