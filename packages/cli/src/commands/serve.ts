@@ -8,8 +8,8 @@ import { createServer } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import pkg from '../../package.json';
-import { getAppBridgeVersion } from '../utils/appBridgeVersion';
 import { getAppBridgeThemeVersion } from '../utils/appBridgeThemeVersion';
+import { getAppBridgeVersion } from '../utils/appBridgeVersion';
 import { Logger } from '../utils/logger';
 
 class PlatformAppDevelopmentServer {
