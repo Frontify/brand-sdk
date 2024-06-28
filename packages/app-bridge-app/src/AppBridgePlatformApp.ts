@@ -254,7 +254,6 @@ export class AppBridgePlatformApp {
         } else {
             this.callSubscribedTopic(`State.${key}`, [message[key], this.localState[key]]);
         }
-
         this.localState = message;
     }
 }
