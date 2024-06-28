@@ -6,6 +6,7 @@ import react from '@vitejs/plugin-react';
 import { type PluginOption, build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
+import { getAppBridgeThemeVersion } from './appBridgeThemeVersion';
 import { getAppBridgeVersion } from './appBridgeVersion';
 
 export type CompilerOptions = {
@@ -46,6 +47,45 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                         window.${outputName} = ${outputName};
                         window.${outputName}.dependencies = window.${outputName}.packages || {};
                         window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
+                    `,
+                },
+            },
+        },
+    });
+};
+
+export const compileTheme = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
+    const appBridgeVersion = getAppBridgeThemeVersion(projectPath);
+    return build({
+        plugins: [
+            react(),
+            viteExternalsPlugin({
+                react: 'React',
+                'react-dom': 'ReactDOM',
+            }),
+        ],
+        define: {
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        },
+        root: projectPath,
+        build: {
+            lib: {
+                name: outputName,
+                entry: entryFile,
+                formats: ['iife'],
+                fileName: () => 'index.js',
+            },
+            rollupOptions: {
+                external: ['react', 'react-dom'],
+                output: {
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                    },
+                    footer: `
+                        window.${outputName} = ${outputName};
+                        window.${outputName}.dependencies = window.${outputName}.packages || {};
+                        window.${outputName}.dependencies['@frontify/app-bridge-theme'] = '${appBridgeVersion}';
                     `,
                 },
             },
