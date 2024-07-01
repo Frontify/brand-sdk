@@ -269,7 +269,7 @@ describe('RichTextEditor', () => {
             />,
         );
         cy.get(RichTextContainerSelector).should('have.class', 'tw-@container');
-        cy.get(RichTextContentSelector).should('have.class', 'tw-columns-1 @sm:!tw-columns-2 @md:!tw-columns-4');
+        cy.get(RichTextContentSelector).should('have.class', 'tw-columns-1 @md:!tw-columns-4');
         cy.get(RichTextContentSelector).should('have.css', 'column-gap', '30px');
     });
 
@@ -288,7 +288,7 @@ describe('RichTextEditor', () => {
         );
 
         cy.get(RichTextContainerSelector).should('have.class', 'tw-@container');
-        cy.get(`${RteHtmlSelector} > div`).should('have.class', 'tw-columns-1 @sm:!tw-columns-2 @md:!tw-columns-4');
+        cy.get(`${RteHtmlSelector} > div`).should('have.class', 'tw-columns-1 @md:!tw-columns-4');
         cy.get(`${RteHtmlSelector} > div`).should('have.css', 'column-gap', '30px');
     });
 });
