@@ -11,7 +11,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@frontify/app-bridge": "4.0.0-alpha.31",
+        "@frontify/app-bridge-app": "^0.0.5",
         "@frontify/fondue": "^12.1.2",
         "@frontify/platform-app": "^0.1.4",
         "react": "^18.3.1",
