@@ -42,11 +42,18 @@ describe('Compiler utils', () => {
     });
 
     describe('compile Theme', () => {
-        test('should provide a valid build with theme', async () => {
-            const result = await compileTheme({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
+        const rootPath = `${__dirname}/../files/compile-theme-files`;
+        const outputFile = `${__dirname}/../files/compile-theme-files/dist/index.js`;
 
-            expect(result[0].output[0].exports).toStrictEqual(['default']);
-            expect(result[0].output[0].fileName).toBe('index.js');
+        test('should provide a valid build with theme', async () => {
+            await compileTheme({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
+
+            await import(outputFile);
+
+            expect(global.window).toHaveProperty('index');
+            expect(global.window?.index.block).toBe('this is a theme');
+            expect(global.window?.index.settings).toMatchObject({ some: 'theme-settings' });
+            expect(global.window?.index.dependencies['@frontify/app-bridge-theme']).toBe('^2.0.0-beta.69');
         });
     });
 

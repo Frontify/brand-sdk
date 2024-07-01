@@ -1,0 +1,9 @@
+{
+    "name": "test-theme",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "dependencies": {
+        "@frontify/app-bridge": "^3.0.0-beta.99",
+        "@frontify/app-bridge-theme": "^2.0.0-beta.69"
+    }
+}
