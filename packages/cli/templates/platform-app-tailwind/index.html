@@ -9,18 +9,9 @@
     <div id="root"></div>
     <script type='module'>
         import module from '/src/index.ts';
-        import ReactDOM from 'react-dom/client';
-        import React from 'react';
-        import { AppBridgePlatformApp } from '@frontify/app-bridge';
+        import {renderReactApp} from '@frontify/app-bridge-app';
 
-        const appBridge = new AppBridgePlatformApp();
-
-        appBridge.subscribe('Context.connected', () => {
-            const root = ReactDOM.createRoot(document.getElementById('root'));
-            root.render(React.createElement(module.app));
-        });
-
-        appBridge.dispatch({ name: 'openConnection' });
+        renderReactApp(module);
     </script>
 </body>
 </html>

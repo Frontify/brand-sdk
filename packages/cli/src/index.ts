@@ -13,11 +13,19 @@ import {
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
+    createDevelopmentServerForTheme,
     createNewApp,
     loginUser,
     logoutUser,
 } from './commands/index';
-import { compileBlock, compilePlatformApp, getValidInstanceUrl, isValidName, reactiveJson } from './utils/index';
+import {
+    compileBlock,
+    compilePlatformApp,
+    compileTheme,
+    getValidInstanceUrl,
+    isValidName,
+    reactiveJson,
+} from './utils/index';
 
 const cli = cac(pkg.name.split('/')[1]);
 
@@ -89,6 +97,8 @@ cli.command('serve', 'serve the app locally')
 
         if (appType === 'platform-app') {
             await createDevelopmentServerForPlatformApp(options.entryPath, options.port);
+        } else if (appType === 'theme') {
+            await createDevelopmentServerForTheme(options.entryPath, options.port, options.allowExternal);
         } else {
             await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
         }
@@ -113,7 +123,7 @@ for (const appType of ['block', 'theme']) {
                     noVerify: options.noVerify,
                     openInBrowser: options.open,
                 },
-                compileBlock,
+                appType === 'theme' ? compileTheme : compileBlock,
             );
         });
 }
@@ -143,6 +153,19 @@ cli.command('deploy', 'deploy the app to the marketplace')
                     token: options.token,
                 },
                 compilePlatformApp,
+            );
+        } else if (appType === 'theme') {
+            await createDeployment(
+                options.entryPath,
+                options.outDir,
+                {
+                    dryRun: options.dryRun,
+                    noVerify: options.noVerify,
+                    openInBrowser: options.open,
+                    instance: options.instance,
+                    token: options.token,
+                },
+                compileTheme,
             );
         } else {
             await createDeployment(

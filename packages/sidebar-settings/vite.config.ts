@@ -11,6 +11,11 @@ const dependencies = Object.keys(dependenciesMap);
 
 export default defineConfig({
     plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
+    test: {
+        deps: {
+            inline: ['@frontify/fondue'],
+        },
+    },
     build: {
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
