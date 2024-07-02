@@ -27,4 +27,5 @@ export type GuidelineSearchResult = {
     sectionTitle: string | null;
     colorHex?: string;
     projectColorId?: string;
+    guidelineTitle: string;
 };
