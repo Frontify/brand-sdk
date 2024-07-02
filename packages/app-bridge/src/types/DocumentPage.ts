@@ -35,13 +35,6 @@ export type DocumentPageApi = {
     sort: number;
     view_count: number;
     visibility: DocumentPageVisibility;
-    change_processed: Nullable<string>;
-    change_processed_by: Nullable<number>;
-    change_skipped: Nullable<string>;
-    change_skipped_by: Nullable<number>;
-    change_comment: Nullable<string>;
-    change_comment_by: Nullable<number>;
-    change_title: Nullable<string>;
     targets: Nullable<SingleTargetApi['target'][]>;
     category?: Nullable<Record<string, unknown>>;
     parent_document?: Nullable<Record<string, unknown>>;
