@@ -1,5 +1,17 @@
 # @frontify/frontify-cli
 
+## 5.7.4
+
+### Patch Changes
+
+-   [#1002](https://github.com/Frontify/brand-sdk/pull/1002) [`1893f2f`](https://github.com/Frontify/brand-sdk/commit/1893f2fb6123d381c273ae774cd64d5c19eefed9) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add appBridgeTheme support
+
+## 5.7.3
+
+### Patch Changes
+
+-   [#1010](https://github.com/Frontify/brand-sdk/pull/1010) [`47883ea`](https://github.com/Frontify/brand-sdk/commit/47883ea7eb04599d91403ec32af58dff973942cb) Thanks [@julianiff](https://github.com/julianiff)! - chore: update platform app templates
+
 ## 5.7.2
 
 ### Patch Changes

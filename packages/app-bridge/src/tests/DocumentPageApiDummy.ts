@@ -22,13 +22,6 @@ export class DocumentPageApiDummy {
             link_url: null,
             view_count: 0,
             visibility: DocumentPageVisibility.Everyone,
-            change_processed: null,
-            change_processed_by: null,
-            change_skipped: null,
-            change_skipped_by: null,
-            change_comment: null,
-            change_comment_by: null,
-            change_title: null,
             targets: null,
             permanent_link: `/r/document-page-${id}`,
         };
