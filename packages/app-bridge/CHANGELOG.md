@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.10.1
+
+### Patch Changes
+
+-   [#1013](https://github.com/Frontify/brand-sdk/pull/1013) [`4f0f660`](https://github.com/Frontify/brand-sdk/commit/4f0f6603f9c3f65598ccbf5c81d3c4b02f732533) Thanks [@hochreutenerl](https://github.com/hochreutenerl)! - refactor: remove change_properties from `Document` and `DocumentPage`
+
 ## 3.10.0
 
 ### Minor Changes
