@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.1
+
+### Patch Changes
+
+-   [#1012](https://github.com/Frontify/brand-sdk/pull/1012) [`04a2dd0`](https://github.com/Frontify/brand-sdk/commit/04a2dd098764fee6ca38f7aee027742e237db812) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): avoid column breaks when wrapping
+
 ## 0.36.0
 
 ### Minor Changes

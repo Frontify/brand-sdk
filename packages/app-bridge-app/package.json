@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge-app",
     "type": "module",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "description": "Package to establish communication between Frontify and apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -10,6 +10,13 @@
         "directory": "packages/app-bridge-app"
     },
     "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.js",
+            "import": "./dist/index.js"
+        }
+    },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "publishConfig": {

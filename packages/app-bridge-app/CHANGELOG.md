@@ -1,5 +1,17 @@
 # @frontify/app-bridge-app
 
+## 0.0.5
+
+### Patch Changes
+
+-   [#1005](https://github.com/Frontify/brand-sdk/pull/1005) [`9790524`](https://github.com/Frontify/brand-sdk/commit/979052451ee69cbd9f60c397a30b4e5fd08fa779) Thanks [@julianiff](https://github.com/julianiff)! - chore: update app-bridge-app
+
+## 0.0.4
+
+### Patch Changes
+
+-   [#1003](https://github.com/Frontify/brand-sdk/pull/1003) [`bca28e1`](https://github.com/Frontify/brand-sdk/commit/bca28e193e59e04618a1b172f7bc14790b24efe2) Thanks [@julianiff](https://github.com/julianiff)! - chore: add exports
+
 ## 0.0.3
 
 ### Patch Changes
