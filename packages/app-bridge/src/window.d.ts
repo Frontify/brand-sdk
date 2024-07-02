@@ -2,9 +2,11 @@
 
 import type { Emitter } from 'mitt';
 import type { EmitterEvents, TerrificComponent, TerrificEvent } from './types';
+import { AppBridgePlatformApp } from './AppBridgePlatformApp.ts';
 
 declare global {
     interface Window {
+        appBridgePlatformApp: AppBridgePlatformApp;
         APPLICATION_CONFIG: {
             version: string;
             bugsnagKey: string | null;

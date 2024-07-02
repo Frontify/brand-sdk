@@ -14,7 +14,7 @@ import {
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
 import { type GetDocumentNavigationPayload, type GetDocumentNavigationResponse } from './GetDocumentNavigation';
 import { type GetPortalNavigationResponse } from './GetPortalNavigation';
-import { type GetProxyNetworkCallPayload, type GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
+import { type GetSecureRequestPayload, type GetSecureRequestResponse } from './GetSecureRequest.ts';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,
@@ -35,7 +35,7 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         payload: SetAssetIdsByBlockAssetKeyPayload;
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
-    getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
+    getSecureRequest: { payload: GetSecureRequestPayload; response: GetSecureRequestResponse };
     getDocumentNavigation: { payload: GetDocumentNavigationPayload; response: GetDocumentNavigationResponse };
     getPortalNavigation: { payload: void; response: GetPortalNavigationResponse };
 }>;

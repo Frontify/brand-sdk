@@ -6,6 +6,6 @@ export * from './CreateAsset';
 export * from './GetAssetResourceInformation';
 export * from './GetCurrentUser';
 export * from './SetAssetIdsByBlockAssetKey';
-export * from './GetProxyNetworkCall';
+export * from './GetSecureRequest';
 export * from './GetDocumentNavigation';
 export * from './GetPortalNavigation';
