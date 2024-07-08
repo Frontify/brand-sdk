@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.6
+
+### Patch Changes
+
+-   [#1022](https://github.com/Frontify/brand-sdk/pull/1022) [`3f8ecab`](https://github.com/Frontify/brand-sdk/commit/3f8ecab1ac4acdd077d63a000a3ac784d81adf3d) Thanks [@julianiff](https://github.com/julianiff)! - chore: adjust test
+
 ## 0.0.5
 
 ### Patch Changes
