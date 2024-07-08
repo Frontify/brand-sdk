@@ -3,6 +3,7 @@
 import { type ApiMethodNameValidator } from '@frontify/app-bridge';
 
 import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
+import { type GetAccountIdPayload, type GetAccountIdResponse } from './GetAccountId.ts';
 import {
     type GetAssetResourceInformationPayload,
     type GetAssetResourceInformationResponse,
@@ -18,4 +19,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         response: GetAssetResourceInformationResponse;
     };
     getSecureRequest: { payload: GetSecureRequestPayload; response: GetSecureRequestResponse };
+    getAccountId: { payload: GetAccountIdPayload; response: GetAccountIdResponse };
 }>;
