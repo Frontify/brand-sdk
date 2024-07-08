@@ -6,7 +6,7 @@ import { getAccountId } from './GetAccountId.ts';
 
 describe('GetAccountId', () => {
     it('should return correct method name', () => {
-        const currentUser = getAccountId();
-        expect(currentUser.name).toBe('getAccountId');
+        const accountIdMethod = getAccountId();
+        expect(accountIdMethod.name).toBe('getAccountId');
     });
 });
