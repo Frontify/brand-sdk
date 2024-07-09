@@ -10,6 +10,7 @@ import {
 } from './GetAssetResourceInformation';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
 import { type GetSecureRequestPayload, type GetSecureRequestResponse } from './GetSecureRequest.ts';
+import { type GraphQlPayload, type GraphQlResponse } from './GraphQl.ts';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
@@ -20,4 +21,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     };
     getSecureRequest: { payload: GetSecureRequestPayload; response: GetSecureRequestResponse };
     getAccountId: { payload: GetAccountIdPayload; response: GetAccountIdResponse };
+    graphQl: { payload: GraphQlPayload; response: GraphQlResponse };
 }>;
