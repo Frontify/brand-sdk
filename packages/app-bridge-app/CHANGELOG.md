@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.7
+
+### Patch Changes
+
+-   [#1024](https://github.com/Frontify/brand-sdk/pull/1024) [`1dff29f`](https://github.com/Frontify/brand-sdk/commit/1dff29f978fe2ba591bd9e3b132fed7da3d598a7) Thanks [@julianiff](https://github.com/julianiff)! - feat: add getAccountId to registry
+
 ## 0.0.6
 
 ### Patch Changes
