@@ -28,7 +28,12 @@ import { getQueryParameters } from './utilities/queryParams';
 export type PlatformAppApiMethod = ApiMethodNameValidator<
     Pick<
         ApiMethodRegistry,
-        'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset' | 'getSecureRequest' | 'getAccountId'
+        | 'getCurrentUser'
+        | 'getAssetResourceInformation'
+        | 'createAsset'
+        | 'getSecureRequest'
+        | 'getAccountId'
+        | 'graphQl'
     >
 >;
 
