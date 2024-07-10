@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.9
+
+### Patch Changes
+
+-   [#1029](https://github.com/Frontify/brand-sdk/pull/1029) [`03e7a27`](https://github.com/Frontify/brand-sdk/commit/03e7a274b799bc87e1188bb343037a11a26d047f) Thanks [@marguslant0](https://github.com/marguslant0)! - feat: Add `PlatformAppApiReturn` type
+
 ## 0.0.8
 
 ### Patch Changes
