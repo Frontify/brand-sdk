@@ -1,5 +1,13 @@
 # @frontify/app-bridge-app
 
+## 0.0.8
+
+### Patch Changes
+
+-   [#1027](https://github.com/Frontify/brand-sdk/pull/1027) [`33d3c6a`](https://github.com/Frontify/brand-sdk/commit/33d3c6ac167715cc80d8e9c1149f50c5d7c007a5) Thanks [@marguslant0](https://github.com/marguslant0)! - feat: Rename the graphql .api() call to use the `execute` prefix
+
+-   [#1026](https://github.com/Frontify/brand-sdk/pull/1026) [`3cad0e2`](https://github.com/Frontify/brand-sdk/commit/3cad0e208460c551b94508d47cbbebd9891869e6) Thanks [@marguslant0](https://github.com/marguslant0)! - feat: Add 'graphQl' `.api()` method
+
 ## 0.0.7
 
 ### Patch Changes
