@@ -2,7 +2,6 @@
 
 import {
     type ApiHandlerParameter,
-    type ApiMethodNameValidator,
     type ApiReturn,
     type CommandNameValidator,
     type ContextAsEventName,
@@ -16,16 +15,39 @@ import {
     type StateReturn,
     type SubscribeMap,
 } from '@frontify/app-bridge';
+import { type Simplify } from 'type-fest';
 
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
+import { type ApiVerb } from './registries/verbs';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
 import { getQueryParameters } from './utilities/queryParams';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<
+type NameContextList = 'API Method';
+type WrongNamePattern<ApiMethodName, NameContext extends NameContextList> = ApiMethodName extends string
+    ? `The following ${NameContext} do not match the naming pattern: ${ApiMethodName}`
+    : never;
+
+type ObjectNameValidator<
+    NameObject,
+    PatternObject,
+    NameContext extends NameContextList,
+> = keyof NameObject extends keyof PatternObject
+    ? NameObject
+    : WrongNamePattern<
+          `${Exclude<Extract<keyof NameObject, string>, Extract<keyof PatternObject, string>>}`,
+          NameContext
+      >;
+
+type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
+type PlatformAppApiMethodNameValidator<ApiMethodNameObject> = Simplify<
+    ObjectNameValidator<ApiMethodNameObject, ApiMethodNamePattern, 'API Method'>
+>;
+
+export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
     Pick<
         ApiMethodRegistry,
         | 'getCurrentUser'

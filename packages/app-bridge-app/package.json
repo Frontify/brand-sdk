@@ -39,6 +39,9 @@
         "react": "^18",
         "react-dom": "^18"
     },
+    "dependencies": {
+        "type-fest": "^4.15.0"
+    },
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
         "@frontify/eslint-config-react": "^0.17.6",
