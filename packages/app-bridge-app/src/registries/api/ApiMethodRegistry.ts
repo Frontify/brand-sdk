@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlatformAppApiMethodNameValidator } from '../../AppBridgePlatformApp.ts';
+import { type PlatformAppApiMethodNameValidator } from '../../types/Api.ts';
 
 import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
 import { type ExecuteGraphQlPayload, type ExecuteGraphQlResponse } from './ExecuteGraphQl.ts';
