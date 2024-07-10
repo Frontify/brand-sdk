@@ -5,4 +5,4 @@ export * from './CreateAsset';
 export * from './GetAssetResourceInformation';
 export * from './GetCurrentUser';
 export * from './GetSecureRequest';
-export * from './GraphQl';
+export * from './ExecuteGraphQl';

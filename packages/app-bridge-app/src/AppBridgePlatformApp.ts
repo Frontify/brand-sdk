@@ -2,7 +2,6 @@
 
 import {
     type ApiHandlerParameter,
-    type ApiMethodNameValidator,
     type ApiReturn,
     type CommandNameValidator,
     type ContextAsEventName,
@@ -20,12 +19,13 @@ import {
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
+import { type PlatformAppApiMethodNameValidator } from './types/Api';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
 import { getQueryParameters } from './utilities/queryParams';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<
+export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
     Pick<
         ApiMethodRegistry,
         | 'getCurrentUser'
@@ -33,7 +33,7 @@ export type PlatformAppApiMethod = ApiMethodNameValidator<
         | 'createAsset'
         | 'getSecureRequest'
         | 'getAccountId'
-        | 'graphQl'
+        | 'executeGraphQl'
     >
 >;
 

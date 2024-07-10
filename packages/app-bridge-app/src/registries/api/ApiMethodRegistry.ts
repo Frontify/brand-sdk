@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type ApiMethodNameValidator } from '@frontify/app-bridge';
+import { type PlatformAppApiMethodNameValidator } from '../../types/Api.ts';
 
 import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
+import { type ExecuteGraphQlPayload, type ExecuteGraphQlResponse } from './ExecuteGraphQl.ts';
 import { type GetAccountIdPayload, type GetAccountIdResponse } from './GetAccountId.ts';
 import {
     type GetAssetResourceInformationPayload,
@@ -10,9 +11,8 @@ import {
 } from './GetAssetResourceInformation';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
 import { type GetSecureRequestPayload, type GetSecureRequestResponse } from './GetSecureRequest.ts';
-import { type GraphQlPayload, type GraphQlResponse } from './GraphQl.ts';
 
-export type ApiMethodRegistry = ApiMethodNameValidator<{
+export type ApiMethodRegistry = PlatformAppApiMethodNameValidator<{
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
     createAsset: { payload: CreateAssetPayload; response: CreateAssetResponse };
     getAssetResourceInformation: {
@@ -21,5 +21,5 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     };
     getSecureRequest: { payload: GetSecureRequestPayload; response: GetSecureRequestResponse };
     getAccountId: { payload: GetAccountIdPayload; response: GetAccountIdResponse };
-    graphQl: { payload: GraphQlPayload; response: GraphQlResponse };
+    executeGraphQl: { payload: ExecuteGraphQlPayload; response: ExecuteGraphQlResponse };
 }>;
