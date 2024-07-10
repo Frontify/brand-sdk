@@ -25,3 +25,12 @@ type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unk
 export type PlatformAppApiMethodNameValidator<ApiMethodNameObject> = Simplify<
     ObjectNameValidator<ApiMethodNameObject, ApiMethodNamePattern, 'API Method'>
 >;
+
+export type PlatformAppApiReturn<
+    ApiMethodName extends keyof ApiMethod,
+    ApiMethod extends ApiMethodNamePattern,
+> = ApiMethodName extends keyof ApiMethod
+    ? ApiMethod[ApiMethodName] extends { response: infer Response }
+        ? Promise<Response>
+        : never
+    : never;

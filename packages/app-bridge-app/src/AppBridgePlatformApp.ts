@@ -2,7 +2,6 @@
 
 import {
     type ApiHandlerParameter,
-    type ApiReturn,
     type CommandNameValidator,
     type ContextAsEventName,
     type ContextReturn,
@@ -19,7 +18,7 @@ import {
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
-import { type PlatformAppApiMethodNameValidator } from './types/Api';
+import { type PlatformAppApiReturn, type PlatformAppApiMethodNameValidator } from './types/Api';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
@@ -113,10 +112,10 @@ export class AppBridgePlatformApp {
 
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
         apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
-    ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
+    ): PlatformAppApiReturn<ApiMethodName, PlatformAppApiMethod> {
         return this.apiMessageBus.post({
             parameter: apiHandler,
-        }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
+        }) as PlatformAppApiReturn<ApiMethodName, PlatformAppApiMethod>;
     }
 
     private guardForInitialization() {
