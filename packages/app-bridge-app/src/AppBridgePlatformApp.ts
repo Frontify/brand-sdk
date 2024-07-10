@@ -43,7 +43,7 @@ type ObjectNameValidator<
       >;
 
 type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
-type PlatformAppApiMethodNameValidator<ApiMethodNameObject> = Simplify<
+export type PlatformAppApiMethodNameValidator<ApiMethodNameObject> = Simplify<
     ObjectNameValidator<ApiMethodNameObject, ApiMethodNamePattern, 'API Method'>
 >;
 
@@ -55,7 +55,7 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
         | 'createAsset'
         | 'getSecureRequest'
         | 'getAccountId'
-        | 'graphQl'
+        | 'executeGraphQl'
     >
 >;
 
