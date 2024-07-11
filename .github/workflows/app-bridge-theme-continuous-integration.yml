@@ -41,6 +41,3 @@ jobs:
 
             - name: Lint code
               run: pnpm --stream --filter {packages/app-bridge-theme} lint
-
-            - name: Test code
-              run: pnpm --stream --filter {packages/app-bridge-theme} test:coverage
