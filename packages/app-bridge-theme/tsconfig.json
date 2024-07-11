@@ -19,6 +19,6 @@
         "baseUrl": ".",
         "types": ["vite/client"]
     },
-    "include": ["src"],
+    "include": ["src", "./tests/setupTests.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

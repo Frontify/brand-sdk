@@ -28,4 +28,15 @@ export default defineConfig({
             external: [...dependencies, ...peerDependencies],
         },
     },
+    test: {
+        environment: 'happy-dom',
+        css: true,
+        coverage: {
+            all: true,
+            reporter: ['text', 'lcov'],
+            include: ['src/**/*.ts', 'src/**/*.tsx'],
+            exclude: ['src/**/test.ts', 'src/**/test.tsx', 'src/**/spec.ts', 'src/**/spec.tsx'],
+        },
+        setupFiles: ['./src/tests/setupTests.ts'],
+    },
 });
