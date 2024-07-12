@@ -3,3 +3,4 @@
 export * from './SearchDialog';
 export * from './Navigate';
 export * from './NavigateToDocumentSection';
+export * from './FetchDocumentNavigation';
