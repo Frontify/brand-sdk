@@ -13,6 +13,7 @@ const UPDATED_LANGUAGE = 'es';
 
 const stubs = vi.hoisted(() => ({
     contextStub: vi.fn(),
+    contextGetStub: vi.fn(),
     subscribeStub: vi.fn(),
     unsubscribeObserverStub: vi.fn(),
 }));
@@ -20,7 +21,7 @@ const stubs = vi.hoisted(() => ({
 const stubbedAppBridgeTheme = () =>
     ({
         context: stubs.contextStub.mockReturnValue({
-            get: () => INITIAL_LANGUAGE,
+            get: stubs.contextGetStub.mockReturnValue(INITIAL_LANGUAGE),
             subscribe: stubs.subscribeStub.mockReturnValue(stubs.unsubscribeObserverStub),
         }),
     }) as unknown as AppBridgeTheme;
@@ -63,6 +64,7 @@ describe('useLanguage', () => {
 
         act(() => {
             if (vi.isMockFunction(stubs.subscribeStub)) {
+                stubs.contextGetStub.mockReturnValue(UPDATED_LANGUAGE);
                 stubs.subscribeStub.mock.calls[0][0](UPDATED_LANGUAGE);
                 stubs.subscribeStub.mock.calls[1][0](UPDATED_LANGUAGE);
             }

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme.ts';
 
@@ -10,18 +10,14 @@ type UseLanguageReturn = {
 };
 
 export const useLanguage = (appBridge: AppBridgeTheme): UseLanguageReturn => {
-    const [currentLanguage, setCurrentLanguage] = useState(appBridge.context('currentLanguage').get());
-    const [defaultLanguage, setDefaultLanguage] = useState(appBridge.context('defaultLanguage').get());
-
-    useEffect(() => {
-        const unsubscribeCurrentLanguageObserver = appBridge.context('currentLanguage').subscribe(setCurrentLanguage);
-        const unsubscribeDefaultLanguageObserver = appBridge.context('defaultLanguage').subscribe(setDefaultLanguage);
-
-        return () => {
-            unsubscribeCurrentLanguageObserver();
-            unsubscribeDefaultLanguageObserver();
-        };
-    }, [appBridge]);
+    const currentLanguage = useSyncExternalStore(
+        appBridge.context('currentLanguage').subscribe,
+        appBridge.context('currentLanguage').get,
+    );
+    const defaultLanguage = useSyncExternalStore(
+        appBridge.context('defaultLanguage').subscribe,
+        appBridge.context('defaultLanguage').get,
+    );
 
     return { currentLanguage, defaultLanguage };
 };
