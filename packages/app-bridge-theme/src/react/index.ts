@@ -2,3 +2,4 @@
 
 export * from './useIsEditing';
 export * from './useLanguage';
+export * from './useDocumentNavigation';
