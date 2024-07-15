@@ -10,7 +10,7 @@ export const EditModal = () => {
     const editor = useEditorRef();
     return (
         <FloatingModalWrapper padding="16px" minWidth="400px" data-test-id="floating-button-edit">
-            <span data-test-id="preview-button-flyout" className="tw-flex tw-justify-between tw-items-center">
+            <span data-test-id="preview-button-flyout" className="tw-flex tw-justify-between tw-items-center tw-gap-2">
                 <span className="tw-pointer-events-none">{floatingButtonSelectors.url()}</span>
                 <span className="tw-flex tw-gap-2">
                     <button
