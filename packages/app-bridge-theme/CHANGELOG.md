@@ -1,5 +1,17 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.11
+
+### Patch Changes
+
+-   [#1031](https://github.com/Frontify/brand-sdk/pull/1031) [`54fd9e7`](https://github.com/Frontify/brand-sdk/commit/54fd9e7a4d973d7b47e67d5e7cc1c1309255e0ea) Thanks [@mike85](https://github.com/mike85)! - chore(AppBridgeTheme): add vitest to app bridge theme
+
+-   [#1032](https://github.com/Frontify/brand-sdk/pull/1032) [`19346b8`](https://github.com/Frontify/brand-sdk/commit/19346b8a27cc1e2efb6cd6c61884496ddd67a34c) Thanks [@mike85](https://github.com/mike85)! - feat(AppBridgeTheme): add use language hook
+
+-   [#1034](https://github.com/Frontify/brand-sdk/pull/1034) [`562990d`](https://github.com/Frontify/brand-sdk/commit/562990de5485cebebcb840ddb5abf74d1abe4357) Thanks [@mike85](https://github.com/mike85)! - feat: add useIsEditing hook
+
+-   [#1040](https://github.com/Frontify/brand-sdk/pull/1040) [`6bcd595`](https://github.com/Frontify/brand-sdk/commit/6bcd595dacebd55520f1cf87bc8fcbf849cc80d2) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: (AppBridgeTheme) documentNavigation in context and command
+
 ## 0.0.0-alpha.10
 
 ### Minor Changes
