@@ -65,7 +65,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...insertProps.style, zIndex: 1000, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
                     >
                         {input}
                     </div>,
@@ -78,7 +78,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...editProps.style, zIndex: 1000, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
                     >
                         {editContent}
                     </div>,
