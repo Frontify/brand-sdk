@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { useEffect, useSyncExternalStore } from 'react';
+
 import { type AppBridgeTheme } from 'src/AppBridgeTheme';
 
 import { hydrateContextDocumentNavigation } from '../registries/commands/HydrateContextDocumentNavigation';

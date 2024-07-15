@@ -2,12 +2,13 @@
 
 import { renderHook } from '@testing-library/react';
 import { act } from 'react';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
+
 import {
     type DocumentPageNavigationItem,
     type DocumentChildNavigationItem,
     type DocumentNavigationItem,
 } from 'src/types';
-import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 
