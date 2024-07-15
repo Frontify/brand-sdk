@@ -9,6 +9,7 @@ export type CommandRegistry = CommandNameValidator<{
     closeSearchDialog: void;
     navigate: string;
     navigateToDocumentSection: number | string;
+    hydrateContextDocumentNavigation: number;
 }>;
 
 type CommandNameValidator<CommandNameObject> = Simplify<
@@ -17,4 +18,4 @@ type CommandNameValidator<CommandNameObject> = Simplify<
 
 type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
 
-type CommandVerb = 'open' | 'close' | 'navigate' | 'download';
+type CommandVerb = 'open' | 'close' | 'navigate' | 'hydrateContext';

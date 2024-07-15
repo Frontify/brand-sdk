@@ -9,6 +9,7 @@ import {
     type Document,
     type DocumentLibrary,
     type DocumentPage,
+    type DocumentChildNavigationItem,
 } from './Guideline';
 import { type Language } from './Language';
 import { type ThemeTemplate } from './ThemeTemplate';
@@ -25,6 +26,7 @@ export type Context = {
     projectId: number;
     portalId: number;
     portalNavigation: PortalNavigationItem[] | null;
+    documentNavigation: Record<number, DocumentChildNavigationItem[] | undefined>;
     portalToken: string | null;
     currentLanguage: string;
     defaultLanguage: string;
