@@ -5,7 +5,7 @@ export const GuidelineSearchResultTypeMap = {
     section: 'SECTION',
     page: 'PAGE',
     color: 'COLOR',
-} as const;
+};
 type GuidelineSearchResultType = (typeof GuidelineSearchResultTypeMap)[keyof typeof GuidelineSearchResultTypeMap];
 
 export type GuidelineSearchResult = {
