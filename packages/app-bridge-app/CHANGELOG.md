@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.10
+
+### Patch Changes
+
+-   [#1038](https://github.com/Frontify/brand-sdk/pull/1038) [`d3f1b52`](https://github.com/Frontify/brand-sdk/commit/d3f1b528b361740b5bf820044cd3b54b4fb1a0a0) Thanks [@marguslant0](https://github.com/marguslant0)! - feat: Export types from `Api.ts`
+
 ## 0.0.9
 
 ### Patch Changes
