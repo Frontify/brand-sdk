@@ -10,6 +10,9 @@ import {
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
 } from '@frontify/fondue';
+import { createPortal } from 'react-dom';
+
+import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
 
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
@@ -55,17 +58,32 @@ export const CustomFloatingLink = () => {
 
     return (
         <>
-            {insertState.isOpen && !editState.isOpen && (
-                <div ref={insertRef} {...insertProps} style={{ ...insertProps.style, zIndex: 1000 }}>
-                    {input}
-                </div>
-            )}
+            {insertState.isOpen &&
+                !editState.isOpen &&
+                createPortal(
+                    <div
+                        data-is-underlay
+                        ref={insertRef}
+                        {...insertProps}
+                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                    >
+                        {input}
+                    </div>,
+                    document.body,
+                )}
 
-            {editState.isOpen && (
-                <div ref={editRef} {...editProps} style={{ ...editProps.style, zIndex: 1000 }}>
-                    {editContent}
-                </div>
-            )}
+            {editState.isOpen &&
+                createPortal(
+                    <div
+                        data-is-underlay
+                        ref={editRef}
+                        {...editProps}
+                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                    >
+                        {editContent}
+                    </div>,
+                    document.body,
+                )}
         </>
     );
 };
