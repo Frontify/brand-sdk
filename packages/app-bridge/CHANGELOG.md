@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.34
+
+### Patch Changes
+
+-   [#1042](https://github.com/Frontify/brand-sdk/pull/1042) [`e345d27`](https://github.com/Frontify/brand-sdk/commit/e345d2747d00efeadd8130dcde7f0dd1f2c398bf) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add documentId to GuidelineDocumentCategory events
+
 ## 4.0.0-alpha.33
 
 ### Patch Changes
