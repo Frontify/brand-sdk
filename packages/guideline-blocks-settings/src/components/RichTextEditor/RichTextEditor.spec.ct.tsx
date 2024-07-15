@@ -82,7 +82,7 @@ describe('RichTextEditor', () => {
         cy.get(RteHtmlSelector).should('not.exist');
     });
 
-    it('select internal link', () => {
+    it('should be able to select internal link', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
