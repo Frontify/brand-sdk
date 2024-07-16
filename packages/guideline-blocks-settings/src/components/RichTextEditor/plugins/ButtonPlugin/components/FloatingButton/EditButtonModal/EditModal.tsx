@@ -2,6 +2,8 @@
 
 import { FloatingModalWrapper, IconPen16, IconTrashBin16, focusEditor, useEditorRef } from '@frontify/fondue';
 
+import { LINK_PLUGIN } from '../../../../LinkPlugin/id';
+import { BlockStyles } from '../../../../styles';
 import { unwrapButton } from '../../../transforms';
 import { triggerFloatingButtonEdit } from '../../../utils';
 import { floatingButtonSelectors } from '../floatingButtonStore';
@@ -11,7 +13,15 @@ export const EditModal = () => {
     return (
         <FloatingModalWrapper padding="16px" minWidth="400px" data-test-id="floating-button-edit">
             <span data-test-id="preview-button-flyout" className="tw-flex tw-justify-between tw-items-center tw-gap-2">
-                <span className="tw-pointer-events-none">{floatingButtonSelectors.url()}</span>
+                <a
+                    data-test-id="floating-button-edit-url"
+                    href={floatingButtonSelectors.url()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={BlockStyles[LINK_PLUGIN]}
+                >
+                    {floatingButtonSelectors.url()}
+                </a>
                 <span className="tw-flex tw-gap-2">
                     <button
                         onClick={() => {
