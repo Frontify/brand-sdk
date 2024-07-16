@@ -20,17 +20,31 @@ type ObjectNameValidator<
           NameContext
       >;
 
-type ApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
+type PlatformAppApiMethodNamePattern = { [apiMethod: `${ApiVerb}${string}`]: { payload: unknown; response: unknown } };
 
 export type PlatformAppApiMethodNameValidator<ApiMethodNameObject> = Simplify<
-    ObjectNameValidator<ApiMethodNameObject, ApiMethodNamePattern, 'API Method'>
+    ObjectNameValidator<ApiMethodNameObject, PlatformAppApiMethodNamePattern, 'API Method'>
 >;
 
 export type PlatformAppApiReturn<
     ApiMethodName extends keyof ApiMethod,
-    ApiMethod extends ApiMethodNamePattern,
+    ApiMethod extends PlatformAppApiMethodNamePattern,
 > = ApiMethodName extends keyof ApiMethod
     ? ApiMethod[ApiMethodName] extends { response: infer Response }
         ? Promise<Response>
         : never
     : never;
+
+type PlatformAppApiHandler<
+    ApiMethodName extends keyof PlatformAppApiMethodNamePattern,
+    ApiMethod extends PlatformAppApiMethodNamePattern,
+> = ApiMethod[ApiMethodName]['payload'] extends void
+    ? { name: ApiMethodName }
+    : { name: ApiMethodName; payload: ApiMethod[ApiMethodName]['payload'] };
+
+export type PlatformAppApiHandlerParameter<
+    ApiMethodName,
+    ApiMethod extends PlatformAppApiMethodNamePattern,
+> = ApiMethodName extends keyof PlatformAppApiMethodNamePattern
+    ? PlatformAppApiHandler<ApiMethodName, ApiMethod>
+    : WrongNamePattern<ApiMethodName, 'API Method'>;
