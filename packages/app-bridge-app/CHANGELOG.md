@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.11
+
+### Patch Changes
+
+-   [#1048](https://github.com/Frontify/brand-sdk/pull/1048) [`c9c4eb2`](https://github.com/Frontify/brand-sdk/commit/c9c4eb26ecbff356c6e384597b153de21073780c) Thanks [@marguslant0](https://github.com/marguslant0)! - feat: Expose `PlatformAppApiHandlerParameter` type
+
 ## 0.0.10
 
 ### Patch Changes

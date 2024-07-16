@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.2
+
+### Patch Changes
+
+-   [#1045](https://github.com/Frontify/brand-sdk/pull/1045) [`304d24f`](https://github.com/Frontify/brand-sdk/commit/304d24f60a623239e72b79b028db69e73fb41968) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(RTE): make link clickable in edit modal
+
+-   [#1041](https://github.com/Frontify/brand-sdk/pull/1041) [`6300d3c`](https://github.com/Frontify/brand-sdk/commit/6300d3c131efb75d787461a289631b77032453a2) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): floating modals are hidden behind higher z index siblings
+
 ## 0.36.1
 
 ### Patch Changes
