@@ -21,7 +21,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
 
     return (
         <FloatingModalWrapper data-test-id="floating-link-edit" padding="16px" minWidth="400px">
-            <span data-test-id="preview-link-flyout" className="tw-flex tw-justify-between tw-items-center">
+            <span data-test-id="preview-link-flyout" className="tw-flex tw-justify-between tw-items-center tw-gap-2">
                 <span className="tw-pointer-events-none">{url}</span>
                 <span className="tw-flex tw-gap-2">
                     <button
