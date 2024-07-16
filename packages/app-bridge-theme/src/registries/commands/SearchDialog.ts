@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type DispatchHandlerParameter } from 'src/types/Command';
-
+import { type DispatchHandlerParameter } from '../../types';
 import { type CommandRegistry } from '../CommandRegistry';
 
 export const openSearchDialog = (): DispatchHandlerParameter<'openSearchDialog', CommandRegistry> => ({

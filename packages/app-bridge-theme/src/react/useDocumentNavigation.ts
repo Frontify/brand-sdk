@@ -2,8 +2,7 @@
 
 import { useEffect, useSyncExternalStore } from 'react';
 
-import { type AppBridgeTheme } from 'src/AppBridgeTheme';
-
+import { type AppBridgeTheme } from '../AppBridgeTheme.ts';
 import { hydrateContextDocumentNavigation } from '../registries/commands/HydrateContextDocumentNavigation';
 import { type DocumentNavigationItem, type DocumentChildNavigationItem } from '../types/Guideline';
 
@@ -17,5 +16,5 @@ export const useDocumentNavigation = (appBridge: AppBridgeTheme, document: Docum
         appBridge.dispatch(hydrateContextDocumentNavigation(document.id()));
     }, [appBridge, document]);
 
-    return documentNavigation[document.id()] ?? [];
+    return documentNavigation ? documentNavigation[document.id()] ?? [] : [];
 };
