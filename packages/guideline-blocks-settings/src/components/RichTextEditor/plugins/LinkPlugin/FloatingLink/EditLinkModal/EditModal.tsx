@@ -4,6 +4,8 @@ import { FloatingModalWrapper, IconPen16, IconTrashBin16, useLinkOpenButtonState
 import { type MouseEvent } from 'react';
 
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
+import { BlockStyles } from '../../../styles';
+import { LINK_PLUGIN } from '../../id';
 
 type EditModalProps = {
     editButtonProps: {
@@ -22,7 +24,15 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
     return (
         <FloatingModalWrapper data-test-id="floating-link-edit" padding="16px" minWidth="400px">
             <span data-test-id="preview-link-flyout" className="tw-flex tw-justify-between tw-items-center tw-gap-2">
-                <span className="tw-pointer-events-none">{url}</span>
+                <a
+                    data-test-id="floating-link-edit-url"
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={BlockStyles[LINK_PLUGIN]}
+                >
+                    {url}
+                </a>
                 <span className="tw-flex tw-gap-2">
                     <button
                         tabIndex={0}
