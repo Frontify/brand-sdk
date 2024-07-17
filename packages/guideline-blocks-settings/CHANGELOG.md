@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.3
+
+### Patch Changes
+
+-   [#1055](https://github.com/Frontify/brand-sdk/pull/1055) [`a9e0fef`](https://github.com/Frontify/brand-sdk/commit/a9e0fefd1dc5e4c49f39592e533acf2177854cd5) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockInjectButton): menu is opening in top left
+
 ## 0.36.2
 
 ### Patch Changes
