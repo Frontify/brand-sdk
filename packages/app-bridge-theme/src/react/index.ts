@@ -2,7 +2,8 @@
 
 export * from './useDocumentNavigation';
 export * from './useIsEditing';
-export * from './useLanguage';
+export * from './useCurrentLanguage';
+export * from './useDefaultLanguage';
 export * from './useLanguages';
 export * from './usePortalNavigation';
 export * from './useSettings';
