@@ -33,7 +33,7 @@ export default defineConfig({
     test: {
         environment: 'happy-dom',
         deps: {
-            inline: ['clsx', '@juggle/resize-observer', '@frontify/fondue'],
+            inline: ['clsx', '@juggle/resize-observer'],
         },
         setupFiles: ['setupTests.ts'],
     },
