@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type ApiHandlerParameter,
     type CommandNameValidator,
     type ContextAsEventName,
     type ContextReturn,
@@ -18,7 +17,11 @@ import {
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
-import { type PlatformAppApiReturn, type PlatformAppApiMethodNameValidator } from './types/Api';
+import {
+    type PlatformAppApiHandlerParameter,
+    type PlatformAppApiReturn,
+    type PlatformAppApiMethodNameValidator,
+} from './types/Api';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
@@ -111,7 +114,7 @@ export class AppBridgePlatformApp {
     }
 
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
-        apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
+        apiHandler: PlatformAppApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
     ): PlatformAppApiReturn<ApiMethodName, PlatformAppApiMethod> {
         return this.apiMessageBus.post({
             parameter: apiHandler,
