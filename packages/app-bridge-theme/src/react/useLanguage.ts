@@ -4,12 +4,7 @@ import { useSyncExternalStore } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme.ts';
 
-type UseLanguageReturn = {
-    currentLanguage: string;
-    defaultLanguage: string;
-};
-
-export const useLanguage = (appBridge: AppBridgeTheme): UseLanguageReturn => {
+export const useLanguage = (appBridge: AppBridgeTheme) => {
     const currentLanguage = useSyncExternalStore(
         appBridge.context('currentLanguage').subscribe,
         appBridge.context('currentLanguage').get,
