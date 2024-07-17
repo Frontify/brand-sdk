@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.13
+
+### Patch Changes
+
+-   [#1051](https://github.com/Frontify/brand-sdk/pull/1051) [`16ec9d1`](https://github.com/Frontify/brand-sdk/commit/16ec9d1ae5ced64bde74b275004cb632cba462b9) Thanks [@mike85](https://github.com/mike85)! - feat(AppBridgeTheme): add context hooks
+
 ## 0.0.0-alpha.12
 
 ### Patch Changes
