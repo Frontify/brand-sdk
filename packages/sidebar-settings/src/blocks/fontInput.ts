@@ -197,7 +197,7 @@ export type FontValue = {
         /**
          * The red value of the color (0-255).
          */
-            red: number;
+        red: number;
         /**
          * The green value of the color (0-255).
          */
