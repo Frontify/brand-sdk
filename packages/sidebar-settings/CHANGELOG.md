@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.20
+
+### Patch Changes
+
+-   [#1062](https://github.com/Frontify/brand-sdk/pull/1062) [`7ec70a5`](https://github.com/Frontify/brand-sdk/commit/7ec70a547155b3bbabdd333113168102565a0cfd) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: type on fontValue
+
 ## 0.9.19
 
 ### Patch Changes
