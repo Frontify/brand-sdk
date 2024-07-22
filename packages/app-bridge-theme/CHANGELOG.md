@@ -1,5 +1,12 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.14
+
+### Patch Changes
+
+-   [#1066](https://github.com/Frontify/brand-sdk/pull/1066) [`efcf755`](https://github.com/Frontify/brand-sdk/commit/efcf755dd1b0b5c2937e989445458f0e4dd992a6) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - feat(AppBridgeTheme): added command to open/close AiBrandAssistant dialog
+    feat(AppBridgeTheme): added list of enabled features to context
+
 ## 0.0.0-alpha.13
 
 ### Patch Changes
