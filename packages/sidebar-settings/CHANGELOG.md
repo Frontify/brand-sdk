@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.19-alpha.0
+
+### Patch Changes
+
+-   [#1059](https://github.com/Frontify/brand-sdk/pull/1059) [`2f6447a`](https://github.com/Frontify/brand-sdk/commit/2f6447a69fec667beba3a65ed552381403fa8057) Thanks [@Kenny806](https://github.com/Kenny806)! - feat: add highlight border settings for fontInput block
+
 ## 0.9.18
 
 ### Patch Changes
