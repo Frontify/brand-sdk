@@ -213,7 +213,7 @@ export type FontValue = {
     } | null;
     highlightBorderStyle?: 'solid' | 'dashed' | 'dotted';
     highlightBorderWeight?: string;
-    highlightBorderWeightCustomEnabled?: string;
+    highlightBorderWeightCustomEnabled?: boolean;
     highlightBorderWeightCustom?: {
         top: string;
         right: string;
@@ -343,7 +343,7 @@ export type FontValue = {
     } | null;
     hoverHighlightBorderStyle?: 'solid' | 'dashed' | 'dotted';
     hoverHighlightBorderWeight?: string;
-    hoverHighlightBorderWeightCustomEnabled?: string;
+    hoverHighlightBorderWeightCustomEnabled?: boolean;
     hoverHighlightBorderWeightCustom?: {
         top: string;
         right: string;
@@ -473,7 +473,7 @@ export type FontValue = {
     } | null;
     activeHighlightBorderStyle?: 'solid' | 'dashed' | 'dotted';
     activeHighlightBorderWeight?: string;
-    activeHighlightBorderWeightCustomEnabled?: string;
+    activeHighlightBorderWeightCustomEnabled?: boolean;
     activeHighlightBorderWeightCustom?: {
         top: string;
         right: string;
