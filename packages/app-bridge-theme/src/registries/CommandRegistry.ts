@@ -7,6 +7,8 @@ import { type ObjectNameValidator } from '../types';
 export type CommandRegistry = CommandNameValidator<{
     openSearchDialog: void;
     closeSearchDialog: void;
+    openAiBrandAssistantDialog: void;
+    closeAiBrandAssistantDialog: void;
     navigate: string;
     navigateToDocumentSection: number | string;
     hydrateContextDocumentNavigation: number;

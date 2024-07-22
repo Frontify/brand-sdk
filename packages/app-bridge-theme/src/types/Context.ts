@@ -33,6 +33,7 @@ export type Context = {
     isEditing: boolean;
     isPublicLink: boolean;
     isAuthenticated: boolean;
+    isAiBrandAssistantDialogOpen: boolean;
     isSearchDialogOpen: boolean;
     languages: Language[];
     template: TemplateContext | null;
