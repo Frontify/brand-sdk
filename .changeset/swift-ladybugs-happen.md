@@ -2,4 +2,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-add highlight border settings for sidebar
+feat: add highlight border settings for sidebar
