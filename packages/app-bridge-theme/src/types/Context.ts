@@ -30,6 +30,7 @@ export type Context = {
     portalToken: string | null;
     currentLanguage: string;
     defaultLanguage: string;
+    enabledFeatures: string[];
     isEditing: boolean;
     isPublicLink: boolean;
     isAuthenticated: boolean;
