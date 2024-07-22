@@ -190,38 +190,6 @@ export type FontValue = {
     highlightBorderRadiusChoice?: BorderRadius;
 
     /**
-     * Highlight border settings
-     */
-    highlightBorderEnabled?: boolean;
-    highlightBorderColor?: {
-        /**
-         * The red value of the color (0-255).
-         */
-        red: number;
-        /**
-         * The green value of the color (0-255).
-         */
-        green: number;
-        /**
-         * The blue value of the color (0-255).
-         */
-        blue: number;
-        /**
-         * The alpha value of the color (0-1).
-         */
-        alpha?: number;
-    } | null;
-    highlightBorderStyle?: 'solid' | 'dashed' | 'dotted';
-    highlightBorderWeight?: string;
-    highlightBorderWeightCustomEnabled?: string;
-    highlightBorderWeightCustom?: {
-        top: string;
-        right: string;
-        bottom: string;
-        left: string;
-    } | null;
-
-    /**
      * The rgba-color of the text on hover.
      */
     hoverColor?: {
@@ -320,38 +288,6 @@ export type FontValue = {
     hoverHighlightBorderRadiusChoice?: BorderRadius;
 
     /**
-     * Highlight border settings on hover
-     */
-    hoverHighlightBorderEnabled?: boolean;
-    hoverHighlightBorderColor?: {
-        /**
-         * The red value of the color (0-255).
-         */
-        red: number;
-        /**
-         * The green value of the color (0-255).
-         */
-        green: number;
-        /**
-         * The blue value of the color (0-255).
-         */
-        blue: number;
-        /**
-         * The alpha value of the color (0-1).
-         */
-        alpha?: number;
-    } | null;
-    hoverHighlightBorderStyle?: 'solid' | 'dashed' | 'dotted';
-    hoverHighlightBorderWeight?: string;
-    hoverHighlightBorderWeightCustomEnabled?: string;
-    hoverHighlightBorderWeightCustom?: {
-        top: string;
-        right: string;
-        bottom: string;
-        left: string;
-    } | null;
-
-    /**
      * The color of the text when active.
      */
     activeColor?: {
@@ -448,38 +384,6 @@ export type FontValue = {
     activeHighlightBorderRadiusCustomEnabled?: boolean;
     activeHighlightBorderRadiusCustom?: FontValueBorderRadiusType | null;
     activeHighlightBorderRadiusChoice?: BorderRadius;
-
-    /**
-     * Highlight border settings when active
-     */
-    activeHighlightBorderEnabled?: boolean;
-    activeHighlightBorderColor?: {
-        /**
-         * The red value of the color (0-255).
-         */
-        red: number;
-        /**
-         * The green value of the color (0-255).
-         */
-        green: number;
-        /**
-         * The blue value of the color (0-255).
-         */
-        blue: number;
-        /**
-         * The alpha value of the color (0-1).
-         */
-        alpha?: number;
-    } | null;
-    activeHighlightBorderStyle?: 'solid' | 'dashed' | 'dotted';
-    activeHighlightBorderWeight?: string;
-    activeHighlightBorderWeightCustomEnabled?: string;
-    activeHighlightBorderWeightCustom?: {
-        top: string;
-        right: string;
-        bottom: string;
-        left: string;
-    } | null;
 };
 
 export type FontInputBlock<AppBridge> = {
