@@ -1,5 +1,13 @@
 # @frontify/sidebar-settings
 
+## 0.9.19
+
+### Patch Changes
+
+-   [#1061](https://github.com/Frontify/brand-sdk/pull/1061) [`84a979b`](https://github.com/Frontify/brand-sdk/commit/84a979b282f3f37766c77718a752df5567df12df) Thanks [@Kenny806](https://github.com/Kenny806)! - feat: add highlight border settings for sidebar
+
+-   [#1057](https://github.com/Frontify/brand-sdk/pull/1057) [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.1.14
+
 ## 0.9.18
 
 ### Patch Changes
