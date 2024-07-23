@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.13
+
+### Patch Changes
+
+-   [#1068](https://github.com/Frontify/brand-sdk/pull/1068) [`7b387ee`](https://github.com/Frontify/brand-sdk/commit/7b387eec0552e861eb71c60af09a0b51eea21dc4) Thanks [@olivereisenhut](https://github.com/olivereisenhut)! - feat: Add option to make beta GraphQL request
+
 ## 0.0.12
 
 ### Patch Changes
