@@ -1,28 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    type ApiHandlerParameter,
-    type ApiMethodNameValidator,
-    type ApiReturn,
-    type AppBridge,
-    type CommandNameValidator,
-    type ContextAsEventName,
-    type ContextReturn,
-    type DispatchHandlerParameter,
-    type EventCallbackParameter,
-    type EventNameParameter,
-    type EventNameValidator,
-    type EventUnsubscribeFunction,
-    type StateAsEventName,
-    type StateReturn,
-    type SubscribeMap,
-} from './AppBridge';
-import { InitializationError } from './errors';
-import { type ApiMethodRegistry, openConnection } from './registries';
-import { Topic } from './types';
-import { generateRandomString, notify, subscribe } from './utilities';
-import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
-import { getQueryParameters } from './utilities/queryParams';
+// import {
+//     type ApiHandlerParameter,
+//     type ApiMethodNameValidator,
+//     type ApiReturn,
+//     type AppBridge,
+//     type CommandNameValidator,
+//     type ContextAsEventName,
+//     type ContextReturn,
+//     type DispatchHandlerParameter,
+//     type EventCallbackParameter,
+//     type EventNameParameter,
+//     type EventNameValidator,
+//     type EventUnsubscribeFunction,
+//     type StateAsEventName,
+//     type StateReturn,
+//     type SubscribeMap,
+// } from './AppBridge';
 
 export type PlatformAppApiMethod = ApiMethodNameValidator<
     Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset' | 'getSecureRequest'>
@@ -129,7 +123,7 @@ export class AppBridgePlatformApp implements IAppBridgePlatformApp {
             const checksum = generateRandomString();
 
             notify(Topic.Init, checksum, {
-                token: getQueryParameters(window.location.href).token,
+                token: 'test',
                 appBridgeVersion: 'v4',
             });
 
