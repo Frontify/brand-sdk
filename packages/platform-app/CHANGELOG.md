@@ -1,5 +1,11 @@
 # @frontify/platform-app
 
+## 0.1.9
+
+### Patch Changes
+
+-   [#1070](https://github.com/Frontify/brand-sdk/pull/1070) [`ccd27ac`](https://github.com/Frontify/brand-sdk/commit/ccd27ac1314c3c002b4bc4470c9ac7898651c93d) Thanks [@julianiff](https://github.com/julianiff)! - chore: adjust import to use type from @frontify/app-bridge-app
+
 ## 0.1.8
 
 ### Patch Changes
