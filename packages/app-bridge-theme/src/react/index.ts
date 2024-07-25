@@ -8,3 +8,4 @@ export * from './useLanguages';
 export * from './usePortalNavigation';
 export * from './useSettings';
 export * from './useTemplateContext';
+export * from './useEnabledFeatures';
