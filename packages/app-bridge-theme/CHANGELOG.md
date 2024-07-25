@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.16
+
+### Patch Changes
+
+-   [#1075](https://github.com/Frontify/brand-sdk/pull/1075) [`772ed45`](https://github.com/Frontify/brand-sdk/commit/772ed451a39041e290597230f99de0727cd78b67) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix: export useEnabledFeatures hook
+
 ## 0.0.0-alpha.15
 
 ### Patch Changes
