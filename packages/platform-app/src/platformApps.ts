@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AppBridgePlatformApp } from '@frontify/app-bridge';
+import { type AppBridgePlatformApp } from '@frontify/app-bridge-app';
 import {
     type ChecklistBlock as ChecklistBlockSettings,
     type ColorInputBlock as ColorInputBlockSettings,
