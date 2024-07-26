@@ -211,9 +211,3 @@ export const mimeTypes: Record<FileExtension, string> = {
     [FileExtension.Xyz]: 'chemical/x-xyz',
     [FileExtension.Zip]: 'application/zip',
 };
-
-export const getMimeType = (filetypes: string[]): string[] => {
-    return filetypes
-        .map((filetype) => mimeTypes[filetype as keyof typeof mimeTypes])
-        .filter((mimeType) => mimeType !== undefined);
-};
