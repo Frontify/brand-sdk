@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.35
+
+### Patch Changes
+
+-   [#1078](https://github.com/Frontify/brand-sdk/pull/1078) [`78555ee`](https://github.com/Frontify/brand-sdk/commit/78555ee76fbb487cf4a7c0fe3cda419704b35f63) Thanks [@julianiff](https://github.com/julianiff)! - chore: remove appBridgePlatformApp
+
 ## 4.0.0-alpha.34
 
 ### Patch Changes

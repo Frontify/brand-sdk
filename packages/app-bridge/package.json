@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge",
     "type": "module",
-    "version": "4.0.0-alpha.34",
+    "version": "4.0.0-alpha.35",
     "description": "Package to establish communication between Frontify and marketplace apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
