@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.36
+
+### Patch Changes
+
+-   [#1080](https://github.com/Frontify/brand-sdk/pull/1080) [`a78218b`](https://github.com/Frontify/brand-sdk/commit/a78218b302929a05616f2d157968aa007cf36115) Thanks [@julianiff](https://github.com/julianiff)! - Fix: readd method
+
 ## 4.0.0-alpha.35
 
 ### Patch Changes
