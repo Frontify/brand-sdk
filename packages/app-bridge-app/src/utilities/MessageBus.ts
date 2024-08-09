@@ -23,10 +23,28 @@ export class MessageBus implements IMessageBus {
             if (messageIndex > -1) {
                 const message = this.messageBucket.splice(messageIndex, 1)[0];
                 if (message) {
+                    if (
+                        this.hasParameterProperty(message.message) &&
+                        message.message.parameter.name === 'getSecureRequest'
+                    ) {
+                        const { status, statusText, headers, body } = event.data;
+
+                        const response = new Response(body, {
+                            status: status,
+                            statusText: statusText,
+                            headers: new Headers(headers),
+                        });
+
+                        message.resolve(response);
+                    }
                     message.resolve(event.data.message);
                 }
             }
         };
+    }
+
+    private hasParameterProperty(obj: any): obj is { parameter: any } {
+        return obj && typeof obj === 'object' && 'parameter' in obj;
     }
 
     public post(message: unknown) {
