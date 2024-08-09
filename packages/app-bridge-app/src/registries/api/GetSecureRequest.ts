@@ -5,11 +5,7 @@ export type GetSecureRequestPayload = {
     requestParams: unknown;
 };
 
-export type GetSecureRequestResponse = {
-    data: unknown;
-    statusText: string;
-    status: string;
-};
+export type GetSecureRequestResponse = Response;
 
 export const getSecureRequest = (payload: GetSecureRequestPayload) => ({
     name: 'getSecureRequest',
