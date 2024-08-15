@@ -14,7 +14,7 @@ export const ToolbarButtonTooltip = ({ content, children, open, disabled }: Tool
     return disabled ? (
         children
     ) : (
-        <Tooltip.Root enterDelay={300} open={open}>
+        <Tooltip.Root enterDelay={300} open={open} data-test-id="toolbar-button-tooltip">
             <Tooltip.Trigger>{children}</Tooltip.Trigger>
             <Tooltip.Content side="top">
                 <div>{content}</div>
