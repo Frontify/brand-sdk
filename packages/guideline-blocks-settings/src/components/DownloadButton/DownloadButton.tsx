@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FOCUS_STYLE, IconArrowCircleDown16, LegacyTooltip as Tooltip, TooltipPosition } from '@frontify/fondue';
+import { FOCUS_STYLE, IconArrowCircleDown16 } from '@frontify/fondue';
+import { Tooltip } from '@frontify/fondue/components';
 import { useFocusRing } from '@react-aria/focus';
 
 import { joinClassNames } from '../../utilities';
@@ -11,12 +12,8 @@ export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
     const { isFocused, focusProps } = useFocusRing();
 
     return (
-        <Tooltip
-            withArrow
-            position={TooltipPosition.Top}
-            content="Download"
-            enterDelay={500}
-            triggerElement={
+        <Tooltip.Root enterDelay={500}>
+            <Tooltip.Trigger>
                 <button
                     tabIndex={0}
                     aria-label="Download"
@@ -32,7 +29,8 @@ export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
                         <IconArrowCircleDown16 />
                     </span>
                 </button>
-            }
-        />
+            </Tooltip.Trigger>
+            <Tooltip.Content side="top">Download</Tooltip.Content>
+        </Tooltip.Root>
     );
 };
