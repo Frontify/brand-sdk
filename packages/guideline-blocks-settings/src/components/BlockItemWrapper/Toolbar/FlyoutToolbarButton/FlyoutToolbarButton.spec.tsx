@@ -10,7 +10,7 @@ import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 import { FlyoutToolbarButton } from './FlyoutToolbarButton';
 
 const BUTTON_ID = 'block-item-wrapper-toolbar-flyout';
-const TOOLTIP_ID = 'toolbar-button-tooltip';
+const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TEST_FLYOUT_ID = 'test';
 const TEST_TOOLTIP = 'tooltip';

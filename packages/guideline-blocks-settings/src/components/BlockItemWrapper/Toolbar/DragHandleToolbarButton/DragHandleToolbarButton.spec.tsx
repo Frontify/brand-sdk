@@ -9,7 +9,7 @@ import { DragPreviewContextProvider } from '../context/DragPreviewContext';
 import { DragHandleToolbarButton } from './DragHandleToolbarButton';
 
 const TOOLBAR_BUTTON_ID = 'block-item-wrapper-toolbar-btn';
-const TOOLTIP_ID = 'toolbar-button-tooltip';
+const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TOOLTIP_CONTENT = 'content';
 
