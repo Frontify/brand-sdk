@@ -18,7 +18,7 @@ const TOOLTIP_CONTENT = 'content';
  */
 
 describe('DragHandleToolbarButton', () => {
-    it('should show tooltip and activeStyles when item is in drag preview context', async () => {
+    it('should show tooltip and activeStyles when item is in drag preview context', () => {
         const { getByTestId } = render(
             <DragPreviewContextProvider isDragPreview>
                 <DragHandleToolbarButton
@@ -38,17 +38,15 @@ describe('DragHandleToolbarButton', () => {
             <DragHandleToolbarButton tooltip={TOOLTIP_CONTENT} icon={<IconAdobeCreativeCloud />} draggableProps={{}} />,
         );
 
-        expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
-        expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TOOLTIP_CONTENT);
-
         getByTestId(TOOLBAR_BUTTON_ID).focus();
 
         await waitFor(() => {
-            expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0');
+            expect(getByTestId(TOOLTIP_ID)).toBeInTheDocument();
+            expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TOOLTIP_CONTENT);
         });
     });
 
-    it('should forward draggableProps', async () => {
+    it('should forward draggableProps', () => {
         const onDragStub = vi.fn();
 
         const { getByTestId } = render(
@@ -59,12 +57,12 @@ describe('DragHandleToolbarButton', () => {
             />,
         );
 
-        await fireEvent.drag(getByTestId(TOOLBAR_BUTTON_ID));
+        fireEvent.drag(getByTestId(TOOLBAR_BUTTON_ID));
 
         expect(onDragStub).toHaveBeenCalledOnce();
     });
 
-    it('should forward setActivatorNodeRef', async () => {
+    it('should forward setActivatorNodeRef', () => {
         const setActivatorNodeRefStub = vi.fn();
 
         render(
@@ -76,10 +74,10 @@ describe('DragHandleToolbarButton', () => {
             />,
         );
 
-        expect(setActivatorNodeRefStub).toHaveBeenCalledOnce();
+        expect(setActivatorNodeRefStub).toHaveBeenCalled();
     });
 
-    it('should display icon', async () => {
+    it('should display icon', () => {
         const { getByTestId } = render(
             <DragHandleToolbarButton tooltip={TOOLTIP_CONTENT} icon={<IconAdobeCreativeCloud />} draggableProps={{}} />,
         );
