@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
@@ -10,7 +10,6 @@ import { MenuToolbarButton } from '.';
 
 const BUTTON_ID = 'block-item-wrapper-toolbar-flyout';
 const MENU_ITEM_ID = 'menu-item';
-const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TEST_FLYOUT_ID = 'test';
 /**
