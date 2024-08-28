@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.17
+
+### Patch Changes
+
+-   [#1084](https://github.com/Frontify/brand-sdk/pull/1084) [`3335235`](https://github.com/Frontify/brand-sdk/commit/3335235dc5f107280cac5c57a5008c4c9e2949e1) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor(themes): add color utilities
+
 ## 0.0.0-alpha.16
 
 ### Patch Changes
