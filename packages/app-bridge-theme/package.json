@@ -40,7 +40,9 @@
     "peerDependencies": {
         "react": "^18"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@frontify/sidebar-settings": "workspace:^"
+    },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.17.6",
         "@testing-library/react": "^14.3.0",

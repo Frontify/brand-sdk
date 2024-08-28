@@ -196,6 +196,10 @@ importers:
         version: 1.6.0(@types/node@20.14.9)(@vitest/ui@1.6.0)(happy-dom@13.10.1)(terser@5.31.1)
 
   packages/app-bridge-theme:
+    dependencies:
+      '@frontify/sidebar-settings':
+        specifier: workspace:^
+        version: link:../sidebar-settings
     devDependencies:
       '@frontify/eslint-config-react':
         specifier: ^0.17.6

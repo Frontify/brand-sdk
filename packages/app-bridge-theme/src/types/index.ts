@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+export * from '@frontify/sidebar-settings';
+
 export * from './Asset';
 export * from './Command';
 export * from './Common';
