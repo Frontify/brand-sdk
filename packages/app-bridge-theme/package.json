@@ -41,7 +41,7 @@
         "react": "^18"
     },
     "dependencies": {
-        "@frontify/sidebar-settings": "workspace:^"
+        "@frontify/sidebar-settings": "^0.9.20"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.17.6",
