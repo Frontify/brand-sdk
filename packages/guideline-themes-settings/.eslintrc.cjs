@@ -2,7 +2,6 @@
 
 module.exports = {
     root: true,
-    extends: ['@frontify/eslint-config-react'],
     plugins: ['notice'],
     settings: {
         react: {

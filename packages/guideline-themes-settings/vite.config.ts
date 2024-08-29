@@ -2,23 +2,15 @@
 
 import { resolve } from 'node:path';
 
-import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vitest/config';
 
-import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
+import { dependencies as dependenciesMap } from './package.json';
 
 const dependencies = Object.keys(dependenciesMap);
-const peerDependencies = Object.keys(peerDependenciesMap);
-
-export const globals = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'react-dom/client': 'ReactDOM',
-};
 
 export default defineConfig({
-    plugins: [dts({ insertTypesEntry: true, rollupTypes: true }), react()],
+    plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
     resolve: {
         mainFields: ['module', 'main'],
     },
@@ -44,24 +36,21 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies, ...peerDependencies, 'react-dom/client', 'react/jsx-runtime'],
+            external: [...dependencies],
             output: [
                 {
                     name: 'GuidelineThemesSettings',
                     format: 'es',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
-                    globals,
                 },
                 {
                     name: 'GuidelineThemesSettings',
                     format: 'umd',
-                    globals,
                 },
                 {
                     name: 'GuidelineThemesSettings',
                     format: 'cjs',
-                    globals,
                 },
             ],
         },

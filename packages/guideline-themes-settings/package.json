@@ -37,10 +37,6 @@
         "test:ui": "vitest --ui",
         "typecheck": "tsc --noEmit"
     },
-    "peerDependencies": {
-        "react": "^18",
-        "react-dom": "^18"
-    },
     "dependencies": {
         "@frontify/sidebar-settings": "^0.9.20"
     },
