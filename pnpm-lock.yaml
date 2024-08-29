@@ -481,13 +481,13 @@ importers:
 
   packages/guideline-themes-settings:
     dependencies:
+      '@frontify/app-bridge-theme':
+        specifier: workspace:^
+        version: link:../app-bridge-theme
       '@frontify/sidebar-settings':
         specifier: ^0.9.20
         version: 0.9.20(@react-spring/web@9.7.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@types/node@18.19.39)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.24.7)(@babel/preset-env@7.24.7(@babel/core@7.24.7))(@types/react@18.3.3)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@18.19.39)(typescript@5.5.2)))(zustand@4.5.3(@types/react@18.3.3)(immer@10.1.1)(react@18.3.1))
     devDependencies:
-      '@frontify/app-bridge-theme':
-        specifier: 0.0.0-alpha.17
-        version: 0.0.0-alpha.17(react@18.3.1)
       '@types/node':
         specifier: ^18.19.31
         version: 18.19.39
@@ -1831,12 +1831,6 @@ packages:
 
   '@formatjs/intl-localematcher@0.5.4':
     resolution: {integrity: sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==}
-
-  '@frontify/app-bridge-theme@0.0.0-alpha.17':
-    resolution: {integrity: sha512-azmjYPfWXfsAP0ofUGidIUTVSK+lEObTl3hyxMXHTCuL7fuXWAoU0Y8xnaf7muii3btGVvf770KF+KAPkDezyg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      react: ^18
 
   '@frontify/app-bridge@3.9.2':
     resolution: {integrity: sha512-87JF8vizY2YA3FCB/g6o6aC5eVcqYd/Iceb1OUU9Htxpk1DSjAuN1axDeW4bY/B984nU6RVq4scRdK553X8sJw==}
@@ -10201,10 +10195,6 @@ snapshots:
   '@formatjs/intl-localematcher@0.5.4':
     dependencies:
       tslib: 2.6.3
-
-  '@frontify/app-bridge-theme@0.0.0-alpha.17(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
 
   '@frontify/app-bridge@3.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sinon@17.0.1)':
     dependencies:
