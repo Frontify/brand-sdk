@@ -1,0 +1,87 @@
+{
+    "name": "@frontify/guideline-themes-settings",
+    "type": "module",
+    "version": "0.0.0",
+    "description": "Provides types and helpers for the guideline themes development",
+    "author": "Frontify Developers <developers@frontify.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Frontify/brand-sdk",
+        "directory": "packages/guideline-themes-settings"
+    },
+    "sideEffects": false,
+    "publishConfig": {
+        "access": "public"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "require": "./dist/index.umd.js",
+            "import": "./dist/index.es.js"
+        },
+        "./styles": "./dist/styles.css",
+        "./tailwind": "./tailwind.config.ts"
+    },
+    "main": "./dist/index.es.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist",
+        "tailwind.config.ts"
+    ],
+    "scripts": {
+        "build": "vite build",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "prettier": "prettier --check .",
+        "prettier:fix": "prettier --write .",
+        "test": "vitest run --silent",
+        "test:coverage": "vitest --coverage",
+        "test:watch": "vitest",
+        "test:ui": "vitest --ui",
+        "typecheck": "tsc --noEmit"
+    },
+    "peerDependencies": {
+        "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha",
+        "react": "^18",
+        "react-dom": "^18"
+    },
+    "dependencies": {
+        "@frontify/sidebar-settings": "^0.9.20"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.24.4",
+        "@frontify/app-bridge": "4.0.0-alpha.20",
+        "@frontify/app-bridge-theme": "0.0.0-alpha.17",
+        "@frontify/eslint-config-react": "0.17.6",
+        "@testing-library/jest-dom": "^6.4.2",
+        "@testing-library/react": "^14.3.0",
+        "@testing-library/user-event": "14.5.2",
+        "@types/node": "^18.19.31",
+        "@types/react": "^18.2.75",
+        "@types/react-dom": "^18.2.24",
+        "@types/sinon": "^17.0.3",
+        "@vitejs/plugin-react": "^4.2.1",
+        "@vitest/coverage-v8": "^1.4.0",
+        "@vitest/ui": "^1.4.0",
+        "autoprefixer": "^10.4.19",
+        "cypress": "^13.7.2",
+        "cypress-real-events": "^1.12.0",
+        "eslint": "^8.57.0",
+        "eslint-plugin-notice": "^0.9.10",
+        "happy-dom": "^13.10.1",
+        "mitt": "^3.0.1",
+        "msw": "^1.3.3",
+        "postcss": "^8.4.38",
+        "prettier": "^3.2.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "rollup": "^4.14.1",
+        "sinon": "17.0.1",
+        "tailwindcss": "^3.4.3",
+        "typescript": "^5.4.4",
+        "vite": "^5.2.10",
+        "vite-plugin-dts": "^3.8.1",
+        "vite-plugin-externals": "^0.6.2",
+        "vitest": "^1.4.0"
+    }
+}
