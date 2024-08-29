@@ -17,6 +17,8 @@ jobs:
 
         strategy:
             fail-fast: false
+            matrix:
+              app-bridge-theme-version: ["workspace:^"]
 
         steps:
             - name: Checkout default branch
@@ -37,6 +39,13 @@ jobs:
 
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
+
+            - name: Build @frontify/app-bridge-theme (if workspace)
+              if: matrix.app-bridge-theme-version == 'workspace:^'
+              run: pnpm build:app-bridge-theme
+
+            - name: Add app-bridge-theme dependency
+              run: pnpm add @frontify/app-bridge-theme@${{ matrix.app-bridge-theme-version }} --filter {packages/guideline-themes-settings}
 
             - name: Typecheck code
               run: pnpm --stream --filter {packages/guideline-themes-settings} typecheck
