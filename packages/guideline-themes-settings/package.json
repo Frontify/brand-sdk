@@ -38,10 +38,10 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@frontify/app-bridge-theme": "workspace:^",
         "@frontify/sidebar-settings": "^0.9.20"
     },
     "devDependencies": {
-        "@frontify/app-bridge-theme": "0.0.0-alpha.17",
         "@types/node": "^18.19.31",
         "@types/react": "^18.2.75",
         "@vitest/coverage-v8": "^1.4.0",
