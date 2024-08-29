@@ -59,23 +59,12 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version-file: ".nvmrc"
+                  cache: "pnpm"
 
             - name: Use pnpm
               uses: pnpm/action-setup@v3
               with:
                   run_install: false
-
-            - name: Get pnpm store directory
-              id: pnpm-cache
-              run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-            - name: Setup pnpm cache
-              uses: actions/cache@v3
-              with:
-                  path: |
-                      ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-                  key: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile

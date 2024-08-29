@@ -41,7 +41,6 @@
         "typecheck": "tsc --noEmit"
     },
     "peerDependencies": {
-        "@frontify/app-bridge": "^3.0.0 || ^4.0.0-alpha",
         "react": "^18",
         "react-dom": "^18"
     },
