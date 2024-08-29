@@ -63,13 +63,13 @@ export default defineConfig({
                     globals,
                 },
                 {
-                    name: 'GuidelineThemes',
+                    name: 'GuidelineThemesSettings',
                     format: 'umd',
                     assetFileNames,
                     globals,
                 },
                 {
-                    name: 'GuidelineThemes',
+                    name: 'GuidelineThemesSettings',
                     format: 'cjs',
                     assetFileNames,
                     globals,
