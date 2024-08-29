@@ -1,1 +1,0 @@
-# @frontify/guideline-themes-settings
