@@ -17,7 +17,7 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
-        "types": ["@testing-library/jest-dom", "cypress", "cypress-real-events", "node"]
+        "types": ["@testing-library/jest-dom", "node"]
     },
     "include": ["src", "setupTests.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]

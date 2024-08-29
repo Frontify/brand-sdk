@@ -3,7 +3,6 @@
 import { resolve } from 'node:path';
 
 import react from '@vitejs/plugin-react';
-import { type PreRenderedAsset } from 'rollup';
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vitest/config';
 
@@ -16,13 +15,6 @@ export const globals = {
     react: 'React',
     'react-dom': 'ReactDOM',
     'react-dom/client': 'ReactDOM',
-};
-
-const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
-    if (chunkInfo.name === 'style.css') {
-        return 'styles.css';
-    }
-    return chunkInfo.name ?? 'UnknownFileName';
 };
 
 export default defineConfig({
@@ -59,19 +51,16 @@ export default defineConfig({
                     format: 'es',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
-                    assetFileNames,
                     globals,
                 },
                 {
                     name: 'GuidelineThemesSettings',
                     format: 'umd',
-                    assetFileNames,
                     globals,
                 },
                 {
                     name: 'GuidelineThemesSettings',
                     format: 'cjs',
-                    assetFileNames,
                     globals,
                 },
             ],

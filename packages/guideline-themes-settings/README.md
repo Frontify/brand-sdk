@@ -1,3 +1,3 @@
 # Themes types
 
-Provides typing for guidelines themes
+Provides typing for guideline themes

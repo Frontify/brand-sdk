@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AppBridgeTheme as LegacyAppBridgeTheme } from '@frontify/app-bridge';
 import { type AppBridgeTheme, type ThemeTemplate } from '@frontify/app-bridge-theme';
 import {
     type AssetInputBlock as AssetInputBlockSidebarSettings,
@@ -76,7 +75,6 @@ export type ThemeSettingsStructureExport = { [customSectionName: string]: Settin
 
 export type ThemeProps = {
     appBridge: AppBridgeTheme;
-    legacyAppBridge: LegacyAppBridgeTheme;
     Content: FC;
     router: FrontifyRouter;
     Footer: FC | null;

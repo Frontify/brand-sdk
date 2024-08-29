@@ -8,5 +8,5 @@
         "lib": ["ESNext"],
         "target": "ESNext"
     },
-    "include": [".eslintrc.cjs", "postcss.config.cjs", "tailwind.config.ts", "vite.config.ts", "package.json"]
+    "include": [".eslintrc.cjs", "vite.config.ts", "package.json"]
 }
