@@ -479,7 +479,7 @@ importers:
         specifier: ^1.4.0
         version: 1.6.0(@types/node@18.19.39)(@vitest/ui@1.6.0)(happy-dom@13.10.1)(terser@5.31.1)
 
-  packages/guideline-themes-settings:
+  packages/guideline-themes:
     dependencies:
       '@frontify/app-bridge-theme':
         specifier: workspace:^
