@@ -8,7 +8,8 @@
     "@frontify/sidebar-settings": "0.8.1",
     "@frontify/platform-app": "0.0.5",
     "@frontify/app-bridge-theme": "1.0.0-alpha.1",
-    "@frontify/app-bridge-app": "0.0.5"
+    "@frontify/app-bridge-app": "0.0.5",
+    "@frontify/guideline-themes": "0.0.0"
   },
   "changesets": [
     "angry-dolphins-fry",
@@ -18,6 +19,7 @@
     "clever-suns-laugh",
     "cuddly-pets-hammer",
     "curly-pots-scream",
+    "cyan-cougars-invite",
     "dry-mangos-fix",
     "early-masks-appear",
     "eighty-ants-happen",
