@@ -2,4 +2,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-feat: adjust build to be a folder
+feat(PlattformApp): adjust build to be a folder
