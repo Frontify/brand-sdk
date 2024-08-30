@@ -1,5 +1,5 @@
 ---
-"@frontify/guideline-themes-settings": patch
+"@frontify/guideline-themes": patch
 ---
 
-feat: starting guideline-themes-settings package
+feat: starting guideline-themes package

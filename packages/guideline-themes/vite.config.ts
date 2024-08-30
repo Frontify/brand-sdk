@@ -39,17 +39,17 @@ export default defineConfig({
             external: [...dependencies],
             output: [
                 {
-                    name: 'GuidelineThemesSettings',
+                    name: 'GuidelineThemes',
                     format: 'es',
                     preserveModules: true,
                     preserveModulesRoot: 'src',
                 },
                 {
-                    name: 'GuidelineThemesSettings',
+                    name: 'GuidelineThemes',
                     format: 'umd',
                 },
                 {
-                    name: 'GuidelineThemesSettings',
+                    name: 'GuidelineThemes',
                     format: 'cjs',
                 },
             ],

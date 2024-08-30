@@ -1,5 +1,5 @@
 {
-    "name": "@frontify/guideline-themes-settings",
+    "name": "@frontify/guideline-themes",
     "type": "module",
     "version": "0.0.0",
     "description": "Provides types and helpers for the guideline themes development",
@@ -7,7 +7,7 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/Frontify/brand-sdk",
-        "directory": "packages/guideline-themes-settings"
+        "directory": "packages/guideline-themes"
     },
     "sideEffects": false,
     "publishConfig": {

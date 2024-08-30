@@ -3,7 +3,7 @@ name: Guideline Themes CI
 on:
     pull_request:
         paths:
-            - packages/guideline-themes-settings/**
+            - packages/guideline-themes/**
 
 # Ensures that only one workflow per branch will run at a time.
 concurrency:
@@ -18,7 +18,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-              app-bridge-theme-version: ["workspace:^"]
+                app-bridge-theme-version: ["workspace:^"]
 
         steps:
             - name: Checkout default branch
@@ -45,13 +45,13 @@ jobs:
               run: pnpm build:app-bridge-theme
 
             - name: Add app-bridge-theme dependency
-              run: pnpm add @frontify/app-bridge-theme@${{ matrix.app-bridge-theme-version }} --filter {packages/guideline-themes-settings}
+              run: pnpm add @frontify/app-bridge-theme@${{ matrix.app-bridge-theme-version }} --filter {packages/guideline-themes}
 
             - name: Typecheck code
-              run: pnpm --stream --filter {packages/guideline-themes-settings} typecheck
+              run: pnpm --stream --filter {packages/guideline-themes} typecheck
 
             - name: Lint code
-              run: pnpm --stream --filter {packages/guideline-themes-settings} lint
+              run: pnpm --stream --filter {packages/guideline-themes} lint
 
     unit-tests:
         runs-on: ubuntu-latest
@@ -79,4 +79,4 @@ jobs:
               run: pnpm install --frozen-lockfile
 
             - name: Tests
-              run: pnpm --stream --filter {packages/guideline-themes-settings} test
+              run: pnpm --stream --filter {packages/guideline-themes} test
