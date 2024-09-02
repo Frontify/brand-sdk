@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.19
+
+### Patch Changes
+
+-   [#1092](https://github.com/Frontify/brand-sdk/pull/1092) [`024b908`](https://github.com/Frontify/brand-sdk/commit/024b9089f68482aa908f08936c6a0c33cdaafb6c) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor(appBridgeThemes): remove utilities folder
+
 ## 0.0.0-alpha.18
 
 ### Patch Changes
