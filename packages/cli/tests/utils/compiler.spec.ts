@@ -1,8 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createHash } from 'node:crypto';
-
-import { beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test } from 'vitest';
 
 import { compileBlock, compilePlatformApp, compileTheme } from '../../src/utils/compiler';
 
@@ -15,14 +13,6 @@ declare global {
         index: { block: unknown; settings: unknown };
     }
 }
-
-vi.mock('crypto', () => ({
-    createHash: vi.fn(() => ({
-        update: vi.fn(() => ({
-            digest: vi.fn(() => 'mocked hash'),
-        })),
-    })),
-}));
 
 describe('Compiler utils', () => {
     beforeEach(() => {
@@ -61,7 +51,6 @@ describe('Compiler utils', () => {
         beforeEach(() => {
             global.window = {};
         });
-        const testHash = 'mocked hash';
 
         test('should provide a valid build with a index.html', async () => {
             const outputNameTest = 'index';
@@ -72,10 +61,9 @@ describe('Compiler utils', () => {
                 outputName: outputNameTest,
             })) as unknown as { app: { output: { fileName: string }[] }; settings: { output: { fileName: string }[] } };
 
-            expect(createHash).toHaveBeenCalledWith('sha256');
-            expect(result.app.output[0].fileName).toBe(`${outputNameTest}.${testHash}.js`);
-            expect(result.app.output[1].fileName).toBe(`${outputNameTest}.${testHash}.css`);
-            expect(result.app.output[2].fileName).toBe(`${outputNameTest}.${testHash}.html`);
+            expect(result.app.output[0].fileName).toBe('assets/index-sM5bF_1u.js');
+            expect(result.app.output[1].fileName).toBe('assets/index-B-x5KKng.css');
+            expect(result.app.output[2].fileName).toBe('index.html');
             expect(result.settings[0].output[0].fileName).toBe('settings.js');
         });
     });

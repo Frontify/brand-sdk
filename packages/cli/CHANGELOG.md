@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.7.5
+
+### Patch Changes
+
+-   [#1088](https://github.com/Frontify/brand-sdk/pull/1088) [`220e38e`](https://github.com/Frontify/brand-sdk/commit/220e38ee70a75284ded46dda81285e00df8e68f3) Thanks [@julianiff](https://github.com/julianiff)! - feat(PlatformApp): adjust build to be a folder
+
 ## 5.7.4
 
 ### Patch Changes
