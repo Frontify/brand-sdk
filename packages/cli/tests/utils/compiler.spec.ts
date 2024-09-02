@@ -2,7 +2,7 @@
 
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import { compileBlock, compilePlatformApp, compileTheme } from '../../src/utils/compiler';
+import { compileBlock, compilePlatformApp, compileTheme } from '../../src/utils';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
