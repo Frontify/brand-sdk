@@ -14,14 +14,8 @@ import {
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { type Asset, useAssetChooser, useAssetUpload, useEditorState } from '@frontify/app-bridge';
-import {
-    AssetInput,
-    AssetInputSize,
-    Flyout,
-    FlyoutPlacement,
-    LegacyTooltip as Tooltip,
-    TooltipPosition,
-} from '@frontify/fondue';
+import { AssetInput, AssetInputSize, Flyout, FlyoutPlacement } from '@frontify/fondue';
+import { Tooltip } from '@frontify/fondue/components';
 import { type MutableRefObject, useEffect, useState } from 'react';
 
 import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
@@ -144,13 +138,8 @@ export const Attachments = ({
     };
 
     return isEditing || (internalItems?.length ?? 0) > 0 ? (
-        <Tooltip
-            withArrow
-            position={TooltipPosition.Top}
-            content="Attachments"
-            disabled={isFlyoutOpen}
-            enterDelay={500}
-            triggerElement={
+        <Tooltip.Root enterDelay={500}>
+            <Tooltip.Trigger>
                 <div data-test-id="attachments-flyout-button">
                     <Flyout
                         placement={FlyoutPlacement.BottomRight}
@@ -235,7 +224,8 @@ export const Attachments = ({
                         </div>
                     </Flyout>
                 </div>
-            }
-        />
+            </Tooltip.Trigger>
+            <Tooltip.Content side="top">Attachments</Tooltip.Content>
+        </Tooltip.Root>
     ) : null;
 };

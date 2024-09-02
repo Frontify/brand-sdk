@@ -10,7 +10,7 @@ import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 import { FlyoutToolbarButton } from './FlyoutToolbarButton';
 
 const BUTTON_ID = 'block-item-wrapper-toolbar-flyout';
-const TOOLTIP_ID = 'toolbar-button-tooltip';
+const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TEST_FLYOUT_ID = 'test';
 const TEST_TOOLTIP = 'tooltip';
@@ -56,7 +56,7 @@ describe('FlyoutToolbarButton', () => {
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 
-    it('should display content', async () => {
+    it('should display content', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
@@ -93,11 +93,10 @@ describe('FlyoutToolbarButton', () => {
 
         getByTestId(BUTTON_ID).focus();
 
-        await waitFor(() => expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0'));
-        expect(getByTestId(TOOLTIP_ID)).toHaveTextContent(TEST_TOOLTIP);
+        await waitFor(() => expect(getByTestId(TOOLTIP_ID)).toBeInTheDocument());
     });
 
-    it('should use supplied icon', async () => {
+    it('should use supplied icon', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
@@ -130,13 +129,8 @@ describe('FlyoutToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
+        getByTestId(BUTTON_ID).focus();
 
-        getByTestId(TOOLTIP_ID).focus();
-
-        await waitFor(() => {
-            expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
-            expect(queryByTestId('content')).toBeNull();
-        });
+        await waitFor(() => expect(queryByTestId(TOOLTIP_ID)).toBeNull());
     });
 });

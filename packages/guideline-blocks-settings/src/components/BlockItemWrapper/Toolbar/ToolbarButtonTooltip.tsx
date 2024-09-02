@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { LegacyTooltip as Tooltip, TooltipPosition } from '@frontify/fondue';
+import { Tooltip } from '@frontify/fondue/components';
 import { type ReactElement, type ReactNode } from 'react';
 
 type ToolbarButtonTooltipProps = {
@@ -10,16 +10,15 @@ type ToolbarButtonTooltipProps = {
     disabled?: boolean;
 };
 
-export const ToolbarButtonTooltip = ({ open, content, children, disabled }: ToolbarButtonTooltipProps) => (
-    <Tooltip
-        withArrow
-        hoverDelay={0}
-        enterDelay={300}
-        open={open}
-        disabled={disabled}
-        position={TooltipPosition.Top}
-        content={<div>{content}</div>}
-        triggerElement={children}
-        data-test-id="toolbar-button-tooltip"
-    />
-);
+export const ToolbarButtonTooltip = ({ content, children, open, disabled }: ToolbarButtonTooltipProps) => {
+    return disabled ? (
+        children
+    ) : (
+        <Tooltip.Root enterDelay={300} open={open}>
+            <Tooltip.Trigger>{children}</Tooltip.Trigger>
+            <Tooltip.Content side="top">
+                <div>{content}</div>
+            </Tooltip.Content>
+        </Tooltip.Root>
+    );
+};
