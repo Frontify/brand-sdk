@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.18
+
+### Patch Changes
+
+-   [#1095](https://github.com/Frontify/brand-sdk/pull/1095) [`a70a9fe`](https://github.com/Frontify/brand-sdk/commit/a70a9fe0932e1a40c5d4d85e4fdcb3f008947b74) Thanks [@mike85](https://github.com/mike85)! - refactor(AppBridgeTheme): remove EventRegistry
+
 ## 0.0.0-alpha.17
 
 ### Patch Changes
