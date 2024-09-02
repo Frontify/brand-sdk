@@ -148,7 +148,7 @@ packages/cli/src/servers/blockDevelopmentServer.ts @Frontify/content-and-blocks
 packages/cli/src/servers/platformAppDevelopmentServer.ts @Frontify/apps-and-integrations
 packages/cli/src/servers/themeDevelopmentServer.ts @Frontify/themes-and-navigation
 
-## Templates
+## Templates
 packages/cli/templates/content-block-css @Frontify/content-and-blocks
 packages/cli/templates/content-block-css-modules @Frontify/content-and-blocks
 packages/cli/templates/content-block-tailwind @Frontify/content-and-blocks
