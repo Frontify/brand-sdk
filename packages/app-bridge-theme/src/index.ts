@@ -4,4 +4,3 @@ export * from './AppBridgeTheme';
 export * from './react';
 export * from './registries';
 export * from './types';
-export * from './utilities';
