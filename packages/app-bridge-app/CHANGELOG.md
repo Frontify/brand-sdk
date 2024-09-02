@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.14
+
+### Patch Changes
+
+-   [#1096](https://github.com/Frontify/brand-sdk/pull/1096) [`e24fb7a`](https://github.com/Frontify/brand-sdk/commit/e24fb7a7cefa999decc4c8bed3941de5a35b006d) Thanks [@julianiff](https://github.com/julianiff)! - fix: adjust parentId type to no be optional
+
 ## 0.0.13
 
 ### Patch Changes
