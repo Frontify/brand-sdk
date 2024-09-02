@@ -6,7 +6,7 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeThemeVersion } from '../appBridgeThemeVersion';
 
-import { type CompilerOptions } from './compiler';
+import { type CompilerOptions } from './compilerOptions';
 
 export const compileTheme = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeThemeVersion(projectPath);

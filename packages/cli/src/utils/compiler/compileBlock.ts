@@ -6,7 +6,7 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from '../appBridgeVersion';
 
-import { type CompilerOptions } from './compiler';
+import { type CompilerOptions } from './compilerOptions';
 
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeVersion(projectPath);
