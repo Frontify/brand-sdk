@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge-app": "^0.0.5",
-        "@frontify/fondue": "^12.1.2",
+        "@frontify/fondue": "^12.2.6",
         "@frontify/platform-app": "^0.1.4",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
