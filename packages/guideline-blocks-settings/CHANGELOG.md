@@ -1,5 +1,14 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.7
+
+### Patch Changes
+
+-   [#1101](https://github.com/Frontify/brand-sdk/pull/1101) [`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.2.6`
+
+-   Updated dependencies [[`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4)]:
+    -   @frontify/sidebar-settings@0.9.21
+
 ## 0.36.6
 
 ### Patch Changes

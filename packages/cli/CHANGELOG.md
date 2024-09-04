@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 5.7.6
+
+### Patch Changes
+
+-   [#1101](https://github.com/Frontify/brand-sdk/pull/1101) [`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.2.6`
+
+-   [#1100](https://github.com/Frontify/brand-sdk/pull/1100) [`e6a9db1`](https://github.com/Frontify/brand-sdk/commit/e6a9db1969b91f520521b83a61317515948bfa5e) Thanks [@julianiff](https://github.com/julianiff)! - chore: update templates
+
 ## 5.7.5
 
 ### Patch Changes
