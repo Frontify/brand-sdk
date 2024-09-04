@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.6
+
+### Patch Changes
+
+-   [#1083](https://github.com/Frontify/brand-sdk/pull/1083) [`65f732d`](https://github.com/Frontify/brand-sdk/commit/65f732d100f1e68d10bad51982ea5d34e12f69bf) Thanks [@ragi96](https://github.com/ragi96)! - fix: tooltip not positioned correctly also replaced the legacy tooltip with the new one
+
 ## 0.36.5
 
 ### Patch Changes
