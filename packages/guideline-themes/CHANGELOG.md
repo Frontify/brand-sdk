@@ -1,5 +1,11 @@
 # @frontify/guideline-themes
 
+## 0.0.1-alpha.3
+
+### Patch Changes
+
+-   [#1103](https://github.com/Frontify/brand-sdk/pull/1103) [`6a57f04`](https://github.com/Frontify/brand-sdk/commit/6a57f04c75a05ef177fe4185f9e768ad72dafd89) Thanks [@mike85](https://github.com/mike85)! - refactor(GuidelineThemes): type cleanup
+
 ## 0.0.1-alpha.2
 
 ### Patch Changes
