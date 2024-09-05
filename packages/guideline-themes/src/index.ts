@@ -55,23 +55,27 @@ export type TemplateInputBlock = TemplateInputBlockSidebarSettings<AppBridgeThem
 export type TextareaBlock = TextareaBlockSidebarSettings<AppBridgeTheme>;
 export type ValueOrPromisedValue<T> = ValueOrPromisedValueSidebarSettings<AppBridgeTheme, T>;
 
-export type ContentAreaWidthChoice = '1200px' | '1000px' | '800px';
-export type ContentAreaWidthTemplateSettings = {
+export type ContentAreaWidthChoice = `${number}${'px' | '%' | 'vw'}`;
+type ContentAreaWidthTemplateSettings = {
     contentAreaWidthChoice?: ContentAreaWidthChoice;
-    contentAreaWidthCustom?: string;
+    contentAreaWidthCustom?: `${number}${string}`;
     contentAreaWidthCustomEnabled?: boolean;
 };
-export type ContentAreaPaddingChoice = '25px' | '50px' | '75px';
-export type ContentAreaPaddingTemplateSettings = {
+export type ContentAreaPaddingChoice = `${number}${'px' | '%' | 'vw'}`;
+type ContentAreaPaddingTemplateSettings = {
     contentAreaPaddingChoice?: ContentAreaPaddingChoice;
-    contentAreaPaddingCustom?: string;
+    contentAreaPaddingCustom?: `${number}${string}`;
     contentAreaPaddingCustomEnabled?: boolean;
 };
 export type ContentAreaAlignmentChoice = 'left' | 'center' | 'right';
-export type ContentAreaAlignmentSetting = { contentAreaAlignmentChoice?: ContentAreaAlignmentChoice };
+type ContentAreaAlignmentSetting = { contentAreaAlignmentChoice?: ContentAreaAlignmentChoice };
 
-export type ThemeSettingsStructure = Record<ThemeTemplate, ThemeSettingsStructureExport>;
+export type ContentAreaSettings = ContentAreaWidthTemplateSettings &
+    ContentAreaPaddingTemplateSettings &
+    ContentAreaAlignmentSetting;
+
 export type ThemeSettingsStructureExport = { [customSectionName: string]: SettingBlock[] };
+export type ThemeSettingsStructure = Record<ThemeTemplate, ThemeSettingsStructureExport>;
 
 export type ThemeProps = {
     appBridge: AppBridgeTheme;
