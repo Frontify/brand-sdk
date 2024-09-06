@@ -1,5 +1,11 @@
 # @frontify/guideline-themes
 
+## 0.0.1-alpha.4
+
+### Patch Changes
+
+-   [#1105](https://github.com/Frontify/brand-sdk/pull/1105) [`35e5f5d`](https://github.com/Frontify/brand-sdk/commit/35e5f5d928de04b4884629a2586e448587ac2c9d) Thanks [@anxobotana](https://github.com/anxobotana)! - fix(guideline-themes): export types ungroupped
+
 ## 0.0.1-alpha.3
 
 ### Patch Changes
