@@ -56,23 +56,19 @@ export type TextareaBlock = TextareaBlockSidebarSettings<AppBridgeTheme>;
 export type ValueOrPromisedValue<T> = ValueOrPromisedValueSidebarSettings<AppBridgeTheme, T>;
 
 export type ContentAreaWidthChoice = `${number}${'px' | '%' | 'vw'}`;
-type ContentAreaWidthTemplateSettings = {
+export type ContentAreaWidthTemplateSettings = {
     contentAreaWidthChoice?: ContentAreaWidthChoice;
     contentAreaWidthCustom?: `${number}${string}`;
     contentAreaWidthCustomEnabled?: boolean;
 };
 export type ContentAreaPaddingChoice = `${number}${'px' | '%' | 'vw'}`;
-type ContentAreaPaddingTemplateSettings = {
+export type ContentAreaPaddingTemplateSettings = {
     contentAreaPaddingChoice?: ContentAreaPaddingChoice;
     contentAreaPaddingCustom?: `${number}${string}`;
     contentAreaPaddingCustomEnabled?: boolean;
 };
 export type ContentAreaAlignmentChoice = 'left' | 'center' | 'right';
-type ContentAreaAlignmentSetting = { contentAreaAlignmentChoice?: ContentAreaAlignmentChoice };
-
-export type ContentAreaSettings = ContentAreaWidthTemplateSettings &
-    ContentAreaPaddingTemplateSettings &
-    ContentAreaAlignmentSetting;
+export type ContentAreaAlignmentSetting = { contentAreaAlignmentChoice?: ContentAreaAlignmentChoice };
 
 export type ThemeSettingsStructureExport = { [customSectionName: string]: SettingBlock[] };
 export type ThemeSettingsStructure = Record<ThemeTemplate, ThemeSettingsStructureExport>;
