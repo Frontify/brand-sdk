@@ -76,6 +76,28 @@ const endpointCallSchema = object({
 const hostnameRegex =
     /^(([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])\.)*([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])$/;
 
+const ScopeEnum = z.enum([
+    'basic:read',
+    'basic:write',
+    'account:read',
+    'webhook:read',
+    'webhook:write',
+]);
+
+const permissionsSchema = z.object({
+    permissions: z
+        .object({
+            scopes: z
+                .array(ScopeEnum)
+                .min(1, 'At least one scope is required')
+                .max(3, 'No more than 3 scopes are allowed')
+                .refine((scopes) => scopes.includes('basic:read'), {
+                    message: "'basic:read' is required in scopes",
+                }),
+        })
+        .optional(),
+});
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
@@ -88,6 +110,7 @@ export const platformAppManifestSchemaV1 = object({
         ).optional(),
         endpoints: array(endpointCallSchema).optional(),
     }).optional(),
+    permissionsSchema,
     surfaces: object({
         mediaLibrary: object({
             assetAction: object({
