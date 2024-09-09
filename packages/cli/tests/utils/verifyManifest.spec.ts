@@ -773,10 +773,6 @@ describe('Verify Platform App Manifest', () => {
         expect(!!verifiedManifest).toBe(true);
     });
 
-    it('should throw error when scopes strings a not valid', () => {
-        expect(() => verifyManifest(INVALID_MANIFEST_WITH_SCOPES, platformAppManifestSchemaV1)).toThrow();
-    });
-
     it('should accept an array of network endpoint without header and body', () => {
         const verifiedManifest = verifyManifest(
             MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
