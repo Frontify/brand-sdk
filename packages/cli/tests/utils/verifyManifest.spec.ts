@@ -668,29 +668,6 @@ const VALID_MANIFEST_WITH_SCOPES = {
     },
 };
 
-const INVALID_MANIFEST_WITH_SCOPES = {
-    appType: 'platform-app',
-    appId: 'abcdabcdabcdabcdabcdabcda',
-    permissions: {
-        scopes: ['basic:read', 'unbasic:write'],
-    },
-    surfaces: {
-        mediaLibrary: {
-            assetAction: {
-                title: 'action title',
-                type: ['image', 'video'],
-                filenameExtension: ['png'],
-            },
-            assetCreation: {
-                title: 'action title',
-            },
-        },
-    },
-    metadata: {
-        version: 1,
-    },
-};
-
 describe('Verify Platform App Manifest', () => {
     beforeEach(() => {
         resetSecretKeySet();
