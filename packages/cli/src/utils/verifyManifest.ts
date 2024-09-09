@@ -82,7 +82,7 @@ const permissionsSchema = object({
     permissions: object({
         scopes: array(ScopeEnum)
             .min(1, 'At least one scope is required')
-            .max(3, 'No more than 3 scopes are allowed')
+            .max(5, 'No more than 5 scopes are allowed')
             .refine((scopes) => scopes.includes('basic:read'), {
                 message: "'basic:read' is required in scopes",
             }),
