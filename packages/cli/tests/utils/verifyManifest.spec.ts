@@ -645,6 +645,29 @@ const INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE = {
     },
 };
 
+const VALID_MANIFEST_WITH_SCOPES = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    permissions: {
+        scopes: ['basic:read', 'basic:write'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     beforeEach(() => {
         resetSecretKeySet();
@@ -719,6 +742,11 @@ describe('Verify Platform App Manifest', () => {
     });
     it('should accept an array of valid hosts', () => {
         const verifiedManifest = verifyManifest(VALID_MANIFEST_NETWORK_HOST, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should accept a permissions object with scopes', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_WITH_SCOPES, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 
