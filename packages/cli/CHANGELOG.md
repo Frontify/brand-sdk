@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.7.7
+
+### Patch Changes
+
+-   [#1108](https://github.com/Frontify/brand-sdk/pull/1108) [`40ed6e8`](https://github.com/Frontify/brand-sdk/commit/40ed6e8e89a7cce7ced862ed9c53cf5576546bf8) Thanks [@julianiff](https://github.com/julianiff)! - feat: add scopes validator
+
 ## 5.7.6
 
 ### Patch Changes
