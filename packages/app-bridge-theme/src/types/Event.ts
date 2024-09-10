@@ -2,6 +2,8 @@
 
 import { type Simplify } from 'type-fest';
 
+import { type EventRegistry } from '../registries';
+
 import { type ObjectNameValidator, type WrongNamePattern } from './Common';
 import { type Context } from './Context';
 
@@ -19,11 +21,12 @@ type ContextAsEventName<Context> = {
 };
 
 export type AppBridgeThemeEvent = EventNameValidator<
-    ContextAsEventName<
-        Context & {
-            '*': Context;
-        }
-    >
+    Pick<EventRegistry, 'assetsChosen'> &
+        ContextAsEventName<
+            Context & {
+                '*': Context;
+            }
+        >
 >;
 
 export type EventNamePattern = {
