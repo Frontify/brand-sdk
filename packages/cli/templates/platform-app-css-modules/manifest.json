@@ -5,6 +5,9 @@
     "metadata": {
         "version": 1
     },
+    "permissions": {
+        "scopes": ["basic:read", "basic:write"]
+    },
     "surfaces": {
         "mediaLibrary": {
             "assetAction": {
