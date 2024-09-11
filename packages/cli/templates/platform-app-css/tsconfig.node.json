@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "jsx": "react-jsx",
         "target": "ES2022",
         "lib": ["ES2023"],
         "module": "ESNext",
@@ -19,4 +18,5 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
+    "exclude": ["src"]
 }
