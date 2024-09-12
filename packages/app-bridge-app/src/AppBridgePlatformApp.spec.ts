@@ -59,7 +59,7 @@ describe('AppBridgePlatformApp', () => {
     it('should return state after app is initialized', async () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
-        platformApp.subscribe('Context.connected', (connected) => {
+        platformApp.subscribe('Context.connected', (connected: boolean) => {
             const state = platformApp.state().get();
 
             expect(connected).toBe(true);
@@ -71,7 +71,7 @@ describe('AppBridgePlatformApp', () => {
     it('should yield true for Context.connected after dispatch', async () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
-        platformApp.subscribe('Context.connected', (connected) => {
+        platformApp.subscribe('Context.connected', (connected: boolean) => {
             const context = platformApp.context().get();
             const parentId = platformApp.context('parentId').get();
 

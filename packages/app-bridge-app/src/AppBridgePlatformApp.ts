@@ -21,7 +21,7 @@ import {
     type PlatformAppApiHandlerParameter,
     type PlatformAppApiReturn,
     type PlatformAppApiMethodNameValidator,
-} from './types/Api';
+} from './types';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
@@ -64,6 +64,7 @@ type AppBaseProps = {
     brandId: number;
     domain: string;
     parentId: string;
+    nodeId: string;
 };
 
 export type AssetActionContext = {
@@ -100,6 +101,7 @@ export class AppBridgePlatformApp {
         'Context.assetId': new Map(),
         'Context.brandId': new Map(),
         'Context.parentId': new Map(),
+        'Context.nodeId': new Map(),
         'Context.domain': new Map(),
         'Context.surface': new Map(),
         'Context.connected': new Map(),
