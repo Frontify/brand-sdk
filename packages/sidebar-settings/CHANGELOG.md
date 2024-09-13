@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.9.22
+
+### Patch Changes
+
+-   [#1115](https://github.com/Frontify/brand-sdk/pull/1115) [`e708d79`](https://github.com/Frontify/brand-sdk/commit/e708d79d0c89ffa59d7ce5cc7314aba2426aa833) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor(dropdown): deprecate the size prop
+
 ## 0.9.21
 
 ### Patch Changes
