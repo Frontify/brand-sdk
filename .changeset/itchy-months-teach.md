@@ -2,4 +2,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-feat: deprecate dropdownBlock size prop
+refactor(dropdown): deprecate the size prop
