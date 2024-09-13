@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.15
+
+### Patch Changes
+
+-   [#1113](https://github.com/Frontify/brand-sdk/pull/1113) [`084af2f`](https://github.com/Frontify/brand-sdk/commit/084af2f7a7f950766c88bd6c2a6f7481687173a2) Thanks [@julianiff](https://github.com/julianiff)! - feat(platform-app): add nodeId
+
 ## 0.0.14
 
 ### Patch Changes
