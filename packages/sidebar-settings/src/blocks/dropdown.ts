@@ -22,6 +22,7 @@ export type DropdownBlock<AppBridge> = {
 
     /**
      * The size of the dropdown.
+     * @deprecated `size` has no effect anymore, will be removed 13.10.2024
      */
     size?: 'small' | 'large' | DropdownSize;
 
