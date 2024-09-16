@@ -64,7 +64,7 @@ type AppBaseProps = {
     brandId: number;
     domain: string;
     parentId: string;
-    nodeId: string;
+    rootId: string;
 };
 
 export type AssetActionContext = {
@@ -101,7 +101,7 @@ export class AppBridgePlatformApp {
         'Context.assetId': new Map(),
         'Context.brandId': new Map(),
         'Context.parentId': new Map(),
-        'Context.nodeId': new Map(),
+        'Context.rootId': new Map(),
         'Context.domain': new Map(),
         'Context.surface': new Map(),
         'Context.connected': new Map(),
