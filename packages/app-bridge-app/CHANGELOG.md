@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.0.16
+
+### Patch Changes
+
+-   [#1117](https://github.com/Frontify/brand-sdk/pull/1117) [`9047b9d`](https://github.com/Frontify/brand-sdk/commit/9047b9d4e089e91394ab23ae2ffaed3e9f6807a6) Thanks [@julianiff](https://github.com/julianiff)! - chore: adjust to rootId
+
 ## 0.0.15
 
 ### Patch Changes
