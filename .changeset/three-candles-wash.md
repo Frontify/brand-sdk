@@ -2,4 +2,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-chore: update templtes
+chore: update templates
