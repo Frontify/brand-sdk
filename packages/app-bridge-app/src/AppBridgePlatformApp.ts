@@ -66,7 +66,7 @@ type AppBaseProps = {
 };
 
 export type AssetViewerContext = {
-    surface: 'assetAction';
+    surface: 'assetViewer';
     assetId: string;
 } & AppBaseProps;
 
@@ -83,7 +83,7 @@ export type AssetCreationContext = {
     rootId: string;
 } & AppBaseProps;
 
-export type PlatformAppContext = AssetActionContext | AssetCreationContext;
+export type PlatformAppContext = AssetActionContext | AssetCreationContext | AssetViewerContext;
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
