@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 5.7.9
+
+### Patch Changes
+
+-   [#1122](https://github.com/Frontify/brand-sdk/pull/1122) [`972ee33`](https://github.com/Frontify/brand-sdk/commit/972ee334da15cfe98c04d0ce8de87ea872b70408) Thanks [@julianiff](https://github.com/julianiff)! - feat: add guideline to verifier
+
+-   [#1119](https://github.com/Frontify/brand-sdk/pull/1119) [`699aec3`](https://github.com/Frontify/brand-sdk/commit/699aec3fa7de03b5d0aa781e9ed09e61b79d7806) Thanks [@julianiff](https://github.com/julianiff)! - chore: update templates
+
 ## 5.7.8
 
 ### Patch Changes
