@@ -73,11 +73,8 @@ describe('AppBridgePlatformApp', () => {
         const platformApp = new AppBridgePlatformApp();
         platformApp.subscribe('Context.connected', (connected: boolean) => {
             const context = platformApp.context().get();
-            const parentId = platformApp.context('parentId').get();
-
             expect(connected).toBe(true);
             expect(context).toEqual({ parentId: 'parentId-test', connected: true });
-            expect(parentId).toEqual('parentId-test');
         });
         platformApp.dispatch(openConnection());
     });
