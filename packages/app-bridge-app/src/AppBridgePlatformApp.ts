@@ -87,7 +87,7 @@ export type PlatformAppContext = AssetActionContext | AssetCreationContext | Ass
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
-    ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }>
+        ContextAsEventName<PlatformAppContext & { '*': PlatformAppContext }>
 >;
 
 export class AppBridgePlatformApp {
