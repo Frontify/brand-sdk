@@ -103,6 +103,17 @@ export const platformAppManifestSchemaV1 = object({
     }).optional(),
     permissionsSchema,
     surfaces: object({
+        guideline: object({
+            assetViewer: object({
+                title: string().min(2).max(28),
+                type: array(completeAssetType),
+                filenameExtension: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('guideline'),
+                    }),
+                ),
+            }).optional(),
+        }).optional(),
         mediaLibrary: object({
             assetAction: object({
                 title: string().min(2).max(28),

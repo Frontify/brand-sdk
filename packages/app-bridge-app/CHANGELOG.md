@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.0
+
+### Minor Changes
+
+-   [#1121](https://github.com/Frontify/brand-sdk/pull/1121) [`7888a1a`](https://github.com/Frontify/brand-sdk/commit/7888a1ac221016717527088ea938a4f5089102ce) Thanks [@julianiff](https://github.com/julianiff)! - feat: add assetViewer surface typing
+
 ## 0.0.16
 
 ### Patch Changes

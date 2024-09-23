@@ -63,20 +63,27 @@ type AppBaseProps = {
     connected: boolean;
     brandId: number;
     domain: string;
-    parentId: string;
-    rootId: string;
 };
+
+export type AssetViewerContext = {
+    surface: 'assetViewer';
+    assetId: string;
+} & AppBaseProps;
 
 export type AssetActionContext = {
     surface: 'assetAction';
     assetId: string;
+    parentId: string;
+    rootId: string;
 } & AppBaseProps;
 
 export type AssetCreationContext = {
     surface: 'assetCreation';
+    parentId: string;
+    rootId: string;
 } & AppBaseProps;
 
-export type PlatformAppContext = AssetActionContext | AssetCreationContext;
+export type PlatformAppContext = AssetActionContext | AssetCreationContext | AssetViewerContext;
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
