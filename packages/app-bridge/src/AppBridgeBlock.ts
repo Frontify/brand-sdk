@@ -137,10 +137,6 @@ export interface AppBridgeBlock<
 
     deleteTemplateIdsFromBlockTemplateKey(key: string, templateIds: number[]): Promise<void>;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use the `useBlockTemplates` hook instead of fetching templates manually.
-     */
     getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
     getColorsByIds(colorIds: number[]): Promise<Color[]>;
