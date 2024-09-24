@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.9
+
+### Patch Changes
+
+-   [#1126](https://github.com/Frontify/brand-sdk/pull/1126) [`8050d68`](https://github.com/Frontify/brand-sdk/commit/8050d6813202738d299f0f4cc8f9acdc4175ff4c) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): add fondue component style css
+
+-   [#1124](https://github.com/Frontify/brand-sdk/pull/1124) [`ec7b4c2`](https://github.com/Frontify/brand-sdk/commit/ec7b4c21c22f5f5ff663193fdce2c5a34604caef) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(\*): scroll events are hijacked by dnd-kit
+
 ## 0.36.8
 
 ### Patch Changes
