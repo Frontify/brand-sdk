@@ -65,8 +65,6 @@ packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/content-and-bl
 packages/app-bridge/src/react/useReadyForPrint.ts @Frontify/content-and-blocks
 packages/app-bridge/src/react/useTemplateAssets.spec.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/react/useTemplateAssets.ts @Frontify/themes-and-navigation
-packages/app-bridge/src/react/useTemplateChooser.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useTemplateChooser.ts @Frontify/content-and-blocks
 packages/app-bridge/src/react/useThemeAssets.spec.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/react/useThemeAssets.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/react/useThemeSettings.spec.ts @Frontify/themes-and-navigation

@@ -30,7 +30,6 @@ export * from './usePlatformAppBridge';
 export * from './usePrivacySettings';
 export * from './useReadyForPrint';
 export * from './useTemplateAssets';
-export * from './useTemplateChooser';
 export * from './useThemeAssets';
 export * from './useThemeSettings';
 export * from './useUncategorizedDocumentPages';
