@@ -66,8 +66,8 @@ type AppBaseProps = {
 };
 
 export type BulkActionsContext = {
-    surface: 'bulkActions';
-    assetId: string;
+    surface: 'assetBulkActions';
+    selection: { assets: { extensions: string[]; ids: string[] }; folders: { ids: string[] } };
     parentId: string;
     rootId: string;
 } & AppBaseProps;
