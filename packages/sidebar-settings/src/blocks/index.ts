@@ -7,7 +7,6 @@ import { type DropdownBlock } from './dropdown';
 import { type FontInputBlock } from './fontInput';
 import { type InputBlock } from './input';
 import { type LegacyAssetInputBlock } from './legacyAssetInput';
-import { type LegacyTemplateInputBlock } from './legacyTemplateInput';
 import { type LinkBlock } from './link';
 import { type LinkChooserBlock } from './linkChooser';
 import { type MultiInputBlock } from './multiInput';
@@ -37,7 +36,6 @@ export * from './sectionHeading';
 export * from './segmentedControls';
 export * from './switch';
 export * from './templateInput';
-export * from './legacyTemplateInput';
 export * from './textarea';
 export * from './link';
 
@@ -401,7 +399,6 @@ export type SimpleSettingBlock<AppBridge> =
     | SegmentedControlsBlock<AppBridge>
     | SwitchBlock<AppBridge>
     | TemplateInputBlock<AppBridge>
-    | LegacyTemplateInputBlock<AppBridge>
     | TextareaBlock<AppBridge>;
 
 export type DynamicSupportedBlock<AppBridge> =
