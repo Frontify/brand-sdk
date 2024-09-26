@@ -3,4 +3,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-chore: bump fondue to 12.2.13
+chore: bump `@frontify/fondue` to `12.2.13`
