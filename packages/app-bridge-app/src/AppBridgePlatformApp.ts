@@ -65,7 +65,7 @@ type AppBaseProps = {
     domain: string;
 };
 
-export type BulkActionsContext = {
+export type AssetBulkActionsContext = {
     surface: 'assetBulkActions';
     selection: { assets: { extensions: string[]; ids: string[] }; folders: { ids: string[] } };
     parentId: string;
@@ -90,7 +90,11 @@ export type AssetCreationContext = {
     rootId: string;
 } & AppBaseProps;
 
-export type PlatformAppContext = AssetActionContext | AssetCreationContext | AssetViewerContext | BulkActionsContext;
+export type PlatformAppContext =
+    | AssetActionContext
+    | AssetCreationContext
+    | AssetViewerContext
+    | AssetBulkActionsContext;
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
