@@ -67,7 +67,7 @@ type AppBaseProps = {
 
 export type AssetBulkActionsContext = {
     surface: 'assetBulkActions';
-    selection: { assets: { extensions: string[]; ids: string[] }; folders: { ids: string[] } };
+    selection: { assets: { ids: string[] }; folders: { ids: string[] } };
     parentId: string;
     rootId: string;
 } & AppBaseProps;
