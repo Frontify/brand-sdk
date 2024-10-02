@@ -1,5 +1,12 @@
 # @frontify/platform-app
 
+## 0.1.12
+
+### Patch Changes
+
+-   Updated dependencies [[`d90e2fb`](https://github.com/Frontify/brand-sdk/commit/d90e2fb5129fb6c267c0bed3dad54ec45d387574), [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686)]:
+    -   @frontify/sidebar-settings@0.9.23
+
 ## 0.1.11
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @frontify/app-bridge-app
 
+## 0.1.2
+
+### Patch Changes
+
+-   [#1131](https://github.com/Frontify/brand-sdk/pull/1131) [`e3ba1ef`](https://github.com/Frontify/brand-sdk/commit/e3ba1efe1334d8fc5ec7fa4b37c8c09562949e04) Thanks [@julianiff](https://github.com/julianiff)! - feat: remove extensions from context object
+
+## 0.1.1
+
+### Patch Changes
+
+-   [#1129](https://github.com/Frontify/brand-sdk/pull/1129) [`555f9fa`](https://github.com/Frontify/brand-sdk/commit/555f9fa6c0fd15b1d5da0855ed73412f40b8c3de) Thanks [@julianiff](https://github.com/julianiff)! - feat: add BulkActionsContext
+
 ## 0.1.0
 
 ### Minor Changes
