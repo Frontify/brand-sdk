@@ -668,6 +668,38 @@ const VALID_MANIFEST_WITH_SCOPES = {
     },
 };
 
+const MANIFEST_WITH_BULK_ACTIONS_SURFACE_ERROR = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetBulkActions: {
+                title: 'action title',
+                filenameExtensions: ['png', 'exe'],
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_BULK_ACTIONS_SURFACE = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetBulkActions: {
+                title: 'action title',
+                filenameExtensions: ['png'],
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     beforeEach(() => {
         resetSecretKeySet();
@@ -750,6 +782,11 @@ describe('Verify Platform App Manifest', () => {
         expect(!!verifiedManifest).toBe(true);
     });
 
+    it('should accept a manifest with a bulk action surface', () => {
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_BULK_ACTIONS_SURFACE, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
     it('should accept an array of network endpoint without header and body', () => {
         const verifiedManifest = verifyManifest(
             MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
@@ -760,6 +797,10 @@ describe('Verify Platform App Manifest', () => {
 
     it('should throw error when network endpoint is not an array', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL, platformAppManifestSchemaV1)).toThrow();
+    });
+
+    it('should throw error when fileextensions is not allowed', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_BULK_ACTIONS_SURFACE_ERROR, platformAppManifestSchemaV1)).toThrow();
     });
 
     it('should throw error when network endpoint object is not correct without id', () => {

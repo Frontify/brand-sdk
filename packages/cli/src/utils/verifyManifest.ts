@@ -117,6 +117,11 @@ export const platformAppManifestSchemaV1 = object({
         mediaLibrary: object({
             assetBulkActions: object({
                 title: string().min(2).max(28),
+                filenameExtensions: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('mediaLibrary'),
+                    }),
+                ),
             }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
@@ -132,6 +137,7 @@ export const platformAppManifestSchemaV1 = object({
         iconLibrary: object({
             assetBulkActions: object({
                 title: string().min(2).max(28),
+                filenameExtensions: array(iconLibraryFilenameExtension),
             }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
@@ -143,6 +149,7 @@ export const platformAppManifestSchemaV1 = object({
         logoLibrary: object({
             assetBulkActions: object({
                 title: string().min(2).max(28),
+                filenameExtensions: array(logoLibraryFilenameExtension),
             }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
@@ -154,6 +161,11 @@ export const platformAppManifestSchemaV1 = object({
         documentLibrary: object({
             assetBulkActions: object({
                 title: string().min(2).max(28),
+                filenameExtensions: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('documentLibrary'),
+                    }),
+                ),
             }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
@@ -169,6 +181,11 @@ export const platformAppManifestSchemaV1 = object({
         workspace: object({
             assetBulkActions: object({
                 title: string().min(2).max(28),
+                filenameExtensions: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('workspaceProject'),
+                    }),
+                ),
             }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
