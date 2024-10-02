@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.7.10
+
+### Patch Changes
+
+-   [#1134](https://github.com/Frontify/brand-sdk/pull/1134) [`d40385a`](https://github.com/Frontify/brand-sdk/commit/d40385a70168b566a4d41651b62c34b70bd16b79) Thanks [@julianiff](https://github.com/julianiff)! - feat: add assetBulkActions to manifest
+
 ## 5.7.9
 
 ### Patch Changes
