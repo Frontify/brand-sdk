@@ -115,6 +115,14 @@ export const platformAppManifestSchemaV1 = object({
             }).optional(),
         }).optional(),
         mediaLibrary: object({
+            assetBulkActions: object({
+                title: string().min(2).max(28),
+                filenameExtensions: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('mediaLibrary'),
+                    }),
+                ),
+            }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
                 type: array(completeAssetType),
@@ -127,6 +135,10 @@ export const platformAppManifestSchemaV1 = object({
             assetCreation: assetCreationShape,
         }).optional(),
         iconLibrary: object({
+            assetBulkActions: object({
+                title: string().min(2).max(28),
+                filenameExtensions: array(iconLibraryFilenameExtension),
+            }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
                 type: array(imageAssetType),
@@ -135,6 +147,10 @@ export const platformAppManifestSchemaV1 = object({
             assetCreation: assetCreationShape,
         }).optional(),
         logoLibrary: object({
+            assetBulkActions: object({
+                title: string().min(2).max(28),
+                filenameExtensions: array(logoLibraryFilenameExtension),
+            }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
                 type: array(imageAssetType),
@@ -143,6 +159,14 @@ export const platformAppManifestSchemaV1 = object({
             assetCreation: assetCreationShape,
         }).optional(),
         documentLibrary: object({
+            assetBulkActions: object({
+                title: string().min(2).max(28),
+                filenameExtensions: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('documentLibrary'),
+                    }),
+                ),
+            }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
                 type: array(completeAssetType),
@@ -155,6 +179,14 @@ export const platformAppManifestSchemaV1 = object({
             assetCreation: assetCreationShape,
         }).optional(),
         workspace: object({
+            assetBulkActions: object({
+                title: string().min(2).max(28),
+                filenameExtensions: array(
+                    string().refine((value) => !forbiddenExtensions.includes(value), {
+                        message: getForbiddenExtensionsErrorMessage('workspaceProject'),
+                    }),
+                ),
+            }).optional(),
             assetAction: object({
                 title: string().min(2).max(28),
                 type: array(completeAssetType),
