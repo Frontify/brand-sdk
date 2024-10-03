@@ -45,7 +45,6 @@ export enum AssetChooserProjectType {
     IconLibrary = 'IconLibrary',
     DocumentLibrary = 'DocumentLibrary',
     TemplateLibrary = 'TemplateLibrary',
-    PatternLibrary = 'PatternLibrary',
     Styleguide = 'Styleguide',
     Workspace = 'Workspace',
 }
