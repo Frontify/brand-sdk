@@ -1,11 +1,38 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { copyFileSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { copyFileSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
+import path, { resolve } from 'node:path';
 
 import globToRegExp from 'glob-to-regexp';
 
 import FileNotFoundError from '../errors/FileNotFoundError';
+
+const GITIGNORE_TEMPLATE = `
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.localdist
+.idea
+.vscode
+
+# Editor directories and files
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.secret.json
+`;
 
 export const isDirectoryEmpty = (folderPath: string): boolean => {
     try {
@@ -22,6 +49,9 @@ export const copyFolder = (
 ) => {
     mkdirSync(destinationFolderPath, { recursive: true });
     const excludePatterns = options?.exclude.map((glob) => globToRegExp(glob));
+
+    const gitignorePath = path.join(destinationFolderPath, '.gitignore');
+    writeFileSync(gitignorePath, GITIGNORE_TEMPLATE);
 
     for (const file of readdirSync(sourceFolderPath)) {
         if (excludePatterns !== undefined && excludePatterns.some((re) => re.test(file))) {
