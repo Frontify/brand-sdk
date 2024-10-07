@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.7.11
+
+### Patch Changes
+
+-   [#1137](https://github.com/Frontify/brand-sdk/pull/1137) [`8823fcb`](https://github.com/Frontify/brand-sdk/commit/8823fcb84f658bcecbba89944173e4dae1963048) Thanks [@imoutaharik](https://github.com/imoutaharik)! - Add .gitignore file while creating an extension
+
 ## 5.7.10
 
 ### Patch Changes
