@@ -183,7 +183,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
         }
     });
 
-cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string, options) => {
+cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
     const { promptedAppName, stylingFramework, appType } = await prompts([
         {
             type: 'text',
