@@ -52,7 +52,7 @@
         "@frontify/eslint-config-basic": "^0.20.5",
         "@types/glob-to-regexp": "^0.4.4",
         "@types/mock-fs": "^4.13.4",
-        "@types/node": "^18.19.31",
+        "@types/node": "^20.0.0",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.5.10",
         "@vitest/coverage-v8": "1.4.0",
