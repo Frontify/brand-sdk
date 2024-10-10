@@ -1,5 +1,21 @@
 # @frontify/frontify-cli
 
+## 5.8.0
+
+### Minor Changes
+
+-   [#1139](https://github.com/Frontify/brand-sdk/pull/1139) [`17de2c8`](https://github.com/Frontify/brand-sdk/commit/17de2c8a6365ddd00c67072e336e8710a8d305d3) Thanks [@julianiff](https://github.com/julianiff)! - chore: remove experimental flag from create command
+
+### Patch Changes
+
+-   [#1141](https://github.com/Frontify/brand-sdk/pull/1141) [`9d3e830`](https://github.com/Frontify/brand-sdk/commit/9d3e830f9a35058c2507aa6587106ecb4ac72a5d) Thanks [@julianiff](https://github.com/julianiff)! - fix: update to be able to use strings
+
+## 5.7.11
+
+### Patch Changes
+
+-   [#1137](https://github.com/Frontify/brand-sdk/pull/1137) [`8823fcb`](https://github.com/Frontify/brand-sdk/commit/8823fcb84f658bcecbba89944173e4dae1963048) Thanks [@imoutaharik](https://github.com/imoutaharik)! - Add .gitignore file while creating an extension
+
 ## 5.7.10
 
 ### Patch Changes
