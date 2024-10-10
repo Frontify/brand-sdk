@@ -388,7 +388,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetwo
     },
 ]);
 
-const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpointNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_STRING_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
         name: 'frontify-user-api',
         resource: 'something-random',
@@ -645,6 +645,61 @@ const INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE = {
     },
 };
 
+const VALID_MANIFEST_WITH_SCOPES = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    permissions: {
+        scopes: ['basic:read', 'basic:write'],
+    },
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_BULK_ACTIONS_SURFACE_ERROR = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetBulkActions: {
+                title: 'action title',
+                filenameExtensions: ['png', 'exe'],
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_BULK_ACTIONS_SURFACE = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        mediaLibrary: {
+            assetBulkActions: {
+                title: 'action title',
+                filenameExtensions: ['png'],
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 describe('Verify Platform App Manifest', () => {
     beforeEach(() => {
         resetSecretKeySet();
@@ -722,6 +777,16 @@ describe('Verify Platform App Manifest', () => {
         expect(!!verifiedManifest).toBe(true);
     });
 
+    it('should accept a permissions object with scopes', () => {
+        const verifiedManifest = verifyManifest(VALID_MANIFEST_WITH_SCOPES, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should accept a manifest with a bulk action surface', () => {
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_BULK_ACTIONS_SURFACE, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
     it('should accept an array of network endpoint without header and body', () => {
         const verifiedManifest = verifyManifest(
             MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
@@ -734,6 +799,10 @@ describe('Verify Platform App Manifest', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NOT_ARRAY_NETWORK_CALL, platformAppManifestSchemaV1)).toThrow();
     });
 
+    it('should throw error when fileextensions is not allowed', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_BULK_ACTIONS_SURFACE_ERROR, platformAppManifestSchemaV1)).toThrow();
+    });
+
     it('should throw error when network endpoint object is not correct without id', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_ID, platformAppManifestSchemaV1)).toThrow();
     });
@@ -742,10 +811,12 @@ describe('Verify Platform App Manifest', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw an error when resource is incorrect', () => {
-        expect(() =>
-            verifyManifest(MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
-        ).toThrow();
+    it('should not throw an error if the URL is not valid to allow secret replacement in the resource', () => {
+        const verifiedManifest = verifyManifest(
+            MANIFEST_WITH_NETWORK_CALL_STRING_RESOURCE,
+            platformAppManifestSchemaV1,
+        );
+        expect(!!verifiedManifest).toBe(true);
     });
 
     it('should throw error when network endpoint object is not correct without options', () => {

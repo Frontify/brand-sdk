@@ -1,5 +1,46 @@
 # @frontify/platform-app
 
+## 0.1.12
+
+### Patch Changes
+
+-   Updated dependencies [[`d90e2fb`](https://github.com/Frontify/brand-sdk/commit/d90e2fb5129fb6c267c0bed3dad54ec45d387574), [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686)]:
+    -   @frontify/sidebar-settings@0.9.23
+
+## 0.1.11
+
+### Patch Changes
+
+-   Updated dependencies [[`e708d79`](https://github.com/Frontify/brand-sdk/commit/e708d79d0c89ffa59d7ce5cc7314aba2426aa833)]:
+    -   @frontify/sidebar-settings@0.9.22
+
+## 0.1.10
+
+### Patch Changes
+
+-   Updated dependencies [[`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4)]:
+    -   @frontify/sidebar-settings@0.9.21
+
+## 0.1.9
+
+### Patch Changes
+
+-   [#1070](https://github.com/Frontify/brand-sdk/pull/1070) [`ccd27ac`](https://github.com/Frontify/brand-sdk/commit/ccd27ac1314c3c002b4bc4470c9ac7898651c93d) Thanks [@julianiff](https://github.com/julianiff)! - chore: adjust import to use type from @frontify/app-bridge-app
+
+## 0.1.8
+
+### Patch Changes
+
+-   Updated dependencies [[`7ec70a5`](https://github.com/Frontify/brand-sdk/commit/7ec70a547155b3bbabdd333113168102565a0cfd)]:
+    -   @frontify/sidebar-settings@0.9.20
+
+## 0.1.7
+
+### Patch Changes
+
+-   Updated dependencies [[`84a979b`](https://github.com/Frontify/brand-sdk/commit/84a979b282f3f37766c77718a752df5567df12df), [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8)]:
+    -   @frontify/sidebar-settings@0.9.19
+
 ## 0.1.6
 
 ### Patch Changes

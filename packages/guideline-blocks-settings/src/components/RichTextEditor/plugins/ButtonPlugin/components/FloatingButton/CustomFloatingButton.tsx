@@ -1,7 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue';
+import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue';
+import { createPortal } from 'react-dom';
 
+import { BlockStyles } from '../../../../../RichTextEditor/plugins/styles';
 import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
 import { EditModal } from './EditButtonModal/EditModal';
@@ -33,17 +35,33 @@ export const CustomFloatingButton = () => {
 
     return (
         <>
-            {isOpen && mode === 'insert' && (
-                <div ref={insertRef} {...insertProps}>
-                    {input}
-                </div>
-            )}
+            {isOpen &&
+                mode === 'insert' &&
+                createPortal(
+                    <div
+                        data-is-underlay
+                        ref={insertRef}
+                        {...insertProps}
+                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                    >
+                        {input}
+                    </div>,
+                    document.body,
+                )}
 
-            {isOpen && mode === 'edit' && (
-                <div ref={editRef} {...editProps}>
-                    {editContent}
-                </div>
-            )}
+            {isOpen &&
+                mode === 'edit' &&
+                createPortal(
+                    <div
+                        data-is-underlay
+                        ref={editRef}
+                        {...editProps}
+                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                    >
+                        {editContent}
+                    </div>,
+                    document.body,
+                )}
         </>
     );
 };

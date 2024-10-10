@@ -12,7 +12,7 @@ import { AttachmentsToolbarButton } from './AttachmentsToolbarButton';
 
 const TOOLBAR_BUTTON_ID = 'attachments-toolbar-button-trigger';
 const FLYOUT_CONTENT_ID = 'attachments-flyout-content';
-const TOOLTIP_ID = 'tooltip';
+const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TEST_FLYOUT_ID = 'flyout-id';
 const ASSET_ID = 'attachments';
@@ -49,14 +49,9 @@ describe('AttachmentsToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
-
         getByTestId(TOOLBAR_BUTTON_ID).focus();
 
-        await waitFor(() => {
-            expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
-            expect(queryByTestId(FLYOUT_CONTENT_ID)).toBeNull();
-        });
+        await waitFor(() => expect(queryByTestId(FLYOUT_CONTENT_ID)).toBeNull());
     });
 
     it('should open flyout onClick', async () => {
@@ -85,12 +80,8 @@ describe('AttachmentsToolbarButton', () => {
             </AttachmentsProvider>,
         );
 
-        expect(getByTestId(TOOLTIP_ID)).toHaveClass('tw-opacity-0');
+        getByTestId(TOOLBAR_BUTTON_ID).focus();
 
-        getByTestId(TOOLTIP_ID).focus();
-
-        await waitFor(() => {
-            expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0');
-        });
+        await waitFor(() => expect(getByTestId(TOOLTIP_ID)).toBeInTheDocument());
     });
 });

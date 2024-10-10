@@ -98,7 +98,7 @@ describe('RichTextEditor', () => {
         cy.get(ToolbarButtonSelector).click();
         cy.get(ButtonSelector).first().click();
         cy.get(InternalDocumentLinkSelector).click();
-        cy.get(ButtonSelector).last().click();
+        cy.get(ButtonSelector).eq(1).click();
         cy.get(FloatingLinkModalSelector).find(ButtonSelector).last().click();
         const linkTag = cy.get(RichTextSelector).find('a[href="/r/document"]');
         linkTag.should('exist');
@@ -121,7 +121,7 @@ describe('RichTextEditor', () => {
         cy.get(ToolbarButtonSelector).click();
         cy.get(ButtonSelector).first().click();
         cy.get(InternalDocumentLinkSelector).click();
-        cy.get(ButtonSelector).last().click();
+        cy.get(ButtonSelector).eq(1).click();
         cy.get(CheckboxSelector).click();
         cy.get(FloatingLinkModalSelector).find(ButtonSelector).last().click();
         const linkTag = cy.get(RichTextSelector).find('a[href="/r/document"]');
@@ -252,7 +252,7 @@ describe('RichTextEditor', () => {
         cy.get(ToolbarButtonSelector).click();
         cy.get(ButtonSelector).first().click();
         cy.get(InternalDocumentLinkSelector).click();
-        cy.get(ButtonSelector).last().click();
+        cy.get(ButtonSelector).eq(1).click();
         cy.get(FloatingButtonModalSelector).find(ButtonSelector).last().click();
         cy.get(RichTextSelector).find('a[href="/r/document"]').should('exist');
     });

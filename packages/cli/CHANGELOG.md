@@ -1,5 +1,61 @@
 # @frontify/frontify-cli
 
+## 5.8.0
+
+### Minor Changes
+
+-   [#1139](https://github.com/Frontify/brand-sdk/pull/1139) [`17de2c8`](https://github.com/Frontify/brand-sdk/commit/17de2c8a6365ddd00c67072e336e8710a8d305d3) Thanks [@julianiff](https://github.com/julianiff)! - chore: remove experimental flag from create command
+
+### Patch Changes
+
+-   [#1141](https://github.com/Frontify/brand-sdk/pull/1141) [`9d3e830`](https://github.com/Frontify/brand-sdk/commit/9d3e830f9a35058c2507aa6587106ecb4ac72a5d) Thanks [@julianiff](https://github.com/julianiff)! - fix: update to be able to use strings
+
+## 5.7.11
+
+### Patch Changes
+
+-   [#1137](https://github.com/Frontify/brand-sdk/pull/1137) [`8823fcb`](https://github.com/Frontify/brand-sdk/commit/8823fcb84f658bcecbba89944173e4dae1963048) Thanks [@imoutaharik](https://github.com/imoutaharik)! - Add .gitignore file while creating an extension
+
+## 5.7.10
+
+### Patch Changes
+
+-   [#1134](https://github.com/Frontify/brand-sdk/pull/1134) [`d40385a`](https://github.com/Frontify/brand-sdk/commit/d40385a70168b566a4d41651b62c34b70bd16b79) Thanks [@julianiff](https://github.com/julianiff)! - feat: add assetBulkActions to manifest
+
+## 5.7.9
+
+### Patch Changes
+
+-   [#1122](https://github.com/Frontify/brand-sdk/pull/1122) [`972ee33`](https://github.com/Frontify/brand-sdk/commit/972ee334da15cfe98c04d0ce8de87ea872b70408) Thanks [@julianiff](https://github.com/julianiff)! - feat: add guideline to verifier
+
+-   [#1119](https://github.com/Frontify/brand-sdk/pull/1119) [`699aec3`](https://github.com/Frontify/brand-sdk/commit/699aec3fa7de03b5d0aa781e9ed09e61b79d7806) Thanks [@julianiff](https://github.com/julianiff)! - chore: update templates
+
+## 5.7.8
+
+### Patch Changes
+
+-   [#1112](https://github.com/Frontify/brand-sdk/pull/1112) [`e8a4286`](https://github.com/Frontify/brand-sdk/commit/e8a4286f09cd054e1bdfdc43ded09fe505c77cb4) Thanks [@julianiff](https://github.com/julianiff)! - chore(platform-apps): adjust CLI templates
+
+## 5.7.7
+
+### Patch Changes
+
+-   [#1108](https://github.com/Frontify/brand-sdk/pull/1108) [`40ed6e8`](https://github.com/Frontify/brand-sdk/commit/40ed6e8e89a7cce7ced862ed9c53cf5576546bf8) Thanks [@julianiff](https://github.com/julianiff)! - feat: add scopes validator
+
+## 5.7.6
+
+### Patch Changes
+
+-   [#1101](https://github.com/Frontify/brand-sdk/pull/1101) [`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.2.6`
+
+-   [#1100](https://github.com/Frontify/brand-sdk/pull/1100) [`e6a9db1`](https://github.com/Frontify/brand-sdk/commit/e6a9db1969b91f520521b83a61317515948bfa5e) Thanks [@julianiff](https://github.com/julianiff)! - chore: update templates
+
+## 5.7.5
+
+### Patch Changes
+
+-   [#1088](https://github.com/Frontify/brand-sdk/pull/1088) [`220e38e`](https://github.com/Frontify/brand-sdk/commit/220e38ee70a75284ded46dda81285e00df8e68f3) Thanks [@julianiff](https://github.com/julianiff)! - feat(PlatformApp): adjust build to be a folder
+
 ## 5.7.4
 
 ### Patch Changes

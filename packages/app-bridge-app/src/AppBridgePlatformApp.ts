@@ -1,9 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type ApiHandlerParameter,
-    type ApiMethodNameValidator,
-    type ApiReturn,
     type CommandNameValidator,
     type ContextAsEventName,
     type ContextReturn,
@@ -20,13 +17,26 @@ import {
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
+import {
+    type PlatformAppApiHandlerParameter,
+    type PlatformAppApiReturn,
+    type PlatformAppApiMethodNameValidator,
+} from './types';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
 import { ErrorMessageBus, type IMessageBus, MessageBus } from './utilities/MessageBus';
 import { getQueryParameters } from './utilities/queryParams';
 
-export type PlatformAppApiMethod = ApiMethodNameValidator<
-    Pick<ApiMethodRegistry, 'getCurrentUser' | 'getAssetResourceInformation' | 'createAsset' | 'getSecureRequest'>
+export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
+    Pick<
+        ApiMethodRegistry,
+        | 'getCurrentUser'
+        | 'getAssetResourceInformation'
+        | 'createAsset'
+        | 'getSecureRequest'
+        | 'getAccountId'
+        | 'executeGraphQl'
+    >
 >;
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{
@@ -53,19 +63,38 @@ type AppBaseProps = {
     connected: boolean;
     brandId: number;
     domain: string;
-    parentId: string;
 };
+
+export type AssetBulkActionsContext = {
+    surface: 'assetBulkActions';
+    selection: { assets: { ids: string[] }; folders: { ids: string[] } };
+    parentId: string;
+    rootId: string;
+} & AppBaseProps;
+
+export type AssetViewerContext = {
+    surface: 'assetViewer';
+    assetId: string;
+} & AppBaseProps;
 
 export type AssetActionContext = {
     surface: 'assetAction';
     assetId: string;
+    parentId: string;
+    rootId: string;
 } & AppBaseProps;
 
 export type AssetCreationContext = {
     surface: 'assetCreation';
+    parentId: string;
+    rootId: string;
 } & AppBaseProps;
 
-export type PlatformAppContext = AssetActionContext | AssetCreationContext;
+export type PlatformAppContext =
+    | AssetActionContext
+    | AssetCreationContext
+    | AssetViewerContext
+    | AssetBulkActionsContext;
 
 export type PlatformAppEvent = EventNameValidator<
     StateAsEventName<PlatformAppState & { '*': PlatformAppState }> &
@@ -90,6 +119,7 @@ export class AppBridgePlatformApp {
         'Context.assetId': new Map(),
         'Context.brandId': new Map(),
         'Context.parentId': new Map(),
+        'Context.rootId': new Map(),
         'Context.domain': new Map(),
         'Context.surface': new Map(),
         'Context.connected': new Map(),
@@ -104,11 +134,11 @@ export class AppBridgePlatformApp {
     }
 
     api<ApiMethodName extends keyof PlatformAppApiMethod>(
-        apiHandler: ApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
-    ): ApiReturn<ApiMethodName, PlatformAppApiMethod> {
+        apiHandler: PlatformAppApiHandlerParameter<ApiMethodName, PlatformAppApiMethod>,
+    ): PlatformAppApiReturn<ApiMethodName, PlatformAppApiMethod> {
         return this.apiMessageBus.post({
             parameter: apiHandler,
-        }) as ApiReturn<ApiMethodName, PlatformAppApiMethod>;
+        }) as PlatformAppApiReturn<ApiMethodName, PlatformAppApiMethod>;
     }
 
     private guardForInitialization() {

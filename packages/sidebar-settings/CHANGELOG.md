@@ -1,5 +1,39 @@
 # @frontify/sidebar-settings
 
+## 0.9.23
+
+### Patch Changes
+
+-   [#1127](https://github.com/Frontify/brand-sdk/pull/1127) [`d90e2fb`](https://github.com/Frontify/brand-sdk/commit/d90e2fb5129fb6c267c0bed3dad54ec45d387574) Thanks [@findmind](https://github.com/findmind)! - chore: Removed unused `LegacyTemplateInputBlock`
+
+-   [#1130](https://github.com/Frontify/brand-sdk/pull/1130) [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump `@frontify/fondue` to `12.2.13`
+
+## 0.9.22
+
+### Patch Changes
+
+-   [#1115](https://github.com/Frontify/brand-sdk/pull/1115) [`e708d79`](https://github.com/Frontify/brand-sdk/commit/e708d79d0c89ffa59d7ce5cc7314aba2426aa833) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor(dropdown): deprecate the size prop
+
+## 0.9.21
+
+### Patch Changes
+
+-   [#1101](https://github.com/Frontify/brand-sdk/pull/1101) [`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.2.6`
+
+## 0.9.20
+
+### Patch Changes
+
+-   [#1062](https://github.com/Frontify/brand-sdk/pull/1062) [`7ec70a5`](https://github.com/Frontify/brand-sdk/commit/7ec70a547155b3bbabdd333113168102565a0cfd) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: type on fontValue
+
+## 0.9.19
+
+### Patch Changes
+
+-   [#1061](https://github.com/Frontify/brand-sdk/pull/1061) [`84a979b`](https://github.com/Frontify/brand-sdk/commit/84a979b282f3f37766c77718a752df5567df12df) Thanks [@Kenny806](https://github.com/Kenny806)! - feat: add highlight border settings for sidebar
+
+-   [#1057](https://github.com/Frontify/brand-sdk/pull/1057) [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.1.14
+
 ## 0.9.18
 
 ### Patch Changes

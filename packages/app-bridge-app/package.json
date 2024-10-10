@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge-app",
     "type": "module",
-    "version": "0.0.5",
+    "version": "0.1.2",
     "description": "Package to establish communication between Frontify and apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -53,6 +53,7 @@
         "prettier": "^3.3.2",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "type-fest": "^4.15.0",
         "typescript": "^5.5.2",
         "vite": "^5.3.1",
         "vite-plugin-dts": "^3.9.1",

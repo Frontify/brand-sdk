@@ -3,7 +3,7 @@
 export type CreateAssetPayload = {
     data: File | Blob | string;
     filename: string;
-    parentId?: string;
+    parentId: string;
     description?: string;
     externalId?: string;
     tags?: { value: string }[];

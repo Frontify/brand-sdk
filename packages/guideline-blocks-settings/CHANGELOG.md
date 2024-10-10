@@ -1,5 +1,74 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.10
+
+### Patch Changes
+
+-   [#1130](https://github.com/Frontify/brand-sdk/pull/1130) [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump `@frontify/fondue` to `12.2.13`
+
+-   Updated dependencies [[`d90e2fb`](https://github.com/Frontify/brand-sdk/commit/d90e2fb5129fb6c267c0bed3dad54ec45d387574), [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686)]:
+    -   @frontify/sidebar-settings@0.9.23
+
+## 0.36.9
+
+### Patch Changes
+
+-   [#1126](https://github.com/Frontify/brand-sdk/pull/1126) [`8050d68`](https://github.com/Frontify/brand-sdk/commit/8050d6813202738d299f0f4cc8f9acdc4175ff4c) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): add fondue component style css
+
+-   [#1124](https://github.com/Frontify/brand-sdk/pull/1124) [`ec7b4c2`](https://github.com/Frontify/brand-sdk/commit/ec7b4c21c22f5f5ff663193fdce2c5a34604caef) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(\*): scroll events are hijacked by dnd-kit
+
+## 0.36.8
+
+### Patch Changes
+
+-   Updated dependencies [[`e708d79`](https://github.com/Frontify/brand-sdk/commit/e708d79d0c89ffa59d7ce5cc7314aba2426aa833)]:
+    -   @frontify/sidebar-settings@0.9.22
+
+## 0.36.7
+
+### Patch Changes
+
+-   [#1101](https://github.com/Frontify/brand-sdk/pull/1101) [`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.2.6`
+
+-   Updated dependencies [[`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4)]:
+    -   @frontify/sidebar-settings@0.9.21
+
+## 0.36.6
+
+### Patch Changes
+
+-   [#1083](https://github.com/Frontify/brand-sdk/pull/1083) [`65f732d`](https://github.com/Frontify/brand-sdk/commit/65f732d100f1e68d10bad51982ea5d34e12f69bf) Thanks [@ragi96](https://github.com/ragi96)! - fix: tooltip not positioned correctly also replaced the legacy tooltip with the new one
+
+## 0.36.5
+
+### Patch Changes
+
+-   Updated dependencies [[`7ec70a5`](https://github.com/Frontify/brand-sdk/commit/7ec70a547155b3bbabdd333113168102565a0cfd)]:
+    -   @frontify/sidebar-settings@0.9.20
+
+## 0.36.4
+
+### Patch Changes
+
+-   [#1057](https://github.com/Frontify/brand-sdk/pull/1057) [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.1.14
+
+-   Updated dependencies [[`84a979b`](https://github.com/Frontify/brand-sdk/commit/84a979b282f3f37766c77718a752df5567df12df), [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8)]:
+    -   @frontify/sidebar-settings@0.9.19
+
+## 0.36.3
+
+### Patch Changes
+
+-   [#1055](https://github.com/Frontify/brand-sdk/pull/1055) [`a9e0fef`](https://github.com/Frontify/brand-sdk/commit/a9e0fefd1dc5e4c49f39592e533acf2177854cd5) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockInjectButton): menu is opening in top left
+
+## 0.36.2
+
+### Patch Changes
+
+-   [#1045](https://github.com/Frontify/brand-sdk/pull/1045) [`304d24f`](https://github.com/Frontify/brand-sdk/commit/304d24f60a623239e72b79b028db69e73fb41968) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(RTE): make link clickable in edit modal
+
+-   [#1041](https://github.com/Frontify/brand-sdk/pull/1041) [`6300d3c`](https://github.com/Frontify/brand-sdk/commit/6300d3c131efb75d787461a289631b77032453a2) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): floating modals are hidden behind higher z index siblings
+
 ## 0.36.1
 
 ### Patch Changes

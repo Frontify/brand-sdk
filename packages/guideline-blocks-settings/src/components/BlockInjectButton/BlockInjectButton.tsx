@@ -65,9 +65,11 @@ export const BlockInjectButton = ({
         if (!buttonRef.current || isLoading) {
             return;
         }
-        const { left, top } = buttonRef.current.getBoundingClientRect();
-        const XInsideComponent = event.clientX - left;
-        const YInsideComponent = event.clientY - top;
+        const { clientX, clientY } = event;
+        const isKeyboardEvent = clientX === 0 && clientY === 0;
+        const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
+        const XInsideComponent = !isKeyboardEvent ? clientX - left : width / 2;
+        const YInsideComponent = !isKeyboardEvent ? clientY - top : height / 2;
         setMenuPosition([XInsideComponent, YInsideComponent]);
     };
 

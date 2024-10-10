@@ -3,6 +3,7 @@
 export * from './AppBridgePlatformApp';
 export * from './errors';
 export * from './registries';
+export * from './types';
 export * from './utilities';
 export * from './react/appUserState';
 export * from './react/appSettings';
