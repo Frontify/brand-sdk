@@ -69,7 +69,7 @@ const endpointCallSchema = object({
             message: 'Endpoint name must be unique',
         },
     ),
-    resource: string().url(),
+    resource: string(),
     options: requestOptionsSchema,
 });
 

@@ -388,7 +388,7 @@ const MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE = generateManifestWithEndpointNetwo
     },
 ]);
 
-const MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE = generateManifestWithEndpointNetworkCall([
+const MANIFEST_WITH_NETWORK_CALL_STRING_RESOURCE = generateManifestWithEndpointNetworkCall([
     {
         name: 'frontify-user-api',
         resource: 'something-random',
@@ -811,10 +811,12 @@ describe('Verify Platform App Manifest', () => {
         expect(() => verifyManifest(MANIFEST_WITH_NETWORK_CALL_NO_RESOURCE, platformAppManifestSchemaV1)).toThrow();
     });
 
-    it('should throw an error when resource is incorrect', () => {
-        expect(() =>
-            verifyManifest(MANIFEST_WITH_NETWORK_CALL_INCORRECT_RESOURCE, platformAppManifestSchemaV1),
-        ).toThrow();
+    it('should not throw an error if the URL is not valid to allow secret replacement in the resource', () => {
+        const verifiedManifest = verifyManifest(
+            MANIFEST_WITH_NETWORK_CALL_STRING_RESOURCE,
+            platformAppManifestSchemaV1,
+        );
+        expect(!!verifiedManifest).toBe(true);
     });
 
     it('should throw error when network endpoint object is not correct without options', () => {
