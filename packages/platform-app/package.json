@@ -36,7 +36,7 @@
         "@frontify/sidebar-settings": "workspace:^"
     },
     "devDependencies": {
-        "@frontify/app-bridge-app": "workspace:^",
+        "@frontify/app-bridge-app": "^0.1.2",
         "@frontify/eslint-config-react": "^0.17.6",
         "@types/react": "^18.2.75",
         "eslint": "^8.57.0",
