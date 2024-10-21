@@ -90,7 +90,6 @@ export type ThemeConfigExport = {
         documentPage: { default: ThemeTemplateExport } & Record<string, ThemeTemplateExport>;
         library: { default: ThemeTemplateExport } & Record<string, ThemeTemplateExport>;
     };
-    settings: ThemeSettingsStructure;
 };
 
 /**
