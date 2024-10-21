@@ -1,5 +1,11 @@
 # @frontify/guideline-themes
 
+## 0.0.1-alpha.6
+
+### Patch Changes
+
+-   [#1145](https://github.com/Frontify/brand-sdk/pull/1145) [`ddf65a6`](https://github.com/Frontify/brand-sdk/commit/ddf65a69e43d127213486f6f1a45394bc05eb0cf) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor(guideline-themes): removes themeConfigExport.settings
+
 ## 0.0.1-alpha.5
 
 ### Patch Changes
