@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.3
+
+### Patch Changes
+
+-   [#1147](https://github.com/Frontify/brand-sdk/pull/1147) [`86c0806`](https://github.com/Frontify/brand-sdk/commit/86c080676e3d27375837f29cd37b7957a64fe360) Thanks [@olivereisenhut](https://github.com/olivereisenhut)! - experimental: add `executeSecureRequest` command
+
 ## 0.1.2
 
 ### Patch Changes
