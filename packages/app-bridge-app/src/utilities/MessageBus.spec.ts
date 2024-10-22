@@ -117,4 +117,31 @@ describe('MessageBus', () => {
         expect(allPromises.includes(message2)).toBe(true);
         expect(allPromises.includes(message3)).toBe(true);
     });
+
+    it('should recompose secure request response', async () => {
+        const channel = new MessageChannel();
+        const messageBus = new MessageBus(channel.port1);
+
+        channel.port2.onmessage = (event) => {
+            expect(event.data.token).toBeDefined();
+            expect(event.data.message.parameter.name).toBe('executeSecureRequest');
+
+            const { token } = event.data;
+            channel.port2.postMessage({
+                status: 200,
+                statusText: 'OK',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: 'test-message' }),
+                token,
+            });
+        };
+
+        const result = (await messageBus.post({ parameter: { name: 'executeSecureRequest' } })) as Response;
+
+        expect(result).toBeInstanceOf(Response);
+        expect(result.status).toBe(200);
+        expect(result.statusText).toBe('OK');
+        expect(result.headers.get('Content-Type')).toBe('application/json');
+        expect(await result.json()).toEqual({ message: 'test-message' });
+    });
 });
