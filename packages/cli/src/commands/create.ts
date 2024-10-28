@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import path, { resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import pc from 'picocolors';
@@ -44,7 +44,7 @@ export const createNewApp = (appName: string, template: string, type: string): v
     const templateDir = resolve(fileURLToPath(import.meta.url), `../../templates/${type}-${template}`);
     copyFolder(templateDir, appName, { exclude: ['node_modules'] });
 
-    const gitignorePath = path.join(templateDir, '.gitignore');
+    const gitignorePath = join(templateDir, '.gitignore');
     writeFileSync(gitignorePath, GITIGNORE_TEMPLATE);
 
     updatePackageJsonProjectName(appName);
