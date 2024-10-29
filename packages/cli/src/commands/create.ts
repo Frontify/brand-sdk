@@ -1,12 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import pc from 'picocolors';
 
 import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
-import { writeFileSync } from 'node:fs';
 
 const GITIGNORE_TEMPLATE = `
 # Logs
