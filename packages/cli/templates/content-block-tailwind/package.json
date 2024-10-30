@@ -10,6 +10,9 @@
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"
     },
+    "peerDependencies": {
+        "zustand": "4.5.5"
+    },
     "dependencies": {
         "@frontify/app-bridge": "^3.5.5",
         "react": "^18.2.0",
