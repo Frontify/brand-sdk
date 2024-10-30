@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.2
+
+### Patch Changes
+
+-   [#1151](https://github.com/Frontify/brand-sdk/pull/1151) [`3686e43`](https://github.com/Frontify/brand-sdk/commit/3686e438acebb661846bf3637cfefcf9c14bb5f1) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(templates): add zustand as peerdependency
+
 ## 5.8.1
 
 ### Patch Changes
