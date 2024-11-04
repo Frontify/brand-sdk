@@ -86,7 +86,9 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         const oldTemplateIds = currentBlockTemplates[key]?.map((template) => template.id) ?? [];
 
         try {
-            await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, oldTemplateIds);
+            if (oldTemplateIds.length > 0) {
+                await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, oldTemplateIds);
+            }
             await appBridge.addTemplateIdsToBlockTemplateKey(key, newTemplateIds);
         } catch (error) {
             handleErrorMessage(error);
