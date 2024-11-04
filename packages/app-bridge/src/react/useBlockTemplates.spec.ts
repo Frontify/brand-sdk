@@ -53,7 +53,7 @@ describe('useBlockTemplates hook', () => {
         const deleteCall = appBridgeStub.deleteTemplateIdsFromBlockTemplateKey.getCall(0);
         const addCall = appBridgeStub.addTemplateIdsToBlockTemplateKey.getCall(0);
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(deleteCall.firstArg).toEqual('key');
             expect(deleteCall.lastArg).toEqual([1, 2]);
             expect(addCall.firstArg).toEqual('key');
@@ -73,11 +73,29 @@ describe('useBlockTemplates hook', () => {
             await result.current.updateTemplateIdsFromKey('key', [2, 1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([1, 2]);
         });
 
         expect(result.current.error).toEqual(errorMessage);
+    });
+
+    it('should not delete templates if no old keys', async () => {
+        const { result, appBridgeStub } = await loadUseBlockTemplates([]);
+
+        await act(async () => {
+            await result.current.updateTemplateIdsFromKey('key', [2, 1]);
+        });
+
+        const deleteCall = appBridgeStub.deleteTemplateIdsFromBlockTemplateKey.getCall(0);
+        const addCall = appBridgeStub.addTemplateIdsToBlockTemplateKey.getCall(0);
+
+        await waitFor(() => {
+            expect(deleteCall).toBeNull();
+            expect(addCall.firstArg).toEqual('key');
+            expect(addCall.lastArg).toEqual([2, 1]);
+            expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([2, 1]);
+        });
     });
 
     it('should notify about updated templates on delete', async () => {
