@@ -1,5 +1,6 @@
 # App Bridge
-packages/app-bridge/src/types @Frontify/api-and-sdk
+
+packages/app-bridge/src/types @Frontify/frontend-platform
 
 ## App Bridge Errors
 packages/app-bridge/src/errors/HttpClientError.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
@@ -9,9 +10,11 @@ packages/app-bridge/src/errors/TimeoutReachedError.ts @Frontify/apps-and-integra
 packages/app-bridge/src/errors/ValidationError.ts @Frontify/apps-and-integrations
 
 ## App Bridge Helpers
+
 packages/app-bridge/src/helpers/ @Frontify/themes-and-navigation
 
 ## React Hooks
+
 packages/app-bridge/src/react/useAssetBulkDownload.spec.tsx @Frontify/content-and-blocks
 packages/app-bridge/src/react/useAssetBulkDownload.ts @Frontify/content-and-blocks
 packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/content-and-blocks
@@ -77,6 +80,7 @@ packages/app-bridge/src/react/useUngroupedDocuments.spec.ts @Frontify/content-an
 packages/app-bridge/src/react/useUngroupedDocuments.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 ### App Bridge registries api
+
 packages/app-bridge/src/registries/api/CreateAsset.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/registries/api/CreateAsset.spec.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/registries/api/GetAssetResourceInformation.ts @Frontify/apps-and-integrations
@@ -97,15 +101,19 @@ packages/app-bridge/src/registries/commands/NewPublication.ts @Frontify/content-
 packages/app-bridge/src/registries/commands/TemplateChooser.ts @Frontify/content-and-blocks
 
 ### App Bridge registries events
+
 packages/app-bridge/src/registries/events/ @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 ### App Bridge registries verbs
+
 packages/app-bridge/src/registries/verbs/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 
 ## App Bridge repositories
+
 packages/app-bridge/src/repositories/ @Frontify/content-and-blocks
 
 ## App Bridge Tests
+
 packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/content-and-blocks
 packages/app-bridge/src/tests/AppBridgePlatformAppStub.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/tests/AppBridgeThemeStub.ts @Frontify/themes-and-navigation
@@ -113,6 +121,7 @@ packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/content-and-
 packages/app-bridge/src/tests/withAppBridgeThemeStubs.tsx @Frontify/themes-and-navigation
 
 ## App Bridge Utilities
+
 packages/app-bridge/src/utilities/hash.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/utilities/httpClient.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 packages/app-bridge/src/utilities/MessageBus.ts @Frontify/apps-and-integrations
@@ -125,9 +134,11 @@ packages/app-bridge/src/utilities/queryParams.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/utilities/subscribe.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 
 ## App Bridge Worker
+
 packages/app-bridge/src/worker/ @Frontify/content-and-blocks
 
 ## App Bridge Interfaces
+
 packages/app-bridge/src/AppBridge.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 packages/app-bridge/src/AppBridgeBlock.ts @Frontify/content-and-blocks
 packages/app-bridge/src/AppBridgeCreateAsset.spec.ts @Frontify/apps-and-integrations
@@ -138,6 +149,7 @@ packages/app-bridge/src/AppBridgeTheme.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/window.d.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 
 # CLI
+
 packages/cli/src/commands/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 packages/cli/src/errors/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 packages/cli/src/utils/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
@@ -150,6 +162,7 @@ packages/cli/src/servers/platformAppDevelopmentServer.ts @Frontify/apps-and-inte
 packages/cli/src/servers/themeDevelopmentServer.ts @Frontify/themes-and-navigation
 
 ## Templates
+
 packages/cli/templates/content-block-css @Frontify/content-and-blocks
 packages/cli/templates/content-block-css-modules @Frontify/content-and-blocks
 packages/cli/templates/content-block-tailwind @Frontify/content-and-blocks
@@ -158,13 +171,16 @@ packages/cli/templates/platform-app-css-modules @Frontify/apps-and-integrations
 packages/cli/templates/platform-app-tailwind @Frontify/apps-and-integrations
 
 # Platform Apps
+
 packages/platform-app @Frontify/apps-and-integrations
 packages/app-bridge-app @Frontify/apps-and-integrations
 
 # Guideline Blocks Settings
+
 packages/guideline-blocks-settings @Frontify/content-and-blocks
 
 # Sidebar Settings
+
 packages/sidebar-settings @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 CODEOWNERS @Frontify/architecture
