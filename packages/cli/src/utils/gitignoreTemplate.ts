@@ -1,8 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export const gitignoreTemplate = {
-    'platform-app': `
-# Logs
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+export const generateGitignoreFile = (destinationFolderPath: string, type: string): void => {
+    const gitignorePath = join(destinationFolderPath, '.gitignore');
+    writeFileSync(gitignorePath, gitignoreTemplate[type]);
+};
+
+const gitignoreTemplate = {
+    'platform-app': `# Logs
 logs
 *.log
 npm-debug.log*
@@ -27,8 +34,7 @@ dist-ssr
 *.sw?
 .secret.json
 `,
-    'content-block': `
-node_modules
+    'content-block': `node_modules
 dist
 .idea
 .vscode

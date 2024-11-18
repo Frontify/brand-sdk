@@ -1,18 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import pc from 'picocolors';
 
-import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
-import { gitignoreTemplate } from '../utils/gitignoreTemplate';
-
-const generateGitignoreFile = (destinationFolderPath: string, type: string): void => {
-    const gitignorePath = join(destinationFolderPath, '.gitignore');
-    writeFileSync(gitignorePath, gitignoreTemplate[type]);
-};
+import { generateGitignoreFile, Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
 
 export const createNewApp = (appName: string, template: string, type: string): void => {
     Logger.info(`Creating the ${type}...`);
