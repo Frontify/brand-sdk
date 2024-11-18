@@ -1,3 +1,7 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
+export const gitignoreTemplate = {
+    'platform-app': `
 # Logs
 logs
 *.log
@@ -10,7 +14,9 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
+*.localdist
+.idea
+.vscode
 
 # Editor directories and files
 .DS_Store
@@ -20,3 +26,11 @@ dist-ssr
 *.sln
 *.sw?
 .secret.json
+`,
+    'content-block': `
+node_modules
+dist
+.idea
+.vscode
+`,
+};
