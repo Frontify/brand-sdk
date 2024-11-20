@@ -1,39 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import pc from 'picocolors';
 
-import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
-
-const GITIGNORE_TEMPLATE = `
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.localdist
-.idea
-.vscode
-
-# Editor directories and files
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.secret.json
-`;
+import { generateGitignoreFile, Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
 
 export const createNewApp = (appName: string, template: string, type: string): void => {
     Logger.info(`Creating the ${type}...`);
@@ -44,9 +16,7 @@ export const createNewApp = (appName: string, template: string, type: string): v
     const templateDir = resolve(fileURLToPath(import.meta.url), `../../templates/${type}-${template}`);
     copyFolder(templateDir, appName, { exclude: ['node_modules'] });
 
-    const gitignorePath = join(templateDir, '.gitignore');
-    writeFileSync(gitignorePath, GITIGNORE_TEMPLATE);
-
+    generateGitignoreFile(appName, type);
     updatePackageJsonProjectName(appName);
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);
