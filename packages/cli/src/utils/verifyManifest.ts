@@ -73,6 +73,108 @@ const endpointCallSchema = object({
     options: requestOptionsSchema,
 });
 
+const variableTypes = z.enum([
+    'STRING',
+    'NUMBER',
+    'URL',
+    'EMAIL',
+    'BOOLEAN',
+    'DATE',
+    'OPTIONS',
+    'USER',
+    'CUSTOM_METADATA_PROPERTY',
+    'WORKFLOW_TASK_STATUS',
+]);
+const variablesSchema = object({
+    key: string()
+        .min(1)
+        .max(80)
+        .refine(
+            (key) => {
+                return /^[._a-z]*$/.test(key);
+            },
+            {
+                message: "Variable key must only contain letters from a-z, '.' and '_' without any spaces",
+            },
+        ),
+    name: string().min(1).max(80),
+    type: variableTypes,
+});
+
+const actionIdSet = new Set();
+const automationActionSchema = object({
+    id: string()
+        .min(1)
+        .max(80)
+        .refine(
+            (id) => {
+                return /^[_a-z]*$/.test(id);
+            },
+            {
+                message: "Automation action id must only contain letters from a-z and '_' without any spaces",
+            },
+        )
+        .refine(
+            (id) => {
+                if (actionIdSet.has(id)) {
+                    return false;
+                }
+
+                actionIdSet.add(id);
+                return true;
+            },
+            {
+                message: 'Automation action id must be unique',
+            },
+        ),
+    name: string().min(1).max(80),
+    workflowId: string()
+        .min(15)
+        .max(15)
+        .refine(
+            (workflowId) => {
+                return /^\w+$/.test(workflowId);
+            },
+            {
+                message:
+                    "Workflow Id must be unique and should only contain letters from a-z, A-Z, numbers from 0-9 and '_' without any spaces",
+            },
+        ),
+    description: string().optional(),
+    variables: array(variablesSchema),
+});
+
+const triggerIdSet = new Set();
+const automationTriggerSchema = object({
+    id: string()
+        .min(1)
+        .max(80)
+        .refine(
+            (id) => {
+                return /^[_a-z]*$/.test(id);
+            },
+            {
+                message: "Automation trigger id must only contain letters from a-z and '_' without any spaces",
+            },
+        )
+        .refine(
+            (id) => {
+                if (triggerIdSet.has(id)) {
+                    return false;
+                }
+
+                triggerIdSet.add(id);
+                return true;
+            },
+            {
+                message: 'Automation trigger id must be unique',
+            },
+        ),
+    name: string().min(1).max(80),
+    description: string().optional(),
+    variables: array(variablesSchema),
+});
+
 const hostnameRegex =
     /^(([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])\.)*([\dA-Za-z]|[\dA-Za-z][\dA-Za-z-]*[\dA-Za-z])$/;
 
@@ -197,6 +299,10 @@ export const platformAppManifestSchemaV1 = object({
                 ),
             }).optional(),
             assetCreation: assetCreationShape,
+        }).optional(),
+        automation: object({
+            actions: array(automationActionSchema).optional(),
+            triggers: array(automationTriggerSchema).optional(),
         }).optional(),
     }).optional(),
     metadata: object({

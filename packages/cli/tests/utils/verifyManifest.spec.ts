@@ -23,6 +23,42 @@ const VALID_MANIFEST = {
                 title: 'action title',
             },
         },
+        automation: {
+            actions: [
+                {
+                    id: 'set_asset_title',
+                    name: 'Set asset title',
+                    variables: [
+                        {
+                            key: 'asset.title',
+                            name: 'Asset title',
+                            type: 'STRING',
+                        },
+                    ],
+                    workflowId: '7DQ92y5AldGBwZ3',
+                    description: 'Changes the title of an asset',
+                },
+            ],
+            triggers: [
+                {
+                    id: 'assets_created',
+                    name: 'Assets created',
+                    variables: [
+                        {
+                            key: 'asset.id',
+                            name: 'Asset Id',
+                            type: 'NUMBER',
+                        },
+                        {
+                            key: 'asset.title',
+                            name: 'Asset title',
+                            type: 'STRING',
+                        },
+                    ],
+                    description: 'Triggered when assets are created',
+                },
+            ],
+        },
     },
     metadata: {
         version: 1,
@@ -268,6 +304,56 @@ const MANIFEST_WITH_SECRET_BUT_NO_LABEL = {
             assetCreation: {
                 title: 'action title',
             },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_DUPLICATE_ACTION_IDS = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        automation: {
+            actions: [
+                {
+                    id: 'set_asset_title',
+                    name: 'Set asset title',
+                    workflowId: '7DQ92y5AldGBwZ3',
+                },
+                {
+                    id: 'set_asset_title',
+                    name: 'Set asset title duplicate',
+                    workflowId: '7DQ92y5AldGBwZ3',
+                },
+            ],
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
+const MANIFEST_WITH_INVALID_VARIABLE_TYPE = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        automation: {
+            actions: [
+                {
+                    id: 'set_asset_title',
+                    name: 'Set asset title',
+                    workflowId: '7DQ92y5AldGBwZ3',
+                    variables: [
+                        {
+                            key: 'asset.title',
+                            name: 'Asset title',
+                            type: 'VARCHAR',
+                        },
+                    ],
+                },
+            ],
         },
     },
     metadata: {
@@ -869,5 +955,13 @@ describe('Verify Platform App Manifest', () => {
         expect(() =>
             verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_UNDESCORE, platformAppManifestSchemaV1),
         ).toThrow();
+    });
+
+    it('should detect when automation action ids are not unique', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_DUPLICATE_ACTION_IDS, platformAppManifestSchemaV1)).toThrow('Automation action id must be unique');
+    });
+
+    it('should detect when action variables have invalid types ', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_INVALID_VARIABLE_TYPE, platformAppManifestSchemaV1)).toThrow('VARCHAR');
     });
 });
