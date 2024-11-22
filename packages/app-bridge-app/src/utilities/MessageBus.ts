@@ -19,14 +19,29 @@ export class MessageBus implements IMessageBus {
     constructor(private port: MessagePort) {
         this.port.onmessage = (event) => {
             const { token } = event.data;
-            const messageIndex = this.messageBucket.findIndex((item) => item.token === token);
-            if (messageIndex > -1) {
-                const message = this.messageBucket.splice(messageIndex, 1)[0];
-                if (message) {
-                    message.resolve(event.data.message);
+            const message = this.messageBucket.find((item) => item.token === token);
+            if (message) {
+                if (
+                    this.hasParameterProperty(message.message) &&
+                    message.message.parameter.name === 'executeSecureRequest'
+                ) {
+                    const { status, statusText, headers, body } = event.data;
+
+                    const response = new Response(body, {
+                        status,
+                        statusText,
+                        headers: new Headers(headers),
+                    });
+
+                    message.resolve(response);
                 }
+                message.resolve(event.data.message);
             }
         };
+    }
+
+    private hasParameterProperty(obj: any): obj is { parameter: any } {
+        return obj && typeof obj === 'object' && 'parameter' in obj;
     }
 
     public post(message: unknown) {

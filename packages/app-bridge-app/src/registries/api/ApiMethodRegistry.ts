@@ -4,6 +4,7 @@ import { type PlatformAppApiMethodNameValidator } from '../../types/Api.ts';
 
 import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
 import { type ExecuteGraphQlPayload, type ExecuteGraphQlResponse } from './ExecuteGraphQl.ts';
+import { type ExecuteSecureRequestPayload, type ExecuteSecureRequestResponse } from './ExecuteSecureRequest.ts';
 import { type GetAccountIdPayload, type GetAccountIdResponse } from './GetAccountId.ts';
 import {
     type GetAssetResourceInformationPayload,
@@ -22,4 +23,5 @@ export type ApiMethodRegistry = PlatformAppApiMethodNameValidator<{
     getSecureRequest: { payload: GetSecureRequestPayload; response: GetSecureRequestResponse };
     getAccountId: { payload: GetAccountIdPayload; response: GetAccountIdResponse };
     executeGraphQl: { payload: ExecuteGraphQlPayload; response: ExecuteGraphQlResponse };
+    executeSecureRequest: { payload: ExecuteSecureRequestPayload; response: ExecuteSecureRequestResponse };
 }>;

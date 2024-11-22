@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import pc from 'picocolors';
 
-import { Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
+import { generateGitignoreFile, Logger, copyFolder, updatePackageJsonProjectName } from '../utils/index';
 
 export const createNewApp = (appName: string, template: string, type: string): void => {
     Logger.info(`Creating the ${type}...`);
@@ -16,6 +16,7 @@ export const createNewApp = (appName: string, template: string, type: string): v
     const templateDir = resolve(fileURLToPath(import.meta.url), `../../templates/${type}-${template}`);
     copyFolder(templateDir, appName, { exclude: ['node_modules'] });
 
+    generateGitignoreFile(appName, type);
     updatePackageJsonProjectName(appName);
 
     Logger.defaultInfo(`\n${Logger.spacer(11)}You can now access the project and install dependencies.`);

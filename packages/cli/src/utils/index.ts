@@ -15,6 +15,7 @@ export * from './reactiveJson';
 export * from './url';
 export * from './user';
 export * from './zip';
+export * from './gitignoreTemplate';
 export { compilePlatformApp } from './compiler/compilePlatformApp';
 export { compileBlock } from './compiler/compileBlock';
 export { compileTheme } from './compiler/compileTheme';

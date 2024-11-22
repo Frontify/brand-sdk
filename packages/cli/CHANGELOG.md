@@ -1,5 +1,17 @@
 # @frontify/frontify-cli
 
+## 5.8.2
+
+### Patch Changes
+
+-   [#1151](https://github.com/Frontify/brand-sdk/pull/1151) [`3686e43`](https://github.com/Frontify/brand-sdk/commit/3686e438acebb661846bf3637cfefcf9c14bb5f1) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(templates): add zustand as peerdependency
+
+## 5.8.1
+
+### Patch Changes
+
+-   [#1149](https://github.com/Frontify/brand-sdk/pull/1149) [`dab919f`](https://github.com/Frontify/brand-sdk/commit/dab919f9fb4e70255b097f69c22c8896d356c000) Thanks [@imoutaharik](https://github.com/imoutaharik)! - fix: gitignore file generated on every folder level
+
 ## 5.8.0
 
 ### Minor Changes
