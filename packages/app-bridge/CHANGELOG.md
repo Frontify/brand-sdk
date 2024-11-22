@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.38
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`cd6ac0b`](https://github.com/Frontify/brand-sdk/commit/cd6ac0b022bca6a3ca663be801f0dbe62d129728) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: merge main into dev
+
 ## 4.0.0-alpha.37
 
 ### Patch Changes
