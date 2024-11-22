@@ -171,8 +171,8 @@ function processFile(index, file, fileMetadata) {
 
     progress[index] = [];
     const blob = file;
-    const BYTES_PER_CHUNK = 15 * 1024 * 1024;
     const SIZE = blob.size;
+    const BYTES_PER_CHUNK = Math.ceil(SIZE / Object.keys(fileMetadata.upload.urls).length);
     let start = 0;
     let end = BYTES_PER_CHUNK;
     let chunkNr = 1;
