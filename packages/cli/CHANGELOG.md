@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.3
+
+### Patch Changes
+
+-   [#1157](https://github.com/Frontify/brand-sdk/pull/1157) [`17eb433`](https://github.com/Frontify/brand-sdk/commit/17eb433a13247c217a048a05a7a0935e4fc77b1f) Thanks [@imoutaharik](https://github.com/imoutaharik)! - Small improvements generating gitignore files
+
 ## 5.8.2
 
 ### Patch Changes

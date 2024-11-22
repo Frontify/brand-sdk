@@ -6,6 +6,14 @@
 
 -   chore: merge main to dev
 
+## 3.11.1
+
+### Patch Changes
+
+-   [#1154](https://github.com/Frontify/brand-sdk/pull/1154) [`a8f1726`](https://github.com/Frontify/brand-sdk/commit/a8f1726a344be12fe32fe2caee8355a6aeeea15b) Thanks [@mikeyrayvon](https://github.com/mikeyrayvon)! - fix(templates): prevent delete on update without existing template ids
+
+-   [#1158](https://github.com/Frontify/brand-sdk/pull/1158) [`8937b15`](https://github.com/Frontify/brand-sdk/commit/8937b15b6dfcf17c288f4b22643c991ae74d55a4) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: do not hardcode upload chunk sizes
+
 ## 4.0.0-alpha.36
 
 ### Patch Changes
