@@ -26,7 +26,7 @@ const VALID_MANIFEST = {
         automation: {
             actions: [
                 {
-                    id: 'set_asset_title',
+                    id: 'setAssetTitle',
                     name: 'Set asset title',
                     variables: [
                         {
@@ -41,7 +41,7 @@ const VALID_MANIFEST = {
             ],
             triggers: [
                 {
-                    id: 'assets_created',
+                    id: 'assetsCreated',
                     name: 'Assets created',
                     variables: [
                         {
@@ -318,12 +318,12 @@ const MANIFEST_WITH_DUPLICATE_ACTION_IDS = {
         automation: {
             actions: [
                 {
-                    id: 'set_asset_title',
+                    id: 'setAssetTitle',
                     name: 'Set asset title',
                     workflowId: '7DQ92y5AldGBwZ3',
                 },
                 {
-                    id: 'set_asset_title',
+                    id: 'setAssetTitle',
                     name: 'Set asset title duplicate',
                     workflowId: '7DQ92y5AldGBwZ3',
                 },
@@ -342,7 +342,7 @@ const MANIFEST_WITH_INVALID_VARIABLE_TYPE = {
         automation: {
             actions: [
                 {
-                    id: 'set_asset_title',
+                    id: 'setAssetTitle',
                     name: 'Set asset title',
                     workflowId: '7DQ92y5AldGBwZ3',
                     variables: [

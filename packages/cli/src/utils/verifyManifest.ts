@@ -91,10 +91,10 @@ const variablesSchema = object({
         .max(80)
         .refine(
             (key) => {
-                return /^[._a-z]*$/.test(key);
+                return /^[._a-zA-Z]*$/.test(key);
             },
             {
-                message: "Variable key must only contain letters from a-z, '.' and '_' without any spaces",
+                message: "Variable key must only contain letters from a-z, A-Z, '.' and '_' without any spaces",
             },
         ),
     name: string().min(1).max(80),
@@ -108,10 +108,10 @@ const automationActionSchema = object({
         .max(80)
         .refine(
             (id) => {
-                return /^[_a-z]*$/.test(id);
+                return /^[_a-zA-Z]*$/.test(id);
             },
             {
-                message: "Automation action id must only contain letters from a-z and '_' without any spaces",
+                message: "Automation action id must only contain letters from a-z, A-Z, and '_' without any spaces",
             },
         )
         .refine(
@@ -151,10 +151,10 @@ const automationTriggerSchema = object({
         .max(80)
         .refine(
             (id) => {
-                return /^[_a-z]*$/.test(id);
+                return /^[_a-zA-Z]*$/.test(id);
             },
             {
-                message: "Automation trigger id must only contain letters from a-z and '_' without any spaces",
+                message: "Automation trigger id must only contain letters from a-z, A-Z, and '_' without any spaces",
             },
         )
         .refine(
