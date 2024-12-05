@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.4
+
+### Patch Changes
+
+-   [#1161](https://github.com/Frontify/brand-sdk/pull/1161) [`aa17750`](https://github.com/Frontify/brand-sdk/commit/aa17750efa88b1e362ff05598bd761246fcb98b2) Thanks [@julianiff](https://github.com/julianiff)! - chore: update to latest app-bridge versions
+
 ## 5.8.3
 
 ### Patch Changes
