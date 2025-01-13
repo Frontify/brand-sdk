@@ -82,6 +82,7 @@ const variableTypes = z.enum([
     'DATE',
     'OPTIONS',
     'USER',
+    'ASSET',
     'CUSTOM_METADATA_PROPERTY',
     'WORKFLOW_TASK_STATUS',
 ]);
