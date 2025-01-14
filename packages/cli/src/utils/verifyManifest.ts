@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { array, number, object, string, z } from 'zod';
+import { array, number, object, string, record, z } from 'zod';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
@@ -87,47 +87,11 @@ const variableTypes = z.enum([
     'WORKFLOW_TASK_STATUS',
 ]);
 const variablesSchema = object({
-    key: string()
-        .min(1)
-        .max(80)
-        .refine(
-            (key) => {
-                return /^[.A-Z_a-z]*$/.test(key);
-            },
-            {
-                message: "Variable key must only contain letters from a-z, A-Z, '.' and '_' without any spaces",
-            },
-        ),
     name: string().min(1).max(80),
     type: variableTypes,
 });
 
-const actionIdSet = new Set();
 const automationActionSchema = object({
-    id: string()
-        .min(1)
-        .max(80)
-        .refine(
-            (id) => {
-                return /^[A-Z_a-z]*$/.test(id);
-            },
-            {
-                message: "Automation action id must only contain letters from a-z, A-Z, and '_' without any spaces",
-            },
-        )
-        .refine(
-            (id) => {
-                if (actionIdSet.has(id)) {
-                    return false;
-                }
-
-                actionIdSet.add(id);
-                return true;
-            },
-            {
-                message: 'Automation action id must be unique',
-            },
-        ),
     name: string().min(1).max(80),
     workflowId: string()
         .min(16)
@@ -142,38 +106,13 @@ const automationActionSchema = object({
             },
         ),
     description: string().optional(),
-    variables: array(variablesSchema),
+    variables: record(variablesSchema),
 });
 
-const triggerIdSet = new Set();
 const automationTriggerSchema = object({
-    id: string()
-        .min(1)
-        .max(80)
-        .refine(
-            (id) => {
-                return /^[A-Z_a-z]*$/.test(id);
-            },
-            {
-                message: "Automation trigger id must only contain letters from a-z, A-Z, and '_' without any spaces",
-            },
-        )
-        .refine(
-            (id) => {
-                if (triggerIdSet.has(id)) {
-                    return false;
-                }
-
-                triggerIdSet.add(id);
-                return true;
-            },
-            {
-                message: 'Automation trigger id must be unique',
-            },
-        ),
     name: string().min(1).max(80),
     description: string().optional(),
-    variables: array(variablesSchema),
+    variables: record(variablesSchema),
 });
 
 const hostnameRegex =
@@ -302,8 +241,8 @@ export const platformAppManifestSchemaV1 = object({
             assetCreation: assetCreationShape,
         }).optional(),
         automation: object({
-            actions: array(automationActionSchema).optional(),
-            triggers: array(automationTriggerSchema).optional(),
+            actions: record(automationActionSchema).optional(),
+            triggers: record(automationTriggerSchema).optional(),
         }).optional(),
     }).optional(),
     metadata: object({
