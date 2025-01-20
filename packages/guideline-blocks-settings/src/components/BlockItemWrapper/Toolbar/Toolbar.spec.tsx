@@ -118,8 +118,6 @@ describe('Toolbar', () => {
 
         const [attachmentBtn, dragBtn, btn, flyoutBtn, menuBtn] = buttons;
 
-        // Click Interactions
-
         fireEvent.click(attachmentBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(1);
 
