@@ -102,7 +102,7 @@ describe('Toolbar', () => {
         expect(() => render(<Toolbar items={[]} attachments={{ isEnabled: true }} />)).toThrowError();
     });
 
-    it('should have every item type accessible by mouse', async () => {
+    it('should have every item type accessible by mouse', () => {
         const ToolbarWithAttachments = () => (
             <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={stubs.setOpenFlyoutIds}>
                 <AttachmentsProvider appBridge={STUB_WITH_NO_ASSETS} assetId={MOCK_ASSET_FIELD_ID}>
@@ -114,25 +114,25 @@ describe('Toolbar', () => {
         const { getAllByRole } = render(<ToolbarWithAttachments />);
 
         const buttons = getAllByRole('button');
-        expect(buttons).toHaveLength(5);
+        expect(buttons).toHaveLength(10);
 
         const [attachmentBtn, dragBtn, btn, flyoutBtn, menuBtn] = buttons;
 
         // Click Interactions
 
-        await fireEvent.click(attachmentBtn);
+        fireEvent.click(attachmentBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(1);
 
-        await fireEvent.drag(dragBtn);
+        fireEvent.drag(dragBtn);
         expect(stubs.onDrag).toHaveBeenCalledTimes(1);
 
-        await fireEvent.click(btn);
+        fireEvent.click(btn);
         expect(stubs.onClick).toHaveBeenCalledTimes(1);
 
-        await fireEvent.click(flyoutBtn);
+        fireEvent.click(flyoutBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(2);
 
-        await fireEvent.click(menuBtn);
+        fireEvent.click(menuBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(3);
     });
 
@@ -150,7 +150,7 @@ describe('Toolbar', () => {
         const { getAllByRole } = render(<ToolbarWithAttachments />);
 
         const buttons = getAllByRole('button');
-        expect(buttons).toHaveLength(5);
+        expect(buttons).toHaveLength(10);
 
         const [attachmentBtn, dragBtn, btn, flyoutBtn, menuBtn] = buttons;
 
