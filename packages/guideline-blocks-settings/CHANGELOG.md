@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.12
+
+### Patch Changes
+
+-   [#1168](https://github.com/Frontify/brand-sdk/pull/1168) [`2b6bd9a`](https://github.com/Frontify/brand-sdk/commit/2b6bd9a1d56a3d03533ed3b38366d843cbcd0f13) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@dnd-kt` bump to latest
+
 ## 0.36.11
 
 ### Patch Changes
