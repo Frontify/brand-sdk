@@ -17,7 +17,7 @@ const DefaultButtonStyles: CSSProperties = {
 
 export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProperties }> = {
     buttonPrimary: {
-        ...DefaulButtonStyles,
+        ...DefaultButtonStyles,
         fontFamily: 'var(--f-theme-settings-button-primary-font-family)',
         fontSize: 'var(--f-theme-settings-button-primary-font-size)',
         fontWeight: 'var(--f-theme-settings-button-primary-font-weight)',
