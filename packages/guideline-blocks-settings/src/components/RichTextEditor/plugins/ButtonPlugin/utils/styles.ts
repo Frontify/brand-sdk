@@ -11,6 +11,7 @@ const DefaulButtonStyles: CSSProperties = {
     textOverflow: 'ellipsis',
     maxWidth: '100%',
     whiteSpace: 'nowrap',
+    verticalAlign: 'middle',
 };
 
 export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProperties }> = {
