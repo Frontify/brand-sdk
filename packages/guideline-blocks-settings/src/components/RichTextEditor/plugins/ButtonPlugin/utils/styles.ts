@@ -2,8 +2,21 @@
 
 import { type CSSProperties } from 'react';
 
+const DefaultButtonStyles: CSSProperties = {
+    marginTop: '10px',
+    marginBottom: '10px',
+    display: 'inline-block',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '100%',
+    verticalAlign: 'middle',
+    boxSizing: 'border-box',
+    overflowWrap: 'normal',
+};
+
 export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProperties }> = {
     buttonPrimary: {
+        ...DefaultButtonStyles,
         fontFamily: 'var(--f-theme-settings-button-primary-font-family)',
         fontSize: 'var(--f-theme-settings-button-primary-font-size)',
         fontWeight: 'var(--f-theme-settings-button-primary-font-weight)',
@@ -19,9 +32,7 @@ export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProp
         borderRadius: 'var(--f-theme-settings-button-primary-border-radius)',
         borderWidth: 'var(--f-theme-settings-button-primary-border-width)',
         color: 'var(--f-theme-settings-button-primary-color)',
-        marginTop: '10px',
-        marginBottom: '10px',
-        display: 'inline-block',
+
         hover: {
             backgroundColor: 'var(--f-theme-settings-button-primary-background-color-hover)',
             borderColor: 'var(--f-theme-settings-button-primary-border-color-hover)',
@@ -30,6 +41,7 @@ export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProp
     },
 
     buttonSecondary: {
+        ...DefaultButtonStyles,
         fontFamily: 'var(--f-theme-settings-button-secondary-font-family)',
         fontSize: 'var(--f-theme-settings-button-secondary-font-size)',
         fontWeight: 'var(--f-theme-settings-button-secondary-font-weight)',
@@ -45,9 +57,6 @@ export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProp
         borderRadius: 'var(--f-theme-settings-button-secondary-border-radius)',
         borderWidth: 'var(--f-theme-settings-button-secondary-border-width)',
         color: 'var(--f-theme-settings-button-secondary-color)',
-        display: 'inline-block',
-        marginTop: '10px',
-        marginBottom: '10px',
         hover: {
             backgroundColor: 'var(--f-theme-settings-button-secondary-background-color-hover)',
             borderColor: 'var(--f-theme-settings-button-secondary-border-color-hover)',
@@ -56,6 +65,7 @@ export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProp
     },
 
     buttonTertiary: {
+        ...DefaultButtonStyles,
         fontFamily: 'var(--f-theme-settings-button-tertiary-font-family)',
         fontSize: 'var(--f-theme-settings-button-tertiary-font-size)',
         fontWeight: 'var(--f-theme-settings-button-tertiary-font-weight)',
@@ -71,9 +81,6 @@ export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProp
         borderRadius: 'var(--f-theme-settings-button-tertiary-border-radius)',
         borderWidth: 'var(--f-theme-settings-button-tertiary-border-width)',
         color: 'var(--f-theme-settings-button-tertiary-color)',
-        display: 'inline-block',
-        marginTop: '10px',
-        marginBottom: '10px',
         hover: {
             backgroundColor: 'var(--f-theme-settings-button-tertiary-background-color-hover)',
             borderColor: 'var(--f-theme-settings-button-tertiary-border-color-hover)',
