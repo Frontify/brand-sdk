@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.13
+
+### Patch Changes
+
+-   [#1173](https://github.com/Frontify/brand-sdk/pull/1173) [`9b3e98f`](https://github.com/Frontify/brand-sdk/commit/9b3e98f45fcbe920bed7e638c7422803696e2907) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(RTE): prevent text overflow from button
+
 ## 0.36.12
 
 ### Patch Changes
