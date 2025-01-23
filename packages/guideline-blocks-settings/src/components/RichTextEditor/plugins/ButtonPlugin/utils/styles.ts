@@ -42,7 +42,7 @@ export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProp
     },
 
     buttonSecondary: {
-        ...DefaulButtonStyles,
+        ...DefaultButtonStyles,
         fontFamily: 'var(--f-theme-settings-button-secondary-font-family)',
         fontSize: 'var(--f-theme-settings-button-secondary-font-size)',
         fontWeight: 'var(--f-theme-settings-button-secondary-font-weight)',
