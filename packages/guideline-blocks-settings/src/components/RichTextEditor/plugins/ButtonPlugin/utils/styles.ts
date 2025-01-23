@@ -2,7 +2,7 @@
 
 import { type CSSProperties } from 'react';
 
-const DefaulButtonStyles: CSSProperties = {
+const DefaultButtonStyles: CSSProperties = {
     marginTop: '10px',
     marginBottom: '10px',
     display: 'inline-block',
