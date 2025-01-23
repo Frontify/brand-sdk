@@ -6,13 +6,12 @@ const DefaultButtonStyles: CSSProperties = {
     marginTop: '10px',
     marginBottom: '10px',
     display: 'inline-block',
-    wordBreak: 'break-word',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     maxWidth: '100%',
-    whiteSpace: 'nowrap',
     verticalAlign: 'middle',
     boxSizing: 'border-box',
+    overflowWrap: 'normal',
 };
 
 export const BlockButtonStyles: Record<string, CSSProperties & { hover?: CSSProperties }> = {
