@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.5
+
+### Patch Changes
+
+-   [#1175](https://github.com/Frontify/brand-sdk/pull/1175) [`c0d2426`](https://github.com/Frontify/brand-sdk/commit/c0d24263857b030e4b79b4222c18d5a37f727bd8) Thanks [@julianiff](https://github.com/julianiff)! - fix: add explicit cors
+
 ## 5.8.4
 
 ### Patch Changes
