@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-adjust default value for outlineOffset prop of BlockItemWrapper
+fix(BlockItemWrapper): adjust default value of the `outlineOffset` prop to `0`
