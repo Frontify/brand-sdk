@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.36.14
+
+### Patch Changes
+
+-   [#1178](https://github.com/Frontify/brand-sdk/pull/1178) [`cfd68bd`](https://github.com/Frontify/brand-sdk/commit/cfd68bd94f2ce033d848c9877770b590eef9f24d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(BlockItemWrapper): adjust default value of the `outlineOffset` prop to `0`
+
 ## 0.36.13
 
 ### Patch Changes
