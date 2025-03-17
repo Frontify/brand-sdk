@@ -79,6 +79,7 @@ export interface PageCategoryNavigationItem {
 
 interface DocumentPageBase {
     id(): number;
+    isPublished(): boolean;
     title(language?: string): string;
     slug(language?: string): string;
     url(language?: string): string;
