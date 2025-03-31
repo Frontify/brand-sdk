@@ -96,9 +96,9 @@ const KeyTypeLabelSchema = object({
 });
 
 const ActionSchema = object({
-    id: string().uuid(),
+    id: string(),
     title: string(),
-    iconUrl: string().url(),
+    iconUrl: string(),
     returns: array(KeyTypeLabelSchema),
     version: number().int().positive(),
     externalId: string(),
