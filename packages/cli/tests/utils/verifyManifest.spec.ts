@@ -878,9 +878,12 @@ describe('Verify Platform App Manifest', () => {
     it('should detect when it is not a valid hostName', () => {
         expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST_HTTPS, platformAppManifestSchemaV1)).toThrow();
     });
+
     it('should verify when automation is added', () => {
-        expect(() => verifyManifest(MANIFEST_WITH_AUTOMATION_ENTRY, platformAppManifestSchemaV1)).toThrow();
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_AUTOMATION_ENTRY, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
     });
+
     it('should detect when it is not a valid hostName with 2 dots', () => {
         expect(() =>
             verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_DOUBLE_DOT, platformAppManifestSchemaV1),
