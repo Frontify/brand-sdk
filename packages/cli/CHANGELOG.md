@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.6
+
+### Patch Changes
+
+-   [#1184](https://github.com/Frontify/brand-sdk/pull/1184) [`c04731a`](https://github.com/Frontify/brand-sdk/commit/c04731a9ca6be05773cd2c662d05d785b0ef56e0) Thanks [@julianiff](https://github.com/julianiff)! - chore: update zod
+
 ## 5.8.5
 
 ### Patch Changes
