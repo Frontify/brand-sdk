@@ -684,6 +684,26 @@ const MANIFEST_WITH_BULK_ACTIONS_SURFACE_ERROR = {
     },
 };
 
+const MANIFEST_WITH_AUTOMATION_ENTRY = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    automation: {
+        actions: [
+            {
+                id: 'test-id',
+                title: 'test-title',
+                iconUrl: 'test-url',
+                returns: [{ key: 'test-key', type: 'STRING', label: 'test-label' }],
+                version: 1,
+                externalId: 'test-external-id',
+                parameters: [{ key: 'test-key', type: 'STRING', label: 'test-label' }],
+            },
+        ],
+    },
+    metadata: {
+        version: 1,
+    },
+};
 const MANIFEST_WITH_BULK_ACTIONS_SURFACE = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
@@ -858,7 +878,9 @@ describe('Verify Platform App Manifest', () => {
     it('should detect when it is not a valid hostName', () => {
         expect(() => verifyManifest(INVALID_MANIFEST_NETWORK_HOST_HTTPS, platformAppManifestSchemaV1)).toThrow();
     });
-
+    it('should verify when automation is added', () => {
+        expect(() => verifyManifest(MANIFEST_WITH_AUTOMATION_ENTRY, platformAppManifestSchemaV1)).toThrow();
+    });
     it('should detect when it is not a valid hostName with 2 dots', () => {
         expect(() =>
             verifyManifest(INVALID_MANIFEST_NETWORK_ALLOWED_HOST_DOUBLE_DOT, platformAppManifestSchemaV1),
