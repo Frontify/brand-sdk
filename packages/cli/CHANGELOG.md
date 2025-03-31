@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.7
+
+### Patch Changes
+
+-   [#1186](https://github.com/Frontify/brand-sdk/pull/1186) [`38d23da`](https://github.com/Frontify/brand-sdk/commit/38d23da894b2635008368351b19ffb81dc13caa5) Thanks [@julianiff](https://github.com/julianiff)! - chore: remove uuid and url params
+
 ## 5.8.6
 
 ### Patch Changes
