@@ -15,7 +15,7 @@ export const ToolbarButtonTooltip = ({ content, children, open, disabled }: Tool
         children
     ) : (
         <Tooltip.Root enterDelay={300} open={open}>
-            <Tooltip.Trigger>{children}</Tooltip.Trigger>
+            <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
             <Tooltip.Content side="top">
                 <div>{content}</div>
             </Tooltip.Content>
