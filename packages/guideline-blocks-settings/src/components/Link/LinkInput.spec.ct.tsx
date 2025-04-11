@@ -2,7 +2,7 @@
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
 import { ButtonSize, CheckboxState } from '@frontify/fondue';
-import { mount } from 'cypress/react18';
+import { mount } from 'cypress/react';
 
 import { LinkInput } from './LinkInput';
 

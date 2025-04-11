@@ -11,10 +11,6 @@ import { ToolbarButton } from './ToolbarButton';
 const TOOLBAR_BUTTON_ID = 'block-item-wrapper-toolbar-btn';
 const TOOLTIP_CONTENT = 'fondue-tooltip-content';
 
-/**
- * @vitest-environment happy-dom
- */
-
 describe('ToolbarButton', () => {
     it('should disable tooltip when item is in drag preview context', () => {
         const { queryByTestId } = render(

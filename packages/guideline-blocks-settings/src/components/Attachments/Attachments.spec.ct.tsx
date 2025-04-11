@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
-import { mount } from 'cypress/react18';
+import { mount } from 'cypress/react';
 import { type SinonStub } from 'sinon';
 
 import { Attachments as AttachmentsComponent } from './Attachments';

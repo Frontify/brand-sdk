@@ -4,7 +4,10 @@ import { type ReactElement } from 'react';
 
 import { type BaseBlock, type ValueOrPromisedValue } from './base';
 
-import { type IconEnum } from '.';
+import type * as Icons from '@frontify/fondue/icons';
+
+type PickIconStrings<T extends string> = T extends `Icon${string}` ? T : never;
+type RemoveIconPrefix<T extends string> = T extends `Icon${infer U}` ? U : T;
 
 export type Choice = {
     /**
@@ -15,9 +18,9 @@ export type Choice = {
     /**
      * The icon of the item.
      *
-     * The full list of icons can be found here {@link https://github.com/Frontify/fondue/blob/beta/src/foundation/Icon/IconEnum.ts}
+     * The full list of icons can be found here {@link https://fondue-components.frontify.com/?path=/story/icons_icons--default}
      */
-    icon?: IconEnum | keyof typeof IconEnum | ReactElement;
+    icon?: RemoveIconPrefix<PickIconStrings<keyof typeof Icons>> | ReactElement;
 
     /**
      * The value of the item.

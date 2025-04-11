@@ -23,10 +23,6 @@ const STUB_WITH_THREE_ASSETS = getAppBridgeBlockStub({
     editorState: true,
 });
 
-/**
- * @vitest-environment happy-dom
- */
-
 describe('AttachmentsToolbarButton', () => {
     beforeAll(() => {
         vi.stubGlobal(
@@ -69,7 +65,7 @@ describe('AttachmentsToolbarButton', () => {
         await fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledOnce();
-        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 

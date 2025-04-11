@@ -1,4 +1,4 @@
-import { IconEnum, defineSettings } from '@frontify/guideline-blocks-settings';
+import { defineSettings } from '@frontify/guideline-blocks-settings';
 
 export const settings = defineSettings({
     main: [
@@ -11,7 +11,7 @@ export const settings = defineSettings({
             choices: [
                 {
                     value: 'content_block',
-                    icon: IconEnum.BuildingBlock,
+                    icon: 'BuildingBlock',
                     label: 'Content Block',
                 },
             ],

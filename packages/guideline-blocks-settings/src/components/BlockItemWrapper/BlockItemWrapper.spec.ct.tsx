@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconMagnifier16 } from '@frontify/fondue';
-import { mount } from 'cypress/react18';
+import { mount } from 'cypress/react';
 
 import { BlockItemWrapper } from './BlockItemWrapper';
 

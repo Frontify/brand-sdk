@@ -15,10 +15,6 @@ import { DragPreviewContextProvider } from './context/DragPreviewContext';
 import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
 import { type ToolbarItem } from './types';
 
-/**
- * @vitest-environment happy-dom
- */
-
 const ATTACHMENTS_FLYOUT_ID = 'attachments-flyout-content';
 const MENU_FLYOUT_ID = 'menu-item';
 const TOOLBAR_SEGMENT_ID = 'block-item-wrapper-toolbar-segment';

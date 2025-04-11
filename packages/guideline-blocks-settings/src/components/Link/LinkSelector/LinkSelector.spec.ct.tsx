@@ -7,7 +7,7 @@ import {
     DocumentSectionApiDummy,
     getAppBridgeBlockStub,
 } from '@frontify/app-bridge';
-import { mount } from 'cypress/react18';
+import { mount } from 'cypress/react';
 import { type SinonStub } from 'sinon';
 
 import { LinkSelector } from './LinkSelector';

@@ -1,18 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { type MutableRefObject } from 'react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsToolbarButtonTrigger } from './AttachmentsToolbarButtonTrigger';
 
 const BUTTON_ID = 'attachments-toolbar-button-trigger';
 
 describe('AttachmentsToolbarButtonTrigger', () => {
-    afterEach(() => {
-        cleanup();
-    });
-
     it('should apply active styles when flyout is open', async () => {
         const { getByTestId } = render(
             <AttachmentsToolbarButtonTrigger

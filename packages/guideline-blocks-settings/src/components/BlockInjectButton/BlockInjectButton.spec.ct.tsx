@@ -2,7 +2,7 @@
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
-import { mount } from 'cypress/react18';
+import { mount } from 'cypress/react';
 
 import { BlockInjectButton } from './BlockInjectButton';
 

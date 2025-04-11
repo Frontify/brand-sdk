@@ -12,9 +12,6 @@ const BUTTON_ID = 'block-item-wrapper-toolbar-flyout';
 const MENU_ITEM_ID = 'menu-item';
 
 const TEST_FLYOUT_ID = 'test';
-/**
- * @vitest-environment happy-dom
- */
 
 describe('MenuToolbarButton', () => {
     it('should log error if not inside a flyout provider when opening', () => {
@@ -38,7 +35,7 @@ describe('MenuToolbarButton', () => {
         fireEvent.click(getByTestId(BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
-        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 

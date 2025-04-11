@@ -11,9 +11,6 @@ import { ToolbarFlyoutMenu } from './ToolbarFlyoutMenu';
 const MENU_ITEM_ID = 'menu-item';
 
 const TEST_FLYOUT_ID = 'test';
-/**
- * @vitest-environment happy-dom
- */
 
 describe('ToolbarFlyoutMenu', () => {
     it('should display menu items', async () => {

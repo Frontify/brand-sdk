@@ -1,16 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { cleanup, fireEvent, render } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { BaseToolbarButton } from './BaseToolbarButton';
 
 const BUTTON_ID = 'base-toolbar-button';
 
 describe('BaseToolbarButton', () => {
-    afterEach(() => {
-        cleanup();
-    });
     it('should call onClick', async () => {
         const onClickStub = vi.fn();
         const { getByTestId } = render(<BaseToolbarButton onClick={onClickStub}>Button</BaseToolbarButton>);

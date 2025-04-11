@@ -339,8 +339,6 @@ export const FileExtensionSets: Record<keyof typeof FileType, FileExtension[]> =
     ],
 };
 
-export { IconEnum } from '@frontify/fondue';
-
 /**
  * @deprecated
  */

@@ -13,10 +13,6 @@ const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TOOLTIP_CONTENT = 'content';
 
-/**
- * @vitest-environment happy-dom
- */
-
 describe('DragHandleToolbarButton', () => {
     it('should show tooltip and activeStyles when item is in drag preview context', () => {
         const { getByTestId } = render(

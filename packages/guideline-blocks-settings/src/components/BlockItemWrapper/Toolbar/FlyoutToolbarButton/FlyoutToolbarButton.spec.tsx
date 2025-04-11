@@ -15,9 +15,6 @@ const TOOLTIP_ID = 'fondue-tooltip-content';
 const TEST_FLYOUT_ID = 'test';
 const TEST_TOOLTIP = 'tooltip';
 
-/**
- * @vitest-environment happy-dom
- */
 describe('FlyoutToolbarButton', () => {
     it('should log error if not inside a flyout provider when opening', async () => {
         vi.spyOn(console, 'error');
@@ -52,7 +49,7 @@ describe('FlyoutToolbarButton', () => {
         await fireEvent.click(getByTestId(BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
-        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 

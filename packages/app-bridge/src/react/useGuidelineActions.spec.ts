@@ -2,7 +2,7 @@
 
 import { act, renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
-import { type SpyInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
     BrandportalLinkDummy,
@@ -63,7 +63,7 @@ const DOCUMENT_GROUP_ID_3 = 345882;
 
 describe('useGuidelineActions hook', () => {
     let useGuidelineActionsStub: ReturnType<typeof useGuidelineActions>;
-    let emitSpy: SpyInstance | null = null;
+    let emitSpy: ReturnType<typeof vi.spyOn> | null = null;
     let appBridgeStub: ReturnType<typeof getAppBridgeThemeStub>;
 
     beforeEach(() => {
