@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.37.0
+
+### Minor Changes
+
+-   [#1188](https://github.com/Frontify/brand-sdk/pull/1188) [`e2978c3`](https://github.com/Frontify/brand-sdk/commit/e2978c33b0d732f7e95963459926914005908794) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(guideline-blocks-settings): add a new property to RTE to fix contrast issues for placeholders
+
 ## 0.36.14
 
 ### Patch Changes
