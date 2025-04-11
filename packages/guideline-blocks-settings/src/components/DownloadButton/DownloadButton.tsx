@@ -13,7 +13,7 @@ export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
 
     return (
         <Tooltip.Root enterDelay={500}>
-            <Tooltip.Trigger>
+            <Tooltip.Trigger asChild>
                 <button
                     tabIndex={0}
                     aria-label="Download"
