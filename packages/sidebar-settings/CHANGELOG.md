@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.10.1-alpha.0
+
+### Patch Changes
+
+-   [#1194](https://github.com/Frontify/brand-sdk/pull/1194) [`6b4483b`](https://github.com/Frontify/brand-sdk/commit/6b4483b9ccb886dd139002b2a51ca0054736c8b3) Thanks [@Kenny806](https://github.com/Kenny806)! - add optional ariaLabel to Choice type
+
 ## 0.10.0
 
 ### Minor Changes
