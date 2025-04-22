@@ -8,9 +8,14 @@ import { type IconEnum } from '.';
 
 export type Choice = {
     /**
-     * The label of the item.
+     * The text label of the item.
      */
     label?: string | number;
+
+    /**
+     * The aria label of the item.
+     */
+    ariaLabel?: string;
 
     /**
      * The icon of the item.

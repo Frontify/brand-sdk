@@ -1,5 +1,18 @@
 # @frontify/guideline-blocks-settings
 
+## 0.37.3
+
+### Patch Changes
+
+-   Updated dependencies [[`d204da8`](https://github.com/Frontify/brand-sdk/commit/d204da8770befc87095f4e9de16c58ad0d1c697e)]:
+    -   @frontify/sidebar-settings@0.10.1
+
+## 0.37.2
+
+### Patch Changes
+
+-   [#1195](https://github.com/Frontify/brand-sdk/pull/1195) [`0105292`](https://github.com/Frontify/brand-sdk/commit/0105292939f29b8cc6c969c1c4c973250748cf06) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(DownloadButton): remove nested buttons
+
 ## 0.37.1
 
 ### Patch Changes
