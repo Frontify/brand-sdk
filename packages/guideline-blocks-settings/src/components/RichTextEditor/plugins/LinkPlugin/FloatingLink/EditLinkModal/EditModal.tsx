@@ -30,6 +30,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                     target="_blank"
                     rel="noopener noreferrer"
                     style={BlockStyles[LINK_PLUGIN]}
+                    className="tw-break-all"
                 >
                     {url}
                 </a>
