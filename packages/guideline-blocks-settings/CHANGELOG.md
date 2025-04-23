@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.37.4
+
+### Patch Changes
+
+-   [#1201](https://github.com/Frontify/brand-sdk/pull/1201) [`b5525e1`](https://github.com/Frontify/brand-sdk/commit/b5525e1e45360d1f18ede33d134ebf638af6d4e3) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): break text into new lines in link modal
+
 ## 0.37.3
 
 ### Patch Changes
