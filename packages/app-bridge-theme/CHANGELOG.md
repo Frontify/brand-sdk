@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.22
+
+### Patch Changes
+
+-   [#1203](https://github.com/Frontify/brand-sdk/pull/1203) [`265c4d4`](https://github.com/Frontify/brand-sdk/commit/265c4d48a76cf5bd6e257123f0d793bd930f91da) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add activeSectionHeadingId to context
+
 ## 0.0.0-alpha.21
 
 ### Minor Changes
