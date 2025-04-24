@@ -12,6 +12,7 @@ import { type DocumentCategory } from './DocumentCategory';
 import { type DocumentGroup } from './DocumentGroup';
 import { type DocumentPage } from './DocumentPage';
 import {
+    type MoveDocumentSectionPayload,
     type AddDocumentSectionPayload,
     type DeleteDocumentSectionPayload,
     type UpdateDocumentSectionPayload,
@@ -129,6 +130,10 @@ export type EmitterEvents = {
         | {
               action: 'delete';
               payload: DeleteDocumentSectionPayload;
+          }
+        | {
+              action: 'move';
+              payload: MoveDocumentSectionPayload;
           };
 
     'AppBridge:GuidelineDocumentCategory:Action':

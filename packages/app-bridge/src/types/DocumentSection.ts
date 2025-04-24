@@ -40,3 +40,14 @@ export type DeleteDocumentSectionPayload = {
     id: number;
     documentPageId: number;
 };
+
+export type SectionHeading = {
+    id: number;
+    slug: string;
+    title: string;
+};
+
+export type MoveDocumentSectionPayload = {
+    headings: SectionHeading[];
+    documentPageId: number;
+};
