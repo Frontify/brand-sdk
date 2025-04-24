@@ -1,6 +1,7 @@
 # App Bridge
 
 packages/app-bridge/src/types @Frontify/frontend-platform
+packages/app-bridge/src/types/DocumentSection.ts @Frontify/content-and-blocks
 
 ## App Bridge Errors
 packages/app-bridge/src/errors/HttpClientError.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
