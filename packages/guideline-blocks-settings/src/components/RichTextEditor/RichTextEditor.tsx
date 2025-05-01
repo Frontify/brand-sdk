@@ -67,6 +67,7 @@ const InternalRichTextEditor = memo(
                     onValueChanged={handleValueChange}
                     onTextChange={handleTextChange}
                     hideExternalFloatingModals={handleHideExternalFloatingModals}
+                    placeholderOpacity="high"
                 />
             );
         }

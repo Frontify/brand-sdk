@@ -19,6 +19,7 @@ export const EditModal = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={BlockStyles[LINK_PLUGIN]}
+                    className="tw-break-all"
                 >
                     {floatingButtonSelectors.url()}
                 </a>

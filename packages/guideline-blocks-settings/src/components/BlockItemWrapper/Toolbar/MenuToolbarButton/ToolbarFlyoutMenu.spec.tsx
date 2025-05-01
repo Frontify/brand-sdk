@@ -57,7 +57,7 @@ describe('ToolbarFlyoutMenu', () => {
 
         expect(getByTestId(MENU_ITEM_ID)).toBeVisible();
 
-        await fireEvent.pointerUp(getByTestId(MENU_ITEM_ID));
+        await fireEvent.click(getByTestId(MENU_ITEM_ID));
 
         expect(onClickStub).toHaveBeenCalledOnce();
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledOnce();

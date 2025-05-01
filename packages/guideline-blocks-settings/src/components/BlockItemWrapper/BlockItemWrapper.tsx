@@ -17,7 +17,7 @@ export const BlockItemWrapper = memo(
         shouldHideComponent = false,
         isDragging = false,
         shouldFillContainer,
-        outlineOffset = 2,
+        outlineOffset = 0,
         shouldBeShown = false,
         showAttachments = false,
     }: BlockItemWrapperProps): ReactElement => {

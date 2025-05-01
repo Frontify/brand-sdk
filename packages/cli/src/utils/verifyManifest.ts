@@ -89,6 +89,24 @@ const permissionsSchema = object({
     }).optional(),
 }).optional();
 
+const KeyTypeLabelSchema = object({
+    key: string(),
+    type: string(),
+    label: string(),
+});
+
+const ActionSchema = object({
+    id: string(),
+    title: string(),
+    iconUrl: string(),
+    returns: array(KeyTypeLabelSchema),
+    version: number().int().positive(),
+    externalId: string(),
+    parameters: array(KeyTypeLabelSchema),
+});
+
+const ActionsArraySchema = array(ActionSchema).optional();
+
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
@@ -102,6 +120,9 @@ export const platformAppManifestSchemaV1 = object({
         endpoints: array(endpointCallSchema).optional(),
     }).optional(),
     permissionsSchema,
+    automation: object({
+        actions: ActionsArraySchema,
+    }).optional(),
     surfaces: object({
         guideline: object({
             assetViewer: object({

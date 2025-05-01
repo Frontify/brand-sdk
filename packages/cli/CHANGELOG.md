@@ -1,5 +1,29 @@
 # @frontify/frontify-cli
 
+## 5.8.7
+
+### Patch Changes
+
+-   [#1186](https://github.com/Frontify/brand-sdk/pull/1186) [`38d23da`](https://github.com/Frontify/brand-sdk/commit/38d23da894b2635008368351b19ffb81dc13caa5) Thanks [@julianiff](https://github.com/julianiff)! - chore: remove uuid and url params
+
+## 5.8.6
+
+### Patch Changes
+
+-   [#1184](https://github.com/Frontify/brand-sdk/pull/1184) [`c04731a`](https://github.com/Frontify/brand-sdk/commit/c04731a9ca6be05773cd2c662d05d785b0ef56e0) Thanks [@julianiff](https://github.com/julianiff)! - chore: update zod
+
+## 5.8.5
+
+### Patch Changes
+
+-   [#1175](https://github.com/Frontify/brand-sdk/pull/1175) [`c0d2426`](https://github.com/Frontify/brand-sdk/commit/c0d24263857b030e4b79b4222c18d5a37f727bd8) Thanks [@julianiff](https://github.com/julianiff)! - fix: add explicit cors
+
+## 5.8.4
+
+### Patch Changes
+
+-   [#1161](https://github.com/Frontify/brand-sdk/pull/1161) [`aa17750`](https://github.com/Frontify/brand-sdk/commit/aa17750efa88b1e362ff05598bd761246fcb98b2) Thanks [@julianiff](https://github.com/julianiff)! - chore: update to latest app-bridge versions
+
 ## 5.8.3
 
 ### Patch Changes

@@ -86,7 +86,7 @@ export const LinkSelector = ({
                         },
                         {
                             children: 'Choose',
-                            onClick: (event) => {
+                            onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
                                 event?.preventDefault();
                                 saveLink();
                             },

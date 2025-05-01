@@ -1,5 +1,56 @@
 # @frontify/guideline-blocks-settings
 
+## 0.37.4
+
+### Patch Changes
+
+-   [#1201](https://github.com/Frontify/brand-sdk/pull/1201) [`b5525e1`](https://github.com/Frontify/brand-sdk/commit/b5525e1e45360d1f18ede33d134ebf638af6d4e3) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): break text into new lines in link modal
+
+## 0.37.3
+
+### Patch Changes
+
+-   Updated dependencies [[`d204da8`](https://github.com/Frontify/brand-sdk/commit/d204da8770befc87095f4e9de16c58ad0d1c697e)]:
+    -   @frontify/sidebar-settings@0.10.1
+
+## 0.37.2
+
+### Patch Changes
+
+-   [#1195](https://github.com/Frontify/brand-sdk/pull/1195) [`0105292`](https://github.com/Frontify/brand-sdk/commit/0105292939f29b8cc6c969c1c4c973250748cf06) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(DownloadButton): remove nested buttons
+
+## 0.37.1
+
+### Patch Changes
+
+-   [`2c30afb`](https://github.com/Frontify/brand-sdk/commit/2c30afb8a9bf66e4140605cd582b6fe62c3d9461) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump ci
+
+## 0.37.0
+
+### Minor Changes
+
+-   [#1188](https://github.com/Frontify/brand-sdk/pull/1188) [`e2978c3`](https://github.com/Frontify/brand-sdk/commit/e2978c33b0d732f7e95963459926914005908794) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(guideline-blocks-settings): add a new property to RTE to fix contrast issues for placeholders
+
+## 0.36.14
+
+### Patch Changes
+
+-   [#1178](https://github.com/Frontify/brand-sdk/pull/1178) [`cfd68bd`](https://github.com/Frontify/brand-sdk/commit/cfd68bd94f2ce033d848c9877770b590eef9f24d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(BlockItemWrapper): adjust default value of the `outlineOffset` prop to `0`
+
+## 0.36.13
+
+### Patch Changes
+
+-   [#1173](https://github.com/Frontify/brand-sdk/pull/1173) [`9b3e98f`](https://github.com/Frontify/brand-sdk/commit/9b3e98f45fcbe920bed7e638c7422803696e2907) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(RTE): prevent text overflow from button
+
+## 0.36.12
+
+### Patch Changes
+
+-   [#1165](https://github.com/Frontify/brand-sdk/pull/1165) [`2f39217`](https://github.com/Frontify/brand-sdk/commit/2f3921736da65404438b990702d33229f16ca2b8) Thanks [@ragi96](https://github.com/ragi96)! - fix: add tailwind base for `*`, `::before` and `::after`
+
+-   [#1168](https://github.com/Frontify/brand-sdk/pull/1168) [`2b6bd9a`](https://github.com/Frontify/brand-sdk/commit/2b6bd9a1d56a3d03533ed3b38366d843cbcd0f13) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@dnd-kt` bump to latest
+
 ## 0.36.11
 
 ### Patch Changes

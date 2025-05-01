@@ -139,7 +139,7 @@ export const Attachments = ({
 
     return isEditing || (internalItems?.length ?? 0) > 0 ? (
         <Tooltip.Root enterDelay={500}>
-            <Tooltip.Trigger>
+            <Tooltip.Trigger asChild>
                 <div data-test-id="attachments-flyout-button">
                     <Flyout
                         placement={FlyoutPlacement.BottomRight}
