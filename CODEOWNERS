@@ -3,11 +3,7 @@
 packages/app-bridge/src/types @Frontify/frontend-platform
 
 ## App Bridge Errors
-packages/app-bridge/src/errors/HttpClientError.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
-packages/app-bridge/src/errors/InitializationError.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/errors/NotifyError.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/errors/TimeoutReachedError.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/errors/ValidationError.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/errors/HttpClientError.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 ## App Bridge Helpers
 
@@ -60,8 +56,6 @@ packages/app-bridge/src/react/useNavigationManager.spec.ts @Frontify/themes-and-
 packages/app-bridge/src/react/useNavigationManager.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/react/usePageTemplateSettings.spec.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/react/usePageTemplateSettings.ts @Frontify/themes-and-navigation
-packages/app-bridge/src/react/usePlatformAppBridge.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/react/usePlatformAppBridge.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/react/usePrivacySettings.spec.ts @Frontify/content-and-blocks
 packages/app-bridge/src/react/usePrivacySettings.ts @Frontify/content-and-blocks
 packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/content-and-blocks
@@ -81,20 +75,13 @@ packages/app-bridge/src/react/useUngroupedDocuments.ts @Frontify/content-and-blo
 
 ### App Bridge registries api
 
-packages/app-bridge/src/registries/api/CreateAsset.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/registries/api/CreateAsset.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/registries/api/GetAssetResourceInformation.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/registries/api/GetAssetResourceInformation.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/registries/api/GetProxyNetworkCall.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/registries/api/GetProxyNetworkCall.spec.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/registries/api/GetAssetBulkDownloadToken.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/api/GetCurrentUser.ts @Frontify/content-and-blocks @Frontify/apps-and-integrations @Frontify/themes-and-navigation
-packages/app-bridge/src/registries/api/GetCurrentUser.spec.ts @Frontify/content-and-blocks @Frontify/apps-and-integrations @Frontify/themes-and-navigation
+packages/app-bridge/src/registries/api/GetCurrentUser.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/registries/api/GetCurrentUser.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 ### App Bridge registries commands
 packages/app-bridge/src/registries/commands/AssetChooser.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 packages/app-bridge/src/registries/commands/AssetViewer.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/commands/Connection.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/registries/commands/DownloadAsset.ts @Frontify/content-and-blocks
 packages/app-bridge/src/registries/commands/NavigationManager.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/registries/commands/NewPublication.ts @Frontify/content-and-blocks
@@ -106,7 +93,7 @@ packages/app-bridge/src/registries/events/ @Frontify/content-and-blocks @Frontif
 
 ### App Bridge registries verbs
 
-packages/app-bridge/src/registries/verbs/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
+packages/app-bridge/src/registries/verbs/ @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 ## App Bridge repositories
 
@@ -115,23 +102,15 @@ packages/app-bridge/src/repositories/ @Frontify/content-and-blocks
 ## App Bridge Tests
 
 packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/content-and-blocks
-packages/app-bridge/src/tests/AppBridgePlatformAppStub.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/tests/AppBridgeThemeStub.ts @Frontify/themes-and-navigation
 packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/content-and-blocks
 packages/app-bridge/src/tests/withAppBridgeThemeStubs.tsx @Frontify/themes-and-navigation
 
 ## App Bridge Utilities
 
-packages/app-bridge/src/utilities/hash.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/utilities/httpClient.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
-packages/app-bridge/src/utilities/MessageBus.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/utilities/MessageBus.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/utilities/notify.ts @Frontify/apps-and-integrations
+packages/app-bridge/src/utilities/httpClient.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 packages/app-bridge/src/utilities/object.spec.ts @Frontify/content-and-blocks
 packages/app-bridge/src/utilities/object.ts @Frontify/content-and-blocks
-packages/app-bridge/src/utilities/queryParams.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/utilities/queryParams.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/utilities/subscribe.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
 
 ## App Bridge Worker
 
@@ -139,14 +118,10 @@ packages/app-bridge/src/worker/ @Frontify/content-and-blocks
 
 ## App Bridge Interfaces
 
-packages/app-bridge/src/AppBridge.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
+packages/app-bridge/src/AppBridge.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 packages/app-bridge/src/AppBridgeBlock.ts @Frontify/content-and-blocks
-packages/app-bridge/src/AppBridgeCreateAsset.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/AppBridgeCreateAsset.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/AppBridgePlatformApp.spec.ts @Frontify/apps-and-integrations
-packages/app-bridge/src/AppBridgePlatformApp.ts @Frontify/apps-and-integrations
 packages/app-bridge/src/AppBridgeTheme.ts @Frontify/themes-and-navigation
-packages/app-bridge/src/window.d.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
+packages/app-bridge/src/window.d.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
 
 # CLI
 
