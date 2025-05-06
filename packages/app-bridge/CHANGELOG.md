@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.39
+
+### Patch Changes
+
+-   [#1206](https://github.com/Frontify/brand-sdk/pull/1206) [`7abe2d7`](https://github.com/Frontify/brand-sdk/commit/7abe2d7635dd7f319497fd4e6e422873d7075489) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove AppBridgeCreateAsset, please use `@frontify/app-bridge-app`
+
 ## 4.0.0-alpha.38
 
 ### Patch Changes
