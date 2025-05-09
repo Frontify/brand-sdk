@@ -10,6 +10,8 @@ import {
     type EventNameParameter,
     type EventUnsubscribeFunction,
     type GuidelineSearchResult,
+    type State,
+    type StateReturn,
 } from './types';
 
 export interface AppBridgeTheme {
@@ -20,6 +22,10 @@ export interface AppBridgeTheme {
     context(): ContextReturn<Context, void>;
     context<Key extends keyof Context>(key: Key): ContextReturn<Context, Key>;
     context(key?: keyof Context | void): unknown;
+
+    state(): StateReturn<State, void>;
+    state<Key extends keyof State>(key: Key): StateReturn<State, Key>;
+    state(key?: keyof State | void): unknown;
 
     subscribe<EventName extends keyof AppBridgeThemeEvent>(
         eventName: EventNameParameter<EventName, AppBridgeThemeEvent>,

@@ -8,4 +8,5 @@ export * from './Event';
 export * from './Guideline';
 export * from './GuidelineSearchResult';
 export * from './Language';
+export * from './State';
 export * from './ThemeTemplate';
