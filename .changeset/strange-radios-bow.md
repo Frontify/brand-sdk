@@ -2,4 +2,4 @@
 "@frontify/app-bridge-theme": patch
 ---
 
-Introduced a State for AppBridgeTheme
+feat: Introduced a State for AppBridgeTheme
