@@ -6,7 +6,7 @@ import { type EventRegistry } from '../registries';
 
 import { type ObjectNameValidator, type WrongNamePattern } from './Common';
 import { type Context } from './Context';
-import { type State } from './State.ts';
+import { type State } from './State';
 
 type EventVerb = 'chosen';
 
