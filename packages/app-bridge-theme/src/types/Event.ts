@@ -6,6 +6,7 @@ import { type EventRegistry } from '../registries';
 
 import { type ObjectNameValidator, type WrongNamePattern } from './Common';
 import { type Context } from './Context';
+import { type State } from './State';
 
 type EventVerb = 'chosen';
 
@@ -20,17 +21,29 @@ type ContextAsEventName<Context> = {
     ];
 };
 
+type StateAsEventName<State> = {
+    [StateKey in keyof State as StateKey extends string ? `State.${StateKey}` : never]: [
+        State[StateKey],
+        State[StateKey],
+    ];
+};
+
 export type AppBridgeThemeEvent = EventNameValidator<
     Pick<EventRegistry, 'assetsChosen'> &
         ContextAsEventName<
             Context & {
                 '*': Context;
             }
+        > &
+        StateAsEventName<
+            State & {
+                '*': State;
+            }
         >
 >;
 
 export type EventNamePattern = {
-    [eventName: `Context.${string}` | `${string}${Capitalize<EventVerb>}`]: unknown;
+    [eventName: `Context.${string}` | `State.${string}` | `${string}${Capitalize<EventVerb>}`]: unknown;
 };
 export type EventNameParameter<
     EventName,
