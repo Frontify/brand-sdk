@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.24
+
+### Patch Changes
+
+-   [#1210](https://github.com/Frontify/brand-sdk/pull/1210) [`0324ffb`](https://github.com/Frontify/brand-sdk/commit/0324ffb2b108d33a83403cfd796c3445626f230a) Thanks [@Kenny806](https://github.com/Kenny806)! - feat: extend AppBridgeTheme Event types to include State
+
 ## 0.0.0-alpha.23
 
 ### Patch Changes

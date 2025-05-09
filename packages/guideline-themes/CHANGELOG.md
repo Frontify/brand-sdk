@@ -1,5 +1,12 @@
 # @frontify/guideline-themes
 
+## 0.0.1-alpha.10
+
+### Patch Changes
+
+-   Updated dependencies [[`0324ffb`](https://github.com/Frontify/brand-sdk/commit/0324ffb2b108d33a83403cfd796c3445626f230a)]:
+    -   @frontify/app-bridge-theme@0.0.0-alpha.24
+
 ## 0.0.1-alpha.9
 
 ### Patch Changes
