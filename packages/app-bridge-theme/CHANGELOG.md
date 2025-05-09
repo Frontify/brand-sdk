@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.23
+
+### Patch Changes
+
+-   [#1208](https://github.com/Frontify/brand-sdk/pull/1208) [`b8d3922`](https://github.com/Frontify/brand-sdk/commit/b8d3922f5e10445426e9c9930ab004e41d8c3fb7) Thanks [@Kenny806](https://github.com/Kenny806)! - feat: Introduced a State for AppBridgeTheme
+
 ## 0.0.0-alpha.22
 
 ### Patch Changes
