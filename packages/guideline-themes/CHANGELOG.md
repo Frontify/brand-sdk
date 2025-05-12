@@ -1,5 +1,11 @@
 # @frontify/guideline-themes
 
+## 0.0.1-alpha.11
+
+### Patch Changes
+
+-   [#1212](https://github.com/Frontify/brand-sdk/pull/1212) [`b1f7ebf`](https://github.com/Frontify/brand-sdk/commit/b1f7ebf02cf5f77b1fe2d1286a4d9727ec49d25a) Thanks [@Kenny806](https://github.com/Kenny806)! - chore: update the @frontify/sidebar-settings dependency
+
 ## 0.0.1-alpha.10
 
 ### Patch Changes
