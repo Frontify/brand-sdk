@@ -73,8 +73,10 @@ export type AssetBulkActionsContext = {
     rootId: string;
 } & AppBaseProps;
 
-export type NavigationActionContext = {
-    surface: 'navigationAction';
+export type ThemeActionContext = {
+    surface: 'themeAction';
+    portalId: string;
+    projectId: string;
 } & AppBaseProps;
 
 export type AssetViewerContext = {
