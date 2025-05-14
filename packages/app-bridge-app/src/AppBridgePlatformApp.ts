@@ -19,8 +19,8 @@ import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
 import {
     type PlatformAppApiHandlerParameter,
-    type PlatformAppApiReturn,
     type PlatformAppApiMethodNameValidator,
+    type PlatformAppApiReturn,
 } from './types';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
@@ -71,6 +71,10 @@ export type AssetBulkActionsContext = {
     selection: { assets: { ids: string[] }; folders: { ids: string[] } };
     parentId: string;
     rootId: string;
+} & AppBaseProps;
+
+export type NavigationActionContext = {
+    surface: 'navigationAction';
 } & AppBaseProps;
 
 export type AssetViewerContext = {
