@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.5
+
+### Patch Changes
+
+-   [#1215](https://github.com/Frontify/brand-sdk/pull/1215) [`dd169ee`](https://github.com/Frontify/brand-sdk/commit/dd169ee59253677a8b4500559aa4fec2790202b2) Thanks [@julianiff](https://github.com/julianiff)! - feat: add NavigationAction Context
+
 ## 0.1.4
 
 ### Patch Changes
