@@ -36,6 +36,7 @@ export type Context = {
     isAuthenticated: boolean;
     isAiBrandAssistantDialogOpen: boolean;
     isSearchDialogOpen: boolean;
+    isPlatformAppsDialogOpen: boolean;
     activeSectionHeadingId: number | null;
     languages: Language[];
     template: TemplateContext | null;
