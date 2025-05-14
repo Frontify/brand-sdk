@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.6
+
+### Patch Changes
+
+-   [#1219](https://github.com/Frontify/brand-sdk/pull/1219) [`bfb23d4`](https://github.com/Frontify/brand-sdk/commit/bfb23d4744fec5bcdefbab30e149e3419de97010) Thanks [@julianiff](https://github.com/julianiff)! - feat: update naming to themeAction and add props
+
 ## 0.1.5
 
 ### Patch Changes
