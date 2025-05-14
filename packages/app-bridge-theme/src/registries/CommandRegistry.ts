@@ -5,6 +5,8 @@ import { type Simplify } from 'type-fest';
 import { type ObjectNameValidator } from '../types';
 
 export type CommandRegistry = CommandNameValidator<{
+    openPlatformAppBrowser: void;
+    closePlatformAppBrowser: void;
     openSearchDialog: void;
     closeSearchDialog: void;
     openAiBrandAssistantDialog: void;
