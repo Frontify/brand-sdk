@@ -1,5 +1,15 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.25
+
+### Minor Changes
+
+-   [#1214](https://github.com/Frontify/brand-sdk/pull/1214) [`242db22`](https://github.com/Frontify/brand-sdk/commit/242db22097bbb8f14187ef5af42d2cd6374a8357) Thanks [@ragi96](https://github.com/ragi96)! - feat: add command to open and close the platform apps dialog
+
+### Patch Changes
+
+-   [#1218](https://github.com/Frontify/brand-sdk/pull/1218) [`e8f80db`](https://github.com/Frontify/brand-sdk/commit/e8f80db9ebff09c575acc932f22ce65886c4d7ee) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `isPlatformAppsDialogOpen` to context
+
 ## 0.0.0-alpha.24
 
 ### Patch Changes
