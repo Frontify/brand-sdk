@@ -3,10 +3,10 @@
 import { type DispatchHandlerParameter } from '../../types';
 import { type CommandRegistry } from '../CommandRegistry';
 
-export const openPlatformAppBrowser = (): DispatchHandlerParameter<'openPlatformAppBrowser', CommandRegistry> => ({
-    name: 'openPlatformAppBrowser',
+export const openPlatformAppsDialog = (): DispatchHandlerParameter<'openPlatformAppsDialog', CommandRegistry> => ({
+    name: 'openPlatformAppsDialog',
 });
 
-export const closePlatformAppBrowser = (): DispatchHandlerParameter<'closePlatformAppBrowser', CommandRegistry> => ({
-    name: 'closePlatformAppBrowser',
+export const closePlatformAppsDialog = (): DispatchHandlerParameter<'closePlatformAppsDialog', CommandRegistry> => ({
+    name: 'closePlatformAppsDialog',
 });
