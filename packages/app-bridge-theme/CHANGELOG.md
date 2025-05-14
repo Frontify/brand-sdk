@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.26
+
+### Patch Changes
+
+-   [#1222](https://github.com/Frontify/brand-sdk/pull/1222) [`22226ab`](https://github.com/Frontify/brand-sdk/commit/22226ab1266c83a8206a36431a419ad215ecbcb6) Thanks [@mike85](https://github.com/mike85)! - feat: export platform apps dialog
+
 ## 0.0.0-alpha.25
 
 ### Minor Changes
