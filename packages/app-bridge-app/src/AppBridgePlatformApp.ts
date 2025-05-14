@@ -101,6 +101,7 @@ export type PlatformAppContext =
     | AssetActionContext
     | AssetCreationContext
     | AssetViewerContext
+    | ThemeActionContext
     | AssetBulkActionsContext;
 
 export type PlatformAppEvent = EventNameValidator<
