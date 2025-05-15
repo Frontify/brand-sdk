@@ -264,9 +264,11 @@ export class AppBridgePlatformApp {
             this.subscribeMap[eventName] = new Map();
         }
 
+        // @ts-expect-error callback complexity
         this.subscribeMap[eventName].set(callback, true);
 
         return () => {
+            // @ts-expect-error callback complexity
             this.subscribeMap[eventName].delete(callback);
         };
     }
