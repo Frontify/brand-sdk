@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.7
+
+### Patch Changes
+
+-   [#1224](https://github.com/Frontify/brand-sdk/pull/1224) [`7658e68`](https://github.com/Frontify/brand-sdk/commit/7658e689bd5169047684cb2c5bb5f14c34b3ed63) Thanks [@julianiff](https://github.com/julianiff)! - feat: adds themeAction to appBridge PlatformApp context
+
 ## 0.1.6
 
 ### Patch Changes
