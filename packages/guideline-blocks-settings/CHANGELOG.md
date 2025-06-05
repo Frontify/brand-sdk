@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.37.5
+
+### Patch Changes
+
+-   [#1230](https://github.com/Frontify/brand-sdk/pull/1230) [`4fcde8f`](https://github.com/Frontify/brand-sdk/commit/4fcde8f964e3438bd63e1b2a908a1237b7cc544e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(FloatingLinks): populate text field with url
+
 ## 0.37.4
 
 ### Patch Changes
