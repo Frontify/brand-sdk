@@ -7,6 +7,7 @@ export class AssetChooserResultDummy {
         return {
             id,
             creator_name: 'Creator Name',
+            alternative_text: 'Alternative Text',
             ext: 'png',
             external_url: null,
             file_id: 'x1x1x1x1x1x1',

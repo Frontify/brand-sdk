@@ -16,6 +16,7 @@ export const createAssetByFileId = async (fileId: string, projectId: number, set
 export const mapAssetApiToAsset = (asset: AssetApi): Asset => {
     return {
         id: asset.id,
+        alternativeText: asset.alternative_text,
         objectType: asset.object_type,
         extension: asset.ext,
         creatorName: asset.creator_name,

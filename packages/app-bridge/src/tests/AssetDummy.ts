@@ -7,6 +7,7 @@ export class AssetDummy {
         return {
             id,
             creatorName: 'Creator Name',
+            alternativeText: 'Alternative Text',
             extension: 'png',
             externalUrl: null,
             fileName: 'fileName.png',
