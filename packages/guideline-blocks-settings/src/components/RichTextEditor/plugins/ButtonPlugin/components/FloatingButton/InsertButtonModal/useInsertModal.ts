@@ -62,7 +62,7 @@ export const useInsertModal = () => {
         dispatch({
             type: 'INIT',
             payload: {
-                text: floatingButtonSelectors.text(),
+                text: floatingButtonSelectors.text() || floatingButtonSelectors.url(),
                 buttonStyle,
                 newTab: floatingButtonSelectors.newTab() ? CheckboxState.Checked : CheckboxState.Unchecked,
                 url: floatingButtonSelectors.url(),

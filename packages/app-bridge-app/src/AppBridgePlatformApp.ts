@@ -19,8 +19,8 @@ import { type ApiMethodRegistry } from './registries';
 import { openConnection } from './registries/commands.ts';
 import {
     type PlatformAppApiHandlerParameter,
-    type PlatformAppApiReturn,
     type PlatformAppApiMethodNameValidator,
+    type PlatformAppApiReturn,
 } from './types';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
@@ -73,6 +73,12 @@ export type AssetBulkActionsContext = {
     rootId: string;
 } & AppBaseProps;
 
+export type ThemeActionContext = {
+    surface: 'themeAction';
+    portalId: string;
+    projectId: string;
+} & AppBaseProps;
+
 export type AssetViewerContext = {
     surface: 'assetViewer';
     assetId: string;
@@ -95,6 +101,7 @@ export type PlatformAppContext =
     | AssetActionContext
     | AssetCreationContext
     | AssetViewerContext
+    | ThemeActionContext
     | AssetBulkActionsContext;
 
 export type PlatformAppEvent = EventNameValidator<
@@ -257,9 +264,11 @@ export class AppBridgePlatformApp {
             this.subscribeMap[eventName] = new Map();
         }
 
+        // @ts-expect-error callback complexity
         this.subscribeMap[eventName].set(callback, true);
 
         return () => {
+            // @ts-expect-error callback complexity
             this.subscribeMap[eventName].delete(callback);
         };
     }
