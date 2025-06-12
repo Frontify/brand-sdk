@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.8
+
+### Patch Changes
+
+-   [#1225](https://github.com/Frontify/brand-sdk/pull/1225) [`60f5874`](https://github.com/Frontify/brand-sdk/commit/60f5874024d798951caf474695e5d197726b4200) Thanks [@julianiff](https://github.com/julianiff)! - feat: adjust parser to check for themeAction
+
 ## 5.8.7
 
 ### Patch Changes

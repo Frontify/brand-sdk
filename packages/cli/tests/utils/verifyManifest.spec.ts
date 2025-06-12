@@ -704,6 +704,23 @@ const MANIFEST_WITH_AUTOMATION_ENTRY = {
         version: 1,
     },
 };
+const MANIFEST_WITH_THEME_ACTION_SURFACE = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    surfaces: {
+        guideline: {
+            themeAction: {
+                title: 'action title',
+                projectId: '123',
+                portalId: '123',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 const MANIFEST_WITH_BULK_ACTIONS_SURFACE = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
@@ -881,6 +898,11 @@ describe('Verify Platform App Manifest', () => {
 
     it('should verify when automation is added', () => {
         const verifiedManifest = verifyManifest(MANIFEST_WITH_AUTOMATION_ENTRY, platformAppManifestSchemaV1);
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should verify when automation is added', () => {
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_THEME_ACTION_SURFACE, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 

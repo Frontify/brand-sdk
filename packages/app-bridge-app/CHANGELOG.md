@@ -1,5 +1,23 @@
 # @frontify/app-bridge-app
 
+## 0.1.7
+
+### Patch Changes
+
+-   [#1224](https://github.com/Frontify/brand-sdk/pull/1224) [`7658e68`](https://github.com/Frontify/brand-sdk/commit/7658e689bd5169047684cb2c5bb5f14c34b3ed63) Thanks [@julianiff](https://github.com/julianiff)! - feat: adds themeAction to appBridge PlatformApp context
+
+## 0.1.6
+
+### Patch Changes
+
+-   [#1219](https://github.com/Frontify/brand-sdk/pull/1219) [`bfb23d4`](https://github.com/Frontify/brand-sdk/commit/bfb23d4744fec5bcdefbab30e149e3419de97010) Thanks [@julianiff](https://github.com/julianiff)! - feat: update naming to themeAction and add props
+
+## 0.1.5
+
+### Patch Changes
+
+-   [#1215](https://github.com/Frontify/brand-sdk/pull/1215) [`dd169ee`](https://github.com/Frontify/brand-sdk/commit/dd169ee59253677a8b4500559aa4fec2790202b2) Thanks [@julianiff](https://github.com/julianiff)! - feat: add NavigationAction Context
+
 ## 0.1.4
 
 ### Patch Changes
