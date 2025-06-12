@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.40
+
+### Minor Changes
+
+-   [#1232](https://github.com/Frontify/brand-sdk/pull/1232) [`559f24e`](https://github.com/Frontify/brand-sdk/commit/559f24efe287c913ecfc0755ff18c56fcfe2fa56) Thanks [@ragi96](https://github.com/ragi96)! - feat(Asset): added the property alternativeText
+
 ## 4.0.0-alpha.39
 
 ### Patch Changes
