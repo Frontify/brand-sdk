@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.41
+
+### Patch Changes
+
+-   [#1235](https://github.com/Frontify/brand-sdk/pull/1235) [`02fd19d`](https://github.com/Frontify/brand-sdk/commit/02fd19d27220470f6ba523a0cae29fc36ab55758) Thanks [@ragi96](https://github.com/ragi96)! - fix: AssetChooserResult Type as alternative text is prefixed with computed
+
 ## 4.0.0-alpha.40
 
 ### Minor Changes
