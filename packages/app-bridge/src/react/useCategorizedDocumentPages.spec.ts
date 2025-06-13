@@ -5,7 +5,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { DocumentPageDummy, getAppBridgeThemeStub } from '../tests';
+import { DocumentPageDummy, getAppBridgeBlockStub } from '../tests';
 import { type DocumentPage } from '../types';
 
 import { useCategorizedDocumentPages } from './useCategorizedDocumentPages';
@@ -24,7 +24,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should fetch document pages on mount', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const { result } = renderHook(() => useCategorizedDocumentPages(appBridge, DOCUMENT_CATEGORY_ID));
@@ -45,7 +45,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should not fetch document pages on mount if not enabled', () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const { result } = renderHook(() =>
@@ -58,7 +58,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should fetch document pages if it gets enabled', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         let enabled = false;
@@ -90,7 +90,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should update document pages if a page is added in the category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withFields({
@@ -137,7 +137,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should not update the document pages if a page is added in another category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withFields({
@@ -165,7 +165,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should update document pages if a page is removed from the category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withFields({
@@ -203,7 +203,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should not update the document pages if a page is removed from another category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const DOCUMENT_PAGE = DocumentPageDummy.withFields({
@@ -242,7 +242,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should update document pages if a page is updated in the category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const UPDATED_DOCUMENT_PAGE: DocumentPage = {
@@ -287,7 +287,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should not update the document pages if a page is updated in another category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const UPDATED_DOCUMENT_PAGE = DocumentPageDummy.withFields({
@@ -322,7 +322,7 @@ describe('useCategorizedDocumentPages', () => {
     });
 
     it('should update document pages if a page is moved in the category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentPagesByDocumentCategoryId');
 
         const UPDATED_DOCUMENT_PAGE: DocumentPage = {

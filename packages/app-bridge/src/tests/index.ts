@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 export * from './AppBridgeBlockStub';
-export * from './AppBridgeThemeStub';
 export * from './AssetApiDummy';
 export * from './AssetChooserOptionsDummy';
 export * from './AssetChooserResultDummy';
@@ -36,6 +35,5 @@ export * from './TemplateDummy';
 export * from './UserApiDummy';
 export * from './UserDummy';
 export * from './withAppBridgeBlockStubs';
-export * from './withAppBridgeThemeStubs';
 export * from './PortalNavigationTreeDummy';
 export * from './DocumentNavigationTreeDummy';
