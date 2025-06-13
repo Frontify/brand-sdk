@@ -30,7 +30,7 @@ type DocumentApiAsNoneLink = {
     link_url: Nullable<never>;
 };
 
-export type DocumentLinkSettingsApi = {
+type DocumentLinkSettingsApi = {
     new_tab: boolean;
     display?: LinkSettingsDisplay;
     icon_position?: LinkSettingsIconPosition;

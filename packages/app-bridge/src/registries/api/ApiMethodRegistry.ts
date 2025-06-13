@@ -7,8 +7,6 @@ import {
     type GetAssetBulkDownloadTokenResponse,
 } from './GetAssetBulkDownloadToken';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser.ts';
-import { type GetDocumentNavigationPayload, type GetDocumentNavigationResponse } from './GetDocumentNavigation';
-import { type GetPortalNavigationResponse } from './GetPortalNavigation';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,
@@ -24,6 +22,4 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         payload: SetAssetIdsByBlockAssetKeyPayload;
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
-    getDocumentNavigation: { payload: GetDocumentNavigationPayload; response: GetDocumentNavigationResponse };
-    getPortalNavigation: { payload: void; response: GetPortalNavigationResponse };
 }>;

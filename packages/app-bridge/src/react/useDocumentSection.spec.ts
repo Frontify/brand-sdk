@@ -4,7 +4,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
 import { type Mock, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { type AppBridgeBlock, type AppBridgeTheme } from '../';
+import { type AppBridgeBlock } from '../';
 import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
 
 import { useDocumentSection } from './useDocumentSection';
@@ -19,7 +19,7 @@ const documentSections = [
 ];
 
 describe('useDocumentSection', () => {
-    const appBridge: AppBridgeBlock | AppBridgeTheme = {} as AppBridgeBlock | AppBridgeTheme;
+    const appBridge: AppBridgeBlock = {} as AppBridgeBlock;
 
     beforeAll(() => {
         window.emitter = mitt();

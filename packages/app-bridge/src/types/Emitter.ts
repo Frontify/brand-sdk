@@ -3,10 +3,8 @@
 import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
 import { type Asset } from './Asset';
-import { type BrandportalLink } from './BrandportalLink';
 import { type Color } from './Color';
 import { type ColorPalette } from './ColorPalette';
-import { type CoverPage } from './CoverPage';
 import { type Document } from './Document';
 import { type DocumentCategory } from './DocumentCategory';
 import { type DocumentGroup } from './DocumentGroup';
@@ -19,34 +17,16 @@ import {
 import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
-import { type ThemeTemplate } from './ThemeTemplate';
 
 export type EmitterAction = 'add' | 'update' | 'delete';
 
 export type EmitterEvents = {
-    'AppBridge:PageTemplateSettingsUpdated': { pageTemplateSettings: Record<string, unknown> };
-    'AppBridge:ThemeSettingsUpdated': { themeSettings: Record<ThemeTemplate, Record<string, unknown>> };
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
 
     'AppBridge:BlockAssetsUpdated': {
         blockId: number;
         blockAssets: Record<string, Asset[]>;
         prevBlockAssets: Record<string, Asset[]>;
-    };
-
-    'AppBridge:TemplateAssetsUpdated': {
-        template: ThemeTemplate;
-        documentId?: number;
-        documentPageId?: number;
-        templateAssets: Record<string, Asset[]>;
-        prevTemplateAssets: Record<string, Asset[]>;
-    };
-
-    'AppBridge:ThemeAssetsUpdated': {
-        portalId: number;
-        themeAssets: Record<string, Asset[]>;
-        prevThemeAssets: Record<string, Asset[]>;
-        template: ThemeTemplate;
     };
 
     'AppBridge:BlockTemplatesUpdated': {
@@ -87,26 +67,9 @@ export type EmitterEvents = {
               action: 'delete';
           };
 
-    'AppBridge:GuidelineCoverPage:Action':
-        | {
-              coverPage: CoverPage;
-              action: 'add' | 'update';
-          }
-        | {
-              action: 'delete';
-          };
-
-    'AppBridge:GuidelineBrandportalLink:Action': {
-        brandportalLink: BrandportalLink;
-        action: 'update';
-    };
-
     'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
     'AppBridge:OpenNavigationManager': void;
-
-    'AppBridge:OpenSearchDialog': void;
-    'AppBridge:CloseSearchDialog': void;
 
     'AppBridge:GuidelineDocumentPage:Action':
         | {
