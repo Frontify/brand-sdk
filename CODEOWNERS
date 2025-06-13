@@ -2,42 +2,9 @@
 
 packages/app-bridge/src/types @Frontify/frontend-platform
 
-## App Bridge Errors
-packages/app-bridge/src/errors/HttpClientError.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+## App Bridge
 
-## App Bridge Helpers
-
-packages/app-bridge/src/helpers/ @Frontify/themes-and-navigation
-
-## React Hooks
-
-packages/app-bridge/src/react/ @Frontify/content-and-blocks
-
-### App Bridge registries 
-
-packages/app-bridge/src/registries/ @Frontify/content-and-blocks
-
-## App Bridge repositories
-
-packages/app-bridge/src/repositories/ @Frontify/content-and-blocks
-
-## App Bridge Tests
-
-packages/app-bridge/src/tests/ @Frontify/content-and-blocks
-
-## App Bridge Utilities
-
-packages/app-bridge/src/utilities/ @Frontify/content-and-blocks
-
-## App Bridge Worker
-
-packages/app-bridge/src/worker/ @Frontify/content-and-blocks
-
-## App Bridge Interfaces
-
-packages/app-bridge/src/AppBridge.ts @Frontify/content-and-blocks
-packages/app-bridge/src/AppBridgeBlock.ts @Frontify/content-and-blocks
-packages/app-bridge/src/window.d.ts @Frontify/content-and-blocks
+packages/app-bridge/ @Frontify/themes-and-navigation
 
 # CLI
 
