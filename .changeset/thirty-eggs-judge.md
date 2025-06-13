@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-refactor: removing appBridgeTheme from app-bridge package. To be used "@frontify/app-bridge-theme" package instead
+refactor: Removed `appBridgeTheme` from the `@frontify/app-bridge` package. It is now provided via the `@frontify/app-bridge-theme` package.
