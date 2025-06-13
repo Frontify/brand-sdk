@@ -11,70 +11,11 @@ packages/app-bridge/src/helpers/ @Frontify/themes-and-navigation
 
 ## React Hooks
 
-packages/app-bridge/src/react/useAssetBulkDownload.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useAssetBulkDownload.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useAssetChooser.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useAssetUpload.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useAssetViewer.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useAssetViewer.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useBlockAssets.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useBlockAssets.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useBlockSettings.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useBlockSettings.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useBlockTemplates.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useBlockTemplates.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useCategorizedDocumentPages.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useCategorizedDocumentPages.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useColorPalettes.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useColorPalettes.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useColors.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useColors.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentCategories.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentCategories.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentGroups.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentGroups.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentPageTargets.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentPageTargets.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentSection.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentTargets.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useDocumentTargets.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useEditorState.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useFileInput.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useFileUpload.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useGroupedDocuments.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useGroupedDocuments.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/usePrivacySettings.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/usePrivacySettings.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useReadyForPrint.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useTemplateChooser.spec.tsx @Frontify/content-and-blocks
-packages/app-bridge/src/react/useTemplateChooser.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useUncategorizedDocumentPages.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useUncategorizedDocumentPages.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useUngroupedDocuments.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/react/useUngroupedDocuments.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/ @Frontify/content-and-blocks
 
-### App Bridge registries api
+### App Bridge registries 
 
-packages/app-bridge/src/registries/api/GetAssetBulkDownloadToken.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/api/GetCurrentUser.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/api/GetCurrentUser.spec.ts @Frontify/content-and-blocks
-
-### App Bridge registries commands
-packages/app-bridge/src/registries/commands/AssetChooser.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/commands/AssetViewer.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/commands/DownloadAsset.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/commands/NewPublication.ts @Frontify/content-and-blocks
-packages/app-bridge/src/registries/commands/TemplateChooser.ts @Frontify/content-and-blocks
-
-### App Bridge registries events
-
-packages/app-bridge/src/registries/events/ @Frontify/content-and-blocks
-
-### App Bridge registries verbs
-
-packages/app-bridge/src/registries/verbs/ @Frontify/content-and-blocks
+packages/app-bridge/src/registries/ @Frontify/content-and-blocks
 
 ## App Bridge repositories
 
@@ -82,14 +23,11 @@ packages/app-bridge/src/repositories/ @Frontify/content-and-blocks
 
 ## App Bridge Tests
 
-packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/content-and-blocks
-packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/tests/ @Frontify/content-and-blocks
 
 ## App Bridge Utilities
 
-packages/app-bridge/src/utilities/httpClient.ts @Frontify/content-and-blocks
-packages/app-bridge/src/utilities/object.spec.ts @Frontify/content-and-blocks
-packages/app-bridge/src/utilities/object.ts @Frontify/content-and-blocks
+packages/app-bridge/src/utilities/ @Frontify/content-and-blocks
 
 ## App Bridge Worker
 
