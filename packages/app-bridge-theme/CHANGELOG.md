@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.27
+
+### Patch Changes
+
+-   [#1238](https://github.com/Frontify/brand-sdk/pull/1238) [`10712c0`](https://github.com/Frontify/brand-sdk/commit/10712c01e2b5b4979b8649525515e490b6c4125b) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor: deprecating navigateToDocumentSection in favor of navigateToSectionHeading.
+
 ## 0.0.0-alpha.26
 
 ### Patch Changes
