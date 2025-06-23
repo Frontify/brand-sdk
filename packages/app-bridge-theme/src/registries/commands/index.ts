@@ -5,4 +5,5 @@ export * from './SearchDialog';
 export * from './PlatformAppsDialog';
 export * from './Navigate';
 export * from './NavigateToDocumentSection';
+export * from './NavigateToSectionHeading';
 export * from './HydrateContextDocumentNavigation';

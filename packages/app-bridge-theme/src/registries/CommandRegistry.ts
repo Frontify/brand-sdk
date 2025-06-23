@@ -13,6 +13,7 @@ export type CommandRegistry = CommandNameValidator<{
     closeAiBrandAssistantDialog: void;
     navigate: string;
     navigateToDocumentSection: number | string;
+    navigateToSectionHeading: number | string;
     hydrateContextDocumentNavigation: number;
 }>;
 

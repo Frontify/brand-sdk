@@ -3,6 +3,7 @@
 import { type DispatchHandlerParameter } from '../../types';
 import { type CommandRegistry } from '../CommandRegistry';
 
+/** @deprecated Use navigateToSectionHeading instead */
 export const navigateToDocumentSection = (
     sectionId: CommandRegistry['navigateToDocumentSection'],
 ): DispatchHandlerParameter<'navigateToDocumentSection', CommandRegistry> => ({
