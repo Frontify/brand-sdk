@@ -16,7 +16,6 @@ type CloseTemplateChooser = void;
 type DownloadAsset = Asset;
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;
-type NavigateToDocumentSection = number | string;
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -28,5 +27,4 @@ export type CommandRegistry = CommandNameValidator<{
     openNewPublication: OpenNewPublicationPayload;
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
-    navigateToDocumentSection: NavigateToDocumentSection;
 }>;
