@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.42
+
+### Patch Changes
+
+-   [#1237](https://github.com/Frontify/brand-sdk/pull/1237) [`eb6822d`](https://github.com/Frontify/brand-sdk/commit/eb6822d507e6a96a77725cb4aeb16d26846b72ee) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor: Removed `appBridgeTheme` from the `@frontify/app-bridge` package. It is now provided via the `@frontify/app-bridge-theme` package.
+
 ## 4.0.0-alpha.41
 
 ### Patch Changes
