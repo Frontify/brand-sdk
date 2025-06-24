@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
 import { type DocumentSection, type EmitterEvents } from '../types';
 
@@ -51,10 +50,7 @@ type UseDocumentSectionReturn = {
     navigationItems: DocumentSection[];
 };
 
-export const useDocumentSection = (
-    appBridge: AppBridgeBlock | AppBridgeTheme,
-    documentPageId: number,
-): UseDocumentSectionReturn => {
+export const useDocumentSection = (appBridge: AppBridgeBlock, documentPageId: number): UseDocumentSectionReturn => {
     const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
     const navigationItems = useMemo(
         () => filterDocumentSectionsWithUnreadableTitles(documentSections),

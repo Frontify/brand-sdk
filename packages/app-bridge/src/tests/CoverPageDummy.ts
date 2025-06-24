@@ -1,10 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CoverPage, type CoverPageUpdateLegacy } from '../types';
+import { type CoverPage } from '../types';
 import { convertObjectCase } from '../utilities';
 
 import { CoverPageApiDummy } from './CoverPageApiDummy';
 
+type CoverPageUpdateLegacy = {
+    brandhome_draft?: boolean;
+    brandhome_title?: string;
+    brandhome_hide_in_nav?: boolean;
+};
 export class CoverPageDummy {
     static with(id: number, title = 'Cover Page Name'): CoverPage {
         const coverPageApi = CoverPageApiDummy.with(id, title);

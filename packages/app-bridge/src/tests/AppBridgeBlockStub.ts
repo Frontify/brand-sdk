@@ -14,6 +14,9 @@ import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { ColorDummy } from './ColorDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
+import { DocumentCategoryDummy } from './DocumentCategoryDummy';
+import { DocumentDummy } from './DocumentDummy';
+import { DocumentPageDummy } from './DocumentPageDummy';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
@@ -23,6 +26,22 @@ const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
+
+const DOCUMENT_GROUP_ID_1 = 5332;
+const GROUPED_DOCUMENT_ID_1 = 2434;
+const GROUPED_DOCUMENT_ID_2 = 552;
+const GROUPED_DOCUMENT_ID_3 = 1145;
+const GROUPED_DOCUMENT_ID_4 = 32345;
+const DOCUMENT_PAGE_ID_1 = 23442;
+const DOCUMENT_PAGE_ID_2 = 235345;
+const DOCUMENT_PAGE_ID_3 = 12352;
+const DOCUMENT_PAGE_ID_4 = 55221;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
+const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
+const DOCUMENT_CATEGORY_ID_1 = 147;
+const DOCUMENT_CATEGORY_ID_2 = 258;
+const DOCUMENT_CATEGORY_ID_3 = 369;
 
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
@@ -242,15 +261,57 @@ export const getAppBridgeBlockStub = ({
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
         getUngroupedDocuments: stub<Parameters<AppBridgeBlock['getUngroupedDocuments']>>().resolves(),
-        getDocumentsByDocumentGroupId: stub<Parameters<AppBridgeBlock['getDocumentsByDocumentGroupId']>>().resolves(),
+        getDocumentsByDocumentGroupId: stub<Parameters<AppBridgeBlock['getDocumentsByDocumentGroupId']>>().resolves([
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
+            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
+        ]),
         getDocumentGroups: stub<Parameters<AppBridgeBlock['getDocumentGroups']>>().resolves(),
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
-        getDocumentPagesByDocumentCategoryId:
-            stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentCategoryId']>>().resolves(),
-        getDocumentCategoriesByDocumentId:
-            stub<Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>>().resolves(),
-        getUncategorizedDocumentPagesByDocumentId:
-            stub<Parameters<AppBridgeBlock['getUncategorizedDocumentPagesByDocumentId']>>().resolves(),
+        getDocumentPagesByDocumentCategoryId: stub<
+            Parameters<AppBridgeBlock['getDocumentPagesByDocumentCategoryId']>
+        >().callsFake((documentCategoryId) =>
+            Promise.resolve([
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_1, categoryId: documentCategoryId, sort: 1 }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: documentCategoryId, sort: 2 }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: documentCategoryId, sort: 3 }),
+                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: documentCategoryId, sort: 4 }),
+            ]),
+        ),
+        getDocumentCategoriesByDocumentId: stub<
+            Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>
+        >().callsFake((documentId) =>
+            Promise.resolve([
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, documentId, 2),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, documentId, 0),
+                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, documentId, 2),
+            ]),
+        ),
+        getUncategorizedDocumentPagesByDocumentId: stub<
+            Parameters<AppBridgeBlock['getUncategorizedDocumentPagesByDocumentId']>
+        >().callsFake((documentId) =>
+            Promise.resolve([
+                DocumentPageDummy.withFields({
+                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
+                    documentId,
+                    categoryId: null,
+                    sort: 1,
+                }),
+                DocumentPageDummy.withFields({
+                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
+                    documentId,
+                    categoryId: null,
+                    sort: 2,
+                }),
+                DocumentPageDummy.withFields({
+                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
+                    documentId,
+                    categoryId: null,
+                    sort: 3,
+                }),
+            ]),
+        ),
         getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
         getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),

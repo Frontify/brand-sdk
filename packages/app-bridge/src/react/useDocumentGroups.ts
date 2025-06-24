@@ -4,7 +4,6 @@ import { produce } from 'immer';
 import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type DocumentGroup, type EmitterEvents } from '../types';
 
 type DocumentGroupDocumentEvent = EmitterEvents['AppBridge:GuidelineDocumentGroup:DocumentAction'];
@@ -21,7 +20,7 @@ type Options = {
 
 const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, options: Options = { enabled: true }) => {
+export const useDocumentGroups = (appBridge: AppBridgeBlock, options: Options = { enabled: true }) => {
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -213,7 +212,7 @@ const actionHandlers = {
     default: (groups: Map<number, DocumentGroup>) => groups,
 };
 
-const fetchDocumentGroups = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
+const fetchDocumentGroups = async (appBridge: AppBridgeBlock) => {
     const documentGroups = await appBridge.getDocumentGroups();
     return new Map([...documentGroups].sort(sortDocumentGroups).map((group) => [group.id, group]));
 };

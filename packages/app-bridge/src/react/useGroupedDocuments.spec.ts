@@ -5,7 +5,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { DocumentDummy, getAppBridgeThemeStub } from '../tests';
+import { DocumentDummy, getAppBridgeBlockStub } from '../tests';
 
 import { useGroupedDocuments } from './useGroupedDocuments';
 
@@ -23,7 +23,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should fetch grouped documents on mount', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1));
@@ -44,7 +44,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should not fetch grouped documents on mount if not enabled', () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const { result } = renderHook(() => useGroupedDocuments(appBridge, DOCUMENT_GROUP_ID_1, { enabled: false }));
@@ -55,7 +55,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should fetch grouped documents if it gets enabled', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         let enabled = false;
@@ -86,7 +86,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should update document if a page is added', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const OLD_DOCUMENT = DocumentDummy.withFields({
@@ -130,7 +130,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should update document if a page is deleted', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const OLD_DOCUMENT = DocumentDummy.withFields({
@@ -178,7 +178,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should update document if a category is added', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const OLD_DOCUMENT = DocumentDummy.withFields({
@@ -223,7 +223,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should update document if a category is deleted', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const OLD_DOCUMENT = DocumentDummy.withFields({
@@ -271,7 +271,7 @@ describe('useGroupedDocument', () => {
     });
 
     it('should update document sorting if a document is moved', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentsByDocumentGroupId');
 
         const DOCUMENT_1 = DocumentDummy.withFields({
