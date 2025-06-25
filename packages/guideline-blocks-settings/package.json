@@ -1,7 +1,7 @@
 {
     "name": "@frontify/guideline-blocks-settings",
     "type": "module",
-    "version": "0.37.5",
+    "version": "0.37.6",
     "description": "Provides types and helpers for the guideline block development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
