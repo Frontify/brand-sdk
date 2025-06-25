@@ -1,7 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import { type InputBlock, type MultiInputBlock, MultiInputLayout } from '@frontify/sidebar-settings';
+import {
+    type InputBlock,
+    maximumNumericalOrPixelOrAutoRule,
+    minimumNumericalOrPixelRule,
+    type MultiInputBlock,
+    MultiInputLayout,
+    numericalOrPixelRule,
+} from '@frontify/sidebar-settings';
 import { describe, expect, it } from 'vitest';
 
 import { type SwitchBlock } from '../';
@@ -49,6 +56,20 @@ describe('getBorderSettings', () => {
         expect(
             ((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1] as InputBlock<AppBridgeBlock>).rules,
         ).toHaveLength(3);
+
+        expect(
+            ((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1] as InputBlock<AppBridgeBlock>)
+                .rules?.[0].errorMessage,
+        ).toBe(numericalOrPixelRule.errorMessage);
+        expect(
+            ((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1] as InputBlock<AppBridgeBlock>)
+                .rules?.[1].errorMessage,
+        ).toBe(minimumNumericalOrPixelRule(0).errorMessage);
+        expect(
+            ((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[1] as InputBlock<AppBridgeBlock>)
+                .rules?.[2].errorMessage,
+        ).toBe(maximumNumericalOrPixelOrAutoRule(500).errorMessage);
+
         expect((borderSettings.on?.[0] as MultiInputBlock<AppBridgeBlock>).blocks[2]).toEqual({
             id: 'borderColor',
             type: 'colorInput',
