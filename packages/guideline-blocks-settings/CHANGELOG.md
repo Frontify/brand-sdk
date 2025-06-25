@@ -1,8 +1,8 @@
 # @frontify/guideline-blocks-settings
 
-## 0.38.0
+## 0.37.6
 
-### Minor Changes
+### Patch Changes
 
 -   [#1241](https://github.com/Frontify/brand-sdk/pull/1241) [`f32ed03`](https://github.com/Frontify/brand-sdk/commit/f32ed03a46cbb8d432b036ebff884377b3b8d22e) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - min value rule for border input
 
