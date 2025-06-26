@@ -3,6 +3,7 @@
 export type AssetApi = {
     id: number;
     creator_name: string;
+    alternative_text: Nullable<string>;
     ext: string;
     external_url: Nullable<string>;
     file_name: string;
@@ -29,6 +30,7 @@ export type AssetApi = {
 export type Asset = {
     id: number;
     creatorName: string;
+    alternativeText: Nullable<string>;
     extension: string;
     externalUrl: Nullable<string>;
     fileName: string;
