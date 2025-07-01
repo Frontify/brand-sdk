@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.37.7
+
+### Patch Changes
+
+-   [#1243](https://github.com/Frontify/brand-sdk/pull/1243) [`1e87e3b`](https://github.com/Frontify/brand-sdk/commit/1e87e3b424476f81dc641843d5d32525ac8a44fa) Thanks [@ragi96](https://github.com/ragi96)! - refactor(RTE): deprecated id prop, `useId` for unique editor ID
+
 ## 0.37.6
 
 ### Patch Changes
