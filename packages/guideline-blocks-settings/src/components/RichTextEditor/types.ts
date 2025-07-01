@@ -3,6 +3,9 @@
 import { type PluginComposer } from '@frontify/fondue';
 
 export type RichTextEditorProps = {
+    /**
+     * @deprecated not needed anymore, handled automatically
+     */
     id?: string;
     isEditing: boolean;
     value?: string;

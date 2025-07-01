@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { useIsInViewport } from '../../hooks/useIsInViewport';
 
@@ -12,7 +12,6 @@ import { type RichTextEditorProps } from './types';
 
 const InternalRichTextEditor = memo(
     ({
-        id = 'rte',
         isEnabled,
         value,
         columns,
@@ -24,6 +23,7 @@ const InternalRichTextEditor = memo(
     }: Omit<RichTextEditorProps, 'isEditing'> & { isEnabled: boolean }) => {
         const customClass = getResponsiveColumnClasses(columns);
         const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
+        const editorId = useId();
 
         const handleTextChange = useCallback(
             (newContent: string) => {
@@ -59,7 +59,7 @@ const InternalRichTextEditor = memo(
         if (isEnabled) {
             return (
                 <FondueRichTextEditor
-                    id={id}
+                    id={editorId}
                     value={value}
                     border={false}
                     placeholder={placeholder}
