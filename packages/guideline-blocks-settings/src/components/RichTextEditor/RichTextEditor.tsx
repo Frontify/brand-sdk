@@ -12,7 +12,6 @@ import { type RichTextEditorProps } from './types';
 
 const InternalRichTextEditor = memo(
     ({
-        id = 'rte',
         isEnabled,
         value,
         columns,
@@ -24,7 +23,7 @@ const InternalRichTextEditor = memo(
     }: Omit<RichTextEditorProps, 'isEditing'> & { isEnabled: boolean }) => {
         const customClass = getResponsiveColumnClasses(columns);
         const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
-        const randomizedId = useId() + id;
+        const editorId = useId();
 
         const handleTextChange = useCallback(
             (newContent: string) => {
@@ -60,7 +59,7 @@ const InternalRichTextEditor = memo(
         if (isEnabled) {
             return (
                 <FondueRichTextEditor
-                    id={randomizedId}
+                    id={editorId}
                     value={value}
                     border={false}
                     placeholder={placeholder}
