@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.38.0
+
+### Minor Changes
+
+-   [#1245](https://github.com/Frontify/brand-sdk/pull/1245) [`3f192f7`](https://github.com/Frontify/brand-sdk/commit/3f192f795f94026fd8d3d8d10c4f4367323f1635) Thanks [@ragi96](https://github.com/ragi96)! - feat(DownloadButton): Add `ariaLabel` prop to allow accessibility label customization
+
 ## 0.37.7
 
 ### Patch Changes
