@@ -8,7 +8,7 @@ import { joinClassNames } from '../../utilities';
 
 import { type DownloadButtonProps } from './types';
 
-export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
+export const DownloadButton = ({ onDownload, ariaLabel }: DownloadButtonProps) => {
     const { isFocused, focusProps } = useFocusRing();
 
     return (
@@ -16,7 +16,7 @@ export const DownloadButton = ({ onDownload }: DownloadButtonProps) => {
             <Tooltip.Trigger asChild>
                 <button
                     tabIndex={0}
-                    aria-label="Download"
+                    aria-label={ariaLabel ?? 'Download'}
                     {...focusProps}
                     className={joinClassNames(['tw-outline-none tw-rounded', isFocused && FOCUS_STYLE])}
                     onClick={onDownload}
