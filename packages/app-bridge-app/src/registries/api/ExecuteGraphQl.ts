@@ -8,7 +8,6 @@ export type ExecuteGraphQlPayload = {
      * Attention: All Beta APIs can and will change without any warning. Be advised not to use those in production, see them as a preview of what is to come.
      */
     beta?: boolean;
-    previewFeatures?: string[];
 };
 
 export type ExecuteGraphQlResponse = Record<string, any>;
