@@ -4,7 +4,6 @@ import { produce } from 'immer';
 import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type Document, type EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocument:DocumentPageAction'];
@@ -22,10 +21,7 @@ type Options = {
 
 const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
-export const useUngroupedDocuments = (
-    appBridge: AppBridgeBlock | AppBridgeTheme,
-    options: Options = { enabled: true },
-) => {
+export const useUngroupedDocuments = (appBridge: AppBridgeBlock, options: Options = { enabled: true }) => {
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -272,7 +268,7 @@ const actionHandlers = {
     default: (documents: Map<number, Document>) => documents,
 };
 
-const fetchUngroupedDocuments = async (appBridge: AppBridgeBlock | AppBridgeTheme) => {
+const fetchUngroupedDocuments = async (appBridge: AppBridgeBlock) => {
     const documents = await appBridge.getUngroupedDocuments();
     return new Map([...documents].sort(sortDocuments).map((document) => [document.id, document]));
 };
