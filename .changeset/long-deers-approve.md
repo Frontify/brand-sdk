@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-remove loading placeholder for serialized text in RichTextEditor
+fix(guideline-blocks-settings): remove loading placeholder for serialized text in RichTextEditor
