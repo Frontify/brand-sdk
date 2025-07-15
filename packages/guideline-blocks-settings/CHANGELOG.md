@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 0.38.1
+
+### Patch Changes
+
+-   [#1253](https://github.com/Frontify/brand-sdk/pull/1253) [`c5fc272`](https://github.com/Frontify/brand-sdk/commit/c5fc272bf297fa259d9c7c388c88a352eb14944e) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(RTE): remove loading placeholder for serialized text
+
 ## 0.38.0
 
 ### Minor Changes
