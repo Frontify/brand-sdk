@@ -145,7 +145,13 @@ export const createDeployment = async (
             }
         }
     } catch (error) {
-        Logger.error('The deployment has failed and was aborted due to an error:', error as string);
+        if (typeof error === 'string') {
+            Logger.error('The deployment has failed and was aborted due to an error:', error);
+        } else if (error instanceof Error) {
+            Logger.error('The deployment has failed and was aborted due to an error:', error.message);
+        } else {
+            Logger.error('The deployment has failed and was aborted due to an unknown error.');
+        }
         process.exit(-1);
     }
 };
