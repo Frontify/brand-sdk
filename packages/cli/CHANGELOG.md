@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.8.9
+
+### Patch Changes
+
+-   [#1255](https://github.com/Frontify/brand-sdk/pull/1255) [`75880c6`](https://github.com/Frontify/brand-sdk/commit/75880c6748cc195bda797863c20b23ddb7e1efdb) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: improve error message on deployment fail
+
 ## 5.8.8
 
 ### Patch Changes
