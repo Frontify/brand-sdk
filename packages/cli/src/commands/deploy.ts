@@ -35,6 +35,7 @@ export type AppManifest = {
     metadata?: {
         version?: number;
     };
+    experimental?: boolean;
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
