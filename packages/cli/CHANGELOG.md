@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.9.0
+
+### Minor Changes
+
+-   [#1257](https://github.com/Frontify/brand-sdk/pull/1257) [`cae6a20`](https://github.com/Frontify/brand-sdk/commit/cae6a20a75e18f6b1e1e2e0e49edeebb211557ef) Thanks [@imoutaharik](https://github.com/imoutaharik)! - Add optional experimental flag to the manifest
+
 ## 5.8.9
 
 ### Patch Changes
