@@ -18,11 +18,10 @@ import {
     IconPen20,
     IconPlayFrame24,
     IconTrashBin20,
-    LoadingCircle,
-    LoadingCircleSize,
     MenuItemContentSize,
     MenuItemStyle,
 } from '@frontify/fondue';
+import { LoadingCircle } from '@frontify/fondue/components';
 import { useFocusRing } from '@react-aria/focus';
 import { type MutableRefObject, forwardRef, useEffect, useState } from 'react';
 
@@ -98,11 +97,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                 ])}
             >
                 <div className="tw-text-text-weak group-hover:tw-text-box-neutral-inverse-hover">
-                    {showLoadingCircle ? (
-                        <LoadingCircle size={LoadingCircleSize.Small} />
-                    ) : (
-                        getDecorator(item.objectType)
-                    )}
+                    {showLoadingCircle ? <LoadingCircle size="small" /> : getDecorator(item.objectType)}
                 </div>
                 <div className="tw-text-s tw-flex-1 tw-min-w-0">
                     <div className="tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-font-bold tw-text-text-weak group-hover:tw-text-box-neutral-inverse-hover">
