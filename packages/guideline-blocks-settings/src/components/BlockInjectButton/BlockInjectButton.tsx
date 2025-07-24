@@ -7,9 +7,9 @@ import {
     IconArrowCircleUp20,
     IconExclamationMarkTriangle,
     IconImageStack20,
-    LoadingCircle,
     MenuItemContentSize,
 } from '@frontify/fondue';
+import { LoadingCircle } from '@frontify/fondue/components';
 import { type DragEventHandler, type MouseEventHandler, useRef, useState } from 'react';
 
 import { joinClassNames } from '../../utilities/react/joinClassNames';
