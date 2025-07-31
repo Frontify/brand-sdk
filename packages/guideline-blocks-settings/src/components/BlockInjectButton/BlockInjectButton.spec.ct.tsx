@@ -7,7 +7,7 @@ import { mount } from 'cypress/react18';
 import { BlockInjectButton } from './BlockInjectButton';
 
 const BlockInjectButtonSelector = '[data-test-id="block-inject-button"]';
-const ActionMenuItemSelector = '[data-test-id="menu-item"]';
+const DropdownItemSelector = '[data-test-id="fondue-dropdown-subtrigger"]';
 
 describe('Block Inject Button', () => {
     it('renders a simple block inject button', () => {
@@ -38,12 +38,12 @@ describe('Block Inject Button', () => {
             />,
         );
         cy.get(BlockInjectButtonSelector).click();
-        cy.get(ActionMenuItemSelector).should('have.length', 2);
-        cy.get(ActionMenuItemSelector).eq(0).should('have.text', 'Upload asset').click();
+        cy.get(DropdownItemSelector).should('have.length', 2);
+        cy.get(DropdownItemSelector).eq(0).should('have.text', 'Upload asset').click();
         cy.get('@onClickonUploadClick').should('have.been.calledOnce');
 
         cy.get(BlockInjectButtonSelector).click();
-        cy.get(ActionMenuItemSelector).eq(1).should('have.text', 'Browse asset').click();
+        cy.get(DropdownItemSelector).eq(1).should('have.text', 'Browse asset').click();
         cy.get('@onClickOpenAssetChooser').should('have.been.calledOnce');
     });
 });
