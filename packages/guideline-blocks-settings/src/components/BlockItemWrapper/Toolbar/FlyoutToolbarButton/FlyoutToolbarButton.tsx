@@ -36,7 +36,7 @@ export const FlyoutToolbarButton = ({
         <ToolbarButtonTooltip disabled={isDragPreview || isOpen} content={tooltip}>
             <div className="tw-flex tw-flex-shrink-0 tw-flex-1 tw-h-6 tw-relative">
                 <Flyout.Root open={isOpen && !isDragPreview} onOpenChange={onOpenChange}>
-                    <Flyout.Trigger>
+                    <Flyout.Trigger asChild>
                         <BaseToolbarButton
                             data-test-id="block-item-wrapper-toolbar-flyout"
                             forceActiveStyle={isOpen && !isDragPreview}
