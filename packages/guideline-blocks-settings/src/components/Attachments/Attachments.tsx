@@ -3,7 +3,6 @@
 import {
     DndContext,
     type DragEndEvent,
-    DragOverlay,
     type DragStartEvent,
     KeyboardSensor,
     PointerSensor,
@@ -11,14 +10,14 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { type Asset, useAssetChooser, useAssetUpload, useEditorState } from '@frontify/app-bridge';
-import { AssetInput, AssetInputSize, Flyout, FlyoutPlacement } from '@frontify/fondue';
-import { Tooltip } from '@frontify/fondue/components';
-import { type MutableRefObject, useEffect, useState } from 'react';
+import { AssetInput, AssetInputSize } from '@frontify/fondue';
+import { Tooltip, Flyout } from '@frontify/fondue/components';
+import { useEffect, useState } from 'react';
 
-import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
+import { SortableAttachmentItem } from './AttachmentItem';
 import { AttachmentsButtonTrigger } from './AttachmentsButtonTrigger';
 import { type AttachmentsProps } from './types';
 
@@ -137,27 +136,31 @@ export const Attachments = ({
         setDraggedAssetId(undefined);
     };
 
+    const autoFocusModifier = {
+        onOpenAutoFocus: (event: Event) => {
+            event.preventDefault();
+        },
+        onEscapeKeyDown: (event: Event) => {
+            event.stopPropagation();
+            handleFlyoutOpenChange(false);
+        },
+    };
+
     return isEditing || (internalItems?.length ?? 0) > 0 ? (
-        <Tooltip.Root enterDelay={500}>
-            <Tooltip.Trigger asChild>
-                <div data-test-id="attachments-flyout-button">
-                    <Flyout
-                        placement={FlyoutPlacement.BottomRight}
-                        onOpenChange={(isOpen) => handleFlyoutOpenChange(draggedItem ? true : isOpen)}
-                        isOpen={isFlyoutOpen}
-                        hug={false}
-                        fitContent
-                        legacyFooter={false}
-                        trigger={(triggerProps, triggerRef) => (
-                            <TriggerComponent
-                                isFlyoutOpen={isFlyoutOpen}
-                                triggerProps={triggerProps}
-                                triggerRef={triggerRef as MutableRefObject<HTMLButtonElement>}
-                            >
+        <div data-test-id="attachments-flyout-button">
+            <Flyout.Root
+                open={isFlyoutOpen}
+                onOpenChange={(isOpen) => handleFlyoutOpenChange(draggedItem ? true : isOpen)}
+            >
+                <Tooltip.Root enterDelay={500}>
+                    <Tooltip.Trigger asChild>
+                        <Flyout.Trigger asChild data-test-id="attachments-button-trigger">
+                            <TriggerComponent isFlyoutOpen={isFlyoutOpen}>
                                 <div>{items.length > 0 ? items.length : 'Add'}</div>
                             </TriggerComponent>
-                        )}
-                    >
+                        </Flyout.Trigger>
+                    </Tooltip.Trigger>
+                    <Flyout.Content side="bottom" align="end" {...autoFocusModifier}>
                         <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
                             {internalItems.length > 0 && (
                                 <DndContext
@@ -165,10 +168,10 @@ export const Attachments = ({
                                     collisionDetection={closestCenter}
                                     onDragStart={handleDragStart}
                                     onDragEnd={handleDragEnd}
-                                    modifiers={[restrictToWindowEdges]}
+                                    modifiers={[restrictToVerticalAxis]}
                                 >
                                     <SortableContext items={internalItems} strategy={rectSortingStrategy}>
-                                        <div className="tw-border-b tw-border-b-line">
+                                        <div className="tw-border-b tw-border-b-line tw-relative">
                                             {internalItems.map((item) => (
                                                 <SortableAttachmentItem
                                                     isEditing={isEditing}
@@ -190,22 +193,6 @@ export const Attachments = ({
                                             ))}
                                         </div>
                                     </SortableContext>
-                                    <DragOverlay>
-                                        {draggedItem && (
-                                            <AttachmentItem
-                                                isOverlay={true}
-                                                isEditing={isEditing}
-                                                key={draggedAssetId}
-                                                item={draggedItem}
-                                                isDragging={true}
-                                                onDelete={() => onDelete(draggedItem)}
-                                                onReplaceWithBrowse={() => onReplaceItemWithBrowse(draggedItem)}
-                                                onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                    onReplaceItemWithUpload(draggedItem, uploadedAsset)
-                                                }
-                                            />
-                                        )}
-                                    </DragOverlay>
                                 </DndContext>
                             )}
                             {isEditing && (
@@ -222,10 +209,10 @@ export const Attachments = ({
                                 </div>
                             )}
                         </div>
-                    </Flyout>
-                </div>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="top">Attachments</Tooltip.Content>
-        </Tooltip.Root>
+                    </Flyout.Content>
+                    <Tooltip.Content side="top">Attachments</Tooltip.Content>
+                </Tooltip.Root>
+            </Flyout.Root>
+        </div>
     ) : null;
 };

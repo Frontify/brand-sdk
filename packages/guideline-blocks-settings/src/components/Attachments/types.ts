@@ -1,13 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock, type Asset } from '@frontify/app-bridge';
-import { type HTMLAttributes, type MutableRefObject, type ReactElement, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 export type AttachmentsTriggerProps = {
     children: ReactNode;
     isFlyoutOpen: boolean;
-    triggerProps: HTMLAttributes<HTMLButtonElement>;
-    triggerRef: MutableRefObject<HTMLButtonElement>;
 };
 
 export type AttachmentsProps = {
@@ -19,7 +17,9 @@ export type AttachmentsProps = {
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
     onBrowse: (browserAttachments: Asset[]) => void;
     onSorted: (sortedAttachments: Asset[]) => void;
-    triggerComponent?: (props: AttachmentsTriggerProps) => ReactElement;
+    triggerComponent?: React.ForwardRefExoticComponent<
+        AttachmentsTriggerProps & React.RefAttributes<HTMLButtonElement>
+    >;
 } & ({ isOpen?: never; onOpenChange?: never } | { isOpen: boolean; onOpenChange: (isOpen: boolean) => void });
 
 export type AttachmentItemProps = SortableAttachmentItemProps & {

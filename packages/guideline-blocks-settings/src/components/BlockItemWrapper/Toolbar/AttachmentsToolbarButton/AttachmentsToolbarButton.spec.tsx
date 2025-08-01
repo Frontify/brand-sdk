@@ -10,7 +10,7 @@ import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
 
 import { AttachmentsToolbarButton } from './AttachmentsToolbarButton';
 
-const TOOLBAR_BUTTON_ID = 'attachments-toolbar-button-trigger';
+const TOOLBAR_BUTTON_ID = 'attachments-button-trigger';
 const FLYOUT_CONTENT_ID = 'attachments-flyout-content';
 const TOOLTIP_ID = 'fondue-tooltip-content';
 
