@@ -3,7 +3,6 @@
 import {
     DndContext,
     type DragEndEvent,
-    DragOverlay,
     type DragStartEvent,
     KeyboardSensor,
     PointerSensor,
@@ -11,14 +10,14 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { type Asset, useAssetChooser, useAssetUpload, useEditorState } from '@frontify/app-bridge';
 import { AssetInput, AssetInputSize } from '@frontify/fondue';
 import { Tooltip, Flyout } from '@frontify/fondue/components';
 import { useEffect, useState } from 'react';
 
-import { AttachmentItem, SortableAttachmentItem } from './AttachmentItem';
+import { SortableAttachmentItem } from './AttachmentItem';
 import { AttachmentsButtonTrigger } from './AttachmentsButtonTrigger';
 import { type AttachmentsProps } from './types';
 
@@ -137,89 +136,83 @@ export const Attachments = ({
         setDraggedAssetId(undefined);
     };
 
+    const autoFocusModifier = {
+        onOpenAutoFocus: (event: Event) => {
+            event.preventDefault();
+        },
+        onEscapeKeyDown: (event: Event) => {
+            event.stopPropagation();
+            handleFlyoutOpenChange(false);
+        },
+    };
+
     return isEditing || (internalItems?.length ?? 0) > 0 ? (
-        <Tooltip.Root enterDelay={500}>
-            <Tooltip.Trigger asChild>
-                <div data-test-id="attachments-flyout-button">
-                    <Flyout.Root
-                        open={isFlyoutOpen}
-                        onOpenChange={(isOpen) => handleFlyoutOpenChange(draggedItem ? true : isOpen)}
-                    >
-                        <Flyout.Trigger asChild>
+        <div data-test-id="attachments-flyout-button">
+            <Flyout.Root
+                open={isFlyoutOpen}
+                onOpenChange={(isOpen) => handleFlyoutOpenChange(draggedItem ? true : isOpen)}
+            >
+                <Tooltip.Root enterDelay={500}>
+                    <Tooltip.Trigger asChild>
+                        <Flyout.Trigger asChild data-test-id="attachments-button-trigger">
                             <TriggerComponent isFlyoutOpen={isFlyoutOpen}>
                                 <div>{items.length > 0 ? items.length : 'Add'}</div>
                             </TriggerComponent>
                         </Flyout.Trigger>
-                        <Flyout.Content side="bottom" align="end">
-                            <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
-                                {internalItems.length > 0 && (
-                                    <DndContext
-                                        sensors={sensors}
-                                        collisionDetection={closestCenter}
-                                        onDragStart={handleDragStart}
-                                        onDragEnd={handleDragEnd}
-                                        modifiers={[restrictToWindowEdges]}
-                                    >
-                                        <SortableContext items={internalItems} strategy={rectSortingStrategy}>
-                                            <div className="tw-border-b tw-border-b-line">
-                                                {internalItems.map((item) => (
-                                                    <SortableAttachmentItem
-                                                        isEditing={isEditing}
-                                                        isLoading={assetIdsLoading.includes(item.id)}
-                                                        key={item.id}
-                                                        item={item}
-                                                        onDelete={() => onDelete(item)}
-                                                        onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
-                                                        onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                            onReplaceItemWithUpload(item, uploadedAsset)
-                                                        }
-                                                        onDownload={() =>
-                                                            appBridge.dispatch({
-                                                                name: 'downloadAsset',
-                                                                payload: item,
-                                                            })
-                                                        }
-                                                    />
-                                                ))}
-                                            </div>
-                                        </SortableContext>
-                                        <DragOverlay>
-                                            {draggedItem && (
-                                                <AttachmentItem
-                                                    isOverlay={true}
+                    </Tooltip.Trigger>
+                    <Flyout.Content side="bottom" align="end" {...autoFocusModifier}>
+                        <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
+                            {internalItems.length > 0 && (
+                                <DndContext
+                                    sensors={sensors}
+                                    collisionDetection={closestCenter}
+                                    onDragStart={handleDragStart}
+                                    onDragEnd={handleDragEnd}
+                                    modifiers={[restrictToVerticalAxis]}
+                                >
+                                    <SortableContext items={internalItems} strategy={rectSortingStrategy}>
+                                        <div className="tw-border-b tw-border-b-line tw-relative">
+                                            {internalItems.map((item) => (
+                                                <SortableAttachmentItem
                                                     isEditing={isEditing}
-                                                    key={draggedAssetId}
-                                                    item={draggedItem}
-                                                    isDragging={true}
-                                                    onDelete={() => onDelete(draggedItem)}
-                                                    onReplaceWithBrowse={() => onReplaceItemWithBrowse(draggedItem)}
+                                                    isLoading={assetIdsLoading.includes(item.id)}
+                                                    key={item.id}
+                                                    item={item}
+                                                    onDelete={() => onDelete(item)}
+                                                    onReplaceWithBrowse={() => onReplaceItemWithBrowse(item)}
                                                     onReplaceWithUpload={(uploadedAsset: Asset) =>
-                                                        onReplaceItemWithUpload(draggedItem, uploadedAsset)
+                                                        onReplaceItemWithUpload(item, uploadedAsset)
+                                                    }
+                                                    onDownload={() =>
+                                                        appBridge.dispatch({
+                                                            name: 'downloadAsset',
+                                                            payload: item,
+                                                        })
                                                     }
                                                 />
-                                            )}
-                                        </DragOverlay>
-                                    </DndContext>
-                                )}
-                                {isEditing && (
-                                    <div className="tw-px-5 tw-py-3">
-                                        <div className="tw-font-body tw-font-medium tw-text-text tw-text-s tw-my-4">
-                                            Add attachments
+                                            ))}
                                         </div>
-                                        <AssetInput
-                                            isLoading={isUploadLoading}
-                                            size={AssetInputSize.Small}
-                                            onUploadClick={(fileList) => setSelectedFiles(fileList)}
-                                            onLibraryClick={onOpenAssetChooser}
-                                        />
+                                    </SortableContext>
+                                </DndContext>
+                            )}
+                            {isEditing && (
+                                <div className="tw-px-5 tw-py-3">
+                                    <div className="tw-font-body tw-font-medium tw-text-text tw-text-s tw-my-4">
+                                        Add attachments
                                     </div>
-                                )}
-                            </div>
-                        </Flyout.Content>
-                    </Flyout.Root>
-                </div>
-            </Tooltip.Trigger>
-            <Tooltip.Content side="top">Attachments</Tooltip.Content>
-        </Tooltip.Root>
+                                    <AssetInput
+                                        isLoading={isUploadLoading}
+                                        size={AssetInputSize.Small}
+                                        onUploadClick={(fileList) => setSelectedFiles(fileList)}
+                                        onLibraryClick={onOpenAssetChooser}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </Flyout.Content>
+                    <Tooltip.Content side="top">Attachments</Tooltip.Content>
+                </Tooltip.Root>
+            </Flyout.Root>
+        </div>
     ) : null;
 };
