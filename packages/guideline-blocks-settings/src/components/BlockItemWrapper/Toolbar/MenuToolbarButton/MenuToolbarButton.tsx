@@ -5,6 +5,7 @@ import { Dropdown, Tooltip } from '@frontify/fondue/components';
 import { IconDotsHorizontal } from '@frontify/fondue/icons';
 
 import { BaseToolbarButton } from '../BaseToolbarButton';
+import { useDragPreviewContext } from '../context';
 import { useMultiFlyoutState } from '../hooks';
 
 export const DEFAULT_MENU_BUTTON_ID = 'menu';
@@ -20,12 +21,17 @@ export type MenuToolbarButtonProps = {
     tooltip?: string;
 };
 
-export const MenuToolbarButton = ({ items, flyoutId, tooltip = 'Options' }: MenuToolbarButtonProps) => {
+export const MenuToolbarButton = ({
+    items,
+    flyoutId = DEFAULT_MENU_BUTTON_ID,
+    tooltip = 'Options',
+}: MenuToolbarButtonProps) => {
     const id = useMemoizedId(flyoutId);
     const { isOpen, onOpenChange } = useMultiFlyoutState(id);
+    const isDragPreview = useDragPreviewContext();
 
     return (
-        <Dropdown.Root open={isOpen} onOpenChange={onOpenChange}>
+        <Dropdown.Root open={isOpen && !isDragPreview} onOpenChange={onOpenChange}>
             <Tooltip.Root>
                 <Tooltip.Trigger asChild>
                     <Dropdown.Trigger asChild>
