@@ -10,7 +10,7 @@ import {
     IconMusicNote24,
     IconPlayFrame24,
 } from '@frontify/fondue';
-import { LoadingCircle, Flyout, Dropdown, Button } from '@frontify/fondue/components';
+import { LoadingCircle, Dropdown, Button } from '@frontify/fondue/components';
 import { IconArrowCircleUp, IconImageStack, IconPen, IconTrashBin } from '@frontify/fondue/icons';
 import { useFocusRing } from '@react-aria/focus';
 import { type MutableRefObject, forwardRef, useEffect, useState } from 'react';
@@ -119,70 +119,62 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                             <IconGrabHandle20 />
                         </button>
                         <div data-test-id="attachments-actionbar-flyout">
-                            <Flyout.Root
+                            <Dropdown.Root
                                 open={selectedAsset?.id === item.id}
                                 onOpenChange={(isOpen) => setSelectedAsset(isOpen ? item : undefined)}
                             >
-                                <Flyout.Trigger asChild>
+                                <Dropdown.Trigger>
                                     <Button
                                         aspect="square"
                                         ref={ref as MutableRefObject<HTMLButtonElement>}
                                         onPress={(e) => {
                                             e?.stopPropagation();
                                             e?.preventDefault();
-                                            setSelectedAsset(selectedAsset ? undefined : item);
                                         }}
                                         emphasis="default"
                                     >
                                         <IconPen size="20" />
                                     </Button>
-                                </Flyout.Trigger>
-                                <Flyout.Content side="right">
-                                    <Dropdown.Root open>
-                                        <Dropdown.Trigger>
-                                            <div />
-                                        </Dropdown.Trigger>
-                                        <Dropdown.Content>
-                                            <Dropdown.Group>
-                                                <Dropdown.Item
-                                                    data-test-id="menu-item"
-                                                    onSelect={(event) => {
-                                                        event?.stopPropagation();
-                                                        openFileDialog();
-                                                        setSelectedAsset(undefined);
-                                                    }}
-                                                >
-                                                    <IconArrowCircleUp size="20" />
-                                                    Replace with upload
-                                                </Dropdown.Item>
-                                                <Dropdown.Item
-                                                    onSelect={(event) => {
-                                                        event?.stopPropagation();
-                                                        onReplaceWithBrowse();
-                                                        setSelectedAsset(undefined);
-                                                    }}
-                                                >
-                                                    <IconImageStack size="20" />
-                                                    Replace with asset
-                                                </Dropdown.Item>
-                                            </Dropdown.Group>
-                                            <Dropdown.Group>
-                                                <Dropdown.Item
-                                                    emphasis="danger"
-                                                    onSelect={(event) => {
-                                                        event?.stopPropagation();
-                                                        onDelete();
-                                                        setSelectedAsset(undefined);
-                                                    }}
-                                                >
-                                                    <IconTrashBin size="20" />
-                                                    Delete
-                                                </Dropdown.Item>
-                                            </Dropdown.Group>
-                                        </Dropdown.Content>
-                                    </Dropdown.Root>
-                                </Flyout.Content>
-                            </Flyout.Root>
+                                </Dropdown.Trigger>
+                                <Dropdown.Content side="right">
+                                    <Dropdown.Group>
+                                        <Dropdown.Item
+                                            data-test-id="menu-item"
+                                            onSelect={(event) => {
+                                                event?.stopPropagation();
+                                                openFileDialog();
+                                                setSelectedAsset(undefined);
+                                            }}
+                                        >
+                                            <IconArrowCircleUp size="20" />
+                                            Replace with upload
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                            onSelect={(event) => {
+                                                event?.stopPropagation();
+                                                onReplaceWithBrowse();
+                                                setSelectedAsset(undefined);
+                                            }}
+                                        >
+                                            <IconImageStack size="20" />
+                                            Replace with asset
+                                        </Dropdown.Item>
+                                    </Dropdown.Group>
+                                    <Dropdown.Group>
+                                        <Dropdown.Item
+                                            emphasis="danger"
+                                            onSelect={(event) => {
+                                                event?.stopPropagation();
+                                                onDelete();
+                                                setSelectedAsset(undefined);
+                                            }}
+                                        >
+                                            <IconTrashBin size="20" />
+                                            Delete
+                                        </Dropdown.Item>
+                                    </Dropdown.Group>
+                                </Dropdown.Content>
+                            </Dropdown.Root>
                         </div>
                     </div>
                 )}
