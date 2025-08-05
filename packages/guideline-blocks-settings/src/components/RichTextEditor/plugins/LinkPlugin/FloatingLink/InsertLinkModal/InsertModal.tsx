@@ -67,10 +67,15 @@ export const InsertModal = ({
         </div>
         <div className="tw-mt-3">
             <div className={'tw-pt-5 tw-flex tw-gap-x-3 tw-justify-end tw-border-t tw-border-t-black-10'}>
-                <Button onPress={onCancel} size="medium" emphasis="default">
+                <Button data-test-id="button" onPress={onCancel} size="medium" emphasis="default">
                     Cancel
                 </Button>
-                <Button onPress={onSave} size="medium" disabled={!isValidUrlOrEmpty(state?.url) || !hasValues}>
+                <Button
+                    data-test-id="button"
+                    onPress={onSave}
+                    size="medium"
+                    disabled={!isValidUrlOrEmpty(state?.url) || !hasValues}
+                >
                     <IconCheckMark size="20" />
                     Save
                 </Button>
