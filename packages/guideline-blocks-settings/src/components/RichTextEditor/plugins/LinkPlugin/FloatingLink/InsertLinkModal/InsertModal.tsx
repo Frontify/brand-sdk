@@ -1,16 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import {
-    Button,
-    ButtonEmphasis,
-    ButtonSize,
-    ButtonStyle,
-    FloatingModalWrapper,
-    FormControl,
-    IconCheckMark20,
-    TextInput,
-} from '@frontify/fondue';
+import { FloatingModalWrapper, FormControl } from '@frontify/fondue';
+import { Button, TextInput } from '@frontify/fondue/components';
+import { IconCheckMark } from '@frontify/fondue/icons';
 import { type MouseEvent, type ReactElement, type ReactNode } from 'react';
 
 import { LinkInput } from '../../../../../Link';
@@ -52,7 +45,12 @@ export const InsertModal = ({
                 required: true,
             }}
         >
-            <TextInput id="linkText" value={state.text} placeholder="Link Text" onChange={onTextChange} />
+            <TextInput
+                id="linkText"
+                value={state.text}
+                placeholder="Link Text"
+                onChange={(event) => onTextChange(event.target.value)}
+            />
         </FormControl>
 
         {children}
@@ -69,20 +67,11 @@ export const InsertModal = ({
         </div>
         <div className="tw-mt-3">
             <div className={'tw-pt-5 tw-flex tw-gap-x-3 tw-justify-end tw-border-t tw-border-t-black-10'}>
-                <Button
-                    onClick={onCancel}
-                    size={ButtonSize.Medium}
-                    style={ButtonStyle.Default}
-                    emphasis={ButtonEmphasis.Default}
-                >
+                <Button onPress={onCancel} size="medium" emphasis="default">
                     Cancel
                 </Button>
-                <Button
-                    onClick={onSave}
-                    size={ButtonSize.Medium}
-                    icon={<IconCheckMark20 />}
-                    disabled={!isValidUrlOrEmpty(state?.url) || !hasValues}
-                >
+                <Button onPress={onSave} size="medium" disabled={!isValidUrlOrEmpty(state?.url) || !hasValues}>
+                    <IconCheckMark size="20" />
                     Save
                 </Button>
             </div>
