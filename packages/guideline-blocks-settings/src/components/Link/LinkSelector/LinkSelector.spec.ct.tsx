@@ -14,7 +14,7 @@ import { LinkSelector } from './LinkSelector';
 
 const LinkSelectorSelector = '[data-test-id="internal-link-selector"]';
 const LinkSelectorButtonSelector = '[data-test-id="internal-link-selector"] > button';
-const LinkSelectorModalSelector = '[data-test-id="modal-body"]';
+const LinkSelectorModalSelector = '[data-test-id="fondue-dialog-body"]';
 const DocumentLinkSelector = '[data-test-id="internal-link-selector-document-link"]';
 const DocumentTreeItemToggleSelector = '[data-test-id="tree-item-toggle"]';
 const PageLinkSelector = '[data-test-id="internal-link-selector-page-link"]';

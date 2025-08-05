@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import { CheckboxState, getPluginOptions, useEditorRef, useHotkeys } from '@frontify/fondue';
+import { getPluginOptions, useEditorRef, useHotkeys } from '@frontify/fondue';
 import { type Dispatch, type Reducer, useEffect, useReducer } from 'react';
 
 import { addHttps } from '../../../../../../../helpers';
@@ -18,7 +18,7 @@ const initialState: InsertModalStateProps = {
     url: '',
     text: '',
     buttonStyle: 'primary',
-    newTab: CheckboxState.Unchecked,
+    newTab: false,
 };
 
 export const InsertModalState = (): [InsertModalStateProps, Dispatch<InsertModalDispatchType>] => {
@@ -29,12 +29,12 @@ export const InsertModalState = (): [InsertModalStateProps, Dispatch<InsertModal
             case 'NEW_TAB':
                 return {
                     ...state,
-                    newTab: CheckboxState.Checked,
+                    newTab: true,
                 };
             case 'SAME_TAB':
                 return {
                     ...state,
-                    newTab: CheckboxState.Unchecked,
+                    newTab: false,
                 };
             case 'URL':
             case 'TEXT':
@@ -64,7 +64,7 @@ export const useInsertModal = () => {
             payload: {
                 text: floatingButtonSelectors.text() || floatingButtonSelectors.url(),
                 buttonStyle,
-                newTab: floatingButtonSelectors.newTab() ? CheckboxState.Checked : CheckboxState.Unchecked,
+                newTab: !!floatingButtonSelectors.newTab(),
                 url: floatingButtonSelectors.url(),
             },
         });
@@ -109,7 +109,7 @@ export const useInsertModal = () => {
         floatingButtonActions.text(state.text);
         floatingButtonActions.url(urlToSave);
         floatingButtonActions.buttonStyle(state.buttonStyle);
-        floatingButtonActions.newTab(state.newTab === CheckboxState.Checked);
+        floatingButtonActions.newTab(state.newTab);
 
         if (submitFloatingButton(editor)) {
             event?.preventDefault();

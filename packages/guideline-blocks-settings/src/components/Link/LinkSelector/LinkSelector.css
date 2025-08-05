@@ -1,0 +1,6 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
+/* This is a workaround to give the dialog higher z-index than the RTE toolbar */
+body [role='toolbar'][data-aria-hidden='true'] ~ div > div[data-visible] {
+    z-index: 50;
+}
