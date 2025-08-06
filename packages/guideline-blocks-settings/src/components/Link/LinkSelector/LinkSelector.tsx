@@ -1,16 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type Document, type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
-import { Button, ButtonEmphasis, ButtonSize, ButtonStyle, ButtonType, IconLink, Modal } from '@frontify/fondue';
-import { useOverlayTriggerState } from '@react-stately/overlays';
+import { Button, Dialog } from '@frontify/fondue/components';
+import { IconLink } from '@frontify/fondue/icons';
 import { type KeyboardEvent, type ReactElement, useEffect, useState } from 'react';
 
+import './LinkSelector.css';
 import { DocumentLinks } from './DocumentLinks';
 
 type LinkSelectorProps = {
     url: string;
     onUrlChange?: (value: string) => void;
-    buttonSize?: ButtonSize;
+    buttonSize?: 'small' | 'medium' | 'large';
     getAllDocuments: () => Promise<Document[]>;
     getDocumentSectionsByDocumentPageId: (documentPageId: number) => Promise<DocumentSection[]>;
     getDocumentPagesByDocumentId: (documentId: number) => Promise<DocumentPage[]>;
@@ -19,12 +20,12 @@ type LinkSelectorProps = {
 export const LinkSelector = ({
     url,
     onUrlChange,
-    buttonSize = ButtonSize.Medium,
+    buttonSize = 'medium',
     getAllDocuments,
     getDocumentPagesByDocumentId,
     getDocumentSectionsByDocumentPageId,
 }: LinkSelectorProps): ReactElement => {
-    const { open: openLinkTree, isOpen: isLinkTreeOpen, close: closeLinkTree } = useOverlayTriggerState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUrl, setSelectedUrl] = useState<string>(url);
 
     const onSelectUrl = (url: string) => {
@@ -33,6 +34,7 @@ export const LinkSelector = ({
 
     const onPressEnter = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
+            event.preventDefault();
             saveLink();
         }
     };
@@ -45,7 +47,14 @@ export const LinkSelector = ({
 
     const saveLink = () => {
         onUrlChange?.(selectedUrl);
-        closeLinkTree();
+        setIsModalOpen(false);
+    };
+
+    const dialogProps = {
+        onOpenAutoFocus: () => {},
+        showUnderlay: true,
+        'data-is-underlay': true,
+        minWidth: '800px',
     };
 
     return (
@@ -55,48 +64,38 @@ export const LinkSelector = ({
             data-test-id="internal-link-selector"
             onKeyDown={onPressEnter}
         >
-            <Button
-                icon={<IconLink />}
-                size={buttonSize}
-                type={ButtonType.Button}
-                style={ButtonStyle.Default}
-                emphasis={ButtonEmphasis.Default}
-                onClick={() => openLinkTree()}
-            >
-                Internal link
-            </Button>
-            <Modal zIndex={1001} onClose={() => closeLinkTree()} isOpen={isLinkTreeOpen} isDismissable>
-                <Modal.Header title="Select internal link" />
-                <Modal.Body>
-                    <DocumentLinks
-                        selectedUrl={selectedUrl}
-                        onSelectUrl={onSelectUrl}
-                        getAllDocuments={getAllDocuments}
-                        getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
-                        getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
-                    />
-                </Modal.Body>
-                <Modal.Footer
-                    buttons={[
-                        {
-                            children: 'Cancel',
-                            onClick: () => closeLinkTree(),
-                            style: ButtonStyle.Default,
-                            emphasis: ButtonEmphasis.Default,
-                        },
-                        {
-                            children: 'Choose',
-                            onClick: (event: React.MouseEvent<HTMLButtonElement>) => {
-                                event?.preventDefault();
-                                saveLink();
-                            },
-                            style: ButtonStyle.Default,
-                            emphasis: ButtonEmphasis.Strong,
-                            disabled: !selectedUrl,
-                        },
-                    ]}
-                />
-            </Modal>
+            <Dialog.Root modal open={isModalOpen} onOpenChange={setIsModalOpen}>
+                <Dialog.Trigger asChild>
+                    <Button size={buttonSize} emphasis="default">
+                        <IconLink size="20" />
+                        Internal link
+                    </Button>
+                </Dialog.Trigger>
+                <Dialog.Content {...dialogProps}>
+                    <Dialog.Header>
+                        <Dialog.Title>Select internal link</Dialog.Title>
+                    </Dialog.Header>
+                    <Dialog.Body>
+                        <div>
+                            <DocumentLinks
+                                selectedUrl={selectedUrl}
+                                onSelectUrl={onSelectUrl}
+                                getAllDocuments={getAllDocuments}
+                                getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
+                                getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
+                            />
+                        </div>
+                    </Dialog.Body>
+                    <Dialog.Footer>
+                        <Button size={buttonSize} emphasis="default" onPress={() => setIsModalOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button size={buttonSize} disabled={!selectedUrl} emphasis="strong" onPress={() => saveLink()}>
+                            Choose
+                        </Button>
+                    </Dialog.Footer>
+                </Dialog.Content>
+            </Dialog.Root>
         </div>
     );
 };
