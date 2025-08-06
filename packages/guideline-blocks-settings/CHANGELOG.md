@@ -1,5 +1,67 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.0
+
+### Major Changes
+
+-   [#1267](https://github.com/Frontify/brand-sdk/pull/1267) [`3b34bfb`](https://github.com/Frontify/brand-sdk/commit/3b34bfb597cd73e82c4016913f8268d17665745b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor(\*): replace deprecated fondue components
+
+    ### Breaking Changes
+
+    -   **`AttachmentsProps`**
+
+        -   `triggerComponent` type changed from:
+            ```ts
+            triggerComponent?: (props: AttachmentsTriggerProps) => ReactElement;
+            ```
+            to:
+            ```ts
+            triggerComponent?: React.ForwardRefExoticComponent<
+                AttachmentsTriggerProps & React.RefAttributes<HTMLButtonElement>
+            >;
+            ```
+
+    -   **`AttachmentTriggerProps`**
+
+        -   Removed:
+            ```ts
+            triggerProps: HTMLAttributes<HTMLButtonElement>;
+            triggerRef: MutableRefObject<HTMLButtonElement>;
+            ```
+
+    -   **`LinkInput`**
+
+        -   Removed props:
+            ```ts
+            openInNewTab?: boolean;
+            clearable?: boolean;
+            ```
+        -   Changed:
+            ```ts
+            buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
+            newTab?: boolean; // was: newTab?: CheckboxState;
+            ```
+
+    -   **`LinkSelector`**
+
+        -   Changed:
+            ```ts
+            buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
+            ```
+
+    -   **`InsertModalDispatchType` & `InsertModalStateProps`**
+        -   Changed:
+            ```ts
+            newTab?: boolean; // was: newTab?: CheckboxState;
+            ```
+
+### Patch Changes
+
+-   [#1258](https://github.com/Frontify/brand-sdk/pull/1258) [`a82646f`](https://github.com/Frontify/brand-sdk/commit/a82646f71f9cb23eb7718062c5ab35c117e18f61) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.11.0`
+
+-   Updated dependencies [[`a82646f`](https://github.com/Frontify/brand-sdk/commit/a82646f71f9cb23eb7718062c5ab35c117e18f61)]:
+    -   @frontify/sidebar-settings@0.10.2
+
 ## 0.38.1
 
 ### Patch Changes
