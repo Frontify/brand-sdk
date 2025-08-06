@@ -69,6 +69,7 @@ export const PageLink = ({
                             data-test-id="tree-item-toggle"
                             className="tw-flex tw-items-center tw-justify-center -tw-mr-2 tw-pr-3.5 tw-pt-1.5 tw-pb-1.5 tw-pl-3.5 tw-cursor-pointer"
                             onClick={() => setIsExpanded(!isExpanded)}
+                            onKeyDown={(event) => event.key === 'Enter' && event.stopPropagation()}
                         >
                             <div
                                 className={merge([
