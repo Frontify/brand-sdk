@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { Flyout, FlyoutPlacement, useMemoizedId } from '@frontify/fondue';
-import { type MutableRefObject, type ReactNode } from 'react';
+import { useMemoizedId } from '@frontify/fondue';
+import { Flyout } from '@frontify/fondue/components';
+import { type ReactNode } from 'react';
 
 import { BaseToolbarButton } from '../BaseToolbarButton';
 import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
@@ -34,28 +35,21 @@ export const FlyoutToolbarButton = ({
     return (
         <ToolbarButtonTooltip disabled={isDragPreview || isOpen} content={tooltip}>
             <div className="tw-flex tw-flex-shrink-0 tw-flex-1 tw-h-6 tw-relative">
-                <Flyout
-                    isOpen={isOpen && !isDragPreview}
-                    legacyFooter={false}
-                    fixedFooter={flyoutFooter}
-                    fixedHeader={flyoutHeader}
-                    fitContent
-                    hug={false}
-                    placement={FlyoutPlacement.BottomRight}
-                    onOpenChange={onOpenChange}
-                    trigger={(triggerProps, triggerRef) => (
+                <Flyout.Root open={isOpen && !isDragPreview} onOpenChange={onOpenChange}>
+                    <Flyout.Trigger asChild>
                         <BaseToolbarButton
                             data-test-id="block-item-wrapper-toolbar-flyout"
                             forceActiveStyle={isOpen && !isDragPreview}
-                            {...triggerProps}
-                            ref={triggerRef as MutableRefObject<HTMLButtonElement>}
                         >
                             {icon}
                         </BaseToolbarButton>
-                    )}
-                >
-                    {content}
-                </Flyout>
+                    </Flyout.Trigger>
+                    <Flyout.Content side="bottom" align="end">
+                        {flyoutHeader && <Flyout.Header>{flyoutHeader}</Flyout.Header>}
+                        {content}
+                        {flyoutFooter && <Flyout.Footer>{flyoutFooter}</Flyout.Footer>}
+                    </Flyout.Content>
+                </Flyout.Root>
             </div>
         </ToolbarButtonTooltip>
     );
