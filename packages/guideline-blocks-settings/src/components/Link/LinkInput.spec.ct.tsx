@@ -1,17 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
-import { ButtonSize, CheckboxState } from '@frontify/fondue';
 import { mount } from 'cypress/react18';
 
 import { LinkInput } from './LinkInput';
 
 const LINK_INPUT_ID = '[data-test-id="link-input"]';
-const TEXT_INPUT_ID = '[data-test-id="text-input"]';
+const TEXT_INPUT_ID = '[data-test-id="text-input"] > input';
 const INPUT_LABEL_CONTAINER_ID = '[data-test-id="input-label-container"]';
-const BUTTON_ID = '[data-test-id="button"]';
-const CLEAR_ICON_ID = '[data-test-id="clear-icon"]';
-const CHECKBOX_ID = '[data-test-id="checkbox-input"]';
+const BUTTON_ID = '[data-test-id="fondue-dialog-trigger"]';
+const CHECKBOX_ID = '[data-test-id="fondue-checkbox"]';
 
 describe('Link Input', () => {
     it('renders the link input', () => {
@@ -36,56 +34,30 @@ describe('Link Input', () => {
         cy.get(TEXT_INPUT_ID).should('have.value', 'https://example.com');
     });
 
-    it('renders with clear icon', () => {
-        const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
-        mount(<LinkInputWithStubs url="https://frontify.com" clearable />);
-
-        cy.get(CLEAR_ICON_ID).should('exist');
-    });
-
-    it('renders without clear icon', () => {
-        const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
-        mount(<LinkInputWithStubs clearable={false} />);
-
-        cy.get(TEXT_INPUT_ID).click({ force: true });
-        cy.get(TEXT_INPUT_ID).type('https://frontify.com').type('{enter}');
-        cy.get(CLEAR_ICON_ID).should('not.exist');
-    });
-
     it('toggles checkbox on click', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
         mount(
-            <LinkInputWithStubs
-                onToggleTab={cy.stub().as('onToggleTab')}
-                url="https://frontify.com"
-                openInNewTab={false}
-            />,
+            <LinkInputWithStubs onToggleTab={cy.stub().as('onToggleTab')} url="https://frontify.com" newTab={false} />,
         );
 
-        cy.get(CHECKBOX_ID).should('not.be.checked');
+        cy.get(CHECKBOX_ID).should('have.attr', 'data-state', 'unchecked');
         cy.get(CHECKBOX_ID).click({ force: true });
         cy.get('@onToggleTab').should('be.called.with', true);
     });
 
     it('toggles checkbox on click if its already checked', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
-        mount(<LinkInputWithStubs onToggleTab={cy.stub().as('onToggleTab')} url="https://frontify.com" openInNewTab />);
+        mount(<LinkInputWithStubs onToggleTab={cy.stub().as('onToggleTab')} url="https://frontify.com" newTab />);
 
-        cy.get(CHECKBOX_ID).should('be.checked');
+        cy.get(CHECKBOX_ID).should('have.attr', 'data-state', 'checked');
         cy.get(CHECKBOX_ID).click({ force: true });
         cy.get('@onToggleTab').should('be.called.with', false);
     });
 
     it('handles "Checked" state from newTab', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
-        mount(
-            <LinkInputWithStubs
-                onToggleTab={cy.stub().as('onToggleTab')}
-                url="https://frontify.com"
-                newTab={CheckboxState.Checked}
-            />,
-        );
-        cy.get(CHECKBOX_ID).should('be.checked');
+        mount(<LinkInputWithStubs onToggleTab={cy.stub().as('onToggleTab')} url="https://frontify.com" newTab />);
+        cy.get(CHECKBOX_ID).should('have.attr', 'data-state', 'checked');
         cy.get(CHECKBOX_ID).click({ force: true });
         cy.get('@onToggleTab').should('be.called.with', false);
     });
@@ -93,13 +65,9 @@ describe('Link Input', () => {
     it('handles "Unchecked" state from newTab', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
         mount(
-            <LinkInputWithStubs
-                onToggleTab={cy.stub().as('onToggleTab')}
-                url="https://frontify.com"
-                newTab={CheckboxState.Unchecked}
-            />,
+            <LinkInputWithStubs onToggleTab={cy.stub().as('onToggleTab')} url="https://frontify.com" newTab={false} />,
         );
-        cy.get(CHECKBOX_ID).should('not.be.checked');
+        cy.get(CHECKBOX_ID).should('have.attr', 'data-state', 'unchecked');
         cy.get(CHECKBOX_ID).click({ force: true });
         cy.get('@onToggleTab').should('be.called.with', true);
     });
@@ -136,7 +104,7 @@ describe('Link Input', () => {
 
     it('renders custom buttonsize', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
-        mount(<LinkInputWithStubs buttonSize={ButtonSize.Small} />);
+        mount(<LinkInputWithStubs buttonSize="small" />);
 
         cy.get(BUTTON_ID).should('have.class', 'tw-text-body-small');
     });

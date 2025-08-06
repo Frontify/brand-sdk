@@ -2,7 +2,6 @@
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
 import {
-    CheckboxState,
     ELEMENT_LINK,
     floatingLinkActions,
     floatingLinkSelectors,
@@ -22,7 +21,7 @@ import { type InsertModalDispatchType, type InsertModalStateProps } from './type
 const initialState: InsertModalStateProps = {
     url: '',
     text: '',
-    newTab: CheckboxState.Unchecked,
+    newTab: false,
 };
 
 export const InsertModalState = (): [InsertModalStateProps, Dispatch<InsertModalDispatchType>] => {
@@ -33,12 +32,12 @@ export const InsertModalState = (): [InsertModalStateProps, Dispatch<InsertModal
             case 'NEW_TAB':
                 return {
                     ...state,
-                    newTab: CheckboxState.Checked,
+                    newTab: true,
                 };
             case 'SAME_TAB':
                 return {
                     ...state,
-                    newTab: CheckboxState.Unchecked,
+                    newTab: false,
                 };
             case 'URL':
             case 'TEXT':
@@ -67,7 +66,7 @@ export const useInsertModal = () => {
             type: 'INIT',
             payload: {
                 text: floatingLinkSelectors.text() || floatingLinkSelectors.url(),
-                newTab: isNewTab ? CheckboxState.Checked : CheckboxState.Unchecked,
+                newTab: isNewTab,
                 url: legacyUrl && url === '' ? legacyUrl : floatingLinkSelectors.url(),
             },
         });
@@ -102,7 +101,7 @@ export const useInsertModal = () => {
 
         floatingLinkActions.text(state.text);
         floatingLinkActions.url(addHttps(state.url));
-        floatingLinkActions.newTab(state.newTab === CheckboxState.Checked);
+        floatingLinkActions.newTab(state.newTab);
 
         if (submitFloatingLink(editor)) {
             event?.preventDefault();
