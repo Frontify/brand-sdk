@@ -28,6 +28,8 @@ export class AssetDummy {
             revisionId: 1,
             backgroundColor: 'rgba(115, 210, 210, 255)',
             isDownloadProtected: false,
+            focalPointX: 0.5,
+            focalPointY: 0.5,
         };
     }
 }

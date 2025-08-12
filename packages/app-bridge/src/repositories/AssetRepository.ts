@@ -38,5 +38,7 @@ export const mapAssetApiToAsset = (asset: AssetApi): Asset => {
         revisionId: asset.revision_id,
         backgroundColor: asset.background_color,
         isDownloadProtected: asset.is_download_protected,
+        focalPointX: asset.focal_point_x,
+        focalPointY: asset.focal_point_y,
     };
 };
