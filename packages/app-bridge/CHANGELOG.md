@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.43
+
+### Patch Changes
+
+-   [#1268](https://github.com/Frontify/brand-sdk/pull/1268) [`010b72c`](https://github.com/Frontify/brand-sdk/commit/010b72ca227278bcb4e0eadaf70252791f037532) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Asset): added the focal point properties
+
 ## 4.0.0-alpha.42
 
 ### Patch Changes
