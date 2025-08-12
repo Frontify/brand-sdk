@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.10.3
+
+### Patch Changes
+
+-   [#1270](https://github.com/Frontify/brand-sdk/pull/1270) [`cb6bd32`](https://github.com/Frontify/brand-sdk/commit/cb6bd32e570e0c6825cd25c2b4f0baab464d5cc7) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(DropdownBlock): add function type to disabled
+
 ## 0.10.2
 
 ### Patch Changes
