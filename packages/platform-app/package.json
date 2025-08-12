@@ -1,7 +1,7 @@
 {
     "name": "@frontify/platform-app",
     "type": "module",
-    "version": "0.1.15",
+    "version": "0.1.16",
     "description": "Provides the types for the Apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
