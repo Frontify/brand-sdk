@@ -25,6 +25,8 @@ export type AssetApi = {
     revision_id: Nullable<number>;
     background_color: Nullable<string>;
     is_download_protected: boolean;
+    focal_point_x: Nullable<number>;
+    focal_point_y: Nullable<number>;
 };
 
 export type Asset = {
@@ -51,4 +53,6 @@ export type Asset = {
     revisionId: Nullable<number>;
     backgroundColor: Nullable<string>;
     isDownloadProtected: boolean;
+    focalPointX: Nullable<number>;
+    focalPointY: Nullable<number>;
 };
