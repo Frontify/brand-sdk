@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.2
+
+### Patch Changes
+
+-   [`a306bf6`](https://github.com/Frontify/brand-sdk/commit/a306bf62e691569439e2dc28878949edbfa58f15) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: update documentation links
+
 ## 1.0.1
 
 ### Patch Changes
