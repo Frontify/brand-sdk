@@ -106,7 +106,7 @@ export type BlockConfigExport = {
     /**
      * Block lifecycle hook ran before the block gets deleted from the Guideline.
      * The hook support both synchronous or asynchronous execution.
-     * {@linkhttps://developer.frontify.com/document/2569#/details-concepts-1/block-lifecycle/on-block-deletion}
+     * {@link https://developer.frontify.com/document/2569#/details-concepts-1/block-lifecycle/on-block-deletion}
      */
     onBlockDeleted?:
         | (({ appBridge }: { appBridge: AppBridgeBlock }) => void)
