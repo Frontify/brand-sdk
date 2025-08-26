@@ -5,8 +5,8 @@ import { type ReactNode, createContext, useContext } from 'react';
 
 import { type BlockProps } from '../index';
 
-export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string) => {
-    const { blockAssets, addAssetIdsToKey, deleteAssetIdsFromKey, updateAssetIdsFromKey } = useBlockAssets(appBridge);
+export const useAttachmentOperations = (attachmentKey: string, blockAssetBundle: ReturnType<typeof useBlockAssets>) => {
+    const { blockAssets, addAssetIdsToKey, deleteAssetIdsFromKey, updateAssetIdsFromKey } = blockAssetBundle;
     const attachments = blockAssets?.[attachmentKey] || [];
 
     const onAttachmentsAdd = async (newAssets: Asset[]) => {
@@ -33,6 +33,19 @@ export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string)
 
         await updateAssetIdsFromKey(attachmentKey, newAssetIds);
     };
+
+    return {
+        onAttachmentsAdd,
+        onAttachmentDelete,
+        onAttachmentReplace,
+        onAttachmentsSorted,
+        attachments,
+    };
+};
+
+export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string) => {
+    const { onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted, attachments } =
+        useAttachmentOperations(attachmentKey, useBlockAssets(appBridge));
 
     return {
         onAttachmentsAdd,
