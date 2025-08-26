@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type Bundle } from '../bundle';
+
 import { type ChoicesType } from './choices';
 
 import { type DropdownSize } from '.';
@@ -13,7 +15,7 @@ export type DropdownBlock<AppBridge> = {
     /**
      * Whether the dropdown should be disabled or not.
      */
-    disabled?: boolean;
+    disabled?: boolean | ((bundle: Bundle<AppBridge>) => boolean);
 
     /**
      * The placeholder to be shown in the dropdown.
