@@ -1,5 +1,30 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.2
+
+### Patch Changes
+
+-   [#1272](https://github.com/Frontify/brand-sdk/pull/1272) [`a306bf6`](https://github.com/Frontify/brand-sdk/commit/a306bf62e691569439e2dc28878949edbfa58f15) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: update documentation links
+
+-   [#1274](https://github.com/Frontify/brand-sdk/pull/1274) [`ccb6492`](https://github.com/Frontify/brand-sdk/commit/ccb6492fac3479a40cef9721b4b1c109d2725990) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(useAttachments): create new hook without asset call
+
+    ### Migration
+
+    No changes required for consumers of `useAttachments`.
+
+    -   **Keep using `useAttachments(appBridge, key)`** → works exactly as before.
+    -   **Optional (advanced use)**: To avoid multiple asset calls, use the new hook directly:
+
+    ```ts
+    import { Attachments, useAttachmentOperations } from '@frontify/guideline-blocks-settings';
+    import { useBlockAssets } from '@frontify/app-bridge';
+
+    const blockAssetsBundle = useBlockAssets(appBridge);
+    const props = useAttachmentOperations("MY_ATTACHMENTS_KEY", blockAssetsBundle);
+
+    return <Attachments {...props} />
+    ```
+
 ## 1.0.1
 
 ### Patch Changes
