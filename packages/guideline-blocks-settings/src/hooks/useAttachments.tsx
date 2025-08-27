@@ -73,6 +73,26 @@ export const AttachmentsProvider = ({
     return <AttachmentsContext.Provider value={attachmentContext}>{children}</AttachmentsContext.Provider>;
 };
 
+export const AttachmentOperationsProvider = ({
+    blockAssetBundle,
+    appBridge,
+    children,
+    assetId,
+}: {
+    blockAssetBundle: ReturnType<typeof useBlockAssets>;
+    children: ReactNode;
+    assetId: string;
+    appBridge: AppBridgeBlock;
+}) => {
+    const attachmentContext = useAttachmentOperations(assetId, blockAssetBundle);
+
+    return (
+        <AttachmentsContext.Provider value={{ ...attachmentContext, appBridge }}>
+            {children}
+        </AttachmentsContext.Provider>
+    );
+};
+
 export const useAttachmentsContext = () => {
     const context = useContext(AttachmentsContext);
 
