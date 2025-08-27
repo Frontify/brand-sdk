@@ -18,3 +18,4 @@ const blockAssetsBundle = useBlockAssets(appBridge);
 const props = useAttachmentOperations("MY_ATTACHMENTS_KEY", blockAssetsBundle);
 
 return <Attachments {...props} />
+```
