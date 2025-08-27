@@ -6,6 +6,7 @@ import {
     type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
+    minimumNumericalOrPixelRule,
     numericalOrPixelRule,
 } from '../';
 
@@ -74,7 +75,11 @@ export const getBorderSettings = (options?: BorderSettingsType): SettingBlock =>
                         id: widthId,
                         type: 'input',
                         defaultValue: BORDER_WIDTH_DEFAULT_VALUE,
-                        rules: [numericalOrPixelRule, maximumNumericalOrPixelOrAutoRule(500)],
+                        rules: [
+                            numericalOrPixelRule,
+                            minimumNumericalOrPixelRule(0),
+                            maximumNumericalOrPixelOrAutoRule(500),
+                        ],
                         placeholder: 'e.g. 3px',
                         onChange: (bundle) => appendUnit(bundle, widthId),
                     },

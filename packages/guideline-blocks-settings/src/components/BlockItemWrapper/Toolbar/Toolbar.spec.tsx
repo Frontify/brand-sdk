@@ -2,7 +2,7 @@
 
 import { getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { IconArrowMove16, IconMoveTo, IconTrashBin } from '@frontify/fondue';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
@@ -132,7 +132,7 @@ describe('Toolbar', () => {
         await fireEvent.click(flyoutBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(2);
 
-        await fireEvent.click(menuBtn);
+        await userEvent.click(menuBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(3);
     });
 
@@ -220,12 +220,13 @@ describe('Toolbar', () => {
         );
 
         const { baseElement } = render(<ToolbarWithAttachments />, { container: document.body });
-
         expect(baseElement.querySelector(`[data-test-id=${ATTACHMENTS_FLYOUT_ID}]`)).not.toBeNull();
-        expect(baseElement.querySelector(`[data-test-id=${MENU_FLYOUT_ID}]`)).not.toBeNull();
+        await waitFor(() => {
+            expect(baseElement.querySelector(`[data-test-id=${MENU_FLYOUT_ID}]`)).not.toBeNull();
+        });
     });
 
-    it('should keep flyouts closed if dragging', async () => {
+    it('should keep flyouts closed if dragging', () => {
         const MOCK_ASSET_FIELD_ID = 'attachment';
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,

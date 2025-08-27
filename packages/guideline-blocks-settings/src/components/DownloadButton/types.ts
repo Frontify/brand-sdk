@@ -2,4 +2,5 @@
 
 export type DownloadButtonProps = {
     onDownload: () => void;
+    ariaLabel?: string;
 };

@@ -275,6 +275,27 @@ const MANIFEST_WITH_SECRET_BUT_NO_LABEL = {
     },
 };
 
+const MANIFEST_WITH_EXPERIMENTAL_FLAG = {
+    appType: 'platform-app',
+    appId: 'abcdabcdabcdabcdabcdabcda',
+    experimental: true,
+    surfaces: {
+        mediaLibrary: {
+            assetAction: {
+                title: 'action title',
+                type: ['image', 'video'],
+                filenameExtension: ['png'],
+            },
+            assetCreation: {
+                title: 'action title',
+            },
+        },
+    },
+    metadata: {
+        version: 1,
+    },
+};
+
 const generateManifestWithEndpointNetworkCall = (networkEndpoints) => {
     return {
         appType: 'platform-app',
@@ -829,6 +850,11 @@ describe('Verify Platform App Manifest', () => {
             MANIFEST_WITH_NETWORK_CALL_NO_HEADERS_AND_BODY,
             platformAppManifestSchemaV1,
         );
+        expect(!!verifiedManifest).toBe(true);
+    });
+
+    it('should accept a manifest with an experimental flag', () => {
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_EXPERIMENTAL_FLAG, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 

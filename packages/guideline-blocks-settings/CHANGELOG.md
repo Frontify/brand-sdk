@@ -1,5 +1,129 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.3
+
+### Patch Changes
+
+-   [#1275](https://github.com/Frontify/brand-sdk/pull/1275) [`8626669`](https://github.com/Frontify/brand-sdk/commit/86266696ffb21f6222ede90e5e6516fcb9d8e695) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(useAttachments): create new context without asset call
+
+## 1.0.2
+
+### Patch Changes
+
+-   [#1272](https://github.com/Frontify/brand-sdk/pull/1272) [`a306bf6`](https://github.com/Frontify/brand-sdk/commit/a306bf62e691569439e2dc28878949edbfa58f15) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: update documentation links
+
+-   [#1274](https://github.com/Frontify/brand-sdk/pull/1274) [`ccb6492`](https://github.com/Frontify/brand-sdk/commit/ccb6492fac3479a40cef9721b4b1c109d2725990) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(useAttachments): create new hook without asset call
+
+    ### Migration
+
+    No changes required for consumers of `useAttachments`.
+
+    -   **Keep using `useAttachments(appBridge, key)`** → works exactly as before.
+    -   **Optional (advanced use)**: To avoid multiple asset calls, use the new hook directly:
+
+    ```ts
+    import { Attachments, useAttachmentOperations } from '@frontify/guideline-blocks-settings';
+    import { useBlockAssets } from '@frontify/app-bridge';
+
+    const blockAssetsBundle = useBlockAssets(appBridge);
+    const props = useAttachmentOperations("MY_ATTACHMENTS_KEY", blockAssetsBundle);
+
+    return <Attachments {...props} />
+    ```
+
+## 1.0.1
+
+### Patch Changes
+
+-   Updated dependencies [[`cb6bd32`](https://github.com/Frontify/brand-sdk/commit/cb6bd32e570e0c6825cd25c2b4f0baab464d5cc7)]:
+    -   @frontify/sidebar-settings@0.10.3
+
+## 1.0.0
+
+### Major Changes
+
+-   [#1267](https://github.com/Frontify/brand-sdk/pull/1267) [`3b34bfb`](https://github.com/Frontify/brand-sdk/commit/3b34bfb597cd73e82c4016913f8268d17665745b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor(\*): replace deprecated fondue components
+
+    ### Breaking Changes
+
+    -   **`AttachmentsProps`**
+
+        -   `triggerComponent` type changed from:
+            ```ts
+            triggerComponent?: (props: AttachmentsTriggerProps) => ReactElement;
+            ```
+            to:
+            ```ts
+            triggerComponent?: React.ForwardRefExoticComponent<
+                AttachmentsTriggerProps & React.RefAttributes<HTMLButtonElement>
+            >;
+            ```
+
+    -   **`AttachmentTriggerProps`**
+
+        -   Removed:
+            ```ts
+            triggerProps: HTMLAttributes<HTMLButtonElement>;
+            triggerRef: MutableRefObject<HTMLButtonElement>;
+            ```
+
+    -   **`LinkInput`**
+
+        -   Removed props:
+            ```ts
+            openInNewTab?: boolean;
+            clearable?: boolean;
+            ```
+        -   Changed:
+            ```ts
+            buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
+            newTab?: boolean; // was: newTab?: CheckboxState;
+            ```
+
+    -   **`LinkSelector`**
+
+        -   Changed:
+            ```ts
+            buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
+            ```
+
+    -   **`InsertModalDispatchType` & `InsertModalStateProps`**
+        -   Changed:
+            ```ts
+            newTab?: boolean; // was: newTab?: CheckboxState;
+            ```
+
+### Patch Changes
+
+-   [#1258](https://github.com/Frontify/brand-sdk/pull/1258) [`a82646f`](https://github.com/Frontify/brand-sdk/commit/a82646f71f9cb23eb7718062c5ab35c117e18f61) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.11.0`
+
+-   Updated dependencies [[`a82646f`](https://github.com/Frontify/brand-sdk/commit/a82646f71f9cb23eb7718062c5ab35c117e18f61)]:
+    -   @frontify/sidebar-settings@0.10.2
+
+## 0.38.1
+
+### Patch Changes
+
+-   [#1253](https://github.com/Frontify/brand-sdk/pull/1253) [`c5fc272`](https://github.com/Frontify/brand-sdk/commit/c5fc272bf297fa259d9c7c388c88a352eb14944e) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(RTE): remove loading placeholder for serialized text
+
+## 0.38.0
+
+### Minor Changes
+
+-   [#1245](https://github.com/Frontify/brand-sdk/pull/1245) [`3f192f7`](https://github.com/Frontify/brand-sdk/commit/3f192f795f94026fd8d3d8d10c4f4367323f1635) Thanks [@ragi96](https://github.com/ragi96)! - feat(DownloadButton): Add `ariaLabel` prop to allow accessibility label customization
+
+## 0.37.7
+
+### Patch Changes
+
+-   [#1243](https://github.com/Frontify/brand-sdk/pull/1243) [`1e87e3b`](https://github.com/Frontify/brand-sdk/commit/1e87e3b424476f81dc641843d5d32525ac8a44fa) Thanks [@ragi96](https://github.com/ragi96)! - refactor(RTE): deprecated id prop, `useId` for unique editor ID
+
+## 0.37.6
+
+### Patch Changes
+
+-   [#1241](https://github.com/Frontify/brand-sdk/pull/1241) [`f32ed03`](https://github.com/Frontify/brand-sdk/commit/f32ed03a46cbb8d432b036ebff884377b3b8d22e) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - min value rule for border input
+
 ## 0.37.5
 
 ### Patch Changes

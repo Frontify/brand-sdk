@@ -1,7 +1,7 @@
 {
     "name": "@frontify/sidebar-settings",
     "type": "module",
-    "version": "0.10.1",
+    "version": "0.10.3",
     "description": "Provides types and helpers for the settings sidebar",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -33,7 +33,7 @@
         "react-dom": "^18"
     },
     "dependencies": {
-        "@frontify/fondue": "^12.9.3"
+        "@frontify/fondue": "^12.11.0"
     },
     "devDependencies": {
         "@babel/core": "^7.24.4",

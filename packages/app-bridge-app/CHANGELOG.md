@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.8
+
+### Patch Changes
+
+-   [#1250](https://github.com/Frontify/brand-sdk/pull/1250) [`9510eba`](https://github.com/Frontify/brand-sdk/commit/9510eba02bd038405bef911579b89f3e23c1216f) Thanks [@olivereisenhut](https://github.com/olivereisenhut)! - feat(app): Enable to pass preview features to the GQL calls
+
 ## 0.1.7
 
 ### Patch Changes
