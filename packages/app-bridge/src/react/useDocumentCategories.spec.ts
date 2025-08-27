@@ -5,7 +5,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { DocumentCategoryDummy, getAppBridgeThemeStub } from '../tests';
+import { DocumentCategoryDummy, getAppBridgeBlockStub } from '../tests';
 import { type DocumentCategory } from '../types';
 
 import { useDocumentCategories } from './useDocumentCategories';
@@ -24,7 +24,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should fetch document categories on mount', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
@@ -44,7 +44,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should not fetch document categories on mount if not enabled', () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID, { enabled: false }));
@@ -55,7 +55,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should fetch document categories if it gets enabled', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         let enabled = false;
@@ -84,7 +84,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should update document categories if a category is added', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY = DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
@@ -130,7 +130,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should not update document categories if a category is added to another document', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY = DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
@@ -165,7 +165,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should update document categories if a category is removed', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY_TO_DELETE = DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
@@ -202,7 +202,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should not update document categories if a category is removed from another document', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY_TO_DELETE = DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
@@ -240,7 +240,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should update document categories if a category is updated', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY_TO_UPDATE: DocumentCategory = {
@@ -283,7 +283,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should not update document categories if a category is updated from another document', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const DOCUMENT_CATEGORY_TO_UPDATE: DocumentCategory = {
@@ -321,7 +321,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should update document categories number if a document page is added to a category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
@@ -339,7 +339,7 @@ describe('useDocumentCategories', () => {
         // Trigger a "document page add" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'add',
-            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_2 },
+            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_2, documentId: DOCUMENT_ID },
         });
 
         await waitFor(() => {
@@ -352,7 +352,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should not update document categories if a document page is added to another category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
@@ -370,7 +370,7 @@ describe('useDocumentCategories', () => {
         // Trigger a "document page add" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'add',
-            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_4 },
+            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_4, documentId: DOCUMENT_ID },
         });
 
         await waitFor(() => {
@@ -383,7 +383,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should update document categories if a document page is removed from a category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
@@ -401,7 +401,7 @@ describe('useDocumentCategories', () => {
         // Trigger a "document page delete" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'delete',
-            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_3 },
+            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_3, documentId: DOCUMENT_ID },
         });
 
         await waitFor(() => {
@@ -414,7 +414,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should not update document categories if a document page is removed from another category', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
@@ -432,7 +432,7 @@ describe('useDocumentCategories', () => {
         // Trigger a "document page delete" event in the specified document
         window.emitter.emit('AppBridge:GuidelineDocumentCategory:DocumentPageAction', {
             action: 'delete',
-            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_4 },
+            documentPage: { id: DOCUMENT_PAGE_ID, categoryId: DOCUMENT_CATEGORY_ID_4, documentId: DOCUMENT_ID },
         });
 
         await waitFor(() => {
@@ -445,7 +445,7 @@ describe('useDocumentCategories', () => {
     });
 
     it('should update document categories sort if a category is moved', async () => {
-        const appBridge = getAppBridgeThemeStub();
+        const appBridge = getAppBridgeBlockStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
 
         const CATEGORY_1 = DocumentCategoryDummy.withFields({

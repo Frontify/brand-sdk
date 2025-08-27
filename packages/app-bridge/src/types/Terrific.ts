@@ -17,7 +17,11 @@ export type TerrificComponent = {
     };
 };
 
-export type AssetChooserResult = Omit<AssetApi, 'project_id' | 'file_size'> & { project: number; filesize: number };
+export type AssetChooserResult = Omit<AssetApi, 'project_id' | 'file_size' | 'alternative_text'> & {
+    project: number;
+    filesize: number;
+    computed_alternative_text: Nullable<string>;
+};
 export type TemplateChooserResult = TemplateApiLegacy;
 
 export type AssetChooserAssetChosenCallback = (selectedAsset: { screenData: AssetChooserResult[] }) => void;
