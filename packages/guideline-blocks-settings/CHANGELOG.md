@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.3
+
+### Patch Changes
+
+-   [#1275](https://github.com/Frontify/brand-sdk/pull/1275) [`8626669`](https://github.com/Frontify/brand-sdk/commit/86266696ffb21f6222ede90e5e6516fcb9d8e695) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(useAttachments): create new context without asset call
+
 ## 1.0.2
 
 ### Patch Changes
