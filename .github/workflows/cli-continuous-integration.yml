@@ -30,7 +30,7 @@ jobs:
             - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version-file: ".nvmrc"
+                  node-version-file: "packages/cli/.nvmrc"
                   cache: "pnpm"
 
             - name: Install npm dependencies
@@ -46,7 +46,7 @@ jobs:
               run: pnpm --stream --filter {packages/cli} test:coverage
 
             - name: SonarCloud Scan
-              uses: sonarsource/sonarqube-scan-action@v4
+              uses: sonarsource/sonarqube-scan-action@v5
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
