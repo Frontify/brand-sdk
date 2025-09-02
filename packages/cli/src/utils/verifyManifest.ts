@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { array, number, object, string, z } from 'zod';
+import { array, boolean, number, object, string, z } from 'zod';
 
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
@@ -110,6 +110,7 @@ const ActionsArraySchema = array(ActionSchema).optional();
 export const platformAppManifestSchemaV1 = object({
     appId: string().length(25),
     appType,
+    experimental: boolean().optional(),
     secrets: secretsArraySchema.optional(),
     network: object({
         allowedHosts: array(

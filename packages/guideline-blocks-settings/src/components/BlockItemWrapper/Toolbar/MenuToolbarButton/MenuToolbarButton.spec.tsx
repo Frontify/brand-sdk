@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import { MultiFlyoutContextProvider } from '../context/MultiFlyoutContext';
@@ -17,16 +18,15 @@ const TEST_FLYOUT_ID = 'test';
  */
 
 describe('MenuToolbarButton', () => {
-    it('should log error if not inside a flyout provider when opening', () => {
+    it('should log error if not inside a flyout provider when opening', async () => {
         vi.spyOn(console, 'error');
         const { getByTestId } = render(<MenuToolbarButton items={[]} />);
 
-        fireEvent.click(getByTestId(BUTTON_ID));
-
+        await userEvent.click(getByTestId(BUTTON_ID));
         expect(console.error).toBeCalled();
     });
 
-    it('should use flyout Id in flyout context', () => {
+    it('should use flyout Id in flyout context', async () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
@@ -35,7 +35,7 @@ describe('MenuToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        fireEvent.click(getByTestId(BUTTON_ID));
+        await userEvent.click(getByTestId(BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
         const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);

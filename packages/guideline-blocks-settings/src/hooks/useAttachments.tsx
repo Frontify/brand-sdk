@@ -5,8 +5,8 @@ import { type ReactNode, createContext, useContext } from 'react';
 
 import { type BlockProps } from '../index';
 
-export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string) => {
-    const { blockAssets, addAssetIdsToKey, deleteAssetIdsFromKey, updateAssetIdsFromKey } = useBlockAssets(appBridge);
+export const useAttachmentOperations = (attachmentKey: string, blockAssetBundle: ReturnType<typeof useBlockAssets>) => {
+    const { blockAssets, addAssetIdsToKey, deleteAssetIdsFromKey, updateAssetIdsFromKey } = blockAssetBundle;
     const attachments = blockAssets?.[attachmentKey] || [];
 
     const onAttachmentsAdd = async (newAssets: Asset[]) => {
@@ -40,6 +40,19 @@ export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string)
         onAttachmentReplace,
         onAttachmentsSorted,
         attachments,
+    };
+};
+
+export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string) => {
+    const { onAttachmentsAdd, onAttachmentDelete, onAttachmentReplace, onAttachmentsSorted, attachments } =
+        useAttachmentOperations(attachmentKey, useBlockAssets(appBridge));
+
+    return {
+        onAttachmentsAdd,
+        onAttachmentDelete,
+        onAttachmentReplace,
+        onAttachmentsSorted,
+        attachments,
         appBridge,
     };
 };
@@ -58,6 +71,26 @@ export const AttachmentsProvider = ({
     const attachmentContext = useAttachments(appBridge, assetId);
 
     return <AttachmentsContext.Provider value={attachmentContext}>{children}</AttachmentsContext.Provider>;
+};
+
+export const AttachmentOperationsProvider = ({
+    blockAssetBundle,
+    appBridge,
+    children,
+    assetId,
+}: {
+    blockAssetBundle: ReturnType<typeof useBlockAssets>;
+    children: ReactNode;
+    assetId: string;
+    appBridge: AppBridgeBlock;
+}) => {
+    const attachmentContext = useAttachmentOperations(assetId, blockAssetBundle);
+
+    return (
+        <AttachmentsContext.Provider value={{ ...attachmentContext, appBridge }}>
+            {children}
+        </AttachmentsContext.Provider>
+    );
 };
 
 export const useAttachmentsContext = () => {

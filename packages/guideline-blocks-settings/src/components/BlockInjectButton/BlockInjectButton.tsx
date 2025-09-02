@@ -1,16 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type FileExtension, FileExtensionSets } from '@frontify/app-bridge';
-import {
-    ActionMenu,
-    Flyout,
-    IconArrowCircleUp20,
-    IconExclamationMarkTriangle,
-    IconImageStack20,
-    LoadingCircle,
-    MenuItemContentSize,
-} from '@frontify/fondue';
-import { type DragEventHandler, type MouseEventHandler, useRef, useState } from 'react';
+import { IconExclamationMarkTriangle } from '@frontify/fondue';
+import { Dropdown, Flyout, LoadingCircle } from '@frontify/fondue/components';
+import { IconArrowCircleUp, IconImageStack } from '@frontify/fondue/icons';
+import { type DragEventHandler, type MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 
 import { joinClassNames } from '../../utilities/react/joinClassNames';
 
@@ -73,6 +67,29 @@ export const BlockInjectButton = ({
         setMenuPosition([XInsideComponent, YInsideComponent]);
     };
 
+    const onItemClick = useCallback((callback: () => unknown) => {
+        callback();
+        setMenuPosition(undefined);
+    }, []);
+
+    const menuItems = useMemo(() => {
+        const items = [];
+        if (onUploadClick) {
+            items.push({
+                onSelect: () => onItemClick(onUploadClick),
+                title: 'Upload asset',
+                icon: <IconArrowCircleUp size="20" />,
+            });
+        }
+        if (onAssetChooseClick) {
+            items.push({
+                onSelect: () => onItemClick(onAssetChooseClick),
+                title: 'Browse asset',
+                icon: <IconImageStack size="20" />,
+            });
+        }
+        return items;
+    }, [onAssetChooseClick, onUploadClick, onItemClick]);
     return (
         <button
             ref={buttonRef}
@@ -121,7 +138,7 @@ export const BlockInjectButton = ({
             }
             onDrop={onDrop ? handleDrop : undefined}
             onClick={(event) => {
-                withMenu && openMenu(event);
+                withMenu && !menuPosition && openMenu(event);
                 onClick?.();
             }}
         >
@@ -151,63 +168,26 @@ export const BlockInjectButton = ({
                         top: menuPosition[1],
                     }}
                 >
-                    <Flyout
-                        onOpenChange={(isOpen) => !isOpen && setMenuPosition(undefined)}
-                        isOpen={true}
-                        fitContent
-                        hug={false}
-                        legacyFooter={false}
-                        trigger={<div />}
-                    >
-                        <ActionMenu
-                            menuBlocks={[
-                                {
-                                    id: 'menu',
-                                    menuItems: [
-                                        ...(onUploadClick
-                                            ? [
-                                                  {
-                                                      id: 'upload',
-                                                      size: MenuItemContentSize.XSmall,
-                                                      title: 'Upload asset',
-                                                      onClick: () => {
-                                                          onUploadClick();
-                                                          setMenuPosition(undefined);
-                                                      },
-
-                                                      initialValue: true,
-                                                      decorator: (
-                                                          <div className="tw-mr-2">
-                                                              <IconArrowCircleUp20 />
-                                                          </div>
-                                                      ),
-                                                  },
-                                              ]
-                                            : []),
-                                        ...(onAssetChooseClick
-                                            ? [
-                                                  {
-                                                      id: 'asset',
-                                                      size: MenuItemContentSize.XSmall,
-                                                      title: 'Browse asset',
-                                                      onClick: () => {
-                                                          onAssetChooseClick();
-                                                          setMenuPosition(undefined);
-                                                      },
-                                                      initialValue: true,
-                                                      decorator: (
-                                                          <div className="tw-mr-2">
-                                                              <IconImageStack20 />
-                                                          </div>
-                                                      ),
-                                                  },
-                                              ]
-                                            : []),
-                                    ],
-                                },
-                            ]}
-                        />
-                    </Flyout>
+                    <Flyout.Root open onOpenChange={(isOpen) => !isOpen && setMenuPosition(undefined)}>
+                        <Flyout.Trigger>
+                            <div />
+                        </Flyout.Trigger>
+                        <Flyout.Content triggerOffset="compact">
+                            <Dropdown.Root open>
+                                <Dropdown.Trigger>
+                                    <div />
+                                </Dropdown.Trigger>
+                                <Dropdown.Content triggerOffset="compact">
+                                    {menuItems.map((item) => (
+                                        <Dropdown.Item key={item.title} onSelect={item.onSelect}>
+                                            {item.icon}
+                                            {item.title}
+                                        </Dropdown.Item>
+                                    ))}
+                                </Dropdown.Content>
+                            </Dropdown.Root>
+                        </Flyout.Content>
+                    </Flyout.Root>
                 </div>
             )}
         </button>
