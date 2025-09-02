@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
-import { mount } from 'cypress/react18';
 import { type SinonStub } from 'sinon';
 
 import { Attachments as AttachmentsComponent } from './Attachments';
@@ -53,46 +52,46 @@ const hasOpenAssetChooser = (
 
 describe('Attachments', () => {
     it('renders attachments flyout if it is in edit mode', () => {
-        mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} />);
+        cy.mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} />);
         cy.get(FlyoutButtonSelector).should('exist');
     });
 
     it('renders attachments flyout if it has attachments', () => {
-        mount(<Attachments items={[AssetDummy.with(1)]} />);
+        cy.mount(<Attachments items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).should('exist');
     });
 
     it('does not render attachments flyout if there are no attachments', () => {
-        mount(<Attachments items={[]} />);
+        cy.mount(<Attachments items={[]} />);
         cy.get(FlyoutButtonSelector).should('not.exist');
     });
 
     it('renders asset input if in edit mode', () => {
-        mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} items={[AssetDummy.with(1)]} />);
+        cy.mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(AssetInputSelector).should('exist');
     });
 
     it('does not render asset input if in view mode', () => {
-        mount(<Attachments items={[AssetDummy.with(1)]} />);
+        cy.mount(<Attachments items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(AssetInputSelector).should('not.exist');
     });
 
     it('renders asset action buttons if in edit mode', () => {
-        mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} items={[AssetDummy.with(1)]} />);
+        cy.mount(<Attachments appBridge={getAppBridgeBlockStub({ editorState: true })} items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(ActionBarSelector).should('exist');
     });
 
     it('does not render asset action buttons if in view mode', () => {
-        mount(<Attachments items={[AssetDummy.with(1)]} />);
+        cy.mount(<Attachments items={[AssetDummy.with(1)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(ActionBarSelector).should('not.exist');
     });
 
     it('renders an attachment item for each asset', () => {
-        mount(<Attachments items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]} />);
+        cy.mount(<Attachments items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]} />);
         cy.get(FlyoutButtonSelector).click();
         cy.get(AttachmentItemSelector).should('have.length', 3);
     });
@@ -102,6 +101,7 @@ describe('Attachments', () => {
             editorState: true,
         });
 
+        // eslint-disable-next-line @typescript-eslint/require-await
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
@@ -115,7 +115,7 @@ describe('Attachments', () => {
                 }, 2000),
             );
 
-        mount(
+        cy.mount(
             <Attachments
                 onReplaceWithBrowse={replaceStub}
                 items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]}
@@ -133,7 +133,7 @@ describe('Attachments', () => {
     });
 
     it('renders focus ring on flyout button while tabbing and open it', () => {
-        mount(
+        cy.mount(
             <Attachments
                 appBridge={getAppBridgeBlockStub({ editorState: true })}
                 items={[AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)]}
@@ -149,7 +149,7 @@ describe('Attachments', () => {
 
     it('reorders items using only keyboard events', () => {
         const onSortStub = cy.stub();
-        mount(
+        cy.mount(
             <Attachments
                 appBridge={getAppBridgeBlockStub({ editorState: true })}
                 items={[{ ...AssetDummy.with(1), title: 'Moved item' }, AssetDummy.with(2), AssetDummy.with(3)]}

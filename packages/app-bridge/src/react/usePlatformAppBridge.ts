@@ -8,7 +8,7 @@ export const usePlatformAppBridge = () => {
     const [platformAppBridge, setPlatformAppBridge] = useState<AppBridgePlatformApp | undefined>();
 
     useEffect(() => {
-        (async () => {
+        (() => {
             const appBridge = new AppBridgePlatformApp();
             appBridge.subscribe('Context.connected', () => {
                 setPlatformAppBridge(appBridge);

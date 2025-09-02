@@ -17,7 +17,7 @@ describe('AssetRepositoryTest', () => {
         vi.clearAllMocks();
     });
 
-    test('createAssetByFileId with success', () => {
+    test('createAssetByFileId with success', async () => {
         const assetApiDummy = AssetApiDummy.with(ASSET_ID);
 
         const mockHttpClientPost = vi.fn().mockReturnValue(HttpUtilResponseDummy.successWith(assetApiDummy));
@@ -27,7 +27,7 @@ describe('AssetRepositoryTest', () => {
         const result = createAssetByFileId(FILE_ID, PROJECT_ID, SET_ID);
 
         expect(mockHttpClientPost).toHaveBeenCalledTimes(1);
-        expect(result).resolves.toEqual({ ...assetApiDummy, ...mapAssetApiToAsset(assetApiDummy) });
+        await expect(result).resolves.toEqual({ ...assetApiDummy, ...mapAssetApiToAsset(assetApiDummy) });
     });
 
     test('should map create asset from api to frontify correctly', () => {

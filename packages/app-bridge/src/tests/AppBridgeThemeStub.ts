@@ -94,7 +94,7 @@ export const getAppBridgeThemeStub = ({
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
 
-    const getAssets = async (themeOrTemplateAssets: Record<string, Asset[]>) => {
+    const getAssets = (themeOrTemplateAssets: Record<string, Asset[]>) => {
         return Object.entries(themeOrTemplateAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
             const addedAssetIdsList = addedAssetIds[key] ?? [];
             const deletedAssetIdsList = deletedAssetIds[key] ?? [];
@@ -106,9 +106,9 @@ export const getAppBridgeThemeStub = ({
         }, {});
     };
 
-    const getTemplateAssets = async () => getAssets(pageTemplateAssets);
+    const getTemplateAssets = () => getAssets(pageTemplateAssets);
 
-    const getThemeAssets = async () => getAssets(themeAssets);
+    const getThemeAssets = () => getAssets(themeAssets);
 
     return {
         getPortalId: stub<Parameters<AppBridgeTheme['getPortalId']>>().returns(portalId),
@@ -224,25 +224,25 @@ export const getAppBridgeThemeStub = ({
         ),
         addAssetIdsToCoverPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['addAssetIdsToCoverPageTemplateAssetKey']>
-        >().callsFake(async (key: string, assetsIds: number[]) => {
+        >().callsFake((key: string, assetsIds: number[]) => {
             addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
             return pageTemplateAssets;
         }),
         addAssetIdsToThemeAssetKey: stub<Parameters<AppBridgeTheme['addAssetIdsToThemeAssetKey']>>().callsFake(
-            async (key: string, assetsIds: number[]) => {
+            (key: string, assetsIds: number[]) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
                 return pageTemplateAssets;
             },
         ),
         addAssetIdsToLibraryPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['addAssetIdsToLibraryPageTemplateAssetKey']>
-        >().callsFake(async (_documentId: number, key: string, assetsIds: number[]) => {
+        >().callsFake((_documentId: number, key: string, assetsIds: number[]) => {
             addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
             return pageTemplateAssets;
         }),
         addAssetIdsToDocumentPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['addAssetIdsToDocumentPageTemplateAssetKey']>
-        >().callsFake(async (_documentPageId: number, key: string, assetsIds: number[]) => {
+        >().callsFake((_documentPageId: number, key: string, assetsIds: number[]) => {
             addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
             return pageTemplateAssets;
         }),
@@ -255,22 +255,22 @@ export const getAppBridgeThemeStub = ({
             stub<Parameters<AppBridgeTheme['getDocumentPageTemplateAssets']>>().callsFake(getTemplateAssets),
         deleteAssetIdsFromCoverPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['deleteAssetIdsFromCoverPageTemplateAssetKey']>
-        >().callsFake(async (key, assetIds) => {
+        >().callsFake((key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
         deleteAssetIdsFromThemeAssetKey: stub<
             Parameters<AppBridgeTheme['deleteAssetIdsFromThemeAssetKey']>
-        >().callsFake(async (key, assetIds) => {
+        >().callsFake((key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
         deleteAssetIdsFromLibraryPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['deleteAssetIdsFromLibraryPageTemplateAssetKey']>
-        >().callsFake(async (_documentId: number, key, assetIds) => {
+        >().callsFake((_documentId: number, key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
         deleteAssetIdsFromDocumentPageTemplateAssetKey: stub<
             Parameters<AppBridgeTheme['deleteAssetIdsFromDocumentPageTemplateAssetKey']>
-        >().callsFake(async (_documentPageId: number, key, assetIds) => {
+        >().callsFake((_documentPageId: number, key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
         getCoverPageTemplateSettings:
@@ -318,21 +318,21 @@ export const getAppBridgeThemeStub = ({
         ),
         updateCoverPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateCoverPageTemplateSettings']>
-        >().callsFake(async (pageTemplateSettingsUpdate) => {
+        >().callsFake((pageTemplateSettingsUpdate) => {
             localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
         updateDocumentPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateDocumentPageTemplateSettings']>
-        >().callsFake(async (pageTemplateSettingsUpdate) => {
+        >().callsFake((pageTemplateSettingsUpdate) => {
             localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
         updateLibraryPageTemplateSettings: stub<
             Parameters<AppBridgeTheme['updateLibraryPageTemplateSettings']>
-        >().callsFake(async (pageTemplateSettingsUpdate) => {
+        >().callsFake((pageTemplateSettingsUpdate) => {
             localPageTemplateSettings = mergeDeep(localPageTemplateSettings, pageTemplateSettingsUpdate);
         }),
         updateThemeSettings: stub<Parameters<AppBridgeTheme['updateThemeSettings']>>().callsFake(
-            async (themeSettingsUpdate) => {
+            (themeSettingsUpdate) => {
                 localThemeSettings = mergeDeep(localThemeSettings, themeSettingsUpdate);
             },
         ),
@@ -365,7 +365,7 @@ export const getAppBridgeThemeStub = ({
         updateDocumentTargets: stub<Parameters<AppBridgeTheme['updateDocumentTargets']>>().resolves(
             UpdateTargetsDummy.with([TARGET_ID_1, TARGET_ID_2, TARGET_ID_3]),
         ),
-        searchInGuideline: stub<Parameters<AppBridgeTheme['searchInGuideline']>>().callsFake(async (query) => {
+        searchInGuideline: stub<Parameters<AppBridgeTheme['searchInGuideline']>>().callsFake((query) => {
             return Promise.resolve([
                 GuidelineSearchResultDummy.with(`${query}-1`),
                 GuidelineSearchResultDummy.with(`${query}-1`),

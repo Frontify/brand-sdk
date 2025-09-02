@@ -37,16 +37,19 @@
     },
     "devDependencies": {
         "@frontify/app-bridge-app": "workspace:^",
-        "@frontify/eslint-config-react": "^0.17.6",
-        "@types/react": "^18.2.75",
-        "eslint": "^8.57.0",
-        "eslint-plugin-notice": "^0.9.10",
-        "prettier": "^3.2.5",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "typescript": "^5.4.4",
-        "vite": "^5.2.10",
-        "vite-plugin-dts": "^3.8.1",
-        "vitest": "^1.4.0"
+        "@frontify/eslint-config-react": "^1.0.4",
+        "@types/react": "^18.3.24",
+        "@vitejs/plugin-react": "^5.0.2",
+        "@vitest/coverage-v8": "^3.2.4",
+        "eslint": "^9.34.0",
+        "eslint-plugin-notice": "^1.0.0",
+        "prettier": "^3.6.2",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "typescript": "^5.9.2",
+        "typescript-eslint": "^8.42.0",
+        "vite": "^5.4.19",
+        "vite-plugin-dts": "^3.9.1",
+        "vitest": "^3.2.4"
     }
 }

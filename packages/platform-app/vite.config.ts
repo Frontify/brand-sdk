@@ -11,6 +11,7 @@ import { dependencies as dependenciesMap } from './package.json';
 const dependencies = Object.keys(dependenciesMap);
 
 export default defineConfig({
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     plugins: [react(), dts({ insertTypesEntry: true, rollupTypes: true })],
     build: {
         lib: {
@@ -41,6 +42,8 @@ export default defineConfig({
     },
     test: {
         coverage: {
+            enabled: true,
+            provider: 'v8',
             all: true,
             reporter: ['text', 'lcov'],
             include: ['src/**/*.ts', 'src/**/*.tsx'],

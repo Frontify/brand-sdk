@@ -9,7 +9,7 @@ import { type AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 import { renderReactApp } from './renderReactApp.ts';
 
 const AppTest = () => {
-    return <div data-testid="test-id">This component got rendered</div>;
+    return <div data-test-id="test-id">This component got rendered</div>;
 };
 
 describe('renderAppReact', () => {
@@ -63,7 +63,7 @@ describe('renderAppReact', () => {
         });
 
         await waitFor(() => {
-            expect(screen.getAllByTestId('test-id')).toBeDefined;
+            expect(screen.getAllByTestId('test-id')).toBeDefined();
         });
     });
 });

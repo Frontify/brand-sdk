@@ -12,8 +12,10 @@ const dependencies = Object.keys(dependenciesMap);
 export default defineConfig({
     plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
     test: {
-        deps: {
-            inline: ['@frontify/fondue'],
+        server: {
+            deps: {
+                inline: ['@frontify/fondue'],
+            },
         },
     },
     build: {

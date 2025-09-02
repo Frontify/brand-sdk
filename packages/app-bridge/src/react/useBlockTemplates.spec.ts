@@ -18,7 +18,7 @@ describe('useBlockTemplates hook', () => {
         cleanup();
     });
 
-    const loadUseBlockTemplates = async (existingTemplates = [TemplateDummy.with(1)]) => {
+    const loadUseBlockTemplates = (existingTemplates = [TemplateDummy.with(1)]) => {
         const template = TemplateDummy.with(1);
         const appBridgeStub = getAppBridgeBlockStub({
             blockId: 123,
@@ -154,7 +154,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.addTemplateIdsToKey('key', [1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(result.current.error).toEqual(errorMessage);
         });
     });
@@ -170,7 +170,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.deleteTemplateIdsFromKey('key', [1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(result.current.error).toEqual(errorMessage);
         });
     });
@@ -187,7 +187,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.deleteTemplateIdsFromKey('key', [1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(result.current.error).toEqual(errorMessage);
         });
     });

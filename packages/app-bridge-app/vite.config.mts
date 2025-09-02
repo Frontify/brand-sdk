@@ -1,15 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
 
 import { peerDependencies as peerDependenciesMap } from './package.json';
 
 const peerDependencies = Object.keys(peerDependenciesMap);
-export const globals = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-};
 
 export default defineConfig({
     plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
@@ -29,5 +25,14 @@ export default defineConfig({
     test: {
         environment: 'happy-dom',
         css: true,
+        coverage: {
+            enabled: true,
+            provider: 'v8',
+            all: true,
+            reporter: ['text', 'lcov'],
+            include: ['src/**/*.ts', 'src/**/*.tsx'],
+            exclude: ['src/**/test.ts', 'src/**/test.tsx', 'src/**/spec.ts', 'src/**/spec.tsx'],
+        },
+        setupFiles: ['./src/setupTests.ts'],
     },
 });
