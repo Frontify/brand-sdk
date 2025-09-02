@@ -72,3 +72,7 @@ pnpm add @frontify/app-bridge@3.0.2 --filter {packages/guideline-blocks-settings
 ```
 
 After updating, you can run the following commands as needed. For testing, use `pnpm test`. For linting, use `pnpm lint`. For type checking, use `pnpm typecheck`.
+
+# CI TEST CHANGE
+
+If this is not reverted, @danielfulop messed up.

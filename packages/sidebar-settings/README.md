@@ -39,3 +39,7 @@ export const settings: BlockSettings = {
     ],
 };
 ```
+
+# CI TEST CHANGE
+
+If this is not reverted, @danielfulop messed up.

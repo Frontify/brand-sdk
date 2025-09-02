@@ -1,6 +1,7 @@
 # Platform App Types
 
 ## Code Structure
+
 Defines the App and gives typing for the settings
 
 ```ts
@@ -36,3 +37,7 @@ export const settings = defineSettings({
     ],
 });
 ```
+
+# CI TEST CHANGE
+
+If this is not reverted, @danielfulop messed up.

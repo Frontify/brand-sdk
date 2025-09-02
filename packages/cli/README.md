@@ -71,3 +71,7 @@ frontify-cli logout
 ## Configuration
 
 macOS: `~/Library/Preferences/frontify-cli-nodejs`
+
+# CI TEST CHANGE
+
+If this is not reverted, @danielfulop messed up.
