@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import { FormControl, TooltipPosition } from '@frontify/fondue';
+import { FormControl } from '@frontify/fondue';
 import { TextInput, Checkbox, Label } from '@frontify/fondue/components';
 
 import { LinkSelector } from './LinkSelector';
@@ -44,7 +44,7 @@ export const LinkInput = ({
                     children: label,
                     htmlFor: 'url',
                     required,
-                    tooltip: info ? { content: info, position: TooltipPosition.Top } : undefined,
+                    tooltip: info ? { content: info, position: 'top' } : undefined,
                 }}
             >
                 <TextInput
