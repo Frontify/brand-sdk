@@ -39,6 +39,7 @@ const Attachments = ({
     );
 };
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const isPre302Stub = async (appBridge: AppBridgeBlock): Promise<boolean> => {
     const context = appBridge.context();
     return context === undefined;
@@ -101,7 +102,6 @@ describe('Attachments', () => {
             editorState: true,
         });
 
-        // eslint-disable-next-line @typescript-eslint/require-await
         if ((await isPre302Stub(appBridge)) && hasOpenAssetChooser(appBridge)) {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             (appBridge.openAssetChooser as SinonStub) = cy.stub().callsArgWith(0, AssetDummy.with(4));
