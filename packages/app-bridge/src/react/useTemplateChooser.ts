@@ -10,6 +10,7 @@ type UseTemplateChooserType = {
     closeTemplateChooser: () => void;
 };
 
+// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix
 export const useTemplateChooser = (appBridge: AppBridgeBlock): UseTemplateChooserType => {
     let unsubscribe: EventUnsubscribeFunction;
     return {

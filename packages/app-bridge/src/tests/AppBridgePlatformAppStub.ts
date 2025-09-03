@@ -4,6 +4,7 @@ import { type SinonStubbedInstance, stub } from 'sinon';
 
 import { type IAppBridgePlatformApp } from '../AppBridgePlatformApp';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type getAppBridgePlatformAppStubProps = {
     //
 };

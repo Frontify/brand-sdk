@@ -2,7 +2,6 @@
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
 import { IconAdobeCreativeCloud } from '@frontify/fondue';
-import { mount } from 'cypress/react18';
 
 import { BlockInjectButton } from './BlockInjectButton';
 
@@ -13,7 +12,7 @@ describe('Block Inject Button', () => {
     it('renders a simple block inject button', () => {
         const [BlockInjectButtonWithStubs] = withAppBridgeBlockStubs(BlockInjectButton, {});
 
-        mount(
+        cy.mount(
             <BlockInjectButtonWithStubs
                 label="label"
                 icon={<IconAdobeCreativeCloud />}
@@ -29,7 +28,7 @@ describe('Block Inject Button', () => {
     it('renders a block inject button with Menu upload and asset', () => {
         const [BlockInjectButtonWithStubs] = withAppBridgeBlockStubs(BlockInjectButton, {});
 
-        mount(
+        cy.mount(
             <BlockInjectButtonWithStubs
                 label="label"
                 secondaryLabel="second label"

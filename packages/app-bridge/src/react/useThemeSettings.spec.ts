@@ -28,7 +28,7 @@ describe('useThemeSettings', () => {
         cleanup();
     });
 
-    const loadUseThemeSettings = async (themeSettings: Record<ThemeTemplate, Record<string, unknown>>) => {
+    const loadUseThemeSettings = (themeSettings: Record<ThemeTemplate, Record<string, unknown>>) => {
         const appBridgeStub = getAppBridgeThemeStub({
             themeSettings,
         });

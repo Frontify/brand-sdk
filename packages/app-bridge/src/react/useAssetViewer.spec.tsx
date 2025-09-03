@@ -12,7 +12,7 @@ describe('useAssetViewer', () => {
         cleanup();
     });
 
-    const loadUseAssetViewer = async () => {
+    const loadUseAssetViewer = () => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeBlockStub({
             blockId: 123,

@@ -149,7 +149,7 @@ export type FontValue = {
     alignment?: TextAlignment;
 
     /**
-     * Whether the text has highlight (backgound color).
+     * Whether the text has highlight (background color).
      */
     highlight?: boolean;
 
@@ -279,7 +279,7 @@ export type FontValue = {
     hoverUnderline?: boolean;
 
     /**
-     * Whether the text has highlight (backgound color) on hover.
+     * Whether the text has highlight (background color) on hover.
      */
     hoverHighlight?: boolean;
 
@@ -409,7 +409,7 @@ export type FontValue = {
     activeUnderline?: boolean;
 
     /**
-     * Whether the text has highlight (backgound color) when active.
+     * Whether the text has highlight (background color) when active.
      */
     activeHighlight?: boolean;
 

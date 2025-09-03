@@ -124,7 +124,7 @@ export const getAppBridgeBlockStub = ({
         openAssetChooser: stub<Parameters<AppBridgeBlock['openAssetChooser']>>().callsFake((callback) => {
             openAssetChooser(callback);
         }),
-        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(async () => {
+        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(() => {
             return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
                 const addedAssetIdsList = addedAssetIds[key] ?? [];
                 const deletedAssetIdsList = deletedAssetIds[key] ?? [];
@@ -136,16 +136,16 @@ export const getAppBridgeBlockStub = ({
             }, {});
         }),
         addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
-            async (key, assetsIds) => {
+            (key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
             },
         ),
         deleteAssetIdsFromBlockAssetKey: stub<
             Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>
-        >().callsFake(async (key, assetIds) => {
+        >().callsFake((key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
         }),
-        getBlockTemplates: stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(async () => {
+        getBlockTemplates: stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(() => {
             return Object.entries(blockTemplates).reduce<Record<string, Template[]>>(
                 (templatesDiff, [key, templates]) => {
                     const addedTemplateIdsList = addedTemplateIds[key] ?? [];
@@ -161,12 +161,12 @@ export const getAppBridgeBlockStub = ({
         }),
         addTemplateIdsToBlockTemplateKey: stub<
             Parameters<AppBridgeBlock['addTemplateIdsToBlockTemplateKey']>
-        >().callsFake(async (key, templateIds) => {
+        >().callsFake((key, templateIds) => {
             addedTemplateIds[key] = [...(addedTemplateIds[key] ?? []), ...templateIds];
         }),
         deleteTemplateIdsFromBlockTemplateKey: stub<
             Parameters<AppBridgeBlock['deleteTemplateIdsFromBlockTemplateKey']>
-        >().callsFake(async (key, templateIds) => {
+        >().callsFake((key, templateIds) => {
             deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
         }),
         getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),

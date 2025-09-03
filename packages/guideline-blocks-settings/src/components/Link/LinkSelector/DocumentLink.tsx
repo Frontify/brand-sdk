@@ -50,7 +50,7 @@ export const DocumentLink = ({
                 ])}
                 onClick={() => onSelectUrl(document.permanentLink)}
             >
-                {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+                {/* eslint-disable-next-line jsx-a11y-x/no-redundant-roles */}
                 <button
                     role="button"
                     tabIndex={0}

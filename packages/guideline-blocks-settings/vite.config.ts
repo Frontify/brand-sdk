@@ -31,11 +31,13 @@ export default defineConfig({
         mainFields: ['module', 'main'],
     },
     test: {
-        environment: 'happy-dom',
-        deps: {
-            inline: ['clsx', '@juggle/resize-observer'],
-        },
         setupFiles: ['setupTests.ts'],
+        environment: 'happy-dom',
+        server: {
+            deps: {
+                inline: ['clsx', '@juggle/resize-observer'],
+            },
+        },
     },
     build: {
         lib: {

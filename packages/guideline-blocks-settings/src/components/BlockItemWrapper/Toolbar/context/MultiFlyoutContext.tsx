@@ -11,6 +11,7 @@ const MultiFlyoutContext = createContext<MultiFlyoutContextType>({
     openFlyoutIds: [],
     setOpenFlyoutIds: () => console.error('No MultiFlyoutContext Provider found'),
 });
+MultiFlyoutContext.displayName = 'MultiFlyoutContext';
 
 export const MultiFlyoutContextProvider = ({
     children,

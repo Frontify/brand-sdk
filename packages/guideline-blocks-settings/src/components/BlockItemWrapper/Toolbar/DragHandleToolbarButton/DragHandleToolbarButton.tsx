@@ -25,7 +25,7 @@ export const DragHandleToolbarButton = ({
     return (
         <ToolbarButtonTooltip
             {...(isDragPreview && { open: isDragPreview })}
-            content={<div>{isDragPreview ? DEFAULT_DRAGGING_TOOLTIP : tooltip ?? DEFAULT_DRAG_TOOLTIP}</div>}
+            content={<div>{isDragPreview ? DEFAULT_DRAGGING_TOOLTIP : (tooltip ?? DEFAULT_DRAG_TOOLTIP)}</div>}
         >
             <BaseToolbarButton
                 ref={setActivatorNodeRef}

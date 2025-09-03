@@ -19,7 +19,7 @@ const TEST_TOOLTIP = 'tooltip';
  * @vitest-environment happy-dom
  */
 describe('FlyoutToolbarButton', () => {
-    it('should log error if not inside a flyout provider when opening', async () => {
+    it('should log error if not inside a flyout provider when opening', () => {
         vi.spyOn(console, 'error');
         const { getByTestId } = render(
             <FlyoutToolbarButton
@@ -30,12 +30,12 @@ describe('FlyoutToolbarButton', () => {
             />,
         );
 
-        await fireEvent.click(getByTestId(BUTTON_ID));
+        fireEvent.click(getByTestId(BUTTON_ID));
 
         expect(console.error).toBeCalled();
     });
 
-    it('should use flyoutId in flyout context', async () => {
+    it('should use flyoutId in flyout context', () => {
         const setOpenFlyoutIdsStub = vi.fn();
 
         const { getByTestId } = render(
@@ -49,10 +49,10 @@ describe('FlyoutToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        await fireEvent.click(getByTestId(BUTTON_ID));
+        fireEvent.click(getByTestId(BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
-        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 

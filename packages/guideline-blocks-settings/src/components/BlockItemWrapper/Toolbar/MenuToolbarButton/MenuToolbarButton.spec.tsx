@@ -38,7 +38,7 @@ describe('MenuToolbarButton', () => {
         await userEvent.click(getByTestId(BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalled();
-        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 

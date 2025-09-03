@@ -8,7 +8,7 @@ import { AttachmentsProvider, useAttachments, useAttachmentsContext, withAttachm
 
 const MOCK_SETTINGS_ID = 'attachments';
 
-describe('useAttachments', async () => {
+describe('useAttachments', () => {
     it('should have 1 attachment if attachment is added', async () => {
         const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
             blockId: 1,
@@ -76,7 +76,7 @@ describe('useAttachments', async () => {
 });
 
 describe('useAttachmentsContext', () => {
-    it('should throw an error when not a child of a provider', async () => {
+    it('should throw an error when not a child of a provider', () => {
         expect(() => renderHook(() => useAttachmentsContext())).toThrowError();
     });
 

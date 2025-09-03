@@ -34,7 +34,7 @@ describe('useMultiFlyoutState', () => {
         const { result } = renderMultiFlyoutState({ openFlyoutIds: [], setOpenFlyoutIds: setOpenFlyoutIdsStub });
 
         result.current.onOpenChange(true);
-        const dispatchedResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
 
         expect(dispatchedResult).toEqual([FLYOUT_ID]);
     });
@@ -44,7 +44,7 @@ describe('useMultiFlyoutState', () => {
         const { result } = renderMultiFlyoutState({ openFlyoutIds: [], setOpenFlyoutIds: setOpenFlyoutIdsStub });
 
         result.current.onOpenChange(false);
-        const dispatchedResult = setOpenFlyoutIdsStub.mock.lastCall[0]([FLYOUT_ID]);
+        const dispatchedResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([FLYOUT_ID]);
 
         expect(dispatchedResult).toEqual([]);
     });
@@ -54,7 +54,7 @@ describe('useMultiFlyoutState', () => {
         const { result } = renderMultiFlyoutState({ openFlyoutIds: [], setOpenFlyoutIds: setOpenFlyoutIdsStub });
 
         result.current.onOpenChange(true);
-        const dispatchedResult = setOpenFlyoutIdsStub.mock.lastCall[0]([FLYOUT_ID, FLYOUT_ID, FLYOUT_ID]);
+        const dispatchedResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([FLYOUT_ID, FLYOUT_ID, FLYOUT_ID]);
 
         expect(dispatchedResult).toEqual([FLYOUT_ID]);
     });
