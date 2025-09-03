@@ -22,8 +22,8 @@ const ReadyForPrintDummy = ({ dataBlockId = BLOCK_ID } = {}) => {
         <div data-test-id={IS_READY_CONTAINER} className="mod block" data-block={dataBlockId}>
             <div>
                 {(isReadyForPrint && IS_READY_FOR_PRINT) || IS_NOT_READY_FOR_PRINT}
-                <button data-test-id={SET_TO_FALSE_BUTTON} onClick={() => setIsReadyForPrint(false)} />
-                <button data-test-id={SET_TO_TRUE_BUTTON} onClick={() => setIsReadyForPrint(true)} />
+                <button data-test-id={SET_TO_FALSE_BUTTON} onClick={() => setIsReadyForPrint(false)} type="button" />
+                <button data-test-id={SET_TO_TRUE_BUTTON} onClick={() => setIsReadyForPrint(true)} type="button" />
             </div>
         </div>
     );
@@ -41,7 +41,7 @@ describe('useReadyForPrint hook', () => {
         const container = screen.getByTestId(IS_READY_CONTAINER);
 
         expect(container.getAttribute('data-ready')).toBe('false');
-        expect(screen.getByText(IS_NOT_READY_FOR_PRINT)).toBeDefined;
+        expect(screen.getByText(IS_NOT_READY_FOR_PRINT)).toBeDefined();
     });
 
     test('Should change data-ready', () => {
@@ -54,12 +54,12 @@ describe('useReadyForPrint hook', () => {
         fireEvent.click(setToTrueButton);
 
         expect(container.getAttribute('data-ready')).toBe('true');
-        expect(screen.getByText(IS_READY_FOR_PRINT)).toBeDefined;
+        expect(screen.getByText(IS_READY_FOR_PRINT)).toBeDefined();
 
         fireEvent.click(setToFalseButton);
 
         expect(container.getAttribute('data-ready')).toBe('false');
-        expect(screen.getByText(IS_NOT_READY_FOR_PRINT)).toBeDefined;
+        expect(screen.getByText(IS_NOT_READY_FOR_PRINT)).toBeDefined();
     });
 
     test('Should throw an error if no blockId is provided', () => {

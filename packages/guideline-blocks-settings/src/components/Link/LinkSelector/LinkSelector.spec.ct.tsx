@@ -7,7 +7,6 @@ import {
     DocumentSectionApiDummy,
     getAppBridgeBlockStub,
 } from '@frontify/app-bridge';
-import { mount } from 'cypress/react18';
 import { type SinonStub } from 'sinon';
 
 import { LinkSelector } from './LinkSelector';
@@ -43,7 +42,7 @@ const isAppBridgeV3Stub = async (appBridge: AppBridgeBlock) => {
 describe('Link Selector', () => {
     it('renders the link selector button', () => {
         const appBridge = getAppBridgeBlockStub();
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -63,7 +62,7 @@ describe('Link Selector', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -83,7 +82,7 @@ describe('Link Selector', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -106,7 +105,7 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -129,7 +128,7 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -158,7 +157,7 @@ describe('Link Selector', () => {
             );
         }
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -182,7 +181,7 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
@@ -204,7 +203,7 @@ describe('Link Selector', () => {
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
 
-        mount(
+        cy.mount(
             <LinkSelector
                 getAllDocuments={appBridge.getAllDocuments}
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}

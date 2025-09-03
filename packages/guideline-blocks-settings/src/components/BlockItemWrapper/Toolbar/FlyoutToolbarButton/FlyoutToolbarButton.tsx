@@ -45,9 +45,9 @@ export const FlyoutToolbarButton = ({
                         </BaseToolbarButton>
                     </Flyout.Trigger>
                     <Flyout.Content side="bottom" align="end">
-                        {flyoutHeader && <Flyout.Header>{flyoutHeader}</Flyout.Header>}
+                        {flyoutHeader ? <Flyout.Header>{flyoutHeader}</Flyout.Header> : null}
                         {content}
-                        {flyoutFooter && <Flyout.Footer>{flyoutFooter}</Flyout.Footer>}
+                        {flyoutFooter ? <Flyout.Footer>{flyoutFooter}</Flyout.Footer> : null}
                     </Flyout.Content>
                 </Flyout.Root>
             </div>

@@ -194,7 +194,7 @@ export class AppBridgePlatformApp {
             this.callSubscribedTopic('Context.connected', [true, false]);
             this.callSubscribedTopic('Context.*', [this.localContext, this.localContext]);
             this.callSubscribedTopic('State.*', [this.localState, this.localState]);
-        } catch (error) {
+        } catch {
             if (attempt < this.maxRetries) {
                 await this.attemptSubscription(attempt + 1, checksum);
             } else {

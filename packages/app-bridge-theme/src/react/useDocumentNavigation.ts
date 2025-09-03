@@ -16,5 +16,5 @@ export const useDocumentNavigation = (appBridge: AppBridgeTheme, document: Docum
         appBridge.dispatch(hydrateContextDocumentNavigation(document.id()));
     }, [appBridge, document]);
 
-    return documentNavigation ? documentNavigation[document.id()] ?? [] : [];
+    return documentNavigation ? (documentNavigation[document.id()] ?? []) : [];
 };

@@ -54,7 +54,7 @@ describe('AttachmentsToolbarButton', () => {
         await waitFor(() => expect(queryByTestId(FLYOUT_CONTENT_ID)).toBeNull());
     });
 
-    it('should open flyout onClick', async () => {
+    it('should open flyout onClick', () => {
         const setOpenFlyoutIdsStub = vi.fn();
         const { getByTestId } = render(
             <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
@@ -66,10 +66,10 @@ describe('AttachmentsToolbarButton', () => {
             </MultiFlyoutContextProvider>,
         );
 
-        await fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));
+        fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));
 
         expect(setOpenFlyoutIdsStub).toHaveBeenCalledOnce();
-        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall[0]([]);
+        const dispatchedStateResult = setOpenFlyoutIdsStub.mock.lastCall?.[0]([]);
         expect(dispatchedStateResult).toEqual([TEST_FLYOUT_ID]);
     });
 

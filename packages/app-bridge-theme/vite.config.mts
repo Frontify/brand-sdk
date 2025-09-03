@@ -32,6 +32,8 @@ export default defineConfig({
         environment: 'happy-dom',
         css: true,
         coverage: {
+            enabled: true,
+            provider: 'v8',
             all: true,
             reporter: ['text', 'lcov'],
             include: ['src/**/*.ts', 'src/**/*.tsx'],

@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { IconMagnifier16 } from '@frontify/fondue';
-import { mount } from 'cypress/react18';
 
 import { BlockItemWrapper } from './BlockItemWrapper';
 
@@ -14,7 +13,7 @@ const ChildSelector = '[data-test-id="block-item-wrapper-child"]';
 
 describe('Block Item Wrapper', () => {
     it('should render the wrapper and the children', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper toolbarItems={[]}>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
             </BlockItemWrapper>,
@@ -24,7 +23,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should render the outline class', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper toolbarItems={[]}>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
             </BlockItemWrapper>,
@@ -33,7 +32,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should not render the outline class if the hide prop is set', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper toolbarItems={[]} shouldHideWrapper>
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
             </BlockItemWrapper>,
@@ -42,7 +41,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should render the right amount of toolbar items', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
                     { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
@@ -56,7 +55,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should render the flyout button with the right amount of menu items', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
                     { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
@@ -97,7 +96,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should render the outline if a toolbar button is focused', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
                     { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
@@ -112,7 +111,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should render the toolbar if a button is focused', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper
                 shouldHideComponent={false}
                 toolbarItems={[
@@ -128,7 +127,7 @@ describe('Block Item Wrapper', () => {
     });
 
     it('should render the outline and the toolbar if enabled', () => {
-        mount(
+        cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
                     { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },

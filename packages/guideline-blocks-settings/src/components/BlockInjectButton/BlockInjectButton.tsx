@@ -138,7 +138,9 @@ export const BlockInjectButton = ({
             }
             onDrop={onDrop ? handleDrop : undefined}
             onClick={(event) => {
-                withMenu && !menuPosition && openMenu(event);
+                if (withMenu && !menuPosition) {
+                    openMenu(event);
+                }
                 onClick?.();
             }}
         >

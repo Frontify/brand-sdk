@@ -16,6 +16,7 @@ export const createZip = (path: string, pathOut: string, ignored: string[] = [])
                 cwd: path,
                 ignore: ignored,
             })
+            // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
             .on('error', (error) => reject(error))
             .pipe(stream);
 

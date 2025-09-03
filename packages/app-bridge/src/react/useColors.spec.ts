@@ -10,7 +10,7 @@ import { useColors } from './useColors';
 const COLOR_PALETTE_ID = 1;
 
 describe('useColors hook', () => {
-    const loadUseColors = async () => {
+    const loadUseColors = () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useColors(appBridgeStub, COLOR_PALETTE_ID));
 
@@ -34,7 +34,7 @@ describe('useColors hook', () => {
 
         const createColorMock = vi.fn().mockImplementation(result.current.createColor);
 
-        expect(createColorMock()).resolves.not.toThrow();
+        await expect(createColorMock()).resolves.not.toThrow();
     });
 
     it('should not throw updateColor', async () => {
@@ -42,7 +42,7 @@ describe('useColors hook', () => {
 
         const updateColorMock = vi.fn().mockImplementation(result.current.updateColor);
 
-        expect(updateColorMock()).resolves.not.toThrow();
+        await expect(updateColorMock()).resolves.not.toThrow();
     });
 
     it('should not throw deleteColor', async () => {
@@ -50,6 +50,6 @@ describe('useColors hook', () => {
 
         const deleteColorMock = vi.fn().mockImplementation(result.current.deleteColor);
 
-        expect(deleteColorMock()).resolves.not.toThrow();
+        await expect(deleteColorMock()).resolves.not.toThrow();
     });
 });

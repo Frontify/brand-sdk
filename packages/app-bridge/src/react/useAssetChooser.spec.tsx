@@ -28,8 +28,9 @@ const AssetChooserDummy = ({
             <button
                 data-test-id={OPEN_ASSET_CHOOSER_BUTTON_ID}
                 onClick={() => openAssetChooser(onAssetChosen ?? (() => null), {})}
+                type="button"
             />
-            <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} />
+            <button data-test-id={CLOSE_ASSET_CHOOSER_BUTTON_ID} onClick={() => closeAssetChooser()} type="button" />
         </>
     );
 };

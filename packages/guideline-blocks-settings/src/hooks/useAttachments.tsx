@@ -58,6 +58,7 @@ export const useAttachments = (appBridge: AppBridgeBlock, attachmentKey: string)
 };
 
 const AttachmentsContext = createContext<ReturnType<typeof useAttachments> | null>(null);
+AttachmentsContext.displayName = 'AttachmentsContext';
 
 export const AttachmentsProvider = ({
     appBridge,

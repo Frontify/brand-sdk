@@ -73,11 +73,15 @@ export const createDeployment = async (
 
         if (!dryRun) {
             user = await getUser(instanceUrl, token);
-            user && Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
+            if (user) {
+                Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
+            }
         }
 
         if (user || dryRun) {
-            dryRun && Logger.info(pc.blue('Dry run: enabled'));
+            if (dryRun) {
+                Logger.info(pc.blue('Dry run: enabled'));
+            }
 
             const projectPath = process.cwd();
             const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
