@@ -36,7 +36,9 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
     })
     .action(async (instanceUrl: string, options) => {
         const computedInstanceUrl = instanceUrl || options.instance || process.env.INSTANCE_URL;
-        computedInstanceUrl && prompts.inject([computedInstanceUrl]);
+        if (computedInstanceUrl) {
+            prompts.inject([computedInstanceUrl]);
+        }
 
         const { promptedInstanceUrl } = await prompts([
             {

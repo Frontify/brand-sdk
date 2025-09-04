@@ -120,16 +120,16 @@ describe('Toolbar', () => {
 
         // Click Interactions
 
-        await fireEvent.click(attachmentBtn);
+        fireEvent.click(attachmentBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(1);
 
-        await fireEvent.drag(dragBtn);
+        fireEvent.drag(dragBtn);
         expect(stubs.onDrag).toHaveBeenCalledTimes(1);
 
-        await fireEvent.click(btn);
+        fireEvent.click(btn);
         expect(stubs.onClick).toHaveBeenCalledTimes(1);
 
-        await fireEvent.click(flyoutBtn);
+        fireEvent.click(flyoutBtn);
         expect(stubs.setOpenFlyoutIds).toHaveBeenCalledTimes(2);
 
         await userEvent.click(menuBtn);

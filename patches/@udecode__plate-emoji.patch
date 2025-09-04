@@ -1,5 +1,5 @@
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 3db72c864241a438a9ed3ea2860c311edcc2c410..1f8db9d86cf6e80d0c19312d145da847021e9bf6 100644
+index 3db72c864241a438a9ed3ea2860c311edcc2c410..643ce36abc93e6dc3977257d8bc837464bd32992 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
 @@ -312,10 +312,10 @@ var EmojiFloatingGridBuilder = class {
@@ -7,11 +7,11 @@ index 3db72c864241a438a9ed3ea2860c311edcc2c410..1f8db9d86cf6e80d0c19312d145da847
  
  // src/utils/EmojiLibrary/EmojiFloatingLibrary.ts
 -import emojiMartData2 from "@emoji-mart/data";
-+import emojiMartData2 from "@emoji-mart/data" assert { type: "json" };
++import emojiMartData2 from "@emoji-mart/data" with { type: "json" };
  
  // src/utils/EmojiLibrary/EmojiInlineLibrary.ts
 -import emojiMartData from "@emoji-mart/data";
-+import emojiMartData from "@emoji-mart/data" assert { type: "json" };
++import emojiMartData from "@emoji-mart/data" with { type: "json" };
  var EmojiInlineLibrary = class {
    constructor(library = emojiMartData) {
      this._hash = {};

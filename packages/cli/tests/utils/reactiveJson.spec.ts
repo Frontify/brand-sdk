@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
-import mockFs from 'mock-fs';
-import { afterEach, beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, afterEach, describe, expect, test, vi } from 'vitest';
 
 import { reactiveJson } from '../../src/utils/reactiveJson';
 
@@ -20,17 +19,22 @@ interface JsonFile {
     told: string;
 }
 
+vi.mock('node:fs', () => {
+    return {
+        readFileSync: vi.fn(),
+        writeFileSync: vi.fn(),
+    };
+});
+
 describe('Reactive JSON utils', () => {
     beforeEach(() => {
-        mockFs({
-            'frontify-cli': {
-                'someObject.json': testString,
-            },
-        });
+        vi.mocked(readFileSync).mockReset();
+        vi.mocked(writeFileSync).mockReset();
+        vi.mocked(readFileSync).mockReturnValue(testString);
     });
 
     afterEach(() => {
-        mockFs.restore();
+        vi.clearAllMocks();
     });
 
     describe('reactiveJson', () => {
@@ -45,8 +49,7 @@ describe('Reactive JSON utils', () => {
             reactiveObject.told = 'me';
             expect(reactiveObject).toEqual(expectedObject);
 
-            const jsonFileContent = readFileSync(fileTestPath, 'utf-8');
-            expect(jsonFileContent).toEqual(expectedString);
+            expect(writeFileSync).toHaveBeenCalledWith(fileTestPath, expectedString);
         });
     });
 });

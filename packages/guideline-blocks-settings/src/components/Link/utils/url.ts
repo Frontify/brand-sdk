@@ -12,7 +12,7 @@ export const isValidUrl = (url: string) => {
         const parsedUrl = new URL(url);
         const validProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
         return validProtocols.includes(parsedUrl.protocol) && parsedUrl.pathname !== '';
-    } catch (error) {
+    } catch {
         return false;
     }
 };

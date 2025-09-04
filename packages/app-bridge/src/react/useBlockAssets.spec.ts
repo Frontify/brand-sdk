@@ -18,7 +18,7 @@ describe('useBlockAssets hook', () => {
         cleanup();
     });
 
-    const loadUseBlockAssets = async (existingAssets = [AssetDummy.with(1)]) => {
+    const loadUseBlockAssets = (existingAssets = [AssetDummy.with(1)]) => {
         const asset = AssetDummy.with(1);
         const appBridgeStub = getAppBridgeBlockStub({
             blockId: 123,
@@ -50,7 +50,7 @@ describe('useBlockAssets hook', () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             sinon.assert.calledWithExactly(appBridgeStub.api, {
                 name: 'setAssetIdsByBlockAssetKey',
                 payload: { key: 'key', assetIds: [2, 1] },
@@ -69,7 +69,7 @@ describe('useBlockAssets hook', () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(result.current.blockAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
         });
 

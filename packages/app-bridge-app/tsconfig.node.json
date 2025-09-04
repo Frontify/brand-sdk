@@ -1,12 +1,14 @@
 {
     "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
         "composite": true,
+        "lib": ["ESNext"],
         "module": "ESNext",
         "moduleResolution": "Node",
-        "allowSyntheticDefaultImports": true,
         "resolveJsonModule": true,
-        "lib": ["ESNext"],
         "target": "ESNext"
     },
-    "include": [".eslintrc.cjs", "vite.config.mts", "package.json"]
+    "include": ["eslint.config.mjs", "vite.config.mts", "package.json"]
 }

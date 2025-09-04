@@ -61,8 +61,8 @@ describe('Compiler utils', () => {
                 outputName: outputNameTest,
             })) as unknown as { app: { output: { fileName: string }[] }; settings: { output: { fileName: string }[] } };
 
-            expect(result.app.output[0].fileName).toBe('assets/index-sM5bF_1u.js');
-            expect(result.app.output[1].fileName).toBe('assets/index-B-x5KKng.css');
+            expect(result.app.output[0].fileName).toBe('assets/index-DjzrFwQ_.js');
+            expect(result.app.output[1].fileName).toBe('assets/index-B-tCd20v.css');
             expect(result.app.output[2].fileName).toBe('index.html');
             expect(result.settings[0].output[0].fileName).toBe('settings.js');
         });

@@ -27,15 +27,24 @@ const Block = ({ appBridge }: { appBridge: AppBridgeBlock }): ReactElement => {
     return (
         <div data-test-id={`block-${appBridge.context('blockId').get()}`}>
             <div data-test-id={BLOCK_SETTINGS_DIV_ID}>{JSON.stringify(blockSettings)}</div>
-            <button onClick={() => updateBlockSettings(NEW_SETTINGS)} data-test-id={SET_BLOCK_SETTING_BUTTON}>
+            <button
+                onClick={() => updateBlockSettings(NEW_SETTINGS)}
+                data-test-id={SET_BLOCK_SETTING_BUTTON}
+                type="button"
+            >
                 Update block setting
             </button>
-            <button onClick={() => updateBlockSettings(NEW_SETTINGS_NULL)} data-test-id={SET_BLOCK_SETTING_NULL_BUTTON}>
+            <button
+                onClick={() => updateBlockSettings(NEW_SETTINGS_NULL)}
+                data-test-id={SET_BLOCK_SETTING_NULL_BUTTON}
+                type="button"
+            >
                 Update block setting to null
             </button>
             <button
                 onClick={() => updateBlockSettings(NEW_SETTINGS_UNDEFINED)}
                 data-test-id={SET_BLOCK_SETTING_UNDEFINED_BUTTON}
+                type="button"
             >
                 Update block setting to undefined
             </button>
@@ -54,7 +63,7 @@ describe('useBlockSettings', () => {
         expect(getByTestId(BLOCK_SETTINGS_DIV_ID).textContent).toBe('{}');
     });
 
-    it('should initially set the block settings to the API data', async () => {
+    it('should initially set the block settings to the API data', () => {
         const [BlockWithStubs] = withAppBridgeBlockStubs(Block, {
             blockSettings: NEW_SETTINGS,
         });
@@ -180,7 +189,7 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('gets the correct settings when rendering 2 blocks', async () => {
+    it('gets the correct settings when rendering 2 blocks', () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [Block1WithStubs] = withAppBridgeBlockStubs(Block, {

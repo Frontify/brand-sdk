@@ -44,4 +44,5 @@ export const floatingButtonStore: any = createStore('floatingButton')({
 
 export const floatingButtonActions = floatingButtonStore.set;
 export const floatingButtonSelectors = floatingButtonStore.get;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 export const useFloatingButtonSelectors = () => floatingButtonStore.use;

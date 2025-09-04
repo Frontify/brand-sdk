@@ -12,14 +12,14 @@ describe('AttachmentsToolbarButtonTrigger', () => {
         cleanup();
     });
 
-    it('should apply active styles when flyout is open', async () => {
+    it('should apply active styles when flyout is open', () => {
         const { getByTestId } = render(
             <AttachmentsToolbarButtonTrigger isFlyoutOpen>Button</AttachmentsToolbarButtonTrigger>,
         );
 
         expect(getByTestId(BUTTON_ID)).toHaveClass('tw-text-box-neutral-inverse-pressed');
     });
-    it('should forward trigger props to button', async () => {
+    it('should forward trigger props to button', () => {
         const onPointerUpStub = vi.fn();
 
         const forwardedProps = {
@@ -31,7 +31,7 @@ describe('AttachmentsToolbarButtonTrigger', () => {
                 Button
             </AttachmentsToolbarButtonTrigger>,
         );
-        await fireEvent.pointerUp(getByTestId(BUTTON_ID));
+        fireEvent.pointerUp(getByTestId(BUTTON_ID));
 
         expect(onPointerUpStub).toHaveBeenCalledOnce();
     });

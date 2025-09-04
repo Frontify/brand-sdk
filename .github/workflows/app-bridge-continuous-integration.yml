@@ -46,7 +46,7 @@ jobs:
               run: pnpm --stream --filter {packages/app-bridge} test:coverage
 
             - name: SonarCloud Scan
-              uses: sonarsource/sonarqube-scan-action@v4
+              uses: sonarsource/sonarqube-scan-action@v5
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -85,6 +85,10 @@ jobs:
                       ~/.cache/Cypress
                   key: pnpm-with-cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
                   restore-keys: pnpm-with-cypress-${{ runner.os }}-
+
+            # https://docs.cypress.io/app/get-started/install-cypress#pnpm-configuration
+            - name: Remove pnpm side effects cache
+              run: pnpm config set side-effects-cache false --location project
 
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile

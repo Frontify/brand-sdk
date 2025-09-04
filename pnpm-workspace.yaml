@@ -1,3 +1,11 @@
-prefer-workspace-packages: true
 packages:
-    - 'packages/*'
+  - packages/*
+
+onlyBuiltDependencies:
+  - cypress
+  - esbuild
+  - msw
+  - unrs-resolver
+
+patchedDependencies:
+  '@udecode/plate-emoji': patches/@udecode__plate-emoji.patch

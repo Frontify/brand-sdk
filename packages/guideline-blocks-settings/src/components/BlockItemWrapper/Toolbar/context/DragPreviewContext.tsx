@@ -3,6 +3,7 @@
 import { type ReactNode, createContext, useContext } from 'react';
 
 const DragPreviewContext = createContext(false);
+DragPreviewContext.displayName = 'DragPreviewContext';
 
 export const DragPreviewContextProvider = ({
     children,

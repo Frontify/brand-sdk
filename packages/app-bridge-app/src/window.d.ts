@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AppBridgePlatformApp } from './AppBridgePlatformApp.ts';
+import { type AppBridgePlatformApp } from './AppBridgePlatformApp.ts';
 
 declare global {
     interface Window {
