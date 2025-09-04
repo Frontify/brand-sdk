@@ -1,4 +1,6 @@
 @import '@frontify/fondue/components/styles';
+@import '../node_modules/@frontify/fondue/dist/packages/tokens/css/base.css';
+@import '../node_modules/@frontify/fondue/dist/packages/tokens/legacy/deprecatedBaseTokens.css';
 
 @tailwind base;
 @tailwind components;
