@@ -4,8 +4,9 @@ import containerQueryPlugin from '@tailwindcss/container-queries';
 import plugin from 'tailwindcss/plugin';
 
 module.exports = {
-    presets: [require('@frontify/fondue/tailwind')],
+    presets: [require('@frontify/fondue/legacyTokens/tailwind')],
     content: ['src/**/*.{ts,tsx}'],
+    prefix: 'tw-',
     corePlugins: {
         preflight: false,
     },

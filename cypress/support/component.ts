@@ -45,3 +45,4 @@ Cypress.Commands.add("mount", (component: ReactNode, options = {}) => {
 import "@frontify/fondue/style";
 import "cypress-real-events/support";
 import "./structuredClone";
+import "../../packages/guideline-blocks-settings/src/styles.css";
