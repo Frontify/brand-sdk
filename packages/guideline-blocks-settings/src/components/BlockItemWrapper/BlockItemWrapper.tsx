@@ -25,7 +25,6 @@ export const BlockItemWrapper = memo(
         const wrapperRef = useRef<HTMLDivElement>(null);
 
         if (shouldHideWrapper) {
-            // eslint-disable-next-line react/jsx-no-useless-fragment
             return <>{children}</>;
         }
 

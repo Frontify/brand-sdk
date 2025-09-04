@@ -50,6 +50,8 @@ describe('useTemplateAssets hook', () => {
             useTemplateAssets(appBridgeStub, template, DOCUMENT_ID, DOCUMENT_PAGE_ID),
         );
 
+        // for some reason necessary
+        // eslint-disable-next-line @typescript-eslint/require-await
         await act(async () => {
             rerender();
         });
@@ -86,7 +88,7 @@ describe('useTemplateAssets hook', () => {
             const deleteCall = appBridgeStub.deleteAssetIdsFromDocumentPageTemplateAssetKey.getCall(0);
             const addCall = appBridgeStub.addAssetIdsToDocumentPageTemplateAssetKey.getCall(0);
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(deleteCall.firstArg).toEqual(DOCUMENT_PAGE_ID);
                 expect(deleteCall.args[1]).toEqual('key');
                 expect(deleteCall.lastArg).toEqual([1, 2]);
@@ -110,7 +112,7 @@ describe('useTemplateAssets hook', () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
             });
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
@@ -199,7 +201,7 @@ describe('useTemplateAssets hook', () => {
             const deleteCall = appBridgeStub.deleteAssetIdsFromLibraryPageTemplateAssetKey.getCall(0);
             const addCall = appBridgeStub.addAssetIdsToLibraryPageTemplateAssetKey.getCall(0);
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(deleteCall.firstArg).toEqual(DOCUMENT_ID);
                 expect(deleteCall.args[1]).toEqual('key');
                 expect(deleteCall.lastArg).toEqual([1, 2]);
@@ -223,7 +225,7 @@ describe('useTemplateAssets hook', () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
             });
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
             });
 
@@ -311,7 +313,7 @@ describe('useTemplateAssets hook', () => {
             const deleteCall = appBridgeStub.deleteAssetIdsFromCoverPageTemplateAssetKey.getCall(0);
             const addCall = appBridgeStub.addAssetIdsToCoverPageTemplateAssetKey.getCall(0);
 
-            await waitFor(async () => {
+            await waitFor(() => {
                 expect(deleteCall.firstArg).toEqual('key');
                 expect(deleteCall.lastArg).toEqual([1, 2]);
                 expect(addCall.firstArg).toEqual('key');
@@ -333,9 +335,7 @@ describe('useTemplateAssets hook', () => {
                 await result.current.updateAssetIdsFromKey('key', [2, 1]);
             });
 
-            await waitFor(async () => {
-                expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
-            });
+            await waitFor(() => expect(result.current.templateAssets.key.map((asset) => asset.id)).toEqual([1, 2]));
 
             expect(console.error).toHaveBeenCalledOnce();
         });

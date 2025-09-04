@@ -86,6 +86,10 @@ jobs:
                   key: pnpm-with-cypress-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
                   restore-keys: pnpm-with-cypress-${{ runner.os }}-
 
+            # https://docs.cypress.io/app/get-started/install-cypress#pnpm-configuration
+            - name: Remove pnpm side effects cache
+              run: pnpm config set side-effects-cache false --location project
+
             - name: Install npm dependencies
               run: pnpm i --frozen-lockfile
 

@@ -67,7 +67,7 @@ describe('useThemeAssets hook', () => {
         const deleteCall = appBridgeStub.deleteAssetIdsFromThemeAssetKey.getCall(0);
         const addCall = appBridgeStub.addAssetIdsToThemeAssetKey.getCall(0);
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(deleteCall.firstArg).toEqual('key');
             expect(deleteCall.args[1]).toEqual([1, 2]);
             expect(addCall.firstArg).toEqual('key');
@@ -89,7 +89,7 @@ describe('useThemeAssets hook', () => {
 
         const deleteCall = appBridgeStub.deleteAssetIdsFromThemeAssetKey.getCall(0);
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(deleteCall.firstArg).toEqual('key');
             expect(deleteCall.args[1]).toEqual([]);
         });
@@ -109,7 +109,7 @@ describe('useThemeAssets hook', () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
         });
 
-        await waitFor(async () => {
+        await waitFor(() => {
             expect(result.current.themeAssets.key.map((asset) => asset.id)).toEqual([1, 2]);
         });
 

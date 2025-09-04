@@ -58,7 +58,7 @@ export const LinkSelector = ({
     };
 
     return (
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        // eslint-disable-next-line jsx-a11y-x/no-static-element-interactions
         <div
             onPointerDown={(event) => event.preventDefault()}
             data-test-id="internal-link-selector"

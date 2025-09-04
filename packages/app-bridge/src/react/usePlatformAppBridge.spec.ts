@@ -26,7 +26,7 @@ describe('usePlatformAppBridge', () => {
         vi.clearAllMocks();
     });
 
-    it('should return undefined platformApp if not initiated', async () => {
+    it('should return undefined platformApp if not initiated', () => {
         const { result } = renderHook(() => usePlatformAppBridge());
         expect(result.current).toBeUndefined();
     });

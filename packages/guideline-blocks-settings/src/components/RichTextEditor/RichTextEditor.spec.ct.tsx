@@ -2,7 +2,6 @@
 
 import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue';
-import { mount } from 'cypress/react18';
 import { type SinonStub } from 'sinon';
 
 import { convertToRteValue } from '../../helpers';
@@ -38,14 +37,14 @@ const appBridge = getAppBridgeBlockStub({
 
 describe('RichTextEditor', () => {
     it('should render a rich text editor in edit mode', () => {
-        mount(<RichTextEditor isEditing plugins={getDefaultPluginsWithLinkChooser(appBridge)} />);
+        cy.mount(<RichTextEditor isEditing plugins={getDefaultPluginsWithLinkChooser(appBridge)} />);
         cy.get(RichTextSelector).should('exist');
     });
 
     it('should only render a rich text editor when inside viewport and editing', () => {
         cy.viewport(500, 500);
 
-        mount(
+        cy.mount(
             <div style={{ paddingTop: '600px' }}>
                 <RichTextEditor isEditing plugins={getDefaultPluginsWithLinkChooser(appBridge)} />
             </div>,
@@ -60,27 +59,27 @@ describe('RichTextEditor', () => {
     });
 
     it('should render a rich text html in view mode', () => {
-        mount(<RichTextEditor isEditing={false} value="test" />);
+        cy.mount(<RichTextEditor isEditing={false} value="test" />);
         cy.get(RteHtmlSelector).should('exist');
     });
 
     it('should render a json value in view mode', () => {
-        mount(<RichTextEditor isEditing={false} value={convertToRteValue(TextStyles.heading1, 'Test Heading')} />);
+        cy.mount(<RichTextEditor isEditing={false} value={convertToRteValue(TextStyles.heading1, 'Test Heading')} />);
         cy.get(RteHtmlSelector).should('exist');
     });
 
     it('should render a html value in view mode', () => {
-        mount(<RichTextEditor isEditing={false} value="<p>Test Paragraph</p>" />);
+        cy.mount(<RichTextEditor isEditing={false} value="<p>Test Paragraph</p>" />);
         cy.get(RteHtmlSelector).should('exist');
     });
 
     it('should not render html output if value is empty', () => {
-        mount(<RichTextEditor isEditing={false} value="" />);
+        cy.mount(<RichTextEditor isEditing={false} value="" />);
         cy.get(RteHtmlSelector).should('not.exist');
     });
 
     it('should not render html output if value is undefined', () => {
-        mount(<RichTextEditor isEditing={false} />);
+        cy.mount(<RichTextEditor isEditing={false} />);
         cy.get(RteHtmlSelector).should('not.exist');
     });
 
@@ -88,9 +87,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
             />,
@@ -111,9 +110,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
             />,
@@ -135,9 +134,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
             />,
@@ -154,9 +153,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
             />,
@@ -174,9 +173,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
             />,
@@ -193,11 +192,8 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
-            <RichTextEditor
-                isEditing={true}
-                plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
-            />,
+        cy.mount(
+            <RichTextEditor isEditing plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])} />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('mailto:info@frontify.com {enter}');
@@ -208,11 +204,8 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
-            <RichTextEditor
-                isEditing={true}
-                plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
-            />,
+        cy.mount(
+            <RichTextEditor isEditing plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])} />,
         );
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('list:{enter}');
@@ -223,9 +216,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new LinkPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a link')}
             />,
@@ -242,9 +235,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new ButtonPlugin({ appBridge })])}
                 value={convertToRteValue('p', 'This is a button')}
             />,
@@ -263,9 +256,9 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
-                isEditing={true}
+                isEditing
                 plugins={new PluginComposer().setPlugin([new BreakAfterPlugin({ columns: 4, gap: 30 })])}
                 value={convertToRteValue('p', 'Hello there!')}
             />,
@@ -279,7 +272,7 @@ describe('RichTextEditor', () => {
         (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
-        mount(
+        cy.mount(
             <RichTextEditor
                 isEditing={false}
                 columns={4}

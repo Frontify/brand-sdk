@@ -52,7 +52,7 @@ describe('MessageBus', () => {
         await expect(() => messageBus.post({ operation: 'test' })).rejects.toThrow();
     });
 
-    it('should send a token with the channel', async () => {
+    it('should send a token with the channel', () => {
         const channel = new MessageChannel();
         const messageBus = new MessageBus(channel.port1);
 

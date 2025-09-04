@@ -9,11 +9,6 @@ import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMa
 const dependencies = Object.keys(dependenciesMap);
 const peerDependencies = Object.keys(peerDependenciesMap);
 
-export const globals = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-};
-
 export default defineConfig({
     plugins: [
         dts({ insertTypesEntry: true, rollupTypes: true }),
@@ -38,6 +33,8 @@ export default defineConfig({
         environment: 'happy-dom',
         css: true,
         coverage: {
+            enabled: true,
+            provider: 'v8',
             all: true,
             reporter: ['text', 'lcov'],
             include: ['src/**/*.ts', 'src/**/*.tsx'],

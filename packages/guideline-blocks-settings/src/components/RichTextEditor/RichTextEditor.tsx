@@ -10,6 +10,12 @@ import { floatingButtonActions, floatingButtonSelectors } from './plugins/Button
 import { getResponsiveColumnClasses } from './plugins/ColumnBreakPlugin/helpers';
 import { type RichTextEditorProps } from './types';
 
+const handleHideExternalFloatingModals = (editorId: string) => {
+    if (floatingButtonSelectors.isOpen(editorId)) {
+        floatingButtonActions.reset();
+    }
+};
+
 const InternalRichTextEditor = memo(
     ({
         isEnabled,
@@ -36,12 +42,6 @@ const InternalRichTextEditor = memo(
         );
 
         const handleValueChange = useCallback(() => setShouldPreventPageLeave(true), []);
-
-        const handleHideExternalFloatingModals = useCallback((editorId: string) => {
-            if (floatingButtonSelectors.isOpen(editorId)) {
-                floatingButtonActions.reset();
-            }
-        }, []);
 
         useEffect(() => {
             const unloadHandler = (event: BeforeUnloadEvent) => {

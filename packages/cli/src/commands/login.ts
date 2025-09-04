@@ -52,7 +52,9 @@ export class Authenticator {
             Configuration.set('instanceUrl', this.instanceUrl);
 
             const user = await getUser(this.instanceUrl);
-            user && Logger.success(`Welcome back ${user.name} (${this.instanceUrl})!`);
+            if (user) {
+                Logger.success(`Welcome back ${user.name} (${this.instanceUrl})!`);
+            }
 
             process.exit(0);
         });

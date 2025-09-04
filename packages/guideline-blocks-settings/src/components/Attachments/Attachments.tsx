@@ -99,6 +99,7 @@ export const Attachments = ({
     const onReplaceItemWithBrowse = (toReplace: Asset) => {
         handleFlyoutOpenChange(false);
         openAssetChooser(
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             async (result: Asset[]) => {
                 handleFlyoutOpenChange(true);
                 closeAssetChooser();

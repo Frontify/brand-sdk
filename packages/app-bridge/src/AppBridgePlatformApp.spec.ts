@@ -40,7 +40,7 @@ describe('AppBridgePlatformApp', () => {
         expect(notify).toHaveBeenCalledTimes(0);
     });
 
-    it('should yield true for Context.connected after dispatch', async () => {
+    it('should yield true for Context.connected after dispatch', () => {
         const connected = true;
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
@@ -57,13 +57,13 @@ describe('AppBridgePlatformApp', () => {
         await expect(() => platformApp.api({ name: 'getCurrentUser' })).rejects.toThrow();
     });
 
-    it('should return empty state when not inititalized', async () => {
+    it('should return empty state when not inititalized', () => {
         const platformApp = new AppBridgePlatformApp();
         const state = platformApp.state().get();
         expect(state).toEqual({ settings: {} });
     });
 
-    it('should return state after app is initialized', async () => {
+    it('should return state after app is initialized', () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
         platformApp.subscribe('Context.connected', (connected) => {
@@ -75,7 +75,7 @@ describe('AppBridgePlatformApp', () => {
         platformApp.dispatch(openConnection());
     });
 
-    it('should yield true for Context.connected after dispatch', async () => {
+    it('should yield true for Context.connected after dispatch', () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
         platformApp.subscribe('Context.connected', (connected) => {
@@ -89,7 +89,7 @@ describe('AppBridgePlatformApp', () => {
         platformApp.dispatch(openConnection());
     });
 
-    it('should return correct object when subscribing to context', async () => {
+    it('should return correct object when subscribing to context', () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
         platformApp.context().subscribe((context) => {
@@ -98,7 +98,7 @@ describe('AppBridgePlatformApp', () => {
         platformApp.dispatch(openConnection());
     });
 
-    it('should return correct object when subscribing to context', async () => {
+    it('should return correct object when subscribing to context', () => {
         window.location.search = `?token=${TOKEN}`;
         const platformApp = new AppBridgePlatformApp();
         platformApp.context().subscribe((context) => {

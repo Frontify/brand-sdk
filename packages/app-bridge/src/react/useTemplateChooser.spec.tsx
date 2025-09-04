@@ -28,8 +28,13 @@ const TemplateChooserDummy = ({
             <button
                 data-test-id={OPEN_TEMPLATE_CHOOSER_BUTTON_ID}
                 onClick={() => openTemplateChooser(onTemplateChosen ?? (() => null))}
+                type="button"
             />
-            <button data-test-id={CLOSE_TEMPLATE_CHOOSER_BUTTON_ID} onClick={() => closeTemplateChooser()} />
+            <button
+                data-test-id={CLOSE_TEMPLATE_CHOOSER_BUTTON_ID}
+                onClick={() => closeTemplateChooser()}
+                type="button"
+            />
         </>
     );
 };

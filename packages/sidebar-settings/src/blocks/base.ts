@@ -21,7 +21,7 @@ export type BaseBlock<AppBridge, T = undefined> = {
     label?: ValueOrPromisedValue<AppBridge, string>;
 
     /**
-     * Additionnal information about the settings to be shown in a tooltip.
+     * Additional information about the settings to be shown in a tooltip.
      */
     info?: ValueOrPromisedValue<AppBridge, string>;
 

@@ -11,28 +11,28 @@ describe('BaseToolbarButton', () => {
     afterEach(() => {
         cleanup();
     });
-    it('should call onClick', async () => {
+    it('should call onClick', () => {
         const onClickStub = vi.fn();
         const { getByTestId } = render(<BaseToolbarButton onClick={onClickStub}>Button</BaseToolbarButton>);
 
-        await fireEvent.click(getByTestId(BUTTON_ID));
+        fireEvent.click(getByTestId(BUTTON_ID));
 
         expect(onClickStub).toHaveBeenCalledOnce();
     });
 
-    it('should apply cursor styles', async () => {
+    it('should apply cursor styles', () => {
         const { getByTestId } = render(<BaseToolbarButton cursor="grab">Button</BaseToolbarButton>);
 
         expect(getByTestId(BUTTON_ID)).toHaveClass('!tw-cursor-grab');
     });
 
-    it('should apply active styles', async () => {
+    it('should apply active styles', () => {
         const { getByTestId } = render(<BaseToolbarButton forceActiveStyle>Button</BaseToolbarButton>);
 
         expect(getByTestId(BUTTON_ID)).toHaveClass('tw-text-box-neutral-inverse-pressed');
     });
 
-    it('should forward other attributes to button', async () => {
+    it('should forward other attributes to button', () => {
         const BUTTON_TYPE = 'base';
         const { getByTestId } = render(<BaseToolbarButton data-button-type={BUTTON_TYPE}>Button</BaseToolbarButton>);
 

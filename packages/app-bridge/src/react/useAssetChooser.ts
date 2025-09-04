@@ -10,6 +10,7 @@ type UseAssetChooserType = {
     closeAssetChooser: () => void;
 };
 
+// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
     let unsubscribe: EventUnsubscribeFunction;
 

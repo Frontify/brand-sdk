@@ -17,7 +17,7 @@ describe('useNavigationManager hook', () => {
         useNavigationManagerStub = result.current;
     });
 
-    it('should call openNavigationManager', async () => {
+    it('should call openNavigationManager', () => {
         const spy = vi.spyOn(useNavigationManagerStub, 'openNavigationManager').mockImplementation(() => undefined);
 
         useNavigationManagerStub.openNavigationManager();

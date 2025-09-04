@@ -1,44 +1,37 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mockFs from 'mock-fs';
-import { afterEach, describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { getAppBridgeVersion } from '../../src/utils/appBridgeVersion';
 
 const rootPath = 'frontify-cli';
 
+vi.mock('node:fs', () => {
+    return {
+        readFileSync: vi.fn(),
+        writeFileSync: vi.fn(),
+    };
+});
+
 describe('AppBridgeVersion utils', () => {
     afterEach(() => {
-        mockFs.restore();
+        vi.clearAllMocks();
     });
 
     it('should return the 3 as version from package.json', () => {
-        mockFs({
-            'frontify-cli': {
-                'package.json': '{"dependencies": {"@frontify/app-bridge": "3"}}',
-            },
-        });
-
+        vi.mocked(readFileSync).mockReturnValueOnce('{"dependencies": {"@frontify/app-bridge": "3"}}');
         expect(getAppBridgeVersion(rootPath)).toEqual('3');
     });
 
     it('should return the 3.0.0-beta.99 as version from package.json', () => {
-        mockFs({
-            'frontify-cli': {
-                'package.json': '{"dependencies": {"@frontify/app-bridge": "3.0.0-beta.99"}}',
-            },
-        });
-
+        vi.mocked(readFileSync).mockReturnValueOnce('{"dependencies": {"@frontify/app-bridge": "3.0.0-beta.99"}}');
         expect(getAppBridgeVersion(rootPath)).toEqual('3.0.0-beta.99');
     });
 
     it('should return the ^3.0.0 as version from package.json', () => {
-        mockFs({
-            'frontify-cli': {
-                'package.json': '{"dependencies": {"@frontify/app-bridge": "^3.0.0"}}',
-            },
-        });
-
+        vi.mocked(readFileSync).mockReturnValueOnce('{"dependencies": {"@frontify/app-bridge": "^3.0.0"}}');
         expect(getAppBridgeVersion(rootPath)).toEqual('^3.0.0');
     });
 });

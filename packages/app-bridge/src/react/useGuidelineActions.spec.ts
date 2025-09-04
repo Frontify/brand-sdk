@@ -2,7 +2,7 @@
 
 import { act, renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
-import { type SpyInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
     BrandportalLinkDummy,
@@ -63,7 +63,7 @@ const DOCUMENT_GROUP_ID_3 = 345882;
 
 describe('useGuidelineActions hook', () => {
     let useGuidelineActionsStub: ReturnType<typeof useGuidelineActions>;
-    let emitSpy: SpyInstance | null = null;
+    let emitSpy: ReturnType<typeof vi.spyOn> | null = null;
     let appBridgeStub: ReturnType<typeof getAppBridgeThemeStub>;
 
     beforeEach(() => {
@@ -83,19 +83,19 @@ describe('useGuidelineActions hook', () => {
     it('should not throw createDocument', async () => {
         const createDocumentMock = vi.fn(useGuidelineActionsStub.createDocument);
 
-        expect(createDocumentMock({ title: 'testDocument' })).resolves.not.toThrow();
+        await expect(createDocumentMock({ title: 'testDocument' })).resolves.not.toThrow();
     });
 
     it('should not throw createDocumentGroup', async () => {
         const createDocumentGroupMock = vi.fn(useGuidelineActionsStub.createDocumentGroup);
 
-        expect(createDocumentGroupMock({ name: 'testDocumentGroup' })).resolves.not.toThrow();
+        await expect(createDocumentGroupMock({ name: 'testDocumentGroup' })).resolves.not.toThrow();
     });
 
     it('should not throw createLibrary', async () => {
         const createLibraryMock = vi.fn(useGuidelineActionsStub.createLibrary);
 
-        expect(
+        await expect(
             createLibraryMock({ title: 'testLibrary', settings: { project: 4 }, mode: 'DOCUMENTLIBRARY' }),
         ).resolves.not.toThrow();
     });
@@ -103,7 +103,7 @@ describe('useGuidelineActions hook', () => {
     it('should not throw createLink', async () => {
         const createLinkMock = vi.fn(useGuidelineActionsStub.createLink);
 
-        expect(
+        await expect(
             createLinkMock({ title: 'testLink', linkUrl: '/test/url', linkSettings: { newTab: true } }),
         ).resolves.not.toThrow();
     });
@@ -111,49 +111,49 @@ describe('useGuidelineActions hook', () => {
     it('should not throw createDocumentCategory', async () => {
         const createDocumentCategoryMock = vi.fn(useGuidelineActionsStub.createDocumentCategory);
 
-        expect(createDocumentCategoryMock({ title: 'testCategory', documentId: 4 })).resolves.not.toThrow();
+        await expect(createDocumentCategoryMock({ title: 'testCategory', documentId: 4 })).resolves.not.toThrow();
     });
 
     it('should not throw createDocumentPage', async () => {
         const createDocumentPageMock = vi.fn(useGuidelineActionsStub.createDocumentPage);
 
-        expect(createDocumentPageMock({ title: 'testPage', documentId: 5 })).resolves.not.toThrow();
+        await expect(createDocumentPageMock({ title: 'testPage', documentId: 5 })).resolves.not.toThrow();
     });
 
     it('should not throw createCoverPage', async () => {
         const createCoverPageMock = vi.fn(useGuidelineActionsStub.createCoverPage);
 
-        expect(createCoverPageMock({ documentId: '5', template: 'cover' })).resolves.not.toThrow();
+        await expect(createCoverPageMock({ documentId: '5', template: 'cover' })).resolves.not.toThrow();
     });
 
     it('should not throw updateDocument', async () => {
         const updateDocumentMock = vi.fn(useGuidelineActionsStub.updateDocument);
 
-        expect(updateDocumentMock({ id: 1, title: 'updateDocumentTest' })).resolves.not.toThrow();
+        await expect(updateDocumentMock({ id: 1, title: 'updateDocumentTest' })).resolves.not.toThrow();
     });
 
     it('should not throw updateDocumentGroup', async () => {
         const updateDocumentGroupMock = vi.fn(useGuidelineActionsStub.updateDocumentGroup);
 
-        expect(updateDocumentGroupMock({ id: 1, name: 'updateDocumentGroupTest' })).resolves.not.toThrow();
+        await expect(updateDocumentGroupMock({ id: 1, name: 'updateDocumentGroupTest' })).resolves.not.toThrow();
     });
 
     it('should not throw updateLibrary', async () => {
         const updateLibraryMock = vi.fn(useGuidelineActionsStub.updateLibrary);
 
-        expect(updateLibraryMock({ id: 1, title: 'updateTitleTest' })).resolves.not.toThrow();
+        await expect(updateLibraryMock({ id: 1, title: 'updateTitleTest' })).resolves.not.toThrow();
     });
 
     it('should not throw updateLink', async () => {
         const updateLinkMock = vi.fn(useGuidelineActionsStub.updateLink);
 
-        expect(updateLinkMock({ id: 1, title: 'updateLinkTest' })).resolves.not.toThrow();
+        await expect(updateLinkMock({ id: 1, title: 'updateLinkTest' })).resolves.not.toThrow();
     });
 
     it('should not throw updateDocumentCategory', async () => {
         const updateDocumentCategoryMock = vi.fn(useGuidelineActionsStub.updateDocumentCategory);
 
-        expect(
+        await expect(
             updateDocumentCategoryMock({ id: 1, title: 'updateDocumentCategoryTest', documentId: 20 }),
         ).resolves.not.toThrow();
     });
@@ -161,7 +161,7 @@ describe('useGuidelineActions hook', () => {
     it('should not throw updateDocumentPage', async () => {
         const updateDocumentPageMock = vi.fn(useGuidelineActionsStub.updateDocumentPage);
 
-        expect(
+        await expect(
             updateDocumentPageMock({ id: 1, title: 'updateDocumentPageTest', documentId: 20 }),
         ).resolves.not.toThrow();
     });
@@ -169,79 +169,79 @@ describe('useGuidelineActions hook', () => {
     it('should not throw updateLegacyCoverPage', async () => {
         const updateLegacyCoverPageMock = vi.fn(useGuidelineActionsStub.updateLegacyCoverPage);
 
-        expect(updateLegacyCoverPageMock({})).resolves.not.toThrow();
+        await expect(updateLegacyCoverPageMock({})).resolves.not.toThrow();
     });
 
     it('should not throw updateCoverPage', async () => {
         const updateCoverPageMock = vi.fn(useGuidelineActionsStub.updateCoverPage);
 
-        expect(updateCoverPageMock({ id: 1 })).resolves.not.toThrow();
+        await expect(updateCoverPageMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw updateBrandportalLink', async () => {
         const updateBrandportalLinkMock = vi.fn(useGuidelineActionsStub.updateBrandportalLink);
 
-        expect(updateBrandportalLinkMock({})).resolves.not.toThrow();
+        await expect(updateBrandportalLinkMock({})).resolves.not.toThrow();
     });
 
     it('should not throw deleteDocument', async () => {
         const deleteDocumentMock = vi.fn(useGuidelineActionsStub.deleteDocument);
 
-        expect(deleteDocumentMock({ id: 1 })).resolves.not.toThrow();
+        await expect(deleteDocumentMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteLibrary', async () => {
         const deleteLibraryMock = vi.fn(useGuidelineActionsStub.deleteLibrary);
 
-        expect(deleteLibraryMock({ id: 1 })).resolves.not.toThrow();
+        await expect(deleteLibraryMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteLink', async () => {
         const deleteLinkMock = vi.fn(useGuidelineActionsStub.deleteLink);
 
-        expect(deleteLinkMock({ id: 1 })).resolves.not.toThrow();
+        await expect(deleteLinkMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteDocumentPage', async () => {
         const deleteDocumentPageMock = vi.fn(useGuidelineActionsStub.deleteDocumentPage);
 
-        expect(deleteDocumentPageMock({ id: 1, documentId: 10, categoryId: null })).resolves.not.toThrow();
+        await expect(deleteDocumentPageMock({ id: 1, documentId: 10, categoryId: null })).resolves.not.toThrow();
     });
 
     it('should not throw deleteDocumentGroup', async () => {
         const deleteDocumentGroupMock = vi.fn(useGuidelineActionsStub.deleteDocumentGroup);
 
-        expect(deleteDocumentGroupMock({ id: 1 })).resolves.not.toThrow();
+        await expect(deleteDocumentGroupMock({ id: 1 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteDocumentCategory', async () => {
         const deleteDocumentCategoryMock = vi.fn(useGuidelineActionsStub.deleteDocumentCategory);
 
-        expect(deleteDocumentCategoryMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
+        await expect(deleteDocumentCategoryMock({ id: 1, documentId: 10 })).resolves.not.toThrow();
     });
 
     it('should not throw deleteCoverPage', async () => {
         const deleteCoverPageMock = vi.fn(useGuidelineActionsStub.deleteCoverPage);
 
-        expect(deleteCoverPageMock()).resolves.not.toThrow();
+        await expect(deleteCoverPageMock()).resolves.not.toThrow();
     });
 
     it('should not throw duplicateDocumentPage', async () => {
         const duplicateDocumentPageMock = vi.fn(useGuidelineActionsStub.duplicateDocumentPage);
 
-        expect(duplicateDocumentPageMock({ id: 1, documentId: 5 })).resolves.not.toThrow();
+        await expect(duplicateDocumentPageMock({ id: 1, documentId: 5 })).resolves.not.toThrow();
     });
 
     it('should not throw updateDocumentTargets', async () => {
         const updateDocumentTargetsMock = vi.fn(useGuidelineActionsStub.updateDocumentTargets);
 
-        expect(updateDocumentTargetsMock([1, 2, 3], [203])).resolves.not.toThrow();
+        await expect(updateDocumentTargetsMock([1, 2, 3], [203])).resolves.not.toThrow();
     });
 
     it('should not throw updateDocumentPageTargets', async () => {
         const updateDocumentPageTargetsMock = vi.fn(useGuidelineActionsStub.updateDocumentPageTargets);
 
-        expect(updateDocumentPageTargetsMock([1, 2, 3], [203])).resolves.not.toThrow();
+        await expect(updateDocumentPageTargetsMock([1, 2, 3], [203])).resolves.not.toThrow();
     });
 
     it('should create a link and emit an event', async () => {
