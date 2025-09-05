@@ -11,7 +11,7 @@ export class PlatformAppDevelopmentServer {
     constructor(
         private readonly entryFilePath: string,
         private readonly port: number,
-    ) { }
+    ) {}
 
     async serve(): Promise<void> {
         try {
