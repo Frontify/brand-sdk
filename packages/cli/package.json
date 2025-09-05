@@ -46,6 +46,7 @@
         "prompts": "^2.4.2",
         "vite": "^5.4.19",
         "vite-plugin-externals": "^0.6.2",
+        "vite-plugin-mkcert": "^1.17.8",
         "zod": "^3.25.76"
     },
     "devDependencies": {

@@ -5,12 +5,13 @@ import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import * as esbuild from 'esbuild';
 import { createServer } from 'vite';
+import mkcert from 'vite-plugin-mkcert';
 
 export class PlatformAppDevelopmentServer {
     constructor(
         private readonly entryFilePath: string,
         private readonly port: number,
-    ) {}
+    ) { }
 
     async serve(): Promise<void> {
         try {
@@ -34,6 +35,7 @@ export class PlatformAppDevelopmentServer {
                 },
                 server: { cors: true },
                 plugins: [
+                    mkcert(),
                     react(),
                     {
                         name: 'prebuild-commands',
