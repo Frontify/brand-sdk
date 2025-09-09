@@ -4,4 +4,4 @@
 "@frontify/frontify-cli": patch
 ---
 
-bump fondue to 12.12.3
+chore: bump `@frontify/fondue` to `12.12.3`
