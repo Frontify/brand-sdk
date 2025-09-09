@@ -1,7 +1,7 @@
 {
     "name": "@frontify/sidebar-settings",
     "type": "module",
-    "version": "0.10.4",
+    "version": "0.10.5",
     "description": "Provides types and helpers for the settings sidebar",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
