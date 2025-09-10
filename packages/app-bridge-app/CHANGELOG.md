@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.10
+
+### Patch Changes
+
+- [#1294](https://github.com/Frontify/brand-sdk/pull/1294) [`a828e37`](https://github.com/Frontify/brand-sdk/commit/a828e37e4934d751823b01bdfbbd42e77d732dee) Thanks [@julianiff](https://github.com/julianiff)! - feat: increase timeout of message bus
+
 ## 0.1.9
 
 ### Patch Changes
