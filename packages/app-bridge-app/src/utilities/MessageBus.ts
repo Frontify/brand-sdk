@@ -53,7 +53,7 @@ export class MessageBus implements IMessageBus {
 
             setTimeout(() => {
                 reject(new TimeoutReachedError('operation'));
-            }, SUBSCRIBE_TIMEOUT * 10);
+            }, SUBSCRIBE_TIMEOUT * 300);
         });
     }
 }
