@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.6
+
+### Patch Changes
+
+- [#1296](https://github.com/Frontify/brand-sdk/pull/1296) [`51c21aa`](https://github.com/Frontify/brand-sdk/commit/51c21aa0f560cd952b7fc8c4f733ccb1505bc170) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(LinkSelector): add scroll to dialog
+
 ## 1.0.5
 
 ### Patch Changes
