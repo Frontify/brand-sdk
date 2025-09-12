@@ -138,7 +138,7 @@ export const getAppBridgeBlockStub = ({
             );
         }),
         addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
-            async (key, assetsIds) => {
+            (key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
             },
         ),
