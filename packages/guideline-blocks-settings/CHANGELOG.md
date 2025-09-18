@@ -6,6 +6,21 @@
 
 - [#1286](https://github.com/Frontify/brand-sdk/pull/1286) [`8ed6d57`](https://github.com/Frontify/brand-sdk/commit/8ed6d57ad71cf81d73798e4f639103960be8dc93) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to v13
 
+## 1.0.6
+
+### Patch Changes
+
+- [#1296](https://github.com/Frontify/brand-sdk/pull/1296) [`51c21aa`](https://github.com/Frontify/brand-sdk/commit/51c21aa0f560cd952b7fc8c4f733ccb1505bc170) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(LinkSelector): add scroll to dialog
+
+## 1.0.5
+
+### Patch Changes
+
+- [#1290](https://github.com/Frontify/brand-sdk/pull/1290) [`0858b44`](https://github.com/Frontify/brand-sdk/commit/0858b444e76cb04d0cb12c999c83eab77de7d71d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - chore: bump `@frontify/fondue` to `12.12.3`
+
+- Updated dependencies [[`0858b44`](https://github.com/Frontify/brand-sdk/commit/0858b444e76cb04d0cb12c999c83eab77de7d71d)]:
+    - @frontify/sidebar-settings@0.10.5
+
 ## 1.0.4
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type Document, type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
-import { Button, Dialog } from '@frontify/fondue/components';
+import { Button, Dialog, ScrollArea } from '@frontify/fondue/components';
 import { IconLink } from '@frontify/fondue/icons';
 import { type KeyboardEvent, type ReactElement, useEffect, useState } from 'react';
 
@@ -75,8 +75,8 @@ export const LinkSelector = ({
                     <Dialog.Header>
                         <Dialog.Title>Select internal link</Dialog.Title>
                     </Dialog.Header>
-                    <Dialog.Body>
-                        <div>
+                    <Dialog.Body padding="none">
+                        <ScrollArea padding="compact">
                             <DocumentLinks
                                 selectedUrl={selectedUrl}
                                 onSelectUrl={onSelectUrl}
@@ -84,7 +84,7 @@ export const LinkSelector = ({
                                 getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
                                 getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
                             />
-                        </div>
+                        </ScrollArea>
                     </Dialog.Body>
                     <Dialog.Footer>
                         <Button size={buttonSize} emphasis="default" onPress={() => setIsModalOpen(false)}>
