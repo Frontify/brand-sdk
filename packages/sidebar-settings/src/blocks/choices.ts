@@ -3,8 +3,7 @@
 import { type ReactElement } from 'react';
 
 import { type BaseBlock, type ValueOrPromisedValue } from './base';
-
-import { type IconEnum } from '.';
+import { type IconEnum } from './iconEnum';
 
 export type Choice = {
     /**
@@ -20,7 +19,7 @@ export type Choice = {
     /**
      * The icon of the item.
      *
-     * The full list of icons can be found here {@link https://github.com/Frontify/fondue/blob/beta/src/foundation/Icon/IconEnum.ts}
+     * The full list of icons can be found here {@link https://fondue-components.frontify.com/?path=/story/icons_icons--default}
      */
     icon?: IconEnum | keyof typeof IconEnum | ReactElement;
 

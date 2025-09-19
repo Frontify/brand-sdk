@@ -128,8 +128,6 @@ export const platformAppManifestSchemaV1 = object({
         guideline: object({
             themeAction: object({
                 title: string().min(2).max(28),
-                projectId: string(),
-                portalId: string(),
             }).optional(),
             assetViewer: object({
                 title: string().min(2).max(28),

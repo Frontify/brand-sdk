@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type BaseBlock } from './base';
-
-import { type Choice } from '.';
+import { type Choice } from './choices';
 
 /**
  * The origin of the font.

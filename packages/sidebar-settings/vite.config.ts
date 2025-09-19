@@ -5,19 +5,8 @@ import { resolve } from 'node:path';
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vitest/config';
 
-import { dependencies as dependenciesMap } from './package.json';
-
-const dependencies = Object.keys(dependenciesMap);
-
 export default defineConfig({
     plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
-    test: {
-        server: {
-            deps: {
-                inline: ['@frontify/fondue'],
-            },
-        },
-    },
     build: {
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
@@ -26,7 +15,6 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies],
             output: [
                 {
                     name: 'SidebarSettings',
