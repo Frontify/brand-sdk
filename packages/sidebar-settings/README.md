@@ -8,7 +8,6 @@ Provides the settings types for the guideline-blocks.
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { BlockSettings, Bundle } from '@frontify/guideline-blocks-settings';
-import { IconEnum } from '@frontify/fondue';
 
 export const settings: BlockSettings = {
     main: [
@@ -20,12 +19,12 @@ export const settings: BlockSettings = {
             choices: [
                 {
                     value: 'noline',
-                    icon: IconEnum.LineSpacer,
+                    icon: 'LineSpacer',
                     label: 'Spacer (no line)',
                 },
                 {
                     value: 'solid',
-                    icon: IconEnum.LineSolid,
+                    icon: 'LineSolid',
                     label: 'Line',
                 },
             ],
