@@ -5,8 +5,9 @@ import { type ReactElement } from 'react';
 import { type Rule } from '../helpers';
 
 import { type BaseBlock } from './base';
+import { type IconEnum } from './iconEnum';
 
-import { type IconEnum, type TextInputType } from '.';
+import { type TextInputType } from '.';
 
 export type InputBlock<AppBridge> = {
     /**
@@ -17,7 +18,7 @@ export type InputBlock<AppBridge> = {
     /**
      * The icon of the input.
      *
-     * The full list of icons can be found here {@link https://github.com/Frontify/fondue/blob/beta/src/foundation/Icon/IconEnum.ts}
+     * The full list of icons can be found here {@link https://fondue-components.frontify.com/?path=/story/icons_icons--default}
      */
     icon?: IconEnum | keyof typeof IconEnum | ReactElement;
 

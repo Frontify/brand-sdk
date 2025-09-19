@@ -6,6 +6,13 @@
 
 - [#1286](https://github.com/Frontify/brand-sdk/pull/1286) [`8ed6d57`](https://github.com/Frontify/brand-sdk/commit/8ed6d57ad71cf81d73798e4f639103960be8dc93) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to v13
 
+## 1.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`4197764`](https://github.com/Frontify/brand-sdk/commit/419776400bc3f470546841241015f80ddc032fe8)]:
+    - @frontify/sidebar-settings@0.10.6
+
 ## 1.0.6
 
 ### Patch Changes

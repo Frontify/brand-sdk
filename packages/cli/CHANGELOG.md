@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.9.3
+
+### Patch Changes
+
+- [#1301](https://github.com/Frontify/brand-sdk/pull/1301) [`89db03c`](https://github.com/Frontify/brand-sdk/commit/89db03cc96f037641fa7f430b7b03e4a5a56752b) Thanks [@julianiff](https://github.com/julianiff)! - fix: remove projectId and portalID from verifier
+
 ## 5.9.2
 
 ### Patch Changes
