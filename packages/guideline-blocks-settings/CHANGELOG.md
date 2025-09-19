@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.8-alpha.0
+
+### Patch Changes
+
+- [#864](https://github.com/Frontify/brand-sdk/pull/864) [`3cb0845`](https://github.com/Frontify/brand-sdk/commit/3cb0845f9fdf445f2fb680be4428980ac14524e5) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump `@frontify/fondue` to `13.0.0-beta.9`
+
+- [#1307](https://github.com/Frontify/brand-sdk/pull/1307) [`9a78b2c`](https://github.com/Frontify/brand-sdk/commit/9a78b2cd2062ace4dc46bfa8d75cc54e04e34c80) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump to latest fondue beta
+
 ## 1.0.5-alpha.0
 
 ### Patch Changes
