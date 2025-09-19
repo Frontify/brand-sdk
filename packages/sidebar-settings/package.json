@@ -32,9 +32,6 @@
         "react": "^18",
         "react-dom": "^18"
     },
-    "dependencies": {
-        "@frontify/fondue": "^12.12.3"
-    },
     "devDependencies": {
         "@babel/core": "^7.28.3",
         "@frontify/eslint-config-basic": "^1.0.5",
