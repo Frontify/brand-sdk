@@ -49,7 +49,18 @@ const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
 };
 
 const BUILD_FILE_BLOCK_LIST = ['**/*.*.map'];
-const SOURCE_FILE_BLOCK_LIST = ['.git', 'node_modules', 'dist', '.vscode', '.idea', 'README.md', '.DS_Store'];
+const SOURCE_FILE_BLOCK_LIST = [
+    '.git',
+    'node_modules',
+    'dist',
+    '.vscode',
+    '.idea',
+    '.eslintignore',
+    '.prettierignore',
+    'README.md',
+    '.DS_Store',
+    '**/*.graphql',
+];
 
 export const createDeployment = async (
     entryFile: string,
@@ -112,9 +123,13 @@ export const createDeployment = async (
             const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
                 (entry) => entry !== 'manifest.json',
             );
-            const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) =>
-                fastGlob.convertPathToPattern(`${projectPath}/${path}`),
-            );
+
+            const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) => {
+                if (path.includes('*')) {
+                    return `${projectPath}/${path}`;
+                }
+                return fastGlob.convertPathToPattern(`${projectPath}/${path}`);
+            });
 
             const request = {
                 build_files: await makeFilesDict(
