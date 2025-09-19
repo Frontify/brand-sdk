@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.10.6
+
+### Patch Changes
+
+- [#1305](https://github.com/Frontify/brand-sdk/pull/1305) [`4197764`](https://github.com/Frontify/brand-sdk/commit/419776400bc3f470546841241015f80ddc032fe8) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - refactor: remove dependency on Fondue
+
 ## 0.10.5
 
 ### Patch Changes
