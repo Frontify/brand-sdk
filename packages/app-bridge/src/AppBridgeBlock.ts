@@ -164,58 +164,80 @@ export interface AppBridgeBlock<
 
     getAsset(assetId: number): Promise<Asset>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getAllDocuments(): Promise<Document[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getUngroupedDocuments(): Promise<Document[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentsByDocumentGroupId(documentGroupId: number): Promise<Document[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentGroups(): Promise<DocumentGroup[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentPagesByDocumentCategoryId(documentCategoryId: number): Promise<DocumentPage[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getUncategorizedDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentTargets(documentId: number): Promise<DocumentTargets>;
 
-    /*
-     * @deprecated this method will be removed without a replacement, if you need this please reach out through the frontify-friends channel, happy to discuss your use case!
+    /**
+     * @deprecated This method will be removed without a replacement. If you need this, please reach out through the
+     * [Frontify Friends Slack channel](https://join.slack.com/t/frontify-friends/shared_invite/zt-1lhu6lump-s18oTGI4EhHt8BKWfBAN_A).
+     * We're happy to discuss your use case!
      */
     getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 }
