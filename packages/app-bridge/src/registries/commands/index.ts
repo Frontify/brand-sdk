@@ -7,3 +7,4 @@ export * from './DownloadAsset';
 export * from './NewPublication';
 export * from './SearchDialog';
 export * from './TemplateChooser';
+export * from './TrackEvent';
