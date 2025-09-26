@@ -1,6 +1,8 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
 export type TrackActions = 'button:clicked';
 
 export type TrackPayload = {
     action: TrackActions;
-    payload: Record<string, unknown>;
+    payload: Nullable<Record<string, string>>;
 };
