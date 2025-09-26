@@ -55,6 +55,7 @@ export type BlockCommand = CommandNameValidator<
         | 'openAssetViewer'
         | 'openTemplateChooser'
         | 'openNewPublication'
+        | 'trackEvent'
     >
 >;
 
