@@ -7,3 +7,4 @@ export * from './Navigate';
 export * from './NavigateToDocumentSection';
 export * from './NavigateToSectionHeading';
 export * from './HydrateContextDocumentNavigation';
+export * from './ScrollPageToTop';
