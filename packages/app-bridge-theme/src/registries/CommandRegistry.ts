@@ -15,6 +15,7 @@ export type CommandRegistry = CommandNameValidator<{
     navigateToDocumentSection: number | string;
     navigateToSectionHeading: number | string;
     hydrateContextDocumentNavigation: number;
+    scrollPageToTop: void;
 }>;
 
 type CommandNameValidator<CommandNameObject> = Simplify<
@@ -23,4 +24,4 @@ type CommandNameValidator<CommandNameObject> = Simplify<
 
 type CommandNamePattern = { [commandName: `${CommandVerb}${string}`]: unknown };
 
-type CommandVerb = 'open' | 'close' | 'navigate' | 'hydrateContext';
+type CommandVerb = 'open' | 'close' | 'navigate' | 'hydrateContext' | 'scroll';
