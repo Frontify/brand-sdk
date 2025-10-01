@@ -39,7 +39,6 @@ export type Context = {
     isPlatformAppsDialogOpen: boolean;
     activeSectionHeadingId: number | null;
     pageScrollPosition: {
-        clientHeight: number;
         scrollTop: number;
         scrollHeight: number;
     } | null;

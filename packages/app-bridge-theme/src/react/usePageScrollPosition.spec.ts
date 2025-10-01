@@ -9,7 +9,6 @@ import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { usePageScrollPosition } from './usePageScrollPosition';
 
 const UPDATED_SCROLL_POSITION = {
-    clientHeight: 500,
     scrollTop: 200,
     scrollHeight: 1500,
 };
