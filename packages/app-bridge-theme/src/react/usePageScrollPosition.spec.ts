@@ -34,7 +34,7 @@ describe('usePageScrollPosition', () => {
         vi.clearAllMocks();
     });
 
-    it('should call the context with ActiveSectionHeadingId', () => {
+    it('should call the context with usePageScrollPosition', () => {
         const appBridgeTheme = stubbedAppBridgeTheme();
 
         renderHook(() => usePageScrollPosition(appBridgeTheme));
