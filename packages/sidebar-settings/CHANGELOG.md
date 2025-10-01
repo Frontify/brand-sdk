@@ -1,5 +1,11 @@
 # @frontify/sidebar-settings
 
+## 0.10.7
+
+### Patch Changes
+
+- [#1316](https://github.com/Frontify/brand-sdk/pull/1316) [`2d086dc`](https://github.com/Frontify/brand-sdk/commit/2d086dc0a457137cff90032e65408871515907a0) Thanks [@ragi96](https://github.com/ragi96)! - fix: add `MagnifierMinus` icons to the `iconEnum`
+
 ## 0.10.6
 
 ### Patch Changes
