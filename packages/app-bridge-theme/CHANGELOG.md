@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.29
+
+### Minor Changes
+
+- [#1315](https://github.com/Frontify/brand-sdk/pull/1315) [`ed08f3e`](https://github.com/Frontify/brand-sdk/commit/ed08f3ec44eaa6b9f384d27d160a9dae0da16f6a) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): scroll page to top command
+
 ## 0.0.0-alpha.28
 
 ### Patch Changes
