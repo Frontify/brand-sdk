@@ -12,8 +12,17 @@ If you need more actions, please reach out through the Frontify Friends Slack ch
 Example usage:
 
 ```typescript
-appBridge.trackEvent("button:clicked", {
-    buttonId: "path/to/button",
-    label: "Click me",
+appBridge.dispatch({
+    name: "trackEvent",
+    payload: {
+        action: "button:clicked",
+        payload: { buttonId: "path/to/button", label: "Click me" },
+    },
+});
+
+// or without payload
+appBridge.dispatch({
+    name: "trackEvent",
+    payload: { action: "button:clicked", payload: null },
 });
 ```
