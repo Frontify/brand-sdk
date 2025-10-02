@@ -6,6 +6,7 @@ import {
     type Asset,
     type AssetChooserOptions,
     type OpenNewPublicationPayload,
+    type TrackPayload,
 } from '../../types';
 
 type OpenAssetChooserPayload = AssetChooserOptions;
@@ -27,4 +28,5 @@ export type CommandRegistry = CommandNameValidator<{
     openNewPublication: OpenNewPublicationPayload;
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
+    trackEvent: TrackPayload;
 }>;
