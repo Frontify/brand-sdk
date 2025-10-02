@@ -1,5 +1,34 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.45
+
+### Minor Changes
+
+- [#1311](https://github.com/Frontify/brand-sdk/pull/1311) [`200b840`](https://github.com/Frontify/brand-sdk/commit/200b84037a0e0866b10fb1796f840260fea65034) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `trackEvent` command
+
+    Use the `trackEvent` command to log custom events within blocks.
+    The event accepts `TrackActions` and an optional payload.
+
+    If you need more actions, please reach out through the Frontify Friends Slack channel.
+
+    Example usage:
+
+    ```typescript
+    appBridge.dispatch({
+        name: 'trackEvent',
+        payload: {
+            action: 'button:clicked',
+            payload: { buttonId: 'path/to/button', label: 'Click me' },
+        },
+    });
+
+    // or without payload
+    appBridge.dispatch({
+        name: 'trackEvent',
+        payload: { action: 'button:clicked', payload: null },
+    });
+    ```
+
 ## 4.0.0-alpha.44
 
 ### Patch Changes
