@@ -4,9 +4,9 @@ import { useSyncExternalStore } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme.ts';
 
-export const usePageScrollPosition = (appBridge: AppBridgeTheme) => {
+export const useScrollableAreaAttributes = (appBridge: AppBridgeTheme) => {
     return useSyncExternalStore(
-        appBridge.context('pageScrollPosition').subscribe,
-        appBridge.context('pageScrollPosition').get,
+        appBridge.context('scrollableAreaAttributes').subscribe,
+        appBridge.context('scrollableAreaAttributes').get,
     );
 };

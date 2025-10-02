@@ -6,12 +6,10 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme';
 
-import { usePageScrollPosition } from './usePageScrollPosition';
+import { useScrollableAreaAttributes } from './useScrollableAreaAttributes';
 
 const UPDATED_SCROLL_POSITION = {
-    clientHeight: 500,
     scrollTop: 200,
-    scrollHeight: 1500,
 };
 
 const stubs = vi.hoisted(() => ({
@@ -29,39 +27,39 @@ const stubbedAppBridgeTheme = () =>
         }),
     }) as unknown as AppBridgeTheme;
 
-describe('usePageScrollPosition', () => {
+describe('scrollableAreaAttributes', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
-    it('should call the context with usePageScrollPosition', () => {
+    it('should call the context with useScrollableAreaAttributes', () => {
         const appBridgeTheme = stubbedAppBridgeTheme();
 
-        renderHook(() => usePageScrollPosition(appBridgeTheme));
+        renderHook(() => useScrollableAreaAttributes(appBridgeTheme));
 
-        expect(stubs.contextStub).toHaveBeenCalledWith('pageScrollPosition');
+        expect(stubs.contextStub).toHaveBeenCalledWith('scrollableAreaAttributes');
     });
 
     it('should subscribe to context updates', () => {
         const appBridgeTheme = stubbedAppBridgeTheme();
 
-        renderHook(() => usePageScrollPosition(appBridgeTheme));
+        renderHook(() => useScrollableAreaAttributes(appBridgeTheme));
 
         expect(stubs.subscribeStub).toHaveBeenCalledOnce();
     });
 
-    it('should return the correct initial PageScrollPosition', () => {
+    it('should return the correct initial ScrollableAreaAttributes', () => {
         const appBridgeTheme = stubbedAppBridgeTheme();
 
-        const { result } = renderHook(() => usePageScrollPosition(appBridgeTheme));
+        const { result } = renderHook(() => useScrollableAreaAttributes(appBridgeTheme));
 
         expect(result.current).toBeNull();
     });
 
-    it('should update the PageScrollPosition on change', () => {
+    it('should update the scrollableAreaAttributes on change', () => {
         const appBridgeTheme = stubbedAppBridgeTheme();
 
-        const { result } = renderHook(() => usePageScrollPosition(appBridgeTheme));
+        const { result } = renderHook(() => useScrollableAreaAttributes(appBridgeTheme));
 
         act(() => {
             if (vi.isMockFunction(stubs.subscribeStub)) {
@@ -76,7 +74,7 @@ describe('usePageScrollPosition', () => {
     it('should unsubscribe on unmount', () => {
         const appBridgeTheme = stubbedAppBridgeTheme();
 
-        const { unmount } = renderHook(() => usePageScrollPosition(appBridgeTheme));
+        const { unmount } = renderHook(() => useScrollableAreaAttributes(appBridgeTheme));
 
         unmount();
 

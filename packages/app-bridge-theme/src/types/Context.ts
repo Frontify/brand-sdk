@@ -38,10 +38,8 @@ export type Context = {
     isSearchDialogOpen: boolean;
     isPlatformAppsDialogOpen: boolean;
     activeSectionHeadingId: number | null;
-    pageScrollPosition: {
-        clientHeight: number;
+    scrollableAreaAttributes: {
         scrollTop: number;
-        scrollHeight: number;
     } | null;
     languages: Language[];
     template: TemplateContext | null;
