@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.30
+
+### Minor Changes
+
+- [#1319](https://github.com/Frontify/brand-sdk/pull/1319) [`0da6bbb`](https://github.com/Frontify/brand-sdk/commit/0da6bbb058b8995cc578528098a0b95bebce6cd9) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): page scroll info in context and listener hook
+
 ## 0.0.0-alpha.29
 
 ### Minor Changes
