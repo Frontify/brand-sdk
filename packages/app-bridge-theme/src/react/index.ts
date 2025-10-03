@@ -10,3 +10,4 @@ export * from './usePortalNavigation';
 export * from './useSettings';
 export * from './useTemplateContext';
 export * from './useEnabledFeatures';
+export * from './useScrollableAreaAttributes';
