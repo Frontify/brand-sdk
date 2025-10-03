@@ -5,7 +5,6 @@ import mitt from 'mitt';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { DocumentTargetsDummy } from '../tests';
 
 import { useDocumentTargets } from './useDocumentTargets';
@@ -13,7 +12,7 @@ import { useDocumentTargets } from './useDocumentTargets';
 const DOCUMENT_ID = 92341;
 
 describe('useDocumentTargets', () => {
-    const appBridge: AppBridgeBlock | AppBridgeTheme = {} as AppBridgeBlock | AppBridgeTheme;
+    const appBridge: AppBridgeBlock = {} as AppBridgeBlock;
 
     beforeEach(() => {
         window.emitter = mitt();
