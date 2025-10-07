@@ -73,8 +73,8 @@ export type AssetBulkActionsContext = {
     rootId: string;
 } & AppBaseProps;
 
-export type GuidelineActionToolbarContext = {
-    surface: 'actionToolbar';
+export type GuidelinePageActionContext = {
+    surface: 'pageAction';
 } & AppBaseProps;
 
 export type AssetViewerContext = {
@@ -99,7 +99,7 @@ export type PlatformAppContext =
     | AssetActionContext
     | AssetCreationContext
     | AssetViewerContext
-    | GuidelineActionToolbarContext
+    | GuidelinePageActionContext
     | AssetBulkActionsContext;
 
 export type PlatformAppEvent = EventNameValidator<

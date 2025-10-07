@@ -725,12 +725,12 @@ const MANIFEST_WITH_AUTOMATION_ENTRY = {
         version: 1,
     },
 };
-const MANIFEST_WITH_ACTION_TOOLBAR_SURFACE = {
+const MANIFEST_WITH_PAGE_ACTION_SURFACE = {
     appType: 'platform-app',
     appId: 'abcdabcdabcdabcdabcdabcda',
     surfaces: {
         guideline: {
-            actionToolbar: {
+            pageAction: {
                 title: 'action title',
             },
         },
@@ -926,7 +926,7 @@ describe('Verify Platform App Manifest', () => {
     });
 
     it('should verify when automation is added', () => {
-        const verifiedManifest = verifyManifest(MANIFEST_WITH_ACTION_TOOLBAR_SURFACE, platformAppManifestSchemaV1);
+        const verifiedManifest = verifyManifest(MANIFEST_WITH_PAGE_ACTION_SURFACE, platformAppManifestSchemaV1);
         expect(!!verifiedManifest).toBe(true);
     });
 

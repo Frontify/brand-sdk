@@ -126,7 +126,7 @@ export const platformAppManifestSchemaV1 = object({
     }).optional(),
     surfaces: object({
         guideline: object({
-            actionToolbar: object({
+            pageAction: object({
                 title: string().min(2).max(28),
             }).optional(),
             assetViewer: object({
