@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 5.9.4
+
+### Patch Changes
+
+- [#1312](https://github.com/Frontify/brand-sdk/pull/1312) [`1a7e48c`](https://github.com/Frontify/brand-sdk/commit/1a7e48c25435ff169cf80efe7eced4c6ce5ff6e2) Thanks [@julianiff](https://github.com/julianiff)! - feat: rename themeAction to actionToolbar surface
+
 ## 5.9.3
 
 ### Patch Changes
