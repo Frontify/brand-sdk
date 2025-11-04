@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.31
+
+### Minor Changes
+
+- [#1335](https://github.com/Frontify/brand-sdk/pull/1335) [`5c1fd8b`](https://github.com/Frontify/brand-sdk/commit/5c1fd8be89f333cda3a15c48a6083ee51be286bf) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): remove platform apps references
+
 ## 0.0.0-alpha.30
 
 ### Minor Changes
