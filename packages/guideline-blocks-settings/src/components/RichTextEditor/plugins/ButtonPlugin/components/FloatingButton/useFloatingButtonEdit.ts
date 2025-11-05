@@ -106,10 +106,7 @@ export const useFloatingButtonEdit = (
     useFloatingButtonEscape();
 
     return {
-        style: {
-            ...style,
-            zIndex: 1000,
-        },
+        style,
         ref: useComposedRef<HTMLElement | null>(floating),
     };
 };
