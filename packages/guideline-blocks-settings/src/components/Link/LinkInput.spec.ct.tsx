@@ -5,7 +5,7 @@ import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
 import { LinkInput } from './LinkInput';
 
 const LINK_INPUT_ID = '[data-test-id="link-input"]';
-const TEXT_INPUT_ID = '[data-test-id="text-input"] > input';
+const TEXT_INPUT_ID = '[data-test-id="text-input"]  input';
 const INPUT_LABEL_CONTAINER_ID = '[data-test-id="input-label-container"]';
 const BUTTON_ID = '[data-test-id="fondue-dialog-trigger"]';
 const CHECKBOX_ID = '[data-test-id="fondue-checkbox"]';
@@ -105,6 +105,6 @@ describe('Link Input', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
         cy.mount(<LinkInputWithStubs buttonSize="small" />);
 
-        cy.get(BUTTON_ID).should('have.class', 'tw-text-body-small');
+        cy.get(BUTTON_ID).should('have.class', 'tw-body-small');
     });
 });

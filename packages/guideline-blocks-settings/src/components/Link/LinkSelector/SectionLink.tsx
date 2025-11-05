@@ -18,6 +18,7 @@ export const SectionLink = ({ section, selectedUrl, onSelectUrl }: SectionLinkPr
     return (
         <button
             data-test-id="internal-link-selector-section-link"
+            data-is-active={isActive}
             className={merge([
                 'tw-py-2 tw-pr-2.5 tw-pl-14 tw-leading-5 tw-cursor-pointer tw-w-full',
                 isActive
