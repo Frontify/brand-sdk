@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.9
+
+### Patch Changes
+
+- [#1338](https://github.com/Frontify/brand-sdk/pull/1338) [`a1e43c2`](https://github.com/Frontify/brand-sdk/commit/a1e43c2a4d6ed998dc202a4d9518f7bc7f8a4a8b) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(FlyoutToolbarButton): add missing padding option
+
 ## 1.0.8
 
 ### Patch Changes
