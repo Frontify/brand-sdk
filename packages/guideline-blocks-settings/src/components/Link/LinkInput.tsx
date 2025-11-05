@@ -76,7 +76,7 @@ export const LinkInput = ({
 
             <div className="tw-mt-3 tw-flex tw-items-center tw-gap-1.5">
                 <Checkbox id="new-tab" value={newTab} onChange={() => onToggleTab?.(!newTab)} />
-                <Label id="new-tab-label" htmlFor="new-tab">
+                <Label id="new-tab-label" htmlFor="new-tab" className="tw-whitespace-nowrap">
                     Open in new tab
                 </Label>
             </div>
