@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.10
+
+### Patch Changes
+
+- [#1340](https://github.com/Frontify/brand-sdk/pull/1340) [`167faba`](https://github.com/Frontify/brand-sdk/commit/167fabaab9e340cb3027531e906373b4c4de3039) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to latest `12.4.3`
+
 ## 1.0.9
 
 ### Patch Changes
