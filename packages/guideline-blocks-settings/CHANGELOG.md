@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.11
+
+### Patch Changes
+
+- [#1342](https://github.com/Frontify/brand-sdk/pull/1342) [`4268d60`](https://github.com/Frontify/brand-sdk/commit/4268d6019b039a08af099107cb0f547b26223598) Thanks [@ragi96](https://github.com/ragi96)! - fix(FlyoutToolbarButton): add missing body
+
 ## 1.0.10
 
 ### Patch Changes
