@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.12
+
+### Patch Changes
+
+- [#1344](https://github.com/Frontify/brand-sdk/pull/1344) [`24bf5f2`](https://github.com/Frontify/brand-sdk/commit/24bf5f273f17cd8f0c03f1fd9f6194f10379f751) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor(LinkSelector): improve blur handling
+
 ## 1.0.11
 
 ### Patch Changes
