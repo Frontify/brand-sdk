@@ -14,9 +14,6 @@ export type TemplateApiLegacy = {
     project_type: string;
     published: number;
     screen_id: number;
-    sector: string;
-    token: string;
-    unit: string;
     width: number;
 };
 

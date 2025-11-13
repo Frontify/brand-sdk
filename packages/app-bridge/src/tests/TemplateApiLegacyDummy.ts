@@ -18,9 +18,6 @@ export class TemplateApiLegacyDummy {
             project_type: 'A project type',
             published: 1,
             screen_id: 1,
-            sector: 'A sector',
-            token: '--token--',
-            unit: 'px',
             width: 640,
         };
     }
