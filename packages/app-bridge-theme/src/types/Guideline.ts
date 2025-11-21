@@ -90,9 +90,20 @@ interface DocumentPageBase {
 export interface DocumentPageNavigationItem extends DocumentPageBase {
     headings(): DocumentPageHeadingNavigationItem[];
 }
+
+export interface AdjacentPage {
+    title(language?: string): string;
+    categoryTitle(language?: string): Nullable<string>;
+    documentTitle(language?: string): string;
+    url(language?: string): string;
+}
+
 export interface DocumentPage extends DocumentPageBase {
     categoryId(): Nullable<number>;
     documentId(): number;
+    previousPage(): Nullable<AdjacentPage>;
+    nextPage(): Nullable<AdjacentPage>;
+    lastModified(): Date;
 }
 
 export interface DocumentPageLinkNavigationItem {
