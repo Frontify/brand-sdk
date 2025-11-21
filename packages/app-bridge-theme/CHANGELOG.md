@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.32
+
+### Patch Changes
+
+- [#1348](https://github.com/Frontify/brand-sdk/pull/1348) [`df0e30d`](https://github.com/Frontify/brand-sdk/commit/df0e30d668da43d8a23684b8963ad67c26f34b10) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): previousPage, nextPage, and lastModified added to DocumentPage
+
 ## 0.0.0-alpha.31
 
 ### Minor Changes
