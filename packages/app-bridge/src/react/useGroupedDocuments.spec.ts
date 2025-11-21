@@ -318,8 +318,7 @@ describe('useGroupedDocument', () => {
 
         await waitFor(() => {
             expect(result.current.isLoading).toBe(false);
+            expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_4, DOCUMENT_2, DOCUMENT_3]);
         });
-
-        expect(result.current.documents).toEqual([DOCUMENT_1, NEW_DOCUMENT_4, DOCUMENT_2, DOCUMENT_3]);
     });
 });
