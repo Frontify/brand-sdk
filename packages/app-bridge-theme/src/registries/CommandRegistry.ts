@@ -10,7 +10,6 @@ export type CommandRegistry = CommandNameValidator<{
     openAiBrandAssistantDialog: void;
     closeAiBrandAssistantDialog: void;
     navigate: string;
-    navigateToDocumentSection: number | string;
     navigateToSectionHeading: number | string;
     hydrateContextDocumentNavigation: number;
     scrollPageToTop: void;

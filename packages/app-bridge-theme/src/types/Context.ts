@@ -21,9 +21,7 @@ export type TemplateContext = { templateId: string; type: ThemeTemplate } & (
 );
 
 export type Context = {
-    brandId: number;
     brandPortalLink: BrandPortalLink | null;
-    projectId: number;
     portalId: number;
     portalNavigation: PortalNavigationItem[] | null;
     documentNavigation: Record<number, DocumentChildNavigationItem[] | undefined>;
