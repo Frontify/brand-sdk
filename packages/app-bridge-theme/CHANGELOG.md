@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.33
+
+### Minor Changes
+
+- [#1351](https://github.com/Frontify/brand-sdk/pull/1351) [`e301854`](https://github.com/Frontify/brand-sdk/commit/e3018543cc0bcb80cee5c3baeac298cac13a1d12) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): cleaning context and deprecated command `NavigateToDocumentSection`
+
 ## 0.0.0-alpha.32
 
 ### Patch Changes
