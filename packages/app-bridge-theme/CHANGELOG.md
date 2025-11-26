@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 0.0.0-alpha.34
+
+### Minor Changes
+
+- [#1355](https://github.com/Frontify/brand-sdk/pull/1355) [`1a52c54`](https://github.com/Frontify/brand-sdk/commit/1a52c5482a3dcc195ff78f0ad9cc0ff4385c9bf6) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(AppBridgeTheme): remove portalToken from context
+
 ## 0.0.0-alpha.33
 
 ### Minor Changes
