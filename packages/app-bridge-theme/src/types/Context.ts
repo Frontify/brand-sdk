@@ -25,7 +25,6 @@ export type Context = {
     portalId: number;
     portalNavigation: PortalNavigationItem[] | null;
     documentNavigation: Record<number, DocumentChildNavigationItem[] | undefined>;
-    portalToken: string | null;
     currentLanguage: string;
     defaultLanguage: string;
     enabledFeatures: string[];
