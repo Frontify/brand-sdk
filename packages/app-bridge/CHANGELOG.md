@@ -77,6 +77,12 @@
 
 - chore: merge main to dev
 
+## 3.12.0
+
+### Minor Changes
+
+- [#1346](https://github.com/Frontify/brand-sdk/pull/1346) [`47eaab2`](https://github.com/Frontify/brand-sdk/commit/47eaab210961db1eeb01cb3da2ff7d623a5b07a2) Thanks [@findmind](https://github.com/findmind)! - refactor(TemplateApiLegacy): removed unused `token`, `unit` and `sector`
+
 ## 3.11.2
 
 ### Patch Changes

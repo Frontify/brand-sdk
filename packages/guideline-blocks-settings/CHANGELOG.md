@@ -32,6 +32,30 @@
 
 - [#1286](https://github.com/Frontify/brand-sdk/pull/1286) [`8ed6d57`](https://github.com/Frontify/brand-sdk/commit/8ed6d57ad71cf81d73798e4f639103960be8dc93) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to v13
 
+## 1.0.12
+
+### Patch Changes
+
+- [#1344](https://github.com/Frontify/brand-sdk/pull/1344) [`24bf5f2`](https://github.com/Frontify/brand-sdk/commit/24bf5f273f17cd8f0c03f1fd9f6194f10379f751) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor(LinkSelector): improve blur handling
+
+## 1.0.11
+
+### Patch Changes
+
+- [#1342](https://github.com/Frontify/brand-sdk/pull/1342) [`4268d60`](https://github.com/Frontify/brand-sdk/commit/4268d6019b039a08af099107cb0f547b26223598) Thanks [@ragi96](https://github.com/ragi96)! - fix(FlyoutToolbarButton): add missing body
+
+## 1.0.10
+
+### Patch Changes
+
+- [#1340](https://github.com/Frontify/brand-sdk/pull/1340) [`167faba`](https://github.com/Frontify/brand-sdk/commit/167fabaab9e340cb3027531e906373b4c4de3039) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to latest `12.4.3`
+
+## 1.0.9
+
+### Patch Changes
+
+- [#1338](https://github.com/Frontify/brand-sdk/pull/1338) [`a1e43c2`](https://github.com/Frontify/brand-sdk/commit/a1e43c2a4d6ed998dc202a4d9518f7bc7f8a4a8b) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(FlyoutToolbarButton): add missing padding option
+
 ## 1.0.8
 
 ### Patch Changes
