@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 1.0.0
+
+### Major Changes
+
+- [#1358](https://github.com/Frontify/brand-sdk/pull/1358) [`885f903`](https://github.com/Frontify/brand-sdk/commit/885f9038d5d544572063442b195f629f4d960d62) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: AppBridgeTheme v1 - first stable release
+
 ## 0.0.0-alpha.34
 
 ### Minor Changes
