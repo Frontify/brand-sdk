@@ -59,7 +59,14 @@ export const LinkSelector = ({
     return (
         // eslint-disable-next-line jsx-a11y-x/no-static-element-interactions
         <div
-            onPointerDown={(event) => event.preventDefault()}
+            onPointerDownCapture={(event) => {
+                event.stopPropagation();
+                event.preventDefault();
+            }}
+            onFocusCapture={(event) => {
+                event.stopPropagation();
+                event.preventDefault();
+            }}
             data-test-id="internal-link-selector"
             onKeyDown={onPressEnter}
         >
