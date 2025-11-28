@@ -187,4 +187,9 @@ packages/sidebar-settings @Frontify/content-and-blocks @Frontify/themes-and-navi
 
 packages/app-bridge-theme @Frontify/themes-and-navigation
 
+# Guideline Themes
+
+packages/guideline-themes @Frontify/themes-and-navigation
+
+
 CODEOWNERS @Frontify/architecture
