@@ -1,5 +1,11 @@
 # @frontify/guideline-themes
 
+## 1.0.0
+
+### Major Changes
+
+- [#1361](https://github.com/Frontify/brand-sdk/pull/1361) [`2e6605f`](https://github.com/Frontify/brand-sdk/commit/2e6605f0e92b3f07dd243cea29406eeeb5e6608d) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: guideline-themes v1 - first stable release
+
 ## 0.0.1-alpha.21
 
 ### Patch Changes
