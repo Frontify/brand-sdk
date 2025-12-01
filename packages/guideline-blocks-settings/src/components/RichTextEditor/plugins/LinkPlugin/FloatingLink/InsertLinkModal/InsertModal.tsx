@@ -3,8 +3,8 @@
 import { type AppBridgeBlock } from '@frontify/app-bridge';
 import { FloatingModalWrapper } from '@frontify/fondue/rte';
 import { FormControl } from '@frontify/fondue';
-import { Button, TextInput } from '@frontify/fondue/components';
 import { IconCheckMark } from '@frontify/fondue/icons';
+import { Button, TextInput } from '@frontify/fondue/components';
 import { type MouseEvent, type ReactElement, type ReactNode } from 'react';
 
 import { LinkInput } from '../../../../../Link';
