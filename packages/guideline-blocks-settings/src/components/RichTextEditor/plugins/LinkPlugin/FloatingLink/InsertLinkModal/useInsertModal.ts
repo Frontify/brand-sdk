@@ -9,7 +9,7 @@ import {
     submitFloatingLink,
     useEditorRef,
     useHotkeys,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { type Dispatch, type MouseEvent, type Reducer, useEffect, useReducer } from 'react';
 
 import { addHttps } from '../../../../../../helpers';

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { serializeRawToHtmlAsync } from '@frontify/fondue';
+import { serializeRawToHtmlAsync } from '@frontify/fondue/rte';
 import { useCallback, useEffect, useState } from 'react';
 
 import { type SerializedTextProps } from './types';

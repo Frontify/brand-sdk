@@ -8,7 +8,7 @@ import {
     useEditorRef,
     useFocused,
     useHotkeys,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { type Ref, useEffect } from 'react';
 
 import { type ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';

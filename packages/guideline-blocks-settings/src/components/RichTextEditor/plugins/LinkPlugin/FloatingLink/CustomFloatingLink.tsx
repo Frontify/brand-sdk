@@ -9,7 +9,7 @@ import {
     useFloatingLinkEditState,
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { createPortal } from 'react-dom';
 
 import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
