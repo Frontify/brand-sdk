@@ -40,7 +40,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge-theme": "workspace:^",
-        "@frontify/sidebar-settings": "^0.10.1"
+        "@frontify/sidebar-settings": "workspace:^"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "1.0.4",
