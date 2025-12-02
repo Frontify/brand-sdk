@@ -24,7 +24,6 @@ export const useCategorizedDocumentPages = (
     documentCategoryId: number,
     options: Options = { enabled: true },
 ) => {
-    // eslint-disable-next-line @eslint-react/hooks-extra/prefer-use-state-lazy-initialization
     const [documentPages, setDocumentPages] = useState<Map<number, DocumentPage>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

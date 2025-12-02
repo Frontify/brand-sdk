@@ -21,7 +21,6 @@ type Options = {
 const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentGroups = (appBridge: AppBridgeBlock, options: Options = { enabled: true }) => {
-    // eslint-disable-next-line @eslint-react/hooks-extra/prefer-use-state-lazy-initialization
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

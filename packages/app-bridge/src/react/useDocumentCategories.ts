@@ -23,7 +23,6 @@ export const useDocumentCategories = (
     documentId: number,
     options: Options = { enabled: true },
 ) => {
-    // eslint-disable-next-line @eslint-react/hooks-extra/prefer-use-state-lazy-initialization
     const [documentCategories, setDocumentCategories] = useState<Map<number, DocumentCategory>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
