@@ -413,8 +413,8 @@ importers:
         specifier: ^7.28.3
         version: 7.28.5
       '@frontify/eslint-config-react':
-        specifier: 1.0.4
-        version: 1.0.4(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.3)(react@18.3.1)(typescript@5.9.3)
+        specifier: 1.0.8
+        version: 1.0.8(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.3)(react@18.3.1)(typescript@5.9.3)
       '@testing-library/jest-dom':
         specifier: ^6.8.0
         version: 6.9.1
@@ -1862,6 +1862,13 @@ packages:
 
   '@frontify/eslint-config-react@1.0.4':
     resolution: {integrity: sha512-8hRlopOOEBQnpNmp02egUgh/d3DwGWQNcttZ5S5NnqKlGYeX2a/mxWhS9Yzb5fb3VoAfgLQ9air2jVySWaGSbA==}
+    peerDependencies:
+      eslint: ^9.0.0
+      prettier: ^3.0.0
+      react: ^18 || ^19
+
+  '@frontify/eslint-config-react@1.0.8':
+    resolution: {integrity: sha512-fZ1PWJeeo5TD58j+4FfhDWlpOiZPDU6OoUamvZNS0Jkc6DoWhKUPKLXkYBpY0QcTgWS8fN6jUw2y1HLnSWpEgg==}
     peerDependencies:
       eslint: ^9.0.0
       prettier: ^3.0.0
@@ -5100,6 +5107,12 @@ packages:
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
 
+  eslint-plugin-react-hooks@7.0.1:
+    resolution: {integrity: sha512-O0d0m04evaNzEPoSW+59Mezf8Qt0InfgGIBJnpC0h3NH/WjUAR7BIKUfysC6todmtiZ/A0oUVS8Gce0WhBrHsA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
+
   eslint-plugin-react-naming-convention@2.3.10:
     resolution: {integrity: sha512-CfdijQO1JHS3IbBzEuYjUKKIY0Jlzy1fu14iMo55D+sxWcd2QK7i4iLDOywJ197AwfwZ8E+wba07lXs/qLRWDA==}
     engines: {node: '>=20.19.0'}
@@ -5585,6 +5598,12 @@ packages:
 
   headers-polyfill@3.2.5:
     resolution: {integrity: sha512-tUCGvt191vNSQgttSyJoibR+VO+I6+iCHIUdhzEMJKE+EAL8BwCN7fUOZlY4ofOelNHsK+gEjxB/B+9N3EWtdA==}
+
+  hermes-estree@0.25.1:
+    resolution: {integrity: sha512-0wUoCcLp+5Ev5pDW2OriHC2MJCbwLwuRx+gAqMTOkGKJJiBCLjtrvy4PWUGn6MIVefecRpzoOZ/UV6iGdOr+Cw==}
+
+  hermes-parser@0.25.1:
+    resolution: {integrity: sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==}
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -8230,6 +8249,12 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
+  zod-validation-error@4.0.2:
+    resolution: {integrity: sha512-Q6/nZLe6jxuU80qb/4uJ4t5v2VEZ44lzQjPDhYJNztRQ4wyWc6VF3D3Kb/fAuPetZQnhS3hnajCf9CsWesghLQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.25.0 || ^4.0.0
+
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
@@ -9714,6 +9739,25 @@ snapshots:
       eslint: 9.39.1(jiti@1.21.7)
       eslint-plugin-jsx-a11y-x: 0.1.1(eslint@9.39.1(jiti@1.21.7))
       eslint-plugin-react-hooks: 5.2.0(eslint@9.39.1(jiti@1.21.7))
+      globals: 16.5.0
+      prettier: 3.7.3
+      react: 18.3.1
+      typescript-eslint: 8.48.1(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
+    transitivePeerDependencies:
+      - '@eslint/json'
+      - '@types/eslint'
+      - eslint-import-resolver-webpack
+      - eslint-plugin-import-x
+      - supports-color
+      - typescript
+
+  '@frontify/eslint-config-react@1.0.8(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.3)(react@18.3.1)(typescript@5.9.3)':
+    dependencies:
+      '@eslint-react/eslint-plugin': 2.3.10(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
+      '@frontify/eslint-config-basic': 1.0.8(eslint@9.39.1(jiti@1.21.7))(prettier@3.7.3)(typescript@5.9.3)
+      eslint: 9.39.1(jiti@1.21.7)
+      eslint-plugin-jsx-a11y-x: 0.1.1(eslint@9.39.1(jiti@1.21.7))
+      eslint-plugin-react-hooks: 7.0.1(eslint@9.39.1(jiti@1.21.7))
       globals: 16.5.0
       prettier: 3.7.3
       react: 18.3.1
@@ -13837,6 +13881,17 @@ snapshots:
     dependencies:
       eslint: 9.39.1(jiti@1.21.7)
 
+  eslint-plugin-react-hooks@7.0.1(eslint@9.39.1(jiti@1.21.7)):
+    dependencies:
+      '@babel/core': 7.28.5
+      '@babel/parser': 7.28.5
+      eslint: 9.39.1(jiti@1.21.7)
+      hermes-parser: 0.25.1
+      zod: 3.25.76
+      zod-validation-error: 4.0.2(zod@3.25.76)
+    transitivePeerDependencies:
+      - supports-color
+
   eslint-plugin-react-naming-convention@2.3.10(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3):
     dependencies:
       '@eslint-react/ast': 2.3.10(eslint@9.39.1(jiti@1.21.7))(typescript@5.9.3)
@@ -14451,6 +14506,12 @@ snapshots:
   he@1.2.0: {}
 
   headers-polyfill@3.2.5: {}
+
+  hermes-estree@0.25.1: {}
+
+  hermes-parser@0.25.1:
+    dependencies:
+      hermes-estree: 0.25.1
 
   hoist-non-react-statics@3.3.2:
     dependencies:
@@ -17477,6 +17538,10 @@ snapshots:
       archiver-utils: 5.0.2
       compress-commons: 6.0.2
       readable-stream: 4.7.0
+
+  zod-validation-error@4.0.2(zod@3.25.76):
+    dependencies:
+      zod: 3.25.76
 
   zod@3.25.76: {}
 
