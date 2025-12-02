@@ -82,7 +82,7 @@ export const LinkSelector = ({
                         <Dialog.Title>Select internal link</Dialog.Title>
                     </Dialog.Header>
                     <Dialog.Body padding="none">
-                        <ScrollArea padding="compact">
+                        <ScrollArea padding="compact" maxHeight="400px">
                             <DocumentLinks
                                 selectedUrl={selectedUrl}
                                 onSelectUrl={onSelectUrl}
