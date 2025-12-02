@@ -10,13 +10,13 @@ import {
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
 } from '@frontify/fondue/rte';
+import { type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 
 import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
 
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
-import { CSSProperties } from 'react';
 
 const floatingOptions: UseVirtualFloatingOptions = {
     placement: 'bottom-start',

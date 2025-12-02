@@ -47,7 +47,7 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies, ...peerDependencies, 'react-dom/client', 'react/jsx-runtime'],
+            external: [...dependencies, ...peerDependencies, 'react-dom/client', 'react/jsx-runtime', /^vfile/],
             output: [
                 {
                     name: 'GuidelineBlocksSettings',

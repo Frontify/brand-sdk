@@ -58,7 +58,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.28.3",
-        "@frontify/eslint-config-react": "1.0.4",
+        "@frontify/eslint-config-react": "1.0.8",
         "@testing-library/jest-dom": "^6.8.0",
         "@testing-library/react": "^16.3.0",
         "@testing-library/user-event": "14.6.1",
