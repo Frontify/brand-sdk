@@ -105,6 +105,6 @@ describe('Link Input', () => {
         const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
         cy.mount(<LinkInputWithStubs buttonSize="small" />);
 
-        cy.get(BUTTON_ID).should('have.class', 'tw-body-small');
+        cy.get(BUTTON_ID).should('have.class', 'tw-text-body-small');
     });
 });
