@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue';
+import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue/rte';
 import { createPortal } from 'react-dom';
 
 import { BlockStyles } from '../../../../../RichTextEditor/plugins/styles';

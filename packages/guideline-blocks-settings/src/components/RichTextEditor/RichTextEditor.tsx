@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue';
+import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue/rte';
 import { memo, useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { useIsInViewport } from '../../hooks/useIsInViewport';
@@ -100,6 +100,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
     useEffect(() => {
         if (!isEditing) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasEnteredViewport(false);
         }
     }, [isEditing]);

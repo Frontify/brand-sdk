@@ -9,7 +9,8 @@ import {
     useFloatingLinkEditState,
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
+import { type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 
 import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
@@ -65,7 +66,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
                     >
                         {input}
                     </div>,
@@ -78,7 +79,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
                     >
                         {editContent}
                     </div>,

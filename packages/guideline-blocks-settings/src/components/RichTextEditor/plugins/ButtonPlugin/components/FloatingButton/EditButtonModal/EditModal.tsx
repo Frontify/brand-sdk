@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FloatingModalWrapper, IconPen16, IconTrashBin16, focusEditor, useEditorRef } from '@frontify/fondue';
+import { IconPen, IconTrashBin } from '@frontify/fondue/icons';
+import { FloatingModalWrapper, focusEditor, useEditorRef } from '@frontify/fondue/rte';
 
 import { LINK_PLUGIN } from '../../../../LinkPlugin/id';
 import { BlockStyles } from '../../../../styles';
@@ -32,7 +33,7 @@ export const EditModal = () => {
                         data-test-id="edit-button-button"
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                     >
-                        <IconPen16 />
+                        <IconPen size={16} />
                     </button>
 
                     <button
@@ -44,7 +45,7 @@ export const EditModal = () => {
                         data-test-id="remove-button-button"
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                     >
-                        <IconTrashBin16 />
+                        <IconTrashBin size={16} />
                     </button>
                 </span>
             </span>
