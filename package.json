@@ -42,7 +42,9 @@
     },
     "pnpm": {
         "overrides": {
-            "@udecode/plate-common": "36.5.9"
+            "@udecode/plate-common": "36.5.9",
+            "@udecode/slate-react": "31.0.0",
+            "@udecode/slate": "31.0.0"
         }
     }
 }

@@ -16,6 +16,7 @@ import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styl
 
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
+import { CSSProperties } from 'react';
 
 const floatingOptions: UseVirtualFloatingOptions = {
     placement: 'bottom-start',
@@ -65,7 +66,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
                     >
                         {input}
                     </div>,
@@ -78,7 +79,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
                     >
                         {editContent}
                     </div>,
