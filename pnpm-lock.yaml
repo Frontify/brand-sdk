@@ -512,8 +512,8 @@ importers:
         specifier: workspace:^
         version: link:../app-bridge-theme
       '@frontify/sidebar-settings':
-        specifier: workspace:^
-        version: link:../sidebar-settings
+        specifier: ^0.10.1
+        version: 0.10.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@frontify/eslint-config-react':
         specifier: 1.0.4
@@ -1920,6 +1920,12 @@ packages:
     resolution: {integrity: sha512-XQQROFgVCCnb2GnUq0Z3e5+2YRSKY4istPXfvYmY7a2TzsYgr/RPK5HgnpoH+OJ29Cl4tF5StFVQ2YLWlm3tBQ==}
     engines: {node: '>=18'}
     hasBin: true
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
+
+  '@frontify/sidebar-settings@0.10.7':
+    resolution: {integrity: sha512-oQgpbo3kPdMbTPrZu8HhOYsahDcUm834gI5fgf6HVh9dqrIphqowgiI6niRD3ptpuwcSISRMRwUDwKn2fPnz0A==}
     peerDependencies:
       react: ^18
       react-dom: ^18
@@ -10030,6 +10036,11 @@ snapshots:
       - supports-color
       - tailwindcss
       - zustand
+
+  '@frontify/sidebar-settings@0.10.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@humanfs/core@0.19.1': {}
 
