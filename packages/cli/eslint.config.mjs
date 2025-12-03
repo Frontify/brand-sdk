@@ -17,7 +17,6 @@ export default defineConfig(
         languageOptions: {
             parserOptions: {
                 projectService: true,
-                // @ts-expect-error missing typing of dirname
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 tsconfigRootDir: import.meta.dirname,
             },
