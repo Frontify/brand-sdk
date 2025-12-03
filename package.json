@@ -1,7 +1,7 @@
 {
     "name": "root",
     "private": true,
-    "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+    "packageManager": "pnpm@10.24.0",
     "scripts": {
         "build": "pnpm build:app-bridge && pnpm build:app-bridge-theme &&  pnpm build:sidebar-settings && pnpm build:guideline-blocks-settings && pnpm build:guideline-themes && pnpm build:platform-app && pnpm build:cli && pnpm build:app-bridge-app",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
@@ -19,7 +19,8 @@
         "test:components:browser": "cypress open --component",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
         "ci:version": "pnpm build && changeset version",
-        "ci:publish": "pnpm build && changeset publish"
+        "ci:publish": "pnpm build && changeset publish",
+        "update": "taze -r -I major"
     },
     "devDependencies": {
         "@4tw/cypress-drag-drop": "^2.3.1",
@@ -35,6 +36,7 @@
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "tailwindcss": "^3.4.18",
+        "taze": "^19.9.2",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
         "vite": "^7.2.6",
