@@ -65,6 +65,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
+                        // @ts-expect-error error on the user-select: contain (old CSS property not supported by browsers and dropped)
                         style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
                     >
                         {input}
@@ -78,6 +79,7 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
+                        // @ts-expect-error error on the user-select: contain (old CSS property not supported by browsers and dropped)
                         style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
                     >
                         {editContent}

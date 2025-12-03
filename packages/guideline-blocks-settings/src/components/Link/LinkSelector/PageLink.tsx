@@ -44,6 +44,7 @@ export const PageLink = ({
 
     useEffect(() => {
         if (page.id === itemsToExpandInitially.pageId) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsExpanded(true);
         }
     }, [itemsToExpandInitially, page.id]);

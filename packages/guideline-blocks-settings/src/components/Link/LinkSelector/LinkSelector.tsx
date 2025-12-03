@@ -41,6 +41,7 @@ export const LinkSelector = ({
 
     useEffect(() => {
         if (url && !selectedUrl) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setSelectedUrl(url);
         }
     }, [url, selectedUrl]);

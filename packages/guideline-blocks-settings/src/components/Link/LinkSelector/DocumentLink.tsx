@@ -34,6 +34,7 @@ export const DocumentLink = ({
 
     useEffect(() => {
         if (document.id === itemsToExpandInitially.documentId) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsExpanded(true);
         }
     }, [itemsToExpandInitially, document.id]);

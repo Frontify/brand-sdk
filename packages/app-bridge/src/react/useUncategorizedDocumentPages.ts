@@ -25,7 +25,7 @@ export const useUncategorizedDocumentPages = (
     documentId: number,
     options: Options = { enabled: true },
 ) => {
-    // eslint-disable-next-line @eslint-react/hooks-extra/prefer-use-state-lazy-initialization
+    // eslint-disable-next-line @eslint-react/prefer-use-state-lazy-initialization
     const [documentPages, setDocumentPages] = useState<Map<number, DocumentPage>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -37,6 +37,7 @@ export const useUncategorizedDocumentPages = (
 
     useEffect(() => {
         if (options.enabled) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             refetch();
         }
     }, [options.enabled, refetch]);

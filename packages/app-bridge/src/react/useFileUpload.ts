@@ -39,24 +39,31 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
         const worker = new Worker();
         workerRef.current = worker;
 
+        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
         worker.addEventListener('message', (workerEvent) => {
             switch (workerEvent.data.event) {
                 case WorkerEvent.OnProgress:
+                    // eslint-disable-next-line react-hooks/immutability
                     onProgress(workerEvent);
                     break;
                 case WorkerEvent.OnProgressAll:
+                    // eslint-disable-next-line react-hooks/immutability
                     onProgressAll(workerEvent);
                     break;
                 case WorkerEvent.OnDone:
+                    // eslint-disable-next-line react-hooks/immutability
                     onDone(workerEvent);
                     break;
                 case WorkerEvent.OnDoneAll:
+                    // eslint-disable-next-line react-hooks/immutability
                     onDoneAll();
                     break;
                 case WorkerEvent.OnFail:
+                    // eslint-disable-next-line react-hooks/immutability
                     onFail();
                     break;
                 case WorkerEvent.OnFileFail:
+                    // eslint-disable-next-line react-hooks/immutability
                     onFileFail(workerEvent);
                     break;
                 default:

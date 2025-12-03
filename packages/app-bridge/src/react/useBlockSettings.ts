@@ -17,6 +17,7 @@ export const useBlockSettings = <T = Record<string, unknown>>(
 
     // Save blockSettings in a ref so updateBlockSettings can safely be used as a react dependency
     const blockSettingsRef = useRef<T>(structuredClone(window.blockSettings[blockId]) as T);
+    // eslint-disable-next-line react-hooks/refs
     const [blockSettings, setBlockSettings] = useState<T>(blockSettingsRef.current);
 
     // Add listener for block settings updates
