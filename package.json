@@ -1,7 +1,11 @@
 {
     "name": "root",
     "private": true,
-    "packageManager": "pnpm@10.24.0",
+    "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+    "engines": {
+        "node": "^24",
+        "npm": "<=0"
+    },
     "scripts": {
         "build": "pnpm build:app-bridge && pnpm build:app-bridge-theme &&  pnpm build:sidebar-settings && pnpm build:guideline-blocks-settings && pnpm build:guideline-themes && pnpm build:platform-app && pnpm build:cli && pnpm build:app-bridge-app",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
@@ -18,8 +22,7 @@
         "test:components": "cypress run --component",
         "test:components:browser": "cypress open --component",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
-        "ci:version": "pnpm build && changeset version",
-        "ci:publish": "pnpm build && changeset publish",
+        "release": "pnpm build && changeset publish",
         "update": "taze -r -I major"
     },
     "devDependencies": {
@@ -27,7 +30,7 @@
         "@changesets/changelog-github": "^0.5.2",
         "@changesets/cli": "^2.29.8",
         "@cypress/vite-dev-server": "^7.0.1",
-        "@frontify/fondue": "^12.14.4",
+        "@frontify/fondue": "^12.14.5",
         "@types/react": "^18.3.27",
         "@vitejs/plugin-react": "^5.1.1",
         "cypress": "^15.7.1",
