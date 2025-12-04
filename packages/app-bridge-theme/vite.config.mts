@@ -1,11 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
 
-import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
+import { peerDependencies as peerDependenciesMap } from './package.json';
 
-const dependencies = Object.keys(dependenciesMap);
 const peerDependencies = Object.keys(peerDependenciesMap);
 
 export const globals = {
@@ -25,7 +24,7 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies, ...peerDependencies],
+            external: [...peerDependencies],
         },
     },
     test: {
@@ -34,7 +33,6 @@ export default defineConfig({
         coverage: {
             enabled: true,
             provider: 'v8',
-            all: true,
             reporter: ['text', 'lcov'],
             include: ['src/**/*.ts', 'src/**/*.tsx'],
             exclude: ['src/**/test.ts', 'src/**/test.tsx', 'src/**/spec.ts', 'src/**/spec.tsx'],

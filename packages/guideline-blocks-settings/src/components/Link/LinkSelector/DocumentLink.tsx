@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
-import { IconColorFan16, merge } from '@frontify/fondue';
+import { merge } from '@frontify/fondue';
+import { IconColorFan } from '@frontify/fondue/icons';
 import { useEffect, useState } from 'react';
 
-import { type InitiallyExpandedItems } from '../';
+import { type InitiallyExpandedItems } from '../types';
 
 import { PageLinks } from './PageLinks';
 
@@ -67,7 +68,7 @@ export const DocumentLink = ({
                         ])}
                     ></div>
                 </button>
-                <IconColorFan16 />
+                <IconColorFan size={16} />
                 <span className="tw-text-s">{document.title}</span>
                 <span className="tw-flex-auto tw-font-sans tw-text-xs tw-text-right">Document</span>
             </button>

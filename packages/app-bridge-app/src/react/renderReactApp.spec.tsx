@@ -3,10 +3,11 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, it, vi, beforeEach, afterEach, expect } from 'vitest';
 
-import * as AppBridge from '../AppBridgePlatformApp.ts';
-import { type AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
+import { AppBridgePlatformApp } from '../AppBridgePlatformApp.ts';
 
 import { renderReactApp } from './renderReactApp.ts';
+
+vi.mock(import('../AppBridgePlatformApp.ts'));
 
 const AppTest = () => {
     return <div data-test-id="test-id">This component got rendered</div>;
@@ -19,19 +20,18 @@ describe('renderAppReact', () => {
     });
 
     afterEach(() => {
-        vi.restoreAllMocks();
+        vi.resetAllMocks();
     });
 
     it('should call the dispatch method to openConnection', async () => {
         const dispatchMock = vi.fn();
 
-        vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementationOnce(
-            () =>
-                ({
-                    subscribe: vi.fn(),
-                    dispatch: dispatchMock,
-                }) as unknown as AppBridgePlatformApp,
-        );
+        vi.mocked(AppBridgePlatformApp).mockImplementationOnce(function () {
+            return {
+                subscribe: vi.fn(),
+                dispatch: dispatchMock,
+            } as unknown as AppBridgePlatformApp;
+        });
 
         renderReactApp({ app: AppTest, settings: {} });
 
@@ -44,16 +44,15 @@ describe('renderAppReact', () => {
         let callbackMock: () => void;
         let nameMock = '';
 
-        vi.spyOn(AppBridge, 'AppBridgePlatformApp').mockImplementationOnce(
-            () =>
-                ({
-                    subscribe: (name: string, callback: () => void) => {
-                        callbackMock = callback;
-                        nameMock = name;
-                    },
-                    dispatch: vi.fn(),
-                }) as unknown as AppBridgePlatformApp,
-        );
+        vi.mocked(AppBridgePlatformApp).mockImplementationOnce(function () {
+            return {
+                subscribe: (name: string, callback: () => void) => {
+                    callbackMock = callback;
+                    nameMock = name;
+                },
+                dispatch: vi.fn(),
+            } as unknown as AppBridgePlatformApp;
+        });
 
         renderReactApp({ app: AppTest, settings: {} });
 

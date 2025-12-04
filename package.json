@@ -1,7 +1,11 @@
 {
     "name": "root",
     "private": true,
-    "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67",
+    "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+    "engines": {
+        "node": "^24",
+        "npm": "<=0"
+    },
     "scripts": {
         "build": "pnpm build:app-bridge && pnpm build:app-bridge-theme && pnpm build:sidebar-settings && pnpm build:guideline-blocks-settings && pnpm build:guideline-themes && pnpm build:platform-app && pnpm build:cli && pnpm build:app-bridge-app",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
@@ -18,31 +22,27 @@
         "test:components": "cypress run --component",
         "test:components:browser": "cypress open --component",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
-        "ci:version": "pnpm build && changeset version",
-        "ci:publish": "pnpm build && changeset publish"
+        "release": "pnpm build && changeset publish",
+        "update": "taze -r -I major"
     },
     "devDependencies": {
-        "@4tw/cypress-drag-drop": "^2.3.0",
-        "@changesets/changelog-github": "^0.5.0",
-        "@changesets/cli": "^2.27.1",
-        "@cypress/vite-dev-server": "^7.0.0",
+        "@4tw/cypress-drag-drop": "^2.3.1",
+        "@changesets/changelog-github": "^0.5.2",
+        "@changesets/cli": "^2.29.8",
+        "@cypress/vite-dev-server": "^7.0.1",
         "@frontify/fondue": "^13.0.0-rc.9",
-        "@types/react": "^18.3.24",
-        "@vitejs/plugin-react": "^5.0.2",
-        "cypress": "^15.0.0",
-        "cypress-real-events": "^1.14.0",
-        "glob": "^11.0.3",
+        "@types/react": "^18.3.27",
+        "@vitejs/plugin-react": "^5.1.1",
+        "cypress": "^15.7.1",
+        "cypress-real-events": "^1.15.0",
+        "glob": "^13.0.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "tailwindcss": "^3.4.17",
+        "tailwindcss": "^3.4.18",
+        "taze": "^19.9.2",
         "ts-node": "^10.9.2",
-        "typescript": "^5.9.2",
-        "vite": "^7.1.4",
-        "vitest": "^3.2.4"
-    },
-    "pnpm": {
-        "overrides": {
-            "@udecode/plate-common": "36.5.9"
-        }
+        "typescript": "^5.9.3",
+        "vite": "^7.2.6",
+        "vitest": "^4.0.15"
     }
 }

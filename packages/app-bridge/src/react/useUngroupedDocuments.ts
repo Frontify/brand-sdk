@@ -22,6 +22,7 @@ type Options = {
 const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useUngroupedDocuments = (appBridge: AppBridgeBlock, options: Options = { enabled: true }) => {
+    // eslint-disable-next-line @eslint-react/prefer-use-state-lazy-initialization
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -33,6 +34,7 @@ export const useUngroupedDocuments = (appBridge: AppBridgeBlock, options: Option
 
     useEffect(() => {
         if (options.enabled) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             refetch();
         }
     }, [options.enabled, refetch]);

@@ -4,8 +4,8 @@ import { type DocumentSection } from '@frontify/app-bridge';
 import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 
-import { type DocumentSectionWithTitle, type InitiallyExpandedItems } from '../';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
+import { type DocumentSectionWithTitle, type InitiallyExpandedItems } from '../types';
 
 import { SectionLink } from './SectionLink';
 

@@ -4,16 +4,16 @@
 
 // @ts-expect-error No types available
 import frontifyConfig from '@frontify/eslint-config-react';
+import { defineConfig } from 'eslint/config';
 // @ts-expect-error No types available
 import noticePlugin from 'eslint-plugin-notice';
-import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    frontifyConfig,
     {
         ignores: ['dist/', 'coverage/', 'node_modules/', '**/*.md/**.ts'],
     },
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    frontifyConfig,
     {
         files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.cjs'],
         languageOptions: {

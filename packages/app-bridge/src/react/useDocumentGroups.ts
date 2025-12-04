@@ -32,6 +32,7 @@ export const useDocumentGroups = (appBridge: AppBridgeBlock, options: Options = 
 
     useEffect(() => {
         if (options.enabled) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             refetch();
         }
     }, [options.enabled, refetch]);
