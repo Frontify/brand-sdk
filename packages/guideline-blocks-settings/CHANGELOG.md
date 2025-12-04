@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.13-alpha.3
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`33c1ebc`](https://github.com/Frontify/brand-sdk/commit/33c1ebc171ba93641374ca44161a7707dffd3e39) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: add plugin for external deps
+
 ## 1.0.13-alpha.2
 
 ### Patch Changes
