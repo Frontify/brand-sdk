@@ -1,4 +1,5 @@
 @import '@frontify/fondue/components/styles';
+@import '@frontify/fondue/rte/styles';
 @import '../node_modules/@frontify/fondue/dist/packages/tokens/css/base.css';
 @import '../node_modules/@frontify/fondue/dist/packages/tokens/legacy/deprecatedBaseTokens.css';
 
