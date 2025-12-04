@@ -129,6 +129,7 @@ export const useTemplateAssets = (
             }
         }
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCustomizedTemplateAssetsKeys(overrides);
         setMergedThemeAndTemplateAssets(mergedAssets);
     }, [themeAssets, templateAssets]);

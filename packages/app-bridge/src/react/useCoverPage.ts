@@ -32,6 +32,7 @@ export const useCoverPage = (
 
     useEffect(() => {
         if (options.enabled) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             fetchCoverPage().catch(console.error);
         }
     }, [appBridge, fetchCoverPage, options.enabled]);

@@ -8,12 +8,14 @@ import { type SerializedTextProps } from './types';
 export const SerializedText = ({ value = '', gap, customClass, show = true, plugins }: SerializedTextProps) => {
     const [html, setHtml] = useState<string | null>(null);
 
+    // eslint-disable-next-line @eslint-react/no-unnecessary-use-callback
     const updateHtml = useCallback(async () => {
         const htmlContent = await serializeRawToHtmlAsync(value, plugins, undefined, gap, customClass);
         setHtml(htmlContent);
     }, [value, gap, plugins, customClass]);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         updateHtml().catch(console.error);
     }, [updateHtml]);
 

@@ -3,8 +3,8 @@
 import { type Document, type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
 import { type ReactElement, useEffect, useState } from 'react';
 
-import { type InitiallyExpandedItems } from '../';
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
+import { type InitiallyExpandedItems } from '../types';
 
 import { DocumentLink } from './DocumentLink';
 import { LoadingIndicator } from './LoadingIndicator';

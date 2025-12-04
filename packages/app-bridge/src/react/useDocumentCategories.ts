@@ -24,7 +24,7 @@ export const useDocumentCategories = (
     documentId: number,
     options: Options = { enabled: true },
 ) => {
-    // eslint-disable-next-line @eslint-react/hooks-extra/prefer-use-state-lazy-initialization
+    // eslint-disable-next-line @eslint-react/prefer-use-state-lazy-initialization
     const [documentCategories, setDocumentCategories] = useState<Map<number, DocumentCategory>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -36,6 +36,7 @@ export const useDocumentCategories = (
 
     useEffect(() => {
         if (options.enabled) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             refetch();
         }
     }, [refetch, options.enabled]);

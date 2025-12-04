@@ -29,11 +29,12 @@ export const useDocumentNavigation = (
 
     useEffect(() => {
         if (options.enabled) {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises, react-hooks/set-state-in-effect
             refetch();
         }
     }, [options.enabled, refetch]);
 
+    // eslint-disable-next-line @eslint-react/no-unnecessary-use-memo
     const debouncedRefetch = useMemo(
         () =>
             debounce(() => {

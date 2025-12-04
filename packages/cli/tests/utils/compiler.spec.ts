@@ -27,7 +27,7 @@ describe('Compiler utils', () => {
             expect(global.window).toHaveProperty('index');
             expect(global.window?.index.block).toBe('this is a block');
             expect(global.window?.index.settings).toMatchObject({ some: 'settings' });
-            expect(global.window?.index.dependencies['@frontify/app-bridge']).toBe('^3.0.0-beta.99');
+            expect(global.window?.index.dependencies['@frontify/app-bridge']).toBe('^3.12.0');
         });
     });
 

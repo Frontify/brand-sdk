@@ -3,7 +3,7 @@
 import { type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
 import { type ReactElement, useEffect, useState } from 'react';
 
-import { type InitiallyExpandedItems } from '../';
+import { type InitiallyExpandedItems } from '../types';
 
 import { LoadingIndicator } from './LoadingIndicator';
 import { PageLink } from './PageLink';

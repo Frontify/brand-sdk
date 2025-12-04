@@ -76,6 +76,7 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
             }
         }
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCustomizedPageTemplateSettingsKeys(overrides);
         setMergedThemeAndPageTemplateSettings(mergedSettings);
     }, [themeSettings, pageTemplateSettings]);
