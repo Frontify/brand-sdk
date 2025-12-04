@@ -1,7 +1,7 @@
 {
     "name": "@frontify/guideline-themes",
     "type": "module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Provides types and helpers for the guideline themes development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
