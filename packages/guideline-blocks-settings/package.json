@@ -86,6 +86,7 @@
         "typescript": "^5.9.3",
         "vite": "^5.4.21",
         "vite-plugin-dts": "^3.9.1",
+        "vite-plugin-externalize-deps": "^0.10.0",
         "vite-plugin-externals": "^0.6.2",
         "vitest": "^3.2.4"
     }
