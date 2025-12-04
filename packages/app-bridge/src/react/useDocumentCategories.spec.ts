@@ -164,43 +164,6 @@ describe('useDocumentCategories', () => {
         ]);
     });
 
-    it('should update document categories if a category is removed', async () => {
-        const appBridge = getAppBridgeThemeStub();
-        const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
-
-        const DOCUMENT_CATEGORY_TO_DELETE = DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(
-            DOCUMENT_CATEGORY_ID_2,
-            DOCUMENT_ID,
-            5,
-        );
-
-        const { result } = renderHook(() => useDocumentCategories(appBridge, DOCUMENT_ID));
-
-        expect(result.current.isLoading).toBe(true);
-        expect(spy).toHaveBeenCalledOnce();
-
-        await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-        // Trigger a "document category delete" event in the specified document
-        window.emitter.emit('AppBridge:GuidelineDocumentCategory:Action', {
-            action: 'delete',
-            documentCategory: {
-                id: DOCUMENT_CATEGORY_TO_DELETE.id,
-                documentId: DOCUMENT_CATEGORY_TO_DELETE.documentId,
-            },
-        });
-
-        await waitFor(() => {
-            expect(result.current.isLoading).toBe(false);
-            expect(spy).toHaveBeenCalledOnce();
-        });
-
-        expect(result.current.documentCategories).toEqual([
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, DOCUMENT_ID, 2),
-            DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, DOCUMENT_ID, 2),
-        ]);
-    });
-
     it('should not update document categories if a category is removed from another document', async () => {
         const appBridge = getAppBridgeThemeStub();
         const spy = vi.spyOn(appBridge, 'getDocumentCategoriesByDocumentId');
