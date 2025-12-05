@@ -54,6 +54,7 @@ export const LinkSelector = ({
     const dialogProps = {
         onOpenAutoFocus: () => {},
         showUnderlay: true,
+        'data-is-underlay': true,
         minWidth: '800px',
     };
 
@@ -79,35 +80,28 @@ export const LinkSelector = ({
                     </Button>
                 </Dialog.Trigger>
                 <Dialog.Content {...dialogProps}>
-                    <span data-is-underlay="true" style={{ minWidth: 'inherit' }}>
-                        <Dialog.Header>
-                            <Dialog.Title>Select internal link</Dialog.Title>
-                        </Dialog.Header>
-                        <Dialog.Body padding="none">
-                            <ScrollArea padding="compact">
-                                <DocumentLinks
-                                    selectedUrl={selectedUrl}
-                                    onSelectUrl={onSelectUrl}
-                                    getAllDocuments={getAllDocuments}
-                                    getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
-                                    getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
-                                />
-                            </ScrollArea>
-                        </Dialog.Body>
-                        <Dialog.Footer>
-                            <Button size={buttonSize} emphasis="default" onPress={() => setIsModalOpen(false)}>
-                                Cancel
-                            </Button>
-                            <Button
-                                size={buttonSize}
-                                disabled={!selectedUrl}
-                                emphasis="strong"
-                                onPress={() => saveLink()}
-                            >
-                                Choose
-                            </Button>
-                        </Dialog.Footer>
-                    </span>
+                    <Dialog.Header>
+                        <Dialog.Title>Select internal link</Dialog.Title>
+                    </Dialog.Header>
+                    <Dialog.Body padding="none">
+                        <ScrollArea padding="compact">
+                            <DocumentLinks
+                                selectedUrl={selectedUrl}
+                                onSelectUrl={onSelectUrl}
+                                getAllDocuments={getAllDocuments}
+                                getDocumentPagesByDocumentId={getDocumentPagesByDocumentId}
+                                getDocumentSectionsByDocumentPageId={getDocumentSectionsByDocumentPageId}
+                            />
+                        </ScrollArea>
+                    </Dialog.Body>
+                    <Dialog.Footer>
+                        <Button size={buttonSize} emphasis="default" onPress={() => setIsModalOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button size={buttonSize} disabled={!selectedUrl} emphasis="strong" onPress={() => saveLink()}>
+                            Choose
+                        </Button>
+                    </Dialog.Footer>
                 </Dialog.Content>
             </Dialog.Root>
         </div>
