@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.13-alpha.5
+
+### Patch Changes
+
+-   [#1377](https://github.com/Frontify/brand-sdk/pull/1377) [`1075016`](https://github.com/Frontify/brand-sdk/commit/1075016e8e18a03eaa6b68f49d1b54e036a064c3) Thanks [@ragi96](https://github.com/ragi96)! - fix(LinkSelector): fix scrollarea
+
 ## 1.0.13-alpha.4
 
 ### Patch Changes
