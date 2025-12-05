@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.13-alpha.4
+
+### Patch Changes
+
+-   [#1375](https://github.com/Frontify/brand-sdk/pull/1375) [`3927db2`](https://github.com/Frontify/brand-sdk/commit/3927db2136eb75e124b90ce16d7bafbc806697ea) Thanks [@ragi96](https://github.com/ragi96)! - fix: build now also has the styles that were missed before
+
 ## 1.0.13-alpha.3
 
 ### Patch Changes
