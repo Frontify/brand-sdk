@@ -4,7 +4,6 @@ import { produce } from 'immer';
 import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type DocumentCategory, type EmitterEvents } from '../types';
 
 type DocumentPageEvent = EmitterEvents['AppBridge:GuidelineDocumentCategory:DocumentPageAction'];
@@ -20,7 +19,7 @@ type Options = {
 const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useDocumentCategories = (
-    appBridge: AppBridgeBlock | AppBridgeTheme,
+    appBridge: AppBridgeBlock,
     documentId: number,
     options: Options = { enabled: true },
 ) => {
@@ -188,7 +187,7 @@ const actionHandlers = {
     default: (documentCategories: Map<number, DocumentCategory>) => documentCategories,
 };
 
-const fetchDocumentCategories = async (appBridge: AppBridgeBlock | AppBridgeTheme, documentId: number) => {
+const fetchDocumentCategories = async (appBridge: AppBridgeBlock, documentId: number) => {
     const categories = await appBridge.getDocumentCategoriesByDocumentId(documentId);
     return new Map([...categories].sort(sortDocumentCategories).map((category) => [category.id, category]));
 };

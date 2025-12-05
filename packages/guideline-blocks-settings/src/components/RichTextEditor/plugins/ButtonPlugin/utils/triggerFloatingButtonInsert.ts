@@ -7,7 +7,7 @@ import {
     getPluginType,
     isRangeAcrossBlocks,
     someNode,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { floatingButtonActions, floatingButtonSelectors } from '../components/FloatingButton/floatingButtonStore';
 import { ELEMENT_BUTTON } from '../createButtonPlugin';

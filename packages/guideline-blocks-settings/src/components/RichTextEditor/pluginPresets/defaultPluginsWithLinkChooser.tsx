@@ -19,7 +19,7 @@ import {
     TextStylePlugin,
     UnderlinePlugin,
     UnorderedListPlugin,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { ButtonPlugin, LinkPlugin, TextStylePluginsWithoutImage, TextStylesWithoutImage } from '../plugins';
 

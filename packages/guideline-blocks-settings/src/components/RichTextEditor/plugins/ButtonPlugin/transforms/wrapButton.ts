@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlateEditor, type Value, type WrapNodesOptions, getPluginType, wrapNodes } from '@frontify/fondue';
+import { type PlateEditor, type Value, type WrapNodesOptions, getPluginType, wrapNodes } from '@frontify/fondue/rte';
 
 import { ELEMENT_BUTTON, type RichTextButtonStyle, type TButtonElement } from '..';
 

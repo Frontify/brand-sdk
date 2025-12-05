@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlateEditor, getAboveNode } from '@frontify/fondue';
+import { type PlateEditor, getAboveNode } from '@frontify/fondue/rte';
 
 import { ELEMENT_BUTTON, type TButtonElement } from '..';
 

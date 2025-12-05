@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlateEditor, type Value } from '@frontify/fondue';
+import { type PlateEditor, type Value } from '@frontify/fondue/rte';
 
 import { floatingButtonSelectors } from '../components';
 

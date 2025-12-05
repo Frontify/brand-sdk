@@ -9,7 +9,7 @@ import {
     someNode,
     useEditorState,
     useEventPlateId,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 

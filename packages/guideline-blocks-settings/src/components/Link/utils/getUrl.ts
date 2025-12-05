@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ELEMENT_LINK, type PlateEditor, getAboveNode } from '@frontify/fondue';
+import { ELEMENT_LINK, type PlateEditor, getAboveNode } from '@frontify/fondue/rte';
 
 import { type TLinkElement } from '../../RichTextEditor/plugins/LinkPlugin/types';
 

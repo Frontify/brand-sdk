@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import { FloatingModalWrapper, FormControl } from '@frontify/fondue';
+import { FormControl } from '@frontify/fondue';
 import { Button, TextInput } from '@frontify/fondue/components';
 import { IconCheckMark } from '@frontify/fondue/icons';
+import { FloatingModalWrapper } from '@frontify/fondue/rte';
 import { type MouseEvent, type ReactElement, type ReactNode } from 'react';
 
 import { LinkInput } from '../../../../../Link';

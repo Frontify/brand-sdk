@@ -1,11 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import frontifyTailwindConfig from '@frontify/fondue/tokens/tailwind';
 import containerQueryPlugin from '@tailwindcss/container-queries';
 import plugin from 'tailwindcss/plugin';
 
 module.exports = {
-    presets: [require('@frontify/fondue/tailwind')],
+    prefix: 'tw-',
     content: ['src/**/*.{ts,tsx}'],
+    presets: [frontifyTailwindConfig],
     corePlugins: {
         preflight: false,
     },

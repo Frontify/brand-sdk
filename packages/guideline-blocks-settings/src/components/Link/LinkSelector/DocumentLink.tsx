@@ -52,9 +52,8 @@ export const DocumentLink = ({
                 ])}
                 onClick={() => onSelectUrl(document.permanentLink)}
             >
-                {/* eslint-disable-next-line jsx-a11y-x/no-redundant-roles */}
                 <button
-                    role="button"
+                    type="button"
                     tabIndex={0}
                     data-test-id="tree-item-toggle"
                     className="tw-flex tw-items-center tw-justify-center -tw-mr-2 tw-pr-3.5 tw-pt-1.5 tw-pb-1.5 tw-pl-3.5 tw-cursor-pointer"

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlateRenderElementProps, type Value } from '@frontify/fondue';
+import { type PlateRenderElementProps, type Value } from '@frontify/fondue/rte';
 import { type CSSProperties, type HTMLAttributeAnchorTarget, type ReactElement, type ReactNode, useState } from 'react';
 
 import { type TButtonElement } from '../types';

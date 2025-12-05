@@ -54,6 +54,7 @@ export const LinkSelector = ({
     const dialogProps = {
         onOpenAutoFocus: () => {},
         showUnderlay: true,
+        'data-is-underlay': true,
         minWidth: '800px',
     };
 

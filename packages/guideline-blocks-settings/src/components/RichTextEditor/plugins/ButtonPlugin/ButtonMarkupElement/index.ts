@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MarkupElement } from '@frontify/fondue';
+import { MarkupElement } from '@frontify/fondue/rte';
 
 import { ELEMENT_BUTTON } from '../createButtonPlugin';
 

@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FloatingModalWrapper, IconPen16, IconTrashBin16, useLinkOpenButtonState } from '@frontify/fondue';
+import { IconPen, IconTrashBin } from '@frontify/fondue/icons';
+import { FloatingModalWrapper, useLinkOpenButtonState } from '@frontify/fondue/rte';
 import { type MouseEvent } from 'react';
 
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
@@ -41,7 +42,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                         {...editButtonProps}
                     >
-                        <IconPen16 />
+                        <IconPen size={16} />
                     </button>
 
                     <button
@@ -50,7 +51,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                         className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
                         {...unlinkButtonProps}
                     >
-                        <IconTrashBin16 />
+                        <IconTrashBin size={16} />
                     </button>
                 </span>
             </span>

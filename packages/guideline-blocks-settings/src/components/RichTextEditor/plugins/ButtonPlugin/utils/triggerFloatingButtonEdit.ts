@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlateEditor, type Value, findNode, getEditorString, getPluginType } from '@frontify/fondue';
+import { type PlateEditor, type Value, findNode, getEditorString, getPluginType } from '@frontify/fondue/rte';
 
 import { ELEMENT_BUTTON, type TButtonElement } from '..';
 import { floatingButtonActions } from '../components/FloatingButton/floatingButtonStore';

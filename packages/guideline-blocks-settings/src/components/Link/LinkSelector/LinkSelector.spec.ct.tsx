@@ -210,11 +210,12 @@ describe('Link Selector', () => {
                 getDocumentPagesByDocumentId={appBridge.getDocumentPagesByDocumentId}
                 getDocumentSectionsByDocumentPageId={appBridge.getDocumentSectionsByDocumentPageId}
                 url=""
-                onUrlChange={cy.stub().as('urlChange')}
+                onUrlChange={cy.stub().as('urlSelected')}
             />,
         );
         cy.get(LinkSelectorButtonSelector).click();
         cy.get(DocumentLinkSelector).should('have.length', 2);
+        cy.realPress('Tab');
         cy.realPress('Tab');
         cy.realPress('Tab');
         cy.realPress('Enter');
@@ -225,7 +226,8 @@ describe('Link Selector', () => {
         cy.get(SectionLinkSelector).should('have.length', 4);
         cy.realPress('Tab');
         cy.realPress('Space');
+        cy.get(SectionLinkSelector).eq(0).should('have.attr', 'data-is-active', 'true');
         cy.realPress('Enter');
-        cy.get('@urlChange').should('be.calledWith', '/6');
+        cy.get('@urlSelected').should('be.calledWith', '/6');
     });
 });

@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconButton16, IconStylingWrapper, ToolbarButton, focusEditor, useEditorRef } from '@frontify/fondue';
+import { IconButton } from '@frontify/fondue/icons';
+import { IconStylingWrapper, ToolbarButton, focusEditor, useEditorRef } from '@frontify/fondue/rte';
 import { type ReactNode, forwardRef } from 'react';
 
 import { triggerFloatingButton } from '../utils';
@@ -23,7 +24,7 @@ export const ButtonToolbarButton = forwardRef<
                 triggerFloatingButton(editor, { focused: true });
             }}
         >
-            <IconStylingWrapper icon={<IconButton16 />} />
+            <IconStylingWrapper icon={<IconButton size={16} />} />
         </ToolbarButton>
     );
 });

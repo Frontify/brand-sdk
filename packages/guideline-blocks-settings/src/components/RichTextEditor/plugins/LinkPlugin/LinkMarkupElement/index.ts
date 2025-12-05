@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { ELEMENT_LINK, MarkupElement, type PlateRenderElementProps } from '@frontify/fondue';
+import { ELEMENT_LINK, MarkupElement, type PlateRenderElementProps } from '@frontify/fondue/rte';
 
 import { LinkMarkupElementNode, type TLinkElement } from './LinkMarkupElementNode';
 

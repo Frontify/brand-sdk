@@ -14,7 +14,7 @@ import {
     useEditorRef,
     useEditorVersion,
     useHotkeys,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { type Ref, useCallback, useEffect } from 'react';
 
 import { type ButtonPlugin, ELEMENT_BUTTON } from '../../createButtonPlugin';
