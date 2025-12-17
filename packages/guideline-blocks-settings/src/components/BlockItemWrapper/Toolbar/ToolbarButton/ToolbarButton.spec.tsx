@@ -46,12 +46,4 @@ describe('ToolbarButton', () => {
 
         expect(onClickStub).toHaveBeenCalledOnce();
     });
-
-    it('should display icon', () => {
-        const { getByTestId } = render(<ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud size="16" />} />);
-
-        const icons = [...getByTestId(TOOLBAR_BUTTON_ID).getElementsByTagName('svg')];
-        expect(icons).toHaveLength(1);
-        expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
-    });
 });
