@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.13-alpha.6
+
+### Patch Changes
+
+-   [#1381](https://github.com/Frontify/brand-sdk/pull/1381) [`86c9205`](https://github.com/Frontify/brand-sdk/commit/86c920570694a04908e408abfa8721bb3f8a2fc3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Icons): replace all legacy icons
+
 ## 1.0.13-alpha.5
 
 ### Patch Changes
