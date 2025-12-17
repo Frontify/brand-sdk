@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { IconAdobeCreativeCloud } from '@frontify/fondue/icons';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
