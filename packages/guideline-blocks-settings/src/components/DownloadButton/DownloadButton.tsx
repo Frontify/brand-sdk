@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FOCUS_STYLE } from '@frontify/fondue';
 import { Tooltip } from '@frontify/fondue/components';
 import { IconArrowCircleDown } from '@frontify/fondue/icons';
 import { useFocusRing } from '@react-aria/focus';
@@ -16,10 +15,15 @@ export const DownloadButton = ({ onDownload, ariaLabel }: DownloadButtonProps) =
         <Tooltip.Root enterDelay={500}>
             <Tooltip.Trigger asChild>
                 <button
+                    type="button"
                     tabIndex={0}
                     aria-label={ariaLabel ?? 'Download'}
                     {...focusProps}
-                    className={joinClassNames(['tw-outline-none tw-rounded', isFocused && FOCUS_STYLE])}
+                    className={joinClassNames([
+                        'tw-outline-none tw-rounded',
+                        isFocused &&
+                            'tw-ring-4 tw-ring-blue tw-ring-offset-2 dark:tw-ring-offset-black tw-outline-none',
+                    ])}
                     onClick={onDownload}
                     onPointerDown={(e) => e.preventDefault()}
                     data-test-id="download-button"
