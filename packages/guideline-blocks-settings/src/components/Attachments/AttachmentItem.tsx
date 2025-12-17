@@ -2,7 +2,6 @@
 
 import { useSortable } from '@dnd-kit/sortable';
 import { type Asset, useAssetUpload, useFileInput } from '@frontify/app-bridge';
-import { FOCUS_STYLE } from '@frontify/fondue';
 import { LoadingCircle, Dropdown, Button } from '@frontify/fondue/components';
 import {
     IconArrowCircleUp,
@@ -75,6 +74,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
 
         return (
             <button
+                type="button"
                 aria-label="Download attachment"
                 data-test-id="attachments-item"
                 onClick={() => !selectedAsset && onDownload?.()}
@@ -107,6 +107,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                         ])}
                     >
                         <button
+                            type="button"
                             {...focusProps}
                             {...draggableProps}
                             aria-label="Drag attachment"
@@ -115,7 +116,8 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                                 isDragging || isOverlay
                                     ? 'tw-cursor-grabbing tw-bg-button-background-pressed hover:tw-bg-button-background-pressed'
                                     : 'tw-cursor-grab hover:tw-bg-button-background-hover',
-                                isFocusVisible && FOCUS_STYLE,
+                                isFocusVisible &&
+                                    'tw-ring-4 tw-ring-blue tw-ring-offset-2 dark:tw-ring-offset-black tw-outline-none',
                                 isFocusVisible && 'tw-z-[2]',
                             ])}
                         >
