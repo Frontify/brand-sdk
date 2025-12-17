@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FOCUS_STYLE, IconArrowCircleDown16 } from '@frontify/fondue';
+import { FOCUS_STYLE } from '@frontify/fondue';
 import { Tooltip } from '@frontify/fondue/components';
+import { IconArrowCircleDown } from '@frontify/fondue/icons';
 import { useFocusRing } from '@react-aria/focus';
 
 import { joinClassNames } from '../../utilities';
@@ -24,7 +25,7 @@ export const DownloadButton = ({ onDownload, ariaLabel }: DownloadButtonProps) =
                     data-test-id="download-button"
                 >
                     <span className="tw-flex tw-text-xs tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-1 tw-p-1.5 tw-outline-line">
-                        <IconArrowCircleDown16 />
+                        <IconArrowCircleDown size="16" />
                     </span>
                 </button>
             </Tooltip.Trigger>

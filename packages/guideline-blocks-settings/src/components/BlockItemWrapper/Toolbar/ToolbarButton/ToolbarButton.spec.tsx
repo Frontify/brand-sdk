@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { IconAdobeCreativeCloud } from '@frontify/fondue/icons';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -19,7 +19,7 @@ describe('ToolbarButton', () => {
     it('should disable tooltip when item is in drag preview context', () => {
         const { queryByTestId } = render(
             <DragPreviewContextProvider isDragPreview>
-                <ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud />} />
+                <ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud size="16" />} />
             </DragPreviewContextProvider>,
         );
 
@@ -27,7 +27,7 @@ describe('ToolbarButton', () => {
     });
 
     it('should show tooltip when item is focused', async () => {
-        const { getByTestId } = render(<ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud />} />);
+        const { getByTestId } = render(<ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud size="16" />} />);
 
         fireEvent.focus(getByTestId(TOOLBAR_BUTTON_ID));
 
@@ -38,7 +38,9 @@ describe('ToolbarButton', () => {
 
     it('should trigger onClick', () => {
         const onClickStub = vi.fn();
-        const { getByTestId } = render(<ToolbarButton onClick={onClickStub} icon={<IconAdobeCreativeCloud />} />);
+        const { getByTestId } = render(
+            <ToolbarButton onClick={onClickStub} icon={<IconAdobeCreativeCloud size="16" />} />,
+        );
 
         fireEvent.click(getByTestId(TOOLBAR_BUTTON_ID));
 
@@ -46,7 +48,7 @@ describe('ToolbarButton', () => {
     });
 
     it('should display icon', () => {
-        const { getByTestId } = render(<ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud />} />);
+        const { getByTestId } = render(<ToolbarButton onClick={vi.fn()} icon={<IconAdobeCreativeCloud size="16" />} />);
 
         const icons = [...getByTestId(TOOLBAR_BUTTON_ID).getElementsByTagName('svg')];
         expect(icons).toHaveLength(1);

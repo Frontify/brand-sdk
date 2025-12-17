@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { IconAdobeCreativeCloud } from '@frontify/fondue/icons';
 
 import { BlockInjectButton } from './BlockInjectButton';
 
