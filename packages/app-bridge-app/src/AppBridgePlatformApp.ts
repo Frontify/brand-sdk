@@ -77,6 +77,10 @@ export type GuidelinePageActionContext = {
     surface: 'pageAction';
 } & AppBaseProps;
 
+export type GuidelineAssetChooserContext = {
+    surface: 'assetChooser';
+} & AppBaseProps;
+
 export type AssetViewerContext = {
     surface: 'assetViewer';
     assetId: string;
@@ -100,6 +104,7 @@ export type PlatformAppContext =
     | AssetCreationContext
     | AssetViewerContext
     | GuidelinePageActionContext
+    | GuidelineAssetChooserContext
     | AssetBulkActionsContext;
 
 export type PlatformAppEvent = EventNameValidator<
