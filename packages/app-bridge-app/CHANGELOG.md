@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.1.13
+
+### Patch Changes
+
+-   [#1390](https://github.com/Frontify/brand-sdk/pull/1390) [`51bfe25`](https://github.com/Frontify/brand-sdk/commit/51bfe25cd72dbdb81ed74f2edd01b7e841bac346) Thanks [@julianiff](https://github.com/julianiff)! - feat: add asssetChooser context
+
 ## 0.1.12
 
 ### Patch Changes
