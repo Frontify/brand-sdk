@@ -2,4 +2,4 @@
 "@frontify/app-bridge-app": patch
 ---
 
-feat: add asssetChooser Context
+feat: add asssetChooser context
