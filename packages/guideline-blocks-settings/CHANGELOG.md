@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.13-alpha.9
+
+### Patch Changes
+
+-   [#1394](https://github.com/Frontify/brand-sdk/pull/1394) [`3f4bef3`](https://github.com/Frontify/brand-sdk/commit/3f4bef3741d5a640d38f48f6248692a6bf3ed11d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `13.0.0-rc.14`, `@react-aria/focus` to `3.21.3` and `@react-stately/overlays` to `3.6.21`
+
 ## 1.0.13-alpha.8
 
 ### Patch Changes
