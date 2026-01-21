@@ -7,10 +7,10 @@
         "npm": "<=0"
     },
     "scripts": {
-        "build": "pnpm build:app-bridge && pnpm build:app-bridge-theme &&  pnpm build:sidebar-settings && pnpm build:guideline-blocks-settings && pnpm build:guideline-themes && pnpm build:platform-app && pnpm build:cli && pnpm build:app-bridge-app",
+        "build": "pnpm build:app-bridge && pnpm build:app-bridge-theme && pnpm build:sidebar-settings && pnpm build:guideline-blocks-settings && pnpm build:guideline-themes && pnpm build:platform-app && pnpm build:cli && pnpm build:app-bridge-app",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
-        "build:app-bridge-app": "pnpm --stream --filter {packages/app-bridge-app} build",
         "build:app-bridge-theme": "pnpm --stream --filter {packages/app-bridge-theme} build",
+        "build:app-bridge-app": "pnpm --stream --filter {packages/app-bridge-app} build",
         "build:sidebar-settings": "pnpm --stream --filter {packages/sidebar-settings} build",
         "build:guideline-blocks-settings": "pnpm --stream --filter {packages/guideline-blocks-settings} build",
         "build:guideline-themes": "pnpm --stream --filter {packages/guideline-themes} build",
@@ -30,7 +30,7 @@
         "@changesets/changelog-github": "^0.5.2",
         "@changesets/cli": "^2.29.8",
         "@cypress/vite-dev-server": "^7.0.1",
-        "@frontify/fondue": "^12.14.5",
+        "@frontify/fondue": "^13.0.0-rc.15",
         "@types/react": "^18.3.27",
         "@vitejs/plugin-react": "^5.1.1",
         "cypress": "^15.7.1",

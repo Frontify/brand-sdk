@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PlatePlugin, Plugin, createColumnBreakPlugin, ColumnBreakButton } from '@frontify/fondue';
+import { type PlatePlugin, Plugin, createColumnBreakPlugin, ColumnBreakButton } from '@frontify/fondue/rte';
 import { type CSSProperties } from 'react';
 
 import { getResponsiveColumnClasses } from './helpers';

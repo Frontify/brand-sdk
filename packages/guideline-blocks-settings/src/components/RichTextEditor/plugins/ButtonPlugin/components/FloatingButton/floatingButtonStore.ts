@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { createStore } from '@frontify/fondue';
+import { createStore } from '@frontify/fondue/rte';
 
 import { type RichTextButtonStyle } from '../../types';
 

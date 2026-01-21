@@ -1,5 +1,103 @@
 # @frontify/guideline-blocks-settings
 
+## 1.0.13-alpha.10
+
+### Patch Changes
+
+-   [#1398](https://github.com/Frontify/brand-sdk/pull/1398) [`d071278`](https://github.com/Frontify/brand-sdk/commit/d071278e8a08f48eda4adc271615ccbd3b9962d5) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to rc.15
+
+## 1.0.13-alpha.9
+
+### Patch Changes
+
+-   [#1394](https://github.com/Frontify/brand-sdk/pull/1394) [`3f4bef3`](https://github.com/Frontify/brand-sdk/commit/3f4bef3741d5a640d38f48f6248692a6bf3ed11d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `13.0.0-rc.14`, `@react-aria/focus` to `3.21.3` and `@react-stately/overlays` to `3.6.21`
+
+## 1.0.13-alpha.8
+
+### Patch Changes
+
+-   [#1391](https://github.com/Frontify/brand-sdk/pull/1391) [`c677f7e`](https://github.com/Frontify/brand-sdk/commit/c677f7eeddb65b084394f6b20d050ba1d98bc78e) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump to v13 fondue
+
+## 1.0.13-alpha.7
+
+### Patch Changes
+
+-   [#1383](https://github.com/Frontify/brand-sdk/pull/1383) [`b3f4429`](https://github.com/Frontify/brand-sdk/commit/b3f4429b241dc2bf7d763fbc844f9a126f318095) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to latest rc
+
+## 1.0.13-alpha.6
+
+### Patch Changes
+
+-   [#1381](https://github.com/Frontify/brand-sdk/pull/1381) [`86c9205`](https://github.com/Frontify/brand-sdk/commit/86c920570694a04908e408abfa8721bb3f8a2fc3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Icons): replace all legacy icons
+
+## 1.0.13-alpha.5
+
+### Patch Changes
+
+-   [#1377](https://github.com/Frontify/brand-sdk/pull/1377) [`1075016`](https://github.com/Frontify/brand-sdk/commit/1075016e8e18a03eaa6b68f49d1b54e036a064c3) Thanks [@ragi96](https://github.com/ragi96)! - fix(LinkSelector): fix scrollarea
+
+## 1.0.13-alpha.4
+
+### Patch Changes
+
+-   [#1375](https://github.com/Frontify/brand-sdk/pull/1375) [`3927db2`](https://github.com/Frontify/brand-sdk/commit/3927db2136eb75e124b90ce16d7bafbc806697ea) Thanks [@ragi96](https://github.com/ragi96)! - fix: build now also has the styles that were missed before
+
+## 1.0.13-alpha.3
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`33c1ebc`](https://github.com/Frontify/brand-sdk/commit/33c1ebc171ba93641374ca44161a7707dffd3e39) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: add plugin for external deps
+
+## 1.0.13-alpha.2
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`0d4a546`](https://github.com/Frontify/brand-sdk/commit/0d4a546ab82da661f14a50e58b5a77afe1c3c311) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: add RTE styles
+
+## 1.0.13-alpha.1
+
+### Patch Changes
+
+-   [#1368](https://github.com/Frontify/brand-sdk/pull/1368) [`b46e848`](https://github.com/Frontify/brand-sdk/commit/b46e848638adc6a03c94edac147ba42f1cde26ef) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump fondue to latest rc
+
+## 1.0.13-alpha.0
+
+### Patch Changes
+
+-   [#1363](https://github.com/Frontify/brand-sdk/pull/1363) [`2be13ae`](https://github.com/Frontify/brand-sdk/commit/2be13ae3eec70d2d1684ebb6f58a8b662421c7e0) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump to latest rc of fondue
+
+## 1.0.8-alpha.3
+
+### Patch Changes
+
+-   [#1336](https://github.com/Frontify/brand-sdk/pull/1336) [`fa50848`](https://github.com/Frontify/brand-sdk/commit/fa50848a67f4fecfec61e55e7d2783b1adaa82e6) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to 13.rc5
+
+## 1.0.8-alpha.2
+
+### Patch Changes
+
+-   [#1333](https://github.com/Frontify/brand-sdk/pull/1333) [`627704a`](https://github.com/Frontify/brand-sdk/commit/627704af5756b7fe850a9bfd4c6d152a3feebc6e) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `13.0.0-rc.2`
+
+## 1.0.8-alpha.1
+
+### Patch Changes
+
+-   [#1330](https://github.com/Frontify/brand-sdk/pull/1330) [`b85e121`](https://github.com/Frontify/brand-sdk/commit/b85e12116af0ec3bb6488448e9fa2f3e12b29b90) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to rc.1
+
+## 1.0.8-alpha.0
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`3cb0845`](https://github.com/Frontify/brand-sdk/commit/3cb0845f9fdf445f2fb680be4428980ac14524e5) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump `@frontify/fondue` to `13.0.0-beta.9`
+
+-   [#1307](https://github.com/Frontify/brand-sdk/pull/1307) [`9a78b2c`](https://github.com/Frontify/brand-sdk/commit/9a78b2cd2062ace4dc46bfa8d75cc54e04e34c80) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump to latest fondue beta
+
+## 1.0.5-alpha.0
+
+### Patch Changes
+
+-   [#1286](https://github.com/Frontify/brand-sdk/pull/1286) [`8ed6d57`](https://github.com/Frontify/brand-sdk/commit/8ed6d57ad71cf81d73798e4f639103960be8dc93) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to v13
+
 ## 1.0.13
 
 ### Patch Changes

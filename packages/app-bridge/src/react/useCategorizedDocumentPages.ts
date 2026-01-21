@@ -4,7 +4,6 @@ import { produce } from 'immer';
 import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type AppBridgeTheme } from '../AppBridgeTheme';
 import { type DocumentPage, type EmitterEvents } from '../types';
 
 import { type DocumentPageTargetEvent } from './useDocumentPageTargets';
@@ -21,7 +20,7 @@ type Options = {
 const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
 export const useCategorizedDocumentPages = (
-    appBridge: AppBridgeBlock | AppBridgeTheme,
+    appBridge: AppBridgeBlock,
     documentCategoryId: number,
     options: Options = { enabled: true },
 ) => {
@@ -163,10 +162,7 @@ const moveDocumentPage = (draft: Map<number, DocumentPage>, documentPage: Docume
     return draft;
 };
 
-const fetchDocumentPagesByDocumentCategoryId = async (
-    appBridge: AppBridgeBlock | AppBridgeTheme,
-    documentCategoryId: number,
-) => {
+const fetchDocumentPagesByDocumentCategoryId = async (appBridge: AppBridgeBlock, documentCategoryId: number) => {
     const pages = await appBridge.getDocumentPagesByDocumentCategoryId(documentCategoryId);
     return new Map([...pages].sort(sortDocumentPages).map((page) => [page.id, page]));
 };

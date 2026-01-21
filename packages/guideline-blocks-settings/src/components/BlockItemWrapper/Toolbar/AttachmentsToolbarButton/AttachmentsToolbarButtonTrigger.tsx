@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconCaretDown12, IconPaperclip16 } from '@frontify/fondue';
+import { IconCaretDown, IconPaperclip } from '@frontify/fondue/icons';
 import { forwardRef } from 'react';
 
 import { type AttachmentsTriggerProps } from '../../../Attachments/types';
@@ -14,9 +14,9 @@ export const AttachmentsToolbarButtonTrigger = forwardRef<HTMLButtonElement, Att
             ref={ref}
             {...props}
         >
-            <IconPaperclip16 />
+            <IconPaperclip size="16" />
             {children}
-            <IconCaretDown12 />
+            <IconCaretDown size="12" />
         </BaseToolbarButton>
     ),
 );

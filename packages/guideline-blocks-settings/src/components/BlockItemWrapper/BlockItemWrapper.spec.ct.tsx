@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconMagnifier16 } from '@frontify/fondue';
+import { IconMagnifier } from '@frontify/fondue/icons';
 
 import { BlockItemWrapper } from './BlockItemWrapper';
 
@@ -44,8 +44,8 @@ describe('Block Item Wrapper', () => {
         cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -58,26 +58,26 @@ describe('Block Item Wrapper', () => {
         cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                     {
                         type: 'menu',
                         items: [
                             [
                                 {
-                                    icon: <IconMagnifier16 />,
+                                    icon: <IconMagnifier />,
                                     onClick: cy.stub(),
                                     title: 'Test title',
                                 },
                             ],
                             [
                                 {
-                                    icon: <IconMagnifier16 />,
+                                    icon: <IconMagnifier />,
                                     onClick: cy.stub(),
                                     title: 'Test title',
                                 },
                                 {
-                                    icon: <IconMagnifier16 />,
+                                    icon: <IconMagnifier />,
                                     onClick: cy.stub(),
                                     title: 'Test title',
                                 },
@@ -99,8 +99,8 @@ describe('Block Item Wrapper', () => {
         cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -115,8 +115,8 @@ describe('Block Item Wrapper', () => {
             <BlockItemWrapper
                 shouldHideComponent={false}
                 toolbarItems={[
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
             >
                 <div data-test-id="block-item-wrapper-child" className="tw-w-8 tw-h-8 tw-bg-red-50" />
@@ -130,8 +130,8 @@ describe('Block Item Wrapper', () => {
         cy.mount(
             <BlockItemWrapper
                 toolbarItems={[
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
-                    { type: 'button', icon: <IconMagnifier16 />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
+                    { type: 'button', icon: <IconMagnifier />, onClick: cy.stub(), tooltip: 'Test tooltip' },
                 ]}
                 shouldBeShown
             >

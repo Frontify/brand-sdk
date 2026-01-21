@@ -7,6 +7,7 @@ export class AssetChooserResultDummy {
         return {
             id,
             creator_name: 'Creator Name',
+            computed_alternative_text: 'Alternative Text',
             ext: 'png',
             external_url: null,
             file_id: 'x1x1x1x1x1x1',
@@ -28,6 +29,8 @@ export class AssetChooserResultDummy {
             revision_id: 1,
             background_color: 'rgba(115, 210, 210, 255)',
             is_download_protected: false,
+            focal_point_x: 0.5,
+            focal_point_y: 0.5,
         };
     }
 }

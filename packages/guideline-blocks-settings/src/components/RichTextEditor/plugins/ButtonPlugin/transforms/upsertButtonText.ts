@@ -8,7 +8,7 @@ import {
     getEditorString,
     getPluginType,
     replaceNodeChildren,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { ELEMENT_BUTTON, type TButtonElement } from '..';
 

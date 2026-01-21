@@ -5,12 +5,8 @@ import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
 import { type PreRenderedAsset } from 'rollup';
 import dts from 'vite-plugin-dts';
+import { externalizeDeps } from 'vite-plugin-externalize-deps';
 import { defineConfig } from 'vitest/config';
-
-import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
-
-const dependencies = Object.keys(dependenciesMap);
-const peerDependencies = Object.keys(peerDependenciesMap);
 
 export const globals = {
     react: 'React',
@@ -26,7 +22,7 @@ const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
 };
 
 export default defineConfig({
-    plugins: [dts({ insertTypesEntry: true, rollupTypes: true }), react()],
+    plugins: [dts({ insertTypesEntry: true, rollupTypes: true }), react(), externalizeDeps()],
     resolve: {
         mainFields: ['module', 'main'],
     },
@@ -47,7 +43,6 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies, ...peerDependencies, 'react-dom/client', 'react/jsx-runtime'],
             output: [
                 {
                     name: 'GuidelineBlocksSettings',

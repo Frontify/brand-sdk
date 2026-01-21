@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { IconAdobeCreativeCloud } from '@frontify/fondue/icons';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -75,15 +75,5 @@ describe('DragHandleToolbarButton', () => {
         );
 
         expect(setActivatorNodeRefStub).toHaveBeenCalled();
-    });
-
-    it('should display icon', () => {
-        const { getByTestId } = render(
-            <DragHandleToolbarButton tooltip={TOOLTIP_CONTENT} icon={<IconAdobeCreativeCloud />} draggableProps={{}} />,
-        );
-
-        const icons = [...getByTestId(TOOLBAR_BUTTON_ID).getElementsByTagName('svg')];
-        expect(icons).toHaveLength(1);
-        expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
     });
 });

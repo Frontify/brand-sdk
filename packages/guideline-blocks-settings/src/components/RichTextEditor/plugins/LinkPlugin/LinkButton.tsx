@@ -7,7 +7,7 @@ import {
     isRangeInSameBlock,
     useEditorState,
     useEventPlateId,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { LinkToolbarButton } from './LinkToolbarButton';
 

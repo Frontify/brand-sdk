@@ -4,7 +4,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import mitt from 'mitt';
 import { type Mock, beforeAll, describe, expect, it, vi } from 'vitest';
 
-import { type AppBridgeBlock, type AppBridgeTheme } from '../';
+import { type AppBridgeBlock } from '../';
 import { DocumentSectionDummy } from '../tests/DocumentSectionDummy';
 
 import { useDocumentSection } from './useDocumentSection';
@@ -12,7 +12,6 @@ import { useDocumentSection } from './useDocumentSection';
 const DOCUMENT_PAGE_ID = 45;
 
 const documentSections = [
-    // @ts-expect-error On purpose to test the function
     DocumentSectionDummy.withFields({ id: 464, title: null }),
     DocumentSectionDummy.withFields({ id: 356, title: 'New Title' }),
     DocumentSectionDummy.withFields({ id: 376, title: ' ' }),
@@ -20,7 +19,7 @@ const documentSections = [
 ];
 
 describe('useDocumentSection', () => {
-    const appBridge: AppBridgeBlock | AppBridgeTheme = {} as AppBridgeBlock | AppBridgeTheme;
+    const appBridge: AppBridgeBlock = {} as AppBridgeBlock;
 
     beforeAll(() => {
         window.emitter = mitt();
