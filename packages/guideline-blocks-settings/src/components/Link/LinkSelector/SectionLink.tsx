@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { merge } from '@frontify/fondue';
 import { IconDocumentText } from '@frontify/fondue/icons';
 
 type SectionLinkProps = {
@@ -19,13 +18,15 @@ export const SectionLink = ({ section, selectedUrl, onSelectUrl }: SectionLinkPr
     return (
         <button
             data-test-id="internal-link-selector-section-link"
+            type="button"
             data-is-active={isActive}
-            className={merge([
-                'tw-py-2 tw-pr-2.5 tw-pl-14 tw-leading-5 tw-cursor-pointer tw-w-full',
-                isActive
-                    ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
-                    : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
-            ])}
+            className={`
+                tw-py-2 tw-pr-2.5 tw-pl-14 tw-leading-5 tw-cursor-pointer tw-w-full 
+                ${
+                    isActive
+                        ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
+                        : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover'
+                }`}
             onClick={() => onSelectUrl(section.permanentLink)}
         >
             <div className="tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-h-6">

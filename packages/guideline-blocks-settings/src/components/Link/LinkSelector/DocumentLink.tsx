@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type DocumentPage, type DocumentSection } from '@frontify/app-bridge';
-import { merge } from '@frontify/fondue';
 import { IconColorFan } from '@frontify/fondue/icons';
 import { useEffect, useState } from 'react';
 
@@ -43,13 +42,13 @@ export const DocumentLink = ({
     return (
         <>
             <button
+                type="button"
                 data-test-id="internal-link-selector-document-link"
-                className={merge([
-                    'tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-py-2 tw-pr-2.5 tw-leading-5 tw-cursor-pointer tw-w-full',
+                className={`tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-py-2 tw-pr-2.5 tw-leading-5 tw-cursor-pointer tw-w-full ${
                     isActive
                         ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
-                        : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
-                ])}
+                        : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover'
+                }`}
                 onClick={() => onSelectUrl(document.permanentLink)}
             >
                 <button
@@ -61,10 +60,7 @@ export const DocumentLink = ({
                     onKeyDown={(event) => event.key === 'Enter' && event.stopPropagation()}
                 >
                     <div
-                        className={merge([
-                            'tw-transition-transform tw-w-0 tw-h-0 tw-font-normal tw-border-t-4 tw-border-t-transparent tw-border-b-4 tw-border-b-transparent tw-border-l-4 tw-border-l-x-strong',
-                            isExpanded ? 'tw-rotate-90' : '',
-                        ])}
+                        className={`tw-transition-transform tw-w-0 tw-h-0 tw-font-normal tw-border-t-4 tw-border-t-transparent tw-border-b-4 tw-border-b-transparent tw-border-l-4 tw-border-l-x-strong ${isExpanded ? 'tw-rotate-90' : ''}`}
                     ></div>
                 </button>
                 <IconColorFan size={16} />
