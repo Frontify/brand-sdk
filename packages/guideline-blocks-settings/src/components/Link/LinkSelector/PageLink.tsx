@@ -75,7 +75,7 @@ export const PageLink = ({
                         >
                             <div
                                 className={`tw-transition-transform tw-w-0 tw-h-0 tw-font-normal tw-border-t-4 tw-border-t-transparent tw-border-b-4 tw-border-b-transparent tw-border-l-4 tw-border-l-x-strong 
-                                ${isExpanded ? 'tw-rotate-90' : ''}`}
+                                ${isExpanded ? 'tw-rotate-90 ' : ''}`}
                             />
                         </button>
                     )}
