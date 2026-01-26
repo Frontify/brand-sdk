@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type DocumentSection } from '@frontify/app-bridge';
-import { merge } from '@frontify/fondue';
 import { useEffect, useState } from 'react';
 
 import { filterDocumentSectionsWithUnreadableTitles } from '../helpers/filterDocumentSectionsWithUnreadableTitles';
@@ -54,30 +53,30 @@ export const PageLink = ({
     return (
         <>
             <button
+                type="button"
                 data-test-id="internal-link-selector-page-link"
-                className={merge([
-                    'tw-py-2 tw-pr-2.5 tw-leading-5 tw-cursor-pointer tw-flex tw-w-full',
-                    hasSections ? 'tw-pl-7' : 'tw-pl-12',
-                    isActive
-                        ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
-                        : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover',
-                ])}
+                className={`
+                    tw-py-2 tw-pr-2.5 tw-leading-5 tw-cursor-pointer tw-flex tw-w-full 
+                    ${hasSections ? 'tw-pl-7 ' : 'tw-pl-12 '}
+                    ${
+                        isActive
+                            ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover '
+                            : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover '
+                    }`}
                 onClick={() => onSelectUrl(page.permanentLink)}
             >
                 <div key={page.id} className="tw-flex tw-flex-1 tw-space-x-1 tw-items-center tw-h-6">
                     {hasSections && (
                         <button
-                            data-test-id="tree-item-toggle"
+                            type="button"
                             className="tw-flex tw-items-center tw-justify-center -tw-mr-2 tw-pr-3.5 tw-pt-1.5 tw-pb-1.5 tw-pl-3.5 tw-cursor-pointer"
                             onClick={() => setIsExpanded(!isExpanded)}
                             onKeyDown={(event) => event.key === 'Enter' && event.stopPropagation()}
                         >
                             <div
-                                className={merge([
-                                    'tw-transition-transform tw-w-0 tw-h-0 tw-font-normal tw-border-t-4 tw-border-t-transparent tw-border-b-4 tw-border-b-transparent tw-border-l-4 tw-border-l-x-strong',
-                                    isExpanded ? 'tw-rotate-90' : '',
-                                ])}
-                            ></div>
+                                className={`tw-transition-transform tw-w-0 tw-h-0 tw-font-normal tw-border-t-4 tw-border-t-transparent tw-border-b-4 tw-border-b-transparent tw-border-l-4 tw-border-l-x-strong 
+                                ${isExpanded ? 'tw-rotate-90' : ''}`}
+                            />
                         </button>
                     )}
                     <span className="tw-text-s">{page.title}</span>
