@@ -1,5 +1,5 @@
 ---
-"@frontify/frontify-cli": major
+"@frontify/frontify-cli": minor
 ---
 
-Fix to make the OAuth login functionality to work. No action needed, other than bumping the version
+fix: to make the OAuth login functionality to work. No action needed.
