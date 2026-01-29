@@ -42,9 +42,12 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{
     openConnection: void;
+    downloadAsset: void;
 }>;
 
-export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandRegistry, 'openConnection'>>;
+export type PlatformAppCommand = CommandNameValidator<
+    Pick<PlatformAppCommandRegistry, 'openConnection' | 'downloadAsset'>
+>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
@@ -164,6 +167,7 @@ export class AppBridgePlatformApp {
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
+        payload?: any,
     ): Promise<void> {
         if (dispatchHandler.name === openConnection().name) {
             if (this.guardForInitialization()) {
@@ -178,6 +182,13 @@ export class AppBridgePlatformApp {
             });
 
             await this.attemptSubscription(1, checksum);
+        } else {
+            return this.commandPort?.postMessage({
+                message: {
+                    parameter: { dispatch: dispatchHandler, payload },
+                },
+                token: 'dispatch',
+            });
         }
     }
 
