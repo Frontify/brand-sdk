@@ -16,7 +16,7 @@
         "templates"
     ],
     "engines": {
-        "node": ">=18"
+        "node": ">=20.19"
     },
     "scripts": {
         "build": "vite build",
@@ -44,7 +44,7 @@
         "open": "^11.0.0",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^5.4.21",
+        "vite": "^7.3.1",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"
     },
