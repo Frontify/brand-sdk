@@ -11,7 +11,7 @@ const dependencies = Object.keys(dependenciesMap);
 
 export default defineConfig({
     build: {
-        target: 'node18',
+        target: 'node20',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             fileName: () => '[name].mjs',
