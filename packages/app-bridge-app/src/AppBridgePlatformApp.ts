@@ -42,9 +42,12 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
 
 export type PlatformAppCommandRegistry = CommandNameValidator<{
     openConnection: void;
+    downloadAsset: void;
 }>;
 
-export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandRegistry, 'openConnection'>>;
+export type PlatformAppCommand = CommandNameValidator<
+    Pick<PlatformAppCommandRegistry, 'openConnection' | 'downloadAsset'>
+>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
@@ -53,6 +56,7 @@ export type PlatformAppState = {
 
 type InitializeEvent = {
     apiPort: MessagePort;
+    commandPort: MessagePort;
     statePort: MessagePort;
     context: PlatformAppContext;
     state: PlatformAppState;
@@ -115,6 +119,7 @@ export type PlatformAppEvent = EventNameValidator<
 export class AppBridgePlatformApp {
     private apiMessageBus: IMessageBus = new ErrorMessageBus();
     private statePort: MessagePort | undefined;
+    private commandPort: MessagePort | undefined;
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
     private localState: PlatformAppState = { settings: {}, userState: {} };
@@ -162,6 +167,7 @@ export class AppBridgePlatformApp {
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
         dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
+        payload?: any,
     ): Promise<void> {
         if (dispatchHandler.name === openConnection().name) {
             if (this.guardForInitialization()) {
@@ -176,14 +182,30 @@ export class AppBridgePlatformApp {
             });
 
             await this.attemptSubscription(1, checksum);
+        } else {
+            return this.commandPort?.postMessage({
+                message: {
+                    parameter: { dispatch: dispatchHandler, payload },
+                },
+                token: 'dispatch',
+            });
         }
     }
 
     private async attemptSubscription(attempt: number, checksum: string): Promise<void> {
         try {
-            const { statePort, apiPort, context, state } = await subscribe<InitializeEvent>(Topic.Init, checksum);
+            const { statePort, apiPort, commandPort, context, state } = await subscribe<InitializeEvent>(
+                Topic.Init,
+                checksum,
+            );
 
             this.apiMessageBus = new MessageBus(apiPort);
+            this.commandPort = commandPort;
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            this.commandPort.onmessage = (event: MessageEvent) => {
+                // do nothing
+            };
 
             this.statePort = statePort;
             this.statePort.onmessage = (event: MessageEvent<{ message: PlatformAppState }>) => {
