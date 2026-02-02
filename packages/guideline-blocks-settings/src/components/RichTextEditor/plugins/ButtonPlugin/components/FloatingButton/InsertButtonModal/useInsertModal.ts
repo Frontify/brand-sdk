@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import { getPluginOptions, useEditorRef, useHotkeys } from '@frontify/fondue';
+import { getPluginOptions, useEditorRef, useHotkeys } from '@frontify/fondue/rte';
 import { type Dispatch, type Reducer, useEffect, useReducer } from 'react';
 
 import { addHttps } from '../../../../../../../helpers';

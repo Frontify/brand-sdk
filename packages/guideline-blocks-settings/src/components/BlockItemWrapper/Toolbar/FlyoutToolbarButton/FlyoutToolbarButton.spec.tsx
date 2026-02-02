@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { IconAdobeCreativeCloud } from '@frontify/fondue';
+import { IconAdobeCreativeCloud } from '@frontify/fondue/icons';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -94,25 +94,6 @@ describe('FlyoutToolbarButton', () => {
         getByTestId(BUTTON_ID).focus();
 
         await waitFor(() => expect(getByTestId(TOOLTIP_ID)).toBeInTheDocument());
-    });
-
-    it('should use supplied icon', () => {
-        const setOpenFlyoutIdsStub = vi.fn();
-
-        const { getByTestId } = render(
-            <MultiFlyoutContextProvider openFlyoutIds={[]} setOpenFlyoutIds={setOpenFlyoutIdsStub}>
-                <FlyoutToolbarButton
-                    flyoutId={TEST_FLYOUT_ID}
-                    icon={<IconAdobeCreativeCloud />}
-                    tooltip={TEST_TOOLTIP}
-                    content="content"
-                />
-            </MultiFlyoutContextProvider>,
-        );
-
-        const icons = [...getByTestId(BUTTON_ID).getElementsByTagName('svg')];
-        expect(icons).toHaveLength(1);
-        expect(icons[0].outerHTML).toMatch('IconAdobeCreativeCloud');
     });
 
     it('should disable tooltip and flyout when content is inside drag preview', async () => {

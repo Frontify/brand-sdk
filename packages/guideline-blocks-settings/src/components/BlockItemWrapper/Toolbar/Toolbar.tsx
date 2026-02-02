@@ -23,16 +23,13 @@ export const Toolbar = ({ items, attachments }: ToolbarProps) => (
                 {items.map((item) => {
                     switch (item.type) {
                         case 'dragHandle':
-                            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                             return <DragHandleToolbarButton key={item.tooltip + item.type} {...item} />;
                         case 'menu':
-                            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-base-to-string
                             return <MenuToolbarButton key={item.tooltip + item.type} {...item} />;
                         case 'flyout':
                             // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-base-to-string
                             return <FlyoutToolbarButton key={item.tooltip + item.type} {...item} />;
                         default:
-                            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                             return <ToolbarButton key={item.tooltip + item.type} {...item} />;
                     }
                 })}
