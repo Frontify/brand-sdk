@@ -9,4 +9,4 @@
 "@frontify/sidebar-settings": patch
 ---
 
-chore(deps): bumps some deps
+chore: updating dependencies
