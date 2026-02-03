@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { getAppBridgeBlockStub } from '@frontify/app-bridge';
-import { IconArrowMove16, IconMoveTo, IconTrashBin } from '@frontify/fondue';
+import { IconArrowMove, IconMoveTo, IconTrashBin } from '@frontify/fondue/icons';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
@@ -52,7 +52,7 @@ describe('Toolbar', () => {
         },
         {
             type: 'flyout',
-            icon: <IconArrowMove16 />,
+            icon: <IconArrowMove size="16" />,
             tooltip: 'Move To',
             content: <div>Content</div>,
             flyoutHeader: <div>Fixed Header</div>,

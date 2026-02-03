@@ -4,7 +4,7 @@ import {
     type PlateRenderElementProps,
     type TLinkElement as TPlateLinkElement,
     useRichTextEditorContext,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { LINK_PLUGIN } from '../id';
 

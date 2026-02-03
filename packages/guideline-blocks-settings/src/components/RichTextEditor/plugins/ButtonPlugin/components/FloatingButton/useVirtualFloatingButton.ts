@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type UseVirtualFloatingOptions, flip, offset, useVirtualFloating } from '@frontify/fondue';
+import { type UseVirtualFloatingOptions, flip, offset, useVirtualFloating } from '@frontify/fondue/rte';
 import { type CSSProperties, type Ref } from 'react';
 
 const OFFSET_Y = 12;

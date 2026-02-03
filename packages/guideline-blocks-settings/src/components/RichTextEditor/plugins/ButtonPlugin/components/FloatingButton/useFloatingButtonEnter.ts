@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEditorRef, useHotkeys } from '@frontify/fondue';
+import { useEditorRef, useHotkeys } from '@frontify/fondue/rte';
 
 import { submitFloatingButton } from '../../transforms/submitFloatingButton';
 

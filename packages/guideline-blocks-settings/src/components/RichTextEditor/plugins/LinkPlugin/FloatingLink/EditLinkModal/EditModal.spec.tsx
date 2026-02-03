@@ -8,8 +8,8 @@ import { EditModal } from './EditModal';
 const URL_ID = 'floating-link-edit-url';
 
 describe('EditModal', () => {
-    vi.mock('@frontify/fondue', async () => {
-        const actual: object = await vi.importActual('@frontify/fondue');
+    vi.mock('@frontify/fondue/rte', async () => {
+        const actual: object = await vi.importActual('@frontify/fondue/rte');
         return {
             ...actual,
             useLinkOpenButtonState: () => ({ element: { url: 'https://frontify.com' } }),

@@ -20,7 +20,7 @@ import {
     isExpanded,
     removeNodes,
     setNodes,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 
 import { type ButtonPlugin, ELEMENT_BUTTON } from '../createButtonPlugin';
 import { type RichTextButtonStyle, type TButtonElement } from '../types';
