@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.0.0
+
+### Major Changes
+
+-   [#1409](https://github.com/Frontify/brand-sdk/pull/1409) [`c06f65b`](https://github.com/Frontify/brand-sdk/commit/c06f65b205d7cf2308d380671cc038f4e274fd2f) Thanks [@ragi96](https://github.com/ragi96)! - feat: breaking change to bump the package to the latest fondue v13
+
 ## 1.0.13-alpha.11
 
 ### Patch Changes
