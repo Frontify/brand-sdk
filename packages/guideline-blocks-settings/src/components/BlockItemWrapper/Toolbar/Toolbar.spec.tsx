@@ -4,7 +4,7 @@ import { getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { IconArrowMove, IconMoveTo, IconTrashBin } from '@frontify/fondue/icons';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
@@ -82,6 +82,10 @@ describe('Toolbar', () => {
                 terminate() {}
             },
         );
+    });
+
+    beforeEach(() => {
+        vi.clearAllMocks();
     });
 
     it('should not throw error if toolbar does not have attachments enabled', () => {
