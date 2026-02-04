@@ -1,10 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type CommandNameValidator,
     type ContextAsEventName,
     type ContextReturn,
-    type DispatchHandlerParameter,
     type EventCallbackParameter,
     type EventNameParameter,
     type EventNameValidator,
@@ -21,6 +19,8 @@ import {
     type PlatformAppApiHandlerParameter,
     type PlatformAppApiMethodNameValidator,
     type PlatformAppApiReturn,
+    type PlatformAppCommandNameValidator,
+    type PlatformAppDispatchHandlerParameter,
 } from './types';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
@@ -40,14 +40,17 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
     >
 >;
 
-export type PlatformAppCommandRegistry = CommandNameValidator<{
-    openConnection: void;
-    downloadAsset: void;
+export type UploadAssetFromUrlPayload = { url: string };
+
+export type PlatformAppCommandRegistry = PlatformAppCommandNameValidator<{
+    openConnection: { payload: void };
+    uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
 }>;
 
-export type PlatformAppCommand = CommandNameValidator<
-    Pick<PlatformAppCommandRegistry, 'openConnection' | 'downloadAsset'>
->;
+export type PlatformAppCommand = PlatformAppCommandNameValidator<{
+    openConnection: { payload: void };
+    uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
+}>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
@@ -166,8 +169,7 @@ export class AppBridgePlatformApp {
     }
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
-        dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
-        payload?: any,
+        dispatchHandler: PlatformAppDispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
         if (dispatchHandler.name === openConnection().name) {
             if (this.guardForInitialization()) {
@@ -183,9 +185,10 @@ export class AppBridgePlatformApp {
 
             await this.attemptSubscription(1, checksum);
         } else {
+            const { name, payload } = dispatchHandler;
             return this.commandPort?.postMessage({
                 message: {
-                    parameter: { dispatch: dispatchHandler, payload },
+                    parameter: { name, payload },
                 },
                 token: 'dispatch',
             });
