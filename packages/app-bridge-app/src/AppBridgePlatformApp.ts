@@ -1,10 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type CommandNameValidator,
     type ContextAsEventName,
     type ContextReturn,
-    type DispatchHandlerParameter,
     type EventCallbackParameter,
     type EventNameParameter,
     type EventNameValidator,
@@ -16,11 +14,14 @@ import {
 
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
+import { type UploadAssetFromUrlPayload } from './registries/command/uploadAssetFromUrl.ts';
 import { openConnection } from './registries/commands.ts';
 import {
     type PlatformAppApiHandlerParameter,
     type PlatformAppApiMethodNameValidator,
     type PlatformAppApiReturn,
+    type PlatformAppCommandNameValidator,
+    type PlatformAppDispatchHandlerParameter,
 } from './types';
 import { Topic } from './types/Topic';
 import { generateRandomString, notify, subscribe } from './utilities';
@@ -40,11 +41,14 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
     >
 >;
 
-export type PlatformAppCommandRegistry = CommandNameValidator<{
-    openConnection: void;
+export type PlatformAppCommandRegistry = PlatformAppCommandNameValidator<{
+    openConnection: { payload: void };
+    uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
 }>;
 
-export type PlatformAppCommand = CommandNameValidator<Pick<PlatformAppCommandRegistry, 'openConnection'>>;
+export type PlatformAppCommand = PlatformAppCommandNameValidator<
+    Pick<PlatformAppCommandRegistry, 'openConnection' | 'uploadAssetFromUrl'>
+>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
@@ -53,6 +57,7 @@ export type PlatformAppState = {
 
 type InitializeEvent = {
     apiPort: MessagePort;
+    commandPort: MessagePort;
     statePort: MessagePort;
     context: PlatformAppContext;
     state: PlatformAppState;
@@ -115,6 +120,7 @@ export type PlatformAppEvent = EventNameValidator<
 export class AppBridgePlatformApp {
     private apiMessageBus: IMessageBus = new ErrorMessageBus();
     private statePort: MessagePort | undefined;
+    private commandPort: MessagePort | undefined;
     private initialized: boolean = false;
     private localContext?: PlatformAppContext;
     private localState: PlatformAppState = { settings: {}, userState: {} };
@@ -161,7 +167,7 @@ export class AppBridgePlatformApp {
     }
 
     async dispatch<CommandName extends keyof PlatformAppCommand>(
-        dispatchHandler: DispatchHandlerParameter<CommandName, PlatformAppCommand>,
+        dispatchHandler: PlatformAppDispatchHandlerParameter<CommandName, PlatformAppCommand>,
     ): Promise<void> {
         if (dispatchHandler.name === openConnection().name) {
             if (this.guardForInitialization()) {
@@ -176,14 +182,26 @@ export class AppBridgePlatformApp {
             });
 
             await this.attemptSubscription(1, checksum);
+        } else {
+            const { name, payload } = dispatchHandler;
+            return this.commandPort?.postMessage({
+                message: {
+                    parameter: { name, payload },
+                },
+                token: 'dispatch',
+            });
         }
     }
 
     private async attemptSubscription(attempt: number, checksum: string): Promise<void> {
         try {
-            const { statePort, apiPort, context, state } = await subscribe<InitializeEvent>(Topic.Init, checksum);
+            const { statePort, apiPort, commandPort, context, state } = await subscribe<InitializeEvent>(
+                Topic.Init,
+                checksum,
+            );
 
             this.apiMessageBus = new MessageBus(apiPort);
+            this.commandPort = commandPort;
 
             this.statePort = statePort;
             this.statePort.onmessage = (event: MessageEvent<{ message: PlatformAppState }>) => {
