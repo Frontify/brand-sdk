@@ -14,6 +14,7 @@ import {
 
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
+import { type UploadAssetFromUrlPayload } from './registries/command/uploadAssetFromUrl.ts';
 import { openConnection } from './registries/commands.ts';
 import {
     type PlatformAppApiHandlerParameter,
@@ -39,8 +40,6 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
         | 'executeSecureRequest'
     >
 >;
-
-export type UploadAssetFromUrlPayload = { url: string };
 
 export type PlatformAppCommandRegistry = PlatformAppCommandNameValidator<{
     openConnection: { payload: void };
@@ -203,11 +202,6 @@ export class AppBridgePlatformApp {
 
             this.apiMessageBus = new MessageBus(apiPort);
             this.commandPort = commandPort;
-
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            this.commandPort.onmessage = (event: MessageEvent) => {
-                // do nothing
-            };
 
             this.statePort = statePort;
             this.statePort.onmessage = (event: MessageEvent<{ message: PlatformAppState }>) => {
