@@ -47,10 +47,9 @@ export type PlatformAppCommandRegistry = PlatformAppCommandNameValidator<{
     uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
 }>;
 
-export type PlatformAppCommand = PlatformAppCommandNameValidator<{
-    openConnection: { payload: void };
-    uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
-}>;
+export type PlatformAppCommand = PlatformAppCommandNameValidator<
+    Pick<PlatformAppCommandRegistry, 'openConnection' | 'uploadAssetFromUrl'>
+>;
 
 export type PlatformAppState = {
     settings: Record<string, unknown>;
