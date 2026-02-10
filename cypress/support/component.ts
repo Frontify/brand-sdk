@@ -15,7 +15,7 @@ declare global {
              */
             mount(
                 component: ReactNode,
-                options?: MountOptions
+                options?: MountOptions,
             ): Cypress.Chainable<MountReturn>;
         }
     }

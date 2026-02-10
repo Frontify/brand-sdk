@@ -103,7 +103,7 @@ export class Authenticator {
                 grant_type: 'authorization_code',
                 client_id: 'block-cli',
                 redirect_uri: 'http://localhost:5600/oauth',
-                scope: 'basic:read%2Bblocks:read%2Bblocks:write',
+                scope: 'basic:read+blocks:read+blocks:write',
                 code_verifier: this.randomChallenge.secret,
                 code: authorizationCode,
             });

@@ -9,11 +9,16 @@ import { notify } from './utilities';
 
 const TOKEN = 'AjY34F87Dsat^J';
 
+const { mockCommandPort } = vi.hoisted(() => ({
+    mockCommandPort: { onmessage: vi.fn(), postMessage: vi.fn() },
+}));
+
 describe('AppBridgePlatformApp', () => {
     vi.mock('./utilities/subscribe', () => ({
         subscribe: vi.fn().mockResolvedValue({
             statePort: { onmessage: vi.fn() },
             apiPort: { onmessage: vi.fn() },
+            commandPort: mockCommandPort,
             context: { parentId: 'parentId-test', connected: true },
             state: { settings: 'settings-test', userState: 'state-test' },
         }),
@@ -77,5 +82,25 @@ describe('AppBridgePlatformApp', () => {
             expect(context).toEqual({ parentId: 'parentId-test', connected: true });
         });
         platformApp.dispatch(openConnection());
+    });
+
+    it('should set up commandPort onmessage handler after initialization', async () => {
+        window.location.search = `?token=${TOKEN}`;
+        const platformApp = new AppBridgePlatformApp();
+
+        await platformApp.dispatch(openConnection());
+
+        expect(mockCommandPort.onmessage).toBeDefined();
+        expect(typeof mockCommandPort.onmessage).toBe('function');
+    });
+
+    it('should handle commandPort messages without errors', async () => {
+        window.location.search = `?token=${TOKEN}`;
+        const platformApp = new AppBridgePlatformApp();
+
+        await platformApp.dispatch(openConnection());
+
+        const mockEvent = { data: { someCommand: 'test' } } as MessageEvent;
+        expect(() => mockCommandPort.onmessage(mockEvent)).not.toThrow();
     });
 });

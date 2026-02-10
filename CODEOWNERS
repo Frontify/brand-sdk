@@ -2,21 +2,163 @@
 
 packages/app-bridge/src/types @Frontify/frontend-platform
 
-## App Bridge
+## App Bridge Errors
+packages/app-bridge/src/errors/HttpClientError.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+packages/app-bridge/src/errors/InitializationError.ts @Frontify/developer-experience
+packages/app-bridge/src/errors/NotifyError.ts @Frontify/developer-experience
+packages/app-bridge/src/errors/TimeoutReachedError.ts @Frontify/developer-experience
+packages/app-bridge/src/errors/ValidationError.ts @Frontify/developer-experience
 
-packages/app-bridge/ @Frontify/content-and-blocks
+## App Bridge Helpers
+
+packages/app-bridge/src/helpers/ @Frontify/themes-and-navigation
+
+## React Hooks
+
+packages/app-bridge/src/react/useAssetBulkDownload.spec.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/react/useAssetBulkDownload.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useAssetChooser.spec.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/react/useAssetChooser.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useAssetUpload.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useAssetViewer.spec.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/react/useAssetViewer.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBlockAssets.spec.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBlockAssets.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBlockSettings.spec.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBlockSettings.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBlockTemplates.spec.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBlockTemplates.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useBrandportalLink.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useBrandportalLink.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useCategorizedDocumentPages.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useCategorizedDocumentPages.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useColorPalettes.spec.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useColorPalettes.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useColors.spec.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useColors.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useCoverPage.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useCoverPage.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentCategories.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentCategories.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentGroups.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentGroups.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentPageTargets.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentPageTargets.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentSection.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentTargets.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useDocumentTargets.tsx @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useEditorState.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useFileInput.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useFileUpload.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useGroupedDocuments.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useGroupedDocuments.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useGuidelineActions.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useGuidelineActions.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useLanguage.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useLanguage.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useNavigationManager.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useNavigationManager.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/usePageTemplateSettings.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/usePageTemplateSettings.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/usePlatformAppBridge.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/react/usePlatformAppBridge.ts @Frontify/developer-experience
+packages/app-bridge/src/react/usePrivacySettings.spec.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/usePrivacySettings.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useReadyForPrint.spec.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/react/useReadyForPrint.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useTemplateAssets.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useTemplateAssets.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useTemplateChooser.spec.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/react/useTemplateChooser.ts @Frontify/content-and-blocks
+packages/app-bridge/src/react/useThemeAssets.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useThemeAssets.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useThemeSettings.spec.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useThemeSettings.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useUncategorizedDocumentPages.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useUncategorizedDocumentPages.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useUngroupedDocuments.spec.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/react/useUngroupedDocuments.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+
+### App Bridge registries api
+
+packages/app-bridge/src/registries/api/CreateAsset.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/api/CreateAsset.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/api/GetAssetResourceInformation.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/api/GetAssetResourceInformation.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/api/GetProxyNetworkCall.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/api/GetProxyNetworkCall.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/api/GetAssetBulkDownloadToken.ts @Frontify/content-and-blocks
+packages/app-bridge/src/registries/api/GetCurrentUser.ts @Frontify/content-and-blocks @Frontify/developer-experience @Frontify/themes-and-navigation
+packages/app-bridge/src/registries/api/GetCurrentUser.spec.ts @Frontify/content-and-blocks @Frontify/developer-experience @Frontify/themes-and-navigation
+
+### App Bridge registries commands
+packages/app-bridge/src/registries/commands/AssetChooser.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation
+packages/app-bridge/src/registries/commands/AssetViewer.ts @Frontify/content-and-blocks
+packages/app-bridge/src/registries/commands/Connection.ts @Frontify/developer-experience
+packages/app-bridge/src/registries/commands/DownloadAsset.ts @Frontify/content-and-blocks
+packages/app-bridge/src/registries/commands/NavigationManager.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/registries/commands/NewPublication.ts @Frontify/content-and-blocks
+packages/app-bridge/src/registries/commands/TemplateChooser.ts @Frontify/content-and-blocks
+
+### App Bridge registries events
+
+packages/app-bridge/src/registries/events/ @Frontify/content-and-blocks @Frontify/themes-and-navigation
+
+### App Bridge registries verbs
+
+packages/app-bridge/src/registries/verbs/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+
+## App Bridge repositories
+
+packages/app-bridge/src/repositories/ @Frontify/content-and-blocks
+
+## App Bridge Tests
+
+packages/app-bridge/src/tests/AppBridgeBlockStub.ts @Frontify/content-and-blocks
+packages/app-bridge/src/tests/AppBridgePlatformAppStub.ts @Frontify/developer-experience
+packages/app-bridge/src/tests/AppBridgeThemeStub.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/tests/withAppBridgeBlockStubs.tsx @Frontify/content-and-blocks
+packages/app-bridge/src/tests/withAppBridgeThemeStubs.tsx @Frontify/themes-and-navigation
+
+## App Bridge Utilities
+
+packages/app-bridge/src/utilities/hash.ts @Frontify/developer-experience
+packages/app-bridge/src/utilities/httpClient.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+packages/app-bridge/src/utilities/MessageBus.ts @Frontify/developer-experience
+packages/app-bridge/src/utilities/MessageBus.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/utilities/notify.ts @Frontify/developer-experience
+packages/app-bridge/src/utilities/object.spec.ts @Frontify/content-and-blocks
+packages/app-bridge/src/utilities/object.ts @Frontify/content-and-blocks
+packages/app-bridge/src/utilities/queryParams.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/utilities/queryParams.ts @Frontify/developer-experience
+packages/app-bridge/src/utilities/subscribe.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+
+## App Bridge Worker
+
+packages/app-bridge/src/worker/ @Frontify/content-and-blocks
+
+## App Bridge Interfaces
+
+packages/app-bridge/src/AppBridge.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+packages/app-bridge/src/AppBridgeBlock.ts @Frontify/content-and-blocks
+packages/app-bridge/src/AppBridgeCreateAsset.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/AppBridgeCreateAsset.ts @Frontify/developer-experience
+packages/app-bridge/src/AppBridgePlatformApp.spec.ts @Frontify/developer-experience
+packages/app-bridge/src/AppBridgePlatformApp.ts @Frontify/developer-experience
+packages/app-bridge/src/AppBridgeTheme.ts @Frontify/themes-and-navigation
+packages/app-bridge/src/window.d.ts @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
 
 # CLI
 
-packages/cli/src/commands/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
-packages/cli/src/errors/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
-packages/cli/src/utils/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/apps-and-integrations
-packages/cli/src/utils/verifyManifest.ts @Frontify/apps-and-integrations
-packages/cli/src/utils/compiler/compilePlatformApp.ts @Frontify/apps-and-integrations
+packages/cli/src/commands/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+packages/cli/src/errors/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+packages/cli/src/utils/ @Frontify/content-and-blocks @Frontify/themes-and-navigation @Frontify/developer-experience
+packages/cli/src/utils/verifyManifest.ts @Frontify/developer-experience
+packages/cli/src/utils/compiler/compilePlatformApp.ts @Frontify/developer-experience
 packages/cli/src/utils/compiler/compileTheme.ts @Frontify/themes-and-navigation
 packages/cli/src/utils/compiler/compileBlock.ts @Frontify/content-and-blocks
 packages/cli/src/servers/blockDevelopmentServer.ts @Frontify/content-and-blocks
-packages/cli/src/servers/platformAppDevelopmentServer.ts @Frontify/apps-and-integrations
+packages/cli/src/servers/platformAppDevelopmentServer.ts @Frontify/developer-experience
 packages/cli/src/servers/themeDevelopmentServer.ts @Frontify/themes-and-navigation
 
 ## Templates
@@ -24,14 +166,14 @@ packages/cli/src/servers/themeDevelopmentServer.ts @Frontify/themes-and-navigati
 packages/cli/templates/content-block-css @Frontify/content-and-blocks
 packages/cli/templates/content-block-css-modules @Frontify/content-and-blocks
 packages/cli/templates/content-block-tailwind @Frontify/content-and-blocks
-packages/cli/templates/platform-app-css @Frontify/apps-and-integrations
-packages/cli/templates/platform-app-css-modules @Frontify/apps-and-integrations
-packages/cli/templates/platform-app-tailwind @Frontify/apps-and-integrations
+packages/cli/templates/platform-app-css @Frontify/developer-experience
+packages/cli/templates/platform-app-css-modules @Frontify/developer-experience
+packages/cli/templates/platform-app-tailwind @Frontify/developer-experience
 
 # Platform Apps
 
-packages/platform-app @Frontify/apps-and-integrations
-packages/app-bridge-app @Frontify/apps-and-integrations
+packages/platform-app @Frontify/developer-experience
+packages/app-bridge-app @Frontify/developer-experience
 
 # Guideline Blocks Settings
 
