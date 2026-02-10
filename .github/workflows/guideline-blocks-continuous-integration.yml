@@ -64,7 +64,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app-bridge-version: ["3.0.0", "workspace:^", "4.0.0-alpha.0"]
+        app-bridge-version:
+          ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
 
     steps:
       - name: Checkout current commit
@@ -115,8 +116,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app-bridge-version:
-          ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
+        app-bridge-version: ["3.0.0", "workspace:^", "4.0.0-alpha.0"]
 
     steps:
       - name: Checkout current commit
