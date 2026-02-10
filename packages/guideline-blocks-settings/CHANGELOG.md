@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.0.2
+
+### Patch Changes
+
+-   [#1416](https://github.com/Frontify/brand-sdk/pull/1416) [`e4a8f2f`](https://github.com/Frontify/brand-sdk/commit/e4a8f2f53ed79ac87f1d7301ce885947724d8ad5) Thanks [@ragi96](https://github.com/ragi96)! - chore(build): adjust css filename
+
 ## 2.0.1
 
 ### Patch Changes
