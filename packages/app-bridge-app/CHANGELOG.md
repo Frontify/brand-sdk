@@ -1,5 +1,17 @@
 # @frontify/app-bridge-app
 
+## 0.2.1
+
+### Patch Changes
+
+-   [#1410](https://github.com/Frontify/brand-sdk/pull/1410) [`245e6b0`](https://github.com/Frontify/brand-sdk/commit/245e6b0aca3a654f508d87611b4f617f1e6f1f13) Thanks [@ragi96](https://github.com/ragi96)! - chore: updating dependencies
+
+## 0.2.0
+
+### Minor Changes
+
+-   [#1406](https://github.com/Frontify/brand-sdk/pull/1406) [`b646f9c`](https://github.com/Frontify/brand-sdk/commit/b646f9cb95630bd347eeca4a272e12f10a9dbbc8) Thanks [@julianiff](https://github.com/julianiff)! - feat: add command channel communication to brand-sdk
+
 ## 0.1.13
 
 ### Patch Changes

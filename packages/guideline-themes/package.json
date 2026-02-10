@@ -1,7 +1,7 @@
 {
     "name": "@frontify/guideline-themes",
     "type": "module",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Provides types and helpers for the guideline themes development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -46,15 +46,15 @@
         "@frontify/eslint-config-react": "1.0.8",
         "@types/node": "^24.10.1",
         "@types/react": "^18.3.27",
-        "@vitest/coverage-v8": "^4.0.15",
-        "@vitest/ui": "^4.0.15",
-        "eslint": "^9.39.1",
+        "@vitest/coverage-v8": "^4.0.18",
+        "@vitest/ui": "^4.0.18",
+        "eslint": "^9.39.2",
         "eslint-plugin-notice": "^1.0.0",
         "prettier": "^3.7.4",
         "typescript": "^5.9.3",
-        "vite": "^5.4.21",
-        "vite-plugin-dts": "^3.9.1",
+        "vite": "^7.3.1",
+        "vite-plugin-dts": "^4.5.4",
         "vite-plugin-externals": "^0.6.2",
-        "vitest": "^4.0.15"
+        "vitest": "^4.0.18"
     }
 }
