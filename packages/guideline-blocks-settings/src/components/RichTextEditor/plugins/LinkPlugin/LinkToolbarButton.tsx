@@ -1,14 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { IconLink } from '@frontify/fondue/icons';
 import {
-    IconLink16,
     IconStylingWrapper,
     ToolbarButton,
     focusEditor,
     useEditorRef,
     useLinkToolbarButton,
     useLinkToolbarButtonState,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { type ReactNode, forwardRef } from 'react';
 
 export const LinkToolbarButton = forwardRef<HTMLButtonElement, { disabled: boolean; tooltip: ReactNode }>(
@@ -26,7 +26,7 @@ export const LinkToolbarButton = forwardRef<HTMLButtonElement, { disabled: boole
                 {...props}
                 {...rootProps}
             >
-                <IconStylingWrapper icon={<IconLink16 />} />
+                <IconStylingWrapper icon={<IconLink size={16} />} />
             </ToolbarButton>
         );
     },

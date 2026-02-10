@@ -1,9 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type FileExtension, FileExtensionSets } from '@frontify/app-bridge';
-import { IconExclamationMarkTriangle } from '@frontify/fondue';
 import { Dropdown, Flyout, LoadingCircle } from '@frontify/fondue/components';
-import { IconArrowCircleUp, IconImageStack } from '@frontify/fondue/icons';
+import { IconArrowCircleUp, IconImageStack, IconExclamationMarkTriangle } from '@frontify/fondue/icons';
 import { type DragEventHandler, type MouseEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 
 import { joinClassNames } from '../../utilities/react/joinClassNames';
@@ -148,7 +147,7 @@ export const BlockInjectButton = ({
                 <LoadingCircle />
             ) : errorMsg ? (
                 <div className=" tw-flex tw-items-center tw-justify-center tw-text-red-60 tw-font-medium">
-                    <IconExclamationMarkTriangle />
+                    <IconExclamationMarkTriangle size="16" />
                     {errorMsg}
                 </div>
             ) : (

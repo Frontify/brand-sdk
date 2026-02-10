@@ -12,7 +12,7 @@ import {
     createPluginFactory,
     getColumnBreakClasses,
     merge,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { type CSSProperties } from 'react';
 
 import { BlockStyles } from '../styles';

@@ -7,7 +7,7 @@ import {
     type PluginProps,
     createLinkPlugin as createPlateLinkPlugin,
     createPluginFactory,
-} from '@frontify/fondue';
+} from '@frontify/fondue/rte';
 import { type CSSProperties } from 'react';
 
 import { isValidUrl } from '../../../Link';

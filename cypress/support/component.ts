@@ -15,7 +15,7 @@ declare global {
              */
             mount(
                 component: ReactNode,
-                options?: MountOptions
+                options?: MountOptions,
             ): Cypress.Chainable<MountReturn>;
         }
     }
@@ -42,6 +42,6 @@ Cypress.Commands.add("mount", (component: ReactNode, options = {}) => {
     return mount(component, options);
 });
 
-import "@frontify/fondue/style";
 import "cypress-real-events/support";
 import "./structuredClone";
+import "../../packages/guideline-blocks-settings/src/styles.css";

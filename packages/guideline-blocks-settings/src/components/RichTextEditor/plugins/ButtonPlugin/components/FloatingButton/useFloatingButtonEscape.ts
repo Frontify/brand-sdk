@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { focusEditor, useEditorRef, useHotkeys } from '@frontify/fondue';
+import { focusEditor, useEditorRef, useHotkeys } from '@frontify/fondue/rte';
 
 import { floatingButtonActions, floatingButtonSelectors } from './floatingButtonStore';
 
