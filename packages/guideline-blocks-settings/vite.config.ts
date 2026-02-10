@@ -67,4 +67,7 @@ export default defineConfig({
             ],
         },
     },
+    optimizeDeps: {
+        exclude: ['@frontify/app-bridge'],
+    },
 });
