@@ -1,163 +1,162 @@
 name: Guideline Blocks CI
 
 on:
-    pull_request:
-        paths:
-            - packages/guideline-blocks-settings/**
+  pull_request:
+    paths:
+      - packages/guideline-blocks-settings/**
 
 # Ensures that only one workflow per branch will run at a time.
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-    lint-typecheck:
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
+  lint-typecheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
-        strategy:
-            fail-fast: false
-            matrix:
-                app-bridge-version:
-                    ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
+    strategy:
+      fail-fast: false
+      matrix:
+        app-bridge-version:
+          ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
 
-        steps:
-            - name: Checkout default branch
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-            - name: Use pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  run_install: false
+      - name: Use pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: false
 
-            - name: Use Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: ".nvmrc"
-                  cache: "pnpm"
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
-            - name: Install npm dependencies
-              run: pnpm i --frozen-lockfile
+      - name: Install npm dependencies
+        run: pnpm i --frozen-lockfile
 
-            - name: Build build:sidebar-settings
-              run: pnpm build:sidebar-settings
+      - name: Build build:sidebar-settings
+        run: pnpm build:sidebar-settings
 
-            - name: Build @frontify/app-bridge (if workspace)
-              if: matrix.app-bridge-version == 'workspace:^'
-              run: pnpm build:app-bridge
+      - name: Build @frontify/app-bridge (if workspace)
+        if: matrix.app-bridge-version == 'workspace:^'
+        run: pnpm build:app-bridge
 
-            - name: Add app-bridge dependency
-              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
+      - name: Add app-bridge dependency
+        run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
-            - name: Typecheck code
-              run: pnpm --stream --filter {packages/guideline-blocks-settings} typecheck
+      - name: Typecheck code
+        run: pnpm --stream --filter {packages/guideline-blocks-settings} typecheck
 
-            - name: Lint code
-              run: pnpm --stream --filter {packages/guideline-blocks-settings} lint
+      - name: Lint code
+        run: pnpm --stream --filter {packages/guideline-blocks-settings} lint
 
-    unit-tests:
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
+  unit-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
-        strategy:
-            fail-fast: false
-            matrix:
-                app-bridge-version:
-                    ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
+    strategy:
+      fail-fast: false
+      matrix:
+        app-bridge-version:
+          ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
 
-        steps:
-            - name: Checkout current commit
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout current commit
+        uses: actions/checkout@v4
 
-            - name: Use Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: ".nvmrc"
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
 
-            - name: Use pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  run_install: false
+      - name: Use pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: false
 
-            - name: Get pnpm store directory
-              id: pnpm-cache
-              run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-            - name: Setup pnpm cache
-              uses: actions/cache@v4
-              with:
-                  path: |
-                      ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-                  key: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-            - name: Build build:sidebar-settings
-              run: pnpm build:sidebar-settings
+      - name: Build build:sidebar-settings
+        run: pnpm build:sidebar-settings
 
-            - name: Build @frontify/app-bridge (if workspace)
-              if: matrix.app-bridge-version == 'workspace:^'
-              run: pnpm build:app-bridge
+      - name: Build @frontify/app-bridge (if workspace)
+        if: matrix.app-bridge-version == 'workspace:^'
+        run: pnpm build:app-bridge
 
-            - name: Add app-bridge dependency
-              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
+      - name: Add app-bridge dependency
+        run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
-            - name: Unit Tests
-              run: pnpm --stream --filter {packages/guideline-blocks-settings} test
+      - name: Unit Tests
+        run: pnpm --stream --filter {packages/guideline-blocks-settings} test
 
-    component-tests:
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
+  component-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
-        strategy:
-            fail-fast: false
-            matrix:
-                app-bridge-version:
-                    ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
+    strategy:
+      fail-fast: false
+      matrix:
+        app-bridge-version: ["3.0.0", "workspace:^", "4.0.0-alpha.0"]
 
-        steps:
-            - name: Checkout current commit
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout current commit
+        uses: actions/checkout@v4
 
-            - name: Use Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: ".nvmrc"
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
 
-            - name: Use pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  run_install: false
+      - name: Use pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: false
 
-            - name: Get pnpm store directory
-              id: pnpm-cache
-              run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-            - name: Setup pnpm cache
-              uses: actions/cache@v4
-              with:
-                  path: |
-                      ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-                      ~/.cache/Cypress
-                  key: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-                  restore-keys: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+            ~/.cache/Cypress
+          key: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-            - name: Build build:sidebar-settings
-              run: pnpm build:sidebar-settings
+      - name: Build build:sidebar-settings
+        run: pnpm build:sidebar-settings
 
-            - name: Build @frontify/app-bridge (if workspace)
-              if: matrix.app-bridge-version == 'workspace:^'
-              run: pnpm build:app-bridge
+      - name: Build @frontify/app-bridge (if workspace)
+        if: matrix.app-bridge-version == 'workspace:^'
+        run: pnpm build:app-bridge
 
-            - name: Add app-bridge dependency
-              run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
+      - name: Add app-bridge dependency
+        run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
-            - name: Component Tests
-              run: pnpm test:components
+      - name: Component Tests
+        run: pnpm test:components

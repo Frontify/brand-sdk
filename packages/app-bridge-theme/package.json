@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge-theme",
     "type": "module",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Package to establish communication between Frontify and themes",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
