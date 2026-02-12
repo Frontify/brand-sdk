@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.2.2
+
+### Patch Changes
+
+-   [#1419](https://github.com/Frontify/brand-sdk/pull/1419) [`ede17a4`](https://github.com/Frontify/brand-sdk/commit/ede17a4a5649debb2fe44a01616f76b61fe89767) Thanks [@julianiff](https://github.com/julianiff)! - feat: add closeApp command and refactor previous command
+
 ## 0.2.1
 
 ### Patch Changes
