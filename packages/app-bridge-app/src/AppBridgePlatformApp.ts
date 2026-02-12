@@ -43,11 +43,12 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
 
 export type PlatformAppCommandRegistry = PlatformAppCommandNameValidator<{
     openConnection: { payload: void };
+    closeApp: { payload: void };
     uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
 }>;
 
 export type PlatformAppCommand = PlatformAppCommandNameValidator<
-    Pick<PlatformAppCommandRegistry, 'openConnection' | 'uploadAssetFromUrl'>
+    Pick<PlatformAppCommandRegistry, 'openConnection' | 'uploadAssetFromUrl' | 'closeApp'>
 >;
 
 export type PlatformAppState = {
