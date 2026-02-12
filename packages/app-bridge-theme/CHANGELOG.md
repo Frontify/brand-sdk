@@ -1,5 +1,12 @@
 # @frontify/app-bridge-theme
 
+## 1.0.3
+
+### Patch Changes
+
+-   [#1412](https://github.com/Frontify/brand-sdk/pull/1412) [`1376a84`](https://github.com/Frontify/brand-sdk/commit/1376a8484fc7082ebf60815450d42615c6238e37) Thanks [@mike85](https://github.com/mike85)! - chore: deprecate closeSearchDialog command
+    chore: deprecate closeAiBrandAssistantDialog command
+
 ## 1.0.2
 
 ### Patch Changes
