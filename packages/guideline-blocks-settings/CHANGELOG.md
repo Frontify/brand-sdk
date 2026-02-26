@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.0.3
+
+### Patch Changes
+
+-   [#1425](https://github.com/Frontify/brand-sdk/pull/1425) [`a31c8b3`](https://github.com/Frontify/brand-sdk/commit/a31c8b339254932e8a3599a996bf13467d4e7c8f) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(LinkSelector): Remove event listeners that prevent scroll area to work properly
+
 ## 2.0.2
 
 ### Patch Changes
