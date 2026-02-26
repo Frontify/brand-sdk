@@ -2,4 +2,4 @@
 "@frontify/guideline-blocks-settings": patch
 ---
 
-Remove event listeners that prevent scroll area scrobler to work properly
+fix(LinkSelector): Remove event listeners that prevent scroll area to work properly
