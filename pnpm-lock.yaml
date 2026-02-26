@@ -27,7 +27,7 @@ importers:
         version: 7.2.0(cypress@15.9.0)
       '@frontify/fondue':
         specifier: ^13.1.3
-        version: 13.1.3(8314b76e992f4cd607197ade4071437f)
+        version: 13.1.3(02abd0eb725dcc8ab6660d75c165688a)
       '@types/react':
         specifier: ^18.3.27
         version: 18.3.27
@@ -383,10 +383,10 @@ importers:
         version: 3.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sinon@21.0.1)
       '@frontify/fondue':
         specifier: ^13.1.3
-        version: 13.1.3(02abd0eb725dcc8ab6660d75c165688a)
+        version: 13.1.3(ef462c5855f82df568f443ef647f62e2)
       '@frontify/sidebar-settings':
-        specifier: ^0.10.9
-        version: 0.10.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:^
+        version: link:../sidebar-settings
       '@react-aria/focus':
         specifier: ^3.21.3
         version: 3.21.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2012,12 +2012,6 @@ packages:
     resolution: {integrity: sha512-IoFykmdVgxo4oh8t64/ByinWzbPxGIU4RF8RgHEk3537Enw5nrdVip/7bKb0U4WdIQV6x/9VZRcDCnZlyjwGbw==}
     engines: {node: '>=18'}
     hasBin: true
-    peerDependencies:
-      react: ^18
-      react-dom: ^18
-
-  '@frontify/sidebar-settings@0.10.9':
-    resolution: {integrity: sha512-mgUHQ7lhV9xQuI+OckJPlk7+c/rWN0uYisfgielcPSeL0rZQzIZw5q5tt44UwsAh8uj8sL+Hq8IDu+qlZ6hFLg==}
     peerDependencies:
       react: ^18
       react-dom: ^18
@@ -11198,7 +11192,7 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue-rte@0.0.3(e24d99ccdb4967dc309a83c2576cbb7f)':
+  '@frontify/fondue-rte@0.0.3(85dc32123b2b33da42e5a91ac1864ad8)':
     dependencies:
       '@ctrl/tinycolor': 4.2.0
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11368,7 +11362,7 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue@13.1.3(8314b76e992f4cd607197ade4071437f)':
+  '@frontify/fondue@13.1.3(ef462c5855f82df568f443ef647f62e2)':
     dependencies:
       '@ctrl/tinycolor': 4.2.0
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11379,7 +11373,7 @@ snapshots:
       '@frontify/fondue-charts': 7.0.0(@frontify/fondue-tokens@5.0.0(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3))))(@react-spring/web@9.7.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@frontify/fondue-components': 26.0.3(@frontify/fondue-icons@0.24.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3))))(@frontify/fondue-tokens@5.0.0(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3)))
       '@frontify/fondue-icons': 0.24.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3)))
-      '@frontify/fondue-rte': 0.0.3(e24d99ccdb4967dc309a83c2576cbb7f)
+      '@frontify/fondue-rte': 0.0.3(85dc32123b2b33da42e5a91ac1864ad8)
       '@frontify/fondue-tokens': 5.0.0(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.10.1)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@react-aria/accordion': 3.0.0-alpha.29(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11437,11 +11431,6 @@ snapshots:
       - supports-color
       - tailwindcss
       - zustand
-
-  '@frontify/sidebar-settings@0.10.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@hapi/hoek@9.3.0':
     optional: true
@@ -13971,7 +13960,7 @@ snapshots:
       slate-react: 0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0)
       use-deep-compare: 1.2.1(react@18.3.1)
       zustand: 4.5.3(@types/react@18.3.27)(immer@10.1.1)(react@18.3.1)
-      zustand-x: 3.0.3(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.0)(@babel/preset-env@7.28.3(@babel/core@7.29.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(zustand@4.5.3(@types/react@18.3.27)(immer@10.1.3)(react@18.3.1))
+      zustand-x: 3.0.3(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.0)(@babel/preset-env@7.28.3(@babel/core@7.29.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(zustand@4.5.3(@types/react@18.3.27)(immer@10.1.1)(react@18.3.1))
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -20675,6 +20664,18 @@ snapshots:
   zod@3.25.76: {}
 
   zod@4.3.6: {}
+
+  zustand-x@3.0.3(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.0)(@babel/preset-env@7.28.3(@babel/core@7.29.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(zustand@4.5.3(@types/react@18.3.27)(immer@10.1.1)(react@18.3.1)):
+    dependencies:
+      immer: 10.1.3
+      lodash.mapvalues: 4.6.0
+      react-tracked: 1.7.14(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.0)(@babel/preset-env@7.28.3(@babel/core@7.29.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)
+      zustand: 4.5.3(@types/react@18.3.27)(immer@10.1.1)(react@18.3.1)
+    transitivePeerDependencies:
+      - react
+      - react-dom
+      - react-native
+      - scheduler
 
   zustand-x@3.0.3(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.0)(@babel/preset-env@7.28.3(@babel/core@7.29.0))(@types/react@18.3.27)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(zustand@4.5.3(@types/react@18.3.27)(immer@10.1.3)(react@18.3.1)):
     dependencies:
