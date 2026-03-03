@@ -24,15 +24,15 @@ export const SectionLink = ({ section, selectedUrl, onSelectUrl }: SectionLinkPr
                 tw-py-2 tw-pr-2.5 tw-pl-14 tw-leading-5 tw-cursor-pointer tw-w-full 
                 ${
                     isActive
-                        ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover'
-                        : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover'
+                        ? 'tw-bg-highlight tw-text-highlight-on-highlight hover:tw-bg-highlight-hover:hover hover:tw-text-highlight-on-highlight:hover'
+                        : 'hover:tw-bg-container-secondary-hover hover:tw-text-container-secondary-on-secondary-container'
                 }`}
             onClick={() => onSelectUrl(section.permanentLink)}
         >
             <div className="tw-flex tw-flex-1 tw-space-x-2 tw-items-center tw-h-6">
                 <IconDocumentText size={16} />
-                <span className="tw-text-s">{section.title}</span>
-                <span className="tw-flex-auto tw-font-sans tw-text-xs tw-text-right">Section</span>
+                <span className="tw-text-small">{section.title}</span>
+                <span className="tw-flex-auto tw-font-sans tw-text-x-small tw-text-right">Section</span>
             </div>
         </button>
     );

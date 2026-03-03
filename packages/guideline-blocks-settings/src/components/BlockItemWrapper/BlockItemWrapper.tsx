@@ -42,7 +42,7 @@ export const BlockItemWrapper = memo(
                             outlineOffset,
                         }}
                         className={joinClassNames([
-                            'tw-relative tw-group tw-outline-1 tw-outline-box-selected-inverse',
+                            'tw-relative tw-group tw-outline-1 tw-outline-container-highlight-on-highlight-container',
                             shouldFillContainer && 'tw-flex-1 tw-h-full tw-w-full',
                             'hover:tw-outline focus-within:tw-outline',
                             shouldToolbarBeVisible && 'tw-outline',

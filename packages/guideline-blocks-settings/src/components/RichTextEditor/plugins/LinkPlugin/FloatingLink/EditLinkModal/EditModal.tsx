@@ -39,7 +39,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                     <button
                         tabIndex={0}
                         data-test-id="edit-link-button"
-                        className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
+                        className="tw-transition tw-cursor-pointer tw-rounded-medium hover:tw-bg-black-10 tw-p-1"
                         {...editButtonProps}
                     >
                         <IconPen size={16} />
@@ -48,7 +48,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                     <button
                         tabIndex={0}
                         data-test-id="remove-link-button"
-                        className="tw-transition tw-cursor-pointer tw-rounded hover:tw-bg-black-10 tw-p-1"
+                        className="tw-transition tw-cursor-pointer tw-rounded-medium hover:tw-bg-black-10 tw-p-1"
                         {...unlinkButtonProps}
                     >
                         <IconTrashBin size={16} />

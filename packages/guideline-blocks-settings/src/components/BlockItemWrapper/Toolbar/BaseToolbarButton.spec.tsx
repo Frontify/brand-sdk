@@ -29,7 +29,7 @@ describe('BaseToolbarButton', () => {
     it('should apply active styles', () => {
         const { getByTestId } = render(<BaseToolbarButton forceActiveStyle>Button</BaseToolbarButton>);
 
-        expect(getByTestId(BUTTON_ID)).toHaveClass('tw-text-box-neutral-inverse-pressed');
+        expect(getByTestId(BUTTON_ID)).toHaveClass('tw-text-container-secondary-on-secondary-container');
     });
 
     it('should forward other attributes to button', () => {
