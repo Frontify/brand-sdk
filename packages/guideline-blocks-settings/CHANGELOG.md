@@ -1,5 +1,15 @@
 # @frontify/guideline-blocks-settings
 
+## 2.0.4
+
+### Patch Changes
+
+-   [#1427](https://github.com/Frontify/brand-sdk/pull/1427) [`e97fe7d`](https://github.com/Frontify/brand-sdk/commit/e97fe7d0310075ea3d3af02596c12a1f7eb2b541) Thanks [@ragi96](https://github.com/ragi96)! - fix(Tokens): migrate to new fondue ones"
+
+-   [#1429](https://github.com/Frontify/brand-sdk/pull/1429) [`a64198e`](https://github.com/Frontify/brand-sdk/commit/a64198e9c8b7801a372213b1305df2f74cc34b29) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to latest version
+
+-   [#1431](https://github.com/Frontify/brand-sdk/pull/1431) [`5921589`](https://github.com/Frontify/brand-sdk/commit/59215895b5085f391e928bdde50ce0dd4a7eead5) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump deps
+
 ## 2.0.3
 
 ### Patch Changes
