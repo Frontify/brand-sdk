@@ -94,7 +94,7 @@ export const BlockInjectButton = ({
             ref={buttonRef}
             data-test-id="block-inject-button"
             className={joinClassNames([
-                'tw-font-body tw-relative tw-text-sm tw-leading-4 tw-border tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-gap-3 tw-w-full first:tw-rounded-tl last:tw-rounded-br',
+                'tw-font-primary tw-relative tw-text-sm tw-leading-4 tw-border tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-gap-3 tw-w-full first:tw-rounded-tl last:tw-rounded-br',
                 verticalLayout
                     ? '[&:not(:first-child)]:tw-border-t-0 first:tw-rounded-tr last:tw-rounded-bl'
                     : '[&:not(:first-child)]:tw-border-l-0  first:tw-rounded-bl last:tw-rounded-tr',
@@ -105,7 +105,7 @@ export const BlockInjectButton = ({
                 errorMsg ? '!tw-border-red-50 !tw-cursor-not-allowed' : ' tw-border-blank-state-line',
                 isLoading || menuPosition || isDraggingOver || errorMsg
                     ? ''
-                    : 'tw-text-text-weak hover:tw-text-blank-state-hover hover:tw-bg-blank-state-hover-inverse hover:tw-border-blank-state-line-hover active:tw-text-blank-state-pressed active:tw-bg-blank-state-pressed-inverse active:tw-border-blank-state-line-hover',
+                    : 'tw-text-secondary hover:tw-text-blank-state-hover hover:tw-bg-blank-state-hover-inverse hover:tw-border-blank-state-line-hover active:tw-text-blank-state-pressed active:tw-bg-blank-state-pressed-inverse active:tw-border-blank-state-line-hover',
                 (isDraggingOver || !!menuPosition) && !errorMsg
                     ? '[&>*]:tw-pointer-events-none tw-border-blank-state-line-hover'
                     : 'tw-bg-blank-state-shaded-inverse tw-text-blank-state-shaded',

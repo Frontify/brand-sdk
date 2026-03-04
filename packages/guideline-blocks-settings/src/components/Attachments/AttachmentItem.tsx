@@ -85,18 +85,18 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                     fontFamily: 'var(-f-theme-settings-body-font-family)',
                 }}
                 className={joinClassNames([
-                    'tw-cursor-pointer tw-text-left tw-w-full tw-relative tw-flex tw-gap-3 tw-px-5 tw-py-3 tw-items-center tw-group hover:tw-bg-box-neutral-hover',
-                    isDragging ? 'tw-bg-box-neutral-hover' : '',
+                    'tw-cursor-pointer tw-text-left tw-w-full tw-relative tw-flex tw-gap-3 tw-px-5 tw-py-3 tw-items-center tw-group hover:tw-bg-container-secondary-hover',
+                    isDragging ? 'tw-bg-container-secondary-hover' : '',
                 ])}
             >
-                <div className="tw-text-text-weak group-hover:tw-text-box-neutral-inverse-hover">
+                <div className="tw-text-secondary group-hover:tw-text-container-secondary-on-secondary-container">
                     {showLoadingCircle ? <LoadingCircle size="small" /> : getDecorator(item.objectType)}
                 </div>
-                <div className="tw-text-s tw-flex-1 tw-min-w-0">
-                    <div className="tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-font-bold tw-text-text-weak group-hover:tw-text-box-neutral-inverse-hover">
+                <div className="tw-text-small tw-flex-1 tw-min-w-0">
+                    <div className="tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-font-bold tw-text-secondary group-hover:tw-text-container-secondary-on-secondary-container">
                         {item.title}
                     </div>
-                    <div className="tw-text-text-weak">{`${item.fileSizeHumanReadable} - ${item.extension}`}</div>
+                    <div className="tw-text-secondary">{`${item.fileSizeHumanReadable} - ${item.extension}`}</div>
                 </div>
                 {isEditing && (
                     <div
@@ -112,10 +112,10 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                             {...draggableProps}
                             aria-label="Drag attachment"
                             className={joinClassNames([
-                                ' tw-border-button-border tw-bg-button-background active:tw-bg-button-background-pressed tw-group tw-border tw-box-box tw-relative tw-flex tw-items-center tw-justify-center tw-outline-none tw-font-medium tw-rounded tw-h-9 tw-w-9 ',
+                                ' tw-border-primary tw-bg-container-secondary active:tw-bg-container-secondary-active tw-group tw-border tw-box-box tw-relative tw-flex tw-items-center tw-justify-center tw-outline-none tw-font-medium tw-rounded-medium tw-h-9 tw-w-9 ',
                                 isDragging || isOverlay
-                                    ? 'tw-cursor-grabbing tw-bg-button-background-pressed hover:tw-bg-button-background-pressed'
-                                    : 'tw-cursor-grab hover:tw-bg-button-background-hover',
+                                    ? 'tw-cursor-grabbing tw-bg-container-secondary-active hover:tw-bg-container-secondary-active'
+                                    : 'tw-cursor-grab hover:tw-bg-container-secondary-hover',
                                 isFocusVisible &&
                                     'tw-ring-4 tw-ring-blue tw-ring-offset-2 dark:tw-ring-offset-black tw-outline-none',
                                 isFocusVisible && 'tw-z-[2]',

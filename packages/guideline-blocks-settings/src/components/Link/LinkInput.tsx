@@ -55,7 +55,7 @@ export const LinkInput = ({
                     placeholder={placeholder ?? 'https://example.com'}
                 />
             </FormControl>
-            {!isUrlValid && <div className="tw-text-text-negative tw-mt-1 tw-text-s">Please enter a valid URL.</div>}
+            {!isUrlValid && <div className="tw-text-error tw-mt-1 tw-text-small">Please enter a valid URL.</div>}
 
             {!hideInternalLinkButton && (
                 <div className="tw-mt-3">

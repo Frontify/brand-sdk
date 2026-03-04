@@ -198,7 +198,7 @@ export const Attachments = ({
                             )}
                             {isEditing && (
                                 <div className="tw-px-5 tw-py-3">
-                                    <div className="tw-font-body tw-font-medium tw-text-text tw-text-s tw-my-4">
+                                    <div className="tw-font-primary tw-font-medium tw-text-primary tw-text-small tw-my-4">
                                         Add attachments
                                     </div>
                                     <AssetInput

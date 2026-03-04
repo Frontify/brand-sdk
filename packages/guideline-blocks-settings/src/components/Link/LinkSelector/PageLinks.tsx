@@ -66,7 +66,7 @@ export const PageLinks = ({
             })}
         </>
     ) : (
-        <div className="tw-h-10 tw-flex tw-items-center tw-pr-2.5 tw-pl-7 tw-leading-5 tw-text-s tw-text-text-weak">
+        <div className="tw-h-10 tw-flex tw-items-center tw-pr-2.5 tw-pl-7 tw-leading-5 tw-text-small tw-text-secondary">
             This document does not contain any pages.
         </div>
     );
