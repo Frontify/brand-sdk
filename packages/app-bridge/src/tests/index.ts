@@ -10,8 +10,6 @@ export * from './ColorApiDummy';
 export * from './ColorDummy';
 export * from './ColorPaletteApiDummy';
 export * from './ColorPaletteDummy';
-export * from './CoverPageApiDummy';
-export * from './CoverPageDummy';
 export * from './DocumentApiDummy';
 export * from './DocumentCategoryApiDummy';
 export * from './DocumentCategoryDummy';
