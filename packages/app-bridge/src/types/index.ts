@@ -4,7 +4,6 @@ export * from './Asset';
 export * from './BulkDownload';
 export * from './Color';
 export * from './ColorPalette';
-export * from './CoverPage';
 export * from './DispatchHandler';
 export * from './Document';
 export * from './DocumentBlockTemplate';
