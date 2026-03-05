@@ -10,7 +10,7 @@ export type Template = {
     pages: TemplatePage[];
 };
 
-export type TemplatePage = {
+type TemplatePage = {
     previewUrl: string;
     width: number;
     height: number;
