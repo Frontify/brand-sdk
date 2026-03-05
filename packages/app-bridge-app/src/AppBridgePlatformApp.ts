@@ -14,7 +14,7 @@ import {
 
 import { InitializationError } from './errors';
 import { type ApiMethodRegistry } from './registries';
-import { type UploadAssetFromUrlPayload } from './registries/command/uploadAssetFromUrl.ts';
+import { type UploadAssetToChooserPayload } from './registries/command/uploadAssetToChooser.ts';
 import { openConnection } from './registries/commands.ts';
 import {
     type PlatformAppApiHandlerParameter,
@@ -43,11 +43,12 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
 
 export type PlatformAppCommandRegistry = PlatformAppCommandNameValidator<{
     openConnection: { payload: void };
-    uploadAssetFromUrl: { payload: UploadAssetFromUrlPayload };
+    closeApp: { payload: void };
+    uploadAssetToChooser: { payload: UploadAssetToChooserPayload };
 }>;
 
 export type PlatformAppCommand = PlatformAppCommandNameValidator<
-    Pick<PlatformAppCommandRegistry, 'openConnection' | 'uploadAssetFromUrl'>
+    Pick<PlatformAppCommandRegistry, 'openConnection' | 'uploadAssetToChooser' | 'closeApp'>
 >;
 
 export type PlatformAppState = {

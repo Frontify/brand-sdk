@@ -20,7 +20,7 @@ export const DownloadButton = ({ onDownload, ariaLabel }: DownloadButtonProps) =
                     aria-label={ariaLabel ?? 'Download'}
                     {...focusProps}
                     className={joinClassNames([
-                        'tw-outline-none tw-rounded',
+                        'tw-outline-none tw-rounded-medium',
                         isFocused &&
                             'tw-ring-4 tw-ring-blue tw-ring-offset-2 dark:tw-ring-offset-black tw-outline-none',
                     ])}
@@ -28,7 +28,7 @@ export const DownloadButton = ({ onDownload, ariaLabel }: DownloadButtonProps) =
                     onPointerDown={(e) => e.preventDefault()}
                     data-test-id="download-button"
                 >
-                    <span className="tw-flex tw-text-xs tw-font-body tw-items-center tw-gap-1 tw-rounded-full tw-bg-box-neutral-strong-inverse hover:tw-bg-box-neutral-strong-inverse-hover active:tw-bg-box-neutral-strong-inverse-pressed tw-text-box-neutral-strong tw-outline tw-outline-1 tw-outline-offset-1 tw-p-1.5 tw-outline-line">
+                    <span className="tw-flex tw-text-x-small tw-font-primary tw-items-center tw-gap-1 tw-rounded-full tw-bg-primary-on-primary hover:tw-bg-primary-on-primary active:tw-bg-primary-on-primary tw-text-primary tw-outline tw-outline-1 tw-outline-offset-1 tw-p-1.5 tw-outline-line-mid">
                         <IconArrowCircleDown size="16" />
                     </span>
                 </button>

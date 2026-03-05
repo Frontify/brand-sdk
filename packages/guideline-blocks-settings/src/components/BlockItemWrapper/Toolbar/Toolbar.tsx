@@ -11,7 +11,7 @@ import { type ToolbarProps } from './types';
 export const Toolbar = ({ items, attachments }: ToolbarProps) => (
     <div
         data-test-id="block-item-wrapper-toolbar"
-        className="tw-rounded-md tw-bg-base tw-border tw-border-line-strong tw-divide-x tw-divide-line-strong tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-isolate"
+        className="tw-rounded-md tw-bg-surface tw-border tw-border-line-mid tw-divide-x tw-divide-line-mid tw-shadow-lg tw-flex tw-flex-none tw-items-center tw-isolate"
     >
         {attachments.isEnabled && (
             <ToolbarSegment>

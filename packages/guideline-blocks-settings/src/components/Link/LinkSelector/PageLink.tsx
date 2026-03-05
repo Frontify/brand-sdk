@@ -60,8 +60,8 @@ export const PageLink = ({
                     ${hasSections ? 'tw-pl-7 ' : 'tw-pl-12 '}
                     ${
                         isActive
-                            ? 'tw-bg-box-selected-strong tw-text-box-selected-strong-inverse hover:tw-bg-box-selected-strong-hover:hover hover:tw-text-box-selected-strong-inverse-hover:hover '
-                            : 'hover:tw-bg-box-neutral-hover hover:tw-text-box-neutral-inverse-hover '
+                            ? 'tw-bg-highlight tw-text-highlight-on-highlight hover:tw-bg-highlight-hover:hover hover:tw-text-highlight-on-highlight:hover '
+                            : 'hover:tw-bg-container-secondary-hover hover:tw-text-container-secondary-on-secondary-container '
                     }`}
                 onClick={() => onSelectUrl(page.permanentLink)}
             >
@@ -79,8 +79,8 @@ export const PageLink = ({
                             />
                         </button>
                     )}
-                    <span className="tw-text-s">{page.title}</span>
-                    <span className="tw-flex-auto tw-font-sans tw-text-xs tw-text-right">Page</span>
+                    <span className="tw-text-small">{page.title}</span>
+                    <span className="tw-flex-auto tw-font-sans tw-text-x-small tw-text-right">Page</span>
                 </div>
             </button>
             {isExpanded &&

@@ -17,7 +17,7 @@ describe('AttachmentsToolbarButtonTrigger', () => {
             <AttachmentsToolbarButtonTrigger isFlyoutOpen>Button</AttachmentsToolbarButtonTrigger>,
         );
 
-        expect(getByTestId(BUTTON_ID)).toHaveClass('tw-text-box-neutral-inverse-pressed');
+        expect(getByTestId(BUTTON_ID)).toHaveClass('tw-text-container-secondary-on-secondary-container');
     });
     it('should forward trigger props to button', () => {
         const onPointerUpStub = vi.fn();

@@ -15,7 +15,7 @@ export const globals = {
 };
 
 const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
-    if (chunkInfo.name === 'style.css') {
+    if (chunkInfo.name === 'guideline-blocks-settings.css') {
         return 'styles.css';
     }
     return chunkInfo.name ?? 'UnknownFileName';
@@ -66,5 +66,8 @@ export default defineConfig({
                 },
             ],
         },
+    },
+    optimizeDeps: {
+        exclude: ['@frontify/app-bridge'],
     },
 });

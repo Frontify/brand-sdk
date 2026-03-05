@@ -3,6 +3,7 @@
 import frontifyTailwindConfig from '@frontify/fondue/tokens/tailwind';
 import containerQueryPlugin from '@tailwindcss/container-queries';
 import plugin from 'tailwindcss/plugin';
+import { type ThemeConfig } from 'tailwindcss/types/config';
 
 module.exports = {
     prefix: 'tw-',
@@ -41,6 +42,22 @@ module.exports = {
                 sm: '440px',
                 md: '740px',
                 lg: '1240px',
+            },
+            outlineColor: ({ theme }: { theme: (path: string) => ThemeConfig }) => ({
+                ...theme('colors'),
+            }),
+            outlineWidth: {
+                0: '0px',
+                1: '1px',
+                2: '2px',
+                4: '4px',
+                8: '8px',
+            },
+            outlineOffset: {
+                0: '0px',
+                1: '1px',
+                2: '2px',
+                4: '4px',
             },
         },
     },
