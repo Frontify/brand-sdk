@@ -20,6 +20,10 @@ type Options = {
 
 const sortDocuments = (a: Document, b: Document) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this method.
+ */
 export const useGroupedDocuments = (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     documentGroupId: number,
