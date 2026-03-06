@@ -12,7 +12,6 @@ export * from './DocumentApiDummy';
 export * from './DocumentCategoryApiDummy';
 export * from './DocumentCategoryDummy';
 export * from './DocumentDummy';
-export * from './DocumentGroupApiDummy';
 export * from './DocumentGroupDummy';
 export * from './DocumentPageApiDummy';
 export * from './DocumentPageDummy';
