@@ -21,7 +21,6 @@ export * from './DocumentSectionDummy';
 export * from './HttpUtilResponseDummy';
 export * from './TargetsApiDummy';
 export * from './TargetsDummy';
-export * from './TemplateApiLegacyDummy';
 export * from './TemplateLegacyDummy';
 export * from './TemplateDummy';
 export * from './UserDummy';
