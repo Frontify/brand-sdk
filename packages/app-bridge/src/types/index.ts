@@ -16,7 +16,6 @@ export * from './File';
 export * from './FileExtension';
 export * from './FileExtensionSets';
 export * from './FileType';
-export * from './PageTemplateAsset';
 export * from './PrivacySettings';
 export * from './SubscriptionHandler';
 export * from './Targets';
