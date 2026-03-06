@@ -3,7 +3,6 @@
 import { type AssetApi } from './Asset';
 import { type FileExtension } from './FileExtension';
 import { type Template } from './Template';
-import { type TemplateApiLegacy } from './TemplateLegacy';
 
 export enum TerrificEvent {
     OpenModal = 'onOpenModal',
@@ -22,7 +21,22 @@ export type AssetChooserResult = Omit<AssetApi, 'project_id' | 'file_size' | 'al
     filesize: number;
     computed_alternative_text: Nullable<string>;
 };
-export type TemplateChooserResult = TemplateApiLegacy;
+export type TemplateChooserResult = {
+    asset_created: string;
+    asset_modified: string;
+    categories: unknown[];
+    description: string;
+    height: number;
+    id: number;
+    name: string;
+    preview: string;
+    project: number;
+    project_name: string;
+    project_type: string;
+    published: number;
+    screen_id: number;
+    width: number;
+};
 
 export type AssetChooserAssetChosenCallback = (selectedAsset: { screenData: AssetChooserResult[] }) => void;
 export type TemplateChooserTemplateChosenCallback = (selectedTemplate: { template: TemplateChooserResult }) => void;
