@@ -12,15 +12,18 @@
     "@frontify/guideline-themes": "0.0.0"
   },
   "changesets": [
+    "all-parts-shout",
     "angry-dolphins-fry",
     "angry-hairs-enjoy",
     "angry-scissors-tap",
+    "beige-pots-poke",
     "blue-foxes-dance",
     "bold-horses-joke",
     "brave-queens-smile",
     "brave-queens-work",
     "bright-insects-wash",
     "calm-candles-wink",
+    "chubby-planets-shave",
     "clever-suns-laugh",
     "cuddly-pets-hammer",
     "curly-pots-scream",
@@ -30,6 +33,7 @@
     "early-masks-appear",
     "eighty-ants-happen",
     "eleven-shrimps-jog",
+    "eleven-times-relate",
     "empty-jobs-add",
     "fair-beans-confess",
     "fair-hats-grab",
@@ -85,6 +89,7 @@
     "shiny-beds-thank",
     "shiny-poets-enjoy",
     "shy-jobs-protect",
+    "six-ears-wait",
     "six-snails-carry",
     "slimy-cats-repeat",
     "smart-suns-type",
@@ -102,8 +107,10 @@
     "thirty-eggs-judge",
     "thirty-pears-lay",
     "three-avocados-push",
+    "tiny-feet-unite",
     "tough-nails-shout",
     "tricky-boats-sip",
+    "tricky-experts-accept",
     "twelve-keys-begin",
     "violet-elephants-tan",
     "warm-hounds-refuse",
@@ -111,6 +118,7 @@
     "wise-zoos-jam",
     "witty-rivers-smile",
     "witty-tools-check",
-    "young-crews-hope"
+    "young-crews-hope",
+    "young-lands-hunt"
   ]
 }

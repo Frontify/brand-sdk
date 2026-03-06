@@ -1,5 +1,27 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.48
+
+### Minor Changes
+
+-   [#1446](https://github.com/Frontify/brand-sdk/pull/1446) [`62812be`](https://github.com/Frontify/brand-sdk/commit/62812be62c7d8817fe16d95786732cc880f5cf40) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentGroups`, `useGroupedDocuments` and `useUngroupedDocuments` hook and also remove the `DocumentGroupApi` type
+
+### Patch Changes
+
+-   [#1438](https://github.com/Frontify/brand-sdk/pull/1438) [`0cfb6bb`](https://github.com/Frontify/brand-sdk/commit/0cfb6bb0769815383541a075103d21a8204b5176) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove TemplatePageApi type
+
+-   [#1442](https://github.com/Frontify/brand-sdk/pull/1442) [`f7d1ede`](https://github.com/Frontify/brand-sdk/commit/f7d1ede454050013a4f890e0bcebac79833ab1ba) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `filterDocumentSectionsWithUnreadableTitles` helper
+
+-   [#1445](https://github.com/Frontify/brand-sdk/pull/1445) [`de6047a`](https://github.com/Frontify/brand-sdk/commit/de6047a1a0d9e1cbe6b357628ebd81d50d3b4064) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentBlockTemplate` types
+
+-   [#1441](https://github.com/Frontify/brand-sdk/pull/1441) [`b80449d`](https://github.com/Frontify/brand-sdk/commit/b80449d852d3edadbc1887e82ecc74eacd53e138) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump
+
+-   [#1440](https://github.com/Frontify/brand-sdk/pull/1440) [`569840a`](https://github.com/Frontify/brand-sdk/commit/569840ab483519b70ecedccb87207be735bf6bfd) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove TemplateApiLegacy type and test dummy
+
+-   [#1444](https://github.com/Frontify/brand-sdk/pull/1444) [`0e28ba2`](https://github.com/Frontify/brand-sdk/commit/0e28ba2dcd55151bfa22e1a788d239fd43e3532b) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `pageTemplateAsset` type
+
+-   [#1435](https://github.com/Frontify/brand-sdk/pull/1435) [`c3aea0d`](https://github.com/Frontify/brand-sdk/commit/c3aea0d5378d094d08c76ab3b574249cf37b5cd4) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove Color and ColorPallete api related types and test dummies
+
 ## 4.0.0-alpha.47
 
 ### Patch Changes
