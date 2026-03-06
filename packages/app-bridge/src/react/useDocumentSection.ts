@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { filterDocumentSectionsWithUnreadableTitles } from '../helpers';
 import { type DocumentSection, type EmitterEvents } from '../types';
 
 const insertDocumentSectionIntoArray = (
@@ -49,6 +48,9 @@ type UseDocumentSectionReturn = {
      */
     navigationItems: DocumentSection[];
 };
+
+const filterDocumentSectionsWithUnreadableTitles = (sections: DocumentSection[]) =>
+    sections.filter((section) => !!section.title?.trim());
 
 export const useDocumentSection = (appBridge: AppBridgeBlock, documentPageId: number): UseDocumentSectionReturn => {
     const [documentSections, setDocumentSections] = useState<DocumentSection[]>([]);
