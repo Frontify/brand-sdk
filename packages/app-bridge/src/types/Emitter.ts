@@ -5,9 +5,7 @@ import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 import { type Asset } from './Asset';
 import { type Color } from './Color';
 import { type ColorPalette } from './ColorPalette';
-import { type Document } from './Document';
 import { type DocumentCategory } from './DocumentCategory';
-import { type DocumentGroup } from './DocumentGroup';
 import { type DocumentPage } from './DocumentPage';
 import {
     type AddDocumentSectionPayload,
@@ -46,26 +44,6 @@ export type EmitterEvents = {
         colorPalettes: ColorPalette[];
         prevColorPalettes: ColorPalette[];
     };
-
-    'AppBridge:GuidelineDocument:Action':
-        | {
-              document: Document;
-              action: 'add' | 'update' | 'move';
-          }
-        | {
-              document: { id: number; documentGroupId?: Nullable<number> };
-              action: 'delete';
-          };
-
-    'AppBridge:GuidelineDocumentGroup:Action':
-        | {
-              documentGroup: DocumentGroup;
-              action: 'add' | 'update';
-          }
-        | {
-              documentGroup: { id: number };
-              action: 'delete';
-          };
 
     'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
@@ -109,21 +87,6 @@ export type EmitterEvents = {
         action: 'add' | 'delete';
     };
 
-    'AppBridge:GuidelineDocument:DocumentPageAction': {
-        documentPage: { id: number; documentId: number };
-        action: 'add' | 'delete';
-    };
-
-    'AppBridge:GuidelineDocument:DocumentCategoryAction': {
-        documentCategory: { id: number; documentId: number };
-        action: 'add' | 'delete';
-    };
-
-    'AppBridge:GuidelineDocumentGroup:DocumentAction': {
-        document: { id: number; documentGroupId: number };
-        action: 'add' | 'delete';
-    };
-
     'AppBridge:GuidelineDocumentPageTargets:Action': {
         action: 'update';
         payload: {
@@ -153,19 +116,6 @@ export type EmitterEvents = {
     'AppBridge:GuidelineDocumentCategory:MoveEvent': {
         documentCategory: DocumentCategory | { id: number; sort?: Nullable<number> };
         documentId: number;
-        position: number;
-        action: 'movePreview';
-    };
-
-    'AppBridge:GuidelineDocument:MoveEvent': {
-        document: Document | { id: number; sort?: Nullable<number>; documentGroupId?: Nullable<number> };
-        position: number;
-        newGroupId?: Nullable<number>;
-        action: 'movePreview';
-    };
-
-    'AppBridge:GuidelineDocumentGroup:MoveEvent': {
-        documentGroup: DocumentGroup | { id: number; sort?: Nullable<number> };
         position: number;
         action: 'movePreview';
     };
