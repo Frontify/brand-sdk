@@ -7,7 +7,6 @@ enableMapSet();
 export * from './AppBridge';
 export * from './AppBridgeBlock';
 export * from './errors';
-export * from './helpers';
 export * from './registries';
 export * from './react';
 export * from './tests';
