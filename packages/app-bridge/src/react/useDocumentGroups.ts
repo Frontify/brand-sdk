@@ -21,6 +21,10 @@ type Options = {
 
 const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this method.
+ */
 export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, options: Options = { enabled: true }) => {
     // eslint-disable-next-line @eslint-react/prefer-use-state-lazy-initialization
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
