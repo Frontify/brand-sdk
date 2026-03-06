@@ -61,10 +61,8 @@ export type DocumentPageTargetsApi = {
 export type DocumentTargets = CamelCasedPropertiesDeep<DocumentTargetsApi['targets']>;
 export type DocumentPageTargets = CamelCasedPropertiesDeep<DocumentPageTargetsApi>;
 
-export type TargetsUpdateApi = {
+export type TargetsUpdate = {
     data: boolean;
     success: boolean;
     targets: number[];
 };
-
-export type TargetsUpdate = CamelCasedPropertiesDeep<TargetsUpdateApi>;
