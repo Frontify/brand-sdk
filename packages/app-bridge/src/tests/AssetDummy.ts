@@ -7,6 +7,7 @@ export class AssetDummy {
         return {
             id,
             creatorName: 'Creator Name',
+            alternativeText: 'Alternative Text',
             extension: 'png',
             externalUrl: null,
             fileName: 'fileName.png',
@@ -27,6 +28,8 @@ export class AssetDummy {
             revisionId: 1,
             backgroundColor: 'rgba(115, 210, 210, 255)',
             isDownloadProtected: false,
+            focalPointX: 0.5,
+            focalPointY: 0.5,
         };
     }
 }

@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge",
     "type": "module",
-    "version": "3.12.3",
+    "version": "4.0.0-alpha.47",
     "description": "Package to establish communication between Frontify and marketplace apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -49,10 +49,10 @@
         "sinon": "^15 || ^16 || ^17 || ^18 || ^19 || ^20 || ^21"
     },
     "dependencies": {
-        "immer": "^10.0.4",
+        "immer": "^11.1.4",
         "lodash-es": "^4.17.23",
         "mitt": "^3.0.1",
-        "type-fest": "^5.4.3"
+        "type-fest": "^5.4.4"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^1.0.8",
@@ -63,15 +63,15 @@
         "@types/sinon": "^21.0.0",
         "@vitest/coverage-v8": "^4.0.18",
         "@vitest/ui": "^4.0.18",
-        "eslint": "^9.39.2",
+        "eslint": "^9.39.3",
         "eslint-plugin-notice": "^1.0.0",
-        "happy-dom": "^20.5.0",
+        "happy-dom": "^20.8.3",
         "mitt": "^3.0.1",
-        "msw": "^2.12.7",
-        "prettier": "^3.7.4",
+        "msw": "^2.12.10",
+        "prettier": "^3.8.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "sinon": "^21.0.1",
+        "sinon": "^21.0.2",
         "ts-json-as-const": "^1.0.7",
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
