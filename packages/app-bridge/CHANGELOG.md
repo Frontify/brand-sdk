@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.12.4
+
+### Patch Changes
+
+-   [#1447](https://github.com/Frontify/brand-sdk/pull/1447) [`e435f99`](https://github.com/Frontify/brand-sdk/commit/e435f99490a71c326c8553f2534aa9599164ca0b) Thanks [@ragi96](https://github.com/ragi96)! - chore: add deprecation notice on some hooks
+
 ## 3.12.3
 
 ### Patch Changes
