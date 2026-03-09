@@ -16,13 +16,3 @@ export class DocumentPageTargetsDummy {
         return convertObjectCase(DocumentPageTargetsApiDummy.with(id), 'camel');
     }
 }
-
-export class UpdateTargetsDummy {
-    static with(targetIds: number[]) {
-        return {
-            success: true,
-            data: true,
-            targets: targetIds,
-        };
-    }
-}
