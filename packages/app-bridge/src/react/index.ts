@@ -13,7 +13,6 @@ export * from './useColorPalettes';
 export * from './useColors';
 export * from './useDocumentCategories';
 export * from './useDocumentPageTargets';
-export * from './useDocumentSection';
 export * from './useDocumentTargets';
 export * from './useEditorState';
 export * from './useFileInput';

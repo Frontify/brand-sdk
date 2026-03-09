@@ -7,11 +7,6 @@ import { type Color } from './Color';
 import { type ColorPalette } from './ColorPalette';
 import { type DocumentCategory } from './DocumentCategory';
 import { type DocumentPage } from './DocumentPage';
-import {
-    type AddDocumentSectionPayload,
-    type DeleteDocumentSectionPayload,
-    type UpdateDocumentSectionPayload,
-} from './DocumentSection';
 import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
@@ -57,19 +52,6 @@ export type EmitterEvents = {
         | {
               documentPage: { id: number; documentId: number; categoryId?: Nullable<number> };
               action: 'delete';
-          };
-    'AppBridge:GuidelineDocumentSection:Action':
-        | {
-              action: 'add';
-              payload: AddDocumentSectionPayload;
-          }
-        | {
-              action: 'update';
-              payload: UpdateDocumentSectionPayload;
-          }
-        | {
-              action: 'delete';
-              payload: DeleteDocumentSectionPayload;
           };
 
     'AppBridge:GuidelineDocumentCategory:Action':
