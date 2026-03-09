@@ -23,11 +23,9 @@ import {
     type Asset,
     type BulkDownload,
     type Color,
-    type ColorCreate,
     type ColorPalette,
     type ColorPaletteCreate,
     type ColorPalettePatch,
-    type ColorPatch,
     type Document,
     type DocumentCategory,
     type DocumentGroup,
@@ -156,24 +154,6 @@ export interface AppBridgeBlock<
      * There won't be a replacement for this method.
      */
     deleteColorPalette(colorPaletteId: number): Promise<void>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    createColor(colorCreate: ColorCreate): Promise<Color>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    updateColor(colorId: number, colorPatch: ColorPatch): Promise<Color>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    deleteColor(colorId: number): Promise<void>;
 
     downloadColorKit(selectedColorPalettes: number[]): string;
 

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { renderHook, waitFor } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { ColorDummy, getAppBridgeBlockStub } from '../tests';
 
@@ -27,29 +27,5 @@ describe('useColors hook', () => {
                 ColorDummy.green(342),
             ]),
         );
-    });
-
-    it('should not throw createColor', async () => {
-        const { result } = await loadUseColors();
-
-        const createColorMock = vi.fn().mockImplementation(result.current.createColor);
-
-        await expect(createColorMock()).resolves.not.toThrow();
-    });
-
-    it('should not throw updateColor', async () => {
-        const { result } = await loadUseColors();
-
-        const updateColorMock = vi.fn().mockImplementation(result.current.updateColor);
-
-        await expect(updateColorMock()).resolves.not.toThrow();
-    });
-
-    it('should not throw deleteColor', async () => {
-        const { result } = await loadUseColors();
-
-        const deleteColorMock = vi.fn().mockImplementation(result.current.deleteColor);
-
-        await expect(deleteColorMock()).resolves.not.toThrow();
     });
 });

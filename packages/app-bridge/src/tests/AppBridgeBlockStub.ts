@@ -176,9 +176,6 @@ export const getAppBridgeBlockStub = ({
             ColorDummy.green(342),
             ColorDummy.yellow(9314),
         ]),
-        updateColor: stub<Parameters<AppBridgeBlock['updateColor']>>().callsFake((colorId) =>
-            Promise.resolve(ColorDummy.red(colorId)),
-        ),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
         ),
@@ -255,8 +252,6 @@ export const getAppBridgeBlockStub = ({
         ]),
 
         // TODO: Stub the following methods
-        createColor: stub<Parameters<AppBridgeBlock['createColor']>>().resolves(ColorDummy.red()),
-        deleteColor: stub<Parameters<AppBridgeBlock['deleteColor']>>().resolves(),
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),

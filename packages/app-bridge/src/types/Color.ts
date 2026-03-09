@@ -1,7 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type PartialDeep } from 'type-fest';
-
 export type Color = {
     id: number;
     sort: number;
@@ -29,21 +27,6 @@ export type ColorRevision = {
     rgba: RgbaColor;
     pantone: PantoneColor;
 };
-
-export type ColorCreate = {
-    colorPaletteId: number;
-    red: number;
-    green: number;
-    blue: number;
-    alpha: number;
-};
-
-export type ColorPatch = PartialDeep<
-    Omit<ColorRevision, 'hex' | 'hue' | 'saturation' | 'lightness'> & {
-        title: Nullable<string>;
-        sort: number;
-    }
->;
 
 type RgbaColor = {
     red: Nullable<number>;
