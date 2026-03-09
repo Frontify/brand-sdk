@@ -201,12 +201,6 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.  But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentsByDocumentGroupId(documentGroupId: number): Promise<Document[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
     getDocumentGroups(): Promise<DocumentGroup[]>;

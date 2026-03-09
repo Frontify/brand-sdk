@@ -15,7 +15,6 @@ import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { ColorDummy } from './ColorDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { DocumentCategoryDummy } from './DocumentCategoryDummy';
-import { DocumentDummy } from './DocumentDummy';
 import { DocumentPageDummy } from './DocumentPageDummy';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
@@ -27,11 +26,6 @@ const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
 
-const DOCUMENT_GROUP_ID_1 = 5332;
-const GROUPED_DOCUMENT_ID_1 = 2434;
-const GROUPED_DOCUMENT_ID_2 = 552;
-const GROUPED_DOCUMENT_ID_3 = 1145;
-const GROUPED_DOCUMENT_ID_4 = 32345;
 const DOCUMENT_PAGE_ID_1 = 23442;
 const DOCUMENT_PAGE_ID_2 = 235345;
 const DOCUMENT_PAGE_ID_3 = 12352;
@@ -256,12 +250,6 @@ export const getAppBridgeBlockStub = ({
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
         getUngroupedDocuments: stub<Parameters<AppBridgeBlock['getUngroupedDocuments']>>().resolves(),
-        getDocumentsByDocumentGroupId: stub<Parameters<AppBridgeBlock['getDocumentsByDocumentGroupId']>>().resolves([
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_1, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_2, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_3, DOCUMENT_GROUP_ID_1),
-            DocumentDummy.withDocumentGroupId(GROUPED_DOCUMENT_ID_4, DOCUMENT_GROUP_ID_1),
-        ]),
         getDocumentGroups: stub<Parameters<AppBridgeBlock['getDocumentGroups']>>().resolves(),
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
         getDocumentPagesByDocumentCategoryId: stub<
