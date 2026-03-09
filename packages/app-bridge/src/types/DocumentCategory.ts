@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CamelCasedPropertiesDeep, type RequireAtLeastOne } from 'type-fest';
+import { type CamelCasedPropertiesDeep } from 'type-fest';
 
 export type DocumentCategoryApi = {
     id: number;
@@ -17,12 +17,4 @@ export type DocumentCategoryApi = {
     number_of_document_pages: number;
 };
 
-type DocumentPageRequestFields = 'title' | 'documentId' | 'id';
-
 export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
-
-export type DocumentCategoryCreate = Pick<DocumentCategory, 'title' | 'documentId'>;
-
-export type DocumentCategoryUpdate = RequireAtLeastOne<Pick<DocumentCategory, DocumentPageRequestFields>, 'title'>;
-
-export type DocumentCategoryDelete = Pick<DocumentCategory, 'id' | 'documentId'>;
