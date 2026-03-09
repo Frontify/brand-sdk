@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-chore: cleanup DocumentPage.ts of unused types
+refactor: remove `DocumentPageRequest, `DocumentPageCreate`, `DocumentPageUpdate` and `DocumentPageDelete` types
