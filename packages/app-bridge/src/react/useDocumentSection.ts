@@ -51,6 +51,10 @@ type UseDocumentSectionReturn = {
     navigationItems: DocumentSection[];
 };
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this method.
+ */
 export const useDocumentSection = (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     documentPageId: number,
