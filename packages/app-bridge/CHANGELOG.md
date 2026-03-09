@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 3.12.5
+
+### Patch Changes
+
+-   [#1454](https://github.com/Frontify/brand-sdk/pull/1454) [`c05add6`](https://github.com/Frontify/brand-sdk/commit/c05add6ecfce78813a08315b0ac3365a5060726a) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: deprecate `useDocumentSection` react hook
+
 ## 3.12.4
 
 ### Patch Changes
