@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CamelCasedPropertiesDeep, type RequireAtLeastOne, type SetRequired } from 'type-fest';
+import { type CamelCasedPropertiesDeep } from 'type-fest';
 
 import { type SingleTargetApi } from './Targets';
 
@@ -44,21 +44,3 @@ export type DocumentPageApi = {
 } & (DocumentPageApiAsLink | DocumentPageApiAsNoneLink);
 
 export type DocumentPage = CamelCasedPropertiesDeep<DocumentPageApi>;
-
-type DocumentPageRequest = {
-    id: number;
-    title: Nullable<string>;
-    documentId: number;
-    linkUrl?: Nullable<string>;
-    categoryId?: Nullable<number>;
-    visibility?: DocumentPageVisibility;
-};
-
-export type DocumentPageCreate = Omit<SetRequired<DocumentPageRequest, 'title' | 'documentId'>, 'id'>;
-
-export type DocumentPageUpdate = RequireAtLeastOne<
-    DocumentPageRequest,
-    'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
->;
-
-export type DocumentPageDelete = Pick<DocumentPageRequest, 'id' | 'documentId' | 'categoryId'>;
