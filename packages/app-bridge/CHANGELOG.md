@@ -1,5 +1,15 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.49
+
+### Patch Changes
+
+-   [#1451](https://github.com/Frontify/brand-sdk/pull/1451) [`20fec73`](https://github.com/Frontify/brand-sdk/commit/20fec7370b99c3a2c264ea7cee8e473642a3ca95) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: cleanup unused types in DocumentCategory
+
+-   [#1450](https://github.com/Frontify/brand-sdk/pull/1450) [`a124e06`](https://github.com/Frontify/brand-sdk/commit/a124e0651cdce785473288a04144e4f54c7f04b8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `DocumentPageRequest`, `DocumentPageCreate`, `DocumentPageUpdate` and `DocumentPageDelete` types
+
+-   [#1453](https://github.com/Frontify/brand-sdk/pull/1453) [`c4a2c08`](https://github.com/Frontify/brand-sdk/commit/c4a2c08b57c392b11f38dad9dfa9ee78d6019c01) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `useDocumentSection` react hooks, along with types and events
+
 ## 4.0.0-alpha.48
 
 ### Minor Changes
