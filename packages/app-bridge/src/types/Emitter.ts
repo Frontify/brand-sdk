@@ -5,7 +5,6 @@ import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 import { type Asset } from './Asset';
 import { type ColorPalette } from './ColorPalette';
 import { type DocumentCategory } from './DocumentCategory';
-import { type DocumentPage } from './DocumentPage';
 import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
@@ -37,16 +36,6 @@ export type EmitterEvents = {
 
     'AppBridge:OpenNavigationManager': void;
 
-    'AppBridge:GuidelineDocumentPage:Action':
-        | {
-              documentPage: DocumentPage;
-              action: 'add' | 'update' | 'move';
-          }
-        | {
-              documentPage: { id: number; documentId: number; categoryId?: Nullable<number> };
-              action: 'delete';
-          };
-
     'AppBridge:GuidelineDocumentCategory:Action':
         | {
               documentCategory: DocumentCategory;
@@ -62,14 +51,6 @@ export type EmitterEvents = {
         action: 'add' | 'delete';
     };
 
-    'AppBridge:GuidelineDocumentPageTargets:Action': {
-        action: 'update';
-        payload: {
-            targets: number[];
-            pageIds: number[];
-        };
-    };
-
     'AppBridge:GuidelineDocumentTargets:Action': {
         payload: {
             targets: number[];
@@ -79,14 +60,6 @@ export type EmitterEvents = {
     };
 
     'AppBridge:ViewerOpened': AssetViewerOptions;
-
-    'AppBridge:GuidelineDocumentPage:MoveEvent': {
-        documentPage: DocumentPage | { id: number; sort?: Nullable<number> };
-        documentId: number;
-        categoryId?: Nullable<number>;
-        position?: number;
-        action: 'movePreview';
-    };
 
     'AppBridge:GuidelineDocumentCategory:MoveEvent': {
         documentCategory: DocumentCategory | { id: number; sort?: Nullable<number> };
