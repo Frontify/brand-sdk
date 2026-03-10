@@ -1,10 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CamelCasedPropertiesDeep } from 'type-fest';
-
-export type DocumentCategoryApi = {
+export type DocumentCategory = {
     id: number;
-    document_id: number;
+    documentId: number;
     slug: string;
     title: string;
     sort: number;
@@ -12,9 +10,7 @@ export type DocumentCategoryApi = {
     created: string;
     modifier: Nullable<string>;
     modified: Nullable<string>;
-    valid_from: string;
-    valid_to: Nullable<string>;
-    number_of_document_pages: number;
+    validFrom: string;
+    validTo: Nullable<string>;
+    numberOfDocumentPages: number;
 };
-
-export type DocumentCategory = CamelCasedPropertiesDeep<DocumentCategoryApi>;
