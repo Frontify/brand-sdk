@@ -20,6 +20,10 @@ type Options = {
 
 const sortDocumentPages = (a: DocumentPage, b: DocumentPage) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this method.
+ */
 export const useCategorizedDocumentPages = (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     documentCategoryId: number,
