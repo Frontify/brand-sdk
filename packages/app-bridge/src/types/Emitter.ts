@@ -3,7 +3,6 @@
 import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
 import { type Asset } from './Asset';
-import { type Color } from './Color';
 import { type ColorPalette } from './ColorPalette';
 import { type DocumentCategory } from './DocumentCategory';
 import { type DocumentPage } from './DocumentPage';
@@ -26,12 +25,6 @@ export type EmitterEvents = {
         blockId: number;
         blockTemplates: Record<string, Template[]>;
         prevBlockTemplates: Record<string, Template[]>;
-    };
-
-    'AppBridge:ColorsUpdated': {
-        blockId: number;
-        colors: Color[];
-        prevColors: Color[];
     };
 
     'AppBridge:ColorPalettesUpdated': {
