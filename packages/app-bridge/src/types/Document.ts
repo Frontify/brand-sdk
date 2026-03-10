@@ -2,7 +2,7 @@
 
 import { type Simplify } from 'type-fest';
 
-import { type SingleTargetApi } from './Targets';
+import { type SingleTargetApi, type CamelCasedPropertiesDeep } from './Targets';
 
 type DocumentLibraryMode =
     | 'MEDIALIBRARY'
@@ -78,7 +78,7 @@ export type Document = Simplify<
         logoSettings: Nullable<unknown>;
         backgroundFileId: Nullable<string>;
         backgroundSettings: Nullable<unknown>;
-        targets: Nullable<SingleTargetApi['target'][]>;
+        targets: Nullable<CamelCasedPropertiesDeep<SingleTargetApi['target'][]>>;
         token: Nullable<string>;
         permanentLink: string;
 
