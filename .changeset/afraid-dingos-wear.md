@@ -4,6 +4,6 @@
 
 refactor: remove react hooks and related events
 
-- useCategorizedDocumentPages
-- useDocumentPageTargets
-- useUncategorizedDocumentPages
+- `useCategorizedDocumentPages`
+- `useDocumentPageTargets`
+- `useUncategorizedDocumentPages`
