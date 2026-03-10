@@ -21,14 +21,11 @@ import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
 import {
     type Asset,
-    type AssetChooserOptions,
     type BulkDownload,
     type Color,
-    type ColorCreate,
     type ColorPalette,
     type ColorPaletteCreate,
     type ColorPalettePatch,
-    type ColorPatch,
     type Document,
     type DocumentCategory,
     type DocumentGroup,
@@ -56,6 +53,7 @@ export type BlockCommand = CommandNameValidator<
         | 'openAssetViewer'
         | 'openTemplateChooser'
         | 'openNewPublication'
+        | 'trackEvent'
     >
 >;
 
@@ -105,18 +103,6 @@ export interface AppBridgeBlock<
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('blockId').get()` instead.
-     */
-    getBlockId(): number;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('sectionId').get()` instead.
-     */
-    getSectionId(): number | undefined;
-
     getBlockAssets(): Promise<Record<string, Asset[]>>;
 
     getAssetById(assetId: number): Promise<Asset>;
@@ -124,12 +110,6 @@ export interface AppBridgeBlock<
     deleteAssetIdsFromBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openAssetViewer(token))` instead.
-     */
-    openAssetViewer(token: string): void;
 
     getBlockTemplates(): Promise<Record<string, Template[]>>;
 
@@ -150,16 +130,6 @@ export interface AppBridgeBlock<
      * There won't be a replacement for this method.
      */
     getColors(): Promise<Color[]>;
-
-    /**
-     * @deprecated Use `getColors` instead.
-     */
-    getAvailableColors(): Promise<Color[]>;
-
-    /**
-     * @deprecated Use `getColorPalettes` instead.
-     */
-    getAvailablePalettes(): Promise<ColorPalette[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
@@ -185,41 +155,11 @@ export interface AppBridgeBlock<
      */
     deleteColorPalette(colorPaletteId: number): Promise<void>;
 
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    createColor(colorCreate: ColorCreate): Promise<Color>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    updateColor(colorId: number, colorPatch: ColorPatch): Promise<Color>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    deleteColor(colorId: number): Promise<void>;
-
     downloadColorKit(selectedColorPalettes: number[]): string;
 
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
 
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openTemplateChooser())` instead.
-     */
-    openTemplateChooser(callback: (selectedTemplate: TemplateLegacy) => void): void;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeTemplateChooser())` instead.
-     */
-    closeTemplateChooser(): void;
 
     getCurrentLoggedUser(): Promise<User>;
 
@@ -228,19 +168,6 @@ export interface AppBridgeBlock<
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 
     getPrivacySettings(): PrivacySettings;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openAssetChooser(options))` to open the asset chooser
-     * and `appBridge.subscribe('assetsChosen', callback)` to subscribe to the asset chosen event
-     */
-    openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeAssetChooser())` instead.
-     */
-    closeAssetChooser(): void;
 
     getProjectId(): number;
 
