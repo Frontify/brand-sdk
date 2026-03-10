@@ -9,7 +9,6 @@ export * from './BulkDownloadDummy';
 export * from './ColorDummy';
 export * from './ColorPaletteDummy';
 export * from './DocumentApiDummy';
-export * from './DocumentCategoryApiDummy';
 export * from './DocumentCategoryDummy';
 export * from './DocumentDummy';
 export * from './DocumentGroupDummy';
