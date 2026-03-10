@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Simplify } from 'type-fest';
+import { type Simplify, type CamelCasedPropertiesDeep } from 'type-fest';
 
-import { type SingleTargetApi, type CamelCasedPropertiesDeep } from './Targets';
+import { type SingleTargetApi } from './Targets';
 
 type DocumentLibraryMode =
     | 'MEDIALIBRARY'
