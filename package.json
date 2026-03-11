@@ -30,7 +30,7 @@
         "@changesets/changelog-github": "^0.6.0",
         "@changesets/cli": "^2.30.0",
         "@cypress/vite-dev-server": "^7.2.0",
-        "@frontify/fondue": "^13.1.5",
+        "@frontify/fondue": "^13.2.0",
         "@types/react": "^18.3.27",
         "@vitejs/plugin-react": "^5.1.4",
         "cypress": "^15.11.0",
