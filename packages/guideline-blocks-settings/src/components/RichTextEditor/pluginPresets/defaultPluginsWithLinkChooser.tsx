@@ -11,17 +11,22 @@ import {
     CheckboxListPlugin,
     CodePlugin,
     ItalicPlugin,
-    OrderedListPlugin,
     PluginComposer,
     ResetFormattingPlugin,
     SoftBreakPlugin,
     StrikethroughPlugin,
     TextStylePlugin,
     UnderlinePlugin,
-    UnorderedListPlugin,
 } from '@frontify/fondue/rte';
 
-import { ButtonPlugin, LinkPlugin, TextStylePluginsWithoutImage, TextStylesWithoutImage } from '../plugins';
+import {
+    ButtonPlugin,
+    LinkPlugin,
+    OrderedListPlugin,
+    TextStylePluginsWithoutImage,
+    TextStylesWithoutImage,
+    UnorderedListPlugin,
+} from '../plugins';
 
 export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock) => {
     return new PluginComposer()
