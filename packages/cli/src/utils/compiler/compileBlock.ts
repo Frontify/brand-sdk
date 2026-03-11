@@ -5,11 +5,13 @@ import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from '../appBridgeVersion';
+import { getReactVersion } from '../reactVersion';
 
 import { type CompilerOptions } from './compilerOptions';
 
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeVersion(projectPath);
+    const reactVersion = getReactVersion(projectPath);
     return build({
         plugins: [
             react(),
@@ -24,24 +26,27 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
         root: projectPath,
         build: {
             lib: {
-                name: outputName,
                 entry: entryFile,
-                formats: ['iife'],
+                formats: ['es'],
                 fileName: () => 'index.js',
             },
             rollupOptions: {
-                external: ['react', 'react-dom'],
-                output: {
-                    globals: {
-                        react: 'React',
-                        'react-dom': 'ReactDOM',
+                plugins: [
+                    {
+                        name: 'exports-to-window',
+                        generateBundle(_, bundle) {
+                            for (const chunk of Object.values(bundle)) {
+                                if (chunk.type === 'chunk' && chunk.exports.length > 0) {
+                                    chunk.code += `\nwindow.${outputName} = {};\n`;
+                                    chunk.code += `\nwindow.${outputName}.dependencies = {};\n`;
+                                    chunk.code += `window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';\n`;
+                                    chunk.code += `window.${outputName}.dependencies['react'] = '${reactVersion}';\n`;
+                                }
+                            }
+                        },
                     },
-                    footer: `
-                        window.${outputName} = ${outputName};
-                        window.${outputName}.dependencies = window.${outputName}.packages || {};
-                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
-                    `,
-                },
+                ],
+                external: ['react', 'react-dom'],
             },
         },
     });
