@@ -1,5 +1,15 @@
 # @frontify/app-bridge
 
+## 3.12.6
+
+### Patch Changes
+
+-   [#1462](https://github.com/Frontify/brand-sdk/pull/1462) [`2fa485a`](https://github.com/Frontify/brand-sdk/commit/2fa485ad84f48d03a3e646e8e16a7326e682189a) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: mark React hooks as deprecated
+
+    -   `useCategorizedDocumentPages`
+    -   `useDocumentPageTargets`
+    -   `useUncategorizedDocumentPages`
+
 ## 3.12.5
 
 ### Patch Changes
