@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.0
+
+### Minor Changes
+
+-   [#1464](https://github.com/Frontify/brand-sdk/pull/1464) [`cac3a23`](https://github.com/Frontify/brand-sdk/commit/cac3a23fd3b0e5e2426d67875b00905723a4729b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(RichTextEditor): add list plugins
+
 ## 2.0.4
 
 ### Patch Changes
