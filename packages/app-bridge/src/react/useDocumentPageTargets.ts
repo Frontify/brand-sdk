@@ -19,6 +19,10 @@ export type DocumentPageTargetEvent = {
     };
 };
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this method.
+ */
 export const useDocumentPageTargets = (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     id: number,
