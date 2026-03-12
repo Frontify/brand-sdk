@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.52
+
+### Major Changes
+
+-   [#1456](https://github.com/Frontify/brand-sdk/pull/1456) [`f161110`](https://github.com/Frontify/brand-sdk/commit/f16111063ae7dc0c6d2204f54c8ecc081d4ec8cf) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `DocumentApiDummy` and `DocumentDummy` testing utils, cleanup types in `Document.ts`, remove `getDocumentsByDocumentGroupId` from AppBridgeBlock
+
 ## 4.0.0-alpha.51
 
 ### Minor Changes
