@@ -1,5 +1,21 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.51
+
+### Minor Changes
+
+-   [#1461](https://github.com/Frontify/brand-sdk/pull/1461) [`e4483dd`](https://github.com/Frontify/brand-sdk/commit/e4483ddf24a1d11ee4f6c6359fff2a9739f0409d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove react hooks and related events
+
+    -   `useCategorizedDocumentPages`
+    -   `useDocumentPageTargets`
+    -   `useUncategorizedDocumentPages`
+
+### Patch Changes
+
+-   [#1460](https://github.com/Frontify/brand-sdk/pull/1460) [`a396af9`](https://github.com/Frontify/brand-sdk/commit/a396af977c0ef052012328d8f182cd54422a5573) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `getDatasetByElement` and `getDatasetByClassName`
+
+-   [#1457](https://github.com/Frontify/brand-sdk/pull/1457) [`d5af57b`](https://github.com/Frontify/brand-sdk/commit/d5af57b45bd5e634506ef709e6d4a811a9728bd2) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `documentCategoryApi` type
+
 ## 4.0.0-alpha.50
 
 ### Major Changes
