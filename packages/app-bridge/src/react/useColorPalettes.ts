@@ -14,6 +14,10 @@ export type UseColorPalettesReturnType = {
     downloadColorKit: (selectedColorPalettes: number[]) => string;
 };
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this method.
+ */
 export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: number[]): UseColorPalettesReturnType => {
     const blockId = appBridge.context('blockId').get();
 
