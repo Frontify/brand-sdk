@@ -8,6 +8,7 @@ export * from './useAssetViewer';
 export * from './useBlockAssets';
 export * from './useBlockSettings';
 export * from './useBlockTemplates';
+export * from './useColorPalettes';
 export * from './useColors';
 export * from './useEditorState';
 export * from './useFileInput';
