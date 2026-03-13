@@ -90,12 +90,6 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        createColorPalette: stub<Parameters<AppBridgeBlock['createColorPalette']>>().resolves(
-            ColorPaletteDummy.with(678),
-        ),
-        updateColorPalette: stub<Parameters<AppBridgeBlock['updateColorPalette']>>().resolves(
-            ColorPaletteDummy.with(678),
-        ),
         getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
             ColorDummy.red(9834),
             ColorDummy.green(342),
@@ -111,7 +105,6 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        deleteColorPalette: stub<Parameters<AppBridgeBlock['deleteColorPalette']>>().resolves(),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
             `/api/color/export/${PROJECT_ID}/zip/500`,

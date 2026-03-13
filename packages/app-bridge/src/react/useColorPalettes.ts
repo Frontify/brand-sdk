@@ -3,14 +3,10 @@
 import { useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { type ColorPalette, type ColorPaletteCreate, type ColorPalettePatch } from '../types';
-import { compareObjects } from '../utilities';
+import { type ColorPalette } from '../types';
 
 export type UseColorPalettesReturnType = {
     colorPalettes: ColorPalette[];
-    createColorPalette: (colorPaletteCreate: ColorPaletteCreate) => void;
-    updateColorPalette: (colorPaletteId: number, colorPalettePatch: ColorPalettePatch) => void;
-    deleteColorPalette: (colorPaletteId: number) => void;
     downloadColorKit: (selectedColorPalettes: number[]) => string;
 };
 
@@ -18,16 +14,6 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
     const blockId = appBridge.context('blockId').get();
 
     const [colorPalettes, setColorPalettes] = useState<ColorPalette[]>([]);
-
-    const updateColorsPalettesFromEvent = (event: {
-        blockId: number;
-        colorPalettes: ColorPalette[];
-        prevColorPalettes: ColorPalette[];
-    }) => {
-        if (event.blockId === blockId && !compareObjects(event.colorPalettes, event.prevColorPalettes)) {
-            setColorPalettes(event.colorPalettes);
-        }
-    };
 
     useEffect(() => {
         let componentMounted = true;
@@ -40,41 +26,12 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
                 }
             };
             mountingFetch();
-
-            window.emitter.on('AppBridge:ColorPalettesUpdated', updateColorsPalettesFromEvent);
         }
 
         return () => {
             componentMounted = false;
-            window.emitter.off('AppBridge:ColorPalettesUpdated', updateColorsPalettesFromEvent);
         };
     }, [appBridge, blockId, colorPaletteIds]);
-
-    const emitUpdatedColorPalettes = async () => {
-        window.emitter.emit('AppBridge:ColorPalettesUpdated', {
-            blockId,
-            colorPalettes: await appBridge.getColorPalettesWithColors(colorPaletteIds),
-            prevColorPalettes: { ...colorPalettes },
-        });
-    };
-
-    const createColorPalette = async (colorPaletteCreate: ColorPaletteCreate) => {
-        await appBridge.createColorPalette(colorPaletteCreate);
-
-        emitUpdatedColorPalettes();
-    };
-
-    const updateColorPalette = async (colorPaletteId: number, colorPalettePatch: ColorPalettePatch) => {
-        await appBridge.updateColorPalette(colorPaletteId, colorPalettePatch);
-
-        emitUpdatedColorPalettes();
-    };
-
-    const deleteColorPalette = async (colorPaletteId: number) => {
-        await appBridge.deleteColorPalette(colorPaletteId);
-
-        emitUpdatedColorPalettes();
-    };
 
     const downloadColorKit = (selectedColorPalettes: number[]) => {
         return appBridge.downloadColorKit(selectedColorPalettes);
@@ -82,9 +39,6 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
 
     return {
         colorPalettes,
-        createColorPalette,
-        updateColorPalette,
-        deleteColorPalette,
         downloadColorKit,
     };
 };
