@@ -8,10 +8,3 @@ export type ColorPalette = {
     description: string;
     colors: Color[];
 };
-
-export type ColorPaletteCreate = {
-    name: string;
-    description?: string;
-};
-
-export type ColorPalettePatch = Partial<Omit<ColorPalette, 'id' | 'colors'>>;

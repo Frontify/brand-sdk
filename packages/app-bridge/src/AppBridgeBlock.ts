@@ -24,8 +24,6 @@ import {
     type BulkDownload,
     type Color,
     type ColorPalette,
-    type ColorPaletteCreate,
-    type ColorPalettePatch,
     type Document,
     type DocumentCategory,
     type DocumentGroup,
@@ -136,24 +134,6 @@ export interface AppBridgeBlock<
      * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
      */
     getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    createColorPalette(colorPaletteCreate: ColorPaletteCreate): Promise<ColorPalette>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    updateColorPalette(colorPaletteId: number, colorPalettePatch: ColorPalettePatch): Promise<ColorPalette>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    deleteColorPalette(colorPaletteId: number): Promise<void>;
 
     downloadColorKit(selectedColorPalettes: number[]): string;
 
