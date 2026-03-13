@@ -2,4 +2,4 @@
 "@frontify/app-bridge": patch
 ---
 
-refactor: deprecate `useColorPalette` react hook
+refactor: deprecate `createColorPalette`, `updateColorPalette`, `deleteColorPalette` from `useColorPalette` react hook
