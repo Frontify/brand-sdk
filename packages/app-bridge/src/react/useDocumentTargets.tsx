@@ -19,6 +19,10 @@ type DocumentTargetEvent = {
     };
 };
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this hook.
+ */
 export const useDocumentTargets = (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     id: number,
