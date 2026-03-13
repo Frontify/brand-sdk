@@ -82,8 +82,11 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
 
     return {
         colorPalettes,
+        /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
         createColorPalette,
+        /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
         updateColorPalette,
+        /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
         deleteColorPalette,
         downloadColorKit,
     };
