@@ -26,6 +26,12 @@ export type EmitterEvents = {
 
     'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
+    'AppBridge:ColorPalettesUpdated': {
+        blockId: number;
+        colorPalettes: ColorPalette[];
+        prevColorPalettes: ColorPalette[];
+    };
+
     'AppBridge:OpenNavigationManager': void;
 
     'AppBridge:ViewerOpened': AssetViewerOptions;
