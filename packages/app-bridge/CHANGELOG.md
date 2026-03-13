@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.53
+
+### Major Changes
+
+-   [#1469](https://github.com/Frontify/brand-sdk/pull/1469) [`721a9af`](https://github.com/Frontify/brand-sdk/commit/721a9afe624eb4801619d54f10cdf9b44588283f) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentTargets` and `useDocumentCategories`
+
 ## 4.0.0-alpha.52
 
 ### Major Changes
