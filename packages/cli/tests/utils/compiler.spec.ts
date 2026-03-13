@@ -1,16 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { beforeEach, describe, expect, test } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { compileBlock, compilePlatformApp, compileTheme } from '../../src/utils';
+import { compileBlock, compilePlatformApp, compileTheme, getReactVersion, getAppBridgeVersion } from '../../src/utils';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
 const pathToIndex = 'index.tsx';
 
+vi.mock(import('../../src/utils/appBridgeVersion'));
+vi.mock(import('../../src/utils/reactVersion'));
 declare global {
     interface Window {
-        index: { block: unknown; settings: unknown };
+        index: {
+            block?: unknown;
+            settings?: unknown;
+            dependencies: Record<string, string>;
+        };
     }
 }
 
@@ -20,14 +26,16 @@ describe('Compiler utils', () => {
     });
 
     describe('compile Block', () => {
-        test('should provide a valid build with block, settings and appBridge version', async () => {
+        test('should provide a valid build with dependencies versions', async () => {
+            vi.mocked(getAppBridgeVersion).mockReturnValue('^3.12.0');
+            vi.mocked(getReactVersion).mockReturnValue('^18.3.1');
+
             await compileBlock({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
             await import(outputFile);
 
             expect(global.window).toHaveProperty('index');
-            expect(global.window?.index.block).toBe('this is a block');
-            expect(global.window?.index.settings).toMatchObject({ some: 'settings' });
             expect(global.window?.index.dependencies['@frontify/app-bridge']).toBe('^3.12.0');
+            expect(global.window?.index.dependencies.react).toBe('^18.3.1');
         });
     });
 

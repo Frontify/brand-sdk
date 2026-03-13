@@ -19,3 +19,4 @@ export * from './gitignoreTemplate';
 export { compilePlatformApp } from './compiler/compilePlatformApp';
 export { compileBlock } from './compiler/compileBlock';
 export { compileTheme } from './compiler/compileTheme';
+export { getReactVersion } from './reactVersion';
