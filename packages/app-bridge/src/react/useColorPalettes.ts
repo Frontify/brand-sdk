@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type ColorPalette } from '../types';
-import { compareObjects } from '../utilities';
 
 export type UseColorPalettesReturnType = {
     colorPalettes: ColorPalette[];
@@ -15,16 +14,6 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
     const blockId = appBridge.context('blockId').get();
 
     const [colorPalettes, setColorPalettes] = useState<ColorPalette[]>([]);
-
-    const updateColorsPalettesFromEvent = (event: {
-        blockId: number;
-        colorPalettes: ColorPalette[];
-        prevColorPalettes: ColorPalette[];
-    }) => {
-        if (event.blockId === blockId && !compareObjects(event.colorPalettes, event.prevColorPalettes)) {
-            setColorPalettes(event.colorPalettes);
-        }
-    };
 
     useEffect(() => {
         let componentMounted = true;
@@ -37,13 +26,10 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
                 }
             };
             mountingFetch();
-
-            window.emitter.on('AppBridge:ColorPalettesUpdated', updateColorsPalettesFromEvent);
         }
 
         return () => {
             componentMounted = false;
-            window.emitter.off('AppBridge:ColorPalettesUpdated', updateColorsPalettesFromEvent);
         };
     }, [appBridge, blockId, colorPaletteIds]);
 
