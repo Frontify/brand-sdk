@@ -19,6 +19,10 @@ type Options = {
 
 const sortDocumentCategories = (a: DocumentCategory, b: DocumentCategory) => (a.sort && b.sort ? a.sort - b.sort : 0);
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * There won't be a replacement for this hook.
+ */
 export const useDocumentCategories = (
     appBridge: AppBridgeBlock | AppBridgeTheme,
     documentId: number,
