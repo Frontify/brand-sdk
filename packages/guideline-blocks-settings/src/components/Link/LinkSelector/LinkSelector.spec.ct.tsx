@@ -8,7 +8,7 @@ import {
 } from '@frontify/app-bridge';
 import { type SinonStub } from 'sinon';
 
-import { DocumentApiDummy } from 'src/testing/dummies/DocumentPageApiDummy';
+import { DocumentApiDummy } from '../../../testing/dummies/DocumentPageApiDummy';
 
 import { LinkSelector } from './LinkSelector';
 const LinkSelectorSelector = '[data-test-id="internal-link-selector"]';

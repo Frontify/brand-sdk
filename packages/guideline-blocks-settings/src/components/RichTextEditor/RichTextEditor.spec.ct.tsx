@@ -4,9 +4,8 @@ import { getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue/rte';
 import { type SinonStub } from 'sinon';
 
-import { DocumentApiDummy } from 'src/testing/dummies/DocumentPageApiDummy';
-
 import { convertToRteValue } from '../../helpers';
+import { DocumentApiDummy } from '../../testing/dummies/DocumentPageApiDummy';
 
 import {
     BreakAfterPlugin,
