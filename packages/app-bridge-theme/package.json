@@ -47,7 +47,7 @@
         "@types/react-dom": "^18.3.7",
         "@vitest/coverage-v8": "^4.1.0",
         "@vitest/ui": "^4.1.0",
-        "eslint": "^9.39.2",
+        "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
         "happy-dom": "^20.5.0",
         "prettier": "^3.7.4",

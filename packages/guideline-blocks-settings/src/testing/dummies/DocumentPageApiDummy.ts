@@ -1,7 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-/* (c) Copyright Frontify Ltd., all rights reserved. */
-
 enum LinkType {
     External = 'EXTERNAL',
     Internal = 'INTERNAL',
