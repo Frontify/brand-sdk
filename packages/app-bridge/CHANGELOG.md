@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.54
+
+### Major Changes
+
+-   [#1467](https://github.com/Frontify/brand-sdk/pull/1467) [`6a13770`](https://github.com/Frontify/brand-sdk/commit/6a137708698927af8383c9277e6f01e28f3778d7) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `createColorPalette`, `updateColorPalette`, `deleteColorPalette` and adjust `useColorPalette` react hook
+
 ## 4.0.0-alpha.53
 
 ### Major Changes
