@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue/rte';
 import { type SinonStub } from 'sinon';
+
+import { DocumentApiDummy } from 'src/testing/dummies/DocumentPageApiDummy';
 
 import { convertToRteValue } from '../../helpers';
 
