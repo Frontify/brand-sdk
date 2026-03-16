@@ -5,13 +5,11 @@ import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from '../appBridgeVersion';
-import { getReactVersion } from '../reactVersion';
 
 import { type CompilerOptions } from './compilerOptions';
 
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeVersion(projectPath);
-    const reactVersion = getReactVersion(projectPath);
     return build({
         plugins: [
             react(),
@@ -40,7 +38,6 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                                     chunk.code += `\nwindow.${outputName} = {};\n`;
                                     chunk.code += `\nwindow.${outputName}.dependencies = {};\n`;
                                     chunk.code += `window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';\n`;
-                                    chunk.code += `window.${outputName}.dependencies['react'] = '${reactVersion}';\n`;
                                 }
                             }
                         },
