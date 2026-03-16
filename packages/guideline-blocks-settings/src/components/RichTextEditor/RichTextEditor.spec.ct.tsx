@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { PluginComposer } from '@frontify/fondue/rte';
 import { type SinonStub } from 'sinon';
 
 import { convertToRteValue } from '../../helpers';
+import { DocumentApiDummy } from '../../testing/dummies/DocumentPageApiDummy';
 
 import {
     BreakAfterPlugin,
