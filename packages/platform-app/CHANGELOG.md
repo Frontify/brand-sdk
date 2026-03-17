@@ -1,5 +1,14 @@
 # @frontify/platform-app
 
+## 0.1.23
+
+### Patch Changes
+
+-   [#1475](https://github.com/Frontify/brand-sdk/pull/1475) [`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update multiple dependencies
+
+-   Updated dependencies [[`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168)]:
+    -   @frontify/sidebar-settings@0.10.10
+
 ## 0.1.22
 
 ### Patch Changes
