@@ -127,6 +127,13 @@ export const BlockInjectButton = ({
                       }
                     : undefined
             }
+            onDragOver={
+                onDrop
+                    ? (event) => {
+                          event.preventDefault();
+                      }
+                    : undefined
+            }
             onDragLeave={
                 onDrop
                     ? () => {
