@@ -1,5 +1,15 @@
 # @frontify/app-bridge
 
+## 3.12.7
+
+### Patch Changes
+
+-   [#1468](https://github.com/Frontify/brand-sdk/pull/1468) [`bfd9f79`](https://github.com/Frontify/brand-sdk/commit/bfd9f79232ea06e331f1317b230a1504b30ee150) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: deprecate `createColorPalette`, `updateColorPalette`, `deleteColorPalette` from `useColorPalette` react hook
+
+-   [#1475](https://github.com/Frontify/brand-sdk/pull/1475) [`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update multiple dependencies
+
+-   [#1470](https://github.com/Frontify/brand-sdk/pull/1470) [`1fc3632`](https://github.com/Frontify/brand-sdk/commit/1fc3632f0dc00dea3731a85414016f8663a6cfe6) Thanks [@ragi96](https://github.com/ragi96)! - chore: add deprecation notice on `useDocumentCategories` and `useDocumentTargets`
+
 ## 3.12.6
 
 ### Patch Changes
