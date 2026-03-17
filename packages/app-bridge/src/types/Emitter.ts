@@ -3,8 +3,6 @@
 import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
 import { type Asset } from './Asset';
-import { type ColorPalette } from './ColorPalette';
-import { type DocumentCategory } from './DocumentCategory';
 import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
@@ -26,45 +24,9 @@ export type EmitterEvents = {
         prevBlockTemplates: Record<string, Template[]>;
     };
 
-    'AppBridge:ColorPalettesUpdated': {
-        blockId: number;
-        colorPalettes: ColorPalette[];
-        prevColorPalettes: ColorPalette[];
-    };
-
     'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
     'AppBridge:OpenNavigationManager': void;
 
-    'AppBridge:GuidelineDocumentCategory:Action':
-        | {
-              documentCategory: DocumentCategory;
-              action: 'add' | 'update';
-          }
-        | {
-              documentCategory: { id: number; documentId: number };
-              action: 'delete';
-          };
-
-    'AppBridge:GuidelineDocumentCategory:DocumentPageAction': {
-        documentPage: { id: number; categoryId: number; documentId: number };
-        action: 'add' | 'delete';
-    };
-
-    'AppBridge:GuidelineDocumentTargets:Action': {
-        payload: {
-            targets: number[];
-            documentIds: number[];
-        };
-        action: 'update';
-    };
-
     'AppBridge:ViewerOpened': AssetViewerOptions;
-
-    'AppBridge:GuidelineDocumentCategory:MoveEvent': {
-        documentCategory: DocumentCategory | { id: number; sort?: Nullable<number> };
-        documentId: number;
-        position: number;
-        action: 'movePreview';
-    };
 };

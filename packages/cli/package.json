@@ -1,7 +1,7 @@
 {
     "name": "@frontify/frontify-cli",
     "type": "module",
-    "version": "5.10.1",
+    "version": "5.10.2",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
@@ -21,6 +21,7 @@
     "scripts": {
         "dev": "vite build --watch",
         "build": "vite build",
+        "dev": "vite build --watch",
         "format": "prettier --write .",
         "lint": "eslint .",
         "lint:fix": "eslint --fix .",
@@ -36,10 +37,10 @@
         "@vitejs/plugin-react": "^5.2.0",
         "archiver": "^7.0.1",
         "cac": "^6.7.14",
-        "conf": "^15.0.2",
-        "esbuild": "^0.27.2",
+        "conf": "^15.1.0",
+        "esbuild": "^0.27.4",
         "fast-glob": "^3.3.3",
-        "fastify": "^5.7.4",
+        "fastify": "^5.8.2",
         "glob-to-regexp": "^0.4.1",
         "node-fetch": "^3.3.2",
         "open": "^11.0.0",
@@ -56,14 +57,14 @@
         "@types/node": "^20.19.25",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.18.1",
-        "@vitest/coverage-v8": "4.0.18",
-        "@vitest/ui": "^4.0.18",
-        "eslint": "^9.39.2",
+        "@vitest/coverage-v8": "4.1.0",
+        "@vitest/ui": "^4.1.0",
+        "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
         "nock": "^13.5.6",
         "prettier": "^3.7.4",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
-        "vitest": "^4.0.18"
+        "vitest": "^4.1.0"
     }
 }

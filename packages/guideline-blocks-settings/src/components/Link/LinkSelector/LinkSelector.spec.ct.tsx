@@ -2,15 +2,15 @@
 
 import {
     type AppBridgeBlock,
-    DocumentApiDummy,
     DocumentPageApiDummy,
     DocumentSectionApiDummy,
     getAppBridgeBlockStub,
 } from '@frontify/app-bridge';
 import { type SinonStub } from 'sinon';
 
-import { LinkSelector } from './LinkSelector';
+import { DocumentApiDummy } from '../../../testing/dummies/DocumentPageApiDummy';
 
+import { LinkSelector } from './LinkSelector';
 const LinkSelectorSelector = '[data-test-id="internal-link-selector"]';
 const LinkSelectorButtonSelector = '[data-test-id="internal-link-selector"] > button';
 const LinkSelectorModalSelector = '[data-test-id="fondue-dialog-body"]';

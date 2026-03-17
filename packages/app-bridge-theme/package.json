@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge-theme",
     "type": "module",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Package to establish communication between Frontify and themes",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -45,9 +45,9 @@
         "@testing-library/react": "^16.3.2",
         "@types/react": "^18.3.27",
         "@types/react-dom": "^18.3.7",
-        "@vitest/coverage-v8": "^4.0.18",
-        "@vitest/ui": "^4.0.18",
-        "eslint": "^9.39.2",
+        "@vitest/coverage-v8": "^4.1.0",
+        "@vitest/ui": "^4.1.0",
+        "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
         "happy-dom": "^20.5.0",
         "prettier": "^3.7.4",
@@ -58,6 +58,6 @@
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
         "vite-plugin-dts": "^4.5.4",
-        "vitest": "^4.0.18"
+        "vitest": "^4.1.0"
     }
 }

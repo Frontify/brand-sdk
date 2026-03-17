@@ -24,8 +24,6 @@ import {
     type BulkDownload,
     type Color,
     type ColorPalette,
-    type ColorPaletteCreate,
-    type ColorPalettePatch,
     type Document,
     type DocumentCategory,
     type DocumentGroup,
@@ -137,24 +135,6 @@ export interface AppBridgeBlock<
      */
     getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
 
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    createColorPalette(colorPaletteCreate: ColorPaletteCreate): Promise<ColorPalette>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    updateColorPalette(colorPaletteId: number, colorPalettePatch: ColorPalettePatch): Promise<ColorPalette>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    deleteColorPalette(colorPaletteId: number): Promise<void>;
-
     downloadColorKit(selectedColorPalettes: number[]): string;
 
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
@@ -198,12 +178,6 @@ export interface AppBridgeBlock<
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
     getUngroupedDocuments(): Promise<Document[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.  But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentsByDocumentGroupId(documentGroupId: number): Promise<Document[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
