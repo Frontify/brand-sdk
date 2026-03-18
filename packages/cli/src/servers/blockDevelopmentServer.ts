@@ -6,6 +6,7 @@ import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import pkg from '../../package.json';
 import { getAppBridgeVersion } from '../utils/appBridgeVersion';
+import { getReactVersion } from '../utils/reactVersion';
 
 export class BlockDevelopmentServer {
     constructor(
@@ -19,8 +20,6 @@ export class BlockDevelopmentServer {
             const viteServer = await createServer({
                 root: process.cwd(),
                 plugins: [
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
                     react(),
                     viteExternalsPlugin({
                         react: 'React',
@@ -30,6 +29,7 @@ export class BlockDevelopmentServer {
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
                     'DevCustomBlock.dependencies.appBridge': JSON.stringify(getAppBridgeVersion(process.cwd())),
+                    'DevCustomBlock.dependencies.react': JSON.stringify(getReactVersion(process.cwd())),
                 },
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
