@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
+import { transform } from 'esbuild';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
@@ -12,6 +13,20 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
     const appBridgeVersion = getAppBridgeVersion(projectPath);
     return build({
         plugins: [
+            {
+                name: 'stub-test-modules',
+                enforce: 'pre',
+                resolveId(id) {
+                    if (id === 'sinon') {
+                        return { id: '\0stub:sinon', syntheticNamedExports: true };
+                    }
+                },
+                load(id) {
+                    if (id.startsWith('\0stub:')) {
+                        return 'export default {};';
+                    }
+                },
+            },
             react(),
             viteExternalsPlugin({
                 react: 'React',
@@ -32,14 +47,23 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                 plugins: [
                     {
                         name: 'exports-to-window',
-                        generateBundle(_, bundle) {
-                            for (const chunk of Object.values(bundle)) {
-                                if (chunk.type === 'chunk' && chunk.exports.length > 0) {
-                                    chunk.code += `\nwindow.${outputName} = {};\n`;
-                                    chunk.code += `\nwindow.${outputName}.dependencies = {};\n`;
-                                    chunk.code += `window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';\n`;
-                                }
+                        renderChunk(code, chunk) {
+                            if (chunk.exports.length > 0) {
+                                return {
+                                    code: `${code}\nwindow.${outputName} = {};\nwindow.${outputName}.dependencies = {};\nwindow.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';\n`,
+                                    map: null,
+                                };
                             }
+                            return null;
+                        },
+                    },
+                    {
+                        name: 'minify',
+                        renderChunk: {
+                            order: 'post' as const,
+                            async handler(code) {
+                                return await transform(code, { minify: true });
+                            },
                         },
                     },
                 ],
