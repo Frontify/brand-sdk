@@ -2,14 +2,7 @@
 
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 
-import {
-    compileBlock,
-    compilePlatformApp,
-    compileTheme,
-    getReactVersion,
-    getAppBridgeVersion,
-    getAppBridgeThemeVersion,
-} from '../../src/utils';
+import { compileBlock, compilePlatformApp, compileTheme } from '../../src/utils';
 
 const rootPath = `${__dirname}/../files/compile-test-files`;
 const outputFile = `${__dirname}/../files/compile-test-files/dist/index.js`;
