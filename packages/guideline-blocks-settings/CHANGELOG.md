@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.2
+
+### Patch Changes
+
+-   [#1477](https://github.com/Frontify/brand-sdk/pull/1477) [`c04449c`](https://github.com/Frontify/brand-sdk/commit/c04449c9298107e3339d74f6e58ef7ec0b0b7d13) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockInjectButton): image dropping is flaky
+
 ## 2.1.1
 
 ### Patch Changes
