@@ -1,32 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
-import { transform } from 'esbuild';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from '../appBridgeVersion';
 
 import { type CompilerOptions } from './compilerOptions';
+import { stubSinon } from './plugins/stubSinon';
 
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeVersion(projectPath);
     return build({
         plugins: [
-            {
-                name: 'stub-test-modules',
-                enforce: 'pre',
-                resolveId(id) {
-                    if (id === 'sinon') {
-                        return { id: '\0stub:sinon', syntheticNamedExports: true };
-                    }
-                },
-                load(id) {
-                    if (id.startsWith('\0stub:')) {
-                        return 'export default {};';
-                    }
-                },
-            },
+            stubSinon(),
             react(),
             viteExternalsPlugin({
                 react: 'React',
@@ -43,7 +30,8 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                 formats: ['es'],
                 fileName: () => 'index.js',
             },
-            rollupOptions: {
+            cssMinify: 'esbuild',
+            rolldownOptions: {
                 plugins: [
                     {
                         name: 'exports-to-window',
@@ -52,22 +40,17 @@ export const compileBlock = async ({ projectPath, entryFile, outputName }: Compi
                                 return {
                                     code: `${code}\nwindow.${outputName} = {};\nwindow.${outputName}.dependencies = {};\nwindow.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';\n`,
                                     map: null,
+                                    moduleType: 'js',
                                 };
                             }
                             return null;
                         },
                     },
-                    {
-                        name: 'minify',
-                        renderChunk: {
-                            order: 'post' as const,
-                            async handler(code) {
-                                return await transform(code, { minify: true });
-                            },
-                        },
-                    },
                 ],
                 external: ['react', 'react-dom'],
+                output: {
+                    minify: true,
+                },
             },
         },
     });

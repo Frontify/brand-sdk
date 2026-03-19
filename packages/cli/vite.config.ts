@@ -14,19 +14,17 @@ export default defineConfig({
         target: 'node18',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
+            formats: ['es'],
             fileName: () => '[name].mjs',
-            name: 'FrontifyCli',
         },
         sourcemap: true,
         minify: true,
-        rollupOptions: {
+        rolldownOptions: {
             external: [...dependencies, ...builtinModules, ...builtinModules.map((m) => `node:${m}`)],
-            output: [
-                {
-                    format: 'es',
-                    banner: '#!/usr/bin/env node\n',
-                },
-            ],
+            output: {
+                format: 'es',
+                banner: '#!/usr/bin/env node\n',
+            },
         },
     },
     test: {

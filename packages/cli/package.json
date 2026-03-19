@@ -19,7 +19,6 @@
         "node": ">=18"
     },
     "scripts": {
-        "dev": "vite build --watch",
         "build": "vite build",
         "dev": "vite build --watch",
         "format": "prettier --write .",
@@ -34,7 +33,7 @@
     },
     "dependencies": {
         "@fastify/cors": "^11.2.0",
-        "@vitejs/plugin-react": "^5.2.0",
+        "@vitejs/plugin-react": "^6.0.1",
         "archiver": "^7.0.1",
         "cac": "^6.7.14",
         "conf": "^15.1.0",
@@ -46,7 +45,7 @@
         "open": "^11.0.0",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^7.3.1",
+        "vite": "^8.0.1",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"
     },
