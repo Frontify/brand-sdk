@@ -121,12 +121,6 @@ export interface AppBridgeBlock<
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
      * There won't be a replacement for this method.
      */
-    getColorsByIds(colorIds: number[]): Promise<Color[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
     getColors(): Promise<Color[]>;
 
     /**
