@@ -22,8 +22,6 @@ import { type EventRegistry } from './registries/events/EventRegistry';
 import {
     type Asset,
     type BulkDownload,
-    type Color,
-    type ColorPalette,
     type Document,
     type DocumentCategory,
     type DocumentGroup,
@@ -117,18 +115,6 @@ export interface AppBridgeBlock<
 
     getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    getColors(): Promise<Color[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
-     */
-    getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
-
     downloadColorKit(selectedColorPalettes: number[]): string;
 
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
@@ -148,18 +134,6 @@ export interface AppBridgeBlock<
     getEditorState(): boolean;
 
     getTranslationLanguage(): string;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But there will a new api to grab all colors and palettes.
-     */
-    getColorPalettes(): Promise<ColorPalette[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But there will a new api to grab all colors and palettes.
-     */
-    getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
