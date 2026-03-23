@@ -28,9 +28,7 @@ import {
     type DocumentCategory,
     type DocumentGroup,
     type DocumentPage,
-    type DocumentPageTargets,
     type DocumentSection,
-    type DocumentTargets,
     type Template,
     type TemplateLegacy,
     type User,
@@ -202,16 +200,4 @@ export interface AppBridgeBlock<
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
     getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentTargets(documentId: number): Promise<DocumentTargets>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 }

@@ -282,8 +282,6 @@ export const getAppBridgeBlockStub = ({
                 }),
             ]),
         ),
-        getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
-        getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
