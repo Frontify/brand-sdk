@@ -12,8 +12,6 @@ import { type PrivacySettings } from '../types/PrivacySettings';
 
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
-import { ColorDummy } from './ColorDummy';
-import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { DocumentCategoryDummy } from './DocumentCategoryDummy';
 import { DocumentPageDummy } from './DocumentPageDummy';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
@@ -85,21 +83,6 @@ export const getAppBridgeBlockStub = ({
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
-        getColorPalettes: stub<Parameters<AppBridgeBlock['getColorPalettes']>>().resolves([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]),
-        getColorsByColorPaletteId: stub<Parameters<AppBridgeBlock['getColorsByColorPaletteId']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
-        ]),
-        getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
             `/api/color/export/${PROJECT_ID}/zip/500`,
@@ -153,11 +136,6 @@ export const getAppBridgeBlockStub = ({
             deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
         }),
         getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
-        getColors: stub<Parameters<AppBridgeBlock['getColors']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
-        ]),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
         ),
