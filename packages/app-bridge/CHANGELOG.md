@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.56
+
+### Minor Changes
+
+-   [#1484](https://github.com/Frontify/brand-sdk/pull/1484) [`bfb6128`](https://github.com/Frontify/brand-sdk/commit/bfb6128ef7add1752f7195259f2051ec6478dc10) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove color related methods: `getColors`, `getColorPalettesWithColors`, `getColorPalettes`, `getColorsByColorPaletteId` and react hooks: `useColors`, `useColorPalettes`
+
+-   [#1488](https://github.com/Frontify/brand-sdk/pull/1488) [`83366ff`](https://github.com/Frontify/brand-sdk/commit/83366ffbc1b0887bb929300be82cdb889bad38b4) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(DocumentTargets): remove already deprecated `getDocumentTargets` and `getDocumentPageTargets`
+
 ## 4.0.0-alpha.55
 
 ### Minor Changes
