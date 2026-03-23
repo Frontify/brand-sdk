@@ -28,9 +28,6 @@ const DOCUMENT_PAGE_ID_1 = 23442;
 const DOCUMENT_PAGE_ID_2 = 235345;
 const DOCUMENT_PAGE_ID_3 = 12352;
 const DOCUMENT_PAGE_ID_4 = 55221;
-const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
-const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
-const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
 const DOCUMENT_CATEGORY_ID_1 = 147;
 const DOCUMENT_CATEGORY_ID_2 = 258;
 const DOCUMENT_CATEGORY_ID_3 = 369;
@@ -234,30 +231,6 @@ export const getAppBridgeBlockStub = ({
                 DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, documentId, 2),
                 DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, documentId, 0),
                 DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, documentId, 2),
-            ]),
-        ),
-        getUncategorizedDocumentPagesByDocumentId: stub<
-            Parameters<AppBridgeBlock['getUncategorizedDocumentPagesByDocumentId']>
-        >().callsFake((documentId) =>
-            Promise.resolve([
-                DocumentPageDummy.withFields({
-                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
-                    documentId,
-                    categoryId: null,
-                    sort: 1,
-                }),
-                DocumentPageDummy.withFields({
-                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
-                    documentId,
-                    categoryId: null,
-                    sort: 2,
-                }),
-                DocumentPageDummy.withFields({
-                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
-                    documentId,
-                    categoryId: null,
-                    sort: 3,
-                }),
             ]),
         ),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
