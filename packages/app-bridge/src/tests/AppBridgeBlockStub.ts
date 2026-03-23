@@ -242,7 +242,6 @@ export const getAppBridgeBlockStub = ({
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
-        getUngroupedDocuments: stub<Parameters<AppBridgeBlock['getUngroupedDocuments']>>().resolves(),
         getDocumentGroups: stub<Parameters<AppBridgeBlock['getDocumentGroups']>>().resolves(),
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
         getDocumentPagesByDocumentCategoryId: stub<
