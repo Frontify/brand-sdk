@@ -23,7 +23,6 @@ import {
     type Asset,
     type BulkDownload,
     type Document,
-    type DocumentCategory,
     type DocumentPage,
     type DocumentSection,
     type Template,
@@ -154,7 +153,6 @@ export interface AppBridgeBlock<
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
-    getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`

@@ -12,7 +12,6 @@ import { type PrivacySettings } from '../types/PrivacySettings';
 
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
-import { DocumentCategoryDummy } from './DocumentCategoryDummy';
 import { DocumentPageDummy } from './DocumentPageDummy';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
@@ -28,9 +27,6 @@ const DOCUMENT_PAGE_ID_1 = 23442;
 const DOCUMENT_PAGE_ID_2 = 235345;
 const DOCUMENT_PAGE_ID_3 = 12352;
 const DOCUMENT_PAGE_ID_4 = 55221;
-const DOCUMENT_CATEGORY_ID_1 = 147;
-const DOCUMENT_CATEGORY_ID_2 = 258;
-const DOCUMENT_CATEGORY_ID_3 = 369;
 
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
@@ -221,15 +217,6 @@ export const getAppBridgeBlockStub = ({
                 DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: documentCategoryId, sort: 2 }),
                 DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: documentCategoryId, sort: 3 }),
                 DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: documentCategoryId, sort: 4 }),
-            ]),
-        ),
-        getDocumentCategoriesByDocumentId: stub<
-            Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>
-        >().callsFake((documentId) =>
-            Promise.resolve([
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, documentId, 2),
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, documentId, 0),
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, documentId, 2),
             ]),
         ),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
