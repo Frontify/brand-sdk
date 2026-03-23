@@ -90,11 +90,6 @@ export const getAppBridgeBlockStub = ({
             ColorPaletteDummy.with(427, 'Palette 2'),
             ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
-        getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
-        ]),
         getColorsByColorPaletteId: stub<Parameters<AppBridgeBlock['getColorsByColorPaletteId']>>().resolves([
             ColorDummy.red(9834),
             ColorDummy.green(342),
