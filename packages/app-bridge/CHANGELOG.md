@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.59
+
+### Patch Changes
+
+-   [#1500](https://github.com/Frontify/brand-sdk/pull/1500) [`a26580a`](https://github.com/Frontify/brand-sdk/commit/a26580a354c3f30970c629c965c1c347fb236e72) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Emitter): remove unused type `EmitterAction`
+
+-   [#1501](https://github.com/Frontify/brand-sdk/pull/1501) [`ec4cb08`](https://github.com/Frontify/brand-sdk/commit/ec4cb0845273b55d69061fecc06e39963da56f68) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentGroup` type and `DocumentGroupDummy`
+
 ## 4.0.0-alpha.58
 
 ### Minor Changes
