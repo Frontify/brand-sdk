@@ -6,7 +6,6 @@ export * from './Color';
 export * from './ColorPalette';
 export * from './DispatchHandler';
 export * from './Document';
-export * from './DocumentCategory';
 export * from './DocumentGroup';
 export * from './DocumentPage';
 export * from './DocumentSection';
