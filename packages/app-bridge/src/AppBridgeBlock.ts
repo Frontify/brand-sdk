@@ -147,11 +147,5 @@ export interface AppBridgeBlock<
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
-    getDocumentPagesByDocumentCategoryId(documentCategoryId: number): Promise<DocumentPage[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
     getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
 }
