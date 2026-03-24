@@ -1,5 +1,17 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.4
+
+### Patch Changes
+
+-   [#1495](https://github.com/Frontify/brand-sdk/pull/1495) [`0fcd332`](https://github.com/Frontify/brand-sdk/commit/0fcd3323a201b342c3636b9cdee0a5cf4c4d1d9a) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(\*): update fondue to 13.3.2
+
+## 2.1.3
+
+### Patch Changes
+
+-   [#1479](https://github.com/Frontify/brand-sdk/pull/1479) [`d5fe2a5`](https://github.com/Frontify/brand-sdk/commit/d5fe2a5f08346511b0f7d62d7211a670bab8e85e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(OrderedListPlugin): css var naming is wrong
+
 ## 2.1.2
 
 ### Patch Changes
