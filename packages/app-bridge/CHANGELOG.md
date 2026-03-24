@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.57
+
+### Minor Changes
+
+-   [#1492](https://github.com/Frontify/brand-sdk/pull/1492) [`c137c46`](https://github.com/Frontify/brand-sdk/commit/c137c46a3ea8181e187b6562a1b7aa94be4c5b95) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(AppBridge): remove already deprecated `getUncategorizedDocumentPagesByDocumentId`
+
 ## 4.0.0-alpha.56
 
 ### Minor Changes
