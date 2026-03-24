@@ -8,8 +8,6 @@ export * from './AssetDummy';
 export * from './BulkDownloadDummy';
 export * from './ColorDummy';
 export * from './ColorPaletteDummy';
-export * from './DocumentPageApiDummy';
-export * from './DocumentPageDummy';
 export * from './DocumentSectionApiDummy';
 export * from './DocumentSectionDummy';
 export * from './HttpUtilResponseDummy';
