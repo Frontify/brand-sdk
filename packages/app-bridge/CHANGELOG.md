@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.58
+
+### Minor Changes
+
+-   [#1494](https://github.com/Frontify/brand-sdk/pull/1494) [`b1d4454`](https://github.com/Frontify/brand-sdk/commit/b1d44547b541cd9ace1bd3907c05f1bedf598fa8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated method `getDocumentCategoriesByDocumentId`
+
+-   [#1490](https://github.com/Frontify/brand-sdk/pull/1490) [`1c377db`](https://github.com/Frontify/brand-sdk/commit/1c377db7721254cc34feee4d284717fe9f12a1c1) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated method `getDocumentGroups`
+
 ## 4.0.0-alpha.57
 
 ### Minor Changes
