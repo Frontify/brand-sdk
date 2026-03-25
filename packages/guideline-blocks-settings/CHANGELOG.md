@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.5
+
+### Patch Changes
+
+-   [#1509](https://github.com/Frontify/brand-sdk/pull/1509) [`95f76e6`](https://github.com/Frontify/brand-sdk/commit/95f76e664a5dfd274ba87c359094df6d51cc9343) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix: missing dummy util
+
 ## 2.1.4
 
 ### Patch Changes
