@@ -25,6 +25,7 @@ jobs:
 
   lint-typecheck:
     needs: changes
+    if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -35,46 +36,38 @@ jobs:
 
     steps:
       - name: Checkout default branch
-        if: needs.changes.outputs.should_run == 'true'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Use pnpm
-        if: needs.changes.outputs.should_run == 'true'
         uses: pnpm/action-setup@v3
         with:
           run_install: false
 
       - name: Use Node.js
-        if: needs.changes.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
 
       - name: Install npm dependencies
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm i --frozen-lockfile
 
       - name: Build build:sidebar-settings
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm build:sidebar-settings
 
       - name: Build @frontify/app-bridge-theme (if workspace)
-        if: needs.changes.outputs.should_run == 'true' && matrix.app-bridge-theme-version == 'workspace:^'
+        if: matrix.app-bridge-theme-version == 'workspace:^'
         run: pnpm build:app-bridge-theme
 
       - name: Add app-bridge-theme dependency
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm add @frontify/app-bridge-theme@${{ matrix.app-bridge-theme-version }} --filter {packages/guideline-themes}
 
       - name: Typecheck code
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm --stream --filter {packages/guideline-themes} typecheck
 
       - name: Lint code
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm --stream --filter {packages/guideline-themes} lint
 
   unit-tests:
