@@ -14,3 +14,4 @@ export * from './useFileUpload';
 export * from './usePrivacySettings';
 export * from './useReadyForPrint';
 export * from './useTemplateChooser';
+export * from './useColorPalettes';

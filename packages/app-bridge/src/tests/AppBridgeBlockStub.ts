@@ -12,6 +12,7 @@ import { type PrivacySettings } from '../types/PrivacySettings';
 
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
+import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
@@ -196,6 +197,11 @@ export const getAppBridgeBlockStub = ({
             DocumentSectionApiDummy.withFields({ id: 2, title: 'Title' }),
             DocumentSectionApiDummy.withFields({ id: 3, title: '  ' }),
             DocumentSectionApiDummy.withFields({ id: 4, title: '' }),
+        ]),
+        getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
+            ColorPaletteDummy.with(678, 'Palette 1'),
+            ColorPaletteDummy.with(427, 'Palette 2'),
+            ColorPaletteDummy.with(679, 'Palette 3'),
         ]),
 
         // TODO: Stub the following methods
