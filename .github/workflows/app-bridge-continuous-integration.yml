@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         timeout-minutes: 5
         outputs:
-            should_run: ${{ steps.filter.outputs.app-bridge }}
+            should_run: ${{ steps.filter.outputs['app-bridge'] }}
         steps:
             - uses: actions/checkout@v4
             - uses: dorny/paths-filter@v3

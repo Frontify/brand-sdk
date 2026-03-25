@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
-      should_run: ${{ steps.filter.outputs.guideline-themes }}
+      should_run: ${{ steps.filter.outputs['guideline-themes'] }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -79,35 +79,30 @@ jobs:
 
   unit-tests:
     needs: changes
+    if: needs.changes.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
       - name: Checkout current commit
-        if: needs.changes.outputs.should_run == 'true'
         uses: actions/checkout@v4
 
       - name: Use pnpm
-        if: needs.changes.outputs.should_run == 'true'
         uses: pnpm/action-setup@v3
         with:
           run_install: false
 
       - name: Use Node.js
-        if: needs.changes.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
 
       - name: Install dependencies
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build build:sidebar-settings
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm build:sidebar-settings
 
       - name: Tests
-        if: needs.changes.outputs.should_run == 'true'
         run: pnpm --stream --filter {packages/guideline-themes} test
