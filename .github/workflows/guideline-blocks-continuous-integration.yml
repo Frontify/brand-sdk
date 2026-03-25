@@ -2,8 +2,6 @@ name: Guideline Blocks CI
 
 on:
   pull_request:
-    paths:
-      - packages/guideline-blocks-settings/**
 
 # Ensures that only one workflow per branch will run at a time.
 concurrency:
@@ -11,7 +9,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      should_run: ${{ steps.filter.outputs.guideline-blocks }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            guideline-blocks:
+              - 'packages/guideline-blocks-settings/**'
+
   lint-typecheck:
+    needs: changes
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -23,41 +36,50 @@ jobs:
 
     steps:
       - name: Checkout default branch
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Use pnpm
+        if: needs.changes.outputs.should_run == 'true'
         uses: pnpm/action-setup@v3
         with:
           run_install: false
 
       - name: Use Node.js
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
 
       - name: Install npm dependencies
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm i --frozen-lockfile
 
       - name: Build build:sidebar-settings
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm build:sidebar-settings
 
       - name: Build @frontify/app-bridge (if workspace)
-        if: matrix.app-bridge-version == 'workspace:^'
+        if: needs.changes.outputs.should_run == 'true' && matrix.app-bridge-version == 'workspace:^'
         run: pnpm build:app-bridge
 
       - name: Add app-bridge dependency
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
       - name: Typecheck code
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm --stream --filter {packages/guideline-blocks-settings} typecheck
 
       - name: Lint code
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm --stream --filter {packages/guideline-blocks-settings} lint
 
   unit-tests:
+    needs: changes
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -69,23 +91,28 @@ jobs:
 
     steps:
       - name: Checkout current commit
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/checkout@v4
 
       - name: Use Node.js
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
       - name: Use pnpm
+        if: needs.changes.outputs.should_run == 'true'
         uses: pnpm/action-setup@v3
         with:
           run_install: false
 
       - name: Get pnpm store directory
+        if: needs.changes.outputs.should_run == 'true'
         id: pnpm-cache
         run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/cache@v4
         with:
           path: |
@@ -94,49 +121,59 @@ jobs:
           restore-keys: pnpm-with-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
       - name: Install dependencies
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build build:sidebar-settings
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm build:sidebar-settings
 
       - name: Build @frontify/app-bridge (if workspace)
-        if: matrix.app-bridge-version == 'workspace:^'
+        if: needs.changes.outputs.should_run == 'true' && matrix.app-bridge-version == 'workspace:^'
         run: pnpm build:app-bridge
 
       - name: Add app-bridge dependency
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
       - name: Unit Tests
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm --stream --filter {packages/guideline-blocks-settings} test
 
   component-tests:
+    needs: changes
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     strategy:
       fail-fast: false
       matrix:
-        app-bridge-version: ["3.0.0", "workspace:^", "4.0.0-alpha.0"]
+        app-bridge-version: ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
 
     steps:
       - name: Checkout current commit
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/checkout@v4
 
       - name: Use Node.js
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
       - name: Use pnpm
+        if: needs.changes.outputs.should_run == 'true'
         uses: pnpm/action-setup@v3
         with:
           run_install: false
 
       - name: Get pnpm store directory
+        if: needs.changes.outputs.should_run == 'true'
         id: pnpm-cache
         run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - name: Setup pnpm cache
+        if: needs.changes.outputs.should_run == 'true'
         uses: actions/cache@v4
         with:
           path: |
@@ -146,17 +183,21 @@ jobs:
           restore-keys: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
       - name: Install dependencies
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: Build build:sidebar-settings
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm build:sidebar-settings
 
       - name: Build @frontify/app-bridge (if workspace)
-        if: matrix.app-bridge-version == 'workspace:^'
+        if: needs.changes.outputs.should_run == 'true' && matrix.app-bridge-version == 'workspace:^'
         run: pnpm build:app-bridge
 
       - name: Add app-bridge dependency
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
       - name: Component Tests
+        if: needs.changes.outputs.should_run == 'true'
         run: pnpm test:components
