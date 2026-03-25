@@ -20,6 +20,7 @@ import { type ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
 import {
+    type ColorPalette,
     type Asset,
     type BulkDownload,
     type Document,
@@ -130,6 +131,12 @@ export interface AppBridgeBlock<
     getEditorState(): boolean;
 
     getTranslationLanguage(): string;
+
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
+     */
+    getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
