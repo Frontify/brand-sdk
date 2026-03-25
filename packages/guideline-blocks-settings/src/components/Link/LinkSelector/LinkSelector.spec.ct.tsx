@@ -1,14 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    type AppBridgeBlock,
-    DocumentPageApiDummy,
-    DocumentSectionApiDummy,
-    getAppBridgeBlockStub,
-} from '@frontify/app-bridge';
+import { type AppBridgeBlock, DocumentSectionApiDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
 import { type SinonStub } from 'sinon';
 
-import { DocumentApiDummy } from '../../../testing/dummies/DocumentPageApiDummy';
+import { DocumentApiDummy, DocumentPageApiDummy } from '../../../testing/dummies/DocumentPageApiDummy';
 
 import { LinkSelector } from './LinkSelector';
 const LinkSelectorSelector = '[data-test-id="internal-link-selector"]';
