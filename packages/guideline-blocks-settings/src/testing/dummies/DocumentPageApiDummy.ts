@@ -140,7 +140,7 @@ export class DocumentPageApiDummy {
             visibility: DocumentPageVisibility.Everyone,
             targets: null,
             permanent_link: `/r/document-page-${id}`,
-        };
+        } as DocumentPageApi;
     }
 
     static withFields(fields: Partial<DocumentPageApi> & { id: number }): DocumentPageApi {
