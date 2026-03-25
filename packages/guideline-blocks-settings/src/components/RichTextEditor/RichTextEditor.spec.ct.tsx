@@ -85,7 +85,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should be able to select internal link', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -108,7 +107,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should be able to select internal link with target blank', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -132,7 +130,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should prepend the URL with https:// if not exists', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -151,7 +148,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should allow URLs that start with /document/', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -171,7 +167,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should not add https:// to the URL for mailto: links', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -190,7 +185,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should create a link with a link typed in the RTE', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -202,7 +196,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should not create a link with a : after a word', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -214,7 +207,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should allow URLs that start with /document/', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -233,7 +225,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should be able to select internal button link', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -254,7 +245,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should render responsive columns in edit mode', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -270,7 +260,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should render responsive columns in view mode', () => {
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(

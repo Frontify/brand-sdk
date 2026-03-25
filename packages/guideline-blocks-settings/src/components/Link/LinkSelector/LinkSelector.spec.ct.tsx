@@ -54,7 +54,6 @@ describe('Link Selector', () => {
             blockId: 1,
         });
         const apiDocuments = [DocumentApiDummy.with(1)];
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -74,7 +73,6 @@ describe('Link Selector', () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
 
         cy.mount(
@@ -95,7 +93,6 @@ describe('Link Selector', () => {
             blockId: 1,
         });
 
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
@@ -118,7 +115,6 @@ describe('Link Selector', () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
@@ -142,7 +138,6 @@ describe('Link Selector', () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
 
@@ -171,7 +166,6 @@ describe('Link Selector', () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));
@@ -194,7 +188,6 @@ describe('Link Selector', () => {
         const appBridge = getAppBridgeBlockStub({
             blockId: 1,
         });
-        (appBridge.getDocumentGroups as SinonStub) = cy.stub().returns([]);
         (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
         (appBridge.getDocumentPagesByDocumentId as SinonStub) = cy.stub().returns(Promise.resolve(apiPages));
         (appBridge.getDocumentSectionsByDocumentPageId as SinonStub) = cy.stub().returns(Promise.resolve(apiSections));

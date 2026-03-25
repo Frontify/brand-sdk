@@ -140,13 +140,6 @@ export class DocumentPageApiDummy {
             visibility: DocumentPageVisibility.Everyone,
             targets: null,
             permanent_link: `/r/document-page-${id}`,
-            change_processed: false,
-            change_processed_by: null,
-            change_skipped: false,
-            change_skipped_by: null,
-            change_comment: null,
-            change_comment_by: null,
-            change_title: null,
         };
     }
 
