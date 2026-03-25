@@ -2,8 +2,6 @@ name: App Bridge CI
 
 on:
     pull_request:
-        paths:
-            - packages/app-bridge/**
 
 # Ensures that only one workflow per branch will run at a time.
 concurrency:
@@ -11,7 +9,23 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
+    changes:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        outputs:
+            should_run: ${{ steps.filter.outputs['app-bridge'] }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: dorny/paths-filter@v3
+              id: filter
+              with:
+                  filters: |
+                      app-bridge:
+                        - 'packages/app-bridge/**'
+
     app-bridge-ci:
+        needs: changes
+        if: needs.changes.outputs.should_run == 'true'
         runs-on: ubuntu-latest
         timeout-minutes: 10
 
@@ -54,6 +68,8 @@ jobs:
                   projectBaseDir: ./packages/app-bridge
 
     guideline-blocks-settings-ci:
+        needs: changes
+        if: needs.changes.outputs.should_run == 'true'
         name: Guideline Blocks Settings CI (for checking compatibility with app-bridge)
         runs-on: ubuntu-latest
         timeout-minutes: 10
