@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.61
+
+### Minor Changes
+
+-   [#1506](https://github.com/Frontify/brand-sdk/pull/1506) [`eac1c51`](https://github.com/Frontify/brand-sdk/commit/eac1c514b74a7fa4de90f47dc7c18dd787081378) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat: add back `useColorPalettes` react hook
+
 ## 4.0.0-alpha.60
 
 ### Minor Changes
