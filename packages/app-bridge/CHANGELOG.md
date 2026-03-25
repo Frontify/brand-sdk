@@ -1,5 +1,11 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.60
+
+### Minor Changes
+
+-   [#1503](https://github.com/Frontify/brand-sdk/pull/1503) [`a183353`](https://github.com/Frontify/brand-sdk/commit/a183353c21dba983b3334963956973208136660e) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated method `getDocumentPagesByDocumentCategoryId`
+
 ## 4.0.0-alpha.59
 
 ### Patch Changes
