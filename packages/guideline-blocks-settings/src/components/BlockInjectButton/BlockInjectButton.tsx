@@ -70,7 +70,7 @@ export const BlockInjectButton = ({
         callback();
         setMenuPosition(undefined);
     }, []);
-
+    console.log('Hello');
     const menuItems = useMemo(() => {
         const items = [];
         if (onUploadClick) {
