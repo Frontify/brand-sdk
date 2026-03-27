@@ -13,7 +13,6 @@ export class DocumentApiDummy {
             project_id: 345,
             valid_from: '2022-03-03t15:41:33.000+00:00',
             valid_to: null,
-            visibility: 'private',
             portal_id: 3495,
             title: `Document ${id}`,
             slug: `document-${id}`,
