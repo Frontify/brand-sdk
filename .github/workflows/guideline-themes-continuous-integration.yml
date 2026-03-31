@@ -15,7 +15,7 @@ jobs:
     outputs:
       should_run: ${{ steps.filter.outputs['guideline-themes'] }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dorny/paths-filter@v3
         id: filter
         with:
@@ -36,13 +36,13 @@ jobs:
     steps:
       - name: Checkout default branch
         if: needs.changes.outputs.should_run == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Use pnpm
         if: needs.changes.outputs.should_run == 'true'
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v5
         with:
           run_install: false
 
@@ -85,10 +85,10 @@ jobs:
 
     steps:
       - name: Checkout current commit
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Use pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v5
         with:
           run_install: false
 
