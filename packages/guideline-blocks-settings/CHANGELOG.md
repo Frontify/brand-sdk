@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.6
+
+### Patch Changes
+
+-   [#1512](https://github.com/Frontify/brand-sdk/pull/1512) [`3210aab`](https://github.com/Frontify/brand-sdk/commit/3210aab12ba69789fec5bc2ce4bb6ec2528dd31e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Buttons): remove custom styles and use fondue
+
 ## 2.1.5
 
 ### Patch Changes
