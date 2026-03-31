@@ -7,8 +7,6 @@ import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
 
-export type EmitterAction = 'add' | 'update' | 'delete';
-
 export type EmitterEvents = {
     'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
 

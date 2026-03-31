@@ -12,10 +12,7 @@ import { type PrivacySettings } from '../types/PrivacySettings';
 
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
-import { ColorDummy } from './ColorDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
-import { DocumentCategoryDummy } from './DocumentCategoryDummy';
-import { DocumentPageDummy } from './DocumentPageDummy';
 import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
@@ -25,17 +22,6 @@ const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
-
-const DOCUMENT_PAGE_ID_1 = 23442;
-const DOCUMENT_PAGE_ID_2 = 235345;
-const DOCUMENT_PAGE_ID_3 = 12352;
-const DOCUMENT_PAGE_ID_4 = 55221;
-const UNCATEGORIZED_DOCUMENT_PAGE_ID_1 = 24324;
-const UNCATEGORIZED_DOCUMENT_PAGE_ID_2 = 3532;
-const UNCATEGORIZED_DOCUMENT_PAGE_ID_3 = 98954;
-const DOCUMENT_CATEGORY_ID_1 = 147;
-const DOCUMENT_CATEGORY_ID_2 = 258;
-const DOCUMENT_CATEGORY_ID_3 = 369;
 
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
@@ -85,26 +71,6 @@ export const getAppBridgeBlockStub = ({
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
-        getColorPalettes: stub<Parameters<AppBridgeBlock['getColorPalettes']>>().resolves([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]),
-        getColorsByIds: stub<Parameters<AppBridgeBlock['getColorsByIds']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
-        ]),
-        getColorsByColorPaletteId: stub<Parameters<AppBridgeBlock['getColorsByColorPaletteId']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
-        ]),
-        getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
             `/api/color/export/${PROJECT_ID}/zip/500`,
@@ -158,11 +124,6 @@ export const getAppBridgeBlockStub = ({
             deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
         }),
         getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
-        getColors: stub<Parameters<AppBridgeBlock['getColors']>>().resolves([
-            ColorDummy.red(9834),
-            ColorDummy.green(342),
-            ColorDummy.yellow(9314),
-        ]),
         getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
             BulkDownloadDummy.default(),
         ),
@@ -237,59 +198,17 @@ export const getAppBridgeBlockStub = ({
             DocumentSectionApiDummy.withFields({ id: 3, title: '  ' }),
             DocumentSectionApiDummy.withFields({ id: 4, title: '' }),
         ]),
+        getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
+            ColorPaletteDummy.with(678, 'Palette 1'),
+            ColorPaletteDummy.with(427, 'Palette 2'),
+            ColorPaletteDummy.with(679, 'Palette 3'),
+        ]),
 
         // TODO: Stub the following methods
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
-        getUngroupedDocuments: stub<Parameters<AppBridgeBlock['getUngroupedDocuments']>>().resolves(),
-        getDocumentGroups: stub<Parameters<AppBridgeBlock['getDocumentGroups']>>().resolves(),
         getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
-        getDocumentPagesByDocumentCategoryId: stub<
-            Parameters<AppBridgeBlock['getDocumentPagesByDocumentCategoryId']>
-        >().callsFake((documentCategoryId) =>
-            Promise.resolve([
-                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_1, categoryId: documentCategoryId, sort: 1 }),
-                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_2, categoryId: documentCategoryId, sort: 2 }),
-                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_3, categoryId: documentCategoryId, sort: 3 }),
-                DocumentPageDummy.withFields({ id: DOCUMENT_PAGE_ID_4, categoryId: documentCategoryId, sort: 4 }),
-            ]),
-        ),
-        getDocumentCategoriesByDocumentId: stub<
-            Parameters<AppBridgeBlock['getDocumentCategoriesByDocumentId']>
-        >().callsFake((documentId) =>
-            Promise.resolve([
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_1, documentId, 2),
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_2, documentId, 0),
-                DocumentCategoryDummy.withDocumentIdAndNumberOfDocumentPages(DOCUMENT_CATEGORY_ID_3, documentId, 2),
-            ]),
-        ),
-        getUncategorizedDocumentPagesByDocumentId: stub<
-            Parameters<AppBridgeBlock['getUncategorizedDocumentPagesByDocumentId']>
-        >().callsFake((documentId) =>
-            Promise.resolve([
-                DocumentPageDummy.withFields({
-                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_1,
-                    documentId,
-                    categoryId: null,
-                    sort: 1,
-                }),
-                DocumentPageDummy.withFields({
-                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_2,
-                    documentId,
-                    categoryId: null,
-                    sort: 2,
-                }),
-                DocumentPageDummy.withFields({
-                    id: UNCATEGORIZED_DOCUMENT_PAGE_ID_3,
-                    documentId,
-                    categoryId: null,
-                    sort: 3,
-                }),
-            ]),
-        ),
-        getDocumentTargets: stub<Parameters<AppBridgeBlock['getDocumentTargets']>>().resolves(),
-        getDocumentPageTargets: stub<Parameters<AppBridgeBlock['getDocumentPageTargets']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
