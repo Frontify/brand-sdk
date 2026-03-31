@@ -1,5 +1,26 @@
 # @frontify/frontify-cli
 
+## 6.0.0-alpha.0
+
+### Major Changes
+
+-   [#1482](https://github.com/Frontify/brand-sdk/pull/1482) [`db8c298`](https://github.com/Frontify/brand-sdk/commit/db8c298546a1b2429df799ed1ee7599efb3bf357) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: support React 19
+
+    The CLI now supports React 19 to stay up-to-date with the React ecosystem and provide better performance and modern features.
+    Consumers can from now on update their block / theme to React 19.
+
+-   [#1482](https://github.com/Frontify/brand-sdk/pull/1482) [`db8c298`](https://github.com/Frontify/brand-sdk/commit/db8c298546a1b2429df799ed1ee7599efb3bf357) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update required node to 22
+
+    The minimum required Node.js version has been bumped from 18 to 22.
+    Node.js 18 is reaching its end-of-life. Node 22 is the current Active LTS release.
+    Consumers must update their local development environments and CI/CD pipelines to use Node.js version 22 or higher.
+
+-   [#1482](https://github.com/Frontify/brand-sdk/pull/1482) [`db8c298`](https://github.com/Frontify/brand-sdk/commit/db8c298546a1b2429df799ed1ee7599efb3bf357) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: build blocks / themes as ESM packages
+
+    Custom blocks and themes are now compiled and output as ECMAScript Modules (ESM) instead of relying on global window variables.
+    ESM is the modern standard for JavaScript, offering better interoperability, tree-shaking and compatibility with modern bundlers.
+    Consumers don't need to do anything to migrate to ESM, but they should be aware of the changes.
+
 ## 5.10.2
 
 ### Patch Changes
