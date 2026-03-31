@@ -131,12 +131,17 @@ export const createDeployment = async (
                 return fastGlob.convertPathToPattern(`${projectPath}/${path}`);
             });
 
+            const packageJsonContent = reactiveJson<{ dependencies?: Record<string, string> }>(
+                join(projectPath, 'package.json'),
+            );
+
             const request = {
                 build_files: await makeFilesDict(
                     fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
                     buildFilesToIgnore,
                 ),
                 source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
+                dependencies: packageJsonContent?.dependencies || {},
             };
 
             if (!dryRun) {

@@ -2,10 +2,10 @@
 
 import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import pkg from '../../package.json';
-import { getAppBridgeThemeVersion } from '../utils/appBridgeThemeVersion';
+import { getAppBridgeThemeVersion, getReactVersion } from '../utils/getPackageVersion';
+import { reactBareExternalPlugin } from '../utils/vitePlugins';
 
 export class ThemeDevelopmentServer {
     constructor(
@@ -16,22 +16,19 @@ export class ThemeDevelopmentServer {
 
     async serve(): Promise<void> {
         try {
+            const appBridgeThemeVersion = getAppBridgeThemeVersion(process.cwd());
+            const reactVersion = getReactVersion(process.cwd());
+
             const viteServer = await createServer({
                 root: process.cwd(),
                 plugins: [
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     react(),
-                    viteExternalsPlugin({
-                        react: 'React',
-                        'react-dom': 'ReactDOM',
-                    }),
+                    reactBareExternalPlugin(),
                 ],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
-                    'DevCustomTheme.dependencies.appBridgeTheme': JSON.stringify(
-                        getAppBridgeThemeVersion(process.cwd()),
-                    ),
                 },
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
@@ -44,6 +41,7 @@ export class ThemeDevelopmentServer {
                         host: this.allowExternal ? '0.0.0.0' : 'localhost',
                         protocol: 'ws',
                     },
+                    forwardConsole: false,
                 },
             });
 
@@ -52,6 +50,8 @@ export class ThemeDevelopmentServer {
                     return next();
                 }
 
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
                 res.writeHead(200);
                 return res.end('OK');
             });
@@ -61,14 +61,23 @@ export class ThemeDevelopmentServer {
                     return next();
                 }
 
+                const host = req.headers.host || `localhost:${this.port}`;
+                const actualPort = parseInt(host.split(':')[1] || String(this.port), 10);
+
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
                 res.setHeader('Content-Type', 'application/json');
                 res.writeHead(200);
                 return res.end(
                     JSON.stringify({
-                        url: `http://localhost:${this.port}/${this.entryFilePath}`,
+                        url: `http://${host}/${this.entryFilePath}`,
                         entryFilePath: this.entryFilePath,
-                        port: this.port,
+                        port: actualPort,
                         version: pkg.version,
+                        dependencies: {
+                            ...(appBridgeThemeVersion ? { '@frontify/app-bridge-theme': appBridgeThemeVersion } : {}),
+                            react: reactVersion,
+                        },
                     }),
                 );
             });

@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
-import { getAppBridgeVersion } from '../appBridgeVersion';
+import { getAppBridgeVersion } from '../getPackageVersion';
 
 import { type CompilerOptions } from './compilerOptions';
 

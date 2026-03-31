@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { getAppBridgeThemeVersion } from '../../src/utils/appBridgeThemeVersion';
+import { getAppBridgeThemeVersion } from '../../src/utils/getPackageVersion';
 
 const rootPath = 'frontify-cli';
 

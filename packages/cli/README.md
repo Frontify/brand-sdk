@@ -4,7 +4,7 @@
 
 ## Prerequisite
 
--   Node >=16
+-   Node >=22
 
 ## Installation
 
