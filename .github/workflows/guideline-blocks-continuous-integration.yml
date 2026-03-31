@@ -15,7 +15,7 @@ jobs:
     outputs:
       should_run: ${{ steps.filter.outputs['guideline-blocks'] }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dorny/paths-filter@v3
         id: filter
         with:
@@ -37,13 +37,13 @@ jobs:
     steps:
       - name: Checkout default branch
         if: needs.changes.outputs.should_run == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Use pnpm
         if: needs.changes.outputs.should_run == 'true'
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v5
         with:
           run_install: false
 
@@ -92,7 +92,7 @@ jobs:
     steps:
       - name: Checkout current commit
         if: needs.changes.outputs.should_run == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Use Node.js
         if: needs.changes.outputs.should_run == 'true'
@@ -102,7 +102,7 @@ jobs:
 
       - name: Use pnpm
         if: needs.changes.outputs.should_run == 'true'
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v5
         with:
           run_install: false
 
@@ -148,12 +148,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app-bridge-version: ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
+        app-bridge-version:
+          ["3.0.0", "workspace:^", "4.0.0-alpha.0", "^4.0.0-alpha.0"]
 
     steps:
       - name: Checkout current commit
         if: needs.changes.outputs.should_run == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Use Node.js
         if: needs.changes.outputs.should_run == 'true'
@@ -163,7 +164,7 @@ jobs:
 
       - name: Use pnpm
         if: needs.changes.outputs.should_run == 'true'
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v5
         with:
           run_install: false
 

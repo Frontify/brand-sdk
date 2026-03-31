@@ -1,68 +1,68 @@
 name: CLI CI
 
 on:
-    pull_request:
+  pull_request:
 
 # Ensures that only one workflow per branch will run at a time.
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-    changes:
-        runs-on: ubuntu-latest
-        timeout-minutes: 5
-        outputs:
-            should_run: ${{ steps.filter.outputs.cli }}
-        steps:
-            - uses: actions/checkout@v4
-            - uses: dorny/paths-filter@v3
-              id: filter
-              with:
-                  filters: |
-                      cli:
-                        - 'packages/cli/**'
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      should_run: ${{ steps.filter.outputs.cli }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            cli:
+              - 'packages/cli/**'
 
-    cli-ci:
-        needs: changes
-        if: needs.changes.outputs.should_run == 'true'
-        runs-on: ubuntu-latest
-        timeout-minutes: 10
+  cli-ci:
+    needs: changes
+    if: needs.changes.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
-        steps:
-            - name: Checkout default branch
-              uses: actions/checkout@v4
-              with:
-                  # Disabling shallow clone is recommended for improving relevancy of reporting
-                  fetch-depth: 0
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v6
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
-            - name: Use pnpm
-              uses: pnpm/action-setup@v3
-              with:
-                  run_install: false
+      - name: Use pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          run_install: false
 
-            - name: Use Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version-file: ".nvmrc"
-                  cache: "pnpm"
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
 
-            - name: Install npm dependencies
-              run: pnpm i --frozen-lockfile
+      - name: Install npm dependencies
+        run: pnpm i --frozen-lockfile
 
-            - name: Typecheck code
-              run: pnpm --stream --filter {packages/cli} typecheck
+      - name: Typecheck code
+        run: pnpm --stream --filter {packages/cli} typecheck
 
-            - name: Lint code
-              run: pnpm --stream --filter {packages/cli} lint
+      - name: Lint code
+        run: pnpm --stream --filter {packages/cli} lint
 
-            - name: Test code
-              run: pnpm --stream --filter {packages/cli} test:coverage
+      - name: Test code
+        run: pnpm --stream --filter {packages/cli} test:coverage
 
-            - name: SonarCloud Scan
-              uses: sonarsource/sonarqube-scan-action@v6
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-              with:
-                  projectBaseDir: ./packages/cli
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: ./packages/cli
