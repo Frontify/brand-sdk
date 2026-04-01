@@ -6,7 +6,6 @@ export class AssetDummy {
     static with(id: number): Asset {
         return {
             id,
-            creatorName: 'Creator Name',
             alternativeText: 'Alternative Text',
             extension: 'png',
             externalUrl: null,
@@ -24,7 +23,6 @@ export class AssetDummy {
             fileSizeHumanReadable: '123.45 MB',
             fileId: 'x1x1x1x1x1x1',
             token: '--token--',
-            projectType: 'STYLEGUIDE',
             revisionId: 1,
             backgroundColor: 'rgba(115, 210, 210, 255)',
             isDownloadProtected: false,

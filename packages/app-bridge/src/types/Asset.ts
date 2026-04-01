@@ -2,7 +2,6 @@
 
 export type AssetApi = {
     id: number;
-    creator_name: string;
     alternative_text: Nullable<string>;
     ext: string;
     external_url: Nullable<string>;
@@ -19,8 +18,6 @@ export type AssetApi = {
     file_size: number;
     file_size_formatted: string;
     file_id: string;
-    project_name: Nullable<string>;
-    project_type: Nullable<string>;
     token: string;
     revision_id: Nullable<number>;
     background_color: Nullable<string>;
@@ -31,7 +28,6 @@ export type AssetApi = {
 
 export type Asset = {
     id: number;
-    creatorName: string;
     alternativeText: Nullable<string>;
     extension: string;
     externalUrl: Nullable<string>;
@@ -49,7 +45,6 @@ export type Asset = {
     fileSizeHumanReadable: string;
     fileId: string;
     token: string;
-    projectType: Nullable<string>;
     revisionId: Nullable<number>;
     backgroundColor: Nullable<string>;
     isDownloadProtected: boolean;
