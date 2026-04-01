@@ -6,7 +6,6 @@ export class AssetChooserResultDummy {
     static with(id: number): AssetChooserResult {
         return {
             id,
-            creator_name: 'Creator Name',
             computed_alternative_text: 'Alternative Text',
             ext: 'png',
             external_url: null,
@@ -18,8 +17,6 @@ export class AssetChooserResultDummy {
             file_origin_url: 'https://origin.url',
             preview_url: 'https://preview.url',
             project: 23,
-            project_name: null,
-            project_type: 'STYLEGUIDE',
             filesize: 256,
             file_size_formatted: '123.45 MB',
             status: 'FINISHED',
