@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 1.0.6
+
+### Patch Changes
+
+-   [#1522](https://github.com/Frontify/brand-sdk/pull/1522) [`561c972`](https://github.com/Frontify/brand-sdk/commit/561c972c09bb8700694eef475db54fdbd63f3558) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: allow useDocumentNavigation to use Document and DocumentNavigationItem
+
 ## 1.0.5
 
 ### Patch Changes
