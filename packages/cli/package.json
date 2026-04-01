@@ -39,7 +39,7 @@
         "conf": "^15.1.0",
         "esbuild": "^0.27.4",
         "fast-glob": "^3.3.3",
-        "fastify": "^5.8.2",
+        "fastify": "^5.8.4",
         "glob-to-regexp": "^0.4.1",
         "node-fetch": "^3.3.2",
         "open": "^11.0.0",
@@ -56,14 +56,14 @@
         "@types/node": "^22.19.15",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.18.1",
-        "@vitest/coverage-v8": "4.1.0",
-        "@vitest/ui": "^4.1.0",
+        "@vitest/coverage-v8": "4.1.2",
+        "@vitest/ui": "^4.1.2",
         "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
         "nock": "^13.5.6",
         "prettier": "^3.7.4",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
-        "vitest": "^4.1.0"
+        "vitest": "^4.1.2"
     }
 }

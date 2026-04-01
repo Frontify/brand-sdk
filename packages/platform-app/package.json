@@ -40,7 +40,7 @@
         "@frontify/eslint-config-react": "^1.0.8",
         "@types/react": "^18.3.27",
         "@vitejs/plugin-react": "^5.2.0",
-        "@vitest/coverage-v8": "^4.1.0",
+        "@vitest/coverage-v8": "^4.1.2",
         "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
         "prettier": "^3.7.4",
@@ -49,6 +49,6 @@
         "typescript": "^5.9.3",
         "vite": "^7.3.1",
         "vite-plugin-dts": "^4.5.4",
-        "vitest": "^4.1.0"
+        "vitest": "^4.1.2"
     }
 }
