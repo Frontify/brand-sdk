@@ -1,5 +1,14 @@
 # @frontify/platform-app
 
+## 0.1.24
+
+### Patch Changes
+
+-   [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
+
+-   Updated dependencies [[`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e)]:
+    -   @frontify/sidebar-settings@0.10.11
+
 ## 0.1.23
 
 ### Patch Changes
