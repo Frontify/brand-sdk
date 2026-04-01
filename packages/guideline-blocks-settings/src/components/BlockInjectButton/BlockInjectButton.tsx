@@ -97,7 +97,7 @@ export const BlockInjectButton = ({
                 'tw-body-medium tw-relative tw-border tw-flex tw-items-center tw-justify-center tw-cursor-pointer tw-gap-3 tw-w-full first:tw-rounded-tl last:tw-rounded-br',
                 verticalLayout
                     ? '[&:not(:first-child)]:tw-border-t-0 first:tw-rounded-tr last:tw-rounded-bl'
-                    : '[&:not(:first-child)]:tw-border-l-0  first:tw-rounded-bl last:tw-rounded-tr',
+                    : '[&:not(:first-child)]:tw-border-l-0 first:tw-rounded-bl last:tw-rounded-tr',
                 fillParentContainer ? 'tw-h-full' : 'tw-h-[72px]',
                 isDraggingOver && !isLoading ? 'tw-border-dashed' : 'tw-border-solid',
                 menuPosition && 'tw-bg-blank-state-pressed-inverse',
