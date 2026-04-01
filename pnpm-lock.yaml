@@ -23,8 +23,8 @@ importers:
         specifier: ^2.30.0
         version: 2.30.0(@types/node@24.11.0)
       '@cypress/vite-dev-server':
-        specifier: ^7.2.0
-        version: 7.2.0(cypress@15.13.0)
+        specifier: ^7.2.1
+        version: 7.2.1(cypress@15.13.0)
       '@frontify/fondue':
         specifier: ^13.4.0
         version: 13.4.0(c0bec9f94939366fef5d812c40394b9d)
@@ -1420,8 +1420,8 @@ packages:
     resolution: {integrity: sha512-hauBrOdvu08vOsagkZ/Aju5XuiZx6ldsLfByg1htFeldhex+PeMrYauANzFsMJeAA0+dyPLbDoX2OYuvVoLDkQ==}
     engines: {node: '>= 6'}
 
-  '@cypress/vite-dev-server@7.2.0':
-    resolution: {integrity: sha512-Rrf9sO8dFgBbn/pQ0sKI4MB/1kMKisr8kXOn+mTvtZyHa38Bst3dMXoFyExatIO1UlMDZyZRfmf1SZV5L4blqg==}
+  '@cypress/vite-dev-server@7.2.1':
+    resolution: {integrity: sha512-fgivZnA696oq70WwcKnSj8mOyb14alZZQhD3yDyaytzOrBdbGAsL+vjHcXP3OyRbi/k38qJXOQkUkxS1L3m/bA==}
     peerDependencies:
       cypress: '>=15.0.0'
 
@@ -10545,7 +10545,7 @@ snapshots:
       tunnel-agent: 0.6.0
       uuid: 8.3.2
 
-  '@cypress/vite-dev-server@7.2.0(cypress@15.13.0)':
+  '@cypress/vite-dev-server@7.2.1(cypress@15.13.0)':
     dependencies:
       cypress: 15.13.0
       debug: 4.4.3(supports-color@8.1.1)
