@@ -4,9 +4,9 @@ import { useEffect, useSyncExternalStore } from 'react';
 
 import { type AppBridgeTheme } from '../AppBridgeTheme.ts';
 import { hydrateContextDocumentNavigation } from '../registries/commands/HydrateContextDocumentNavigation';
-import { type DocumentNavigationItem, type DocumentChildNavigationItem } from '../types/Guideline';
+import { type Document, type DocumentNavigationItem, type DocumentChildNavigationItem } from '../types/Guideline';
 
-export const useDocumentNavigation = (appBridge: AppBridgeTheme, document: DocumentNavigationItem) => {
+export const useDocumentNavigation = (appBridge: AppBridgeTheme, document: DocumentNavigationItem | Document) => {
     const documentNavigation: Record<number, DocumentChildNavigationItem[] | undefined> = useSyncExternalStore(
         appBridge.context('documentNavigation').subscribe,
         appBridge.context('documentNavigation').get,
