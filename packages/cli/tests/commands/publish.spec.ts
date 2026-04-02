@@ -61,7 +61,7 @@ describe('Publish command', () => {
     test('should publish app successfully with token and instance options', async () => {
         const testMockApi = nock(`https://${TEST_BASE_URL}`);
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql-internal').reply(200, PUBLISH_SUCCESS_RESPONSE);
+        testMockApi.post('/graphql').reply(200, PUBLISH_SUCCESS_RESPONSE);
 
         await publishApp({
             releaseNotes: 'Initial release',
@@ -78,7 +78,7 @@ describe('Publish command', () => {
     test('should publish app with COMMUNITY availability', async () => {
         const testMockApi = nock(`https://${TEST_BASE_URL}`);
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql-internal').reply(200, PUBLISH_SUCCESS_RESPONSE);
+        testMockApi.post('/graphql').reply(200, PUBLISH_SUCCESS_RESPONSE);
 
         await publishApp({
             releaseNotes: 'Community release',
@@ -96,7 +96,7 @@ describe('Publish command', () => {
 
         const testMockApi = nock(`https://${TEST_BASE_URL}`);
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql-internal').reply(200, PUBLISH_SUCCESS_RESPONSE);
+        testMockApi.post('/graphql').reply(200, PUBLISH_SUCCESS_RESPONSE);
 
         await publishApp({ releaseNotes: 'Release notes' });
 
@@ -131,7 +131,7 @@ describe('Publish command', () => {
     test('should exit with error when GraphQL publish mutation fails', async () => {
         const testMockApi = nock(`https://${TEST_BASE_URL}`);
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql-internal').reply(400, { error: 'Publish failed' });
+        testMockApi.post('/graphql').reply(400, { error: 'Publish failed' });
 
         await publishApp({
             releaseNotes: 'Release notes',
@@ -147,7 +147,7 @@ describe('Publish command', () => {
         const testMockApi = nock(`https://${TEST_BASE_URL}`);
         testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
         testMockApi
-            .post('/graphql-internal', (body: { query: string }) => body.query.includes('PRIVATE'))
+            .post('/graphql', (body: { query: string }) => body.query.includes('PRIVATE'))
             .reply(200, PUBLISH_SUCCESS_RESPONSE);
 
         await publishApp({
