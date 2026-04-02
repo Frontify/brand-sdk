@@ -1,16 +1,22 @@
 # @frontify/app-bridge-theme
 
+## 1.0.6
+
+### Patch Changes
+
+- [#1522](https://github.com/Frontify/brand-sdk/pull/1522) [`561c972`](https://github.com/Frontify/brand-sdk/commit/561c972c09bb8700694eef475db54fdbd63f3558) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: allow useDocumentNavigation to use Document and DocumentNavigationItem
+
 ## 1.0.5
 
 ### Patch Changes
 
--   [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
+- [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
 
 ## 1.0.4
 
 ### Patch Changes
 
--   [#1475](https://github.com/Frontify/brand-sdk/pull/1475) [`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update multiple dependencies
+- [#1475](https://github.com/Frontify/brand-sdk/pull/1475) [`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update multiple dependencies
 
 ## 1.0.3
 
