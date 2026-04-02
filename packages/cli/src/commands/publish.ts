@@ -55,7 +55,7 @@ export const publishApp = async ({
 
         const query = `mutation PublishMarketplaceApp {
   publishMarketplaceApp(
-    input: {appId: "${appId}", releaseNotes: ${JSON.stringify(releaseNotes)}, availability: "${availability}"}
+    input: {appId: "${appId}", releaseNotes: ${JSON.stringify(releaseNotes)}, availability: ${availability}}
   ) {
     id
   }
