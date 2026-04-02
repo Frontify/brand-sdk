@@ -8,10 +8,10 @@ import ParseJsonError from '../errors/ParseJsonError';
 export const reactiveJson = <T>(path: string): T => {
     try {
         const jsonRaw = readFileSync(path, 'utf8');
-        const jsonParsed = JSON.parse(jsonRaw);
+        const jsonParsed: T = JSON.parse(jsonRaw) as T;
 
-        return new Proxy(jsonParsed, {
-            set: (obj, prop, value) => {
+        return new Proxy(jsonParsed as object, {
+            set: (obj: Record<string | symbol, unknown>, prop, value: unknown) => {
                 obj[prop] = value;
 
                 const jsonString = JSON.stringify(obj, null, '\t');
@@ -20,15 +20,14 @@ export const reactiveJson = <T>(path: string): T => {
 
                 return true;
             },
-        });
+        }) as T;
     } catch (error) {
         if (error instanceof SyntaxError) {
             throw new ParseJsonError(path);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } else if ((error as any).code === 'ENOENT') {
+        } else if (error instanceof Error && 'code' in error && error.code === 'ENOENT') {
             throw new FileNotFoundError(path);
         }
 
-        throw new Error(error as string);
+        throw new Error(String(error));
     }
 };
