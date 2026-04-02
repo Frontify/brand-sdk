@@ -65,7 +65,7 @@ export const publishApp = async ({
 
         try {
             await httpClient.post<{ data: { publishMarketplaceApp: { id: string } } }>(
-                '/graphql',
+                '/graphql-internal',
                 { query },
                 { headers: { Authorization: `Bearer ${accessToken}` } },
             );
