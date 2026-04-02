@@ -17,8 +17,11 @@ import {
     createNewApp,
     loginUser,
     logoutUser,
+    publishApp,
+    Availability,
 } from './commands/index';
 import {
+    Logger,
     compileBlock,
     compilePlatformApp,
     compileTheme,
@@ -183,6 +186,29 @@ cli.command('deploy', 'deploy the app to the marketplace')
                 compileBlock,
             );
         }
+    });
+
+cli.command('publish', 'publish the app to the marketplace')
+    .option('--releaseNotes, --release-notes <releaseNotes>', '[string] release notes for the publish')
+    .option(
+        '--availability [availability]',
+        `[string] availability of the app (${Object.values(Availability).join(', ')})`,
+        { default: Availability.PRIVATE },
+    )
+    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
+    .option('-t, --token <accessToken>', '[string] the access token')
+    .action(async (options) => {
+        if (!options.releaseNotes) {
+            Logger.error('Release notes are required. Use --releaseNotes="Your release notes".');
+            process.exit(-1);
+        }
+
+        await publishApp({
+            releaseNotes: options.releaseNotes,
+            availability: options.availability,
+            token: options.token,
+            instance: options.instance,
+        });
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
