@@ -38,7 +38,7 @@ export class Authenticator {
         this.registerPlugins();
         this.registerRoutes();
 
-        this.fastifyServer.listen({ port: this.port });
+        this.fastifyServer.listen({ port: this.port }).catch(() => {});
     }
 
     private registerRoutes(): void {

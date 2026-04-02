@@ -27,7 +27,9 @@ describe('Compiler utils', () => {
     describe('compile Block', () => {
         test('should provide a valid build', async () => {
             await compileBlock({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
-            const module = await import(`${outputFile}?t=${Date.now()}`);
+            const module = (await import(`${outputFile}?t=${Date.now()}`)) as {
+                default: { block: unknown; settings: unknown };
+            };
 
             expect(module.default.block).toBe('this is a block');
             expect(module.default.settings).toMatchObject({ some: 'settings' });
@@ -41,7 +43,9 @@ describe('Compiler utils', () => {
         test('should provide a valid build with theme', async () => {
             await compileTheme({ projectPath: rootPath, entryFile: pathToIndex, outputName: 'index' });
 
-            const module = await import(`${outputFile}?t=${Date.now()}`);
+            const module = (await import(`${outputFile}?t=${Date.now()}`)) as {
+                default: { block: unknown; settings: unknown };
+            };
 
             expect(module.default.block).toBe('this is a theme');
             expect(module.default.settings).toMatchObject({ some: 'theme-settings' });
@@ -60,7 +64,7 @@ describe('Compiler utils', () => {
                 projectPath: rootPath,
                 entryFile: pathToIndex,
                 outputName: outputNameTest,
-            })) as unknown as { app: { output: { fileName: string }[] }; settings: { output: { fileName: string }[] } };
+            })) as { app: { output: { fileName: string }[] }; settings: { output: { fileName: string }[] }[] };
 
             expect(
                 result.app.output.find((o) => o.fileName.endsWith('.js') && o.fileName.startsWith('assets/index-')),

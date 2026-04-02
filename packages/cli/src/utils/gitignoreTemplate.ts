@@ -5,7 +5,7 @@ import { join } from 'node:path';
 
 export const generateGitignoreFile = (destinationFolderPath: string, type: string): void => {
     const gitignorePath = join(destinationFolderPath, '.gitignore');
-    writeFileSync(gitignorePath, gitignoreTemplate[type]);
+    writeFileSync(gitignorePath, gitignoreTemplate[type as keyof typeof gitignoreTemplate]);
 };
 
 const gitignoreTemplate = {

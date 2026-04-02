@@ -27,6 +27,19 @@ import {
     reactiveJson,
 } from './utils/index';
 
+type LoginOptions = { instance: string; port: number };
+type ServeOptions = { entryPath: string; port: number; allowExternal: boolean; appType?: string };
+type DeployOptions = {
+    entryPath: string;
+    outDir: string;
+    dryRun: boolean;
+    noVerify: boolean;
+    open: boolean;
+    appType?: string;
+    instance?: string;
+    token?: string;
+};
+
 const cli = cac(pkg.name.split('/')[1]);
 
 cli.command('login [instanceUrl]', 'log in to a Frontify instance')
@@ -34,13 +47,13 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
     .option('-p, --port <port>', '[number] port for the oauth service', {
         default: process.env.PORT || 5600,
     })
-    .action(async (instanceUrl: string, options) => {
+    .action(async (instanceUrl: string, options: LoginOptions) => {
         const computedInstanceUrl = instanceUrl || options.instance || process.env.INSTANCE_URL;
         if (computedInstanceUrl) {
             prompts.inject([computedInstanceUrl]);
         }
 
-        const { promptedInstanceUrl } = await prompts([
+        const { promptedInstanceUrl } = (await prompts([
             {
                 type: 'text',
                 name: 'promptedInstanceUrl',
@@ -48,7 +61,7 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
                 initial: 'instanceName.frontify.com',
                 validate: (value: string) => (value.trim() === '' ? 'You need to enter a valid URL.' : true),
             },
-        ]);
+        ])) as { promptedInstanceUrl: string };
 
         if (!promptedInstanceUrl) {
             exit(0);
@@ -76,7 +89,7 @@ for (const appType of ['block', 'theme']) {
         .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
             default: false,
         })
-        .action(async (options) => {
+        .action(async (options: ServeOptions) => {
             await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
         });
 }
@@ -93,7 +106,7 @@ cli.command('serve', 'serve the app locally')
         default: false,
     })
     .option('--appType <appType>, --app-type', '[string] specify app type. Overrides manifest values')
-    .action(async (options) => {
+    .action(async (options: ServeOptions) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
 
@@ -116,7 +129,7 @@ for (const appType of ['block', 'theme']) {
         .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
         .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
         .option('--open', '[boolean] open the marketplace app page', { default: false })
-        .action(async (options) => {
+        .action(async (options: DeployOptions) => {
             await createDeployment(
                 options.entryPath,
                 options.outDir,
@@ -139,7 +152,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
     .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
     .option('-t, --token <accessToken>', '[string] the access token')
-    .action(async (options) => {
+    .action(async (options: DeployOptions) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
 
@@ -186,7 +199,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
-    const { promptedAppName, stylingFramework, appType } = await prompts([
+    const { promptedAppName, stylingFramework, appType } = (await prompts([
         {
             type: 'text',
             name: 'promptedAppName',
@@ -219,7 +232,7 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
                 { title: 'None', value: 'css' },
             ],
         },
-    ]);
+    ])) as { promptedAppName: string; stylingFramework: string; appType: string };
 
     if (!promptedAppName || !stylingFramework || !appType) {
         exit(0);
