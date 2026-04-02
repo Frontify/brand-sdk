@@ -1,7 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import fetch from 'node-fetch';
-
 import { HttpClientError } from '../errors/HttpClientError';
 
 interface RequestOptions {
@@ -34,7 +32,7 @@ export class HttpClient {
             headers: { 'Content-Type': 'application/json', ...options?.headers },
         });
 
-        if (response.status === 200) {
+        if (response.ok) {
             const contentType = response.headers.get('Content-Type');
 
             switch (contentType) {
@@ -54,7 +52,7 @@ export class HttpClient {
                 }
             }
         } else {
-            const errorData = (await response.json()) as { sucess: false; error: string };
+            const errorData = (await response.json()) as { success: false; error: string };
             throw new HttpClientError(response.status, errorData);
         }
     }
