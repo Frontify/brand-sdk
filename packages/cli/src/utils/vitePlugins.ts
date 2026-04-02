@@ -22,10 +22,11 @@ export function reactBareExternalPlugin(): Plugin {
             config.optimizeDeps ??= {};
             config.optimizeDeps.exclude = [...(config.optimizeDeps.exclude ?? []), ...modules];
 
-            const optimizeDepsAny = config.optimizeDeps as any;
-            optimizeDepsAny.rolldownOptions ??= {};
-            optimizeDepsAny.rolldownOptions.plugins ??= [];
-            optimizeDepsAny.rolldownOptions.plugins.push({
+            const optimizeDeps = config.optimizeDeps as Record<string, unknown>;
+            optimizeDeps.rolldownOptions ??= {};
+            const rolldownOptions = optimizeDeps.rolldownOptions as Record<string, unknown>;
+            rolldownOptions.plugins ??= [];
+            (rolldownOptions.plugins as unknown[]).push({
                 name: 'externalize-react',
                 resolveId(source: string) {
                     if (modules.includes(source)) {
@@ -35,7 +36,7 @@ export function reactBareExternalPlugin(): Plugin {
                     return null;
                 },
             });
-            optimizeDepsAny.rolldownOptions.plugins.push(esmExternalRequirePlugin({ external: modules }));
+            (rolldownOptions.plugins as unknown[]).push(esmExternalRequirePlugin({ external: modules }));
 
             return null;
         },
@@ -44,9 +45,7 @@ export function reactBareExternalPlugin(): Plugin {
             const base = resolvedConfig.base ?? '/';
             const escapedBase = base.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error plugins is readonly but must be extended post-resolution
-            resolvedConfig.plugins.push({
+            (resolvedConfig.plugins as Plugin[]).push({
                 name: 'vite-plugin-react-bare-restore',
                 transform(code: string) {
                     if (resolved.size === 0) {

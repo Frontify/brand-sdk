@@ -296,7 +296,7 @@ const MANIFEST_WITH_EXPERIMENTAL_FLAG = {
     },
 };
 
-const generateManifestWithEndpointNetworkCall = (networkEndpoints) => {
+const generateManifestWithEndpointNetworkCall = (networkEndpoints: unknown) => {
     return {
         appType: 'platform-app',
         appId: 'abcdabcdabcdabcdabcdabcda',

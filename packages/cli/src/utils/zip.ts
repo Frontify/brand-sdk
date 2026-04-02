@@ -4,9 +4,17 @@ import { createWriteStream } from 'node:fs';
 
 import archiver from 'archiver';
 
+interface Archive {
+    glob(pattern: string, options: { cwd: string; ignore: string[] }): Archive;
+    on(event: string, callback: (error: Error) => void): Archive;
+    pipe(destination: NodeJS.WritableStream): Archive;
+    finalize(): Promise<void>;
+}
+
 export const createZip = (path: string, pathOut: string, ignored: string[] = []): Promise<void> => {
     return new Promise((resolve, reject): void => {
-        const archive = archiver('zip', { zlib: { level: 9 } });
+        const createArchive = archiver as unknown as (format: string, options: { zlib: { level: number } }) => Archive;
+        const archive = createArchive('zip', { zlib: { level: 9 } });
 
         const stream = createWriteStream(pathOut);
         stream.on('close', () => resolve());
@@ -16,10 +24,9 @@ export const createZip = (path: string, pathOut: string, ignored: string[] = [])
                 cwd: path,
                 ignore: ignored,
             })
-            // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
-            .on('error', (error) => reject(error))
+            .on('error', (error: Error) => reject(error))
             .pipe(stream);
 
-        archive.finalize();
+        archive.finalize().catch((error: Error) => reject(error));
     });
 };
