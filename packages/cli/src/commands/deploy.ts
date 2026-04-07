@@ -61,7 +61,7 @@ const SOURCE_FILE_BLOCK_LIST = [
     '**/*.graphql',
 ];
 
-const resolveCredentials = (token?: string, instance?: string) => {
+export const resolveCredentials = (token?: string, instance?: string) => {
     const instanceUrl = instance || Configuration.get('instanceUrl');
     const accessToken = token || Configuration.get('tokens.access_token');
 
@@ -77,7 +77,7 @@ const resolveCredentials = (token?: string, instance?: string) => {
     return { instanceUrl, accessToken };
 };
 
-const verifyCode = async (noVerify: boolean) => {
+export const verifyCode = async (noVerify: boolean) => {
     if (noVerify) {
         return;
     }
@@ -89,10 +89,13 @@ const verifyCode = async (noVerify: boolean) => {
     await promiseExec('npx eslint src');
 };
 
-const collectFiles = async (projectPath: string, distPath: string) => {
-    const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((pattern) =>
-        fastGlob.convertPathToPattern(`${projectPath}/${pattern}`),
-    );
+export const collectFiles = async (projectPath: string, distPath: string) => {
+    const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((pattern) => {
+        if (pattern.includes('*')) {
+            return `${fastGlob.convertPathToPattern(projectPath)}/${pattern}`;
+        }
+        return fastGlob.convertPathToPattern(`${projectPath}/${pattern}`);
+    });
 
     const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
         (entry) => entry !== 'manifest.json',
@@ -119,7 +122,7 @@ const collectFiles = async (projectPath: string, distPath: string) => {
     };
 };
 
-const handleDeployError = (error: unknown): never => {
+export const handleDeployError = (error: unknown): never => {
     if (typeof error === 'string') {
         Logger.error('The deployment has failed and was aborted due to an error:', error);
     } else if (error instanceof Error) {
