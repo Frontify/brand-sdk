@@ -23,13 +23,6 @@ export const useDocumentNavigation = (appBridge: AppBridgeTheme, document: Docum
     );
 
     useEffect(() => {
-        console.log(
-            'useDocumentNavigation - document or portalNavigation changed, dispatching hydrateContextDocumentNavigation',
-            {
-                document,
-                portalNavigation,
-            },
-        );
         appBridge.dispatch(hydrateContextDocumentNavigation(document.id()));
     }, [appBridge, document, portalNavigation]);
 
