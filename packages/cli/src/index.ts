@@ -77,26 +77,6 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
 
 cli.command('logout', 'log out of an instance').action(logoutUser);
 
-/**
- * @deprecated `block serve` and `theme serve` will be removed in version 4.0 in favour of `serve`
- */
-for (const appType of ['block', 'theme']) {
-    cli.command(`${appType} serve`, `[deprecated: use 'serve' instead] serve the ${appType} locally`)
-        .alias(`${appType} dev`)
-        .option('-e, --entryPath, --entry-path <entryPath>', `[string] path to the ${appType} entry file`, {
-            default: join('src', 'index.tsx'),
-        })
-        .option('--port <port>', '[number] specify port', {
-            default: process.env.PORT || 5600,
-        })
-        .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
-            default: false,
-        })
-        .action(async (options: ServeOptions) => {
-            await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
-        });
-}
-
 cli.command('serve', 'serve the app locally')
     .alias('dev')
     .option('-e, --entryPath, --entry-path <entryPath>', '[string] path to the entry file', {
@@ -121,30 +101,6 @@ cli.command('serve', 'serve the app locally')
             await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
         }
     });
-
-/**
- * @deprecated `block deploy` and `theme deploy` will be removed in version 4.0 in favour of `deploy`
- */
-for (const appType of ['block', 'theme']) {
-    cli.command(`${appType} deploy`, `[deprecated: use 'deploy' instead] deploy the ${appType} to the marketplace`)
-        .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.tsx') })
-        .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
-        .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
-        .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
-        .option('--open', '[boolean] open the marketplace app page', { default: false })
-        .action(async (options: DeployOptions) => {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                },
-                appType === 'theme' ? compileTheme : compileBlock,
-            );
-        });
-}
 
 cli.command('deploy', 'deploy the app to the marketplace')
     .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.ts') })
@@ -267,32 +223,7 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     createNewApp(promptedAppName, stylingFramework, appType);
 });
 
-/**
- * @deprecated `block create` and `theme create` will be removed in version 4.0 in favour of `create`
- */
-for (const appType of ['block', 'theme']) {
-    cli.command(
-        `${appType} create [appName]`,
-        `[deprecated: use 'create' instead] create a ${appType} app locally`,
-    ).action((appName: string) => createNewApp(appName, 'css-modules', 'content-block'));
-}
-
 cli.help();
 cli.version(pkg.version);
 
-const mergeOldBlockThemeCommands = (cliArgs: string[]) => {
-    const oldCommandIndex = cliArgs.findIndex((value) => value === 'block' || value === 'theme');
-    if (
-        oldCommandIndex !== -1 &&
-        (cliArgs[oldCommandIndex + 1] === 'serve' ||
-            cliArgs[oldCommandIndex + 1] === 'deploy' ||
-            cliArgs[oldCommandIndex + 1] === 'create')
-    ) {
-        cliArgs[oldCommandIndex] = `${cliArgs[oldCommandIndex]} ${cliArgs[oldCommandIndex + 1]}`;
-        cliArgs.splice(oldCommandIndex + 1, 1);
-    }
-
-    return cliArgs;
-};
-
-cli.parse(mergeOldBlockThemeCommands(process.argv));
+cli.parse(process.argv);
