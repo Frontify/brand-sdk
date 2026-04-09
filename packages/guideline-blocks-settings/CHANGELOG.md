@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.8
+
+### Patch Changes
+
+-   [#1537](https://github.com/Frontify/brand-sdk/pull/1537) [`03f18bd`](https://github.com/Frontify/brand-sdk/commit/03f18bd45b9ce538ef1982099dca37b30a5e7ca3) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(Attachments): prevent add button to inherit typo styles from theme
+
 ## 2.1.7
 
 ### Patch Changes
