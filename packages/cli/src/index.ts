@@ -117,9 +117,15 @@ cli.command('deploy', 'deploy the app to the marketplace')
         const appType = options.appType || manifest.appType;
 
         const compilers: Record<string, (options: CompilerOptions) => Promise<unknown>> = {
+            'content-block': compileBlock,
             'platform-app': compilePlatformApp,
             theme: compileTheme,
         };
+
+        const compiler = compilers[appType ?? ''];
+        if (!compiler) {
+            throw new Error(`Unknown app type "${appType}". Expected one of: ${Object.keys(compilers).join(', ')}`);
+        }
 
         await createDeployment(
             options.entryPath,
@@ -131,7 +137,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
                 instance: options.instance,
                 token: options.token,
             },
-            compilers[appType ?? ''] ?? compileBlock,
+            compiler,
         );
     });
 
