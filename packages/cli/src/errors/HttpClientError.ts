@@ -2,9 +2,9 @@
 
 export class HttpClientError extends Error {
     public code = 0;
-    public responseBody: { sucess: false; error: string };
+    public responseBody: { success: false; error: string };
 
-    constructor(code: number, responseBody: { sucess: false; error: string }) {
+    constructor(code: number, responseBody: { success: false; error: string }) {
         super(`Status code ${code}`);
         this.name = 'HttpClientError';
         this.code = code;

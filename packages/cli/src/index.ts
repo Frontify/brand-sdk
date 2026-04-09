@@ -21,6 +21,7 @@ import {
     Availability,
 } from './commands/index';
 import {
+    type CompilerOptions,
     Logger,
     compileBlock,
     compilePlatformApp,
@@ -115,46 +116,29 @@ cli.command('deploy', 'deploy the app to the marketplace')
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
 
-        if (appType === 'platform-app') {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                    instance: options.instance,
-                    token: options.token,
-                },
-                compilePlatformApp,
-            );
-        } else if (appType === 'theme') {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                    instance: options.instance,
-                    token: options.token,
-                },
-                compileTheme,
-            );
-        } else {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                    instance: options.instance,
-                    token: options.token,
-                },
-                compileBlock,
-            );
+        const compilers: Record<string, (options: CompilerOptions) => Promise<unknown>> = {
+            'content-block': compileBlock,
+            'platform-app': compilePlatformApp,
+            theme: compileTheme,
+        };
+
+        const compiler = compilers[appType ?? ''];
+        if (!compiler) {
+            throw new Error(`Unknown app type "${appType}". Expected one of: ${Object.keys(compilers).join(', ')}`);
         }
+
+        await createDeployment(
+            options.entryPath,
+            options.outDir,
+            {
+                dryRun: options.dryRun,
+                noVerify: options.noVerify,
+                openInBrowser: options.open,
+                instance: options.instance,
+                token: options.token,
+            },
+            compiler,
+        );
     });
 
 cli.command('publish', 'publish the app to the marketplace')
