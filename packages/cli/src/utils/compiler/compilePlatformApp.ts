@@ -20,15 +20,19 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
             }),
         ],
         root: projectPath,
+        mode: 'production',
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
         build: {
+            minify: 'terser',
+            cssMinify: 'lightningcss',
             lib: {
                 entry: entryFile,
                 name: outputName,
                 formats: ['iife'],
                 fileName: () => 'index.js',
+                cssFileName: 'style',
             },
             rollupOptions: {
                 external: ['react', 'react-dom'],
@@ -41,7 +45,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
                     footer: `
                         window.${outputName} = ${outputName};
                         window.${outputName}.dependencies = window.${outputName}.packages || {};
-                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
+                        window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${appBridgeVersion}';
                     `,
                 },
             },
@@ -51,11 +55,14 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
     const app = await build({
         plugins: [react()],
         root: projectPath,
+        mode: 'production',
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
         base: '/__DYNAMIC_SEGMENT__/',
         build: {
+            minify: 'terser',
+            cssMinify: 'lightningcss',
             emptyOutDir: false,
         },
     });
