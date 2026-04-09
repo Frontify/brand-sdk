@@ -14,6 +14,7 @@ export const AttachmentsButtonTrigger = forwardRef<HTMLButtonElement, Attachment
             rounding="full"
             emphasis="default"
             data-test-id="attachments-button-trigger"
+            className="tw-body-medium"
             {...props}
         >
             <IconPaperclip size="16" />
