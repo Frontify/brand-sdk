@@ -12,7 +12,6 @@ import {
     Configuration,
     HttpClient,
     Logger,
-    type UserInfo,
     getUser,
     promiseExec,
     reactiveJson,
@@ -62,6 +61,78 @@ const SOURCE_FILE_BLOCK_LIST = [
     '**/*.graphql',
 ];
 
+export const resolveCredentials = (token?: string, instance?: string) => {
+    const instanceUrl = instance || Configuration.get('instanceUrl');
+    const accessToken = token || Configuration.get('tokens.access_token');
+
+    if (!accessToken || !instanceUrl) {
+        Logger.error(
+            `You are currently not logged in. You can use the command ${pc.bold(
+                'frontify-cli login',
+            )} to log in, or pass --token=<token> --instance=<instance> to the deploy command.`,
+        );
+        process.exit(-1);
+    }
+
+    return { instanceUrl, accessToken };
+};
+
+export const verifyCode = async (noVerify: boolean) => {
+    if (noVerify) {
+        return;
+    }
+
+    Logger.info('Performing type checks...');
+    await promiseExec('npx tsc --noEmit');
+
+    Logger.info('Performing eslint checks...');
+    await promiseExec('npx eslint src');
+};
+
+export const collectFiles = async (projectPath: string, distPath: string) => {
+    const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((pattern) => {
+        if (pattern.includes('*')) {
+            return `${fastGlob.convertPathToPattern(projectPath)}/${pattern}`;
+        }
+        return fastGlob.convertPathToPattern(`${projectPath}/${pattern}`);
+    });
+
+    const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
+        (entry) => entry !== 'manifest.json',
+    );
+
+    const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) => {
+        if (path.includes('*')) {
+            return `${projectPath}/${path}`;
+        }
+        return fastGlob.convertPathToPattern(`${projectPath}/${path}`);
+    });
+
+    const packageJsonContent = reactiveJson<{ dependencies?: Record<string, string> }>(
+        join(projectPath, 'package.json'),
+    );
+
+    return {
+        build_files: await makeFilesDict(
+            fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
+            buildFilesToIgnore,
+        ),
+        source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
+        dependencies: packageJsonContent?.dependencies || {},
+    };
+};
+
+export const handleDeployError = (error: unknown): never => {
+    if (typeof error === 'string') {
+        Logger.error('The deployment has failed and was aborted due to an error:', error);
+    } else if (error instanceof Error) {
+        Logger.error('The deployment has failed and was aborted due to an error:', error.message);
+    } else {
+        Logger.error('The deployment has failed and was aborted due to an unknown error.');
+    }
+    process.exit(-1);
+};
+
 export const createDeployment = async (
     entryFile: string,
     distPath: string,
@@ -69,114 +140,62 @@ export const createDeployment = async (
     compile: ({ projectPath, entryFile, outputName }: CompilerOptions) => Promise<unknown>,
 ): Promise<void> => {
     try {
-        let user: UserInfo | undefined;
-        const instanceUrl = instance || Configuration.get('instanceUrl');
-        const accessToken = token || Configuration.get('tokens.access_token');
+        const { instanceUrl, accessToken } = resolveCredentials(token, instance);
 
-        if (!accessToken || !instanceUrl) {
-            Logger.error(
-                `You are currently not logged in. You can use the command ${pc.bold(
-                    'frontify-cli login',
-                )} to log in, or pass --token=<token> --instance=<instance> to the deploy command.`,
-            );
+        if (dryRun) {
+            Logger.info(pc.blue('Dry run: enabled'));
+        } else {
+            const user = await getUser(instanceUrl, token);
+            if (user) {
+                Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
+            } else {
+                return;
+            }
+        }
+
+        const projectPath = process.cwd();
+        const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+        const { appId } =
+            manifestContent.appType === 'platform-app'
+                ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
+                : manifestContent;
+
+        await verifyCode(noVerify);
+
+        try {
+            await compile({ projectPath, entryFile, outputName: appId });
+        } catch (error) {
+            Logger.error(error as string);
             process.exit(-1);
         }
 
-        if (!dryRun) {
-            user = await getUser(instanceUrl, token);
-            if (user) {
-                Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
-            }
+        const request = await collectFiles(projectPath, distPath);
+
+        if (dryRun) {
+            Logger.success('The command has been executed without any issue.');
+            process.exit(0);
         }
 
-        if (user || dryRun) {
-            if (dryRun) {
-                Logger.info(pc.blue('Dry run: enabled'));
-            }
+        Logger.info('Sending the files to Frontify Marketplace...');
 
-            const projectPath = process.cwd();
-            const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
-            const { appId } =
-                manifestContent.appType === 'platform-app'
-                    ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
-                    : manifestContent;
+        const httpClient = new HttpClient(instanceUrl);
 
-            if (!noVerify) {
-                Logger.info('Performing type checks...');
-                await promiseExec('npx tsc --noEmit');
-
-                Logger.info('Performing eslint checks...');
-                await promiseExec('npx eslint src');
-            }
-
-            try {
-                await compile({ projectPath, entryFile, outputName: appId });
-            } catch (error) {
-                Logger.error(error as string);
-                process.exit(-1);
-            }
-
-            const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((path) =>
-                fastGlob.convertPathToPattern(projectPath + path),
-            );
-
-            const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
-                (entry) => entry !== 'manifest.json',
-            );
-
-            const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) => {
-                if (path.includes('*')) {
-                    return `${projectPath}/${path}`;
-                }
-                return fastGlob.convertPathToPattern(`${projectPath}/${path}`);
+        try {
+            await httpClient.put(`/api/marketplace/app/${appId}`, request, {
+                headers: { Authorization: `Bearer ${accessToken}` },
             });
 
-            const packageJsonContent = reactiveJson<{ dependencies?: Record<string, string> }>(
-                join(projectPath, 'package.json'),
-            );
+            Logger.success('The new version has been pushed.');
 
-            const request = {
-                build_files: await makeFilesDict(
-                    fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
-                    buildFilesToIgnore,
-                ),
-                source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
-                dependencies: packageJsonContent?.dependencies || {},
-            };
-
-            if (!dryRun) {
-                Logger.info('Sending the files to Frontify Marketplace...');
-
-                const httpClient = new HttpClient(instanceUrl);
-
-                try {
-                    await httpClient.put(`/api/marketplace/app/${appId}`, request, {
-                        headers: { Authorization: `Bearer ${accessToken}` },
-                    });
-
-                    Logger.success('The new version has been pushed.');
-
-                    if (openInBrowser) {
-                        Logger.info('Opening the Frontify Marketplace page...');
-                        await open(`https://${instanceUrl}/marketplace/apps/${appId}`);
-                    }
-                } catch (error) {
-                    Logger.error('An error occured while deploying:', (error as HttpClientError).responseBody.error);
-                    process.exit(-1);
-                }
-            } else {
-                Logger.success('The command has been executed without any issue.');
-                process.exit(0);
+            if (openInBrowser) {
+                Logger.info('Opening the Frontify Marketplace page...');
+                await open(`https://${instanceUrl}/marketplace/apps/${appId}`);
             }
+        } catch (error) {
+            Logger.error('An error occurred while deploying:', (error as HttpClientError).responseBody.error);
+            process.exit(-1);
         }
     } catch (error) {
-        if (typeof error === 'string') {
-            Logger.error('The deployment has failed and was aborted due to an error:', error);
-        } else if (error instanceof Error) {
-            Logger.error('The deployment has failed and was aborted due to an error:', error.message);
-        } else {
-            Logger.error('The deployment has failed and was aborted due to an unknown error.');
-        }
-        process.exit(-1);
+        handleDeployError(error);
     }
 };

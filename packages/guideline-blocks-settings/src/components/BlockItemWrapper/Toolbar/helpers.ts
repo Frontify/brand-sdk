@@ -10,7 +10,7 @@ export const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActi
         'tw-relative tw-inline-flex tw-items-center tw-justify-center',
         'tw-h-6 tw-p-1',
         'tw-rounded-medium',
-        'tw-text-x-small tw-font-medium',
+        'tw-body-medium',
         'tw-gap-0.5',
         'focus-visible:tw-z-10',
     ];

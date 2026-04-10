@@ -84,7 +84,7 @@ export class Authenticator {
         const queryParams = [
             'response_type=code',
             'client_id=block-cli',
-            'redirect_uri=http://localhost:5600/oauth',
+            `redirect_uri=http://localhost:${this.port}/oauth`,
             'scope=basic:read%2Bblocks:read%2Bblocks:write',
             `code_challenge=${this.randomChallenge.sha256}`,
             'code_challenge_method=S256',
@@ -102,7 +102,7 @@ export class Authenticator {
             const tokens = await this.httpClient.post<OauthAccessTokenApiResponse>('/api/oauth/accesstoken', {
                 grant_type: 'authorization_code',
                 client_id: 'block-cli',
-                redirect_uri: 'http://localhost:5600/oauth',
+                redirect_uri: `http://localhost:${this.port}/oauth`,
                 scope: 'basic:read+blocks:read+blocks:write',
                 code_verifier: this.randomChallenge.secret,
                 code: authorizationCode,
