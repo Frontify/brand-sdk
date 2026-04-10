@@ -105,7 +105,7 @@ describe('useDocumentNavigation', () => {
 
         renderHook(() => useDocumentNavigation(appBridgeTheme, DOCUMENT_DUMMY));
 
-        expect(stubs.subscribeStub).toHaveBeenCalledOnce();
+        expect(stubs.subscribeStub).toHaveBeenCalledTimes(2);
     });
 
     it('should return the correct initial DocumentNavigation state', () => {
@@ -140,6 +140,6 @@ describe('useDocumentNavigation', () => {
 
         unmount();
 
-        expect(stubs.unsubscribeObserverStub).toHaveBeenCalledOnce();
+        expect(stubs.unsubscribeObserverStub).toHaveBeenCalledTimes(2);
     });
 });

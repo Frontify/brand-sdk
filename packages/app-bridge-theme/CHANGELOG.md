@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 1.0.7
+
+### Patch Changes
+
+-   [#1532](https://github.com/Frontify/brand-sdk/pull/1532) [`286d387`](https://github.com/Frontify/brand-sdk/commit/286d38706cc223212632a34f9dd83e2ea2e58124) Thanks [@anxobotana](https://github.com/anxobotana)! - (AppBridgeTheme) Ensure document navigation items hydration is dispatched when portal navigation items have been loaded
+
 ## 1.0.6
 
 ### Patch Changes
