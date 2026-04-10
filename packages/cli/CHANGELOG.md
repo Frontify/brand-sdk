@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.0.0-alpha.2
+
+### Patch Changes
+
+-   [#1540](https://github.com/Frontify/brand-sdk/pull/1540) [`1c41dbf`](https://github.com/Frontify/brand-sdk/commit/1c41dbf212f1128e306358df67e2e793ce3d9daf) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove nock dependency, use vitest mocks instead
+
 ## 6.0.0-alpha.1
 
 ### Major Changes
