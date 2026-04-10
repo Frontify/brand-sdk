@@ -59,7 +59,6 @@
         "@vitest/ui": "^4.1.2",
         "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
-        "nock": "^14.0.11",
         "prettier": "^3.7.4",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
