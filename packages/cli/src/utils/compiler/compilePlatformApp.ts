@@ -26,7 +26,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         },
         build: {
             minify: 'terser',
-            cssMinify: 'lightningcss',
+            cssMinify: 'esbuild',
             lib: {
                 entry: entryFile,
                 name: outputName,
@@ -62,7 +62,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
         base: '/__DYNAMIC_SEGMENT__/',
         build: {
             minify: 'terser',
-            cssMinify: 'lightningcss',
+            cssMinify: 'esbuild',
             emptyOutDir: false,
         },
     });
