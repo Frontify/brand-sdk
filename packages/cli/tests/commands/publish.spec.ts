@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import nock from 'nock';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { Availability, publishApp } from '../../src/commands/publish';
@@ -17,26 +16,29 @@ const DUMMY_TOKENS = {
     refresh_token: 'some_refresh_token',
 };
 
-const CURRENT_USER_RESPONSE = {
-    data: {
-        currentUser: {
-            email: 'test@frontify.test',
-            name: 'Test User',
-        },
-    },
+const TEST_USER = {
+    email: 'test@frontify.test',
+    name: 'Test User',
 };
 
-const PUBLISH_SUCCESS_RESPONSE = {
-    data: {
-        publishMarketplaceApp: {
-            id: 'published-app-id',
-        },
-    },
-};
+const { mockGetUser, mockHttpPost } = vi.hoisted(() => ({
+    mockGetUser: vi.fn(),
+    mockHttpPost: vi.fn(),
+}));
 
 vi.mock('../../src/utils/reactiveJson', () => ({
     reactiveJson: () => ({ appId: TEST_APP_ID }),
 }));
+
+vi.mock('../../src/utils/user', () => ({
+    getUser: mockGetUser,
+}));
+
+vi.mock('../../src/utils/httpClient', () => {
+    const MockHttpClient = vi.fn();
+    MockHttpClient.prototype.post = mockHttpPost;
+    return { HttpClient: MockHttpClient };
+});
 
 describe('Publish command', () => {
     let oldTokens: unknown;
@@ -55,13 +57,11 @@ describe('Publish command', () => {
     afterEach(() => {
         Configuration.set('tokens', oldTokens);
         Configuration.set('instanceUrl', oldInstanceUrl);
-        nock.cleanAll();
     });
 
     test('should publish app successfully with token and instance options', async () => {
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql').reply(200, PUBLISH_SUCCESS_RESPONSE);
+        mockGetUser.mockResolvedValue(TEST_USER);
+        mockHttpPost.mockResolvedValue({ data: { publishMarketplaceApp: { id: 'published-app-id' } } });
 
         await publishApp({
             releaseNotes: 'Initial release',
@@ -70,15 +70,15 @@ describe('Publish command', () => {
             instance: TEST_BASE_URL,
         });
 
+        expect(mockGetUser).toHaveBeenCalledWith(TEST_BASE_URL, TEST_ACCESS_TOKEN);
         expect(infoSpy).toHaveBeenCalledWith(expect.stringContaining('Test User'));
         expect(successSpy).toHaveBeenCalledWith('The app has been published successfully.');
         expect(exitSpy).not.toHaveBeenCalled();
     });
 
     test('should publish app with COMMUNITY availability', async () => {
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql').reply(200, PUBLISH_SUCCESS_RESPONSE);
+        mockGetUser.mockResolvedValue(TEST_USER);
+        mockHttpPost.mockResolvedValue({ data: { publishMarketplaceApp: { id: 'published-app-id' } } });
 
         await publishApp({
             releaseNotes: 'Community release',
@@ -94,12 +94,12 @@ describe('Publish command', () => {
         Configuration.set('tokens', DUMMY_TOKENS);
         Configuration.set('instanceUrl', TEST_BASE_URL);
 
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql').reply(200, PUBLISH_SUCCESS_RESPONSE);
+        mockGetUser.mockResolvedValue(TEST_USER);
+        mockHttpPost.mockResolvedValue({ data: { publishMarketplaceApp: { id: 'published-app-id' } } });
 
         await publishApp({ releaseNotes: 'Release notes' });
 
+        expect(mockGetUser).toHaveBeenCalledWith(TEST_BASE_URL, undefined);
         expect(successSpy).toHaveBeenCalledWith('The app has been published successfully.');
     });
 
@@ -114,10 +114,7 @@ describe('Publish command', () => {
     });
 
     test('should exit with error when getUser returns undefined', async () => {
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi
-            .post('/graphql', { query: '{ currentUser { email name } }' })
-            .reply(200, { data: { currentUser: null } });
+        mockGetUser.mockResolvedValue(undefined);
 
         await publishApp({
             releaseNotes: 'Release notes',
@@ -129,9 +126,8 @@ describe('Publish command', () => {
     });
 
     test('should exit with error when GraphQL publish mutation fails', async () => {
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi.post('/graphql').reply(400, { error: 'Publish failed' });
+        mockGetUser.mockResolvedValue(TEST_USER);
+        mockHttpPost.mockRejectedValue({ responseBody: { error: 'Publish failed' } });
 
         await publishApp({
             releaseNotes: 'Release notes',
@@ -139,16 +135,13 @@ describe('Publish command', () => {
             instance: TEST_BASE_URL,
         });
 
-        expect(errorSpy).toHaveBeenCalledWith('An error occurred while publishing:', expect.any(String));
+        expect(errorSpy).toHaveBeenCalledWith('An error occurred while publishing:', 'Publish failed');
         expect(exitSpy).toHaveBeenCalledWith(-1);
     });
 
     test('should default availability to PRIVATE', async () => {
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, CURRENT_USER_RESPONSE);
-        testMockApi
-            .post('/graphql', (body: { query: string }) => body.query.includes('PRIVATE'))
-            .reply(200, PUBLISH_SUCCESS_RESPONSE);
+        mockGetUser.mockResolvedValue(TEST_USER);
+        mockHttpPost.mockResolvedValue({ data: { publishMarketplaceApp: { id: 'published-app-id' } } });
 
         await publishApp({
             releaseNotes: 'Release notes',
@@ -156,6 +149,11 @@ describe('Publish command', () => {
             instance: TEST_BASE_URL,
         });
 
+        expect(mockHttpPost).toHaveBeenCalledWith(
+            '/graphql',
+            expect.objectContaining({ query: expect.stringContaining('PRIVATE') }),
+            expect.any(Object),
+        );
         expect(successSpy).toHaveBeenCalledWith('The app has been published successfully.');
     });
 });
