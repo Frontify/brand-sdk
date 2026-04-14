@@ -44,7 +44,7 @@
         "open": "^11.0.0",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^8.0.7",
+        "vite": "^8.0.8",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"
     },
@@ -55,13 +55,13 @@
         "@types/node": "^22.19.15",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.18.1",
-        "@vitest/coverage-v8": "4.1.2",
-        "@vitest/ui": "^4.1.2",
+        "@vitest/coverage-v8": "4.1.4",
+        "@vitest/ui": "^4.1.4",
         "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
         "prettier": "^3.7.4",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
-        "vitest": "^4.1.2"
+        "vitest": "^4.1.4"
     }
 }
