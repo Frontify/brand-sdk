@@ -1,46 +1,42 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import react from '@vitejs/plugin-react';
-import { build } from 'vite';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
+import { build, esmExternalRequirePlugin } from 'vite';
 
-import { getAppBridgeVersion } from '../appBridgeVersion';
+import { REACT_MODULES } from '../vitePlugins';
 
 import { type CompilerOptions } from './compilerOptions';
 
 export const compileBlock = async ({ projectPath, entryFile, outputName }: CompilerOptions) => {
-    const appBridgeVersion = getAppBridgeVersion(projectPath);
     return build({
-        plugins: [
-            react(),
-            viteExternalsPlugin({
-                react: 'React',
-                'react-dom': 'ReactDOM',
-            }),
-        ],
+        plugins: [react(), esmExternalRequirePlugin({ external: REACT_MODULES })],
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
         },
         root: projectPath,
+        mode: 'production',
         build: {
+            minify: 'terser',
+            cssMinify: 'lightningcss',
             lib: {
                 name: outputName,
                 entry: entryFile,
-                formats: ['iife'],
+                formats: ['es'],
                 fileName: () => 'index.js',
+                cssFileName: 'style',
             },
-            rollupOptions: {
-                external: ['react', 'react-dom'],
-                output: {
-                    globals: {
-                        react: 'React',
-                        'react-dom': 'ReactDOM',
-                    },
-                    footer: `
-                        window.${outputName} = ${outputName};
-                        window.${outputName}.dependencies = window.${outputName}.packages || {};
-                        window.${outputName}.dependencies['@frontify/app-bridge'] = '${appBridgeVersion}';
-                    `,
+            rolldownOptions: {
+                platform: 'browser',
+                treeshake: {
+                    // TODO: Fix in Fondue
+                    moduleSideEffects: [
+                        { test: /@frontify\/fondue-components/, sideEffects: false },
+                        { test: /@frontify\/fondue-icons/, sideEffects: false },
+                        { test: /@frontify\/fondue-tokens/, sideEffects: false },
+                        { test: /@frontify\/fondue-charts/, sideEffects: false },
+                        { test: /@frontify\/fondue-rte/, sideEffects: false },
+                        { test: /\.css$/, sideEffects: true },
+                    ],
                 },
             },
         },

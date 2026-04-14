@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export * from './appBridgeVersion';
+export * from './getPackageVersion';
 export * from './compiler/compilerOptions';
 export * from './configuration';
 export * from './date';

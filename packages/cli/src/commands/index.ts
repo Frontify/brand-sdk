@@ -5,3 +5,4 @@ export * from './login';
 export * from './logout';
 export * from './serve';
 export * from './create';
+export * from './publish';

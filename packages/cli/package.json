@@ -16,7 +16,7 @@
         "templates"
     ],
     "engines": {
-        "node": ">=18"
+        "node": ">=22"
     },
     "scripts": {
         "build": "vite build",
@@ -33,19 +33,18 @@
     },
     "dependencies": {
         "@fastify/cors": "^11.2.0",
-        "@vitejs/plugin-react": "^5.2.0",
+        "@vitejs/plugin-react": "^6.0.1",
         "archiver": "^7.0.1",
-        "cac": "^6.7.14",
+        "cac": "^7.0.0",
         "conf": "^15.1.0",
-        "esbuild": "^0.27.4",
+        "esbuild": "^0.28.0",
         "fast-glob": "^3.3.3",
         "fastify": "^5.8.4",
         "glob-to-regexp": "^0.4.1",
-        "node-fetch": "^3.3.2",
         "open": "^11.0.0",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^7.3.1",
+        "vite": "^8.0.7",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"
     },
@@ -53,14 +52,13 @@
         "@frontify/eslint-config-basic": "^1.0.8",
         "@types/glob-to-regexp": "^0.4.4",
         "@types/mock-fs": "^4.13.4",
-        "@types/node": "^20.19.25",
+        "@types/node": "^22.19.15",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.18.1",
         "@vitest/coverage-v8": "4.1.2",
         "@vitest/ui": "^4.1.2",
         "eslint": "^9.39.4",
         "eslint-plugin-notice": "^1.0.0",
-        "nock": "^13.5.6",
         "prettier": "^3.7.4",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",

@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import nock from 'nock';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { Configuration } from '../../src/utils/configuration';
 import { getUser } from '../../src/utils/user';
@@ -23,15 +22,27 @@ const GET_USER_API_RESPONSE = {
 
 const TEST_BASE_URL = 'testing.frontify.test';
 
+const { mockHttpPost } = vi.hoisted(() => ({
+    mockHttpPost: vi.fn(),
+}));
+
+vi.mock('../../src/utils/httpClient', () => {
+    const MockHttpClient = vi.fn();
+    MockHttpClient.prototype.post = mockHttpPost;
+    return { HttpClient: MockHttpClient };
+});
+
 describe('User utils', () => {
     beforeEach(() => {
-        const testMockApi = nock(`https://${TEST_BASE_URL}`);
-        testMockApi.post('/graphql', { query: '{ currentUser { email name } }' }).reply(200, GET_USER_API_RESPONSE);
+        mockHttpPost.mockResolvedValue(GET_USER_API_RESPONSE);
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
     });
 
     describe('getUser', () => {
         test('should get user object', async () => {
-            // TODO: We shall have a different object for test and prod/dev as it would override existing tokens from the user if testing locally
             const oldTokens = Configuration.get('tokens') || {};
             Configuration.set('tokens', DUMMY_TOKENS.tokens);
             expect(await getUser(TEST_BASE_URL)).toEqual(DUMMY_TOKENS);

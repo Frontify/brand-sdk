@@ -22,6 +22,6 @@ export class Logger {
     }
 
     static spacer(width = 1): string {
-        return Array(width + 1).join(' ');
+        return ' '.repeat(width);
     }
 }

@@ -2,10 +2,10 @@
 
 import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
-import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import pkg from '../../package.json';
-import { getAppBridgeVersion } from '../utils/appBridgeVersion';
+import { getAppBridgeVersion, getReactVersion } from '../utils/getPackageVersion';
+import { reactBareExternalPlugin } from '../utils/vitePlugins';
 
 export class BlockDevelopmentServer {
     constructor(
@@ -16,20 +16,19 @@ export class BlockDevelopmentServer {
 
     async serve(): Promise<void> {
         try {
+            const appBridgeVersion = getAppBridgeVersion(process.cwd());
+            const reactVersion = getReactVersion(process.cwd());
+
             const viteServer = await createServer({
                 root: process.cwd(),
                 plugins: [
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     react(),
-                    viteExternalsPlugin({
-                        react: 'React',
-                        'react-dom': 'ReactDOM',
-                    }),
+                    reactBareExternalPlugin(),
                 ],
                 define: {
                     'process.env.NODE_ENV': JSON.stringify('development'),
-                    'DevCustomBlock.dependencies.appBridge': JSON.stringify(getAppBridgeVersion(process.cwd())),
                 },
                 base: `http://localhost:${this.port}/`,
                 appType: 'custom',
@@ -42,6 +41,7 @@ export class BlockDevelopmentServer {
                         host: this.allowExternal ? '0.0.0.0' : 'localhost',
                         protocol: 'ws',
                     },
+                    forwardConsole: false,
                 },
             });
 
@@ -50,6 +50,8 @@ export class BlockDevelopmentServer {
                     return next();
                 }
 
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
                 res.writeHead(200);
                 return res.end('OK');
             });
@@ -59,14 +61,23 @@ export class BlockDevelopmentServer {
                     return next();
                 }
 
+                const host = req.headers.host || `localhost:${this.port}`;
+                const actualPort = parseInt(host.split(':')[1] || String(this.port), 10);
+
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
                 res.setHeader('Content-Type', 'application/json');
                 res.writeHead(200);
                 return res.end(
                     JSON.stringify({
-                        url: `http://localhost:${this.port}/${this.entryFilePath}`,
+                        url: `http://${host}/${this.entryFilePath}`,
                         entryFilePath: this.entryFilePath,
-                        port: this.port,
+                        port: actualPort,
                         version: pkg.version,
+                        dependencies: {
+                            ...(appBridgeVersion ? { '@frontify/app-bridge': appBridgeVersion } : {}),
+                            react: reactVersion,
+                        },
                     }),
                 );
             });
