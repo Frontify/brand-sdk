@@ -1,5 +1,90 @@
 # @frontify/frontify-cli
 
+## 6.0.0
+
+### Major Changes
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - feat: support React 19
+
+    The CLI now supports React 19 to stay up-to-date with the React ecosystem and provide better performance and modern features.
+    Consumers can from now on update their block / theme to React 19.
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - chore: update required node to 22
+
+    The minimum required Node.js version has been bumped from 18 to 22.
+    Node.js 18 is reaching its end-of-life. Node 22 is the current Active LTS release.
+    Consumers must update their local development environments and CI/CD pipelines to use Node.js version 22 or higher.
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - feat: remove deprecated `block` and `theme` subcommands
+
+    The following deprecated commands have been removed:
+
+    -   `block serve` / `theme serve` → use `serve` instead
+    -   `block deploy` / `theme deploy` → use `deploy` instead
+    -   `block create` / `theme create` → use `create` instead
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - feat: build blocks / themes as ESM packages
+
+    Custom blocks and themes are now compiled and output as ECMAScript Modules (ESM) instead of relying on global window variables.
+    ESM is the modern standard for JavaScript, offering better interoperability, tree-shaking and compatibility with modern bundlers.
+    Consumers don't need to do anything to migrate to ESM, but they should be aware of the changes.
+
+### Minor Changes
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `publish` command for publishing apps to the Frontify Marketplace
+
+    Publish your app directly from the CLI using `frontify-cli publish`.
+
+    ### Usage
+
+    ```bash
+    # Publish with release notes (required)
+    frontify-cli publish --release-notes="Initial release"
+
+    # Publish with community availability (default: PRIVATE)
+    frontify-cli publish --release-notes="Bug fixes" --availability=COMMUNITY
+
+    # Publish using explicit credentials instead of stored login
+    frontify-cli publish --release-notes="New feature" --token=<access-token> --instance=<instance-url>
+    ```
+
+### Patch Changes
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - fix: resolve all ESLint warnings across the CLI package
+
+    -   Add typed interfaces (`LoginOptions`, `ServeOptions`, `DeployOptions`) for CLI action callbacks to eliminate unsafe `any` access on command options
+    -   Cast `prompts()` return values to proper types instead of implicit `any` destructuring
+    -   Handle floating promises in `login.ts` and `platformAppDevelopmentServer.ts` with `.catch()` instead of fire-and-forget
+    -   Replace `@ts-expect-error` workarounds in `promiseExec.ts` with proper `String()` coercion
+    -   Refactor `reactiveJson.ts` to use typed `JSON.parse`, `Record`-based proxy handler, and `instanceof`/`in` checks instead of `as any` casts
+    -   Replace `as any` casts in `vitePlugins.ts` with `Record<string, unknown>` for rolldownOptions access
+    -   Add local `Archive` interface in `zip.ts` to properly type the untyped `archiver` module
+    -   Use `keyof typeof` cast in `gitignoreTemplate.ts` for safe object indexing
+    -   Type dynamic `import()` results and `JSON.parse` calls in test files
+    -   Remove unused `eslint-disable` directives
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - fix: CLI bug fixes and cleanup
+
+    -   Fix typo `sucess` → `success` in HTTP error response type
+    -   Fix hardcoded port in OAuth redirect URI (now uses the configured `--port` value)
+    -   Fix missing `/` separator in deploy build file ignore glob pattern
+    -   Remove `node-fetch` dependency in favor of native `fetch` (Node >=22)
+    -   Handle full 2xx status range in HTTP client instead of only `200`
+    -   Eliminate duplicated deploy command branches in CLI entry point
+    -   Reduce cognitive complexity in deploy command by extracting helper functions
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - chore: updated the block templates
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove nock dependency, use vitest mocks instead
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - core(Deps): Bump `esbuild` and `vite` dependencies
+
+-   [#1546](https://github.com/Frontify/brand-sdk/pull/1546) [`dec69a9`](https://github.com/Frontify/brand-sdk/commit/dec69a9829016cb0a0c87bfd9e7ac239cca9dfeb) Thanks [@ragi96](https://github.com/ragi96)! - fix: add missing CSS and JS minification to platform-app compiler
+
+    -   Add `cssFileName: 'style'` to the settings lib build
+    -   Add `minify: 'terser'` for JS minification
+    -   Set explicit `mode: 'production'` on both builds
+
 ## 6.0.0-alpha.3
 
 ### Patch Changes
