@@ -42,12 +42,12 @@ export class PlatformAppDevelopmentServer {
 
                             if (relativeFilePath === 'src/settings.ts' || relativeFilePath === 'src/index.ts') {
                                 // if the change is either in settings.ts or index.ts do a rebuild to load settings
-                                settingsSchema.rebuild();
-                                server.restart();
+                                settingsSchema.rebuild().catch(() => {});
+                                server.restart().catch(() => {});
                             }
                         },
                         buildStart: () => {
-                            settingsSchema.rebuild();
+                            settingsSchema.rebuild().catch(() => {});
                         },
                     },
                 ],

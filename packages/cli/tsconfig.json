@@ -3,7 +3,7 @@
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "lib": ["es2020"],
+        "lib": ["ES2022"],
         "module": "ESNext",
         "moduleResolution": "Bundler",
         "noImplicitAny": false,
@@ -14,7 +14,7 @@
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
-        "target": "ES2020"
+        "target": "ES2022"
     },
     "exclude": ["dist", "node_modules", "tests/files"],
     "include": ["eslint.config.mjs", "src", "package.json", "tests", "vite.config.ts"]

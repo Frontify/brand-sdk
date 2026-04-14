@@ -8,12 +8,9 @@ export const promiseExec = (command: string, options: ExecOptions = {}): Promise
     return new Promise((resolve, reject) => {
         exec(command, options, (error, stdout) => {
             if (error) {
-                // @ts-expect-error node typing change
-                // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                return reject(new CommandExecutionError(error + stdout));
+                return reject(new CommandExecutionError(`${error.message}${String(stdout)}`));
             } else {
-                // @ts-expect-error node typing change
-                return resolve(stdout);
+                return resolve(String(stdout));
             }
         });
     });

@@ -7,10 +7,10 @@ import { beforeEach, afterEach, describe, expect, test, vi } from 'vitest';
 import { reactiveJson } from '../../src/utils/reactiveJson';
 
 const testString = '{ "some": "body" }';
-const testObject = JSON.parse(testString);
+const testObject: unknown = JSON.parse(testString);
 
 const expectedString = '{\n\t"some": "one",\n\t"told": "me"\n}';
-const expectedObject = JSON.parse(expectedString);
+const expectedObject: unknown = JSON.parse(expectedString);
 
 const fileTestPath = './frontify-cli/someObject.json';
 

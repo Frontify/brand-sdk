@@ -1,9 +1,107 @@
 # @frontify/frontify-cli
 
+## 6.0.0-alpha.3
+
+### Patch Changes
+
+-   [#1544](https://github.com/Frontify/brand-sdk/pull/1544) [`0eb64be`](https://github.com/Frontify/brand-sdk/commit/0eb64bee22875daca3177ee80c1498550bddef86) Thanks [@ragi96](https://github.com/ragi96)! - chore: updated the block templates
+
+## 6.0.0-alpha.2
+
+### Patch Changes
+
+-   [#1540](https://github.com/Frontify/brand-sdk/pull/1540) [`1c41dbf`](https://github.com/Frontify/brand-sdk/commit/1c41dbf212f1128e306358df67e2e793ce3d9daf) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove nock dependency, use vitest mocks instead
+
+## 6.0.0-alpha.1
+
+### Major Changes
+
+-   [#1534](https://github.com/Frontify/brand-sdk/pull/1534) [`dce1f51`](https://github.com/Frontify/brand-sdk/commit/dce1f51e9cb71c2760b8b8b4e6117ef879dd8336) Thanks [@ragi96](https://github.com/ragi96)! - feat: remove deprecated `block` and `theme` subcommands
+
+    The following deprecated commands have been removed:
+
+    -   `block serve` / `theme serve` → use `serve` instead
+    -   `block deploy` / `theme deploy` → use `deploy` instead
+    -   `block create` / `theme create` → use `create` instead
+
+### Minor Changes
+
+-   [#1526](https://github.com/Frontify/brand-sdk/pull/1526) [`406291f`](https://github.com/Frontify/brand-sdk/commit/406291f61a96e8c754da8d07358d8308678b48ac) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `publish` command for publishing apps to the Frontify Marketplace
+
+    Publish your app directly from the CLI using `frontify-cli publish`.
+
+    ### Usage
+
+    ```bash
+    # Publish with release notes (required)
+    frontify-cli publish --release-notes="Initial release"
+
+    # Publish with community availability (default: PRIVATE)
+    frontify-cli publish --release-notes="Bug fixes" --availability=COMMUNITY
+
+    # Publish using explicit credentials instead of stored login
+    frontify-cli publish --release-notes="New feature" --token=<access-token> --instance=<instance-url>
+    ```
+
+### Patch Changes
+
+-   [#1527](https://github.com/Frontify/brand-sdk/pull/1527) [`d070293`](https://github.com/Frontify/brand-sdk/commit/d0702939e4f15cd0f872475f5f5694e3054783a4) Thanks [@ragi96](https://github.com/ragi96)! - fix: resolve all ESLint warnings across the CLI package
+
+    -   Add typed interfaces (`LoginOptions`, `ServeOptions`, `DeployOptions`) for CLI action callbacks to eliminate unsafe `any` access on command options
+    -   Cast `prompts()` return values to proper types instead of implicit `any` destructuring
+    -   Handle floating promises in `login.ts` and `platformAppDevelopmentServer.ts` with `.catch()` instead of fire-and-forget
+    -   Replace `@ts-expect-error` workarounds in `promiseExec.ts` with proper `String()` coercion
+    -   Refactor `reactiveJson.ts` to use typed `JSON.parse`, `Record`-based proxy handler, and `instanceof`/`in` checks instead of `as any` casts
+    -   Replace `as any` casts in `vitePlugins.ts` with `Record<string, unknown>` for rolldownOptions access
+    -   Add local `Archive` interface in `zip.ts` to properly type the untyped `archiver` module
+    -   Use `keyof typeof` cast in `gitignoreTemplate.ts` for safe object indexing
+    -   Type dynamic `import()` results and `JSON.parse` calls in test files
+    -   Remove unused `eslint-disable` directives
+
+-   [#1529](https://github.com/Frontify/brand-sdk/pull/1529) [`6152ca5`](https://github.com/Frontify/brand-sdk/commit/6152ca58166f7128df78a14b8f6dc6f66cc71f7d) Thanks [@ragi96](https://github.com/ragi96)! - fix: CLI bug fixes and cleanup
+
+    -   Fix typo `sucess` → `success` in HTTP error response type
+    -   Fix hardcoded port in OAuth redirect URI (now uses the configured `--port` value)
+    -   Fix missing `/` separator in deploy build file ignore glob pattern
+    -   Remove `node-fetch` dependency in favor of native `fetch` (Node >=22)
+    -   Handle full 2xx status range in HTTP client instead of only `200`
+    -   Eliminate duplicated deploy command branches in CLI entry point
+    -   Reduce cognitive complexity in deploy command by extracting helper functions
+
+-   [#1535](https://github.com/Frontify/brand-sdk/pull/1535) [`2a4d33c`](https://github.com/Frontify/brand-sdk/commit/2a4d33ca2807bfa3c2c0dea30eaecb3153d181fb) Thanks [@ragi96](https://github.com/ragi96)! - core(Deps): Bump `esbuild` and `vite` dependencies
+
+-   [#1536](https://github.com/Frontify/brand-sdk/pull/1536) [`d5d2237`](https://github.com/Frontify/brand-sdk/commit/d5d22370de2f2da44e6fd5326ddb0ccf572d4ed4) Thanks [@ragi96](https://github.com/ragi96)! - fix: add missing CSS and JS minification to platform-app compiler
+
+    -   Add `cssFileName: 'style'` to the settings lib build
+    -   Add `minify: 'terser'` for JS minification
+    -   Set explicit `mode: 'production'` on both builds
+
+## 6.0.0-alpha.0
+
+### Major Changes
+
+-   [#1482](https://github.com/Frontify/brand-sdk/pull/1482) [`db8c298`](https://github.com/Frontify/brand-sdk/commit/db8c298546a1b2429df799ed1ee7599efb3bf357) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: support React 19
+
+    The CLI now supports React 19 to stay up-to-date with the React ecosystem and provide better performance and modern features.
+    Consumers can from now on update their block / theme to React 19.
+
+-   [#1482](https://github.com/Frontify/brand-sdk/pull/1482) [`db8c298`](https://github.com/Frontify/brand-sdk/commit/db8c298546a1b2429df799ed1ee7599efb3bf357) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update required node to 22
+
+    The minimum required Node.js version has been bumped from 18 to 22.
+    Node.js 18 is reaching its end-of-life. Node 22 is the current Active LTS release.
+    Consumers must update their local development environments and CI/CD pipelines to use Node.js version 22 or higher.
+
+-   [#1482](https://github.com/Frontify/brand-sdk/pull/1482) [`db8c298`](https://github.com/Frontify/brand-sdk/commit/db8c298546a1b2429df799ed1ee7599efb3bf357) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: build blocks / themes as ESM packages
+
+    Custom blocks and themes are now compiled and output as ECMAScript Modules (ESM) instead of relying on global window variables.
+    ESM is the modern standard for JavaScript, offering better interoperability, tree-shaking and compatibility with modern bundlers.
+    Consumers don't need to do anything to migrate to ESM, but they should be aware of the changes.
+
 ## 5.10.3
 
 ### Patch Changes
 
+-   # [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
 -   [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
 
 ## 5.10.2
@@ -580,4 +678,5 @@
 
 ### Minor Changes
 
+-
 -   [#274](https://github.com/Frontify/frontify-cli/pull/274) [`c0095fc`](https://github.com/Frontify/frontify-cli/commit/c0095fc46d5dd95e7fd91779be586756f3a7dc0e) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add template to CLI creation

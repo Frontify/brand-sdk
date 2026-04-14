@@ -17,8 +17,12 @@ import {
     createNewApp,
     loginUser,
     logoutUser,
+    publishApp,
+    Availability,
 } from './commands/index';
 import {
+    type CompilerOptions,
+    Logger,
     compileBlock,
     compilePlatformApp,
     compileTheme,
@@ -27,6 +31,19 @@ import {
     reactiveJson,
 } from './utils/index';
 
+type LoginOptions = { instance: string; port: number };
+type ServeOptions = { entryPath: string; port: number; allowExternal: boolean; appType?: string };
+type DeployOptions = {
+    entryPath: string;
+    outDir: string;
+    dryRun: boolean;
+    noVerify: boolean;
+    open: boolean;
+    appType?: string;
+    instance?: string;
+    token?: string;
+};
+
 const cli = cac(pkg.name.split('/')[1]);
 
 cli.command('login [instanceUrl]', 'log in to a Frontify instance')
@@ -34,13 +51,13 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
     .option('-p, --port <port>', '[number] port for the oauth service', {
         default: process.env.PORT || 5600,
     })
-    .action(async (instanceUrl: string, options) => {
+    .action(async (instanceUrl: string, options: LoginOptions) => {
         const computedInstanceUrl = instanceUrl || options.instance || process.env.INSTANCE_URL;
         if (computedInstanceUrl) {
             prompts.inject([computedInstanceUrl]);
         }
 
-        const { promptedInstanceUrl } = await prompts([
+        const { promptedInstanceUrl } = (await prompts([
             {
                 type: 'text',
                 name: 'promptedInstanceUrl',
@@ -48,7 +65,7 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
                 initial: 'instanceName.frontify.com',
                 validate: (value: string) => (value.trim() === '' ? 'You need to enter a valid URL.' : true),
             },
-        ]);
+        ])) as { promptedInstanceUrl: string };
 
         if (!promptedInstanceUrl) {
             exit(0);
@@ -60,26 +77,6 @@ cli.command('login [instanceUrl]', 'log in to a Frontify instance')
     });
 
 cli.command('logout', 'log out of an instance').action(logoutUser);
-
-/**
- * @deprecated `block serve` and `theme serve` will be removed in version 4.0 in favour of `serve`
- */
-for (const appType of ['block', 'theme']) {
-    cli.command(`${appType} serve`, `[deprecated: use 'serve' instead] serve the ${appType} locally`)
-        .alias(`${appType} dev`)
-        .option('-e, --entryPath, --entry-path <entryPath>', `[string] path to the ${appType} entry file`, {
-            default: join('src', 'index.tsx'),
-        })
-        .option('--port <port>', '[number] specify port', {
-            default: process.env.PORT || 5600,
-        })
-        .option('--allowExternal, --allow-external', '[boolean] allow external IPs to access the server', {
-            default: false,
-        })
-        .action(async (options) => {
-            await createDevelopmentServer(options.entryPath, options.port, options.allowExternal);
-        });
-}
 
 cli.command('serve', 'serve the app locally')
     .alias('dev')
@@ -93,7 +90,7 @@ cli.command('serve', 'serve the app locally')
         default: false,
     })
     .option('--appType <appType>, --app-type', '[string] specify app type. Overrides manifest values')
-    .action(async (options) => {
+    .action(async (options: ServeOptions) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
 
@@ -106,30 +103,6 @@ cli.command('serve', 'serve the app locally')
         }
     });
 
-/**
- * @deprecated `block deploy` and `theme deploy` will be removed in version 4.0 in favour of `deploy`
- */
-for (const appType of ['block', 'theme']) {
-    cli.command(`${appType} deploy`, `[deprecated: use 'deploy' instead] deploy the ${appType} to the marketplace`)
-        .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.tsx') })
-        .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
-        .option('--dryRun, --dry-run', '[boolean] enable the dry run mode', { default: false })
-        .option('--noVerify, --no-verify', '[boolean] disable the linting and typechecking', { default: false })
-        .option('--open', '[boolean] open the marketplace app page', { default: false })
-        .action(async (options) => {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                },
-                appType === 'theme' ? compileTheme : compileBlock,
-            );
-        });
-}
-
 cli.command('deploy', 'deploy the app to the marketplace')
     .option('-e, --entryPath <entryPath>', '[string] path to the entry file', { default: join('src', 'index.ts') })
     .option('-o, --outDir <outDir>', '[string] path to the output directory', { default: 'dist' })
@@ -139,54 +112,60 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
     .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
     .option('-t, --token <accessToken>', '[string] the access token')
-    .action(async (options) => {
+    .action(async (options: DeployOptions) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
 
-        if (appType === 'platform-app') {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                    instance: options.instance,
-                    token: options.token,
-                },
-                compilePlatformApp,
-            );
-        } else if (appType === 'theme') {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                    instance: options.instance,
-                    token: options.token,
-                },
-                compileTheme,
-            );
-        } else {
-            await createDeployment(
-                options.entryPath,
-                options.outDir,
-                {
-                    dryRun: options.dryRun,
-                    noVerify: options.noVerify,
-                    openInBrowser: options.open,
-                    instance: options.instance,
-                    token: options.token,
-                },
-                compileBlock,
-            );
+        const compilers: Record<string, (options: CompilerOptions) => Promise<unknown>> = {
+            'content-block': compileBlock,
+            'platform-app': compilePlatformApp,
+            theme: compileTheme,
+        };
+
+        const compiler = compilers[appType ?? ''];
+        if (!compiler) {
+            throw new Error(`Unknown app type "${appType}". Expected one of: ${Object.keys(compilers).join(', ')}`);
         }
+
+        await createDeployment(
+            options.entryPath,
+            options.outDir,
+            {
+                dryRun: options.dryRun,
+                noVerify: options.noVerify,
+                openInBrowser: options.open,
+                instance: options.instance,
+                token: options.token,
+            },
+            compiler,
+        );
+    });
+
+cli.command('publish', 'publish the app to the marketplace')
+    .option('--releaseNotes, --release-notes <releaseNotes>', '[string] release notes for the publish')
+    .option(
+        '--availability [availability]',
+        `[string] availability of the app (${Object.values(Availability).join(', ')})`,
+        { default: Availability.PRIVATE },
+    )
+    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
+    .option('-t, --token <accessToken>', '[string] the access token')
+    .action(async (options) => {
+        if (!options.releaseNotes) {
+            Logger.error('Release notes are required. Use --releaseNotes="Your release notes".');
+            process.exit(-1);
+        }
+
+        await publishApp({
+            releaseNotes: options.releaseNotes,
+            availability: options.availability,
+            token: options.token,
+            instance: options.instance,
+        });
     });
 
 cli.command('create [appName]', 'create a new marketplace app').action(async (appName: string) => {
-    const { promptedAppName, stylingFramework, appType } = await prompts([
+    const { promptedAppName, stylingFramework, appType } = (await prompts([
         {
             type: 'text',
             name: 'promptedAppName',
@@ -219,7 +198,7 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
                 { title: 'None', value: 'css' },
             ],
         },
-    ]);
+    ])) as { promptedAppName: string; stylingFramework: string; appType: string };
 
     if (!promptedAppName || !stylingFramework || !appType) {
         exit(0);
@@ -228,32 +207,7 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
     createNewApp(promptedAppName, stylingFramework, appType);
 });
 
-/**
- * @deprecated `block create` and `theme create` will be removed in version 4.0 in favour of `create`
- */
-for (const appType of ['block', 'theme']) {
-    cli.command(
-        `${appType} create [appName]`,
-        `[deprecated: use 'create' instead] create a ${appType} app locally`,
-    ).action((appName: string) => createNewApp(appName, 'css-modules', 'content-block'));
-}
-
 cli.help();
 cli.version(pkg.version);
 
-const mergeOldBlockThemeCommands = (cliArgs: string[]) => {
-    const oldCommandIndex = cliArgs.findIndex((value) => value === 'block' || value === 'theme');
-    if (
-        oldCommandIndex !== -1 &&
-        (cliArgs[oldCommandIndex + 1] === 'serve' ||
-            cliArgs[oldCommandIndex + 1] === 'deploy' ||
-            cliArgs[oldCommandIndex + 1] === 'create')
-    ) {
-        cliArgs[oldCommandIndex] = `${cliArgs[oldCommandIndex]} ${cliArgs[oldCommandIndex + 1]}`;
-        cliArgs.splice(oldCommandIndex + 1, 1);
-    }
-
-    return cliArgs;
-};
-
-cli.parse(mergeOldBlockThemeCommands(process.argv));
+cli.parse(process.argv);

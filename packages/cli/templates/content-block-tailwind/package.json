@@ -10,18 +10,15 @@
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"
     },
-    "peerDependencies": {
-        "zustand": "4.5.5"
-    },
     "dependencies": {
-        "@frontify/app-bridge": "^3.12.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "@frontify/app-bridge": "^3.12.8",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.17.6",
-        "@frontify/frontify-cli": "^5.9.4",
-        "@frontify/guideline-blocks-settings": "^1.0.12",
+        "@frontify/frontify-cli": "^6.0.0",
+        "@frontify/guideline-blocks-settings": "^2.1.18",
         "@types/react": "^18.3.27",
         "@types/react-dom": "^18.3.7",
         "autoprefixer": "^10.4.22",
