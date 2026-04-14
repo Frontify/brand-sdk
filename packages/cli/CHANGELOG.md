@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.0.0-alpha.3
+
+### Patch Changes
+
+-   [#1544](https://github.com/Frontify/brand-sdk/pull/1544) [`0eb64be`](https://github.com/Frontify/brand-sdk/commit/0eb64bee22875daca3177ee80c1498550bddef86) Thanks [@ragi96](https://github.com/ragi96)! - chore: updated the block templates
+
 ## 6.0.0-alpha.2
 
 ### Patch Changes
