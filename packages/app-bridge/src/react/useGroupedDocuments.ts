@@ -29,7 +29,7 @@ export const useGroupedDocuments = (
     documentGroupId: number,
     options: Options = { enabled: true },
 ) => {
-    // eslint-disable-next-line @eslint-react/prefer-use-state-lazy-initialization
+    // eslint-disable-next-line @eslint-react/use-state
     const [documents, setDocuments] = useState<Map<number, Document>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -41,7 +41,6 @@ export const useGroupedDocuments = (
 
     useEffect(() => {
         if (options.enabled) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             refetch();
         }
     }, [options.enabled, refetch]);

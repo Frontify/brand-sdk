@@ -37,7 +37,7 @@ export const DocumentLinks = ({
                 setItemsToExpandInitially(items);
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [documents.length]);
 
     useEffect(() => {
@@ -48,6 +48,7 @@ export const DocumentLinks = ({
             .finally(() => {
                 setIsLoading(false);
             });
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, []);
 
     const findLocationOfSelectedUrl = async () => {

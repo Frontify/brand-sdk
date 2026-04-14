@@ -84,6 +84,5 @@ export const useAssetUpload = (props?: UseAssetUploadParameters): UseAssetUpload
         uploadFilesInternal(files);
     };
 
-    // eslint-disable-next-line react-hooks/refs
     return [uploadFiles, { results: results.current, doneAll }];
 };

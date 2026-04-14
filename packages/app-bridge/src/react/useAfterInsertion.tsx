@@ -10,7 +10,7 @@ export const useAfterInsertion = <T extends AppBridgeBlock>(appBridge: T, callba
         if (enabled && isNewlyInserted) {
             callback();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [enabled, appBridge]);
 
     return appBridge;

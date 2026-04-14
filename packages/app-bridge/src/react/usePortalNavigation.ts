@@ -37,7 +37,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
 
     useEffect(() => {
         if (options.enabled) {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises, react-hooks/set-state-in-effect
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             refetch();
         }
     }, [options.enabled, refetch]);
