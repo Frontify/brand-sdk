@@ -114,7 +114,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('-t, --token <accessToken>', '[string] the access token')
     .action(async (options: DeployOptions) => {
         const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
-        const appType = options.appType || manifest.appType;
+        const appType = options.appType || manifest.appType || 'content-block';
 
         const compilers: Record<string, (options: CompilerOptions) => Promise<unknown>> = {
             'content-block': compileBlock,
