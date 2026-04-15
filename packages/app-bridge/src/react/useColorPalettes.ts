@@ -48,6 +48,7 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
             componentMounted = false;
             window.emitter.off('AppBridge:ColorPalettesUpdated', updateColorsPalettesFromEvent);
         };
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge, blockId, colorPaletteIds]);
 
     const emitUpdatedColorPalettes = async () => {

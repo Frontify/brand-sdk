@@ -1,6 +1,7 @@
 # Platform App Types
 
 ## Code Structure
+
 Defines the App and gives typing for the settings
 
 ```ts

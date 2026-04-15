@@ -3,14 +3,14 @@
 // @ts-check
 
 import frontifyConfig from '@frontify/eslint-config-basic';
+import headerPlugin from '@tony.ganchev/eslint-plugin-header';
 import { defineConfig } from 'eslint/config';
-import noticePlugin from 'eslint-plugin-notice';
 
 export default defineConfig(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     frontifyConfig,
     {
-        ignores: ['dist/', 'coverage/', 'node_modules/', 'templates/', 'tests/files', '**/*.md/**.ts'],
+        ignores: ['dist/', 'coverage/', 'node_modules/', 'templates/', 'tests/files', '**/*.md/**.ts', '**/*.md'],
     },
     {
         files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.cjs'],
@@ -21,17 +21,19 @@ export default defineConfig(
             },
         },
         plugins: {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            notice: noticePlugin,
+            '@tony.ganchev': headerPlugin,
         },
         rules: {
             // Copyright header rules
-            'notice/notice': [
+            '@tony.ganchev/header': [
                 'error',
                 {
-                    template: '/* (c) Copyright Frontify Ltd., all rights reserved. */\n\n',
-                    messages: {
-                        whenFailedToMatch: 'No Frontify copyright header set.',
+                    header: {
+                        commentType: 'block',
+                        lines: [' (c) Copyright Frontify Ltd., all rights reserved. '],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2,
                     },
                 },
             ],
