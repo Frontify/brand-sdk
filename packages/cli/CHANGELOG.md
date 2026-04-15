@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 6.0.1
+
+### Patch Changes
+
+-   [#1549](https://github.com/Frontify/brand-sdk/pull/1549) [`2317a2a`](https://github.com/Frontify/brand-sdk/commit/2317a2a91baede088328d7f9cad2e8a941df86b8) Thanks [@ragi96](https://github.com/ragi96)! - fix(cli): default `appType` to `content-block` in deploy command
+
+    When neither the `--app-type` CLI option nor the `manifest.json` `appType` field is set, the deploy command now falls back to `'content-block'` instead of remaining `undefined`. This prevents deployment failures for projects that omit the `appType` from their manifest.
+
 ## 6.0.0
 
 ### Major Changes
