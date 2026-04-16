@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import sinon from 'sinon';
+import sinon, { type SinonStub } from 'sinon';
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
@@ -96,29 +96,36 @@ describe('useBlockAssets hook', () => {
         });
     });
 
-    it('should update state after delete via getBlockAssets', async () => {
-        const { result, appBridgeStub } = loadUseBlockAssets();
+    it('should notify about updated assets on delete', async () => {
+        const { result, asset } = loadUseBlockAssets();
 
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
         });
 
+        const call = (window.emitter.emit as SinonStub).getCall(0);
+
         await waitFor(() => {
-            expect(appBridgeStub.getBlockAssets.called).toBe(true);
-            expect(result.current.blockAssets).toStrictEqual({ key: [] });
+            expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
+            expect(call.lastArg.blockId).toEqual(123);
+            expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
+            expect(call.lastArg.blockAssets).toStrictEqual({ key: [] });
         });
     });
 
-    it('should update state after add via getBlockAssets', async () => {
-        const { result, appBridgeStub } = loadUseBlockAssets();
-
+    it('should notify about updated assets on add asset ids to key', async () => {
+        const { result, asset } = loadUseBlockAssets();
+        const assetToAdd = AssetDummy.with(2);
         await act(async () => {
-            await result.current.addAssetIdsToKey('key', [2]);
+            await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
         });
 
+        const call = (window.emitter.emit as SinonStub).getCall(0);
         await waitFor(() => {
-            expect(appBridgeStub.getBlockAssets.called).toBe(true);
-            expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1, 2]);
+            expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
+            expect(call.lastArg.blockId).toEqual(123);
+            expect(call.lastArg.blockAssets).toMatchObject({ key: [asset, assetToAdd] });
+            expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
         });
     });
 });
