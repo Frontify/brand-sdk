@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 6.0.2
+
+### Patch Changes
+
+-   [#1551](https://github.com/Frontify/brand-sdk/pull/1551) [`4a51843`](https://github.com/Frontify/brand-sdk/commit/4a518433f20e598ea6e3ef9a95105b0072b577b1) Thanks [@jeremyzahner](https://github.com/jeremyzahner)! - fix(cli): resolve dependency versions from node_modules instead of package.json specifiers
+
+    The development server and platform app compiler were reading React and App Bridge versions directly from the consumer's `package.json` `dependencies` field. This broke when using pnpm workspaces with the `catalog:` or `workspace:*` protocols, since those specifiers were passed as-is to the bundler instead of actual version numbers.
+
+    Version resolution now uses Node's built-in `findPackageJSON` (available since Node 22.14.0, matching the CLI's `>=22` engine requirement) to directly locate each package's `package.json` in `node_modules`. A fallback to the consumer's `package.json` is preserved for environments where `node_modules` is not yet populated, and checks `devDependencies` and `peerDependencies` in addition to `dependencies`.
+
 ## 6.0.1
 
 ### Patch Changes
