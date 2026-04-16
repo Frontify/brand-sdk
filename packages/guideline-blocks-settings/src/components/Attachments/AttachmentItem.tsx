@@ -60,14 +60,14 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
             if (selectedFiles) {
                 uploadFile(selectedFiles[0]);
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line @eslint-react/exhaustive-deps
         }, [selectedFiles]);
 
         useEffect(() => {
             if (doneAll) {
                 onReplaceWithUpload(uploadResults[0]);
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line @eslint-react/exhaustive-deps
         }, [doneAll, uploadResults]);
 
         const showLoadingCircle = isLoading || (selectedFiles && !doneAll);

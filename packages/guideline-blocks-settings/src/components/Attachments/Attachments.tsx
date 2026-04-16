@@ -67,7 +67,7 @@ export const Attachments = ({
             setIsUploadLoading(true);
             uploadFile(selectedFiles);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [selectedFiles]);
 
     useEffect(() => {
@@ -78,7 +78,7 @@ export const Attachments = ({
             }
         };
         uploadDone();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [doneAll, uploadResults]);
 
     const onOpenAssetChooser = () => {

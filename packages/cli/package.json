@@ -1,7 +1,7 @@
 {
     "name": "@frontify/frontify-cli",
     "type": "module",
-    "version": "6.0.0-alpha.3",
+    "version": "6.0.1",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
@@ -44,24 +44,24 @@
         "open": "^11.0.0",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^8.0.7",
+        "vite": "^8.0.8",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"
     },
     "devDependencies": {
-        "@frontify/eslint-config-basic": "^1.0.8",
+        "@frontify/eslint-config-basic": "^1.0.15",
+        "@tony.ganchev/eslint-plugin-header": "^3.4.3",
         "@types/glob-to-regexp": "^0.4.4",
         "@types/mock-fs": "^4.13.4",
         "@types/node": "^22.19.15",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.18.1",
-        "@vitest/coverage-v8": "4.1.2",
-        "@vitest/ui": "^4.1.2",
-        "eslint": "^9.39.4",
-        "eslint-plugin-notice": "^1.0.0",
-        "prettier": "^3.7.4",
+        "@vitest/coverage-v8": "4.1.4",
+        "@vitest/ui": "^4.1.4",
+        "eslint": "^10.2.0",
+        "prettier": "^3.8.2",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
-        "vitest": "^4.1.2"
+        "vitest": "^4.1.4"
     }
 }

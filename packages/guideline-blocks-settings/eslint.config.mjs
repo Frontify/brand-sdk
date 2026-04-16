@@ -4,15 +4,14 @@
 
 // @ts-expect-error No types available
 import frontifyConfig from '@frontify/eslint-config-react';
+import headerPlugin from '@tony.ganchev/eslint-plugin-header';
 import { defineConfig } from 'eslint/config';
-// @ts-expect-error No types available
-import noticePlugin from 'eslint-plugin-notice';
 
 export default defineConfig(
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     frontifyConfig,
     {
-        ignores: ['dist/', 'coverage/', 'node_modules/', '**/*.md/**.ts'],
+        ignores: ['dist/', 'coverage/', 'node_modules/', '**/*.md/**.ts', '**/*.md'],
     },
     {
         files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts', '**/*.cjs'],
@@ -23,24 +22,25 @@ export default defineConfig(
             },
         },
         plugins: {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            notice: noticePlugin,
+            '@tony.ganchev': headerPlugin,
         },
         rules: {
             // Copyright header rules
-            'notice/notice': [
+            '@tony.ganchev/header': [
                 'error',
                 {
-                    template: '/* (c) Copyright Frontify Ltd., all rights reserved. */\n\n',
-                    messages: {
-                        whenFailedToMatch: 'No Frontify copyright header set.',
+                    header: {
+                        commentType: 'block',
+                        lines: [' (c) Copyright Frontify Ltd., all rights reserved. '],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2,
                     },
                 },
             ],
 
             // React rules
-            '@eslint-react/dom/no-missing-button-type': 'warn',
-            '@eslint-react/naming-convention/filename-extension': 'warn',
+            '@eslint-react/dom-no-missing-button-type': 'warn',
             '@eslint-react/no-unnecessary-use-prefix': 'warn',
             '@eslint-react/no-unstable-context-value': 'warn',
 

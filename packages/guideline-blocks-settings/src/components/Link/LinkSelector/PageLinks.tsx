@@ -44,6 +44,7 @@ export const PageLinks = ({
             .finally(() => {
                 setIsLoading(false);
             });
+        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, []);
 
     if (isLoading) {

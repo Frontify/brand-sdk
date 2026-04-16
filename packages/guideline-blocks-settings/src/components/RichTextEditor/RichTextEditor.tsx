@@ -100,7 +100,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
     useEffect(() => {
         if (!isEditing) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
+            // eslint-disable-next-line @eslint-react/set-state-in-effect
             setHasEnteredViewport(false);
         }
     }, [isEditing]);

@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-/* (c) Copyright Frontify Ltd., all rights reserved. */
 import { afterEach, vi } from 'vitest';
 
 vi.stubGlobal('crypto', {
