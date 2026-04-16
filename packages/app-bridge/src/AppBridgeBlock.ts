@@ -97,10 +97,6 @@ export interface AppBridgeBlock<
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `context('assets').get()` instead to get block assets synchronously from context.
-     */
     getBlockAssets(): Promise<Record<string, Asset[]>>;
 
     /**
