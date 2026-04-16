@@ -62,6 +62,7 @@ export type BlockContext = {
     sectionId?: number;
     isAuthenticated: boolean;
     isNewlyInserted: boolean;
+    assets?: Record<string, Asset[]>;
 };
 
 export type BlockEvent = EventNameValidator<
@@ -96,8 +97,16 @@ export interface AppBridgeBlock<
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `context('assets').get()` instead to get block assets synchronously from context.
+     */
     getBlockAssets(): Promise<Record<string, Asset[]>>;
 
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * Use `context('assets').get()` and find the asset by id from the context assets instead.
+     */
     getAssetById(assetId: number): Promise<Asset>;
 
     deleteAssetIdsFromBlockAssetKey(key: string, assetIds: number[]): Promise<void>;

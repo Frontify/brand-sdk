@@ -1,76 +1,65 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type Asset } from '../types';
-import { compareObjects } from '../utilities';
+
+const getContextAssets = (appBridge: AppBridgeBlock): Record<string, Asset[]> => {
+    try {
+        return appBridge.context('assets').get() ?? {};
+    } catch {
+        return {};
+    }
+};
 
 export const useBlockAssets = (appBridge: AppBridgeBlock) => {
-    const blockId = appBridge.context('blockId').get();
+    const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>(() => getContextAssets(appBridge));
 
-    const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>({});
-
-    const updateBlockAssetsFromEvent = (event: {
-        blockId: number;
-        blockAssets: Record<string, Asset[]>;
-        prevBlockAssets: Record<string, Asset[]>;
-    }) => {
-        if (event.blockId === blockId && !compareObjects(event.blockAssets, event.prevBlockAssets)) {
-            setBlockAssets(event.blockAssets);
-        }
-    };
-
-    // Fetch the block assets on mount.
-    // And add listener for block assets updates.
     useEffect(() => {
-        let componentMounted = true;
+        try {
+            const unsubscribe = appBridge.context('assets').subscribe((nextAssets) => {
+                setBlockAssets(nextAssets ?? {});
+            });
 
-        if (blockId) {
-            const mountingFetch = async () => {
-                const allBlockAssets = await appBridge.getBlockAssets();
-                if (componentMounted) {
-                    setBlockAssets(allBlockAssets);
-                }
-            };
-            mountingFetch();
-
-            window.emitter.on('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
+            return unsubscribe;
+        } catch {
+            // Fallback for older platform versions that don't support context('assets')
         }
-
-        return () => {
-            componentMounted = false;
-            window.emitter.off('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
-        };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge]);
 
-    const emitUpdatedBlockAssets = async () => {
-        window.emitter.emit('AppBridge:BlockAssetsUpdated', {
-            blockId,
-            blockAssets: await appBridge.getBlockAssets(),
-            prevBlockAssets: { ...blockAssets },
-        });
-    };
+    const emitUpdatedBlockAssets = useCallback(async () => {
+        const updatedAssets = await appBridge.getBlockAssets();
+        setBlockAssets(updatedAssets);
+    }, [appBridge]);
 
-    const updateAssetIdsFromKey = async (key: string, newAssetIds: number[]) => {
-        try {
-            await appBridge.api({ name: 'setAssetIdsByBlockAssetKey', payload: { key, assetIds: newAssetIds } });
-        } catch (error) {
-            console.error(error);
-        }
-        emitUpdatedBlockAssets();
-    };
+    const updateAssetIdsFromKey = useCallback(
+        async (key: string, newAssetIds: number[]) => {
+            try {
+                await appBridge.api({ name: 'setAssetIdsByBlockAssetKey', payload: { key, assetIds: newAssetIds } });
+            } catch (error) {
+                console.error(error);
+            }
+            emitUpdatedBlockAssets();
+        },
+        [appBridge, emitUpdatedBlockAssets],
+    );
 
-    const deleteAssetIdsFromKey = async (key: string, assetIds: number[]) => {
-        await appBridge.deleteAssetIdsFromBlockAssetKey(key, assetIds);
-        emitUpdatedBlockAssets();
-    };
+    const deleteAssetIdsFromKey = useCallback(
+        async (key: string, assetIds: number[]) => {
+            await appBridge.deleteAssetIdsFromBlockAssetKey(key, assetIds);
+            emitUpdatedBlockAssets();
+        },
+        [appBridge, emitUpdatedBlockAssets],
+    );
 
-    const addAssetIdsToKey = async (key: string, assetIds: number[]) => {
-        await appBridge.addAssetIdsToBlockAssetKey(key, assetIds);
-        emitUpdatedBlockAssets();
-    };
+    const addAssetIdsToKey = useCallback(
+        async (key: string, assetIds: number[]) => {
+            await appBridge.addAssetIdsToBlockAssetKey(key, assetIds);
+            emitUpdatedBlockAssets();
+        },
+        [appBridge, emitUpdatedBlockAssets],
+    );
 
     return {
         blockAssets,
