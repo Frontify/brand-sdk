@@ -45,7 +45,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
                     footer: `
                         window.${outputName} = ${outputName};
                         window.${outputName}.dependencies = window.${outputName}.packages || {};
-                        window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${appBridgeVersion}';
+                        ${appBridgeVersion ? `window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${appBridgeVersion}';` : ''}
                     `,
                 },
             },

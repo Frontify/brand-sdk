@@ -1,21 +1,44 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { readFileSync } from 'node:fs';
+import { findPackageJSON } from 'node:module';
 import { join } from 'node:path';
 
-import { type PackageJson } from './npm';
-import { reactiveJson } from './reactiveJson';
+const getInstalledPackageVersion = (rootPath: string, packageName: string): string | undefined => {
+    try {
+        const pkgJsonPath = findPackageJSON(packageName, join(rootPath, 'package.json'));
 
-export const getAppBridgeVersion = (rootPath: string) => {
-    const packageJson = reactiveJson<PackageJson>(join(rootPath, 'package.json'));
-    return packageJson.dependencies['@frontify/app-bridge'];
+        if (pkgJsonPath === undefined) {
+            throw new Error(`Package "${packageName}" not found from "${rootPath}"`);
+        }
+
+        const pkg = JSON.parse(readFileSync(pkgJsonPath, 'utf8')) as { version?: string };
+
+        return pkg.version;
+    } catch {
+        try {
+            const pkgContent = readFileSync(join(rootPath, 'package.json'), 'utf-8');
+            const pkg = JSON.parse(pkgContent) as Record<string, Record<string, string> | undefined>;
+
+            return (
+                pkg.dependencies?.[packageName] ||
+                pkg.devDependencies?.[packageName] ||
+                pkg.peerDependencies?.[packageName]
+            );
+        } catch {
+            return undefined;
+        }
+    }
 };
 
-export const getAppBridgeThemeVersion = (rootPath: string) => {
-    const packageJson = reactiveJson<PackageJson>(join(rootPath, 'package.json'));
-    return packageJson.dependencies['@frontify/app-bridge-theme'];
+export const getAppBridgeVersion = (rootPath: string): string | undefined => {
+    return getInstalledPackageVersion(rootPath, '@frontify/app-bridge');
 };
 
-export const getReactVersion = (rootPath: string) => {
-    const packageJson = reactiveJson<PackageJson>(join(rootPath, 'package.json'));
-    return packageJson.dependencies.react;
+export const getAppBridgeThemeVersion = (rootPath: string): string | undefined => {
+    return getInstalledPackageVersion(rootPath, '@frontify/app-bridge-theme');
+};
+
+export const getReactVersion = (rootPath: string): string | undefined => {
+    return getInstalledPackageVersion(rootPath, 'react');
 };
