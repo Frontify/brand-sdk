@@ -76,7 +76,7 @@ export class BlockDevelopmentServer {
                         version: pkg.version,
                         dependencies: {
                             ...(appBridgeVersion ? { '@frontify/app-bridge': appBridgeVersion } : {}),
-                            react: reactVersion,
+                            ...(reactVersion ? { react: reactVersion } : {}),
                         },
                     }),
                 );

@@ -76,7 +76,7 @@ export class ThemeDevelopmentServer {
                         version: pkg.version,
                         dependencies: {
                             ...(appBridgeThemeVersion ? { '@frontify/app-bridge-theme': appBridgeThemeVersion } : {}),
-                            react: reactVersion,
+                            ...(reactVersion ? { react: reactVersion } : {}),
                         },
                     }),
                 );
