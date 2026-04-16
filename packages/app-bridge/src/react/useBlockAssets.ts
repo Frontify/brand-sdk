@@ -5,27 +5,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type Asset } from '../types';
 
-const getContextAssets = (appBridge: AppBridgeBlock): Record<string, Asset[]> => {
-    try {
-        return appBridge.context('assets').get() ?? {};
-    } catch {
-        return {};
-    }
-};
-
 export const useBlockAssets = (appBridge: AppBridgeBlock) => {
-    const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>(() => getContextAssets(appBridge));
+    const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>(
+        () => appBridge.context('assets').get() ?? {},
+    );
 
     useEffect(() => {
-        try {
-            const unsubscribe = appBridge.context('assets').subscribe((nextAssets) => {
-                setBlockAssets(nextAssets ?? {});
-            });
+        const unsubscribe = appBridge.context('assets').subscribe((nextAssets) => {
+            setBlockAssets(nextAssets ?? {});
+        });
 
-            return unsubscribe;
-        } catch {
-            // Fallback for older platform versions that don't support context('assets')
-        }
+        return unsubscribe;
     }, [appBridge]);
 
     const emitUpdatedBlockAssets = useCallback(async () => {
@@ -40,7 +30,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
             } catch (error) {
                 console.error(error);
             }
-            emitUpdatedBlockAssets();
+            await emitUpdatedBlockAssets();
         },
         [appBridge, emitUpdatedBlockAssets],
     );
@@ -48,7 +38,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
     const deleteAssetIdsFromKey = useCallback(
         async (key: string, assetIds: number[]) => {
             await appBridge.deleteAssetIdsFromBlockAssetKey(key, assetIds);
-            emitUpdatedBlockAssets();
+            await emitUpdatedBlockAssets();
         },
         [appBridge, emitUpdatedBlockAssets],
     );
@@ -56,7 +46,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
     const addAssetIdsToKey = useCallback(
         async (key: string, assetIds: number[]) => {
             await appBridge.addAssetIdsToBlockAssetKey(key, assetIds);
-            emitUpdatedBlockAssets();
+            await emitUpdatedBlockAssets();
         },
         [appBridge, emitUpdatedBlockAssets],
     );
