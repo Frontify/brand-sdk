@@ -7,6 +7,7 @@ import open from 'open';
 import pc from 'picocolors';
 
 import { type HttpClientError } from '../errors/HttpClientError';
+import { getInstalledPackageVersion } from '../utils/getPackageVersion';
 import {
     type CompilerOptions,
     Configuration,
@@ -61,6 +62,55 @@ const SOURCE_FILE_BLOCK_LIST = [
     '**/*.graphql',
 ];
 
+const SENSITIVE_FILE_PATTERNS = ['.env', '.npmrc', '.netrc'];
+
+const PROTOCOL_PREFIXES = ['catalog:', 'workspace:', 'link:', 'file:', 'portal:'];
+
+const isProtocolSpecifier = (specifier: string): boolean => {
+    return PROTOCOL_PREFIXES.some((prefix) => specifier.startsWith(prefix));
+};
+
+export const resolveDependencyVersions = (
+    dependencies: Record<string, string>,
+    projectPath: string,
+): Record<string, string> => {
+    const resolved: Record<string, string> = {};
+
+    for (const [name, specifier] of Object.entries(dependencies)) {
+        const installedVersion = getInstalledPackageVersion(projectPath, name);
+
+        if (installedVersion && !isProtocolSpecifier(installedVersion)) {
+            resolved[name] = installedVersion;
+            continue;
+        }
+
+        if (isProtocolSpecifier(specifier)) {
+            Logger.warn(
+                `Could not resolve version for "${name}" (specifier: "${specifier}"). ` +
+                    'The package may not be installed. Omitting from deployment dependencies.',
+            );
+            continue;
+        }
+
+        resolved[name] = specifier;
+    }
+
+    return resolved;
+};
+
+export const warnAboutSensitiveFiles = (sourceFiles: Record<string, string>): void => {
+    const sensitiveFiles = Object.keys(sourceFiles).filter((filePath) =>
+        SENSITIVE_FILE_PATTERNS.some((pattern) => filePath.split('/').some((segment) => segment.startsWith(pattern))),
+    );
+
+    if (sensitiveFiles.length > 0) {
+        Logger.warn(
+            `Potentially sensitive files detected in source files:\n${sensitiveFiles.map((f) => `  - ${f}`).join('\n')}\n` +
+                'Consider adding these to your .gitignore to prevent them from being uploaded.',
+        );
+    }
+};
+
 export const resolveCredentials = (token?: string, instance?: string) => {
     const instanceUrl = instance || Configuration.get('instanceUrl');
     const accessToken = token || Configuration.get('tokens.access_token');
@@ -108,17 +158,42 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
         return fastGlob.convertPathToPattern(`${projectPath}/${path}`);
     });
 
-    const packageJsonContent = reactiveJson<{ dependencies?: Record<string, string> }>(
-        join(projectPath, 'package.json'),
+    const packageJsonContent = reactiveJson<{
+        dependencies?: Record<string, string>;
+        devDependencies?: Record<string, string>;
+        peerDependencies?: Record<string, string>;
+    }>(join(projectPath, 'package.json'));
+
+    const resolvedDependencies = resolveDependencyVersions(packageJsonContent?.dependencies || {}, projectPath);
+
+    const sourceFiles = await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore);
+
+    // Sanitize the package.json in source_files to contain resolved versions
+    // instead of protocol specifiers that are invalid outside the workspace.
+    // Note: packageJsonContent is a reactiveJson Proxy. We only READ from it here
+    // via spread and property access. Do not mutate it directly — the Proxy's set
+    // trap would write changes back to disk.
+    if (sourceFiles['/package.json'] && packageJsonContent) {
+        const sanitized = {
+            ...packageJsonContent,
+            dependencies: resolvedDependencies,
+            devDependencies: resolveDependencyVersions(packageJsonContent.devDependencies || {}, projectPath),
+            peerDependencies: resolveDependencyVersions(packageJsonContent.peerDependencies || {}, projectPath),
+        };
+        sourceFiles['/package.json'] = Buffer.from(JSON.stringify(sanitized, null, '\t')).toString('base64');
+    }
+
+    warnAboutSensitiveFiles(sourceFiles);
+
+    const buildFiles = await makeFilesDict(
+        fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
+        buildFilesToIgnore,
     );
 
     return {
-        build_files: await makeFilesDict(
-            fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
-            buildFilesToIgnore,
-        ),
-        source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
-        dependencies: packageJsonContent?.dependencies || {},
+        build_files: buildFiles,
+        source_files: sourceFiles,
+        dependencies: resolvedDependencies,
     };
 };
 

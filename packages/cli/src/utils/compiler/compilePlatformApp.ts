@@ -8,8 +8,15 @@ import { getAppBridgeVersion } from '../getPackageVersion';
 
 import { type CompilerOptions } from './compilerOptions';
 
+const PROTOCOL_PREFIXES = ['catalog:', 'workspace:', 'link:', 'file:', 'portal:'];
+
+const isValidVersion = (version: string | undefined): version is string => {
+    return version !== undefined && !PROTOCOL_PREFIXES.some((prefix) => version.startsWith(prefix));
+};
+
 export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeVersion(projectPath);
+    const safeAppBridgeVersion = isValidVersion(appBridgeVersion) ? appBridgeVersion : undefined;
 
     const settings = await build({
         plugins: [
@@ -45,7 +52,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
                     footer: `
                         window.${outputName} = ${outputName};
                         window.${outputName}.dependencies = window.${outputName}.packages || {};
-                        ${appBridgeVersion ? `window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${appBridgeVersion}';` : ''}
+                        ${safeAppBridgeVersion ? `window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${safeAppBridgeVersion}';` : ''}
                     `,
                 },
             },

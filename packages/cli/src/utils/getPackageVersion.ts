@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { findPackageJSON } from 'node:module';
 import { join } from 'node:path';
 
-const getInstalledPackageVersion = (rootPath: string, packageName: string): string | undefined => {
+export const getInstalledPackageVersion = (rootPath: string, packageName: string): string | undefined => {
     try {
         const pkgJsonPath = findPackageJSON(packageName, join(rootPath, 'package.json'));
 
