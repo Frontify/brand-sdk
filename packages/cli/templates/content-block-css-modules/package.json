@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "@frontify/app-bridge": "^3.12.8",
-        "@frontify/fondue": "13.4.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
     },
