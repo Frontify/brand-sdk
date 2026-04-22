@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.0.3
+
+### Patch Changes
+
+-   [#1555](https://github.com/Frontify/brand-sdk/pull/1555) [`f12d05b`](https://github.com/Frontify/brand-sdk/commit/f12d05b5e106c106bdd70dc485ef1ace4c72d146) Thanks [@floriangaechter](https://github.com/floriangaechter)! - fix(cli): correct guideline-blocks-settings version in templates
+
 ## 6.0.2
 
 ### Patch Changes
