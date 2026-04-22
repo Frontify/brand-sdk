@@ -16,10 +16,12 @@
         "react-dom": "^18.3.1"
     },
     "overrides": {
-        "@udecode/plate-common": "36.5.9"
+        "@udecode/plate-common": "36.5.9",
+        "zustand": "4.5.7"
     },
     "resolutions": {
-        "@udecode/plate-common": "36.5.9"
+        "@udecode/plate-common": "36.5.9",
+        "zustand": "4.5.7"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^0.17.6",
