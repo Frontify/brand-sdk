@@ -7,5 +7,5 @@
         "allowSyntheticDefaultImports": true,
         "strict": true
     },
-    "include": [".eslintrc.cjs", "postcss.config.cjs", "tailwind.config.ts"]
+    "include": ["eslint.config.mjs", "postcss.config.cjs", "tailwind.config.ts"]
 }

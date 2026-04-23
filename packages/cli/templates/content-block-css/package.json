@@ -15,6 +15,17 @@
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
     },
+    "devDependencies": {
+        "@frontify/eslint-config-react": "1.0.15",
+        "@frontify/frontify-cli": "^6.0.3",
+        "@frontify/guideline-blocks-settings": "2.1.8",
+        "@types/react": "^18.3.27",
+        "@types/react-dom": "^18.3.7",
+        "eslint": "^10.2.1",
+        "prettier": "^3.8.3",
+        "terser": "^5.46.1",
+        "typescript": "^6.0.3"
+    },
     "overrides": {
         "@udecode/plate-common": "36.5.9",
         "zustand": "4.5.7"
@@ -22,16 +33,5 @@
     "resolutions": {
         "@udecode/plate-common": "36.5.9",
         "zustand": "4.5.7"
-    },
-    "devDependencies": {
-        "@frontify/eslint-config-react": "^0.17.6",
-        "@frontify/frontify-cli": "^6.0.0",
-        "@frontify/guideline-blocks-settings": "^2.1.8",
-        "@types/react": "^18.3.27",
-        "@types/react-dom": "^18.3.7",
-        "eslint": "^8.57.0",
-        "prettier": "^3.7.4",
-        "terser": "^5.46.1",
-        "typescript": "^5.9.3"
     }
 }
