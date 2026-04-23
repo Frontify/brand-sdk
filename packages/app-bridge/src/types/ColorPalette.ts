@@ -1,21 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Color, type ColorApi } from './Color';
-
-export type ColorPaletteApi = {
-    id: number;
-    name: string;
-    description: string;
-    colors?: Nullable<ColorApi[]>;
-};
-
-export type ColorPaletteApiCreate = {
-    project_id: number;
-    name: string;
-    description?: string;
-};
-
-export type ColorPaletteApiPatch = Partial<Omit<ColorPaletteApi, 'id' | 'colors'> & { language: string }>;
+import { type Color } from './Color';
 
 export type ColorPalette = {
     id: number;
@@ -23,10 +8,3 @@ export type ColorPalette = {
     description: string;
     colors: Color[];
 };
-
-export type ColorPaletteCreate = {
-    name: string;
-    description?: string;
-};
-
-export type ColorPalettePatch = Partial<Omit<ColorPalette, 'id' | 'colors'>>;

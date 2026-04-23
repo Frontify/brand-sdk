@@ -20,22 +20,12 @@ import { type ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
 import {
-    type Asset,
-    type AssetChooserOptions,
-    type BulkDownload,
-    type Color,
-    type ColorCreate,
     type ColorPalette,
-    type ColorPaletteCreate,
-    type ColorPalettePatch,
-    type ColorPatch,
+    type Asset,
+    type BulkDownload,
     type Document,
-    type DocumentCategory,
-    type DocumentGroup,
     type DocumentPage,
-    type DocumentPageTargets,
     type DocumentSection,
-    type DocumentTargets,
     type Template,
     type TemplateLegacy,
     type User,
@@ -56,6 +46,7 @@ export type BlockCommand = CommandNameValidator<
         | 'openAssetViewer'
         | 'openTemplateChooser'
         | 'openNewPublication'
+        | 'trackEvent'
     >
 >;
 
@@ -105,18 +96,6 @@ export interface AppBridgeBlock<
         callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('blockId').get()` instead.
-     */
-    getBlockId(): number;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.context('sectionId').get()` instead.
-     */
-    getSectionId(): number | undefined;
-
     getBlockAssets(): Promise<Record<string, Asset[]>>;
 
     getAssetById(assetId: number): Promise<Asset>;
@@ -124,12 +103,6 @@ export interface AppBridgeBlock<
     deleteAssetIdsFromBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openAssetViewer(token))` instead.
-     */
-    openAssetViewer(token: string): void;
 
     getBlockTemplates(): Promise<Record<string, Template[]>>;
 
@@ -139,87 +112,11 @@ export interface AppBridgeBlock<
 
     getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    getColorsByIds(colorIds: number[]): Promise<Color[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    getColors(): Promise<Color[]>;
-
-    /**
-     * @deprecated Use `getColors` instead.
-     */
-    getAvailableColors(): Promise<Color[]>;
-
-    /**
-     * @deprecated Use `getColorPalettes` instead.
-     */
-    getAvailablePalettes(): Promise<ColorPalette[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
-     */
-    getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    createColorPalette(colorPaletteCreate: ColorPaletteCreate): Promise<ColorPalette>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    updateColorPalette(colorPaletteId: number, colorPalettePatch: ColorPalettePatch): Promise<ColorPalette>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    deleteColorPalette(colorPaletteId: number): Promise<void>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    createColor(colorCreate: ColorCreate): Promise<Color>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    updateColor(colorId: number, colorPatch: ColorPatch): Promise<Color>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
-     */
-    deleteColor(colorId: number): Promise<void>;
-
     downloadColorKit(selectedColorPalettes: number[]): string;
 
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
 
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openTemplateChooser())` instead.
-     */
-    openTemplateChooser(callback: (selectedTemplate: TemplateLegacy) => void): void;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeTemplateChooser())` instead.
-     */
-    closeTemplateChooser(): void;
 
     getCurrentLoggedUser(): Promise<User>;
 
@@ -229,19 +126,6 @@ export interface AppBridgeBlock<
 
     getPrivacySettings(): PrivacySettings;
 
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(openAssetChooser(options))` to open the asset chooser
-     * and `appBridge.subscribe('assetsChosen', callback)` to subscribe to the asset chosen event
-     */
-    openAssetChooser(callback: (selectedAssets: Asset[]) => void, options?: AssetChooserOptions): void;
-
-    /**
-     * @deprecated This will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * Use `appBridge.dispatch(closeAssetChooser())` instead.
-     */
-    closeAssetChooser(): void;
-
     getProjectId(): number;
 
     getEditorState(): boolean;
@@ -250,15 +134,9 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But there will a new api to grab all colors and palettes.
+     * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
      */
-    getColorPalettes(): Promise<ColorPalette[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But there will a new api to grab all colors and palettes.
-     */
-    getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
+    getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
@@ -270,59 +148,11 @@ export interface AppBridgeBlock<
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
-    getUngroupedDocuments(): Promise<Document[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.  But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentsByDocumentGroupId(documentGroupId: number): Promise<Document[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentGroups(): Promise<DocumentGroup[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
     getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
      * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
      */
-    getDocumentPagesByDocumentCategoryId(documentCategoryId: number): Promise<DocumentPage[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentCategoriesByDocumentId(documentId: number): Promise<DocumentCategory[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getUncategorizedDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
     getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentTargets(documentId: number): Promise<DocumentTargets>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentPageTargets(documentPageId: number): Promise<DocumentPageTargets>;
 }
