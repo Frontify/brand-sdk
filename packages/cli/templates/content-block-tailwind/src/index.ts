@@ -1,4 +1,4 @@
-import 'tailwindcss/tailwind.css';
+import './style.css';
 
 import { defineBlock } from '@frontify/guideline-blocks-settings';
 

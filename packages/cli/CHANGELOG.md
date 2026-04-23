@@ -1,5 +1,25 @@
 # @frontify/frontify-cli
 
+## 6.0.4
+
+### Patch Changes
+
+-   [#1560](https://github.com/Frontify/brand-sdk/pull/1560) [`112553a`](https://github.com/Frontify/brand-sdk/commit/112553a9caba60eb9a3be4165de92a37b25110dd) Thanks [@ragi96](https://github.com/ragi96)! - fix(cli): repair content-block templates
+
+    -   Replace removed `IconEnum` import with string icon name in `settings.ts`
+    -   Pin `@udecode/plate-common` to `36.5.9` via `overrides`/`resolutions` to avoid the deprecated `42.0.0` shim that breaks Rollup builds
+    -   Pin `zustand` to `4.5.7` so blocks don't pick up `zustand@5` (incompatible API with `@udecode/zustood` / `zustand-x`, causing `TypeError: createState is not a function` when the block loads in the web-app)
+    -   Use arbitrary-value color classes in the Tailwind template so the example renders correctly under the Frontify Tailwind preset (which replaces the default `blue`/`green`/`red` palette)
+
+-   [#1561](https://github.com/Frontify/brand-sdk/pull/1561) [`830efe3`](https://github.com/Frontify/brand-sdk/commit/830efe31161c9642d13a570af85724636eaff719) Thanks [@ragi96](https://github.com/ragi96)! - chore(cli): bump content-block template dev toolchain
+
+    -   `eslint` 8 → 10 (flat config); `@frontify/eslint-config-react` 0.17 → 1.0.15
+    -   `typescript` 5 → 6
+    -   `tailwindcss` 3.4.3 → 3.4.19, `autoprefixer` 10.4.22 → 10.5.0, explicit `postcss` dep (tailwind template)
+    -   Replace deprecated `tailwindcss/tailwind.css` side-effect import with a local `src/style.css` using `@tailwind` directives
+    -   Pin `@frontify/guideline-blocks-settings` to exact `2.1.8`
+    -   Migrate `.eslintrc.cjs` → `eslint.config.mjs` (flat config)
+
 ## 6.0.3
 
 ### Patch Changes

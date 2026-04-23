@@ -8,9 +8,9 @@ type Settings = {
 
 const colorTailwindMap: Record<Settings['color'], string> = {
     violet: 'tw-text-[rgb(113,89,215)]',
-    blue: 'tw-text-blue-600',
-    green: 'tw-text-green-600',
-    red: 'tw-text-red-600',
+    blue: 'tw-text-[rgb(37,99,235)]',
+    green: 'tw-text-[rgb(22,163,74)]',
+    red: 'tw-text-[rgb(220,38,38)]',
 };
 
 export const AnExampleBlock: FC<BlockProps> = ({ appBridge }) => {
