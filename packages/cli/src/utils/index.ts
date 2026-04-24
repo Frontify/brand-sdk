@@ -11,6 +11,7 @@ export * from './logger';
 export * from './logo';
 export * from './npm';
 export * from './promiseExec';
+export * from './packageProtocols';
 export * from './reactiveJson';
 export * from './url';
 export * from './user';

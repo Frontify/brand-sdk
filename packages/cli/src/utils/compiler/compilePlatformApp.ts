@@ -5,13 +5,12 @@ import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from '../getPackageVersion';
+import { isPackageProtocolSpecifier } from '../packageProtocols';
 
 import { type CompilerOptions } from './compilerOptions';
 
-const PROTOCOL_PREFIXES = ['catalog:', 'workspace:', 'link:', 'file:', 'portal:'];
-
 const isValidVersion = (version: string | undefined): version is string => {
-    return version !== undefined && !PROTOCOL_PREFIXES.some((prefix) => version.startsWith(prefix));
+    return version !== undefined && !isPackageProtocolSpecifier(version);
 };
 
 export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {

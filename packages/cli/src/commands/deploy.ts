@@ -19,6 +19,7 @@ import {
     readFileAsBase64,
     readFileLinesAsArray,
 } from '../utils/index';
+import { isPackageProtocolSpecifier } from '../utils/packageProtocols';
 import { platformAppManifestSchemaV1, verifyManifest } from '../utils/verifyManifest';
 
 type Options = {
@@ -64,12 +65,6 @@ const SOURCE_FILE_BLOCK_LIST = [
 
 const SENSITIVE_FILE_PATTERNS = ['.env', '.npmrc', '.netrc'];
 
-const PROTOCOL_PREFIXES = ['catalog:', 'workspace:', 'link:', 'file:', 'portal:'];
-
-const isProtocolSpecifier = (specifier: string): boolean => {
-    return PROTOCOL_PREFIXES.some((prefix) => specifier.startsWith(prefix));
-};
-
 export const resolveDependencyVersions = (
     dependencies: Record<string, string>,
     projectPath: string,
@@ -79,12 +74,12 @@ export const resolveDependencyVersions = (
     for (const [name, specifier] of Object.entries(dependencies)) {
         const installedVersion = getInstalledPackageVersion(projectPath, name);
 
-        if (installedVersion && !isProtocolSpecifier(installedVersion)) {
+        if (installedVersion && !isPackageProtocolSpecifier(installedVersion)) {
             resolved[name] = installedVersion;
             continue;
         }
 
-        if (isProtocolSpecifier(specifier)) {
+        if (isPackageProtocolSpecifier(specifier)) {
             Logger.warn(
                 `Could not resolve version for "${name}" (specifier: "${specifier}"). ` +
                     'The package may not be installed. Omitting from deployment dependencies.',
@@ -173,14 +168,22 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
     // Note: packageJsonContent is a reactiveJson Proxy. We only READ from it here
     // via spread and property access. Do not mutate it directly — the Proxy's set
     // trap would write changes back to disk.
-    if (sourceFiles['/package.json'] && packageJsonContent) {
+    const pkgJsonKey = '/package.json';
+    if (packageJsonContent) {
+        if (!(pkgJsonKey in sourceFiles)) {
+            Logger.error(
+                `Expected "${pkgJsonKey}" in sourceFiles but key was not found. ` +
+                    'This likely indicates a change in makeFilesDict key format.',
+            );
+            process.exit(-1);
+        }
         const sanitized = {
             ...packageJsonContent,
             dependencies: resolvedDependencies,
             devDependencies: resolveDependencyVersions(packageJsonContent.devDependencies || {}, projectPath),
             peerDependencies: resolveDependencyVersions(packageJsonContent.peerDependencies || {}, projectPath),
         };
-        sourceFiles['/package.json'] = Buffer.from(JSON.stringify(sanitized, null, '\t')).toString('base64');
+        sourceFiles[pkgJsonKey] = Buffer.from(JSON.stringify(sanitized, null, '\t')).toString('base64');
     }
 
     warnAboutSensitiveFiles(sourceFiles);
