@@ -1,5 +1,15 @@
 # @frontify/guideline-themes
 
+## 1.0.5
+
+### Patch Changes
+
+-   [#1566](https://github.com/Frontify/brand-sdk/pull/1566) [`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): bumping some devDependencies
+
+-   Updated dependencies [[`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f)]:
+    -   @frontify/app-bridge-theme@1.0.8
+    -   @frontify/sidebar-settings@0.10.12
+
 ## 1.0.4
 
 ### Patch Changes
