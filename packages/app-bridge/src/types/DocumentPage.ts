@@ -4,11 +4,6 @@ import { type CamelCasedPropertiesDeep, type RequireAtLeastOne, type SetRequired
 
 import { type SingleTargetApi } from './Targets';
 
-export enum DocumentPageVisibility {
-    Everyone = 'EVERYONE',
-    Editor = 'EDITOR',
-}
-
 type DocumentPageApiAsLink = {
     link_type: 'EXTERNAL';
     link_url: string;
@@ -34,7 +29,6 @@ export type DocumentPageApi = {
     slug: string;
     sort: number;
     view_count: number;
-    visibility: DocumentPageVisibility;
     targets: Nullable<SingleTargetApi['target'][]>;
     category?: Nullable<Record<string, unknown>>;
     parent_document?: Nullable<Record<string, unknown>>;
@@ -51,14 +45,13 @@ type DocumentPageRequest = {
     documentId: number;
     linkUrl?: Nullable<string>;
     categoryId?: Nullable<number>;
-    visibility?: DocumentPageVisibility;
 };
 
 export type DocumentPageCreate = Omit<SetRequired<DocumentPageRequest, 'title' | 'documentId'>, 'id'>;
 
 export type DocumentPageUpdate = RequireAtLeastOne<
     DocumentPageRequest,
-    'documentId' | 'categoryId' | 'linkUrl' | 'title' | 'visibility'
+    'documentId' | 'categoryId' | 'linkUrl' | 'title'
 >;
 
 export type DocumentPageDelete = Pick<DocumentPageRequest, 'id' | 'documentId' | 'categoryId'>;
