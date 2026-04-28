@@ -21,6 +21,10 @@ export class Logger {
         console.error(pc.red(`[${getCurrentTime()}] ${messages.join(' ')}`));
     }
 
+    static warn(...messages: string[]): void {
+        console.warn(pc.yellow(`[${getCurrentTime()}] ${messages.join(' ')}`));
+    }
+
     static spacer(width = 1): string {
         return ' '.repeat(width);
     }

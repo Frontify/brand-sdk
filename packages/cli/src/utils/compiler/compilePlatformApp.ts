@@ -5,11 +5,17 @@ import { build } from 'vite';
 import { viteExternalsPlugin } from 'vite-plugin-externals';
 
 import { getAppBridgeVersion } from '../getPackageVersion';
+import { isPackageProtocolSpecifier } from '../packageProtocols';
 
 import { type CompilerOptions } from './compilerOptions';
 
+const isValidVersion = (version: string | undefined): version is string => {
+    return version !== undefined && !isPackageProtocolSpecifier(version);
+};
+
 export const compilePlatformApp = async ({ outputName, entryFile, projectPath = '' }: CompilerOptions) => {
     const appBridgeVersion = getAppBridgeVersion(projectPath);
+    const safeAppBridgeVersion = isValidVersion(appBridgeVersion) ? appBridgeVersion : undefined;
 
     const settings = await build({
         plugins: [
@@ -45,7 +51,7 @@ export const compilePlatformApp = async ({ outputName, entryFile, projectPath = 
                     footer: `
                         window.${outputName} = ${outputName};
                         window.${outputName}.dependencies = window.${outputName}.packages || {};
-                        ${appBridgeVersion ? `window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${appBridgeVersion}';` : ''}
+                        ${safeAppBridgeVersion ? `window.${outputName}.dependencies['@frontify/app-bridge-app'] = '${safeAppBridgeVersion}';` : ''}
                     `,
                 },
             },
