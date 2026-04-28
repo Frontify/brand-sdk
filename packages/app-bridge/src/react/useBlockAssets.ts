@@ -9,7 +9,9 @@ import { compareObjects } from '../utilities';
 export const useBlockAssets = (appBridge: AppBridgeBlock) => {
     const blockId = appBridge.context('blockId').get();
 
-    const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>({});
+    const [blockAssets, setBlockAssets] = useState<Record<string, Asset[]>>(
+        () => appBridge.context('assets').get() ?? {},
+    );
 
     const updateBlockAssetsFromEvent = (event: {
         blockId: number;
@@ -21,25 +23,13 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
         }
     };
 
-    // Fetch the block assets on mount.
-    // And add listener for block assets updates.
+    // Add listener for block assets updates.
     useEffect(() => {
-        let componentMounted = true;
-
         if (blockId) {
-            const mountingFetch = async () => {
-                const allBlockAssets = await appBridge.getBlockAssets();
-                if (componentMounted) {
-                    setBlockAssets(allBlockAssets);
-                }
-            };
-            mountingFetch();
-
             window.emitter.on('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
         }
 
         return () => {
-            componentMounted = false;
             window.emitter.off('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
         };
         // eslint-disable-next-line @eslint-react/exhaustive-deps

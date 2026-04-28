@@ -67,6 +67,8 @@ export const getAppBridgeBlockStub = ({
     const deletedTemplateIds: Record<string, number[]> = {};
     const addedTemplateIds: Record<string, number[]> = {};
 
+    const contextAssetsSubscribers: Set<(nextAssets: Record<string, Asset[]>) => void> = new Set();
+
     return {
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
@@ -168,6 +170,16 @@ export const getAppBridgeBlockStub = ({
                     case 'isNewlyInserted':
                         return {
                             get: () => isNewlyInserted,
+                        };
+                    case 'assets':
+                        return {
+                            get: () => blockAssets,
+                            subscribe: (callback: (nextAssets: Record<string, Asset[]>) => void) => {
+                                contextAssetsSubscribers.add(callback);
+                                return () => {
+                                    contextAssetsSubscribers.delete(callback);
+                                };
+                            },
                         };
                     default:
                         return {
