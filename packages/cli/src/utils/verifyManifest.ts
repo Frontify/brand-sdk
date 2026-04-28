@@ -241,7 +241,10 @@ export const verifyManifest = (manifest: unknown, schema: typeof platformAppMani
     return validatedManifest.data;
 };
 
-export type VerifyManifestResult = { valid: true } | { valid: false; error: string };
+export type VerifyManifestResult = {
+    success: boolean;
+    data: { valid: true } | { valid: false; error: string };
+};
 
 const APP_TYPE_TO_SERVER_ENUM: Record<string, string> = {
     'content-block': 'CONTENT_BLOCK',
