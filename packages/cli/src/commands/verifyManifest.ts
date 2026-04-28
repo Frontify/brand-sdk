@@ -34,7 +34,7 @@ export const verifyManifest = async ({ appType, instance, token }: VerifyManifes
                 manifestContent as unknown as Record<string, unknown>,
             );
 
-            if (result.valid) {
+            if (result.data.valid) {
                 Logger.success('The manifest is valid.');
                 return;
             }
