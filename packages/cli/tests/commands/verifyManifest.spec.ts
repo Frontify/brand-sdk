@@ -46,7 +46,7 @@ describe('VerifyManifest command', () => {
     });
 
     test('should report valid manifest via the validation endpoint', async () => {
-        mockHttpPost.mockResolvedValue({ valid: true });
+        mockHttpPost.mockResolvedValue({ success: true, data: { valid: true } });
 
         await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
 
@@ -60,7 +60,10 @@ describe('VerifyManifest command', () => {
     });
 
     test('should exit with error when manifest is invalid', async () => {
-        mockHttpPost.mockResolvedValue({ valid: false, error: 'Invalid manifest: appId missing' });
+        mockHttpPost.mockResolvedValue({
+            success: true,
+            data: { valid: false, error: 'Invalid manifest: appId missing' },
+        });
 
         await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
 
@@ -70,7 +73,7 @@ describe('VerifyManifest command', () => {
 
     test('should map platform-app manifest to PLATFORM_APP enum', async () => {
         mockManifest.appType = 'platform-app';
-        mockHttpPost.mockResolvedValue({ valid: true });
+        mockHttpPost.mockResolvedValue({ success: true, data: { valid: true } });
 
         await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
 
@@ -83,7 +86,7 @@ describe('VerifyManifest command', () => {
 
     test('should prefer explicit appType option over manifest value', async () => {
         mockManifest.appType = 'content-block';
-        mockHttpPost.mockResolvedValue({ valid: true });
+        mockHttpPost.mockResolvedValue({ success: true, data: { valid: true } });
 
         await verifyManifest({ appType: 'theme', token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
 
