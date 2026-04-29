@@ -25,9 +25,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
 
     // Add listener for block assets updates.
     useEffect(() => {
-        if (blockId) {
-            window.emitter.on('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
-        }
+        window.emitter.on('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
 
         return () => {
             window.emitter.off('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
