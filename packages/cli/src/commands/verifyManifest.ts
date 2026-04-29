@@ -44,7 +44,7 @@ export const verifyManifest = async ({ appType, instance, token }: VerifyManifes
         } catch (error) {
             Logger.error(
                 'An error occurred while verifying the manifest:',
-                (error as HttpClientError).responseBody?.error || (error as Error).message,
+                (error as HttpClientError).responseBody?.error ?? (error as Error).message,
             );
             process.exit(-1);
         }
