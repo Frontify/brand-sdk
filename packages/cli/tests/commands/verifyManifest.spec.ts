@@ -9,13 +9,17 @@ const TEST_BASE_URL = 'testing.frontify.test';
 const TEST_APP_ID = 'cle76j1n70001cyw40exodwao';
 const TEST_ACCESS_TOKEN = 'some_access_token';
 
-const { mockHttpPost, mockManifest } = vi.hoisted(() => ({
-    mockHttpPost: vi.fn(),
-    mockManifest: { appId: 'cle76j1n70001cyw40exodwao' } as Record<string, unknown>,
-}));
+const { mockHttpPost, mockManifest, mockReactiveJson } = vi.hoisted(() => {
+    const manifest = { appId: 'cle76j1n70001cyw40exodwao' } as Record<string, unknown>;
+    return {
+        mockHttpPost: vi.fn(),
+        mockManifest: manifest,
+        mockReactiveJson: vi.fn(() => manifest),
+    };
+});
 
 vi.mock('../../src/utils/reactiveJson', () => ({
-    reactiveJson: () => mockManifest,
+    reactiveJson: mockReactiveJson,
 }));
 
 vi.mock('../../src/utils/httpClient', () => {
@@ -38,6 +42,7 @@ describe('VerifyManifest command', () => {
         vi.clearAllMocks();
         mockManifest.appId = TEST_APP_ID;
         delete mockManifest.appType;
+        mockReactiveJson.mockImplementation(() => mockManifest);
     });
 
     afterEach(() => {
@@ -123,6 +128,47 @@ describe('VerifyManifest command', () => {
         await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
 
         expect(errorSpy).toHaveBeenCalledWith('An error occurred while verifying the manifest:', 'Server down');
+        expect(exitSpy).toHaveBeenCalledWith(-1);
+    });
+
+    test('should report Error message when manifest loading throws an Error', async () => {
+        mockReactiveJson.mockImplementation(() => {
+            throw new Error('manifest.json not found');
+        });
+
+        await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
+
+        expect(errorSpy).toHaveBeenCalledWith(
+            'The manifest verification has failed due to an error:',
+            'manifest.json not found',
+        );
+        expect(exitSpy).toHaveBeenCalledWith(-1);
+    });
+
+    test('should report string thrown from manifest loading', async () => {
+        mockReactiveJson.mockImplementation(() => {
+            // eslint-disable-next-line @typescript-eslint/only-throw-error
+            throw 'unreadable manifest';
+        });
+
+        await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
+
+        expect(errorSpy).toHaveBeenCalledWith(
+            'The manifest verification has failed due to an error:',
+            'unreadable manifest',
+        );
+        expect(exitSpy).toHaveBeenCalledWith(-1);
+    });
+
+    test('should report unknown failure when a non-string non-Error is thrown', async () => {
+        mockReactiveJson.mockImplementation(() => {
+            // eslint-disable-next-line @typescript-eslint/only-throw-error
+            throw 42;
+        });
+
+        await verifyManifest({ token: TEST_ACCESS_TOKEN, instance: TEST_BASE_URL });
+
+        expect(errorSpy).toHaveBeenCalledWith('The manifest verification has failed due to an unknown error.');
         expect(exitSpy).toHaveBeenCalledWith(-1);
     });
 });
