@@ -187,7 +187,7 @@ export const createDeployment = async (
                 ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
                 : manifestContent;
 
-        if (!dryRun && (manifestContent.appType || 'content-block') === 'content-block') {
+        if (!dryRun && (manifestContent.appType ?? 'content-block') === 'content-block') {
             await validateBlockManifestOnServer(instanceUrl, accessToken, manifestContent);
         }
 
