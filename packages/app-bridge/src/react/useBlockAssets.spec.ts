@@ -29,14 +29,34 @@ describe('useBlockAssets hook', () => {
         return { result, appBridgeStub, asset };
     };
 
+    it('should initialize block assets from context without calling getBlockAssets', () => {
+        const { result, appBridgeStub } = loadUseBlockAssets();
+
+        expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1]);
+        sinon.assert.notCalled(appBridgeStub.getBlockAssets);
+    });
+
+    it('should fall back to empty assets when context does not provide assets', () => {
+        const appBridgeStub = getAppBridgeBlockStub({
+            blockId: 123,
+            blockAssets: { key: [AssetDummy.with(1)] },
+        });
+        appBridgeStub.context.withArgs('assets').returns({ get: () => undefined });
+
+        const { result } = renderHook(() => useBlockAssets(appBridgeStub));
+
+        expect(result.current.blockAssets).toStrictEqual({});
+        sinon.assert.notCalled(appBridgeStub.getBlockAssets);
+    });
+
     it('should delete an asset', async () => {
-        const { result, appBridgeStub } = await loadUseBlockAssets();
+        const { result, appBridgeStub } = loadUseBlockAssets();
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
         });
 
         const call = appBridgeStub.deleteAssetIdsFromBlockAssetKey.getCall(0);
-        waitFor(() => {
+        await waitFor(() => {
             expect(call.firstArg).toEqual('key');
             expect(call.lastArg).toEqual([1]);
             expect(result.current.blockAssets).toStrictEqual({ key: [] });
@@ -44,7 +64,7 @@ describe('useBlockAssets hook', () => {
     });
 
     it('should set assets', async () => {
-        const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+        const { result, appBridgeStub } = loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
 
         await act(async () => {
             await result.current.updateAssetIdsFromKey('key', [2, 1]);
@@ -60,7 +80,7 @@ describe('useBlockAssets hook', () => {
     });
 
     it('should not sort assets if api call throws error', async () => {
-        const { result, appBridgeStub } = await loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
+        const { result, appBridgeStub } = loadUseBlockAssets([AssetDummy.with(1), AssetDummy.with(2)]);
         (appBridgeStub.api as unknown as Mock) = vi.fn().mockImplementation(() => {
             return Promise.reject(new Error('Unsuccessful API call'));
         });
@@ -76,8 +96,22 @@ describe('useBlockAssets hook', () => {
         expect(console.error).toHaveBeenCalledOnce();
     });
 
+    it('should add asset ids', async () => {
+        const { result, appBridgeStub } = loadUseBlockAssets();
+        await act(async () => {
+            await result.current.addAssetIdsToKey('key', [2]);
+        });
+
+        const call = appBridgeStub.addAssetIdsToBlockAssetKey.getCall(0);
+        await waitFor(() => {
+            expect(call.firstArg).toEqual('key');
+            expect(call.lastArg).toEqual([2]);
+            expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1, 2]);
+        });
+    });
+
     it('should notify about updated assets on delete', async () => {
-        const { result, asset } = await loadUseBlockAssets();
+        const { result, asset } = loadUseBlockAssets();
 
         await act(async () => {
             await result.current.deleteAssetIdsFromKey('key', [1]);
@@ -85,7 +119,7 @@ describe('useBlockAssets hook', () => {
 
         const call = (window.emitter.emit as SinonStub).getCall(0);
 
-        waitFor(() => {
+        await waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
             expect(call.lastArg.blockId).toEqual(123);
             expect(call.lastArg.prevBlockAssets).toMatchObject({ key: [asset] });
@@ -93,29 +127,15 @@ describe('useBlockAssets hook', () => {
         });
     });
 
-    it('should add asset ids', async () => {
-        const { result, appBridgeStub } = await loadUseBlockAssets();
-        await act(async () => {
-            await result.current.addAssetIdsToKey('key', [2]);
-        });
-
-        const call = appBridgeStub.addAssetIdsToBlockAssetKey.getCall(0);
-        waitFor(() => {
-            expect(call.firstArg).toEqual('key');
-            expect(call.lastArg).toEqual([2]);
-            expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1, 2]);
-        });
-    });
-
     it('should notify about updated assets on add asset ids to key', async () => {
-        const { result, asset } = await loadUseBlockAssets();
+        const { result, asset } = loadUseBlockAssets();
         const assetToAdd = AssetDummy.with(2);
         await act(async () => {
             await result.current.addAssetIdsToKey('key', [assetToAdd.id]);
         });
 
         const call = (window.emitter.emit as SinonStub).getCall(0);
-        waitFor(() => {
+        await waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:BlockAssetsUpdated');
             expect(call.lastArg.blockId).toEqual(123);
             expect(call.lastArg.blockAssets).toMatchObject({ key: [asset, assetToAdd] });
