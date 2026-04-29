@@ -20,7 +20,7 @@ export const verifyManifest = async ({ appType, instance, token }: VerifyManifes
 
         const projectPath = process.cwd();
         const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
-        const resolvedAppType = appType || manifestContent.appType || 'content-block';
+        const resolvedAppType = appType ?? manifestContent.appType ?? 'content-block';
 
         const httpClient = new HttpClient(instanceUrl);
 
