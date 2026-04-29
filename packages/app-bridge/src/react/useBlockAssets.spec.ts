@@ -29,10 +29,24 @@ describe('useBlockAssets hook', () => {
         return { result, appBridgeStub, asset };
     };
 
-    it('should initialize block assets from context', () => {
-        const { result } = loadUseBlockAssets();
+    it('should initialize block assets from context without calling getBlockAssets', () => {
+        const { result, appBridgeStub } = loadUseBlockAssets();
 
         expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1]);
+        sinon.assert.notCalled(appBridgeStub.getBlockAssets);
+    });
+
+    it('should fall back to empty assets when context does not provide assets', () => {
+        const appBridgeStub = getAppBridgeBlockStub({
+            blockId: 123,
+            blockAssets: { key: [AssetDummy.with(1)] },
+        });
+        appBridgeStub.context.withArgs('assets').returns({ get: () => undefined });
+
+        const { result } = renderHook(() => useBlockAssets(appBridgeStub));
+
+        expect(result.current.blockAssets).toStrictEqual({});
+        sinon.assert.notCalled(appBridgeStub.getBlockAssets);
     });
 
     it('should delete an asset', async () => {
