@@ -136,8 +136,8 @@ export const validateBlockManifestOnServer = async (
             'content-block',
             manifestContent as unknown as Record<string, unknown>,
         );
-        if (!result.valid) {
-            Logger.error('The manifest is invalid:', result.error);
+        if (!result.data.valid) {
+            Logger.error('The manifest is invalid:', result.data.error);
             process.exit(-1);
         }
     } catch (error) {

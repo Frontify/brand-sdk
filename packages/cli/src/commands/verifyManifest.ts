@@ -39,7 +39,7 @@ export const verifyManifest = async ({ appType, instance, token }: VerifyManifes
                 return;
             }
 
-            Logger.error('The manifest is invalid:', result.error);
+            Logger.error('The manifest is invalid:', result.data.error);
             process.exit(-1);
         } catch (error) {
             Logger.error(
