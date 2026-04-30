@@ -24,7 +24,6 @@ import {
     type SwitchBlock as SwitchBlockSidebarSettings,
     type TemplateInputBlock as TemplateInputBlockSidebarSettings,
     type TextareaBlock as TextareaBlockSidebarSettings,
-    type TranslatableSettingsStructure as TranslatableSettingsStructureSidebarSettings,
     type ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
 } from '@frontify/sidebar-settings';
 import { type FC } from 'react';
