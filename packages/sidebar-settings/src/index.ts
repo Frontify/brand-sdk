@@ -3,3 +3,4 @@
 export * from './blocks';
 export * from './bundle';
 export * from './helpers';
+export * from './settingsStructure';
