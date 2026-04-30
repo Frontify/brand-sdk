@@ -55,9 +55,16 @@ export type SettingsSection<AppBridge> = MainSection<AppBridge> | LabeledSection
 /**
  * Settings structure that resolves at render time for the requested language.
  *
+ * The argument is an object so the contract can grow new fields in the future
+ * without breaking existing callers.
+ *
  * @typeParam AppBridge - The AppBridge variant the contained blocks target.
  *
  * Currently supported languages are:
  * 'en', 'de', 'fr', 'es', 'it', 'pt', 'nl', 'da', 'sv', 'pl', 'cs', 'fi', 'no'
  */
-export type TranslatableSettingsStructure<AppBridge> = (lang: string) => SettingsSection<AppBridge>[];
+export type TranslatableSettingsStructure<AppBridge> = ({
+    languageCode,
+}: {
+    languageCode: string;
+}) => SettingsSection<AppBridge>[];

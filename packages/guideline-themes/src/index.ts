@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AppBridgeTheme, type LanguageCode, type ThemeTemplate } from '@frontify/app-bridge-theme';
+import { type AppBridgeTheme, type ThemeTemplate } from '@frontify/app-bridge-theme';
 import {
     type AssetInputBlock as AssetInputBlockSidebarSettings,
     type BaseBlock as BaseBlockSidebarSettings,
@@ -19,7 +19,6 @@ import {
     type SectionHeadingBlock as SectionHeadingBlockSidebarSettings,
     type SegmentedControlsBlock as SegmentedControlsBlockSidebarSettings,
     type SettingBlock as SettingBlockSidebarSettings,
-    type SettingsSection as SettingsSectionSidebarSettings,
     type SimpleSettingBlock as SimpleSettingBlockSidebarSettings,
     type SwitchBlock as SwitchBlockSidebarSettings,
     type TemplateInputBlock as TemplateInputBlockSidebarSettings,
