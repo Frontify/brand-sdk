@@ -1,5 +1,12 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.10
+
+### Patch Changes
+
+-   Updated dependencies [[`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263)]:
+    -   @frontify/sidebar-settings@0.12.0
+
 ## 2.1.9
 
 ### Patch Changes

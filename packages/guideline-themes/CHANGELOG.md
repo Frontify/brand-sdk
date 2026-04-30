@@ -1,5 +1,16 @@
 # @frontify/guideline-themes
 
+## 1.2.0
+
+### Minor Changes
+
+-   [#1572](https://github.com/Frontify/brand-sdk/pull/1572) [`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263) Thanks [@Kenny806](https://github.com/Kenny806)! - Revert function shape from new sidebar settings type. Only allow static array.
+
+### Patch Changes
+
+-   Updated dependencies [[`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263)]:
+    -   @frontify/sidebar-settings@0.12.0
+
 ## 1.1.0
 
 ### Minor Changes
