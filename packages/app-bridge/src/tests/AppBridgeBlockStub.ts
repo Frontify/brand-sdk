@@ -69,6 +69,22 @@ export const getAppBridgeBlockStub = ({
 
     const contextAssetsSubscribers: Set<(nextAssets: Record<string, Asset[]>) => void> = new Set();
 
+    const computeBlockAssets = (): Record<string, Asset[]> =>
+        Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
+            const addedAssetIdsList = addedAssetIds[key] ?? [];
+            const deletedAssetIdsList = deletedAssetIds[key] ?? [];
+            assetsDiff[key] = [
+                ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
+                ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
+            ];
+            return assetsDiff;
+        }, {});
+
+    const notifyContextAssetsSubscribers = () => {
+        const next = computeBlockAssets();
+        contextAssetsSubscribers.forEach((subscriber) => subscriber(next));
+    };
+
     return {
         getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
@@ -80,26 +96,18 @@ export const getAppBridgeBlockStub = ({
         getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
             Promise.resolve(AssetDummy.with(assetId)),
         ),
-        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(() => {
-            return Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
-                const addedAssetIdsList = addedAssetIds[key] ?? [];
-                const deletedAssetIdsList = deletedAssetIds[key] ?? [];
-                assetsDiff[key] = [
-                    ...assets.filter((asset) => !deletedAssetIdsList.includes(asset.id)),
-                    ...addedAssetIdsList.map((id) => AssetDummy.with(id)),
-                ];
-                return assetsDiff;
-            }, {});
-        }),
+        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(() => computeBlockAssets()),
         addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
             (key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
+                notifyContextAssetsSubscribers();
             },
         ),
         deleteAssetIdsFromBlockAssetKey: stub<
             Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>
         >().callsFake((key, assetIds) => {
             deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
+            notifyContextAssetsSubscribers();
         }),
         getBlockTemplates: stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(() => {
             return Object.entries(blockTemplates).reduce<Record<string, Template[]>>(
@@ -140,6 +148,7 @@ export const getAppBridgeBlockStub = ({
                 }
                 case 'setAssetIdsByBlockAssetKey': {
                     blockAssets[args.payload.key] = args.payload.assetIds.map((id) => AssetDummy.with(id));
+                    notifyContextAssetsSubscribers();
                     return Promise.resolve();
                 }
             }
