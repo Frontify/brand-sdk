@@ -30,9 +30,8 @@ describe('useAttachments', () => {
         });
         const { result } = renderHook(() => useAttachments(STUB_WITH_THREE_ASSETS, MOCK_SETTINGS_ID));
 
-        const initialValue = result.current;
         await waitFor(() => {
-            expect(result.current).not.toBe(initialValue);
+            expect(result.current.attachments).toHaveLength(3);
         });
         await result.current.onAttachmentDelete(AssetDummy.with(1));
         await waitFor(() => {
@@ -46,9 +45,8 @@ describe('useAttachments', () => {
             blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
         });
         const { result } = renderHook(() => useAttachments(STUB_WITH_THREE_ASSETS, MOCK_SETTINGS_ID));
-        const initialValue = result.current;
         await waitFor(() => {
-            expect(result.current).not.toBe(initialValue);
+            expect(result.current.attachments).toHaveLength(3);
         });
         await result.current.onAttachmentReplace(AssetDummy.with(2), AssetDummy.with(10));
         await waitFor(() => {
@@ -62,9 +60,8 @@ describe('useAttachments', () => {
             blockAssets: { [MOCK_SETTINGS_ID]: [AssetDummy.with(1), AssetDummy.with(2), AssetDummy.with(3)] },
         });
         const { result } = renderHook(() => useAttachments(STUB_WITH_THREE_ASSETS, MOCK_SETTINGS_ID));
-        const initialValue = result.current;
         await waitFor(() => {
-            expect(result.current).not.toBe(initialValue);
+            expect(result.current.attachments).toHaveLength(3);
         });
         await result.current.onAttachmentsSorted([AssetDummy.with(3), AssetDummy.with(2), AssetDummy.with(1)]);
         await waitFor(() => {
