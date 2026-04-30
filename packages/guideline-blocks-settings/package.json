@@ -1,7 +1,7 @@
 {
     "name": "@frontify/guideline-blocks-settings",
     "type": "module",
-    "version": "2.1.8",
+    "version": "2.1.9",
     "description": "Provides types and helpers for the guideline block development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -62,22 +62,22 @@
         "@testing-library/jest-dom": "^6.9.1",
         "@testing-library/react": "^16.3.2",
         "@testing-library/user-event": "14.6.1",
-        "@tony.ganchev/eslint-plugin-header": "^3.4.3",
+        "@tony.ganchev/eslint-plugin-header": "^3.4.4",
         "@types/node": "^24.11.0",
         "@types/react": "^18.3.27",
         "@types/react-dom": "^18.3.7",
         "@types/sinon": "^21.0.0",
         "@vitejs/plugin-react": "^5.2.0",
-        "@vitest/ui": "^4.1.4",
+        "@vitest/ui": "^4.1.5",
         "autoprefixer": "^10.4.27",
         "cypress": "^15.13.0",
         "cypress-real-events": "^1.15.0",
-        "eslint": "^10.2.0",
+        "eslint": "^10.2.1",
         "happy-dom": "^20.9.0",
         "mitt": "^3.0.1",
         "msw": "^2.12.14",
         "postcss": "^8.5.9",
-        "prettier": "^3.8.2",
+        "prettier": "^3.8.3",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "rollup": "^4.60.1",
@@ -88,6 +88,6 @@
         "vite-plugin-dts": "^4.5.4",
         "vite-plugin-externalize-deps": "^0.10.0",
         "vite-plugin-externals": "^0.6.2",
-        "vitest": "^4.1.4"
+        "vitest": "^4.1.5"
     }
 }
