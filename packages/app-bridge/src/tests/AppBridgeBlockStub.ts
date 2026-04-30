@@ -82,7 +82,9 @@ export const getAppBridgeBlockStub = ({
 
     const notifyContextAssetsSubscribers = () => {
         const next = computeBlockAssets();
-        contextAssetsSubscribers.forEach((subscriber) => subscriber(next));
+        for (const subscriber of contextAssetsSubscribers) {
+            subscriber(next);
+        }
     };
 
     return {
