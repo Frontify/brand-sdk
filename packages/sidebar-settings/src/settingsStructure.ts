@@ -3,7 +3,6 @@
 import { type ReactElement } from 'react';
 
 import { type SettingBlock } from './blocks';
-import { type IconEnum } from './blocks/iconEnum';
 
 /**
  * Settings section rendered above the accordion with no header, label, or
@@ -32,12 +31,9 @@ export type LabeledSection<AppBridge> = {
      */
     label: string;
     /**
-     * Optional leading icon. Accepts an {@link IconEnum} value, its string
-     * key (e.g. `'Eye'`), or a custom React element.
-     *
-     * The full list of icons can be found here {@link https://fondue-components.frontify.com/?path=/story/icons_icons--default}
+     * Optional leading icon as a React element.
      */
-    icon?: IconEnum | keyof typeof IconEnum | ReactElement;
+    icon?: ReactElement;
     blocks: SettingBlock<AppBridge>[];
 };
 
