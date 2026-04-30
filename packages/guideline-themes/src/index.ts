@@ -80,9 +80,7 @@ export type LegacyThemeSettingsStructure = { [customSectionName: string]: Settin
 
 type TranslatableThemeSettingsStructure = TranslatableSettingsStructureSidebarSettings<AppBridgeTheme>;
 
-export type ThemeSettingsStructureExport =
-    | LegacyThemeSettingsStructure
-    | TranslatableThemeSettingsStructure;
+export type ThemeSettingsStructureExport = LegacyThemeSettingsStructure | TranslatableThemeSettingsStructure;
 
 export type ThemeSettingsStructure =
     | Record<ThemeTemplate, LegacyThemeSettingsStructure>
