@@ -2,7 +2,7 @@
 
 import { type AppBridgeTheme, type ThemeTemplate } from '@frontify/app-bridge-theme';
 import {
-    SettingsSection,
+    type SettingsSection,
     type AssetInputBlock as AssetInputBlockSidebarSettings,
     type BaseBlock as BaseBlockSidebarSettings,
     type Bundle as BundleSidebarSettings,
