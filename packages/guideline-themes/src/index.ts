@@ -23,6 +23,7 @@ import {
     type SwitchBlock as SwitchBlockSidebarSettings,
     type TemplateInputBlock as TemplateInputBlockSidebarSettings,
     type TextareaBlock as TextareaBlockSidebarSettings,
+    type TranslatableSettingsStructure as TranslatableSettingsStructureSidebarSettings,
     type ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
 } from '@frontify/sidebar-settings';
 import { type FC } from 'react';
@@ -70,8 +71,20 @@ export type ContentAreaPaddingTemplateSettings = {
 export type ContentAreaAlignmentChoice = 'left' | 'center' | 'right';
 export type ContentAreaAlignmentSetting = { contentAreaAlignmentChoice?: ContentAreaAlignmentChoice };
 
-export type ThemeSettingsStructureExport = { [customSectionName: string]: SettingBlock[] };
-export type ThemeSettingsStructure = Record<ThemeTemplate, ThemeSettingsStructureExport>;
+/**
+ * @deprecated Use {@link TranslatableThemeSettingsStructure} instead. The legacy
+ * record shape cannot express section labels, icons, or translations and will be
+ * removed in a future major version.
+ */
+export type LegacyThemeSettingsStructure = { [customSectionName: string]: SettingBlock[] };
+
+type TranslatableThemeSettingsStructure = TranslatableSettingsStructureSidebarSettings<AppBridgeTheme>;
+
+export type ThemeSettingsStructureExport = LegacyThemeSettingsStructure | TranslatableThemeSettingsStructure;
+
+export type ThemeSettingsStructure =
+    | Record<ThemeTemplate, LegacyThemeSettingsStructure>
+    | Record<ThemeTemplate, TranslatableThemeSettingsStructure>;
 
 export type ThemeProps = {
     appBridge: AppBridgeTheme;

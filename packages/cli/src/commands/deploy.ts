@@ -18,7 +18,7 @@ import {
     readFileAsBase64,
     readFileLinesAsArray,
 } from '../utils/index';
-import { platformAppManifestSchemaV1, verifyManifest } from '../utils/verifyManifest';
+import { platformAppManifestSchemaV1, verifyManifest, verifyManifestOnServer } from '../utils/verifyManifest';
 
 type Options = {
     dryRun?: boolean;
@@ -122,6 +122,33 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
     };
 };
 
+export const validateBlockManifestOnServer = async (
+    instanceUrl: string,
+    accessToken: string,
+    manifestContent: AppManifest,
+): Promise<void> => {
+    Logger.info('Validating the manifest against the Frontify Marketplace...');
+    const httpClient = new HttpClient(instanceUrl);
+    try {
+        const result = await verifyManifestOnServer(
+            httpClient,
+            accessToken,
+            'content-block',
+            manifestContent as unknown as Record<string, unknown>,
+        );
+        if (!result.data.valid) {
+            Logger.error('The manifest is invalid:', result.data.error);
+            process.exit(-1);
+        }
+    } catch (error) {
+        Logger.error(
+            'An error occurred while validating the manifest:',
+            (error as HttpClientError).responseBody?.error || (error as Error).message,
+        );
+        process.exit(-1);
+    }
+};
+
 export const handleDeployError = (error: unknown): never => {
     if (typeof error === 'string') {
         Logger.error('The deployment has failed and was aborted due to an error:', error);
@@ -159,6 +186,10 @@ export const createDeployment = async (
             manifestContent.appType === 'platform-app'
                 ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
                 : manifestContent;
+
+        if ((manifestContent.appType ?? 'content-block') === 'content-block') {
+            await validateBlockManifestOnServer(instanceUrl, accessToken, manifestContent);
+        }
 
         await verifyCode(noVerify);
 

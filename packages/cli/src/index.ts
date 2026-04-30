@@ -18,6 +18,7 @@ import {
     loginUser,
     logoutUser,
     publishApp,
+    verifyManifest,
     Availability,
 } from './commands/index';
 import {
@@ -139,6 +140,18 @@ cli.command('deploy', 'deploy the app to the marketplace')
             },
             compiler,
         );
+    });
+
+cli.command('verify-manifest', 'verify the app manifest against the Frontify marketplace')
+    .option('--appType [appType], --app-type', '[string] specify app type. Overrides manifest values')
+    .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
+    .option('-t, --token <accessToken>', '[string] the access token')
+    .action(async (options: { appType?: string; instance?: string; token?: string }) => {
+        await verifyManifest({
+            appType: options.appType,
+            instance: options.instance,
+            token: options.token,
+        });
     });
 
 cli.command('publish', 'publish the app to the marketplace')

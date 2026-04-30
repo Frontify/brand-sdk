@@ -1,5 +1,11 @@
 # @frontify/app-bridge-app
 
+## 0.2.5
+
+### Patch Changes
+
+-   [#1566](https://github.com/Frontify/brand-sdk/pull/1566) [`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): bumping some devDependencies
+
 ## 0.2.4
 
 ### Patch Changes

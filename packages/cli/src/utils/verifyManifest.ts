@@ -2,6 +2,8 @@
 
 import { array, boolean, number, object, string, z } from 'zod';
 
+import { type HttpClient } from './httpClient';
+
 const forbiddenExtensions = ['exe', 'dmg', 'cmd', 'sh', 'bat'];
 const getForbiddenExtensionsErrorMessage = (surfaceName: string) =>
     `Invalid file extension, \`${surfaceName}.filenameExtension\` can not include: ${forbiddenExtensions.join(', ')}.`;
@@ -237,4 +239,35 @@ export const verifyManifest = (manifest: unknown, schema: typeof platformAppMani
     }
 
     return validatedManifest.data;
+};
+
+export type VerifyManifestResult = {
+    success: boolean;
+    data: { valid: true } | { valid: false; error: string };
+};
+
+const APP_TYPE_TO_SERVER_ENUM: Record<string, string> = {
+    'content-block': 'CONTENT_BLOCK',
+    'platform-app': 'PLATFORM_APP',
+    theme: 'THEME',
+};
+
+export const verifyManifestOnServer = async (
+    httpClient: HttpClient,
+    accessToken: string,
+    appType: string,
+    manifest: Record<string, unknown>,
+): Promise<VerifyManifestResult> => {
+    const serverAppType = APP_TYPE_TO_SERVER_ENUM[appType];
+    if (!serverAppType) {
+        throw new Error(
+            `Unknown app type "${appType}". Expected one of: ${Object.keys(APP_TYPE_TO_SERVER_ENUM).join(', ')}`,
+        );
+    }
+
+    return httpClient.post<VerifyManifestResult>(
+        '/api/marketplace/app/manifest/validate',
+        { appType: serverAppType, manifest },
+        { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
 };

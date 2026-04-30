@@ -1,5 +1,23 @@
 # @frontify/frontify-cli
 
+## 6.1.0
+
+### Minor Changes
+
+-   [#1564](https://github.com/Frontify/brand-sdk/pull/1564) [`ca53cc3`](https://github.com/Frontify/brand-sdk/commit/ca53cc343fdba498184320547f45e6491a051649) Thanks [@ragi96](https://github.com/ragi96)! - feat(CLI): add `verify-manifest` command to validate the local `manifest.json` against the Frontify Marketplace before deploying
+
+    Example usage:
+
+    ```bash
+    frontify-cli verify-manifest
+    frontify-cli verify-manifest --app-type content-block
+    frontify-cli verify-manifest --app-type content-block --instance my-instance.frontify.com --token <accessToken>
+    ```
+
+### Patch Changes
+
+-   [#1566](https://github.com/Frontify/brand-sdk/pull/1566) [`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): bumping some devDependencies
+
 ## 6.0.4
 
 ### Patch Changes
