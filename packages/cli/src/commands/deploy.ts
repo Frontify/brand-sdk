@@ -19,7 +19,7 @@ import {
     readFileLinesAsArray,
 } from '../utils/index';
 import {
-    type AppManifest,
+    type MarketplaceManifest,
     platformAppManifestSchemaV1,
     verifyManifest,
     verifyManifestOnServer,
@@ -121,7 +121,7 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
 export const validateBlockManifestOnServer = async (
     instanceUrl: string,
     accessToken: string,
-    manifestContent: AppManifest,
+    manifestContent: MarketplaceManifest,
 ): Promise<void> => {
     Logger.info('Validating the manifest against the Frontify Marketplace...');
     const httpClient = new HttpClient(instanceUrl);
@@ -172,7 +172,7 @@ export const createDeployment = async (
         }
 
         const projectPath = process.cwd();
-        const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+        const manifestContent = reactiveJson<MarketplaceManifest>(join(projectPath, 'manifest.json'));
         const { appId } =
             manifestContent.appType === 'platform-app'
                 ? verifyManifest(manifestContent, platformAppManifestSchemaV1)

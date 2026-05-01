@@ -251,7 +251,7 @@ export type ContentBlockManifest = {
 
 export type PlatformAppManifest = z.infer<typeof platformAppManifestSchemaV1>;
 
-export type AppManifest = ContentBlockManifest | PlatformAppManifest;
+export type MarketplaceManifest = ContentBlockManifest | PlatformAppManifest;
 
 export type VerifyManifestResult = {
     success: boolean;
@@ -268,7 +268,7 @@ export const verifyManifestOnServer = async (
     httpClient: HttpClient,
     accessToken: string,
     appType: string,
-    manifest: AppManifest,
+    manifest: MarketplaceManifest,
 ): Promise<VerifyManifestResult> => {
     const serverAppType = APP_TYPE_TO_SERVER_ENUM[appType];
     if (!serverAppType) {

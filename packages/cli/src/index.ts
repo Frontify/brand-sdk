@@ -30,7 +30,7 @@ import {
     isValidName,
     reactiveJson,
 } from './utils/index';
-import { type AppManifest } from './utils/verifyManifest';
+import { type MarketplaceManifest } from './utils/verifyManifest';
 
 type LoginOptions = { instance: string; port: number };
 type ServeOptions = { entryPath: string; port: number; allowExternal: boolean; appType?: string };
@@ -92,7 +92,7 @@ cli.command('serve', 'serve the app locally')
     })
     .option('--appType <appType>, --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options: ServeOptions) => {
-        const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
+        const manifest = reactiveJson<MarketplaceManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType;
 
         if (appType === 'platform-app') {
@@ -114,7 +114,7 @@ cli.command('deploy', 'deploy the app to the marketplace')
     .option('-i, --instance <instanceUrl>', '[string] url of the Frontify instance')
     .option('-t, --token <accessToken>', '[string] the access token')
     .action(async (options: DeployOptions) => {
-        const manifest = reactiveJson<AppManifest>(join(process.cwd(), 'manifest.json'));
+        const manifest = reactiveJson<MarketplaceManifest>(join(process.cwd(), 'manifest.json'));
         const appType = options.appType || manifest.appType || 'content-block';
 
         const compilers: Record<string, (options: CompilerOptions) => Promise<unknown>> = {
