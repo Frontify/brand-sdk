@@ -4,7 +4,7 @@
 
 feat(serve): include the block manifest in the `/_entrypoint` dev-server response
 
-The block development server now reads `manifest.json` from the project root on each `/_entrypoint` request and returns its parsed content under a `manifest` field, so consumers can pick up live manifest changes without restarting `frontify-cli serve`. If `manifest.json` is missing or unparseable, the field is omitted and a warning is logged.
+The block development server now reads `manifest.json` from the project root on each `/_entrypoint` request and returns its parsed content under a `manifest` field, so the host can pick up live manifest changes without restarting `frontify-cli serve`. If `manifest.json` is missing or unparseable, the field is omitted and a warning is logged.
 
 ```json
 GET http://localhost:5600/_entrypoint
