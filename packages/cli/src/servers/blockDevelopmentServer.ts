@@ -7,9 +7,9 @@ import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 
 import pkg from '../../package.json';
-import { type AppManifest } from '../commands/deploy';
 import { getAppBridgeVersion, getReactVersion } from '../utils/getPackageVersion';
 import { Logger } from '../utils/logger';
+import { type ContentBlockManifest } from '../utils/verifyManifest';
 import { reactBareExternalPlugin } from '../utils/vitePlugins';
 
 export class BlockDevelopmentServer {
@@ -67,11 +67,13 @@ export class BlockDevelopmentServer {
                 }
 
                 const host = req.headers.host || `localhost:${this.port}`;
-                const actualPort = parseInt(host.split(':')[1] || String(this.port), 10);
+                const actualPort = Number.parseInt(host.split(':')[1] || String(this.port), 10);
 
-                let manifest: AppManifest | undefined;
+                let manifest: ContentBlockManifest | undefined;
                 try {
-                    manifest = JSON.parse(readFileSync(join(process.cwd(), 'manifest.json'), 'utf8')) as AppManifest;
+                    manifest = JSON.parse(
+                        readFileSync(join(process.cwd(), 'manifest.json'), 'utf8'),
+                    ) as ContentBlockManifest;
                 } catch (error) {
                     Logger.error('Warning: could not read manifest.json from project root.', (error as Error).message);
                 }

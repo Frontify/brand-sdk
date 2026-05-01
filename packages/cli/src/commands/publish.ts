@@ -6,8 +6,7 @@ import pc from 'picocolors';
 
 import { type HttpClientError } from '../errors/HttpClientError';
 import { Configuration, HttpClient, Logger, type UserInfo, getUser, reactiveJson } from '../utils/index';
-
-import { type AppManifest } from './deploy';
+import { type AppManifest } from '../utils/verifyManifest';
 
 export enum Availability {
     PRIVATE = 'PRIVATE',

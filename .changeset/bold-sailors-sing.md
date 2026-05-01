@@ -17,3 +17,5 @@ GET http://localhost:5600/_entrypoint
     "manifest": { "appId": "abc123…" }
 }
 ```
+
+Internal type cleanup that landed alongside this: `AppManifest` is now a discriminated union `ContentBlockManifest | PlatformAppManifest` (the latter inferred from `platformAppManifestSchemaV1`), exported from `utils/verifyManifest`. `verifyManifestOnServer` accepts `AppManifest` directly, dropping the `as unknown as Record<string, unknown>` casts in `validateBlockManifestOnServer` and the `verify-manifest` command. The block dev server is narrowed to `ContentBlockManifest` since it never serves platform-app or theme manifests. Theme manifests still pass through the platform-app variant for now because the `appType` enum on `platformAppManifestSchemaV1` includes `'theme'`.

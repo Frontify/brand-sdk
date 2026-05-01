@@ -241,6 +241,18 @@ export const verifyManifest = (manifest: unknown, schema: typeof platformAppMani
     return validatedManifest.data;
 };
 
+export type ContentBlockManifest = {
+    appId: string;
+    appType?: 'content-block';
+    settingsSchema?: object;
+    i18nFields?: string[];
+    searchFields?: { settingId: string; type: string }[];
+};
+
+export type PlatformAppManifest = z.infer<typeof platformAppManifestSchemaV1>;
+
+export type AppManifest = ContentBlockManifest | PlatformAppManifest;
+
 export type VerifyManifestResult = {
     success: boolean;
     data: { valid: true } | { valid: false; error: string };
@@ -256,7 +268,7 @@ export const verifyManifestOnServer = async (
     httpClient: HttpClient,
     accessToken: string,
     appType: string,
-    manifest: Record<string, unknown>,
+    manifest: AppManifest,
 ): Promise<VerifyManifestResult> => {
     const serverAppType = APP_TYPE_TO_SERVER_ENUM[appType];
     if (!serverAppType) {

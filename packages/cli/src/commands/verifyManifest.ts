@@ -4,9 +4,9 @@ import { join } from 'node:path';
 
 import { type HttpClientError } from '../errors/HttpClientError';
 import { HttpClient, Logger, reactiveJson } from '../utils/index';
-import { verifyManifestOnServer } from '../utils/verifyManifest';
+import { type AppManifest, verifyManifestOnServer } from '../utils/verifyManifest';
 
-import { type AppManifest, resolveCredentials } from './deploy';
+import { resolveCredentials } from './deploy';
 
 type VerifyManifestOptions = {
     appType?: string;
@@ -27,12 +27,7 @@ export const verifyManifest = async ({ appType, instance, token }: VerifyManifes
         Logger.info('Verifying the manifest...');
 
         try {
-            const result = await verifyManifestOnServer(
-                httpClient,
-                accessToken,
-                resolvedAppType,
-                manifestContent as unknown as Record<string, unknown>,
-            );
+            const result = await verifyManifestOnServer(httpClient, accessToken, resolvedAppType, manifestContent);
 
             if (result.data.valid) {
                 Logger.success('The manifest is valid.');

@@ -9,7 +9,6 @@ import prompts from 'prompts';
 import pkg from '../package.json';
 
 import {
-    type AppManifest,
     createDeployment,
     createDevelopmentServer,
     createDevelopmentServerForPlatformApp,
@@ -31,6 +30,7 @@ import {
     isValidName,
     reactiveJson,
 } from './utils/index';
+import { type AppManifest } from './utils/verifyManifest';
 
 type LoginOptions = { instance: string; port: number };
 type ServeOptions = { entryPath: string; port: number; allowExternal: boolean; appType?: string };

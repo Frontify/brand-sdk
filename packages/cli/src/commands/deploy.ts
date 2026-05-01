@@ -18,7 +18,12 @@ import {
     readFileAsBase64,
     readFileLinesAsArray,
 } from '../utils/index';
-import { platformAppManifestSchemaV1, verifyManifest, verifyManifestOnServer } from '../utils/verifyManifest';
+import {
+    type AppManifest,
+    platformAppManifestSchemaV1,
+    verifyManifest,
+    verifyManifestOnServer,
+} from '../utils/verifyManifest';
 
 type Options = {
     dryRun?: boolean;
@@ -26,15 +31,6 @@ type Options = {
     openInBrowser?: boolean;
     token?: string;
     instance?: string;
-};
-
-export type AppManifest = {
-    appId: string;
-    appType?: string;
-    metadata?: {
-        version?: number;
-    };
-    experimental?: boolean;
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -130,12 +126,7 @@ export const validateBlockManifestOnServer = async (
     Logger.info('Validating the manifest against the Frontify Marketplace...');
     const httpClient = new HttpClient(instanceUrl);
     try {
-        const result = await verifyManifestOnServer(
-            httpClient,
-            accessToken,
-            'content-block',
-            manifestContent as unknown as Record<string, unknown>,
-        );
+        const result = await verifyManifestOnServer(httpClient, accessToken, 'content-block', manifestContent);
         if (!result.data.valid) {
             Logger.error('The manifest is invalid:', result.data.error);
             process.exit(-1);
