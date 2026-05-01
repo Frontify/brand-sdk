@@ -20,6 +20,7 @@ import {
     verifyManifest,
     Availability,
 } from './commands/index';
+import FileNotFoundError from './errors/FileNotFoundError';
 import {
     type CompilerOptions,
     Logger,
@@ -92,8 +93,15 @@ cli.command('serve', 'serve the app locally')
     })
     .option('--appType <appType>, --app-type', '[string] specify app type. Overrides manifest values')
     .action(async (options: ServeOptions) => {
-        const manifest = reactiveJson<MarketplaceManifest>(join(process.cwd(), 'manifest.json'));
-        const appType = options.appType || manifest.appType;
+        let manifest: MarketplaceManifest | undefined;
+        try {
+            manifest = reactiveJson<MarketplaceManifest>(join(process.cwd(), 'manifest.json'));
+        } catch (error) {
+            if (!(error instanceof FileNotFoundError)) {
+                throw error;
+            }
+        }
+        const appType = options.appType || manifest?.appType;
 
         if (appType === 'platform-app') {
             await createDevelopmentServerForPlatformApp(options.entryPath, options.port);
