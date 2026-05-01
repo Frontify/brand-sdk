@@ -4,24 +4,24 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { Logger } from '../../src/utils/logger';
 import { readContentBlockManifest } from '../../src/utils/readContentBlockManifest';
 
 describe('readContentBlockManifest', () => {
-    let tempDir: string;
+    let tempDir = '';
     let loggerErrorSpy: ReturnType<typeof vi.spyOn>;
 
     beforeEach(() => {
+        if (tempDir) {
+            rmSync(tempDir, { recursive: true, force: true });
+        }
+        vi.clearAllMocks();
+
         tempDir = join(tmpdir(), `cli-test-${Date.now()}-${Math.random().toString(36).slice(2)}`);
         mkdirSync(tempDir, { recursive: true });
         loggerErrorSpy = vi.spyOn(Logger, 'error').mockImplementation(() => undefined);
-    });
-
-    afterEach(() => {
-        rmSync(tempDir, { recursive: true, force: true });
-        loggerErrorSpy.mockRestore();
     });
 
     test('returns the parsed manifest when manifest.json is valid', () => {
