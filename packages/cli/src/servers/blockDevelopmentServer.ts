@@ -1,15 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-
 import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 
 import pkg from '../../package.json';
 import { getAppBridgeVersion, getReactVersion } from '../utils/getPackageVersion';
-import { Logger } from '../utils/logger';
-import { type ContentBlockManifest } from '../utils/verifyManifest';
+import { readContentBlockManifest } from '../utils/readContentBlockManifest';
 import { reactBareExternalPlugin } from '../utils/vitePlugins';
 
 export class BlockDevelopmentServer {
@@ -69,14 +65,7 @@ export class BlockDevelopmentServer {
                 const host = req.headers.host || `localhost:${this.port}`;
                 const actualPort = Number.parseInt(host.split(':')[1] || String(this.port), 10);
 
-                let manifest: ContentBlockManifest | undefined;
-                try {
-                    manifest = JSON.parse(
-                        readFileSync(join(process.cwd(), 'manifest.json'), 'utf8'),
-                    ) as ContentBlockManifest;
-                } catch (error) {
-                    Logger.error('Warning: could not read manifest.json from project root.', (error as Error).message);
-                }
+                const manifest = readContentBlockManifest(process.cwd());
 
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
