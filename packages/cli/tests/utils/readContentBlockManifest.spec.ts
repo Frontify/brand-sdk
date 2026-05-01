@@ -24,7 +24,7 @@ describe('readContentBlockManifest', () => {
         loggerErrorSpy = vi.spyOn(Logger, 'error').mockImplementation(() => undefined);
     });
 
-    test('returns the parsed manifest when manifest.json is valid', () => {
+    test('should return the parsed manifest when manifest.json is valid', () => {
         const manifest = { appId: 'abc123', appType: 'content-block' as const };
         writeFileSync(join(tempDir, 'manifest.json'), JSON.stringify(manifest));
 
@@ -32,7 +32,7 @@ describe('readContentBlockManifest', () => {
         expect(loggerErrorSpy).not.toHaveBeenCalled();
     });
 
-    test('returns undefined and logs a warning when manifest.json does not exist', () => {
+    test('should return undefined and log a warning when manifest.json does not exist', () => {
         expect(readContentBlockManifest(tempDir)).toBeUndefined();
         expect(loggerErrorSpy).toHaveBeenCalledWith(
             expect.stringContaining('could not read manifest.json'),
@@ -40,7 +40,7 @@ describe('readContentBlockManifest', () => {
         );
     });
 
-    test('returns undefined and logs a warning when manifest.json is not valid JSON', () => {
+    test('should return undefined and log a warning when manifest.json is not valid JSON', () => {
         writeFileSync(join(tempDir, 'manifest.json'), '{ invalid json');
 
         expect(readContentBlockManifest(tempDir)).toBeUndefined();
