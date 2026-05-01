@@ -1,10 +1,15 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import react from '@vitejs/plugin-react';
 import { createServer } from 'vite';
 
 import pkg from '../../package.json';
+import { type AppManifest } from '../commands/deploy';
 import { getAppBridgeVersion, getReactVersion } from '../utils/getPackageVersion';
+import { Logger } from '../utils/logger';
 import { reactBareExternalPlugin } from '../utils/vitePlugins';
 
 export class BlockDevelopmentServer {
@@ -64,6 +69,13 @@ export class BlockDevelopmentServer {
                 const host = req.headers.host || `localhost:${this.port}`;
                 const actualPort = parseInt(host.split(':')[1] || String(this.port), 10);
 
+                let manifest: AppManifest | undefined;
+                try {
+                    manifest = JSON.parse(readFileSync(join(process.cwd(), 'manifest.json'), 'utf8')) as AppManifest;
+                } catch (error) {
+                    Logger.error('Warning: could not read manifest.json from project root.', (error as Error).message);
+                }
+
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
                 res.setHeader('Content-Type', 'application/json');
@@ -78,6 +90,7 @@ export class BlockDevelopmentServer {
                             ...(appBridgeVersion ? { '@frontify/app-bridge': appBridgeVersion } : {}),
                             ...(reactVersion ? { react: reactVersion } : {}),
                         },
+                        ...(manifest ? { manifest } : {}),
                     }),
                 );
             });
