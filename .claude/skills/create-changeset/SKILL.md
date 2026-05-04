@@ -35,7 +35,25 @@ Workspaces (use the `name` field from each `packages/*/package.json`, e.g. `@fro
 
 …then a changeset is most likely not needed. Surface this to the user before writing one: *"This looks CI-/tooling-only and probably doesn't need a changeset — want me to skip it?"* Only proceed if they confirm.
 
-## 3. Write the body using Conventional Commits
+## 3. Write for consumers, not contributors
+
+A changeset becomes a CHANGELOG entry that someone reading the diff in their `pnpm install` output will see. Describe **only what's observable to consumers** of the package — not what was rearranged inside the source tree. The reader's question is *"what changed for me when I install this version?"*, not *"what did the author do this week?"*.
+
+What counts as consumer-visible depends on the package shape:
+
+- **Library packages** (`@frontify/app-bridge`, `@frontify/guideline-blocks-settings`, `@frontify/sidebar-settings`, `@frontify/app-bridge-theme`, `@frontify/app-bridge-app`, …) — exported APIs, types, props, hooks, components, runtime behavior, peer-dep changes.
+- **Binary packages** (`@frontify/frontify-cli`, anything with only `bin` and no `main`/`exports`) — commands, flags, prompts, generated output / response shapes, exit codes, error messages.
+
+**Always exclude from the body** (these belong in the commit message or PR description, not the CHANGELOG):
+
+- Internal renames of non-exported symbols, file moves, folder restructures.
+- Type-only refactors that don't change a published type (e.g. tightening an internal union, replacing a cast, splitting/combining internal types).
+- Test additions, fixture updates, lint/format fixes.
+- Implementation details ("now uses a discriminated union", "removed a cast", "wired through a different helper").
+
+If a change is genuinely internal-only and you're still writing a `patch` changeset to trigger a release, keep the body to **one short imperative line** (`refactor: clean up internal manifest typing`) — don't pad it with mechanics. If you can't think of anything consumer-facing to write, that's a signal the change might not need a changeset at all; ask the user before proceeding.
+
+## 4. Write the body using Conventional Commits
 
 The body **must** start with a Conventional Commits type prefix. Choose the one that matches the change:
 
@@ -56,15 +74,18 @@ Optional scope in parentheses — but **never use the workspace package name as 
 
 Use a scope only when it points at something *more specific* than the package — a feature area, hook, component, or subsystem inside that package. Good: `chore(deps): …`, `refactor(useBlockAssets): …`, `feat(AttachmentsToolbarButton): …`. If you can't think of a meaningful sub-scope, omit the parentheses entirely: `feat: …`, `fix: …`.
 
-Keep the summary line tight and imperative. If the change is non-trivial, follow with one or two short sentences of context (the *why*, or what the user-visible effect is).
+Keep the summary line tight and imperative. If the change is non-trivial, follow with one or two short sentences of context (the *why*, or what the user-visible effect is) — staying within the consumer-visible boundary defined in §3.
 
-## 4. Add examples when the change is new
+## 5. Add examples when the change is new
 
 If the change is `feat:` (or any change that introduces a new prop, hook, component, setting, CLI flag, exported helper, etc.), include a short fenced code block showing how to use the new thing. Examples are **not** required for `fix:`, `refactor:`, `chore:`, `docs:`, `test:`, `style:`, `perf:`, `build:`, `ci:` — only when there is a new surface a consumer can call.
 
-The example should be minimal and copy-pasteable: import statement + the smallest call site that demonstrates the feature.
+The example should be minimal and copy-pasteable, and should match the package shape:
 
-## 5. Final file shape
+- **Library packages** — `import` statement plus the smallest call site that demonstrates the feature.
+- **Binary packages** — the command invocation, or the relevant slice of generated output / response shape that the new feature produces.
+
+## 6. Final file shape
 
 ```markdown
 ---
@@ -90,5 +111,7 @@ The example should be minimal and copy-pasteable: import statement + the smalles
 - [ ] Frontmatter lists every affected `@frontify/*` package with the correct bump level.
 - [ ] Body starts with a Conventional Commits prefix.
 - [ ] Scope (if any) is **not** a workspace package name — that's already in the frontmatter.
+- [ ] Body describes only consumer-visible effects (per §3) — no internal renames, type-only refactors, casts, file moves, or implementation details.
+- [ ] If the change is internal-only, the body is a single imperative line — not padded with mechanics.
 - [ ] If `feat:` or otherwise introduces a new API, a usage example is included.
 - [ ] Did not run `pnpm changeset` interactively — wrote the file directly with the Write tool.
