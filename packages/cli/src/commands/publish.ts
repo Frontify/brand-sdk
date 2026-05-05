@@ -6,8 +6,7 @@ import pc from 'picocolors';
 
 import { type HttpClientError } from '../errors/HttpClientError';
 import { Configuration, HttpClient, Logger, type UserInfo, getUser, reactiveJson } from '../utils/index';
-
-import { type AppManifest } from './deploy';
+import { type MarketplaceManifest } from '../utils/verifyManifest';
 
 export enum Availability {
     PRIVATE = 'PRIVATE',
@@ -48,7 +47,7 @@ export const publishApp = async ({
         Logger.info(`You are logged in as ${user.name} (${instanceUrl}).`);
 
         const projectPath = process.cwd();
-        const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+        const manifestContent = reactiveJson<MarketplaceManifest>(join(projectPath, 'manifest.json'));
         const { appId } = manifestContent;
 
         const httpClient = new HttpClient(instanceUrl);
