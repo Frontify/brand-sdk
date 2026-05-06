@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge",
     "type": "module",
-    "version": "3.12.9",
+    "version": "4.0.0-alpha.64",
     "description": "Package to establish communication between Frontify and marketplace apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -49,10 +49,10 @@
         "sinon": "^15 || ^16 || ^17 || ^18 || ^19 || ^20 || ^21"
     },
     "dependencies": {
-        "immer": "^10.0.4",
+        "immer": "^11.1.4",
         "lodash-es": "^4.18.1",
         "mitt": "^3.0.1",
-        "type-fest": "^5.4.3"
+        "type-fest": "^5.4.4"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "^1.0.15",
