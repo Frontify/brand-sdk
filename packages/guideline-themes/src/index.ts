@@ -2,6 +2,7 @@
 
 import { type AppBridgeTheme, type ThemeTemplate } from '@frontify/app-bridge-theme';
 import {
+    type SettingsSection,
     type AssetInputBlock as AssetInputBlockSidebarSettings,
     type BaseBlock as BaseBlockSidebarSettings,
     type Bundle as BundleSidebarSettings,
@@ -23,7 +24,6 @@ import {
     type SwitchBlock as SwitchBlockSidebarSettings,
     type TemplateInputBlock as TemplateInputBlockSidebarSettings,
     type TextareaBlock as TextareaBlockSidebarSettings,
-    type TranslatableSettingsStructure as TranslatableSettingsStructureSidebarSettings,
     type ValueOrPromisedValue as ValueOrPromisedValueSidebarSettings,
 } from '@frontify/sidebar-settings';
 import { type FC } from 'react';
@@ -78,13 +78,13 @@ export type ContentAreaAlignmentSetting = { contentAreaAlignmentChoice?: Content
  */
 export type LegacyThemeSettingsStructure = { [customSectionName: string]: SettingBlock[] };
 
-type TranslatableThemeSettingsStructure = TranslatableSettingsStructureSidebarSettings<AppBridgeTheme>;
+type ThemeSettingsSections = SettingsSection<AppBridgeTheme>[];
 
-export type ThemeSettingsStructureExport = LegacyThemeSettingsStructure | TranslatableThemeSettingsStructure;
+export type ThemeSettingsStructureExport = LegacyThemeSettingsStructure | ThemeSettingsSections;
 
 export type ThemeSettingsStructure =
     | Record<ThemeTemplate, LegacyThemeSettingsStructure>
-    | Record<ThemeTemplate, TranslatableThemeSettingsStructure>;
+    | Record<ThemeTemplate, ThemeSettingsSections>;
 
 export type ThemeProps = {
     appBridge: AppBridgeTheme;

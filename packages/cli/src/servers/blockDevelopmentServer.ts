@@ -5,6 +5,7 @@ import { createServer } from 'vite';
 
 import pkg from '../../package.json';
 import { getAppBridgeVersion, getReactVersion } from '../utils/getPackageVersion';
+import { readContentBlockManifest } from '../utils/readContentBlockManifest';
 import { reactBareExternalPlugin } from '../utils/vitePlugins';
 
 export class BlockDevelopmentServer {
@@ -62,7 +63,9 @@ export class BlockDevelopmentServer {
                 }
 
                 const host = req.headers.host || `localhost:${this.port}`;
-                const actualPort = parseInt(host.split(':')[1] || String(this.port), 10);
+                const actualPort = Number.parseInt(host.split(':')[1] || String(this.port), 10);
+
+                const manifest = readContentBlockManifest(process.cwd());
 
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -78,6 +81,7 @@ export class BlockDevelopmentServer {
                             ...(appBridgeVersion ? { '@frontify/app-bridge': appBridgeVersion } : {}),
                             ...(reactVersion ? { react: reactVersion } : {}),
                         },
+                        ...(manifest ? { manifest } : {}),
                     }),
                 );
             });

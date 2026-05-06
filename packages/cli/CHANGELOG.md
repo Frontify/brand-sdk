@@ -1,5 +1,31 @@
 # @frontify/frontify-cli
 
+## 6.2.0
+
+### Minor Changes
+
+-   [#1578](https://github.com/Frontify/brand-sdk/pull/1578) [`a2b5431`](https://github.com/Frontify/brand-sdk/commit/a2b5431a31848e52782341ce9b8bfff56743700f) Thanks [@ragi96](https://github.com/ragi96)! - feat(serve): include the block manifest in the `/_entrypoint` dev-server response
+
+    The block development server now reads `manifest.json` from the project root on each `/_entrypoint` request and returns its parsed content under a `manifest` field, so the host can pick up live manifest changes without restarting `frontify-cli serve`. If `manifest.json` is missing or unparseable, the field is omitted and a warning is logged.
+
+    ```json
+    GET http://localhost:5600/_entrypoint
+    {
+        "url": "http://localhost:5600/src/index.ts",
+        "entryFilePath": "src/index.ts",
+        "port": 5600,
+        "version": "6.1.0",
+        "dependencies": { "@frontify/app-bridge": "^4.0.0", "react": "^18.3.1" },
+        "manifest": { "appId": "abc123…" }
+    }
+    ```
+
+### Patch Changes
+
+-   [#1583](https://github.com/Frontify/brand-sdk/pull/1583) [`866c444`](https://github.com/Frontify/brand-sdk/commit/866c444b75c7d0f076754bca5a3e068f073ab42f) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `fastify` to `^5.8.5` and `vite` to `^8.0.10`
+
+-   [#1581](https://github.com/Frontify/brand-sdk/pull/1581) [`11b6c03`](https://github.com/Frontify/brand-sdk/commit/11b6c03962b83af3789b5f23e8d7c72f5eacbe8d) Thanks [@renovate](https://github.com/apps/renovate)! - chore(deps): bump `@frontify/guideline-blocks-settings` to `2.1.10` in scaffolded content-block templates
+
 ## 6.1.0
 
 ### Minor Changes

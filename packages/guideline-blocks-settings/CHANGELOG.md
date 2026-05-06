@@ -1,5 +1,20 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.11
+
+### Patch Changes
+
+-   [#1574](https://github.com/Frontify/brand-sdk/pull/1574) [`05b9d4e`](https://github.com/Frontify/brand-sdk/commit/05b9d4e49ea79c1685778cd4377f2c85502d4e12) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove redundant `useMemoizedId` wrapping around `flyoutId` in `AttachmentsToolbarButton`, `FlyoutToolbarButton`, and `MenuToolbarButton`. Each component already supplies a default `flyoutId`, so the memoized id was a pass-through. Drops the `@frontify/fondue` `useMemoizedId` import from these files.
+
+-   [#1576](https://github.com/Frontify/brand-sdk/pull/1576) [`2f3a738`](https://github.com/Frontify/brand-sdk/commit/2f3a7389600b63cb39b014e906f967823987dfa5) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.4.5`
+
+## 2.1.10
+
+### Patch Changes
+
+-   Updated dependencies [[`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263)]:
+    -   @frontify/sidebar-settings@0.12.0
+
 ## 2.1.9
 
 ### Patch Changes

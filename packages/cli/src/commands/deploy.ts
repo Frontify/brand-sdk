@@ -18,7 +18,12 @@ import {
     readFileAsBase64,
     readFileLinesAsArray,
 } from '../utils/index';
-import { platformAppManifestSchemaV1, verifyManifest, verifyManifestOnServer } from '../utils/verifyManifest';
+import {
+    type MarketplaceManifest,
+    platformAppManifestSchemaV1,
+    verifyManifest,
+    verifyManifestOnServer,
+} from '../utils/verifyManifest';
 
 type Options = {
     dryRun?: boolean;
@@ -26,15 +31,6 @@ type Options = {
     openInBrowser?: boolean;
     token?: string;
     instance?: string;
-};
-
-export type AppManifest = {
-    appId: string;
-    appType?: string;
-    metadata?: {
-        version?: number;
-    };
-    experimental?: boolean;
 };
 
 const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
@@ -125,17 +121,12 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
 export const validateBlockManifestOnServer = async (
     instanceUrl: string,
     accessToken: string,
-    manifestContent: AppManifest,
+    manifestContent: MarketplaceManifest,
 ): Promise<void> => {
     Logger.info('Validating the manifest against the Frontify Marketplace...');
     const httpClient = new HttpClient(instanceUrl);
     try {
-        const result = await verifyManifestOnServer(
-            httpClient,
-            accessToken,
-            'content-block',
-            manifestContent as unknown as Record<string, unknown>,
-        );
+        const result = await verifyManifestOnServer(httpClient, accessToken, 'content-block', manifestContent);
         if (!result.data.valid) {
             Logger.error('The manifest is invalid:', result.data.error);
             process.exit(-1);
@@ -181,7 +172,7 @@ export const createDeployment = async (
         }
 
         const projectPath = process.cwd();
-        const manifestContent = reactiveJson<AppManifest>(join(projectPath, 'manifest.json'));
+        const manifestContent = reactiveJson<MarketplaceManifest>(join(projectPath, 'manifest.json'));
         const { appId } =
             manifestContent.appType === 'platform-app'
                 ? verifyManifest(manifestContent, platformAppManifestSchemaV1)

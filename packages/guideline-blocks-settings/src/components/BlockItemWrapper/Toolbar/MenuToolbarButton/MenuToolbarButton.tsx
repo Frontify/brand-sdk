@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useMemoizedId } from '@frontify/fondue';
 import { Dropdown, Tooltip } from '@frontify/fondue/components';
 import { IconDotsHorizontal } from '@frontify/fondue/icons';
 
@@ -26,8 +25,7 @@ export const MenuToolbarButton = ({
     flyoutId = DEFAULT_MENU_BUTTON_ID,
     tooltip = 'Options',
 }: MenuToolbarButtonProps) => {
-    const id = useMemoizedId(flyoutId);
-    const { isOpen, onOpenChange } = useMultiFlyoutState(id);
+    const { isOpen, onOpenChange } = useMultiFlyoutState(flyoutId);
     const isDragPreview = useDragPreviewContext();
 
     return (

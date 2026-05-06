@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useMemoizedId } from '@frontify/fondue';
 import { Flyout } from '@frontify/fondue/components';
 import { type ReactNode } from 'react';
 
@@ -26,9 +25,7 @@ export const FlyoutToolbarButton = ({
     flyoutFooter,
     flyoutHeader,
 }: FlyoutToolbarButtonProps) => {
-    const id = useMemoizedId(flyoutId);
-
-    const { isOpen, onOpenChange } = useMultiFlyoutState(id);
+    const { isOpen, onOpenChange } = useMultiFlyoutState(flyoutId);
 
     const isDragPreview = useDragPreviewContext();
 
