@@ -1,5 +1,17 @@
 # @frontify/frontify-cli
 
+## 6.2.1
+
+### Patch Changes
+
+-   [#1584](https://github.com/Frontify/brand-sdk/pull/1584) [`bbe3339`](https://github.com/Frontify/brand-sdk/commit/bbe33395d7d2b758759377f08134939402ee4f59) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump dependencies in scaffolded content-block templates
+
+    Newly scaffolded `content-block-css`, `content-block-css-modules`, and `content-block-tailwind` projects pin updated `@frontify/app-bridge`, `@frontify/guideline-blocks-settings`, and `@frontify/frontify-cli` versions, with `@frontify/guideline-blocks-settings` now declared as a runtime dependency.
+
+-   [#1586](https://github.com/Frontify/brand-sdk/pull/1586) [`2575dba`](https://github.com/Frontify/brand-sdk/commit/2575dba0a82501f60af8e9bfd345e551ea619fd2) Thanks [@jorgsowa](https://github.com/jorgsowa)! - chore(deps): bump template dependencies
+
+    Updated dependencies in platform-app and content-block-tailwind scaffolded templates, including newer versions of `@frontify/app-bridge-app`, `@frontify/fondue`, `@frontify/platform-app`, `@frontify/frontify-cli`, `@types/react`, `@types/react-dom`, and other dev dependencies.
+
 ## 6.2.0
 
 ### Minor Changes
