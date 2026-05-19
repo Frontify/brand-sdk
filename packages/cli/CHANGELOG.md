@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.2.2
+
+### Patch Changes
+
+-   [#1591](https://github.com/Frontify/brand-sdk/pull/1591) [`4aa3e28`](https://github.com/Frontify/brand-sdk/commit/4aa3e28f8ce74aabb96e8121ce8d9059cc3efbd5) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(deps): bump `@frontify/fondue` to `13.5.0`
+
 ## 6.2.1
 
 ### Patch Changes
