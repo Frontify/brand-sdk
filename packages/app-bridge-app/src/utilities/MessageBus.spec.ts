@@ -144,4 +144,26 @@ describe('MessageBus', () => {
         expect(result.headers.get('Content-Type')).toBe('application/json');
         expect(await result.json()).toEqual({ message: 'test-message' });
     });
+
+    it('should forward the full executeGraphQl response envelope, including top-level errors', async () => {
+        const channel = new MessageChannel();
+        const messageBus = new MessageBus(channel.port1);
+
+        const hostResponse = {
+            data: { brand: { id: '1' } },
+            errors: [{ message: 'Cannot query field "x" on type "Brand".' }],
+        };
+
+        channel.port2.onmessage = (event) => {
+            const { token } = event.data;
+            channel.port2.postMessage({ message: hostResponse, token });
+        };
+
+        const result = await messageBus.post({
+            parameter: { name: 'executeGraphQl', payload: { query: 'query SomeQuery {}' } },
+        });
+
+        expect(result).toEqual(hostResponse);
+        expect((result as typeof hostResponse).errors).toBeDefined();
+    });
 });
