@@ -37,7 +37,7 @@ export type PlatformAppApiMethod = PlatformAppApiMethodNameValidator<
         | 'getSecureRequest'
         | 'getAccountId'
         | 'executeGraphQl'
-        | 'executeGraphQlWithErrors'
+        | 'executeGraphQlWithFullResponse'
         | 'executeSecureRequest'
     >
 >;

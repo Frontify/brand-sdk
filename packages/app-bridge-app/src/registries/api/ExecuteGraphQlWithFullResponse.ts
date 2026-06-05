@@ -2,7 +2,7 @@
 
 import { type ExecuteGraphQlPayload } from './ExecuteGraphQl.ts';
 
-export type ExecuteGraphQlWithErrorsPayload = ExecuteGraphQlPayload;
+export type ExecuteGraphQlWithFullResponsePayload = ExecuteGraphQlPayload;
 
 export type GraphQlError = {
     message: string;
@@ -16,15 +16,15 @@ export type GraphQlError = {
  * this resolves the full GraphQL response envelope, including the top-level `errors` array
  * (and `extensions`, if present).
  */
-export type ExecuteGraphQlWithErrorsResponse = {
+export type ExecuteGraphQlWithFullResponse = {
     data?: Record<string, any> | null;
     errors?: GraphQlError[];
     extensions?: Record<string, any>;
 };
 
-export const executeGraphQlWithErrors = (
-    payload: ExecuteGraphQlWithErrorsPayload,
-): { name: 'executeGraphQlWithErrors'; payload: ExecuteGraphQlWithErrorsPayload } => ({
-    name: 'executeGraphQlWithErrors',
+export const executeGraphQlWithFullResponse = (
+    payload: ExecuteGraphQlWithFullResponsePayload,
+): { name: 'executeGraphQlWithFullResponse'; payload: ExecuteGraphQlWithFullResponsePayload } => ({
+    name: 'executeGraphQlWithFullResponse',
     payload,
 });
