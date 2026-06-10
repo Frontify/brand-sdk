@@ -90,7 +90,6 @@ interface DocumentPageBase {
 }
 export interface DocumentPageNavigationItem extends DocumentPageBase {
     headings(): DocumentPageHeadingNavigationItem[];
-    isHiddenInNavigation(): boolean;
 }
 
 export interface AdjacentPage {
