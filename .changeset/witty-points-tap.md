@@ -1,5 +1,11 @@
 ---
-"@frontify/app-bridge-theme": patch
+"@frontify/app-bridge-theme": minor
 ---
 
-Extend DocumentNavigationItem and DocumentPageNavigationItem to enable working with pages hidden from navigation
+feat: add `hasVisiblePages()` to `DocumentNavigationItem`
+
+Lets consumers detect navigation documents whose pages are all hidden from navigation, so they don't need to attempt fetching their children and/or can modify their UI accordingly if needed
+
+```ts
+navigationItems.filter((item) => item.hasVisiblePages());
+```
