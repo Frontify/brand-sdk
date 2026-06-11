@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.2.3
+
+### Patch Changes
+
+-   [#1597](https://github.com/Frontify/brand-sdk/pull/1597) [`c6905ae`](https://github.com/Frontify/brand-sdk/commit/c6905aecd6d111270df2f4b55f0f3befb42327f1) Thanks [@imoutaharik](https://github.com/imoutaharik)! - fix(cli): modernise Fondue imports in platform-app templates and unblock pnpm install
+
 ## 6.2.2
 
 ### Patch Changes

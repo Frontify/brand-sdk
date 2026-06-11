@@ -15,7 +15,7 @@
     },
     "dependencies": {
         "@frontify/app-bridge-app": "^0.2.5",
-        "@frontify/fondue": "^13.5.0",
+        "@frontify/fondue": "^13.6.1",
         "@frontify/platform-app": "^0.1.26",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
@@ -30,6 +30,7 @@
         "eslint-plugin-react-refresh": "^0.4.24",
         "globals": "^16.5.0",
         "prettier": "^3.8.3",
+        "terser": "^5.46.1",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.48.1"
     }
