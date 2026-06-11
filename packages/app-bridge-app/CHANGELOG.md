@@ -1,5 +1,25 @@
 # @frontify/app-bridge-app
 
+## 0.3.0
+
+### Minor Changes
+
+-   [#1596](https://github.com/Frontify/brand-sdk/pull/1596) [`2d76186`](https://github.com/Frontify/brand-sdk/commit/2d76186b3a2e8376ed8c737f11cdbc410d4f0b0b) Thanks [@SedukhinaPolina](https://github.com/SedukhinaPolina)! - feat(api): add `executeGraphQlWithFullResponse` and deprecate `executeGraphQl`
+
+    `executeGraphQl` resolves only the `data` field of the GraphQL response, so the top-level `errors` array is not accessible to the app. The new `executeGraphQlWithFullResponse` method resolves the full response envelope, including `errors`. `executeGraphQl` is now deprecated.
+
+    ```ts
+    const response = await appBridge.api({
+        name: 'executeGraphQlWithFullResponse',
+        payload: {
+            query: `query CurrentUser { currentUser { id email } }`,
+        },
+    });
+
+    // response now includes both `data` and any top-level `errors`
+    const { data, errors } = response;
+    ```
+
 ## 0.2.5
 
 ### Patch Changes
