@@ -1,5 +1,17 @@
 # @frontify/app-bridge-theme
 
+## 1.1.0
+
+### Minor Changes
+
+-   [#1599](https://github.com/Frontify/brand-sdk/pull/1599) [`902ddfd`](https://github.com/Frontify/brand-sdk/commit/902ddfda0d755345337e2919556758d7c8e328be) Thanks [@Kenny806](https://github.com/Kenny806)! - feat(app-bridge-theme): add `hasVisiblePages()` to `DocumentNavigationItem`
+
+    Lets consumers detect navigation documents whose pages are all hidden from navigation, so they don't need to attempt fetching their children and/or can modify their UI accordingly if needed
+
+    ```ts
+    navigationItems.filter((item) => item.hasVisiblePages());
+    ```
+
 ## 1.0.8
 
 ### Patch Changes
