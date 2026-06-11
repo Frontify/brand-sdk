@@ -40,6 +40,7 @@ interface DocumentBase {
 }
 export interface DocumentNavigationItem extends DocumentBase {
     parentId(): Nullable<number>;
+    hasVisiblePages(): boolean;
 }
 export interface Document extends DocumentBase {
     documentGroupId(): Nullable<number>;
