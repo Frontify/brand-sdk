@@ -13,6 +13,12 @@ export type ExecuteGraphQlPayload = {
 
 export type ExecuteGraphQlResponse = Record<string, any>;
 
+/**
+ * @deprecated Use `executeGraphQlWithFullResponse` instead. `executeGraphQl` resolves only the
+ * `data` field of the GraphQL response, so the top-level `errors` array is not accessible
+ * to the consuming app. `executeGraphQlWithFullResponse` resolves the full response envelope,
+ * including `errors`.
+ */
 export const executeGraphQl = (
     payload: ExecuteGraphQlPayload,
 ): { name: 'executeGraphQl'; payload: ExecuteGraphQlPayload } => ({
