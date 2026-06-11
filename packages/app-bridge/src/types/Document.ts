@@ -54,7 +54,6 @@ export type DocumentApi = Simplify<
         document_group_id?: Nullable<number>;
         valid_from: string;
         valid_to: Nullable<string>;
-        visibility: Nullable<string>;
         portal_id: Nullable<number>;
         title: string;
         slug: Nullable<string>;
