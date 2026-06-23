@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.2.4
+
+### Patch Changes
+
+-   [#1603](https://github.com/Frontify/brand-sdk/pull/1603) [`f445f6b`](https://github.com/Frontify/brand-sdk/commit/f445f6b8a49dbc0985b55001d713556413da6a4a) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump build dependencies (`vite`, `esbuild`, `@vitejs/plugin-react`)
+
 ## 6.2.3
 
 ### Patch Changes
