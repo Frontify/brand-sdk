@@ -7,7 +7,6 @@ import { type ColorPalette } from '../types';
 
 export type UseColorPalettesReturnType = {
     colorPalettes: ColorPalette[];
-    downloadColorKit: (selectedColorPalettes: number[]) => string;
 };
 
 export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: number[]): UseColorPalettesReturnType => {
@@ -34,12 +33,7 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
         // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge, blockId, colorPaletteIds]);
 
-    const downloadColorKit = (selectedColorPalettes: number[]) => {
-        return appBridge.downloadColorKit(selectedColorPalettes);
-    };
-
     return {
         colorPalettes,
-        downloadColorKit,
     };
 };
