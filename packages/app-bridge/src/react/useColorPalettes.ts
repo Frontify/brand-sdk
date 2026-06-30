@@ -30,7 +30,6 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
         return () => {
             componentMounted = false;
         };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge, blockId, colorPaletteIds]);
 
     return {
