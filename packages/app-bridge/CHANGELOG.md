@@ -1,5 +1,413 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.64
+
+### Minor Changes
+
+-   [#1570](https://github.com/Frontify/brand-sdk/pull/1570) [`ff26e12`](https://github.com/Frontify/brand-sdk/commit/ff26e126efc9cb7a73392e10c427c711bf1b3023) Thanks [@ragi96](https://github.com/ragi96)! - refactor(useBlockAssets): source state from `Context.assets`
+
+    The hook now seeds and updates `blockAssets` from `appBridge.context('assets')` and no longer fetches via `getBlockAssets()` on mount. It also no longer listens to or emits `AppBridge:BlockAssetsUpdated`; mutation helpers (`addAssetIdsToKey`, `deleteAssetIdsFromKey`, `updateAssetIdsFromKey`) just call the AppBridge API, and the host is responsible for refreshing `context('assets')` after each mutation.
+
+## 4.0.0-alpha.63
+
+### Minor Changes
+
+-   [#1553](https://github.com/Frontify/brand-sdk/pull/1553) [`f7e21d1`](https://github.com/Frontify/brand-sdk/commit/f7e21d121de259650e2ae810e351260a5ae48a66) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridge): expose block assets via `BlockContext`
+    -   Adds `assets` to `BlockContext`, available synchronously via `appBridge.context('assets').get()`.
+    -   `useBlockAssets` now seeds its initial state from the context instead of fetching via `getBlockAssets()` on mount, so assets are available on the first render.
+
+## 4.0.0-alpha.62
+
+### Patch Changes
+
+-   [#1523](https://github.com/Frontify/brand-sdk/pull/1523) [`18360b0`](https://github.com/Frontify/brand-sdk/commit/18360b0f04f4a3b06a08dc10842a745e66764ec3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Asset): remove `creatorName` and `projectType` on the `Asset`
+
+## 4.0.0-alpha.61
+
+### Minor Changes
+
+-   [#1506](https://github.com/Frontify/brand-sdk/pull/1506) [`eac1c51`](https://github.com/Frontify/brand-sdk/commit/eac1c514b74a7fa4de90f47dc7c18dd787081378) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat: add back `useColorPalettes` react hook
+
+## 4.0.0-alpha.60
+
+### Minor Changes
+
+-   [#1503](https://github.com/Frontify/brand-sdk/pull/1503) [`a183353`](https://github.com/Frontify/brand-sdk/commit/a183353c21dba983b3334963956973208136660e) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated method `getDocumentPagesByDocumentCategoryId`
+
+## 4.0.0-alpha.59
+
+### Patch Changes
+
+-   [#1500](https://github.com/Frontify/brand-sdk/pull/1500) [`a26580a`](https://github.com/Frontify/brand-sdk/commit/a26580a354c3f30970c629c965c1c347fb236e72) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Emitter): remove unused type `EmitterAction`
+
+-   [#1501](https://github.com/Frontify/brand-sdk/pull/1501) [`ec4cb08`](https://github.com/Frontify/brand-sdk/commit/ec4cb0845273b55d69061fecc06e39963da56f68) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentGroup` type and `DocumentGroupDummy`
+
+## 4.0.0-alpha.58
+
+### Minor Changes
+
+-   [#1494](https://github.com/Frontify/brand-sdk/pull/1494) [`b1d4454`](https://github.com/Frontify/brand-sdk/commit/b1d44547b541cd9ace1bd3907c05f1bedf598fa8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated method `getDocumentCategoriesByDocumentId`
+
+-   [#1490](https://github.com/Frontify/brand-sdk/pull/1490) [`1c377db`](https://github.com/Frontify/brand-sdk/commit/1c377db7721254cc34feee4d284717fe9f12a1c1) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated method `getDocumentGroups`
+
+## 4.0.0-alpha.57
+
+### Minor Changes
+
+-   [#1492](https://github.com/Frontify/brand-sdk/pull/1492) [`c137c46`](https://github.com/Frontify/brand-sdk/commit/c137c46a3ea8181e187b6562a1b7aa94be4c5b95) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(AppBridge): remove already deprecated `getUncategorizedDocumentPagesByDocumentId`
+
+## 4.0.0-alpha.56
+
+### Minor Changes
+
+-   [#1484](https://github.com/Frontify/brand-sdk/pull/1484) [`bfb6128`](https://github.com/Frontify/brand-sdk/commit/bfb6128ef7add1752f7195259f2051ec6478dc10) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove color related methods: `getColors`, `getColorPalettesWithColors`, `getColorPalettes`, `getColorsByColorPaletteId` and react hooks: `useColors`, `useColorPalettes`
+
+-   [#1488](https://github.com/Frontify/brand-sdk/pull/1488) [`83366ff`](https://github.com/Frontify/brand-sdk/commit/83366ffbc1b0887bb929300be82cdb889bad38b4) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(DocumentTargets): remove already deprecated `getDocumentTargets` and `getDocumentPageTargets`
+
+## 4.0.0-alpha.55
+
+### Minor Changes
+
+-   [#1483](https://github.com/Frontify/brand-sdk/pull/1483) [`66cff04`](https://github.com/Frontify/brand-sdk/commit/66cff04d3e369e363ca685ce3109c250eb3eb9ab) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove already deprecated `getColorsByIds`
+
+-   [#1487](https://github.com/Frontify/brand-sdk/pull/1487) [`5c7f2e8`](https://github.com/Frontify/brand-sdk/commit/5c7f2e87d5d216bacbee44d80fd889347b0c5f9b) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor remove already deprecated method `getUngroupedDocuments`
+
+## 4.0.0-alpha.54
+
+### Major Changes
+
+-   [#1467](https://github.com/Frontify/brand-sdk/pull/1467) [`6a13770`](https://github.com/Frontify/brand-sdk/commit/6a137708698927af8383c9277e6f01e28f3778d7) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `createColorPalette`, `updateColorPalette`, `deleteColorPalette` and adjust `useColorPalette` react hook
+
+## 4.0.0-alpha.53
+
+### Major Changes
+
+-   [#1469](https://github.com/Frontify/brand-sdk/pull/1469) [`721a9af`](https://github.com/Frontify/brand-sdk/commit/721a9afe624eb4801619d54f10cdf9b44588283f) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentTargets` and `useDocumentCategories`
+
+## 4.0.0-alpha.52
+
+### Major Changes
+
+-   [#1456](https://github.com/Frontify/brand-sdk/pull/1456) [`f161110`](https://github.com/Frontify/brand-sdk/commit/f16111063ae7dc0c6d2204f54c8ecc081d4ec8cf) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `DocumentApiDummy` and `DocumentDummy` testing utils, cleanup types in `Document.ts`, remove `getDocumentsByDocumentGroupId` from AppBridgeBlock
+
+## 4.0.0-alpha.51
+
+### Minor Changes
+
+-   [#1461](https://github.com/Frontify/brand-sdk/pull/1461) [`e4483dd`](https://github.com/Frontify/brand-sdk/commit/e4483ddf24a1d11ee4f6c6359fff2a9739f0409d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove react hooks and related events
+    -   `useCategorizedDocumentPages`
+    -   `useDocumentPageTargets`
+    -   `useUncategorizedDocumentPages`
+
+### Patch Changes
+
+-   [#1460](https://github.com/Frontify/brand-sdk/pull/1460) [`a396af9`](https://github.com/Frontify/brand-sdk/commit/a396af977c0ef052012328d8f182cd54422a5573) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `getDatasetByElement` and `getDatasetByClassName`
+
+-   [#1457](https://github.com/Frontify/brand-sdk/pull/1457) [`d5af57b`](https://github.com/Frontify/brand-sdk/commit/d5af57b45bd5e634506ef709e6d4a811a9728bd2) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `documentCategoryApi` type
+
+## 4.0.0-alpha.50
+
+### Major Changes
+
+-   [#1449](https://github.com/Frontify/brand-sdk/pull/1449) [`b811e3f`](https://github.com/Frontify/brand-sdk/commit/b811e3ff45c88a9c28edddd0ca478423542851e9) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove deprecated `updateColor`, `createColor`, and `deleteColor` methods from the AppBridge, the `useColors` hook, and related tests
+
+## 4.0.0-alpha.49
+
+### Patch Changes
+
+-   [#1451](https://github.com/Frontify/brand-sdk/pull/1451) [`20fec73`](https://github.com/Frontify/brand-sdk/commit/20fec7370b99c3a2c264ea7cee8e473642a3ca95) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: cleanup unused types in DocumentCategory
+
+-   [#1450](https://github.com/Frontify/brand-sdk/pull/1450) [`a124e06`](https://github.com/Frontify/brand-sdk/commit/a124e0651cdce785473288a04144e4f54c7f04b8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `DocumentPageRequest`, `DocumentPageCreate`, `DocumentPageUpdate` and `DocumentPageDelete` types
+
+-   [#1453](https://github.com/Frontify/brand-sdk/pull/1453) [`c4a2c08`](https://github.com/Frontify/brand-sdk/commit/c4a2c08b57c392b11f38dad9dfa9ee78d6019c01) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `useDocumentSection` react hooks, along with types and events
+
+## 4.0.0-alpha.48
+
+### Minor Changes
+
+-   [#1446](https://github.com/Frontify/brand-sdk/pull/1446) [`62812be`](https://github.com/Frontify/brand-sdk/commit/62812be62c7d8817fe16d95786732cc880f5cf40) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentGroups`, `useGroupedDocuments` and `useUngroupedDocuments` hook and also remove the `DocumentGroupApi` type
+
+### Patch Changes
+
+-   [#1438](https://github.com/Frontify/brand-sdk/pull/1438) [`0cfb6bb`](https://github.com/Frontify/brand-sdk/commit/0cfb6bb0769815383541a075103d21a8204b5176) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove TemplatePageApi type
+
+-   [#1442](https://github.com/Frontify/brand-sdk/pull/1442) [`f7d1ede`](https://github.com/Frontify/brand-sdk/commit/f7d1ede454050013a4f890e0bcebac79833ab1ba) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `filterDocumentSectionsWithUnreadableTitles` helper
+
+-   [#1445](https://github.com/Frontify/brand-sdk/pull/1445) [`de6047a`](https://github.com/Frontify/brand-sdk/commit/de6047a1a0d9e1cbe6b357628ebd81d50d3b4064) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentBlockTemplate` types
+
+-   [#1443](https://github.com/Frontify/brand-sdk/pull/1443) [`a3000f3`](https://github.com/Frontify/brand-sdk/commit/a3000f38774029f81dbd0df1975ec2464d2a3af5) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: clean up target api related things
+
+-   [#1441](https://github.com/Frontify/brand-sdk/pull/1441) [`b80449d`](https://github.com/Frontify/brand-sdk/commit/b80449d852d3edadbc1887e82ecc74eacd53e138) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump
+
+-   [#1440](https://github.com/Frontify/brand-sdk/pull/1440) [`569840a`](https://github.com/Frontify/brand-sdk/commit/569840ab483519b70ecedccb87207be735bf6bfd) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove TemplateApiLegacy type and test dummy
+
+-   [#1444](https://github.com/Frontify/brand-sdk/pull/1444) [`0e28ba2`](https://github.com/Frontify/brand-sdk/commit/0e28ba2dcd55151bfa22e1a788d239fd43e3532b) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `pageTemplateAsset` type
+
+-   [#1435](https://github.com/Frontify/brand-sdk/pull/1435) [`c3aea0d`](https://github.com/Frontify/brand-sdk/commit/c3aea0d5378d094d08c76ab3b574249cf37b5cd4) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove Color and ColorPallete api related types and test dummies
+
+## 4.0.0-alpha.47
+
+### Patch Changes
+
+-   [#1433](https://github.com/Frontify/brand-sdk/pull/1433) [`013ed9a`](https://github.com/Frontify/brand-sdk/commit/013ed9a350b43705e452505e484f58a8e15191ca) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `GetBulkDownloadTokenApi` and `BulkDownloadApi` types
+
+-   [#1432](https://github.com/Frontify/brand-sdk/pull/1432) [`415a73b`](https://github.com/Frontify/brand-sdk/commit/415a73ba7319dc949c0cecab1b852c2035832895) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove unused `Topic` type
+
+-   [#1437](https://github.com/Frontify/brand-sdk/pull/1437) [`f3c2bcc`](https://github.com/Frontify/brand-sdk/commit/f3c2bccb3e3f4b5bceee940f0031e38ec547a218) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove UserApi related things
+
+-   [#1436](https://github.com/Frontify/brand-sdk/pull/1436) [`a2543c2`](https://github.com/Frontify/brand-sdk/commit/a2543c20c11bc7e810ee58aed97619957c4cc6d6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove cover page related things
+
+## 4.0.0-alpha.46
+
+### Patch Changes
+
+-   [#1414](https://github.com/Frontify/brand-sdk/pull/1414) [`eacc687`](https://github.com/Frontify/brand-sdk/commit/eacc6878b72a59da83ccf7b7df2ae9c9656d6861) Thanks [@ragi96](https://github.com/ragi96)! - chore: update dependencies
+
+## 4.0.0-alpha.45
+
+### Minor Changes
+
+-   [#1311](https://github.com/Frontify/brand-sdk/pull/1311) [`200b840`](https://github.com/Frontify/brand-sdk/commit/200b84037a0e0866b10fb1796f840260fea65034) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `trackEvent` command
+
+    Use the `trackEvent` command to log custom events within blocks.
+    The event accepts `TrackActions` and an optional payload.
+
+    If you need more actions, please reach out through the Frontify Friends Slack channel.
+
+    Example usage:
+
+    ```typescript
+    appBridge.dispatch({
+        name: 'trackEvent',
+        payload: {
+            action: 'button:clicked',
+            payload: { buttonId: 'path/to/button', label: 'Click me' },
+        },
+    });
+
+    // or without payload
+    appBridge.dispatch({
+        name: 'trackEvent',
+        payload: { action: 'button:clicked', payload: null },
+    });
+    ```
+
+## 4.0.0-alpha.44
+
+### Patch Changes
+
+-   [#1284](https://github.com/Frontify/brand-sdk/pull/1284) [`8a81ba2`](https://github.com/Frontify/brand-sdk/commit/8a81ba2445f5d13b55a106d2c3845b6316e79c4f) Thanks [@ragi96](https://github.com/ragi96)! - chore: update deps
+
+## 4.0.0-alpha.43
+
+### Patch Changes
+
+-   [#1268](https://github.com/Frontify/brand-sdk/pull/1268) [`010b72c`](https://github.com/Frontify/brand-sdk/commit/010b72ca227278bcb4e0eadaf70252791f037532) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Asset): added the focal point properties
+
+## 4.0.0-alpha.42
+
+### Patch Changes
+
+-   [#1237](https://github.com/Frontify/brand-sdk/pull/1237) [`eb6822d`](https://github.com/Frontify/brand-sdk/commit/eb6822d507e6a96a77725cb4aeb16d26846b72ee) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor: Removed `appBridgeTheme` from the `@frontify/app-bridge` package. It is now provided via the `@frontify/app-bridge-theme` package.
+
+## 4.0.0-alpha.41
+
+### Patch Changes
+
+-   [#1235](https://github.com/Frontify/brand-sdk/pull/1235) [`02fd19d`](https://github.com/Frontify/brand-sdk/commit/02fd19d27220470f6ba523a0cae29fc36ab55758) Thanks [@ragi96](https://github.com/ragi96)! - fix: AssetChooserResult Type as alternative text is prefixed with computed
+
+## 4.0.0-alpha.40
+
+### Minor Changes
+
+-   [#1232](https://github.com/Frontify/brand-sdk/pull/1232) [`559f24e`](https://github.com/Frontify/brand-sdk/commit/559f24efe287c913ecfc0755ff18c56fcfe2fa56) Thanks [@ragi96](https://github.com/ragi96)! - feat(Asset): added the property alternativeText
+
+## 4.0.0-alpha.39
+
+### Patch Changes
+
+-   [#1206](https://github.com/Frontify/brand-sdk/pull/1206) [`7abe2d7`](https://github.com/Frontify/brand-sdk/commit/7abe2d7635dd7f319497fd4e6e422873d7075489) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove AppBridgeCreateAsset, please use `@frontify/app-bridge-app`
+
+## 4.0.0-alpha.38
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`cd6ac0b`](https://github.com/Frontify/brand-sdk/commit/cd6ac0b022bca6a3ca663be801f0dbe62d129728) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: merge main into dev
+
+## 4.0.0-alpha.37
+
+### Patch Changes
+
+-   chore: merge main to dev
+
+## 4.0.0-alpha.54
+
+### Major Changes
+
+-   [#1467](https://github.com/Frontify/brand-sdk/pull/1467) [`6a13770`](https://github.com/Frontify/brand-sdk/commit/6a137708698927af8383c9277e6f01e28f3778d7) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `createColorPalette`, `updateColorPalette`, `deleteColorPalette` and adjust `useColorPalette` react hook
+
+## 4.0.0-alpha.53
+
+### Major Changes
+
+-   [#1469](https://github.com/Frontify/brand-sdk/pull/1469) [`721a9af`](https://github.com/Frontify/brand-sdk/commit/721a9afe624eb4801619d54f10cdf9b44588283f) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentTargets` and `useDocumentCategories`
+
+## 4.0.0-alpha.52
+
+### Major Changes
+
+-   [#1456](https://github.com/Frontify/brand-sdk/pull/1456) [`f161110`](https://github.com/Frontify/brand-sdk/commit/f16111063ae7dc0c6d2204f54c8ecc081d4ec8cf) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `DocumentApiDummy` and `DocumentDummy` testing utils, cleanup types in `Document.ts`, remove `getDocumentsByDocumentGroupId` from AppBridgeBlock
+
+## 4.0.0-alpha.51
+
+### Minor Changes
+
+-   [#1461](https://github.com/Frontify/brand-sdk/pull/1461) [`e4483dd`](https://github.com/Frontify/brand-sdk/commit/e4483ddf24a1d11ee4f6c6359fff2a9739f0409d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove react hooks and related events
+    -   `useCategorizedDocumentPages`
+    -   `useDocumentPageTargets`
+    -   `useUncategorizedDocumentPages`
+
+### Patch Changes
+
+-   [#1460](https://github.com/Frontify/brand-sdk/pull/1460) [`a396af9`](https://github.com/Frontify/brand-sdk/commit/a396af977c0ef052012328d8f182cd54422a5573) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `getDatasetByElement` and `getDatasetByClassName`
+
+-   [#1457](https://github.com/Frontify/brand-sdk/pull/1457) [`d5af57b`](https://github.com/Frontify/brand-sdk/commit/d5af57b45bd5e634506ef709e6d4a811a9728bd2) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `documentCategoryApi` type
+
+## 4.0.0-alpha.50
+
+### Major Changes
+
+-   [#1449](https://github.com/Frontify/brand-sdk/pull/1449) [`b811e3f`](https://github.com/Frontify/brand-sdk/commit/b811e3ff45c88a9c28edddd0ca478423542851e9) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove deprecated `updateColor`, `createColor`, and `deleteColor` methods from the AppBridge, the `useColors` hook, and related tests
+
+## 4.0.0-alpha.49
+
+### Patch Changes
+
+-   [#1451](https://github.com/Frontify/brand-sdk/pull/1451) [`20fec73`](https://github.com/Frontify/brand-sdk/commit/20fec7370b99c3a2c264ea7cee8e473642a3ca95) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: cleanup unused types in DocumentCategory
+
+-   [#1450](https://github.com/Frontify/brand-sdk/pull/1450) [`a124e06`](https://github.com/Frontify/brand-sdk/commit/a124e0651cdce785473288a04144e4f54c7f04b8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `DocumentPageRequest`, `DocumentPageCreate`, `DocumentPageUpdate` and `DocumentPageDelete` types
+
+-   [#1453](https://github.com/Frontify/brand-sdk/pull/1453) [`c4a2c08`](https://github.com/Frontify/brand-sdk/commit/c4a2c08b57c392b11f38dad9dfa9ee78d6019c01) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `useDocumentSection` react hooks, along with types and events
+
+## 4.0.0-alpha.48
+
+### Minor Changes
+
+-   [#1446](https://github.com/Frontify/brand-sdk/pull/1446) [`62812be`](https://github.com/Frontify/brand-sdk/commit/62812be62c7d8817fe16d95786732cc880f5cf40) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentGroups`, `useGroupedDocuments` and `useUngroupedDocuments` hook and also remove the `DocumentGroupApi` type
+
+### Patch Changes
+
+-   [#1438](https://github.com/Frontify/brand-sdk/pull/1438) [`0cfb6bb`](https://github.com/Frontify/brand-sdk/commit/0cfb6bb0769815383541a075103d21a8204b5176) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove TemplatePageApi type
+
+-   [#1442](https://github.com/Frontify/brand-sdk/pull/1442) [`f7d1ede`](https://github.com/Frontify/brand-sdk/commit/f7d1ede454050013a4f890e0bcebac79833ab1ba) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `filterDocumentSectionsWithUnreadableTitles` helper
+
+-   [#1445](https://github.com/Frontify/brand-sdk/pull/1445) [`de6047a`](https://github.com/Frontify/brand-sdk/commit/de6047a1a0d9e1cbe6b357628ebd81d50d3b4064) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentBlockTemplate` types
+
+-   [#1443](https://github.com/Frontify/brand-sdk/pull/1443) [`a3000f3`](https://github.com/Frontify/brand-sdk/commit/a3000f38774029f81dbd0df1975ec2464d2a3af5) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: clean up target api related things
+
+-   [#1441](https://github.com/Frontify/brand-sdk/pull/1441) [`b80449d`](https://github.com/Frontify/brand-sdk/commit/b80449d852d3edadbc1887e82ecc74eacd53e138) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump
+
+-   [#1440](https://github.com/Frontify/brand-sdk/pull/1440) [`569840a`](https://github.com/Frontify/brand-sdk/commit/569840ab483519b70ecedccb87207be735bf6bfd) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove TemplateApiLegacy type and test dummy
+
+-   [#1444](https://github.com/Frontify/brand-sdk/pull/1444) [`0e28ba2`](https://github.com/Frontify/brand-sdk/commit/0e28ba2dcd55151bfa22e1a788d239fd43e3532b) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `pageTemplateAsset` type
+
+-   [#1435](https://github.com/Frontify/brand-sdk/pull/1435) [`c3aea0d`](https://github.com/Frontify/brand-sdk/commit/c3aea0d5378d094d08c76ab3b574249cf37b5cd4) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove Color and ColorPallete api related types and test dummies
+
+## 4.0.0-alpha.47
+
+### Patch Changes
+
+-   [#1433](https://github.com/Frontify/brand-sdk/pull/1433) [`013ed9a`](https://github.com/Frontify/brand-sdk/commit/013ed9a350b43705e452505e484f58a8e15191ca) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove `GetBulkDownloadTokenApi` and `BulkDownloadApi` types
+
+-   [#1432](https://github.com/Frontify/brand-sdk/pull/1432) [`415a73b`](https://github.com/Frontify/brand-sdk/commit/415a73ba7319dc949c0cecab1b852c2035832895) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove unused `Topic` type
+
+-   [#1437](https://github.com/Frontify/brand-sdk/pull/1437) [`f3c2bcc`](https://github.com/Frontify/brand-sdk/commit/f3c2bccb3e3f4b5bceee940f0031e38ec547a218) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove UserApi related things
+
+-   [#1436](https://github.com/Frontify/brand-sdk/pull/1436) [`a2543c2`](https://github.com/Frontify/brand-sdk/commit/a2543c20c11bc7e810ee58aed97619957c4cc6d6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove cover page related things
+
+## 4.0.0-alpha.46
+
+### Patch Changes
+
+-   [#1414](https://github.com/Frontify/brand-sdk/pull/1414) [`eacc687`](https://github.com/Frontify/brand-sdk/commit/eacc6878b72a59da83ccf7b7df2ae9c9656d6861) Thanks [@ragi96](https://github.com/ragi96)! - chore: update dependencies
+
+## 4.0.0-alpha.45
+
+### Minor Changes
+
+-   [#1311](https://github.com/Frontify/brand-sdk/pull/1311) [`200b840`](https://github.com/Frontify/brand-sdk/commit/200b84037a0e0866b10fb1796f840260fea65034) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `trackEvent` command
+
+    Use the `trackEvent` command to log custom events within blocks.
+    The event accepts `TrackActions` and an optional payload.
+
+    If you need more actions, please reach out through the Frontify Friends Slack channel.
+
+    Example usage:
+
+    ```typescript
+    appBridge.dispatch({
+        name: 'trackEvent',
+        payload: {
+            action: 'button:clicked',
+            payload: { buttonId: 'path/to/button', label: 'Click me' },
+        },
+    });
+
+    // or without payload
+    appBridge.dispatch({
+        name: 'trackEvent',
+        payload: { action: 'button:clicked', payload: null },
+    });
+    ```
+
+## 4.0.0-alpha.44
+
+### Patch Changes
+
+-   [#1284](https://github.com/Frontify/brand-sdk/pull/1284) [`8a81ba2`](https://github.com/Frontify/brand-sdk/commit/8a81ba2445f5d13b55a106d2c3845b6316e79c4f) Thanks [@ragi96](https://github.com/ragi96)! - chore: update deps
+
+## 4.0.0-alpha.43
+
+### Patch Changes
+
+-   [#1268](https://github.com/Frontify/brand-sdk/pull/1268) [`010b72c`](https://github.com/Frontify/brand-sdk/commit/010b72ca227278bcb4e0eadaf70252791f037532) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Asset): added the focal point properties
+
+## 4.0.0-alpha.42
+
+### Patch Changes
+
+-   [#1237](https://github.com/Frontify/brand-sdk/pull/1237) [`eb6822d`](https://github.com/Frontify/brand-sdk/commit/eb6822d507e6a96a77725cb4aeb16d26846b72ee) Thanks [@anxobotana](https://github.com/anxobotana)! - refactor: Removed `appBridgeTheme` from the `@frontify/app-bridge` package. It is now provided via the `@frontify/app-bridge-theme` package.
+
+## 4.0.0-alpha.41
+
+### Patch Changes
+
+-   [#1235](https://github.com/Frontify/brand-sdk/pull/1235) [`02fd19d`](https://github.com/Frontify/brand-sdk/commit/02fd19d27220470f6ba523a0cae29fc36ab55758) Thanks [@ragi96](https://github.com/ragi96)! - fix: AssetChooserResult Type as alternative text is prefixed with computed
+
+## 4.0.0-alpha.40
+
+### Minor Changes
+
+-   [#1232](https://github.com/Frontify/brand-sdk/pull/1232) [`559f24e`](https://github.com/Frontify/brand-sdk/commit/559f24efe287c913ecfc0755ff18c56fcfe2fa56) Thanks [@ragi96](https://github.com/ragi96)! - feat(Asset): added the property alternativeText
+
+## 4.0.0-alpha.39
+
+### Patch Changes
+
+-   [#1206](https://github.com/Frontify/brand-sdk/pull/1206) [`7abe2d7`](https://github.com/Frontify/brand-sdk/commit/7abe2d7635dd7f319497fd4e6e422873d7075489) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove AppBridgeCreateAsset, please use `@frontify/app-bridge-app`
+
+## 4.0.0-alpha.38
+
+### Patch Changes
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`cd6ac0b`](https://github.com/Frontify/brand-sdk/commit/cd6ac0b022bca6a3ca663be801f0dbe62d129728) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: merge main into dev
+
+## 4.0.0-alpha.37
+
+### Patch Changes
+
+-   chore: merge main to dev
+
 ## 3.12.9
 
 ### Patch Changes
@@ -27,7 +435,6 @@
 ### Patch Changes
 
 -   [#1462](https://github.com/Frontify/brand-sdk/pull/1462) [`2fa485a`](https://github.com/Frontify/brand-sdk/commit/2fa485ad84f48d03a3e646e8e16a7326e682189a) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: mark React hooks as deprecated
-
     -   `useCategorizedDocumentPages`
     -   `useDocumentPageTargets`
     -   `useUncategorizedDocumentPages`
@@ -82,7 +489,128 @@
 
 -   [#1158](https://github.com/Frontify/brand-sdk/pull/1158) [`8937b15`](https://github.com/Frontify/brand-sdk/commit/8937b15b6dfcf17c288f4b22643c991ae74d55a4) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix: do not hardcode upload chunk sizes
 
-## 3.11.0
+## 4.0.0-alpha.36
+
+### Patch Changes
+
+-   [#1080](https://github.com/Frontify/brand-sdk/pull/1080) [`a78218b`](https://github.com/Frontify/brand-sdk/commit/a78218b302929a05616f2d157968aa007cf36115) Thanks [@julianiff](https://github.com/julianiff)! - Fix: readd method
+
+## 4.0.0-alpha.35
+
+### Patch Changes
+
+-   [#1078](https://github.com/Frontify/brand-sdk/pull/1078) [`78555ee`](https://github.com/Frontify/brand-sdk/commit/78555ee76fbb487cf4a7c0fe3cda419704b35f63) Thanks [@julianiff](https://github.com/julianiff)! - chore: remove appBridgePlatformApp
+
+## 4.0.0-alpha.34
+
+### Patch Changes
+
+-   [#1042](https://github.com/Frontify/brand-sdk/pull/1042) [`e345d27`](https://github.com/Frontify/brand-sdk/commit/e345d2747d00efeadd8130dcde7f0dd1f2c398bf) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add documentId to GuidelineDocumentCategory events
+
+## 4.0.0-alpha.33
+
+### Patch Changes
+
+-   chore: merge main to dev
+
+## 4.0.0-alpha.32
+
+### Patch Changes
+
+-   [#1007](https://github.com/Frontify/brand-sdk/pull/1007) [`2c0ebf2`](https://github.com/Frontify/brand-sdk/commit/2c0ebf209915a11dd018b7453d7932d0f0ee6f3e) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main to dev
+
+-   [#992](https://github.com/Frontify/brand-sdk/pull/992) [`f60bbf4`](https://github.com/Frontify/brand-sdk/commit/f60bbf42218880ee8042e5830152a2112eef09dc) Thanks [@julianiff](https://github.com/julianiff)! - feat: deprecate react hooks for platform apps
+
+## 4.0.0-alpha.31
+
+### Patch Changes
+
+-   [#956](https://github.com/Frontify/brand-sdk/pull/956) [`2491b6e`](https://github.com/Frontify/brand-sdk/commit/2491b6e88fc41ca8eafff5e41ec181247a968c46) Thanks [@julianiff](https://github.com/julianiff)! - feat: adds state listener to allow push from parent
+
+## 4.0.0-alpha.30
+
+### Patch Changes
+
+-   chore: merge branch `main` into dev
+
+## 4.0.0-alpha.29
+
+### Patch Changes
+
+-   [#941](https://github.com/Frontify/brand-sdk/pull/941) [`4e643ec`](https://github.com/Frontify/brand-sdk/commit/4e643ec9414e5671f877c556b68436a1a06569cb) Thanks [@julianiff](https://github.com/julianiff)! - Feat: adjust secure request response
+
+## 4.0.0-alpha.28
+
+### Patch Changes
+
+-   [#939](https://github.com/Frontify/brand-sdk/pull/939) [`7ea653c`](https://github.com/Frontify/brand-sdk/commit/7ea653ca17f2a16c72e8ee5525580eaee0d6405a) Thanks [@julianiff](https://github.com/julianiff)! - refactor: rename brandsdk name from secretRequest to secureRequest
+
+## 4.0.0-alpha.27
+
+### Patch Changes
+
+-   [#937](https://github.com/Frontify/brand-sdk/pull/937) [`341886e`](https://github.com/Frontify/brand-sdk/commit/341886e9d16184048f9285d692df5177bfd2d0d1) Thanks [@julianiff](https://github.com/julianiff)! - chore: rename brand sdk name
+
+## 4.0.0-alpha.26
+
+### Patch Changes
+
+-   [#929](https://github.com/Frontify/brand-sdk/pull/929) [`414ea40`](https://github.com/Frontify/brand-sdk/commit/414ea4092d5446815df032a87471829801604634) Thanks [@julianiff](https://github.com/julianiff)! - refactor: Method to reflect feature
+
+## 4.0.0-alpha.25
+
+### Patch Changes
+
+-   chore: merge main to dev
+
+## 4.0.0-alpha.24
+
+### Patch Changes
+
+-   chore: merge main to dev
+
+## 4.0.0-alpha.23
+
+### Patch Changes
+
+-   [#918](https://github.com/Frontify/brand-sdk/pull/918) [`1d48008`](https://github.com/Frontify/brand-sdk/commit/1d48008561a2dc3f4b7b4c9fcb7bc44cd7d04bc6) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: Merge main into dev
+
+## 4.0.0-alpha.22
+
+### Patch Changes
+
+-   chore: merge branch `main` into dev
+
+## 4.0.0-alpha.21
+
+### Patch Changes
+
+-   [#910](https://github.com/Frontify/brand-sdk/pull/910) [`0723d89`](https://github.com/Frontify/brand-sdk/commit/0723d89575f47682bc146661e693651f61965c8c) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: (AppBridgeTheme) update appBridgeThemeStub with context and state
+
+## 4.0.0-alpha.20
+
+### Patch Changes
+
+-   [#900](https://github.com/Frontify/brand-sdk/pull/900) [`9294b16`](https://github.com/Frontify/brand-sdk/commit/9294b164ad2b3fc502004e3d8d86ee29737ac822) Thanks [@julianiff](https://github.com/julianiff)! - feat(AppBridgePlatformApp): only one app bridge per iframe
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`2a5b9cf`](https://github.com/Frontify/brand-sdk/commit/2a5b9cfb1e73331a3a4d39550a3a26de8a7e0c94) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: merge `main` into `dev`
+
+-   [#864](https://github.com/Frontify/brand-sdk/pull/864) [`2a5b9cf`](https://github.com/Frontify/brand-sdk/commit/2a5b9cfb1e73331a3a4d39550a3a26de8a7e0c94) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat(AppBridgeTheme): add isSearchDialogOpen to context
+
+## 4.0.0-alpha.19
+
+### Patch Changes
+
+-   [#895](https://github.com/Frontify/brand-sdk/pull/895) [`b31a73d`](https://github.com/Frontify/brand-sdk/commit/b31a73d1756f01374682552a3013173f3c8f5384) Thanks [@julianiff](https://github.com/julianiff)! - feat: add user state variable
+
+## 4.0.0-alpha.18
+
+### Patch Changes
+
+-   [#884](https://github.com/Frontify/brand-sdk/pull/884) [`4fe96c8`](https://github.com/Frontify/brand-sdk/commit/4fe96c8808d1b85541dd6cc5ed2711bc5a47f4eb) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+    fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+
+## 4.0.0-alpha.17
 
 ### Minor Changes
 
@@ -182,17 +710,39 @@
 
 -   [#871](https://github.com/Frontify/brand-sdk/pull/871) [`cc7532a`](https://github.com/Frontify/brand-sdk/commit/cc7532ae5a3803f12997887e9f1ca9993e9f8e7c) Thanks [@ryancarville](https://github.com/ryancarville)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
 
+## 4.0.0-alpha.16
+
+### Patch Changes
+
+-   # [#877](https://github.com/Frontify/brand-sdk/pull/877) [`1dd80ad`](https://github.com/Frontify/brand-sdk/commit/1dd80ad39568e96e97ab73c04feee3a949764ae9) Thanks [@mike85](https://github.com/mike85)! - feat(usePageTemplateSettings): returns also templateThemeSettings
+
 ## 3.5.9
 
 ### Patch Changes
 
 -   [#875](https://github.com/Frontify/brand-sdk/pull/875) [`d74dc90`](https://github.com/Frontify/brand-sdk/commit/d74dc90501cd0aac39f67a834014fd9c261abfb0) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(usePageTemplateSettings): returns also templateThemeSettings
 
+## 4.0.0-alpha.15
+
+### Patch Changes
+
+-   # [#864](https://github.com/Frontify/brand-sdk/pull/864) [`0f17eb8`](https://github.com/Frontify/brand-sdk/commit/0f17eb82afdc30692e02d1cf150d622f38d0913a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - feat: merge `main` into `dev`
+
 ## 3.5.8
 
 ### Patch Changes
 
 -   [#868](https://github.com/Frontify/brand-sdk/pull/868) [`88fb3c3`](https://github.com/Frontify/brand-sdk/commit/88fb3c3b0235d9fc89c9a352273bacfaf53fdb0e) Thanks [@mike85](https://github.com/mike85)! - feat(AppBridgeTheme): add useDocumentNavigation hook
+
+## 4.0.0-alpha.14
+
+### Major Changes
+
+-   [#841](https://github.com/Frontify/brand-sdk/pull/841) [`d88b50d`](https://github.com/Frontify/brand-sdk/commit/d88b50dd6e2235262dbae7250db053f9052228d1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - feat: modify `DocumentSection` and `DocumentSectionApi` type to allow `title` to be `null`.
+
+### Patch Changes
+
+-   # [#841](https://github.com/Frontify/brand-sdk/pull/841) [`d88b50d`](https://github.com/Frontify/brand-sdk/commit/d88b50dd6e2235262dbae7250db053f9052228d1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - feat(useDocumentSection): Subscribe hook to emitter event listeners. A new emitter type, `AppBridge:GuidelineDocumentSection:Action` has been added. This emitter can be used to add and remove items from the sections saved in the hook state. - feat(useDocumentSection): `navigationItems` is now returned from this hook. This array filters out sections with an unreadable title and should be used to create section navigation links.
 
 ## 3.5.7
 
@@ -208,11 +758,41 @@
 
 -   [#855](https://github.com/Frontify/brand-sdk/pull/855) [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump dependencies
 
-## 3.5.5
+## 4.0.0-alpha.13
 
 ### Patch Changes
 
 -   [#843](https://github.com/Frontify/brand-sdk/pull/843) [`3109e66`](https://github.com/Frontify/brand-sdk/commit/3109e66248fb9185c312d8170055452dce796bc4) Thanks [@julianiff](https://github.com/julianiff)! - chore: move up to v4
+
+-   [`0d9d0af`](https://github.com/Frontify/brand-sdk/commit/0d9d0afe4fc55b0e0c5b1e397aeaf77e7e8c4a69) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Merge main into dev
+
+## 4.0.0-alpha.12
+
+### Patch Changes
+
+-   [`18c91b1`](https://github.com/Frontify/brand-sdk/commit/18c91b184651f49c490d381054b3ec543f928551) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Merge `main` into `dev`
+
+## 4.0.0-alpha.11
+
+### Minor Changes
+
+-   [#830](https://github.com/Frontify/brand-sdk/pull/830) [`e14ef89`](https://github.com/Frontify/brand-sdk/commit/e14ef895606e72af066e614983b61ca8778c108d) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlock): add `isAuthenticated` to `BlockContext` type
+
+## 4.0.0-alpha.10
+
+### Minor Changes
+
+-   [#808](https://github.com/Frontify/brand-sdk/pull/808) [`4529beb`](https://github.com/Frontify/brand-sdk/commit/4529beb4b9f20ba94c7d6226257b422d6b560d5a) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add navigateToDocumentSection command to AppBridgeTheme
+
+### Patch Changes
+
+-   [#810](https://github.com/Frontify/brand-sdk/pull/810) [`0ac69ea`](https://github.com/Frontify/brand-sdk/commit/0ac69eaa52ba58a5be06ce75afa63cf5838e958b) Thanks [@anxobotana](https://github.com/anxobotana)! - fix: useGroupedDocuments and useUngroupedDocuments flaky tests
+
+## 4.0.0-alpha.9
+
+### Patch Changes
+
+-   # Merge main into dev
 
 ## 3.5.4
 
@@ -264,6 +844,14 @@
 
 -   [`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add the dist folder to published packages
 
+## 4.0.0-alpha.8
+
+### Patch Changes
+
+-   [#777](https://github.com/Frontify/brand-sdk/pull/777) [`b5d1cb8`](https://github.com/Frontify/brand-sdk/commit/b5d1cb8a376ccada20d0234913584a6bdba0cba9) Thanks [@julianiff](https://github.com/julianiff)! - Fix: add retry to subscription
+
+-   # Merge main into dev
+
 ## 3.4.1
 
 ### Patch Changes
@@ -278,17 +866,64 @@
 
 -   [#775](https://github.com/Frontify/brand-sdk/pull/775) [`3837782`](https://github.com/Frontify/brand-sdk/commit/383778258e862fb4fef62bf33aa71db71727aca1) Thanks [@mike85](https://github.com/mike85)! - feat: add open/close search dialog commands to AppBridgeTheme
 
+## 4.0.0-alpha.7
+
+### Minor Changes
+
+-   [#780](https://github.com/Frontify/brand-sdk/pull/780) [`40b18c4`](https://github.com/Frontify/brand-sdk/commit/40b18c473478750ce04eb18a7ff290e34b65b94f) Thanks [@mike85](https://github.com/mike85)! - feat: add open/close search dialog commands to AppBridgeTheme
+
+## 4.0.0-alpha.6
+
+### Patch Changes
+
+-   [#772](https://github.com/Frontify/brand-sdk/pull/772) [`3e44c59`](https://github.com/Frontify/brand-sdk/commit/3e44c596628abcad11414eb26a954f4cb6eea097) Thanks [@julianiff](https://github.com/julianiff)! - feat: switch to platformAppBridge to v4
+
+-   [#774](https://github.com/Frontify/brand-sdk/pull/774) [`7a80244`](https://github.com/Frontify/brand-sdk/commit/7a80244b2ebf075f93a492513970b3ee2c92dc80) Thanks [@julianiff](https://github.com/julianiff)! - feat: Adjust PlatformAppContext
+    refactor: rename from type to surface
+
+## 4.0.0-alpha.5
+
+### Patch Changes
+
+-   [`a4822db`](https://github.com/Frontify/brand-sdk/commit/a4822db8bb86c2516241395963979369e0311a7a) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix: document page duplication return type
+
+-   # [`5e4178c`](https://github.com/Frontify/brand-sdk/commit/5e4178c1e1028cec2af73bd34fedf56078f8b42c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Merge main into dev
+
 ## 3.3.2
 
 ### Patch Changes
 
 -   [#769](https://github.com/Frontify/brand-sdk/pull/769) [`dde3283`](https://github.com/Frontify/brand-sdk/commit/dde328355d240a730ba6a6d465166c0ecc773548) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - fix: document page duplication return type
 
+## 4.0.0-alpha.4
+
+### Patch Changes
+
+-   # Merge main into dev
+
 ## 3.3.1
 
 ### Patch Changes
 
 -   [#766](https://github.com/Frontify/brand-sdk/pull/766) [`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
+
+## 4.0.0-alpha.3
+
+### Patch Changes
+
+-   [#734](https://github.com/Frontify/brand-sdk/pull/734) [`029dd26`](https://github.com/Frontify/brand-sdk/commit/029dd26b26734539e80af86bcaa49d2caf9a7771) Thanks [@ragi96](https://github.com/ragi96)! - feat: adjust the color type to have a revision
+
+## 4.0.0-alpha.2
+
+### Patch Changes
+
+-   [#753](https://github.com/Frontify/brand-sdk/pull/753) [`50937f2`](https://github.com/Frontify/brand-sdk/commit/50937f2170f5ee1eab05726e141fc0e932f71865) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds `setAssetIdsByBlockAssetKey` to AppBridgeBlock
+
+## 4.0.0-alpha.1
+
+### Patch Changes
+
+-   # [#742](https://github.com/Frontify/brand-sdk/pull/742) [`5ea66a7`](https://github.com/Frontify/brand-sdk/commit/5ea66a79bac131f5b34f1a1bf60fbe81add6b17f) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add context.template to AppBridgeTheme
 
 ## 3.3.0
 
@@ -301,6 +936,12 @@
 ### Minor Changes
 
 -   [#731](https://github.com/Frontify/brand-sdk/pull/731) [`b9c4fc4`](https://github.com/Frontify/brand-sdk/commit/b9c4fc4fddacabb988ceb0cbe125c1793a697e19) Thanks [@anxobotana](https://github.com/anxobotana)! - feat: add theme template context to appBridgeThemes context
+
+## 4.0.0-alpha.0
+
+### Major Changes
+
+-   # [#705](https://github.com/Frontify/brand-sdk/pull/705) [`a027b87`](https://github.com/Frontify/brand-sdk/commit/a027b87593ae25d18cda62c4989920a16958d28c) Thanks [@ragi96](https://github.com/ragi96)! - feat: first alpha release, removes all deprecated functions on the AppBridgeBlock
 
 ## 3.1.0
 
@@ -354,4 +995,5 @@
 
 ### Minor Changes
 
+-
 -   Add Brandportal link
