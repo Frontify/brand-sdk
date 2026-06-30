@@ -11,6 +11,7 @@ export type UseColorPalettesReturnType = {
     createColorPalette: (colorPaletteCreate: ColorPaletteCreate) => void;
     updateColorPalette: (colorPaletteId: number, colorPalettePatch: ColorPalettePatch) => void;
     deleteColorPalette: (colorPaletteId: number) => void;
+    /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
     downloadColorKit: (selectedColorPalettes: number[]) => string;
 };
 
