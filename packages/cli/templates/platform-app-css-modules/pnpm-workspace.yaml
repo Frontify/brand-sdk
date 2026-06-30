@@ -1,0 +1,6 @@
+# Only used by pnpm. Safe to delete if you install with npm or yarn.
+# Allows esbuild's postinstall (pnpm v10: onlyBuiltDependencies, v11: allowBuilds).
+onlyBuiltDependencies:
+  - esbuild
+allowBuilds:
+  esbuild: true

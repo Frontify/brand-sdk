@@ -1,5 +1,35 @@
 # @frontify/frontify-cli
 
+## 6.2.4
+
+### Patch Changes
+
+-   [#1603](https://github.com/Frontify/brand-sdk/pull/1603) [`f445f6b`](https://github.com/Frontify/brand-sdk/commit/f445f6b8a49dbc0985b55001d713556413da6a4a) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump build dependencies (`vite`, `esbuild`, `@vitejs/plugin-react`)
+
+## 6.2.3
+
+### Patch Changes
+
+-   [#1597](https://github.com/Frontify/brand-sdk/pull/1597) [`c6905ae`](https://github.com/Frontify/brand-sdk/commit/c6905aecd6d111270df2f4b55f0f3befb42327f1) Thanks [@imoutaharik](https://github.com/imoutaharik)! - fix(cli): modernise Fondue imports in platform-app templates and unblock pnpm install
+
+## 6.2.2
+
+### Patch Changes
+
+-   [#1591](https://github.com/Frontify/brand-sdk/pull/1591) [`4aa3e28`](https://github.com/Frontify/brand-sdk/commit/4aa3e28f8ce74aabb96e8121ce8d9059cc3efbd5) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(deps): bump `@frontify/fondue` to `13.5.0`
+
+## 6.2.1
+
+### Patch Changes
+
+-   [#1584](https://github.com/Frontify/brand-sdk/pull/1584) [`bbe3339`](https://github.com/Frontify/brand-sdk/commit/bbe33395d7d2b758759377f08134939402ee4f59) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump dependencies in scaffolded content-block templates
+
+    Newly scaffolded `content-block-css`, `content-block-css-modules`, and `content-block-tailwind` projects pin updated `@frontify/app-bridge`, `@frontify/guideline-blocks-settings`, and `@frontify/frontify-cli` versions, with `@frontify/guideline-blocks-settings` now declared as a runtime dependency.
+
+-   [#1586](https://github.com/Frontify/brand-sdk/pull/1586) [`2575dba`](https://github.com/Frontify/brand-sdk/commit/2575dba0a82501f60af8e9bfd345e551ea619fd2) Thanks [@jorgsowa](https://github.com/jorgsowa)! - chore(deps): bump template dependencies
+
+    Updated dependencies in platform-app and content-block-tailwind scaffolded templates, including newer versions of `@frontify/app-bridge-app`, `@frontify/fondue`, `@frontify/platform-app`, `@frontify/frontify-cli`, `@types/react`, `@types/react-dom`, and other dev dependencies.
+
 ## 6.2.0
 
 ### Minor Changes

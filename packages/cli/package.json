@@ -1,7 +1,7 @@
 {
     "name": "@frontify/frontify-cli",
     "type": "module",
-    "version": "6.2.0",
+    "version": "6.2.4",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
@@ -33,18 +33,18 @@
     },
     "dependencies": {
         "@fastify/cors": "^11.2.0",
-        "@vitejs/plugin-react": "^6.0.1",
+        "@vitejs/plugin-react": "^6.0.2",
         "archiver": "^7.0.1",
         "cac": "^7.0.0",
         "conf": "^15.1.0",
-        "esbuild": "^0.28.0",
+        "esbuild": "^0.28.1",
         "fast-glob": "^3.3.3",
         "fastify": "^5.8.5",
         "glob-to-regexp": "^0.4.1",
         "open": "^11.0.0",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^8.0.10",
+        "vite": "^8.0.16",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"
     },
@@ -56,12 +56,12 @@
         "@types/node": "^22.19.15",
         "@types/prompts": "^2.4.9",
         "@types/ws": "8.18.1",
-        "@vitest/coverage-v8": "4.1.5",
-        "@vitest/ui": "^4.1.5",
-        "eslint": "^10.2.1",
-        "prettier": "^3.8.3",
+        "@vitest/coverage-v8": "4.1.9",
+        "@vitest/ui": "^4.1.9",
+        "eslint": "^10.5.0",
+        "prettier": "^3.8.4",
         "ts-node": "^10.9.2",
-        "typescript": "^5.9.3",
-        "vitest": "^4.1.5"
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.9"
     }
 }

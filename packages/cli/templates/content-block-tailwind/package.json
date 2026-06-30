@@ -11,14 +11,14 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "@frontify/app-bridge": "^3.12.8",
+        "@frontify/app-bridge": "^3.12.9",
+        "@frontify/guideline-blocks-settings": "2.1.11",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
     },
     "devDependencies": {
         "@frontify/eslint-config-react": "1.0.15",
-        "@frontify/frontify-cli": "^6.0.3",
-        "@frontify/guideline-blocks-settings": "2.1.10",
+        "@frontify/frontify-cli": "^6.2.0",
         "@types/react": "^18.3.27",
         "@types/react-dom": "^18.3.7",
         "autoprefixer": "^10.5.0",
