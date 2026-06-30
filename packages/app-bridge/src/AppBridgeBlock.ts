@@ -203,6 +203,10 @@ export interface AppBridgeBlock<
      */
     deleteColor(colorId: number): Promise<void>;
 
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * There won't be a replacement for this method.
+     */
     downloadColorKit(selectedColorPalettes: number[]): string;
 
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
