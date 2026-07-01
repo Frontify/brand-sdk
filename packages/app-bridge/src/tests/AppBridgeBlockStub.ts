@@ -92,9 +92,6 @@ export const getAppBridgeBlockStub = ({
         getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
         getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
-        downloadColorKit: stub<Parameters<AppBridgeBlock['downloadColorKit']>>().returns(
-            `/api/color/export/${PROJECT_ID}/zip/500`,
-        ),
         getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
             Promise.resolve(AssetDummy.with(assetId)),
         ),

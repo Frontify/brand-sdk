@@ -113,8 +113,6 @@ export interface AppBridgeBlock<
 
     getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
-    downloadColorKit(selectedColorPalettes: number[]): string;
-
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
 
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;
