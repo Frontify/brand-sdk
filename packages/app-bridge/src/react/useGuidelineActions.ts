@@ -282,7 +282,6 @@ export const useGuidelineActions = (appBridge: AppBridgeTheme) => {
      * @property  title - Indicates title of a page.
      * @property  documentId - Indicates to witch document the page belongs to.
      * @property  categoryId - Indicates to witch category the page belongs to.
-     * @property  visibility - Indicates whether the page is visible only to the editor or everyone.
      * @property  linkUrl - Indicates whether the page is link or not.
      */
     const updateDocumentPage = useCallback(

@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { DocumentPageVisibility, type DocumentPageApi } from '@frontify/app-bridge';
+import { type DocumentPageApi } from '@frontify/app-bridge';
 
 enum LinkType {
     External = 'EXTERNAL',
@@ -37,7 +37,6 @@ type DocumentApi = {
     document_group_id?: number | null;
     valid_from: string;
     valid_to: string | null;
-    visibility: string | null;
     portal_id: number | null;
     title: string;
     slug: string | null;
@@ -88,7 +87,6 @@ export class DocumentApiDummy {
             project_id: 345,
             valid_from: '2022-03-03t15:41:33.000+00:00',
             valid_to: null,
-            visibility: 'private',
             portal_id: 3495,
             title: `Document ${id}`,
             slug: `document-${id}`,
@@ -137,7 +135,6 @@ export class DocumentPageApiDummy {
             link_type: 'INTERNAL',
             link_url: null,
             view_count: 0,
-            visibility: DocumentPageVisibility.Everyone,
             targets: null,
             permanent_link: `/r/document-page-${id}`,
         } as DocumentPageApi;
