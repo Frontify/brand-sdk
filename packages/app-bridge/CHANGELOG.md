@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 3.12.10
+
+### Patch Changes
+
+-   [#1606](https://github.com/Frontify/brand-sdk/pull/1606) [`4a02576`](https://github.com/Frontify/brand-sdk/commit/4a025764875892f4c156a2f3d8d553c64b0e5945) Thanks [@ragi96](https://github.com/ragi96)! - refactor: deprecate the `downloadColorKit` method
+
+    `AppBridgeBlock.downloadColorKit` and the `downloadColorKit` value returned from the `useColorPalettes` hook are now deprecated and will be removed in version 4.0.0.
+
 ## 3.12.9
 
 ### Patch Changes
