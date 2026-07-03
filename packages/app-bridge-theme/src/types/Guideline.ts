@@ -76,6 +76,7 @@ export interface PageCategoryNavigationItem {
     id(): number;
     title(language?: string): string;
     slug(language?: string): string;
+    url(language?: string): string;
     children(): (DocumentPageNavigationItem | DocumentPageLinkNavigationItem)[];
     type: 'page-category';
 }
