@@ -1,5 +1,13 @@
 # @frontify/app-bridge-theme
 
+## 1.2.0
+
+### Minor Changes
+
+-   [#1609](https://github.com/Frontify/brand-sdk/pull/1609) [`92bf6c1`](https://github.com/Frontify/brand-sdk/commit/92bf6c1eca5855a69af17a513d6697202a530b12) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(theme): add `url()` to `PageCategoryNavigationItem`
+
+    `PageCategoryNavigationItem` now exposes a `url(language?: string)` method that returns the navigable URL of the page category, matching the `url()` already available on documents, document pages, and cover pages.
+
 ## 1.1.0
 
 ### Minor Changes
