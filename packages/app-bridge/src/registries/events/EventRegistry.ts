@@ -6,4 +6,5 @@ import { type Asset, type TemplateLegacy } from '../../types';
 export type EventRegistry = EventNameValidator<{
     assetsChosen: { assets: Asset[] };
     templateChosen: { template: TemplateLegacy };
+    platformAppDirectOpened: { marketplaceAppId: string };
 }>;
