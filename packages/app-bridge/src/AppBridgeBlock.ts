@@ -46,7 +46,6 @@ export type BlockCommand = CommandNameValidator<
         | 'openAssetViewer'
         | 'openTemplateChooser'
         | 'openNewPublication'
-        | 'openPlatformAppDirect'
         | 'trackEvent'
     >
 >;
@@ -67,7 +66,7 @@ export type BlockContext = {
 };
 
 export type BlockEvent = EventNameValidator<
-    Pick<EventRegistry, 'assetsChosen' | 'templateChosen' | 'platformAppDirectOpened'> &
+    Pick<EventRegistry, 'assetsChosen' | 'templateChosen'> &
         StateAsEventName<BlockState & { '*': BlockState }> &
         ContextAsEventName<BlockContext & { '*': BlockContext }>
 >;
@@ -78,11 +77,11 @@ export interface AppBridgeBlock<
     Event extends BlockEvent = BlockEvent,
 > extends AppBridge<BlockApiMethod, BlockCommand, State, Context, Event> {
     api<ApiMethodName extends keyof BlockApiMethod>(
-        apiHandler: ApiHandlerParameter<ApiMethodName, BlockApiMethod>
+        apiHandler: ApiHandlerParameter<ApiMethodName, BlockApiMethod>,
     ): ApiReturn<ApiMethodName, BlockApiMethod>;
 
     dispatch<CommandName extends keyof BlockCommand>(
-        dispatchHandler: DispatchHandlerParameter<CommandName, BlockCommand>
+        dispatchHandler: DispatchHandlerParameter<CommandName, BlockCommand>,
     ): Promise<void>;
 
     state(): StateReturn<State, void>;
@@ -95,7 +94,7 @@ export interface AppBridgeBlock<
 
     subscribe<EventName extends keyof Event>(
         eventName: EventNameParameter<EventName, Event>,
-        callback: EventCallbackParameter<EventName, Event>
+        callback: EventCallbackParameter<EventName, Event>,
     ): EventUnsubscribeFunction;
 
     getBlockAssets(): Promise<Record<string, Asset[]>>;

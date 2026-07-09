@@ -5,7 +5,6 @@ export * from './AssetViewer';
 export * from './CommandRegistry';
 export * from './DownloadAsset';
 export * from './NewPublication';
-export * from './PlatformApp';
 export * from './SearchDialog';
 export * from './TemplateChooser';
 export * from './TrackEvent';

@@ -17,7 +17,6 @@ type CloseTemplateChooser = void;
 type DownloadAsset = Asset;
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;
-type OpenPlatformAppDirect = { marketplaceAppId: string };
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -29,6 +28,5 @@ export type CommandRegistry = CommandNameValidator<{
     openNewPublication: OpenNewPublicationPayload;
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
-    openPlatformAppDirect: OpenPlatformAppDirect;
     trackEvent: TrackPayload;
 }>;
