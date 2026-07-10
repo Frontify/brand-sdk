@@ -141,7 +141,6 @@ describe('Attachments', () => {
         cy.get(FlyoutButtonSelector).click();
         cy.realPress('Tab');
         cy.realPress('Tab');
-        cy.realPress('Tab');
         cy.realPress('Enter');
         cy.get(MenuItemSelector).should('exist');
     });
