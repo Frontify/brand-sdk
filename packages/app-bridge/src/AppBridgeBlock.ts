@@ -67,7 +67,7 @@ export type BlockContext = {
 };
 
 export type BlockEvent = EventNameValidator<
-    Pick<EventRegistry, 'assetsChosen' | 'templateChosen' | 'platformAppDirectOpened'> &
+    Pick<EventRegistry, 'assetsChosen' | 'templateChosen'> &
         StateAsEventName<BlockState & { '*': BlockState }> &
         ContextAsEventName<BlockContext & { '*': BlockContext }>
 >;
