@@ -138,9 +138,6 @@ export const Attachments = ({
     };
 
     const autoFocusModifier = {
-        onOpenAutoFocus: (event: Event) => {
-            event.preventDefault();
-        },
         onEscapeKeyDown: (event: Event) => {
             event.stopPropagation();
             handleFlyoutOpenChange(false);
