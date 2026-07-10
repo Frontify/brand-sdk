@@ -209,8 +209,20 @@ jobs:
       id-token: write # to authenticate with npm registry via OIDC
 
     steps:
+      - name: Generate GitHub App token
+        id: generate-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.FRONTIFY_GITHUB_WORKFLOWS_APP_ID }}
+          private-key: ${{ secrets.FRONTIFY_GITHUB_WORKFLOWS_PRIVATE_KEY }}
+          repositories: brand-sdk
+          permission-contents: write
+          permission-pull-requests: write
+
       - name: Checkout default branch
         uses: actions/checkout@v6
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Use pnpm
         uses: pnpm/action-setup@v5
@@ -235,7 +247,7 @@ jobs:
           createGithubReleases: true
           publish: pnpm release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
           NPM_CONFIG_PROVENANCE: true
           # Use OIDC for npm authentication instead of NPM_TOKEN
           NPM_TOKEN: "" # https://github.com/changesets/changesets/issues/1152#issuecomment-3190884868
