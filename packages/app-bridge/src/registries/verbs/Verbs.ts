@@ -2,4 +2,4 @@
 
 export type ApiVerb = 'get' | 'create' | 'update' | 'delete' | 'add' | 'remove' | 'set';
 export type CommandVerb = 'open' | 'close' | 'download' | 'track';
-export type EventVerb = 'chosen' | 'opened';
+export type EventVerb = 'chosen';
