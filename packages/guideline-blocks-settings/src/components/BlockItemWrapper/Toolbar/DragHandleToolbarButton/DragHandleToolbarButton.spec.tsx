@@ -13,12 +13,21 @@ const TOOLTIP_ID = 'fondue-tooltip-content';
 
 const TOOLTIP_CONTENT = 'content';
 
+vi.mock('@dnd-kit/core', () => ({
+    useDndContext: vi.fn(() => ({ activatorEvent: null })),
+}));
+
 /**
  * @vitest-environment happy-dom
  */
 
 describe('DragHandleToolbarButton', () => {
-    it('should show tooltip and activeStyles when item is in drag preview context', () => {
+    it('should show tooltip and activeStyles when item is in keyboard drag preview context', async () => {
+        const { useDndContext } = await import('@dnd-kit/core');
+        vi.mocked(useDndContext).mockReturnValue({
+            activatorEvent: new KeyboardEvent('keydown'),
+        } as unknown as ReturnType<typeof useDndContext>);
+
         const { getByTestId } = render(
             <DragPreviewContextProvider isDragPreview>
                 <DragHandleToolbarButton
@@ -30,6 +39,26 @@ describe('DragHandleToolbarButton', () => {
         );
 
         expect(getByTestId(TOOLTIP_ID)).not.toHaveClass('tw-opacity-0');
+        expect(getByTestId(TOOLBAR_BUTTON_ID)).toHaveClass('tw-cursor-grabbing');
+    });
+
+    it('should not force tooltip open when item is in pointer drag preview context', async () => {
+        const { useDndContext } = await import('@dnd-kit/core');
+        vi.mocked(useDndContext).mockReturnValue({
+            activatorEvent: new PointerEvent('pointerdown'),
+        } as unknown as ReturnType<typeof useDndContext>);
+
+        const { queryByTestId, getByTestId } = render(
+            <DragPreviewContextProvider isDragPreview>
+                <DragHandleToolbarButton
+                    tooltip={TOOLTIP_CONTENT}
+                    icon={<IconAdobeCreativeCloud />}
+                    draggableProps={{}}
+                />
+            </DragPreviewContextProvider>,
+        );
+
+        expect(queryByTestId(TOOLTIP_ID)).not.toBeInTheDocument();
         expect(getByTestId(TOOLBAR_BUTTON_ID)).toHaveClass('tw-cursor-grabbing');
     });
 
