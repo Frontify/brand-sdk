@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { useDndContext } from '@dnd-kit/core';
 import { type ReactNode } from 'react';
 
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../../constants';
@@ -21,10 +22,12 @@ export const DragHandleToolbarButton = ({
     draggableProps,
 }: DragHandleToolbarButtonProps) => {
     const isDragPreview = useDragPreviewContext();
+    const { activatorEvent } = useDndContext();
+    const activatedByKeyboard = activatorEvent instanceof KeyboardEvent;
 
     return (
         <ToolbarButtonTooltip
-            {...(isDragPreview && { open: isDragPreview })}
+            {...(isDragPreview && activatedByKeyboard && { open: true })}
             content={<div>{isDragPreview ? DEFAULT_DRAGGING_TOOLTIP : (tooltip ?? DEFAULT_DRAG_TOOLTIP)}</div>}
         >
             <BaseToolbarButton
