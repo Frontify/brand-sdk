@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.16
+
+### Patch Changes
+
+-   [#1616](https://github.com/Frontify/brand-sdk/pull/1616) [`2481350`](https://github.com/Frontify/brand-sdk/commit/2481350fb9c6812f50b4da51119f1950dcf9ffa9) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(BlockItemWrapper): only show drag and drop tooltip if it was activated by keyboard
+
+-   [#1614](https://github.com/Frontify/brand-sdk/pull/1614) [`ca4c2a7`](https://github.com/Frontify/brand-sdk/commit/ca4c2a74e7966a41597f9e96083cfa1204995515) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(Attachments): flyout content not reachable via keyboard
+
 ## 2.1.15
 
 ### Patch Changes
