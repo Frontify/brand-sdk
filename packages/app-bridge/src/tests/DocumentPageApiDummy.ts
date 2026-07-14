@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type DocumentPageApi, DocumentPageVisibility } from '../types';
+import { type DocumentPageApi } from '../types';
 
 export class DocumentPageApiDummy {
     static with(id: number): DocumentPageApi {
@@ -21,7 +21,6 @@ export class DocumentPageApiDummy {
             link_type: 'INTERNAL',
             link_url: null,
             view_count: 0,
-            visibility: DocumentPageVisibility.Everyone,
             targets: null,
             permanent_link: `/r/document-page-${id}`,
         };
@@ -44,7 +43,6 @@ export class DocumentPageDuplicateApiDummy {
                 name: 'Document page duplicate dummy',
                 sections: [],
                 url: `document-page-duplicate-dummy-${id}`,
-                visibility: 'EVERYONE',
             },
         };
     }
