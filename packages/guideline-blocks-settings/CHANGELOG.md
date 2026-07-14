@@ -1,99 +1,107 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.16
+
+### Patch Changes
+
+- [#1616](https://github.com/Frontify/brand-sdk/pull/1616) [`2481350`](https://github.com/Frontify/brand-sdk/commit/2481350fb9c6812f50b4da51119f1950dcf9ffa9) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(BlockItemWrapper): only show drag and drop tooltip if it was activated by keyboard
+
+- [#1614](https://github.com/Frontify/brand-sdk/pull/1614) [`ca4c2a7`](https://github.com/Frontify/brand-sdk/commit/ca4c2a74e7966a41597f9e96083cfa1204995515) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(Attachments): flyout content not reachable via keyboard
+
 ## 2.1.15
 
 ### Patch Changes
 
--   [#1611](https://github.com/Frontify/brand-sdk/pull/1611) [`26d79be`](https://github.com/Frontify/brand-sdk/commit/26d79becbfc7e4ff0685350733dbf97ac4401098) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(deps): bump `@frontify/fondue` to `13.7.0`
+- [#1611](https://github.com/Frontify/brand-sdk/pull/1611) [`26d79be`](https://github.com/Frontify/brand-sdk/commit/26d79becbfc7e4ff0685350733dbf97ac4401098) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(deps): bump `@frontify/fondue` to `13.7.0`
 
 ## 2.1.14
 
 ### Patch Changes
 
--   [#1601](https://github.com/Frontify/brand-sdk/pull/1601) [`e96f2bc`](https://github.com/Frontify/brand-sdk/commit/e96f2bcdcc5dae6e88a3a46323ffe3e59264630a) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.6.2`
+- [#1601](https://github.com/Frontify/brand-sdk/pull/1601) [`e96f2bc`](https://github.com/Frontify/brand-sdk/commit/e96f2bcdcc5dae6e88a3a46323ffe3e59264630a) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.6.2`
 
 ## 2.1.13
 
 ### Patch Changes
 
--   [#1594](https://github.com/Frontify/brand-sdk/pull/1594) [`8f8b1d3`](https://github.com/Frontify/brand-sdk/commit/8f8b1d3a41aade25b320f1b5e275b7ef28afa637) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.6.0`
+- [#1594](https://github.com/Frontify/brand-sdk/pull/1594) [`8f8b1d3`](https://github.com/Frontify/brand-sdk/commit/8f8b1d3a41aade25b320f1b5e275b7ef28afa637) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.6.0`
 
 ## 2.1.12
 
 ### Patch Changes
 
--   [#1591](https://github.com/Frontify/brand-sdk/pull/1591) [`4aa3e28`](https://github.com/Frontify/brand-sdk/commit/4aa3e28f8ce74aabb96e8121ce8d9059cc3efbd5) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(deps): bump `@frontify/fondue` to `13.5.0`
+- [#1591](https://github.com/Frontify/brand-sdk/pull/1591) [`4aa3e28`](https://github.com/Frontify/brand-sdk/commit/4aa3e28f8ce74aabb96e8121ce8d9059cc3efbd5) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(deps): bump `@frontify/fondue` to `13.5.0`
 
 ## 2.1.11
 
 ### Patch Changes
 
--   [#1574](https://github.com/Frontify/brand-sdk/pull/1574) [`05b9d4e`](https://github.com/Frontify/brand-sdk/commit/05b9d4e49ea79c1685778cd4377f2c85502d4e12) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove redundant `useMemoizedId` wrapping around `flyoutId` in `AttachmentsToolbarButton`, `FlyoutToolbarButton`, and `MenuToolbarButton`. Each component already supplies a default `flyoutId`, so the memoized id was a pass-through. Drops the `@frontify/fondue` `useMemoizedId` import from these files.
+- [#1574](https://github.com/Frontify/brand-sdk/pull/1574) [`05b9d4e`](https://github.com/Frontify/brand-sdk/commit/05b9d4e49ea79c1685778cd4377f2c85502d4e12) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove redundant `useMemoizedId` wrapping around `flyoutId` in `AttachmentsToolbarButton`, `FlyoutToolbarButton`, and `MenuToolbarButton`. Each component already supplies a default `flyoutId`, so the memoized id was a pass-through. Drops the `@frontify/fondue` `useMemoizedId` import from these files.
 
--   [#1576](https://github.com/Frontify/brand-sdk/pull/1576) [`2f3a738`](https://github.com/Frontify/brand-sdk/commit/2f3a7389600b63cb39b014e906f967823987dfa5) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.4.5`
+- [#1576](https://github.com/Frontify/brand-sdk/pull/1576) [`2f3a738`](https://github.com/Frontify/brand-sdk/commit/2f3a7389600b63cb39b014e906f967823987dfa5) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.4.5`
 
 ## 2.1.10
 
 ### Patch Changes
 
--   Updated dependencies [[`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263)]:
-    -   @frontify/sidebar-settings@0.12.0
+- Updated dependencies [[`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263)]:
+    - @frontify/sidebar-settings@0.12.0
 
 ## 2.1.9
 
 ### Patch Changes
 
--   [#1566](https://github.com/Frontify/brand-sdk/pull/1566) [`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): bumping some devDependencies
+- [#1566](https://github.com/Frontify/brand-sdk/pull/1566) [`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): bumping some devDependencies
 
--   Updated dependencies [[`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f), [`1aa19a4`](https://github.com/Frontify/brand-sdk/commit/1aa19a4c0fabddae79a1e882206a187ab466714e)]:
-    -   @frontify/sidebar-settings@0.11.0
+- Updated dependencies [[`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f), [`1aa19a4`](https://github.com/Frontify/brand-sdk/commit/1aa19a4c0fabddae79a1e882206a187ab466714e)]:
+    - @frontify/sidebar-settings@0.11.0
 
 ## 2.1.8
 
 ### Patch Changes
 
--   [#1537](https://github.com/Frontify/brand-sdk/pull/1537) [`03f18bd`](https://github.com/Frontify/brand-sdk/commit/03f18bd45b9ce538ef1982099dca37b30a5e7ca3) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(Attachments): prevent add button to inherit typo styles from theme
+- [#1537](https://github.com/Frontify/brand-sdk/pull/1537) [`03f18bd`](https://github.com/Frontify/brand-sdk/commit/03f18bd45b9ce538ef1982099dca37b30a5e7ca3) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(Attachments): prevent add button to inherit typo styles from theme
 
 ## 2.1.7
 
 ### Patch Changes
 
--   [#1519](https://github.com/Frontify/brand-sdk/pull/1519) [`e074f45`](https://github.com/Frontify/brand-sdk/commit/e074f45c4c56dcd53dbfa53e85b7b12f2a7d83dc) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(BlockInjectButton): prevent the button from inheriting letter spacing from outside
+- [#1519](https://github.com/Frontify/brand-sdk/pull/1519) [`e074f45`](https://github.com/Frontify/brand-sdk/commit/e074f45c4c56dcd53dbfa53e85b7b12f2a7d83dc) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(BlockInjectButton): prevent the button from inheriting letter spacing from outside
 
--   [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
+- [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
 
--   Updated dependencies [[`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e)]:
-    -   @frontify/sidebar-settings@0.10.11
+- Updated dependencies [[`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e)]:
+    - @frontify/sidebar-settings@0.10.11
 
 ## 2.1.6
 
 ### Patch Changes
 
--   [#1512](https://github.com/Frontify/brand-sdk/pull/1512) [`3210aab`](https://github.com/Frontify/brand-sdk/commit/3210aab12ba69789fec5bc2ce4bb6ec2528dd31e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Buttons): remove custom styles and use fondue
+- [#1512](https://github.com/Frontify/brand-sdk/pull/1512) [`3210aab`](https://github.com/Frontify/brand-sdk/commit/3210aab12ba69789fec5bc2ce4bb6ec2528dd31e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Buttons): remove custom styles and use fondue
 
 ## 2.1.5
 
 ### Patch Changes
 
--   [#1509](https://github.com/Frontify/brand-sdk/pull/1509) [`95f76e6`](https://github.com/Frontify/brand-sdk/commit/95f76e664a5dfd274ba87c359094df6d51cc9343) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix: missing dummy util
+- [#1509](https://github.com/Frontify/brand-sdk/pull/1509) [`95f76e6`](https://github.com/Frontify/brand-sdk/commit/95f76e664a5dfd274ba87c359094df6d51cc9343) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix: missing dummy util
 
 ## 2.1.4
 
 ### Patch Changes
 
--   [#1495](https://github.com/Frontify/brand-sdk/pull/1495) [`0fcd332`](https://github.com/Frontify/brand-sdk/commit/0fcd3323a201b342c3636b9cdee0a5cf4c4d1d9a) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(\*): update fondue to 13.3.2
+- [#1495](https://github.com/Frontify/brand-sdk/pull/1495) [`0fcd332`](https://github.com/Frontify/brand-sdk/commit/0fcd3323a201b342c3636b9cdee0a5cf4c4d1d9a) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore(\*): update fondue to 13.3.2
 
 ## 2.1.3
 
 ### Patch Changes
 
--   [#1479](https://github.com/Frontify/brand-sdk/pull/1479) [`d5fe2a5`](https://github.com/Frontify/brand-sdk/commit/d5fe2a5f08346511b0f7d62d7211a670bab8e85e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(OrderedListPlugin): css var naming is wrong
+- [#1479](https://github.com/Frontify/brand-sdk/pull/1479) [`d5fe2a5`](https://github.com/Frontify/brand-sdk/commit/d5fe2a5f08346511b0f7d62d7211a670bab8e85e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(OrderedListPlugin): css var naming is wrong
 
 ## 2.1.2
 
 ### Patch Changes
 
--   [#1477](https://github.com/Frontify/brand-sdk/pull/1477) [`c04449c`](https://github.com/Frontify/brand-sdk/commit/c04449c9298107e3339d74f6e58ef7ec0b0b7d13) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockInjectButton): image dropping is flaky
+- [#1477](https://github.com/Frontify/brand-sdk/pull/1477) [`c04449c`](https://github.com/Frontify/brand-sdk/commit/c04449c9298107e3339d74f6e58ef7ec0b0b7d13) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(BlockInjectButton): image dropping is flaky
 
 ## 2.1.1
 

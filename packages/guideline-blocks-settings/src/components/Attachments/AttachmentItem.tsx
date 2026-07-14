@@ -85,7 +85,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                     fontFamily: 'var(-f-theme-settings-body-font-family)',
                 }}
                 className={joinClassNames([
-                    'tw-cursor-pointer tw-text-left tw-w-full tw-relative tw-flex tw-gap-3 tw-px-5 tw-py-3 tw-items-center tw-group hover:tw-bg-container-secondary-hover',
+                    'tw-cursor-pointer tw-text-left tw-w-full tw-relative tw-flex tw-gap-3 tw-px-5 tw-py-3 tw-items-center tw-group hover:tw-bg-container-secondary-hover -tw-outline-offset-1',
                     isDragging ? 'tw-bg-container-secondary-hover' : '',
                 ])}
             >
