@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 2.1.17
+
+### Patch Changes
+
+-   [#1621](https://github.com/Frontify/brand-sdk/pull/1621) [`e73e0c8`](https://github.com/Frontify/brand-sdk/commit/e73e0c8ea93fb9f21771b8ddbb562415cabc9878) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(BlockItemWrapper): prevent showing the tooltip when dragging by mouse
+
 ## 2.1.16
 
 ### Patch Changes
