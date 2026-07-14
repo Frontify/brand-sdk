@@ -27,7 +27,7 @@ export const DragHandleToolbarButton = ({
 
     return (
         <ToolbarButtonTooltip
-            {...(isDragPreview && activatedByKeyboard && { open: true })}
+            {...(isDragPreview && { open: activatedByKeyboard })}
             content={<div>{isDragPreview ? DEFAULT_DRAGGING_TOOLTIP : (tooltip ?? DEFAULT_DRAG_TOOLTIP)}</div>}
         >
             <BaseToolbarButton
