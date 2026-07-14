@@ -16,7 +16,7 @@ jobs:
       should_run: ${{ steps.filter.outputs['guideline-themes'] }}
     steps:
       - uses: actions/checkout@v6
-      - uses: dorny/paths-filter@v3
+      - uses: dorny/paths-filter@v4
         id: filter
         with:
           filters: |
@@ -48,7 +48,7 @@ jobs:
 
       - name: Use Node.js
         if: needs.changes.outputs.should_run == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -93,7 +93,7 @@ jobs:
           run_install: false
 
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
