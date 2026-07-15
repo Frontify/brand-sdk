@@ -91,6 +91,7 @@ export const BlockInjectButton = ({
     }, [onAssetChooseClick, onUploadClick, onItemClick]);
     return (
         <button
+            type="button"
             ref={buttonRef}
             data-test-id="block-inject-button"
             className={joinClassNames([
@@ -100,15 +101,15 @@ export const BlockInjectButton = ({
                     : '[&:not(:first-child)]:tw-border-l-0 first:tw-rounded-bl last:tw-rounded-tr',
                 fillParentContainer ? 'tw-h-full' : 'tw-h-[72px]',
                 isDraggingOver && !isLoading ? 'tw-border-dashed' : 'tw-border-solid',
-                menuPosition && 'tw-bg-blank-state-pressed-inverse',
-                isDraggingOver && 'tw-bg-blank-state-weak-inverse',
-                errorMsg ? '!tw-border-red-50 !tw-cursor-not-allowed' : ' tw-border-blank-state-line',
+                menuPosition && 'tw-bg-surface-hover',
+                isDraggingOver && 'tw-bg-surface',
+                errorMsg ? '!tw-border-red-50 !tw-cursor-not-allowed' : ' tw-border-line-mid',
                 isLoading || menuPosition || isDraggingOver || errorMsg
                     ? ''
-                    : 'tw-text-secondary hover:tw-text-blank-state-hover hover:tw-bg-blank-state-hover-inverse hover:tw-border-blank-state-line-hover active:tw-text-blank-state-pressed active:tw-bg-blank-state-pressed-inverse active:tw-border-blank-state-line-hover',
+                    : 'tw-text-secondary hover:tw-text-primary hover:tw-bg-surface hover:tw-border-line-strong active:tw-text-primary active:tw-bg-surface-hover active:tw-border-line-strong',
                 (isDraggingOver || !!menuPosition) && !errorMsg
-                    ? '[&>*]:tw-pointer-events-none tw-border-blank-state-line-hover'
-                    : 'tw-bg-blank-state-shaded-inverse tw-text-blank-state-shaded',
+                    ? '[&>*]:tw-pointer-events-none tw-border-line-strong'
+                    : 'tw-bg-surface-dim tw-text-secondary',
             ])}
             onDragEnter={
                 onDrop
