@@ -2,7 +2,7 @@
 "@frontify/guideline-blocks-settings": major
 ---
 
-Changes:
+refactor!: remove exports that moved
 
 - remove `DownloadButton` component
 - remove `useDndSensors` react hook
