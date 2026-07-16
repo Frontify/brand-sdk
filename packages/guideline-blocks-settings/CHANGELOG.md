@@ -1,5 +1,19 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.0
+
+### Major Changes
+
+-   [#1624](https://github.com/Frontify/brand-sdk/pull/1624) [`b89012c`](https://github.com/Frontify/brand-sdk/commit/b89012cd33632b0d98334c2099ca54d837076e88) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor!: remove exports that moved
+
+    -   remove `DownloadButton` component
+    -   remove `useDndSensors` react hook
+    -   remove `mapColorPalettes` helper
+    -   remove `moveItemToArray` utility
+    -   address Color type deprecation from Fondue
+    -   use Fondue color tokens for `BlockInjectButton`
+    -   prevent getBorderRadiusSettings from accepting negative values
+
 ## 2.1.17
 
 ### Patch Changes
