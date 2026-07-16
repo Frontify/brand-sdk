@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Color } from '@frontify/fondue';
+import { type Color } from '@frontify/sidebar-settings';
 import { type CSSProperties } from 'react';
 
 import { BORDER_COLOR_DEFAULT_VALUE } from '../../settings/defaultValues';
