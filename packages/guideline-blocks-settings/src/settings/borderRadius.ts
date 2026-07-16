@@ -1,6 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
+import {
+    type SettingBlock,
+    appendUnit,
+    minimumNumericalOrPixelRule,
+    numericalOrPixelRule,
+    presetCustomValue,
+} from '../';
 
 import { Radius, radiusStyleMap } from './types';
 
@@ -64,7 +70,7 @@ export const getBorderRadiusSettings = (options?: BorderRadiusSettingsType): Set
                 id: valueId,
                 type: 'input',
                 placeholder: 'e.g. 10px',
-                rules: [numericalOrPixelRule],
+                rules: [numericalOrPixelRule, minimumNumericalOrPixelRule(0)],
                 onChange: (bundle) => appendUnit(bundle, valueId),
             },
         ],
