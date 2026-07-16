@@ -10,3 +10,4 @@ refactor!: remove exports that moved
 - remove `moveItemToArray` utility
 - address Color type deprecation from Fondue
 - use Fondue color tokens for `BlockInjectButton`
+- prevent getBorderRadiusSettings from accepting negative values
