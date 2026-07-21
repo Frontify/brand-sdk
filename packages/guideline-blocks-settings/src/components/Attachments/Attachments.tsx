@@ -198,7 +198,7 @@ export const Attachments = ({
                                 </DndContext>
                             )}
                             {isEditing && (
-                                <div className="tw-px-5 tw-py-3">
+                                <div className="tw-px-5 tw-py-3" data-test-id="asset-input-placeholder">
                                     <div className="tw-font-primary tw-font-medium tw-text-primary tw-text-small tw-my-4">
                                         Add attachments
                                     </div>
