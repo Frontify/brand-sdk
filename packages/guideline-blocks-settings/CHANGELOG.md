@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.1
+
+### Patch Changes
+
+-   [#1626](https://github.com/Frontify/brand-sdk/pull/1626) [`9c54586`](https://github.com/Frontify/brand-sdk/commit/9c54586a92f0e286476284114f46c4972d839d10) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): several qol changes
+
 ## 3.0.0
 
 ### Major Changes
