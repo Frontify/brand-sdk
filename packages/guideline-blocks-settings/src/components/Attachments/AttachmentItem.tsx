@@ -14,8 +14,7 @@ import {
     IconMusicNote,
     IconGrabHandle,
 } from '@frontify/fondue/icons';
-import { useFocusRing } from '@react-aria/focus';
-import { type MutableRefObject, forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { joinClassNames } from '../../utilities';
 
@@ -54,8 +53,6 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
         const [openFileDialog, { selectedFiles }] = useFileInput({ multiple: true, accept: 'image/*' });
         const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload();
 
-        const { focusProps, isFocusVisible } = useFocusRing();
-
         useEffect(() => {
             if (selectedFiles) {
                 uploadFile(selectedFiles[0]);
@@ -85,8 +82,8 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                     fontFamily: 'var(-f-theme-settings-body-font-family)',
                 }}
                 className={joinClassNames([
-                    'tw-cursor-pointer tw-text-left tw-w-full tw-relative tw-flex tw-gap-3 tw-px-5 tw-py-3 tw-items-center tw-group hover:tw-bg-container-secondary-hover -tw-outline-offset-1',
-                    isDragging ? 'tw-bg-container-secondary-hover' : '',
+                    'tw-cursor-pointer tw-text-left tw-w-full tw-relative tw-flex tw-gap-3 tw-px-5 tw-py-3 tw-items-center tw-group hover:tw-bg-surface-hover focus-visible:tw-outline focus-visible:!-tw-outline-offset-4',
+                    isDragging ? 'tw-bg-surface-hover' : '',
                 ])}
             >
                 <div className="tw-text-secondary group-hover:tw-text-container-secondary-on-secondary-container">
@@ -102,27 +99,22 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                     <div
                         data-test-id="attachments-actionbar"
                         className={joinClassNames([
-                            'tw-flex tw-gap-0.5 group-focus:tw-opacity-100 focus-visible:tw-opacity-100 focus-within:tw-opacity-100 group-hover:tw-opacity-100',
+                            'tw-flex tw-gap-0.5 group-hover:tw-opacity-100 group-focus-visible:tw-opacity-100 has-[:focus-visible]:tw-opacity-100',
                             isOverlay || selectedAsset?.id === item.id ? 'tw-opacity-100' : 'tw-opacity-0',
                         ])}
                     >
-                        <button
-                            type="button"
-                            {...focusProps}
-                            {...draggableProps}
+                        <Button
+                            aspect="square"
+                            emphasis="weak"
                             aria-label="Drag attachment"
                             className={joinClassNames([
-                                ' tw-border-primary tw-bg-container-secondary active:tw-bg-container-secondary-active tw-group tw-border tw-box-box tw-relative tw-flex tw-items-center tw-justify-center tw-outline-none tw-font-medium tw-rounded-medium tw-h-9 tw-w-9 ',
-                                isDragging || isOverlay
-                                    ? 'tw-cursor-grabbing tw-bg-container-secondary-active hover:tw-bg-container-secondary-active'
-                                    : 'tw-cursor-grab hover:tw-bg-container-secondary-hover',
-                                isFocusVisible &&
-                                    'tw-ring-4 tw-ring-blue tw-ring-offset-2 dark:tw-ring-offset-black tw-outline-none',
-                                isFocusVisible && 'tw-z-[2]',
+                                isDragging || isOverlay ? 'tw-cursor-grabbing' : 'tw-cursor-grab',
+                                'focus-visible:tw-z-[2]',
                             ])}
+                            {...draggableProps}
                         >
                             <IconGrabHandle />
-                        </button>
+                        </Button>
                         <div data-test-id="attachments-actionbar-flyout">
                             <Dropdown.Root
                                 open={selectedAsset?.id === item.id}
@@ -131,12 +123,11 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                                 <Dropdown.Trigger>
                                     <Button
                                         aspect="square"
-                                        ref={ref as MutableRefObject<HTMLButtonElement>}
+                                        emphasis={selectedAsset?.id === item.id ? 'default' : 'weak'}
                                         onPress={(e) => {
                                             e?.stopPropagation();
                                             e?.preventDefault();
                                         }}
-                                        emphasis="default"
                                     >
                                         <IconPen size="20" />
                                     </Button>

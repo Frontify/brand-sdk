@@ -10,11 +10,11 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { SortableContext, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { type Asset, useAssetChooser, useAssetUpload, useEditorState } from '@frontify/app-bridge';
-import { AssetInput, AssetInputSize } from '@frontify/fondue';
-import { Tooltip, Flyout } from '@frontify/fondue/components';
+import { Tooltip, Flyout, AssetInput, Flex } from '@frontify/fondue/components';
+import { IconArrowCircleUp, IconImageStack } from '@frontify/fondue/icons';
 import { useEffect, useState } from 'react';
 
 import { SortableAttachmentItem } from './AttachmentItem';
@@ -39,6 +39,7 @@ export const Attachments = ({
     const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
     const [draggedAssetId, setDraggedAssetId] = useState<number | undefined>(undefined);
     const [isUploadLoading, setIsUploadLoading] = useState(false);
+    const [isBrowseLoading, setIsBrowseLoading] = useState(false);
     const [assetIdsLoading, setAssetIdsLoading] = useState<number[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const isEditing = useEditorState(appBridge);
@@ -84,10 +85,13 @@ export const Attachments = ({
     const onOpenAssetChooser = () => {
         handleFlyoutOpenChange(false);
         openAssetChooser(
-            (result: Asset[]) => {
-                onBrowse(result);
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            async (result: Asset[]) => {
                 closeAssetChooser();
                 handleFlyoutOpenChange(true);
+                setIsBrowseLoading(true);
+                await onBrowse(result);
+                setIsBrowseLoading(false);
             },
             {
                 multiSelection: true,
@@ -158,15 +162,15 @@ export const Attachments = ({
                             </TriggerComponent>
                         </Flyout.Trigger>
                     </Tooltip.Trigger>
-                    <Flyout.Content side="bottom" align="end" {...autoFocusModifier}>
-                        <div className="tw-w-[300px]" data-test-id="attachments-flyout-content">
+                    <Flyout.Content side="bottom" align="end" width="300px" {...autoFocusModifier}>
+                        <div className="tw-w-full" data-test-id="attachments-flyout-content">
                             {internalItems.length > 0 && (
                                 <DndContext
                                     sensors={sensors}
                                     collisionDetection={closestCenter}
                                     onDragStart={handleDragStart}
                                     onDragEnd={handleDragEnd}
-                                    modifiers={[restrictToVerticalAxis]}
+                                    modifiers={[restrictToParentElement]}
                                 >
                                     <SortableContext items={internalItems} strategy={rectSortingStrategy}>
                                         <div className="tw-border-b tw-border-b-line tw-relative">
@@ -198,12 +202,34 @@ export const Attachments = ({
                                     <div className="tw-font-primary tw-font-medium tw-text-primary tw-text-small tw-my-4">
                                         Add attachments
                                     </div>
-                                    <AssetInput
-                                        isLoading={isUploadLoading}
-                                        size={AssetInputSize.Small}
-                                        onUploadClick={(fileList) => setSelectedFiles(fileList)}
-                                        onLibraryClick={onOpenAssetChooser}
-                                    />
+                                    {isUploadLoading || isBrowseLoading ? (
+                                        <AssetInput.Root orientation="horizontal">
+                                            <AssetInput.Preview>
+                                                <AssetInput.PreviewLoading />
+                                            </AssetInput.Preview>
+                                            <AssetInput.Title>Asset</AssetInput.Title>
+                                            <AssetInput.Metadata>
+                                                <AssetInput.MetadataItem>
+                                                    <Flex align="center" gap={0.5}>
+                                                        {isBrowseLoading ? (
+                                                            <IconImageStack size={16} />
+                                                        ) : (
+                                                            <IconArrowCircleUp size={16} />
+                                                        )}
+                                                        {isBrowseLoading ? 'Loading' : 'Uploading'}
+                                                    </Flex>
+                                                </AssetInput.MetadataItem>
+                                            </AssetInput.Metadata>
+                                        </AssetInput.Root>
+                                    ) : (
+                                        <AssetInput.Placeholder>
+                                            <AssetInput.UploadInput
+                                                allowMultiple
+                                                onSelect={(event) => setSelectedFiles(event.target.files)}
+                                            />
+                                            <AssetInput.BrowseInput onBrowse={onOpenAssetChooser} />
+                                        </AssetInput.Placeholder>
+                                    )}
                                 </div>
                             )}
                         </div>

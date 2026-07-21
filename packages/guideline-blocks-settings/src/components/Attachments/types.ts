@@ -15,7 +15,7 @@ export type AttachmentsProps = {
     onReplaceWithBrowse: (attachmentToReplace: Asset, newAsset: Asset) => Promise<void>;
     onDelete: (attachmentToDelete: Asset) => void;
     onUpload: (uploadedAttachments: Asset[]) => Promise<void>;
-    onBrowse: (browserAttachments: Asset[]) => void;
+    onBrowse: (browserAttachments: Asset[]) => void | Promise<void>;
     onSorted: (sortedAttachments: Asset[]) => void;
     triggerComponent?: React.ForwardRefExoticComponent<
         AttachmentsTriggerProps & React.RefAttributes<HTMLButtonElement>
