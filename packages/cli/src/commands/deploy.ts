@@ -81,6 +81,16 @@ export const verifyCode = async (noVerify: boolean) => {
     Logger.info('Performing type checks...');
     await promiseExec('npx tsc --noEmit');
 
+    const eslintConfigFiles = await fastGlob(
+        ['.eslintrc', '.eslintrc.{js,cjs,mjs,json,yaml,yml}', 'eslint.config.{js,cjs,mjs,ts,cts,mts}'],
+        { dot: true },
+    );
+
+    if (eslintConfigFiles.length === 0) {
+        Logger.info('Eslint config file not found, skipping eslint checks...');
+        return;
+    }
+
     Logger.info('Performing eslint checks...');
     await promiseExec('npx eslint src');
 };
