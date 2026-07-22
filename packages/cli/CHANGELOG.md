@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 6.2.6
+
+### Patch Changes
+
+-   [#1628](https://github.com/Frontify/brand-sdk/pull/1628) [`9bfe0db`](https://github.com/Frontify/brand-sdk/commit/9bfe0dbb283f20e0a2e49588ba64e122fdc86259) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(deploy): skip eslint checks when no eslint config is present
+
+    The deploy command previously failed when a project had no ESLint config file. It now detects a missing config and skips the ESLint step, so projects that lint with another tool (e.g. oxlint) can deploy. Run your linter manually before deploying if you don't use ESLint.
+
 ## 6.2.5
 
 ### Patch Changes
