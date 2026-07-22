@@ -20,13 +20,13 @@
     ],
     "scripts": {
         "build": "vite build",
-        "lint": "eslint .",
-        "lint:fix": "eslint --fix .",
-        "prettier": "prettier --check .",
-        "prettier:fix": "prettier --write .",
+        "lint": "oxlint --type-aware",
+        "lint:fix": "oxlint --type-aware --fix",
         "typecheck": "tsc --noEmit",
         "test": "vitest run",
-        "test:watch": "vitest"
+        "test:watch": "vitest",
+        "format": "oxfmt",
+        "format:check": "oxfmt --check"
     },
     "peerDependencies": {
         "react": "^18",
@@ -34,12 +34,14 @@
     },
     "devDependencies": {
         "@babel/core": "^7.29.0",
-        "@frontify/eslint-config-basic": "^1.0.15",
+        "@frontify/oxfmt-config": "^0.0.2",
+        "@frontify/oxlint-config-basic": "^0.0.2",
         "@tony.ganchev/eslint-plugin-header": "^3.4.4",
         "@types/react": "^18.3.27",
         "@types/react-dom": "^18.3.7",
-        "eslint": "^10.2.1",
-        "prettier": "^3.8.3",
+        "oxfmt": "^0.52.0",
+        "oxlint": "^1.75.0",
+        "oxlint-tsgolint": "^7.0.2001",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "typescript": "^5.9.3",

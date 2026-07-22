@@ -5,7 +5,6 @@ import { cleanup, configure } from '@testing-library/react';
 import { type MountOptions, type MountReturn } from 'cypress/react';
 import { type ReactNode } from 'react';
 import { afterEach, beforeAll, expect, vi } from 'vitest';
-
 import '@testing-library/jest-dom/vitest';
 
 expect.extend(matchers);

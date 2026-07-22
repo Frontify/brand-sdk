@@ -9,5 +9,5 @@
         "resolveJsonModule": true,
         "target": "ESNext"
     },
-    "include": ["oxlint.config.ts", "oxfmt.config.ts", "vite.config.mts", "package.json"]
+    "include": ["oxlint.config.ts", "oxfmt.config.ts"]
 }
