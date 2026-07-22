@@ -92,7 +92,7 @@ describe('useCoverPage', () => {
         result.current.coverPage = CoverPageDummy.with(1);
 
         act(() => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             window.emitter.emit('AppBridge:GuidelineCoverPage:Action', { action: 'invalid' as any });
         });
 

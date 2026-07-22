@@ -41,7 +41,7 @@ export const LinkSelector = ({
 
     useEffect(() => {
         if (url && !selectedUrl) {
-            // eslint-disable-next-line @eslint-react/set-state-in-effect
+            // oxlint-disable-next-line @eslint-react/set-state-in-effect
             setSelectedUrl(url);
         }
     }, [url, selectedUrl]);
@@ -59,7 +59,7 @@ export const LinkSelector = ({
     };
 
     return (
-        // eslint-disable-next-line jsx-a11y-x/no-static-element-interactions
+        // oxlint-disable-next-line jsx-a11y-x/no-static-element-interactions
         <div
             onPointerDown={(event) => {
                 event.preventDefault();

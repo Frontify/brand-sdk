@@ -2,7 +2,7 @@
 
 import { type ReactNode } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// oxlint-disable-next-line typescript/no-unused-vars
 import { type AttachmentsProvider, type withAttachmentsProvider } from '../../hooks/useAttachments';
 
 import { type ToolbarItem } from './Toolbar';

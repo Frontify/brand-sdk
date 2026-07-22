@@ -33,7 +33,7 @@ export const isObject = (item: unknown) => {
     return item && typeof item === 'object' && !Array.isArray(item);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line typescript/no-explicit-any
 export const mergeDeep = <T = Record<string, unknown>>(target: any, ...sources: any): T => {
     if (sources.length === 0) {
         return target;
@@ -63,7 +63,7 @@ export const mergeDeep = <T = Record<string, unknown>>(target: any, ...sources: 
  * @param caseType camel or snake
  * @returns converted object or array of objects
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line typescript/no-explicit-any
 export const convertObjectCase = <Obj extends Record<string, any>, Case extends 'camel' | 'snake'>(
     obj: Obj,
     caseType: Case,
@@ -73,7 +73,7 @@ export const convertObjectCase = <Obj extends Record<string, any>, Case extends 
         snake: snakeCase,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line typescript/no-explicit-any
     return transform(obj, (acc: any, value, key, target) => {
         const caseKey = Array.isArray(target) ? key : caseFn[caseType](key);
 

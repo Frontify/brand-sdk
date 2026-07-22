@@ -51,7 +51,7 @@ describe('useTemplateAssets hook', () => {
         );
 
         // for some reason necessary
-        // eslint-disable-next-line @typescript-eslint/require-await
+        // oxlint-disable-next-line typescript/require-await
         await act(async () => {
             rerender();
         });

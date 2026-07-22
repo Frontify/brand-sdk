@@ -29,7 +29,7 @@ describe('useThemeAssets hook', () => {
 
         const { result, rerender } = renderHook(() => useThemeAssets(appBridgeStub, template));
 
-        // eslint-disable-next-line @typescript-eslint/require-await
+        // oxlint-disable-next-line typescript/require-await
         await act(async () => {
             rerender();
         });

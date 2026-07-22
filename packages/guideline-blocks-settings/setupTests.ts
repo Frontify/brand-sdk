@@ -22,12 +22,12 @@ afterEach(() => {
     cleanup();
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+// oxlint-disable-next-line typescript/no-unsafe-return
 globalThis.structuredClone = (data: unknown) => JSON.parse(JSON.stringify(data));
 
 // Actual implementation in `cypress/support/component.ts`
 declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
+    // oxlint-disable-next-line typescript/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
