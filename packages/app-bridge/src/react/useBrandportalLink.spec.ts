@@ -55,7 +55,7 @@ describe('useBrandportalLink', () => {
 
         act(() => {
             window.emitter.emit('AppBridge:GuidelineBrandportalLink:Action', {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // oxlint-disable-next-line typescript/no-explicit-any
                 action: 'invalid' as any,
                 brandportalLink: { enabled: false, label: '', url: '' },
             });

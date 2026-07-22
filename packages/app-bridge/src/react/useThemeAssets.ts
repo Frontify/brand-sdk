@@ -65,7 +65,7 @@ export const useThemeAssets = (appBridge: AppBridgeTheme, template?: ThemeTempla
             componentMounted = false;
             window.emitter.off('AppBridge:ThemeAssetsUpdated', updateThemeAssetsFromEvent);
         };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
+        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge]);
 
     const emitUpdatedThemeAssets = async () => {

@@ -11,7 +11,7 @@ import { dependencies as dependenciesMap } from './package.json';
 const dependencies = Object.keys(dependenciesMap);
 
 export default defineConfig({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    // oxlint-disable-next-line typescript/no-unsafe-assignment,typescript/no-unsafe-call
     plugins: [react(), dts({ insertTypesEntry: true, rollupTypes: true })],
     build: {
         lib: {

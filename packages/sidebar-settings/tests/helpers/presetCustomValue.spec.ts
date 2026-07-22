@@ -26,7 +26,7 @@ describe('presetCustomValue', () => {
                 return null;
             },
             setBlockValue(): void {},
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
         };
 
@@ -50,7 +50,7 @@ describe('presetCustomValue', () => {
                 return null;
             },
             setBlockValue(): void {},
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
         };
 

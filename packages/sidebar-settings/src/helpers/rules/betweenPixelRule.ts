@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Rule } from './Rule';
 import { minimumNumericRule } from './minimumNumericRule';
+import { type Rule } from './Rule';
 
 /**
  * Rule to validate value is between two pixel values.

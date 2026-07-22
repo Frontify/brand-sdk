@@ -14,9 +14,9 @@ import { isValidUrl } from '../../../Link';
 import { BlockStyles } from '../styles';
 
 import { CustomFloatingLink } from './FloatingLink/CustomFloatingLink';
+import { LINK_PLUGIN } from './id';
 import { LinkButton } from './LinkButton';
 import { LinkMarkupElement } from './LinkMarkupElement';
-import { LINK_PLUGIN } from './id';
 
 export const createLinkPlugin = (appBridge: AppBridgeBlock): PlatePlugin =>
     createPluginFactory({

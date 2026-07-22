@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "composite": true,
+        "lib": ["ESNext"],
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "target": "ESNext"
+    },
+    "include": ["oxlint.config.ts", "oxfmt.config.ts"]
+}

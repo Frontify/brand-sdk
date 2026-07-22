@@ -61,7 +61,7 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
             componentMounted = false;
             window.emitter.off('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent);
         };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
+        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge]);
 
     const emitUpdatedBlockTemplates = async () => {

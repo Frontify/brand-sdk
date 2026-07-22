@@ -27,7 +27,7 @@ export const Toolbar = ({ items, attachments }: ToolbarProps) => (
                         case 'menu':
                             return <MenuToolbarButton key={item.tooltip + item.type} {...item} />;
                         case 'flyout':
-                            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-base-to-string
+                            // oxlint-disable-next-line typescript/restrict-plus-operands,typescript/no-base-to-string
                             return <FlyoutToolbarButton key={item.tooltip + item.type} {...item} />;
                         default:
                             return <ToolbarButton key={item.tooltip + item.type} {...item} />;

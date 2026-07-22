@@ -17,5 +17,6 @@
         "target": "ES2022"
     },
     "exclude": ["dist", "node_modules", "tests/files"],
-    "include": ["eslint.config.mjs", "src", "package.json", "tests", "vite.config.ts"]
+    "include": ["src", "package.json", "tests", "vite.config.ts"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }

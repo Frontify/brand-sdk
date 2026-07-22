@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import './styles.css';
-
 import { type AppBridgeBlock } from '@frontify/app-bridge';
 import {
     type AssetInputBlock as AssetInputBlockSidebarSettings,

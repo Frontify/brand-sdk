@@ -92,8 +92,20 @@ describe('Deploy command helpers', () => {
     });
 
     describe('verifyCode', () => {
+        let tempDir: string;
+        let previousCwd: string;
+
         beforeEach(() => {
             promiseExecMock.mockClear();
+            previousCwd = process.cwd();
+            tempDir = join(tmpdir(), `cli-verify-${Date.now()}`);
+            mkdirSync(tempDir, { recursive: true });
+            process.chdir(tempDir);
+        });
+
+        afterEach(() => {
+            process.chdir(previousCwd);
+            rmSync(tempDir, { recursive: true, force: true });
         });
 
         test('should skip verification when noVerify is true', async () => {
@@ -102,7 +114,17 @@ describe('Deploy command helpers', () => {
             expect(promiseExecMock).not.toHaveBeenCalled();
         });
 
-        test('should run tsc and eslint when noVerify is false', async () => {
+        test('should run tsc and skip eslint when no eslint config is found', async () => {
+            console.log = vi.fn();
+
+            await verifyCode(false);
+
+            expect(promiseExecMock).toHaveBeenCalledTimes(1);
+            expect(promiseExecMock).toHaveBeenCalledWith('npx tsc --noEmit');
+        });
+
+        test('should run tsc and eslint when eslint config exists', async () => {
+            writeFileSync(join(tempDir, 'eslint.config.js'), 'export default [];');
             console.log = vi.fn();
 
             await verifyCode(false);

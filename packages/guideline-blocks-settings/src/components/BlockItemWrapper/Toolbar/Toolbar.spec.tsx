@@ -9,10 +9,10 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AttachmentsProvider } from '../../../hooks/useAttachments';
 
 import { DEFAULT_ATTACHMENTS_BUTTON_ID } from './AttachmentsToolbarButton';
-import { DEFAULT_MENU_BUTTON_ID } from './MenuToolbarButton';
-import { Toolbar } from './Toolbar';
 import { DragPreviewContextProvider } from './context/DragPreviewContext';
 import { MultiFlyoutContextProvider } from './context/MultiFlyoutContext';
+import { DEFAULT_MENU_BUTTON_ID } from './MenuToolbarButton';
+import { Toolbar } from './Toolbar';
 import { type ToolbarItem } from './types';
 
 /**
