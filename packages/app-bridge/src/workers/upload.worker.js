@@ -35,7 +35,7 @@ function upload(data, chunk) {
             // Calculate loaded bytes of single file considering chunks
             let loaded = 0;
 
-            // eslint-disable-next-line unicorn/no-array-for-each
+            // oxlint-disable-next-line unicorn/no-array-for-each
             progress[data.index].forEach((chunkProgress) => {
                 loaded += chunkProgress.loaded;
             });

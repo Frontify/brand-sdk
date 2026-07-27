@@ -156,7 +156,7 @@ export type EventNameParameter<
 > = EventName extends keyof EventNameParameter ? EventName : WrongNamePattern<EventName, 'Event'>;
 
 export type EventCallbackParameter<EventName, Event> = EventName extends keyof Event
-    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ? // oxlint-disable-next-line typescript/no-explicit-any
       Event[EventName] extends any[]
         ? (...eventReturn: Event[EventName]) => void
         : (eventReturn: Event[EventName]) => void

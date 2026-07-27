@@ -22,7 +22,7 @@ export class ThemeDevelopmentServer {
             const viteServer = await createServer({
                 root: process.cwd(),
                 plugins: [
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // oxlint-disable-next-line typescript/ban-ts-comment
                     // @ts-ignore
                     react(),
                     reactBareExternalPlugin(),

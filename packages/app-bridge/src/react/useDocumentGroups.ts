@@ -26,7 +26,7 @@ const sortDocumentGroups = (a: DocumentGroup, b: DocumentGroup) => (a.sort && b.
  * There won't be a replacement for this method.
  */
 export const useDocumentGroups = (appBridge: AppBridgeBlock | AppBridgeTheme, options: Options = { enabled: true }) => {
-    // eslint-disable-next-line @eslint-react/use-state
+    // oxlint-disable-next-line @eslint-react/use-state
     const [documentGroups, setDocumentGroups] = useState<Map<number, DocumentGroup>>(new Map([]));
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

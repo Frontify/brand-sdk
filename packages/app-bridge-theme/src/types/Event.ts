@@ -51,7 +51,7 @@ export type EventNameParameter<
 > = EventName extends keyof EventNameParameter ? EventName : WrongNamePattern<EventName, 'Event'>;
 
 export type EventCallbackParameter<EventName, AppBridgeThemeEvent> = EventName extends keyof AppBridgeThemeEvent
-    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ? // oxlint-disable-next-line typescript/no-explicit-any
       AppBridgeThemeEvent[EventName] extends any[]
         ? (...eventReturn: AppBridgeThemeEvent[EventName]) => void
         : (eventReturn: AppBridgeThemeEvent[EventName]) => void

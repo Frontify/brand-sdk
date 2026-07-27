@@ -42,7 +42,7 @@ export const useBlockAssets = (appBridge: AppBridgeBlock) => {
             componentMounted = false;
             window.emitter.off('AppBridge:BlockAssetsUpdated', updateBlockAssetsFromEvent);
         };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
+        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [appBridge]);
 
     const emitUpdatedBlockAssets = async () => {

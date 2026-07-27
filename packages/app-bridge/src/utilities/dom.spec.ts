@@ -44,7 +44,7 @@ describe('getDatasetByClassName', () => {
         const dataset = { attribute: 'value' };
         const domElement = createElementWithClass(className);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // oxlint-disable-next-line typescript/ban-ts-comment
         // @ts-ignore
         domElement.jQuery12345678 = dataset;
 
@@ -55,7 +55,7 @@ describe('getDatasetByClassName', () => {
         const className = 'className';
         const domElement = createElementWithClassAndAttribute(className, 'data-dom-attribute', 'value');
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // oxlint-disable-next-line typescript/ban-ts-comment
         // @ts-ignore
         domElement.jQuery12345678 = { jQueryAttribute: 'value' };
 

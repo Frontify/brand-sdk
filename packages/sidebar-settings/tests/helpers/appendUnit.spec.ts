@@ -11,7 +11,7 @@ describe('appendUnit', () => {
             getBlock() {
                 return { value: 20 };
             },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
             setBlockValue(): void {},
         };
@@ -27,7 +27,7 @@ describe('appendUnit', () => {
             getBlock() {
                 return { value: 40 };
             },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
             setBlockValue(): void {},
         };
@@ -43,7 +43,7 @@ describe('appendUnit', () => {
             getBlock() {
                 return { value: '20px' };
             },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
             setBlockValue(): void {},
         };
@@ -58,7 +58,7 @@ describe('appendUnit', () => {
                 return { value: undefined };
             },
             setBlockValue: vi.fn(),
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
         };
         appendUnit(bundle, 'my_setting_id');
@@ -71,7 +71,7 @@ describe('appendUnit', () => {
                 return { value: '' };
             },
             setBlockValue: vi.fn(),
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line typescript/no-explicit-any
             getAppBridge(): any {},
         };
         appendUnit(bundle, 'my_setting_id');

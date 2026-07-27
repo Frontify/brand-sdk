@@ -25,11 +25,11 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
         setIsLoading(false);
     }, [appBridge]);
 
-    // eslint-disable-next-line @eslint-react/no-unnecessary-use-memo
+    // oxlint-disable-next-line @eslint-react/no-unnecessary-use-memo
     const debouncedRefetch = useMemo(
         () =>
             debounce(() => {
-                // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                // oxlint-disable-next-line typescript/no-floating-promises
                 refetch();
             }, 100),
         [refetch],
@@ -37,7 +37,7 @@ export const usePortalNavigation = (appBridge: AppBridgeTheme, options: Options 
 
     useEffect(() => {
         if (options.enabled) {
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            // oxlint-disable-next-line typescript/no-floating-promises
             refetch();
         }
     }, [options.enabled, refetch]);

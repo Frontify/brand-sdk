@@ -4,9 +4,9 @@ import { Flyout } from '@frontify/fondue/components';
 import { type ReactNode } from 'react';
 
 import { BaseToolbarButton } from '../BaseToolbarButton';
-import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { useDragPreviewContext } from '../context/DragPreviewContext';
 import { useMultiFlyoutState } from '../hooks/useMultiFlyoutState';
+import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 
 export type FlyoutToolbarButtonProps = {
     content: ReactNode;

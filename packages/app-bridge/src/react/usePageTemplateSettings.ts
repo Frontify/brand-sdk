@@ -76,10 +76,10 @@ export const usePageTemplateSettings = <TPageTemplateSettings = Record<string, u
             }
         }
 
-        // eslint-disable-next-line @eslint-react/set-state-in-effect
+        // oxlint-disable-next-line @eslint-react/set-state-in-effect
         setCustomizedPageTemplateSettingsKeys(overrides);
         setMergedThemeAndPageTemplateSettings(mergedSettings);
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
+        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [themeSettings, pageTemplateSettings]);
 
     const updatePageTemplateSettings = async (pageTemplateSettingsUpdate: Partial<TPageTemplateSettings>) => {
