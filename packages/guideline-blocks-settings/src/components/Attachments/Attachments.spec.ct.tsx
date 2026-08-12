@@ -39,7 +39,7 @@ const Attachments = ({
     );
 };
 
-// eslint-disable-next-line @typescript-eslint/require-await
+// oxlint-disable-next-line typescript/require-await
 const isPre302Stub = async (appBridge: AppBridgeBlock): Promise<boolean> => {
     const context = appBridge.context();
     return context === undefined;

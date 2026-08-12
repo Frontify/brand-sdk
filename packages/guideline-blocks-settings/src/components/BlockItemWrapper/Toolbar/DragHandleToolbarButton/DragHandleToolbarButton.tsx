@@ -5,8 +5,8 @@ import { type ReactNode } from 'react';
 
 import { DEFAULT_DRAGGING_TOOLTIP, DEFAULT_DRAG_TOOLTIP } from '../../constants';
 import { BaseToolbarButton } from '../BaseToolbarButton';
-import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 import { useDragPreviewContext } from '../context/DragPreviewContext';
+import { ToolbarButtonTooltip } from '../ToolbarButtonTooltip';
 
 export type DragHandleToolbarButtonProps = {
     icon?: ReactNode;
@@ -27,7 +27,7 @@ export const DragHandleToolbarButton = ({
 
     return (
         <ToolbarButtonTooltip
-            {...(isDragPreview && activatedByKeyboard && { open: true })}
+            {...(isDragPreview && { open: activatedByKeyboard })}
             content={<div>{isDragPreview ? DEFAULT_DRAGGING_TOOLTIP : (tooltip ?? DEFAULT_DRAG_TOOLTIP)}</div>}
         >
             <BaseToolbarButton

@@ -67,7 +67,7 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
         return () => {
             worker.terminate();
         };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
+        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, []);
 
     const onProgress = (workerEvent: MessageEvent<FileApi>) => {

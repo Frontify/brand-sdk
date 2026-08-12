@@ -147,7 +147,7 @@ describe('VerifyManifest command', () => {
 
     test('should report string thrown from manifest loading', async () => {
         mockReactiveJson.mockImplementation(() => {
-            // eslint-disable-next-line @typescript-eslint/only-throw-error
+            // oxlint-disable-next-line typescript/only-throw-error
             throw 'unreadable manifest';
         });
 
@@ -162,7 +162,7 @@ describe('VerifyManifest command', () => {
 
     test('should report unknown failure when a non-string non-Error is thrown', async () => {
         mockReactiveJson.mockImplementation(() => {
-            // eslint-disable-next-line @typescript-eslint/only-throw-error
+            // oxlint-disable-next-line typescript/only-throw-error
             throw 42;
         });
 

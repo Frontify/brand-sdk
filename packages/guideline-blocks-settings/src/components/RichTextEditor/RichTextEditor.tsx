@@ -5,9 +5,9 @@ import { memo, useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import { useIsInViewport } from '../../hooks/useIsInViewport';
 
-import { SerializedText } from './SerializedText';
 import { floatingButtonActions, floatingButtonSelectors } from './plugins/ButtonPlugin/components';
 import { getResponsiveColumnClasses } from './plugins/ColumnBreakPlugin/helpers';
+import { SerializedText } from './SerializedText';
 import { type RichTextEditorProps } from './types';
 
 const handleHideExternalFloatingModals = (editorId: string) => {
@@ -100,7 +100,7 @@ export const RichTextEditor = (props: RichTextEditorProps) => {
 
     useEffect(() => {
         if (!isEditing) {
-            // eslint-disable-next-line @eslint-react/set-state-in-effect
+            // oxlint-disable-next-line @eslint-react/set-state-in-effect
             setHasEnteredViewport(false);
         }
     }, [isEditing]);

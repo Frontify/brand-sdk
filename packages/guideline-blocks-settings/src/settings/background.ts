@@ -1,11 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Color } from '@frontify/fondue';
+import { type Color } from '@frontify/sidebar-settings';
 
 import { type SettingBlock } from '../';
 
 import { BACKGROUND_COLOR_DEFAULT_VALUE } from './defaultValues';
-
 type BackgroundSettingsType = {
     id?: string;
     defaultValue?: boolean;

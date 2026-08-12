@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { type SwitchBlock } from '..';
+import { type InputBlock, type SwitchBlock, minimumNumericalOrPixelRule, numericalOrPixelRule } from '..';
 
 import { Radius, getBorderRadiusSettings } from '.';
 
@@ -16,6 +16,13 @@ describe('getBorderRadiusSettings', () => {
         expect(borderRadiusSettings).toHaveProperty('defaultValue', false);
         expect(borderRadiusSettings.on?.[0]).toHaveProperty('id', 'radiusValue');
         expect(borderRadiusSettings.on?.[0]).toHaveProperty('type', 'input');
+        expect((borderRadiusSettings.on?.[0] as InputBlock).rules).toHaveLength(2);
+        expect((borderRadiusSettings.on?.[0] as InputBlock).rules?.[0].errorMessage).toBe(
+            numericalOrPixelRule.errorMessage,
+        );
+        expect((borderRadiusSettings.on?.[0] as InputBlock).rules?.[1].errorMessage).toBe(
+            minimumNumericalOrPixelRule(0).errorMessage,
+        );
         expect(borderRadiusSettings.off?.[0]).toHaveProperty('id', 'radiusChoice');
         expect(borderRadiusSettings.off?.[0]).toHaveProperty('type', 'segmentedControls');
         expect(borderRadiusSettings.off?.[0]).toHaveProperty('defaultValue', Radius.None);

@@ -22,7 +22,7 @@ const RichTextContentSelector = '[data-test-id="rich-text-editor"] [contentedita
 const RichTextContainerSelector = '[data-test-id="rich-text-editor-container"]';
 const ButtonSelector = '[data-test-id="button"]';
 const LinkSelectorButtonSelector = '[data-test-id="fondue-dialog-trigger"]';
-const LinkSelectorFooterButton = '[data-test-id="fondue-button"]';
+const LinkSelectorChooseButton = '[data-test-id="fondue-dialog-footer"] [data-test-id="fondue-button"]';
 const CheckboxSelector = '[data-test-id="fondue-checkbox"]';
 const ToolbarButtonSelector = '[data-testid="ToolbarButton"]';
 const InternalDocumentLinkSelector = '[data-test-id="internal-link-selector-document-link"]';
@@ -99,7 +99,7 @@ describe('RichTextEditor', () => {
         cy.get(ToolbarButtonSelector).click();
         cy.get(LinkSelectorButtonSelector).first().click();
         cy.get(InternalDocumentLinkSelector).click();
-        cy.get(LinkSelectorFooterButton).eq(1).click();
+        cy.get(LinkSelectorChooseButton).last().click();
         cy.get(FloatingLinkModalSelector).find(ButtonSelector).last().click();
         const linkTag = cy.get(RichTextSelector).find('a[href="/r/document"]');
         linkTag.should('exist');
@@ -121,7 +121,7 @@ describe('RichTextEditor', () => {
         cy.get(ToolbarButtonSelector).click();
         cy.get(LinkSelectorButtonSelector).first().click();
         cy.get(InternalDocumentLinkSelector).click();
-        cy.get(LinkSelectorFooterButton).eq(1).click();
+        cy.get(LinkSelectorChooseButton).last().click();
         cy.get(CheckboxSelector).click();
         cy.get(FloatingLinkModalSelector).find(ButtonSelector).last().click();
         const linkTag = cy.get(RichTextSelector).find('a[href="/r/document"]');
@@ -239,7 +239,7 @@ describe('RichTextEditor', () => {
         cy.get(ToolbarButtonSelector).click();
         cy.get(LinkSelectorButtonSelector).first().click();
         cy.get(InternalDocumentLinkSelector).click();
-        cy.get(LinkSelectorFooterButton).eq(1).click();
+        cy.get(LinkSelectorChooseButton).last().click();
         cy.get(FloatingButtonModalSelector).find(ButtonSelector).last().click();
         cy.get(RichTextSelector).find('a[href="/r/document"]').should('exist');
     });

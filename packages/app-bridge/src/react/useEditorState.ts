@@ -23,7 +23,7 @@ export const useEditorState = (appBridge: AppBridgeBlock): boolean => {
         return () => {
             mutationObserver.disconnect();
         };
-        // eslint-disable-next-line @eslint-react/exhaustive-deps
+        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, []);
 
     return editorState;

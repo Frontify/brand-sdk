@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { TinyColor } from '@ctrl/tinycolor';
-import { type Color } from '@frontify/fondue';
+import { type Color } from '@frontify/sidebar-settings';
 
 import { toShortRgba } from './toShortRgba';
 
