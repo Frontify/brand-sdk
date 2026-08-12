@@ -52,8 +52,6 @@
         "@dnd-kit/sortable": "^10.0.0",
         "@frontify/fondue": "^13.7.0",
         "@frontify/sidebar-settings": "workspace:^",
-        "@react-aria/focus": "^3.21.5",
-        "@react-stately/overlays": "^3.6.23",
         "@tailwindcss/container-queries": "^0.1.1"
     },
     "devDependencies": {
