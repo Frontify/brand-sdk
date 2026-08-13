@@ -116,25 +116,6 @@ describe('RichTextEditor', () => {
         });
     });
 
-    // TODO(vitest-migration): the link/button insertion tests could not be migrated. They all drive
-    // the Plate `contenteditable` (select all -> floating toolbar -> link modal), and under happy-dom
-    // neither half works: typing never reaches the document because `beforeinput` /
-    // `InputEvent.getTargetRanges()` are unimplemented, and the floating toolbar never mounts even
-    // with a valid DOM selection because it is positioned from real layout rects. On top of that,
-    // `react-hotkeys-hook` (used inside the fondue RTE) throws on every keydown that reaches
-    // `document`. Dropped:
-    //   - should be able to select internal link
-    //   - should be able to select internal link with target blank
-    //   - should be able to select internal button link
-    //   - should create a link with a link typed in the RTE
-    //   - should not create a link with a : after a word
-    //   - should prepend the URL with https:// if not exists
-    //   - should allow URLs that start with /document/ (present twice in the Cypress spec)
-    //   - should not add https:// to the URL for mailto: links
-    // The URL normalisation rules the last three covered are already unit-tested in
-    // `src/helpers/addHttps.spec.ts` and `src/components/Link/utils/relativeUrlRegex.spec.ts`; what
-    // is left uncovered is the plugin-to-LinkSelector wiring and the typing autoformat.
-
     it('should render responsive columns in edit mode', async () => {
         render(
             <RichTextEditor
