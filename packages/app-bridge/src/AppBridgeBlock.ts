@@ -40,10 +40,12 @@ export type BlockCommand = CommandNameValidator<
     Pick<
         CommandRegistry,
         | 'closeAssetChooser'
+        | 'closeLinkChooser'
         | 'closeTemplateChooser'
         | 'downloadAsset'
         | 'openAssetChooser'
         | 'openAssetViewer'
+        | 'openLinkChooser'
         | 'openTemplateChooser'
         | 'openNewPublication'
         | 'openPlatformAppDirect'
@@ -67,7 +69,7 @@ export type BlockContext = {
 };
 
 export type BlockEvent = EventNameValidator<
-    Pick<EventRegistry, 'assetsChosen' | 'templateChosen'> &
+    Pick<EventRegistry, 'assetsChosen' | 'linkChosen' | 'templateChosen'> &
         StateAsEventName<BlockState & { '*': BlockState }> &
         ContextAsEventName<BlockContext & { '*': BlockContext }>
 >;

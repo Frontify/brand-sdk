@@ -11,6 +11,7 @@ export * from './useBlockTemplates';
 export * from './useEditorState';
 export * from './useFileInput';
 export * from './useFileUpload';
+export * from './useLinkChooser';
 export * from './usePrivacySettings';
 export * from './useReadyForPrint';
 export * from './useTemplateChooser';

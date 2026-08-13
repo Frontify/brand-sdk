@@ -4,6 +4,7 @@ export * from './AssetChooser';
 export * from './AssetViewer';
 export * from './CommandRegistry';
 export * from './DownloadAsset';
+export * from './LinkChooser';
 export * from './NewPublication';
 export * from './PlatformApp';
 export * from './SearchDialog';
