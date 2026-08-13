@@ -5,8 +5,14 @@ import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
 import { type PreRenderedAsset } from 'rollup';
 import dts from 'vite-plugin-dts';
-import { externalizeDeps } from 'vite-plugin-externalize-deps';
 import { defineConfig } from 'vitest/config';
+
+import { dependencies, peerDependencies } from './package.json';
+
+// Externalize every declared dependency and any of its subpaths (e.g. '@frontify/fondue/rte').
+const external = [...Object.keys(dependencies), ...Object.keys(peerDependencies)].map(
+    (dependency) => new RegExp(`^${dependency.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/.*)?$`),
+);
 
 export const globals = {
     react: 'React',
@@ -22,7 +28,7 @@ const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
 };
 
 export default defineConfig({
-    plugins: [dts({ insertTypesEntry: true, rollupTypes: true }), react(), externalizeDeps()],
+    plugins: [dts({ insertTypesEntry: true, bundleTypes: true }), react()],
     resolve: {
         mainFields: ['module', 'main'],
     },
@@ -42,7 +48,11 @@ export default defineConfig({
         },
         sourcemap: true,
         minify: true,
+        // Vite 8 defaults CSS minification to Lightning CSS, which re-adds vendor prefixes that are
+        // already present in the bundled Fondue styles and grows dist/styles.css by ~20%.
+        cssMinify: 'esbuild',
         rollupOptions: {
+            external,
             output: [
                 {
                     name: 'GuidelineBlocksSettings',
