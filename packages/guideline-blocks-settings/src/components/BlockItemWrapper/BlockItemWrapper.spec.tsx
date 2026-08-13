@@ -106,11 +106,6 @@ describe('Block Item Wrapper', () => {
         expect(await screen.findAllByTestId(MENU_ITEM_TEST_ID)).toHaveLength(3);
     });
 
-    // TODO(vitest-migration): dropped `should render the outline if a toolbar button is focused` and
-    // `should render the toolbar if a button is focused`. Both outcomes are produced purely by the
-    // `focus-within:` / `group-focus:` Tailwind variants, and happy-dom has no CSS engine, so the
-    // computed `outline-style` / `opacity` the Cypress specs asserted on cannot be observed here.
-
     it('should render the outline and the toolbar if it should be shown', () => {
         render(
             <BlockItemWrapper
