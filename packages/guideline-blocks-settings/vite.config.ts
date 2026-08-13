@@ -7,10 +7,10 @@ import { type PreRenderedAsset } from 'rollup';
 import dts from 'vite-plugin-dts';
 import { defineConfig } from 'vitest/config';
 
-import { dependencies, peerDependencies } from './package.json';
+import packageJson from './package.json' with { type: 'json' };
 
 // Externalize every declared dependency and any of its subpaths (e.g. '@frontify/fondue/rte').
-const external = [...Object.keys(dependencies), ...Object.keys(peerDependencies)].map(
+const external = [...Object.keys(packageJson.dependencies), ...Object.keys(packageJson.peerDependencies)].map(
     (dependency) => new RegExp(`^${dependency.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/.*)?$`),
 );
 
@@ -43,7 +43,7 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
+            entry: resolve(import.meta.dirname, 'src/index.ts'),
             fileName: (format: string) => `[name].${format}.js`,
         },
         sourcemap: true,
