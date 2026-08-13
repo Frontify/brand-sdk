@@ -69,8 +69,6 @@
         "@vitejs/plugin-react": "^5.2.0",
         "@vitest/ui": "^4.1.5",
         "autoprefixer": "^10.4.27",
-        "cypress": "^15.13.0",
-        "cypress-real-events": "^1.15.0",
         "eslint-plugin-tailwindcss": "^3.18.3",
         "happy-dom": "^20.9.0",
         "mitt": "^3.0.1",
