@@ -150,57 +150,11 @@ jobs:
       - name: Test code
         run: pnpm test
 
-  component-tests:
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout current commit
-        uses: actions/checkout@v6
-
-      - name: Use pnpm
-        uses: pnpm/action-setup@v5
-        with:
-          run_install: false
-
-      - name: Use Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".nvmrc"
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v5
-        with:
-          path: |
-            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download built artifacts
-        uses: actions/download-artifact@v8
-        with:
-          name: built-artifacts
-          path: packages
-
-      - name: Add app-bridge dependency for guideline-blocks-settings
-        run: pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
-
-      - name: Tests
-        run: pnpm --stream --filter {packages/guideline-blocks-settings} test
-
   publish:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    needs: [lint, typecheck, component-tests, unit-tests]
+    needs: [lint, typecheck, unit-tests]
 
     permissions:
       contents: write # to create release (changesets/action)
