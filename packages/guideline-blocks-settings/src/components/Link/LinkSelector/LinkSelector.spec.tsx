@@ -73,12 +73,12 @@ const openModal = async () => {
 
 const expandFirstDocument = async () => {
     const documentLinks = await screen.findAllByTestId(DOCUMENT_LINK_TEST_ID);
-    await userEvent.click(within(documentLinks[0]).getByTestId(TREE_ITEM_TOGGLE_TEST_ID));
+    await userEvent.click(await within(documentLinks[0]).findByTestId(TREE_ITEM_TOGGLE_TEST_ID));
 };
 
 const expandFirstPage = async () => {
     const pageLinks = await screen.findAllByTestId(PAGE_LINK_TEST_ID);
-    await userEvent.click(within(pageLinks[0]).getByRole('button'));
+    await userEvent.click(await within(pageLinks[0]).findByRole('button'));
 };
 
 describe('Link Selector', () => {

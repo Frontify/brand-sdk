@@ -116,16 +116,24 @@ describe('Attachments', () => {
     it('should render a loading circle for an attachment item while it is being replaced', async () => {
         const appBridge = getAppBridgeBlockStub({ editorState: true });
 
-        // `useAssetChooser` opens the chooser by dispatching an action and awaiting an `assetsChosen`
-        // event, so the chosen asset has to be delivered through `subscribe` rather than a stubbed
-        // `openAssetChooser` method.
+        const chosenAssets = [AssetDummy.with(4)];
         let onAssetsChosen: ((event: { assets: Asset[] }) => void) | undefined;
-        appBridge.subscribe = vi.fn((eventName: string, handler: (event: { assets: Asset[] }) => void) => {
+
+        (appBridge as unknown as { openAssetChooser: (callback: (assets: Asset[]) => void) => void }).openAssetChooser =
+            vi.fn((callback: (assets: Asset[]) => void) => {
+                callback(chosenAssets);
+            });
+
+        (
+            appBridge as unknown as {
+                subscribe: (eventName: string, handler: (event: { assets: Asset[] }) => void) => () => void;
+            }
+        ).subscribe = vi.fn((eventName: string, handler: (event: { assets: Asset[] }) => void) => {
             if (eventName === 'assetsChosen') {
                 onAssetsChosen = handler;
             }
             return () => {};
-        }) as unknown as typeof appBridge.subscribe;
+        });
 
         let resolveReplace: (() => void) | undefined;
         const onReplaceWithBrowse = vi.fn(
@@ -148,7 +156,7 @@ describe('Attachments', () => {
         await userEvent.click(await screen.findByText('Replace with asset'));
 
         await act(async () => {
-            onAssetsChosen?.({ assets: [AssetDummy.with(4)] });
+            onAssetsChosen?.({ assets: chosenAssets });
             await Promise.resolve();
         });
 
@@ -166,10 +174,6 @@ describe('Attachments', () => {
     });
 
     it('should reorder the items using only keyboard events', async () => {
-        // happy-dom has no layout engine, so every rect is empty and dnd-kit cannot resolve a
-        // collision. Give each attachment item a synthetic rect stacked vertically, and the element
-        // wrapping them one that spans the whole list, so `restrictToParentElement` does not clamp
-        // the movement away.
         const ITEM_HEIGHT = 50;
         const ITEM_WIDTH = 300;
         const rectOf = (top: number, height: number) =>
