@@ -22,11 +22,4 @@ declare global {
     }
 }
 
-// oxlint-disable-next-line typescript/no-unused-vars
-declare namespace Cypress {
-    interface AUTWindow {
-        emitter: Emitter<EmitterEvents>;
-    }
-}
-
 export {};

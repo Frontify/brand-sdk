@@ -179,9 +179,8 @@ jobs:
         with:
           path: |
             ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-            ~/.cache/Cypress
-          key: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: pnpm-with-cypress-${{ matrix.app-bridge-version }}-${{ runner.os }}
+          key: pnpm-${{ matrix.app-bridge-version }}-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ matrix.app-bridge-version }}-${{ runner.os }}
 
       - name: Install dependencies
         if: needs.changes.outputs.should_run == 'true'
@@ -199,6 +198,6 @@ jobs:
         if: needs.changes.outputs.should_run == 'true'
         run: pnpm add @frontify/app-bridge@${{ matrix.app-bridge-version }} --filter {packages/guideline-blocks-settings}
 
-      - name: Component Tests
+      - name: Tests
         if: needs.changes.outputs.should_run == 'true'
-        run: pnpm test:components
+        run: pnpm --stream --filter {packages/guideline-blocks-settings} test
