@@ -206,6 +206,8 @@ export const getAppBridgeBlockStub = ({
                 (callback as EventCallbackParameter<'templateChosen', BlockEvent>)({
                     template: TemplateLegacyDummy.with(234),
                 });
+            } else if (eventName === 'linkChosen') {
+                (callback as EventCallbackParameter<'linkChosen', BlockEvent>)({ url: 'https://example.com' });
             }
             return unsubscribe;
         }),
