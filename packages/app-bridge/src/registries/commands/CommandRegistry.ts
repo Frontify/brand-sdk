@@ -28,7 +28,7 @@ export type CommandRegistry = CommandNameValidator<{
     openAssetViewer: OpenAssetViewerPayload;
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
-    openLinkChooser: OpenLinkChooserPayload;
+    openLinkChooser?: OpenLinkChooserPayload;
     closeLinkChooser: CloseLinkChooserPayload;
     downloadAsset: DownloadAsset;
     openNewPublication: OpenNewPublicationPayload;

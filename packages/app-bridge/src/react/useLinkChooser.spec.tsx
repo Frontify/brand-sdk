@@ -25,7 +25,7 @@ const LinkChooserDummy = ({
         <>
             <button
                 data-test-id={OPEN_LINK_CHOOSER_BUTTON_ID}
-                onClick={() => openLinkChooser(onLinkChosen ?? (() => null), { hubId: 123 })}
+                onClick={() => openLinkChooser(onLinkChosen ?? (() => null), {})}
                 type="button"
             >
                 Open Link Chooser

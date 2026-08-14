@@ -9,7 +9,7 @@ Adds a `linkChosen` event and a `useLinkChooser` hook.
 ```ts
 import { openLinkChooser, closeLinkChooser } from "@frontify/app-bridge";
 
-await appBridge.dispatch(openLinkChooser({ hubId: 123, selectedItem: currentUrl }));
+await appBridge.dispatch(openLinkChooser({ selectedUrl: currentUrl }));
 // ...
 await appBridge.dispatch(closeLinkChooser());
 ```

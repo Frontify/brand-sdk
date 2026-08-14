@@ -5,7 +5,7 @@ import { type DispatchHandlerParameter } from '../../AppBridge';
 import { type CommandRegistry } from './CommandRegistry';
 
 export const openLinkChooser = (
-    options: CommandRegistry['openLinkChooser'],
+    options?: CommandRegistry['openLinkChooser'],
 ): DispatchHandlerParameter<'openLinkChooser', CommandRegistry> => ({
     name: 'openLinkChooser',
     payload: options,
