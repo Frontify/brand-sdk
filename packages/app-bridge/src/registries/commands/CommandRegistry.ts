@@ -5,7 +5,9 @@ import {
     type AssetViewerOptions,
     type Asset,
     type AssetChooserOptions,
+    type LinkChooserOptions,
     type OpenNewPublicationPayload,
+    type TrackPayload,
 } from '../../types';
 
 type OpenAssetChooserPayload = AssetChooserOptions;
@@ -13,11 +15,12 @@ type CloseAssetChooserPayload = void;
 type OpenAssetViewerPayload = AssetViewerOptions;
 type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
-type OpenNavigationManager = void;
+type OpenLinkChooserPayload = LinkChooserOptions;
+type CloseLinkChooserPayload = void;
 type DownloadAsset = Asset;
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;
-type NavigateToDocumentSection = number | string;
+type OpenPlatformAppDirect = { marketplaceAppId: string };
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -25,10 +28,12 @@ export type CommandRegistry = CommandNameValidator<{
     openAssetViewer: OpenAssetViewerPayload;
     openTemplateChooser: OpenTemplateChooser;
     closeTemplateChooser: CloseTemplateChooser;
+    openLinkChooser?: OpenLinkChooserPayload;
+    closeLinkChooser: CloseLinkChooserPayload;
     downloadAsset: DownloadAsset;
-    openNavigationManager: OpenNavigationManager;
     openNewPublication: OpenNewPublicationPayload;
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
-    navigateToDocumentSection: NavigateToDocumentSection;
+    openPlatformAppDirect: OpenPlatformAppDirect;
+    trackEvent: TrackPayload;
 }>;

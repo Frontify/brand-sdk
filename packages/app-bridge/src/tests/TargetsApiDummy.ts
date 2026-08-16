@@ -2,7 +2,7 @@
 
 import { type DocumentPageTargetsApi, type DocumentTargetsApi, type SingleTargetApi } from '../types';
 
-export class SingleTargetApiDummy {
+class SingleTargetApiDummy {
     static target(value: number): SingleTargetApi {
         return {
             checked: false,
@@ -57,16 +57,6 @@ export class DocumentTargetsApiDummy {
                 ],
             },
             title: 'Test document',
-        };
-    }
-}
-
-export class UpdateTargetsApiDummy {
-    static with(targetIds: number[]) {
-        return {
-            success: true,
-            data: true,
-            targets: targetIds,
         };
     }
 }
