@@ -7,7 +7,7 @@ import { LinkInput } from './LinkInput';
 const LINK_INPUT_ID = '[data-test-id="link-input"]';
 const TEXT_INPUT_ID = '[data-test-id="text-input"] input';
 const INPUT_LABEL_CONTAINER_ID = '[data-test-id="input-label-container"]';
-const BUTTON_ID = '[data-test-id="fondue-dialog-trigger"]';
+const BUTTON_ID = '[data-test-id="internal-link-chooser-button"]';
 const CHECKBOX_ID = '[data-test-id="fondue-checkbox"]';
 
 describe('Link Input', () => {
@@ -85,6 +85,14 @@ describe('Link Input', () => {
         cy.mount(<LinkInputWithStubs />);
 
         cy.get(BUTTON_ID).should('exist');
+    });
+
+    it('opens the link chooser and reports the chosen url', () => {
+        const [LinkInputWithStubs] = withAppBridgeBlockStubs(LinkInput, {});
+        cy.mount(<LinkInputWithStubs onUrlChange={cy.stub().as('onUrlChange')} />);
+
+        cy.get(BUTTON_ID).click();
+        cy.get('@onUrlChange').should('be.calledWith', 'https://example.com');
     });
 
     it('hides internal link button', () => {
