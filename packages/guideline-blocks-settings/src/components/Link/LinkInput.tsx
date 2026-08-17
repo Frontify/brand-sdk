@@ -1,10 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AppBridgeBlock } from '@frontify/app-bridge';
+import { type AppBridgeBlock, useLinkChooser } from '@frontify/app-bridge';
 import { FormControl } from '@frontify/fondue';
-import { TextInput, Checkbox, Label } from '@frontify/fondue/components';
+import { TextInput, Checkbox, Label, Button } from '@frontify/fondue/components';
+import { IconLink } from '@frontify/fondue/icons';
 
-import { LinkSelector } from './LinkSelector';
 import { isValidUrlOrEmpty as internalIsValidUrlOrEmpty } from './utils';
 
 type LinkInputProps = {
@@ -37,6 +37,20 @@ export const LinkInput = ({
     hideInternalLinkButton,
 }: LinkInputProps) => {
     const isUrlValid = isValidUrlOrEmpty ? isValidUrlOrEmpty(url) : internalIsValidUrlOrEmpty(url);
+    const { openLinkChooser, closeLinkChooser } = useLinkChooser(appBridge);
+
+    const onOpenLinkChooser = () => {
+        // oxlint-disable-next-line typescript/no-floating-promises
+        openLinkChooser(
+            (chosenUrl) => {
+                onUrlChange?.(chosenUrl);
+                // oxlint-disable-next-line typescript/no-floating-promises
+                closeLinkChooser();
+            },
+            { selectedUrl: url },
+        );
+    };
+
     return (
         <div data-test-id="link-input">
             <FormControl
@@ -58,19 +72,22 @@ export const LinkInput = ({
             {!isUrlValid && <div className="tw-text-error tw-mt-1 tw-text-small">Please enter a valid URL.</div>}
 
             {!hideInternalLinkButton && (
-                <div className="tw-mt-3">
-                    <LinkSelector
-                        url={url}
-                        onUrlChange={onUrlChange}
-                        buttonSize={buttonSize ?? 'medium'}
-                        getAllDocuments={() => appBridge.getAllDocuments()}
-                        getDocumentPagesByDocumentId={(documentId) =>
-                            appBridge.getDocumentPagesByDocumentId(documentId)
-                        }
-                        getDocumentSectionsByDocumentPageId={(documentPageId) =>
-                            appBridge.getDocumentSectionsByDocumentPageId(documentPageId)
-                        }
-                    />
+                // oxlint-disable-next-line jsx-a11y-x/no-static-element-interactions
+                <div
+                    className="tw-mt-3"
+                    onPointerDown={(event) => {
+                        event.preventDefault();
+                    }}
+                >
+                    <Button
+                        data-test-id="internal-link-chooser-button"
+                        size={buttonSize ?? 'medium'}
+                        emphasis="default"
+                        onPress={onOpenLinkChooser}
+                    >
+                        <IconLink size="20" />
+                        Internal link
+                    </Button>
                 </div>
             )}
 

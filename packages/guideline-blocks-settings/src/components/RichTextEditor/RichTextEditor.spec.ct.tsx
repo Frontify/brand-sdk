@@ -21,11 +21,9 @@ const RichTextSelector = '[data-test-id="rich-text-editor"]';
 const RichTextContentSelector = '[data-test-id="rich-text-editor"] [contenteditable]';
 const RichTextContainerSelector = '[data-test-id="rich-text-editor-container"]';
 const ButtonSelector = '[data-test-id="button"]';
-const LinkSelectorButtonSelector = '[data-test-id="fondue-dialog-trigger"]';
-const LinkSelectorChooseButton = '[data-test-id="fondue-dialog-footer"] [data-test-id="fondue-button"]';
+const InternalLinkChooserButtonSelector = '[data-test-id="internal-link-chooser-button"]';
 const CheckboxSelector = '[data-test-id="fondue-checkbox"]';
 const ToolbarButtonSelector = '[data-testid="ToolbarButton"]';
-const InternalDocumentLinkSelector = '[data-test-id="internal-link-selector-document-link"]';
 const FloatingLinkModalSelector = '[data-test-id="floating-link-insert"]';
 const FloatingButtonModalSelector = '[data-test-id="floating-button-insert"]';
 const UrlInputSelector = 'input[id="url"]';
@@ -85,8 +83,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should be able to select internal link', () => {
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
-
         cy.mount(
             <RichTextEditor
                 isEditing
@@ -97,18 +93,14 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
         cy.get(ToolbarButtonSelector).click();
-        cy.get(LinkSelectorButtonSelector).first().click();
-        cy.get(InternalDocumentLinkSelector).click();
-        cy.get(LinkSelectorChooseButton).last().click();
+        cy.get(InternalLinkChooserButtonSelector).first().click();
         cy.get(FloatingLinkModalSelector).find(ButtonSelector).last().click();
-        const linkTag = cy.get(RichTextSelector).find('a[href="/r/document"]');
+        const linkTag = cy.get(RichTextSelector).find('a[href="https://example.com"]');
         linkTag.should('exist');
         linkTag.should('have.attr', 'target', '_self');
     });
 
     it('should be able to select internal link with target blank', () => {
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
-
         cy.mount(
             <RichTextEditor
                 isEditing
@@ -119,12 +111,10 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
         cy.get(ToolbarButtonSelector).click();
-        cy.get(LinkSelectorButtonSelector).first().click();
-        cy.get(InternalDocumentLinkSelector).click();
-        cy.get(LinkSelectorChooseButton).last().click();
+        cy.get(InternalLinkChooserButtonSelector).first().click();
         cy.get(CheckboxSelector).click();
         cy.get(FloatingLinkModalSelector).find(ButtonSelector).last().click();
-        const linkTag = cy.get(RichTextSelector).find('a[href="/r/document"]');
+        const linkTag = cy.get(RichTextSelector).find('a[href="https://example.com"]');
         linkTag.should('exist');
         linkTag.should('have.attr', 'target', '_blank');
     });
@@ -225,8 +215,6 @@ describe('RichTextEditor', () => {
     });
 
     it('should be able to select internal button link', () => {
-        (appBridge.getAllDocuments as SinonStub) = cy.stub().returns(Promise.resolve(apiDocuments));
-
         cy.mount(
             <RichTextEditor
                 isEditing
@@ -237,11 +225,9 @@ describe('RichTextEditor', () => {
         cy.get(RichTextSelector).click();
         cy.get(RichTextSelector).type('{selectall}');
         cy.get(ToolbarButtonSelector).click();
-        cy.get(LinkSelectorButtonSelector).first().click();
-        cy.get(InternalDocumentLinkSelector).click();
-        cy.get(LinkSelectorChooseButton).last().click();
+        cy.get(InternalLinkChooserButtonSelector).first().click();
         cy.get(FloatingButtonModalSelector).find(ButtonSelector).last().click();
-        cy.get(RichTextSelector).find('a[href="/r/document"]').should('exist');
+        cy.get(RichTextSelector).find('a[href="https://example.com"]').should('exist');
     });
 
     it('should render responsive columns in edit mode', () => {
