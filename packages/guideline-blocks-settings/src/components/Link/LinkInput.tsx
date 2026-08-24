@@ -39,13 +39,11 @@ export const LinkInput = ({
     const isUrlValid = isValidUrlOrEmpty ? isValidUrlOrEmpty(url) : internalIsValidUrlOrEmpty(url);
     const { openLinkChooser, closeLinkChooser } = useLinkChooser(appBridge);
 
-    const onOpenLinkChooser = () => {
-        // oxlint-disable-next-line typescript/no-floating-promises
-        openLinkChooser(
-            (chosenUrl) => {
+    const onOpenLinkChooser = async () => {
+        await openLinkChooser(
+            (chosenUrl: string) => {
                 onUrlChange?.(chosenUrl);
-                // oxlint-disable-next-line typescript/no-floating-promises
-                closeLinkChooser();
+                closeLinkChooser().catch(console.error);
             },
             { selectedUrl: url },
         );
