@@ -15,7 +15,7 @@
         "skipLibCheck": true,
         "strict": true,
         "target": "ES2021",
-        "types": ["@testing-library/jest-dom", "cypress", "cypress-real-events", "node"],
+        "types": ["@testing-library/jest-dom", "node"],
         "useDefineForClassFields": true
     },
     "include": ["src", "setupTests.ts"],
