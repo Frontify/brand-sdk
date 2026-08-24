@@ -390,6 +390,9 @@ importers:
       '@dnd-kit/sortable':
         specifier: ^10.0.0
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      '@frontify/app-bridge':
+        specifier: ^3.0.0 || ^4.0.0-alpha.0
+        version: 3.12.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sinon@21.0.3)
       '@frontify/fondue':
         specifier: ^13.7.5
         version: 13.7.5(ce27a694f1c4d4f20b9334137391a29c)
@@ -403,9 +406,6 @@ importers:
       '@babel/core':
         specifier: ^7.29.0
         version: 7.29.7
-      '@frontify/app-bridge':
-        specifier: workspace:*
-        version: link:../app-bridge
       '@frontify/oxfmt-config':
         specifier: ^0.0.2
         version: 0.0.2(oxfmt@0.63.0)
@@ -2012,6 +2012,14 @@ packages:
 
   '@formatjs/intl-localematcher@0.5.4':
     resolution: {integrity: sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==}
+
+  '@frontify/app-bridge@3.12.10':
+    resolution: {integrity: sha512-fDDSc3VHHcCZZIk5WFXvIQsPBdEQikdxxkA+FxlwZfiAhkgy3T369i4FiZkuwaTPJ6MVVX3A+jokzJLBgrM/uw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
+      sinon: ^15 || ^16 || ^17 || ^18 || ^19 || ^20 || ^21
 
   '@frontify/fondue-charts@8.0.1':
     resolution: {integrity: sha512-Vp565EZISfQTgbUfWDJyZp1D89lzXRvymFYF/slqqVQBZzsg+dC//Lv60Q2p8oLI0crxI0lp288uzZycuH28nw==}
@@ -10991,6 +10999,16 @@ snapshots:
   '@formatjs/intl-localematcher@0.5.4':
     dependencies:
       tslib: 2.8.1
+
+  '@frontify/app-bridge@3.12.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sinon@21.0.3)':
+    dependencies:
+      immer: 10.1.3
+      lodash-es: 4.18.1
+      mitt: 3.0.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      sinon: 21.0.3
+      type-fest: 5.5.0
 
   '@frontify/fondue-charts@8.0.1(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
