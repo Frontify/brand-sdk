@@ -16,6 +16,7 @@ export const AttachmentsButtonTrigger = forwardRef<HTMLButtonElement, Attachment
             data-test-id="attachments-button-trigger"
             className="tw-body-medium"
             {...props}
+            aria-haspopup="menu"
         >
             <IconPaperclip size="16" />
             {children}

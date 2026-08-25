@@ -13,6 +13,7 @@ export const AttachmentsToolbarButtonTrigger = forwardRef<HTMLButtonElement, Att
             data-test-id="attachments-toolbar-button-trigger"
             ref={ref}
             {...props}
+            aria-haspopup="menu"
         >
             <IconPaperclip size="16" />
             {children}

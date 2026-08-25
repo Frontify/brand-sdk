@@ -1,12 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock, type Asset } from '@frontify/app-bridge';
-import { type ReactNode } from 'react';
+import { type AriaAttributes, type ReactNode } from 'react';
 
 export type AttachmentsTriggerProps = {
     children: ReactNode;
     isFlyoutOpen: boolean;
-};
+} & Pick<AriaAttributes, 'aria-label'>;
 
 export type AttachmentsProps = {
     items?: Asset[];
