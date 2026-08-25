@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.3
+
+### Patch Changes
+
+- [#1647](https://github.com/Frontify/brand-sdk/pull/1647) [`c16110d`](https://github.com/Frontify/brand-sdk/commit/c16110d0914dc0196c80d3cdf3b3662a0fdf4d11) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Attachments): improve the accessibility of the flyout trigger
+
+  The trigger now has an accessible name that describes the action and the number of attachments (e.g. `Open attachments, 1 attachment`) instead of only exposing the bare count, and it announces `aria-haspopup="menu"` instead of `dialog`.
+
 ## 3.0.2
 
 ### Patch Changes
