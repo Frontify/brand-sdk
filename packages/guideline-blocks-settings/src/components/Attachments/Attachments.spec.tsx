@@ -71,6 +71,32 @@ describe('Attachments', () => {
         expect(screen.queryByTestId(FLYOUT_TRIGGER_TEST_ID)).not.toBeInTheDocument();
     });
 
+    it('should announce the action and the number of attachments on the trigger', () => {
+        renderAttachments({ items: [AssetDummy.with(1)] });
+
+        expect(screen.getAllByTestId(FLYOUT_TRIGGER_TEST_ID)[0]).toHaveAccessibleName('Open attachments, 1 attachment');
+    });
+
+    it('should pluralize the number of attachments on the trigger', () => {
+        renderAttachments({ items: [AssetDummy.with(1), AssetDummy.with(2)] });
+
+        expect(screen.getAllByTestId(FLYOUT_TRIGGER_TEST_ID)[0]).toHaveAccessibleName(
+            'Open attachments, 2 attachments',
+        );
+    });
+
+    it('should announce the add action on the trigger if there are no attachments', () => {
+        renderAttachments({ appBridge: getAppBridgeBlockStub({ editorState: true }), items: [] });
+
+        expect(screen.getAllByTestId(FLYOUT_TRIGGER_TEST_ID)[0]).toHaveAccessibleName('Add attachments');
+    });
+
+    it('should mark the trigger as having a menu popup', () => {
+        renderAttachments({ items: [AssetDummy.with(1)] });
+
+        expect(screen.getAllByTestId(FLYOUT_TRIGGER_TEST_ID)[0]).toHaveAttribute('aria-haspopup', 'menu');
+    });
+
     it('should render the asset input if it is in edit mode', async () => {
         renderAttachments({ appBridge: getAppBridgeBlockStub({ editorState: true }), items: [AssetDummy.with(1)] });
 

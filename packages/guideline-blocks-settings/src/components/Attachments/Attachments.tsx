@@ -49,6 +49,12 @@ export const Attachments = ({
 
     const draggedItem = internalItems?.find((item) => item.id === draggedAssetId);
 
+    const attachmentCount = items.length;
+    const triggerLabel =
+        attachmentCount > 0
+            ? `Open attachments, ${attachmentCount} ${attachmentCount === 1 ? 'attachment' : 'attachments'}`
+            : 'Add attachments';
+
     const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload({
         onUploadProgress: () => !isUploadLoading && setIsUploadLoading(true),
     });
@@ -157,8 +163,8 @@ export const Attachments = ({
                 <Tooltip.Root enterDelay={500}>
                     <Tooltip.Trigger asChild>
                         <Flyout.Trigger asChild data-test-id="attachments-button-trigger">
-                            <TriggerComponent isFlyoutOpen={isFlyoutOpen}>
-                                <div>{items.length > 0 ? items.length : 'Add'}</div>
+                            <TriggerComponent isFlyoutOpen={isFlyoutOpen} aria-label={triggerLabel}>
+                                <div aria-hidden="true">{attachmentCount > 0 ? attachmentCount : 'Add'}</div>
                             </TriggerComponent>
                         </Flyout.Trigger>
                     </Tooltip.Trigger>
