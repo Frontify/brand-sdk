@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { useCallback, useEffect, useRef } from 'react';
+
 import { type EventUnsubscribeFunction } from '../AppBridge';
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { closeLinkChooser, openLinkChooser } from '../registries/commands/LinkChooser';
@@ -10,21 +12,35 @@ type UseLinkChooserType = {
     closeLinkChooser: () => Promise<void>;
 };
 
-// oxlint-disable-next-line @eslint-react/no-unnecessary-use-prefix
 export const useLinkChooser = (appBridge: AppBridgeBlock): UseLinkChooserType => {
-    let unsubscribe: EventUnsubscribeFunction;
+    const unsubscribeRef = useRef<EventUnsubscribeFunction>();
 
-    return {
-        openLinkChooser: async (callback, options) => {
-            unsubscribe?.();
-            unsubscribe = appBridge.subscribe('linkChosen', (chosenLink) => {
+    useEffect(() => {
+        return () => {
+            unsubscribeRef.current?.();
+            unsubscribeRef.current = undefined;
+        };
+    }, []);
+
+    const handleOpenLinkChooser = useCallback(
+        async (callback: (url: string) => void, options: LinkChooserOptions) => {
+            unsubscribeRef.current?.();
+            unsubscribeRef.current = appBridge.subscribe('linkChosen', (chosenLink) => {
                 callback(chosenLink.url);
             });
             await appBridge.dispatch(openLinkChooser(options));
         },
-        closeLinkChooser: async () => {
-            unsubscribe?.();
-            await appBridge.dispatch(closeLinkChooser());
-        },
+        [appBridge],
+    );
+
+    const handleCloseLinkChooser = useCallback(async () => {
+        unsubscribeRef.current?.();
+        unsubscribeRef.current = undefined;
+        await appBridge.dispatch(closeLinkChooser());
+    }, [appBridge]);
+
+    return {
+        openLinkChooser: handleOpenLinkChooser,
+        closeLinkChooser: handleCloseLinkChooser,
     };
 };
