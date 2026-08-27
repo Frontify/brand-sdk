@@ -87,4 +87,25 @@ describe('useLinkChooser hook', () => {
         openLinkChooserButton.click();
         sinon.assert.calledOnce(unsubscribeSpy);
     });
+
+    it('should unsubscribe the previous subscription if opened again after a re-render without closing', () => {
+        const unsubscribeSpy = sinon.spy();
+        const [BlockWithStubs] = withAppBridgeBlockStubs(LinkChooserDummy, { unsubscribe: unsubscribeSpy });
+        const { getByTestId, rerender } = render(<BlockWithStubs />);
+        const openLinkChooserButton = getByTestId(OPEN_LINK_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openLinkChooserButton.click();
+        rerender(<BlockWithStubs onLinkChosen={sinon.spy()} />);
+        openLinkChooserButton.click();
+        sinon.assert.calledOnce(unsubscribeSpy);
+    });
+
+    it('should unsubscribe a still-open subscription on unmount', () => {
+        const unsubscribeSpy = sinon.spy();
+        const [BlockWithStubs] = withAppBridgeBlockStubs(LinkChooserDummy, { unsubscribe: unsubscribeSpy });
+        const { getByTestId, unmount } = render(<BlockWithStubs />);
+        const openLinkChooserButton = getByTestId(OPEN_LINK_CHOOSER_BUTTON_ID) as HTMLButtonElement;
+        openLinkChooserButton.click();
+        unmount();
+        sinon.assert.calledOnce(unsubscribeSpy);
+    });
 });
