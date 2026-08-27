@@ -23,9 +23,6 @@ import {
     type ColorPalette,
     type Asset,
     type BulkDownload,
-    type Document,
-    type DocumentPage,
-    type DocumentSection,
     type Template,
     type TemplateLegacy,
     type User,
@@ -139,22 +136,4 @@ export interface AppBridgeBlock<
      * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
      */
     getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getAllDocuments(): Promise<Document[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentPagesByDocumentId(documentId: number): Promise<DocumentPage[]>;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But Link Chooser will be in-sourced and there will be a command to open it.
-     */
-    getDocumentSectionsByDocumentPageId(documentPageId: number): Promise<DocumentSection[]>;
 }
