@@ -13,7 +13,6 @@ import { type PrivacySettings } from '../types/PrivacySettings';
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
 import { ColorPaletteDummy } from './ColorPaletteDummy';
-import { DocumentSectionApiDummy } from './DocumentSectionApiDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 import { UserDummy } from './UserDummy';
@@ -212,14 +211,6 @@ export const getAppBridgeBlockStub = ({
             return unsubscribe;
         }),
 
-        getDocumentSectionsByDocumentPageId: stub<
-            Parameters<AppBridgeBlock['getDocumentSectionsByDocumentPageId']>
-        >().resolves([
-            DocumentSectionApiDummy.withFields({ id: 1, title: null }),
-            DocumentSectionApiDummy.withFields({ id: 2, title: 'Title' }),
-            DocumentSectionApiDummy.withFields({ id: 3, title: '  ' }),
-            DocumentSectionApiDummy.withFields({ id: 4, title: '' }),
-        ]),
         getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
             ColorPaletteDummy.with(678, 'Palette 1'),
             ColorPaletteDummy.with(427, 'Palette 2'),
@@ -229,8 +220,6 @@ export const getAppBridgeBlockStub = ({
         // TODO: Stub the following methods
         getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
         updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
-        getAllDocuments: stub<Parameters<AppBridgeBlock['getAllDocuments']>>().resolves(),
-        getDocumentPagesByDocumentId: stub<Parameters<AppBridgeBlock['getDocumentPagesByDocumentId']>>().resolves(),
         state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
         dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
