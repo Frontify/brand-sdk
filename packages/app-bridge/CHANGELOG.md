@@ -1,5 +1,19 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.68
+
+### Major Changes
+
+- [#1653](https://github.com/Frontify/brand-sdk/pull/1653) [`aa2bde9`](https://github.com/Frontify/brand-sdk/commit/aa2bde9fadca9579f3f06522cc5b12bc024c50ee) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove deprecated document methods and types from `AppBridgeBlock`
+
+  Removed the `getAllDocuments`, `getDocumentPagesByDocumentId`, and `getDocumentSectionsByDocumentPageId` methods, along with the now-unused `Document`, `DocumentPage`, `DocumentSection`, and `Targets` types and their test dummies (`TargetsDummy`, `TargetsApiDummy`, `DocumentSectionDummy`, `DocumentSectionApiDummy`). There is no replacement — Link Chooser is being in-sourced and will be opened via a command instead.
+
+### Patch Changes
+
+- [#1651](https://github.com/Frontify/brand-sdk/pull/1651) [`5cecc41`](https://github.com/Frontify/brand-sdk/commit/5cecc41d4ccd680a0433815aea19cfe78fa6a98b) Thanks [@ragi96](https://github.com/ragi96)! - fix(useLinkChooser): unsubscribe from the `linkChosen` event on unmount
+
+  Previously, a component that unmounted while the link chooser was still open kept its `linkChosen` listener subscribed, leaking it. `openLinkChooser` and `closeLinkChooser` are also now stable across re-renders.
+
 ## 4.0.0-alpha.67
 
 ### Minor Changes
