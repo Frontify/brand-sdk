@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.1
+
+### Patch Changes
+
+- chore(deps): bump `@frontify/fondue` to `^13.7.8`
+
 ## 4.0.0-alpha.0
 
 ### Major Changes
@@ -19,6 +25,7 @@
 ### Patch Changes
 
 - [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+
 ## 3.0.4
 
 ### Patch Changes
