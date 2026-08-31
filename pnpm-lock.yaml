@@ -391,7 +391,7 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@frontify/app-bridge':
-        specifier: ^3.0.0 || ^4.0.0-alpha.0
+        specifier: ^3.0.0 || >=4.0.0-alpha.0 < 4.0.0-alpha.68
         version: 3.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sinon@21.0.3)
       '@frontify/fondue':
         specifier: ^13.7.8
