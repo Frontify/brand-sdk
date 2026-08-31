@@ -20,8 +20,8 @@ importers:
         specifier: ^2.31.0
         version: 2.31.1(@types/node@26.2.0)
       '@frontify/fondue':
-        specifier: ^13.7.5
-        version: 13.7.5(45c575e7183f0eb0f04a70e4625bc901)
+        specifier: ^13.7.8
+        version: 13.7.8(45c575e7183f0eb0f04a70e4625bc901)
       '@types/react':
         specifier: ^18.3.27
         version: 18.3.31
@@ -394,8 +394,8 @@ importers:
         specifier: ^3.0.0 || ^4.0.0-alpha.0
         version: 3.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sinon@21.0.3)
       '@frontify/fondue':
-        specifier: ^13.7.5
-        version: 13.7.5(27dc3a34af4070cf36eae6fb407c823e)
+        specifier: ^13.7.8
+        version: 13.7.8(27dc3a34af4070cf36eae6fb407c823e)
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -1959,9 +1959,6 @@ packages:
   '@fastify/proxy-addr@5.1.0':
     resolution: {integrity: sha512-INS+6gh91cLUjB+PVHfu1UqcB76Sqtpyp7bnL+FYojhjygvOPA9ctiD/JDKsyD9Xgu4hUhCSJBPig/w7duNajw==}
 
-  '@floating-ui/core@1.7.5':
-    resolution: {integrity: sha512-1Ih4WTWyw0+lKyFMcBHGbb5U5FtuHJuujoyyr5zTaWS5EYMeT6Jb2AuDeftsCsEuchO+mM2ij5+q9crhydzLhQ==}
-
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
 
@@ -1992,9 +1989,6 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  '@floating-ui/utils@0.2.11':
-    resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
-
   '@floating-ui/utils@0.2.12':
     resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
@@ -2021,47 +2015,47 @@ packages:
       react-dom: ^18
       sinon: ^15 || ^16 || ^17
 
-  '@frontify/fondue-charts@8.0.1':
-    resolution: {integrity: sha512-Vp565EZISfQTgbUfWDJyZp1D89lzXRvymFYF/slqqVQBZzsg+dC//Lv60Q2p8oLI0crxI0lp288uzZycuH28nw==}
+  '@frontify/fondue-charts@8.0.2':
+    resolution: {integrity: sha512-Q26gOUMZS2Rhqcd/gCqpxA7BXdK2y9OZ8lDs7IpttMm6qkEezi8gz6J1Nndw3Xi6iqnywspCgMuk+27yb0VUmg==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@frontify/fondue-tokens': ^5.1.1
+      '@frontify/fondue-tokens': ^5.1.2
       react: ^18
       react-dom: ^18
 
-  '@frontify/fondue-components@31.2.0':
-    resolution: {integrity: sha512-nHjzgpXY4sTQDEwZSQaEEJThlf9HnPS0KeefBdg/P9kivGt2JejwOsBp6CW/Ntuo+C0PyzWgNF6v244aHdwYdg==}
+  '@frontify/fondue-components@32.0.2':
+    resolution: {integrity: sha512-bYR3EFu2rXNZ2tXop2SkpJnTeJVNupzsmvKggeFKR+B0O0t7sCvlFwpJ0McZr9R6tzL4Qx8x+aHIB5pIt0Calw==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@frontify/fondue-icons': ^0.27.1
-      '@frontify/fondue-tokens': ^5.1.1
+      '@frontify/fondue-icons': ^0.28.1
+      '@frontify/fondue-tokens': ^5.1.2
       react: ^18
       react-dom: ^18
 
-  '@frontify/fondue-icons@0.27.1':
-    resolution: {integrity: sha512-PpV8E3rlFaB+CeQsnNrJJQ/TsouxGzw6BBeMcBL/mfoK2Hmyo4USanLL7J/tEOqcDwZ2wwQktlZcboowSaHtbg==}
+  '@frontify/fondue-icons@0.28.1':
+    resolution: {integrity: sha512-idLr2luDLKlJUFGyJPPWdCSJexxBecJHb2k0hRy/uuF2gms4A5krvVx2uzgh4WZXPF16Kt52h2/tRc5bA1xcGA==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
 
-  '@frontify/fondue-rte@0.1.8':
-    resolution: {integrity: sha512-g8WUUDEmTcevX9aOXOWudP+F+CfUQdqETn/MZDBH+DZakbypAj56CyQyTZa66cpfu8HDL0HcVsN6QZdpZMPb4w==}
+  '@frontify/fondue-rte@0.1.10':
+    resolution: {integrity: sha512-SR2k7lYeBY7n1/z2eld450ls0VcZCdlU2HNQA4xyr1JCEdo+3oOywA3+J1R8bcKyZw2qCpjqkBncK6fI35k4Lw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
       react-dom: ^18
 
-  '@frontify/fondue-sdk@0.2.0':
-    resolution: {integrity: sha512-TVsQhgaL/ryO+qW3XPQ/ah7GPdiA2TM2Ae2xpnbUf2Eeo+HwFJjV2aCU0pXSyE+BpOoKEmXAZs4fB0EDtFR6Pw==}
+  '@frontify/fondue-sdk@0.2.1':
+    resolution: {integrity: sha512-+soc/n4Cj5L/WOeYE517+4Ye4PIAQnXp7rQhqHBXiYc0PAdlx8YLdd1DL//rVDhuwWZQfKHOYPrqM+rRUMQ3Lw==}
     engines: {node: '>=20'}
 
-  '@frontify/fondue-tokens@5.1.1':
-    resolution: {integrity: sha512-mLy5dY23AVff4QTL2jpNhjEglivePGkaBQlg85sMEeOHDmLMVuvIiA/kV2OGCuREEWwF+fJusbSnIUSOklIkAQ==}
+  '@frontify/fondue-tokens@5.1.2':
+    resolution: {integrity: sha512-fKif/+w9f37ZtrHXwIjPkngLrQcN8tHEtylPdwjNcDhiR3XsNNDKDiPqZSqtd4vznJH6+xRcGpNTPAYOteaWCw==}
     peerDependencies:
       tailwindcss: ^3.4.17
 
-  '@frontify/fondue@13.7.5':
-    resolution: {integrity: sha512-AMM3XGPpimCdxqsgFk5VrveATXgckHCzIPgXU/kYMAVGywBTvlOn+0qqj61V503cAooQI+b+ZZOFrZEgEpY2tw==}
+  '@frontify/fondue@13.7.8':
+    resolution: {integrity: sha512-Jpeh2Wp5rgpSFq6X1gb2S2mltCujj/uNKh2sC2I4a1dTPJbjClbao4qFU0gvfHv17K1RK+R6ac+j4MqzJEZzRQ==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -2681,15 +2675,6 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@radix-ui/react-compose-refs@1.1.3':
-    resolution: {integrity: sha512-rYOP8OMnuuPMQF1uhPVlGNcCDlkokKqGFE3JcxFViIkAXP7EvFWUliJAstrapypaBLJNHbZL6jGhbVDGTwmVhA==}
-    peerDependencies:
-      '@types/react': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-
   '@radix-ui/react-compose-refs@1.1.5':
     resolution: {integrity: sha512-+48PbAAbq3didjJxa+OaWY2ZwgAKsNiRGyeHKszblZMQ+kcpd9pAaT11cMkGEie0vsOi3QdeTE6d5Fe3Gn61kA==}
     peerDependencies:
@@ -2967,15 +2952,6 @@ packages:
       '@types/react':
         optional: true
       '@types/react-dom':
-        optional: true
-
-  '@radix-ui/react-slot@1.2.5':
-    resolution: {integrity: sha512-rCMO3QsIVKv5JTY5CVbo2MvO77SpEqqYc8AvRE7OWqRDOIqAKjsp+DrmnY9uc8NPdxB5E2z47HTYGeE2+NTptg==}
-    peerDependencies:
-      '@types/react': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-    peerDependenciesMeta:
-      '@types/react':
         optional: true
 
   '@radix-ui/react-slot@1.3.3':
@@ -5373,9 +5349,6 @@ packages:
   compute-scroll-into-view@1.0.20:
     resolution: {integrity: sha512-UCB0ioiyj8CRjtrvaceBLqqhZCVP+1B8+NWQhmdsm0VXOJtobBCf1dBQmebCCo34qZmUwZfIH2MZLqNHazrfjg==}
 
-  compute-scroll-into-view@3.1.0:
-    resolution: {integrity: sha512-rj8l8pD4bJ1nx+dAkMhV1xB5RuZEyVysfxJqB1pRchh1KVvwOv9b7CGB8ZfjTImVv2oF+sYMUkMZq6Na5Ftmbg==}
-
   compute-scroll-into-view@3.1.1:
     resolution: {integrity: sha512-VRhuHOLoKYOy4UbilLbUzbYg93XLjv2PncJC50EuTWPA3gaja1UjBsUP/D/9/juV3vQFr6XBEzn9KCAHdUvOHw==}
 
@@ -6456,10 +6429,6 @@ packages:
 
   is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
-    engines: {node: '>=0.10.0'}
-
-  is-plain-object@5.0.0:
-    resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
     engines: {node: '>=0.10.0'}
 
   is-plain-object@5.1.0:
@@ -10906,10 +10875,6 @@ snapshots:
       '@fastify/forwarded': 3.0.1
       ipaddr.js: 2.3.0
 
-  '@floating-ui/core@1.7.5':
-    dependencies:
-      '@floating-ui/utils': 0.2.11
-
   '@floating-ui/core@1.8.0':
     dependencies:
       '@floating-ui/utils': 0.2.12
@@ -10942,12 +10907,10 @@ snapshots:
   '@floating-ui/react@0.26.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/react-dom': 2.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@floating-ui/utils': 0.2.11
+      '@floating-ui/utils': 0.2.12
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       tabbable: 6.2.0
-
-  '@floating-ui/utils@0.2.11': {}
 
   '@floating-ui/utils@0.2.12': {}
 
@@ -10985,9 +10948,9 @@ snapshots:
       sinon: 21.0.3
       type-fest: 4.41.0
 
-  '@frontify/fondue-charts@8.0.1(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@frontify/fondue-charts@8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
       '@react-spring/web': 10.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@visx/axis': 4.0.0(@types/react@18.3.31)(react@18.3.1)
       '@visx/glyph': 4.0.0(@types/react@18.3.31)(react@18.3.1)
@@ -11007,12 +10970,12 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@frontify/fondue-components@31.2.0(@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@frontify/fondue-components@32.0.2(@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@dnd-kit/abstract': 0.3.2
       '@dnd-kit/react': 0.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-icons': 0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
       '@headless-tree/core': 1.7.0
       '@headless-tree/react': 1.7.0(@headless-tree/core@1.7.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-accordion': 1.2.20(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11042,31 +11005,31 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))':
+  '@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))':
     dependencies:
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
       react: 18.3.1
     transitivePeerDependencies:
       - tailwindcss
 
-  '@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))':
+  '@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))':
     dependencies:
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
       react: 18.3.1
     transitivePeerDependencies:
       - tailwindcss
 
-  '@frontify/fondue-rte@0.1.8(5cd31961db6cc5ea9c345a1ace3e8383)':
+  '@frontify/fondue-rte@0.1.10(5cd31961db6cc5ea9c345a1ace3e8383)':
     dependencies:
       '@ctrl/tinycolor': 4.2.0
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@dnd-kit/modifiers': 7.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
-      '@frontify/fondue-charts': 8.0.1(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 31.2.0(@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 32.0.2(@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@radix-ui/react-popover': 1.1.23(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-toolbar': 1.1.19(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11149,17 +11112,17 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue-rte@0.1.8(67c849619941ec30e8311b6980fccecc)':
+  '@frontify/fondue-rte@0.1.10(67c849619941ec30e8311b6980fccecc)':
     dependencies:
       '@ctrl/tinycolor': 4.2.0
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@dnd-kit/modifiers': 7.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
-      '@frontify/fondue-charts': 8.0.1(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 31.2.0(@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 32.0.2(@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@radix-ui/react-popover': 1.1.23(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-toolbar': 1.1.19(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11242,17 +11205,17 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue-sdk@0.2.0': {}
+  '@frontify/fondue-sdk@0.2.1': {}
 
-  '@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))':
+  '@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))':
     dependencies:
       tailwindcss: 3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3))
 
-  '@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))':
+  '@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))':
     dependencies:
       tailwindcss: 3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))
 
-  '@frontify/fondue@13.7.5(27dc3a34af4070cf36eae6fb407c823e)':
+  '@frontify/fondue@13.7.8(27dc3a34af4070cf36eae6fb407c823e)':
     dependencies:
       '@ctrl/tinycolor': 4.2.0
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11260,12 +11223,12 @@ snapshots:
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
       '@floating-ui/dom': 1.8.0
-      '@frontify/fondue-charts': 8.0.1(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 31.2.0(@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
-      '@frontify/fondue-rte': 0.1.8(5cd31961db6cc5ea9c345a1ace3e8383)
-      '@frontify/fondue-sdk': 0.2.0
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 32.0.2(@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
+      '@frontify/fondue-rte': 0.1.10(5cd31961db6cc5ea9c345a1ace3e8383)
+      '@frontify/fondue-sdk': 0.2.1
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@24.11.0)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@react-aria/accordion': 3.0.0-alpha.37(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-aria/breadcrumbs': 3.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11322,7 +11285,7 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue@13.7.5(45c575e7183f0eb0f04a70e4625bc901)':
+  '@frontify/fondue@13.7.8(45c575e7183f0eb0f04a70e4625bc901)':
     dependencies:
       '@ctrl/tinycolor': 4.2.0
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11330,12 +11293,12 @@ snapshots:
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
       '@floating-ui/dom': 1.8.0
-      '@frontify/fondue-charts': 8.0.1(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 31.2.0(@frontify/fondue-icons@0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.27.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
-      '@frontify/fondue-rte': 0.1.8(67c849619941ec30e8311b6980fccecc)
-      '@frontify/fondue-sdk': 0.2.0
-      '@frontify/fondue-tokens': 5.1.1(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 32.0.2(@frontify/fondue-icons@0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.28.1(react@18.3.1)(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
+      '@frontify/fondue-rte': 0.1.10(67c849619941ec30e8311b6980fccecc)
+      '@frontify/fondue-sdk': 0.2.1
+      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.18(ts-node@10.9.2(@types/node@26.2.0)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@react-aria/accordion': 3.0.0-alpha.37(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-aria/breadcrumbs': 3.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -12058,12 +12021,6 @@ snapshots:
       '@types/react': 18.3.31
       '@types/react-dom': 18.3.7(@types/react@18.3.31)
 
-  '@radix-ui/react-compose-refs@1.1.3(@types/react@18.3.31)(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-    optionalDependencies:
-      '@types/react': 18.3.31
-
   '@radix-ui/react-compose-refs@1.1.5(@types/react@18.3.31)(react@18.3.1)':
     dependencies:
       react: 18.3.1
@@ -12381,13 +12338,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.31
       '@types/react-dom': 18.3.7(@types/react@18.3.31)
-
-  '@radix-ui/react-slot@1.2.5(@types/react@18.3.31)(react@18.3.1)':
-    dependencies:
-      '@radix-ui/react-compose-refs': 1.1.3(@types/react@18.3.31)(react@18.3.1)
-      react: 18.3.1
-    optionalDependencies:
-      '@types/react': 18.3.31
 
   '@radix-ui/react-slot@1.3.3(@types/react@18.3.31)(react@18.3.1)':
     dependencies:
@@ -14084,7 +14034,7 @@ snapshots:
       jotai-optics: 0.3.2(jotai@2.8.3(@types/react@18.3.31)(react@18.3.1))(optics-ts@2.4.1)
       jotai-x: 1.2.3(@types/react@18.3.31)(jotai@2.8.3(@types/react@18.3.31)(react@18.3.1))(react@18.3.1)
       lodash: 4.18.1
-      nanoid: 3.3.15
+      nanoid: 3.3.18
       optics-ts: 2.4.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -14114,7 +14064,7 @@ snapshots:
       jotai-optics: 0.3.2(jotai@2.8.3(@types/react@18.3.31)(react@18.3.1))(optics-ts@2.4.1)
       jotai-x: 1.2.3(@types/react@18.3.31)(jotai@2.8.3(@types/react@18.3.31)(react@18.3.1))(react@18.3.1)
       lodash: 4.18.1
-      nanoid: 3.3.15
+      nanoid: 3.3.18
       optics-ts: 2.4.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -14158,7 +14108,7 @@ snapshots:
 
   '@udecode/plate-floating@31.0.0(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.7)(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0)':
     dependencies:
-      '@floating-ui/core': 1.7.5
+      '@floating-ui/core': 1.8.0
       '@floating-ui/react': 0.22.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-common': 36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.7)(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0)
       react: 18.3.1
@@ -14170,7 +14120,7 @@ snapshots:
 
   '@udecode/plate-floating@31.0.0(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.3)(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.7)(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0)':
     dependencies:
-      '@floating-ui/core': 1.7.5
+      '@floating-ui/core': 1.8.0
       '@floating-ui/react': 0.22.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-common': 36.5.9(@types/react@18.3.31)(immer@10.1.3)(react-dom@18.3.1(react@18.3.1))(react-native@0.74.2(@babel/core@7.29.7)(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@types/react@18.3.31)(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0)
       react: 18.3.1
@@ -14400,7 +14350,7 @@ snapshots:
 
   '@udecode/react-utils@31.0.0(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@radix-ui/react-slot': 1.2.5(@types/react@18.3.31)(react@18.3.1)
+      '@radix-ui/react-slot': 1.3.3(@types/react@18.3.31)(react@18.3.1)
       '@udecode/utils': 31.0.0
       clsx: 1.2.1
       react: 18.3.1
@@ -14410,7 +14360,7 @@ snapshots:
 
   '@udecode/react-utils@33.0.0(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@radix-ui/react-slot': 1.2.5(@types/react@18.3.31)(react@18.3.1)
+      '@radix-ui/react-slot': 1.3.3(@types/react@18.3.31)(react@18.3.1)
       '@udecode/utils': 31.0.0
       clsx: 1.2.1
       react: 18.3.1
@@ -15408,8 +15358,6 @@ snapshots:
     optional: true
 
   compute-scroll-into-view@1.0.20: {}
-
-  compute-scroll-into-view@3.1.0: {}
 
   compute-scroll-into-view@3.1.1: {}
 
@@ -16626,8 +16574,6 @@ snapshots:
   is-plain-object@2.0.4:
     dependencies:
       isobject: 3.0.1
-
-  is-plain-object@5.0.0: {}
 
   is-plain-object@5.1.0: {}
 
@@ -18914,7 +18860,7 @@ snapshots:
 
   scroll-into-view-if-needed@3.1.0:
     dependencies:
-      compute-scroll-into-view: 3.1.0
+      compute-scroll-into-view: 3.1.1
 
   secure-json-parse@4.1.0: {}
 
@@ -19083,7 +19029,7 @@ snapshots:
       '@types/lodash': 4.17.5
       direction: 1.0.4
       is-hotkey: 0.2.0
-      is-plain-object: 5.0.0
+      is-plain-object: 5.1.0
       lodash: 4.18.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -19094,7 +19040,7 @@ snapshots:
   slate@0.102.0:
     dependencies:
       immer: 10.1.3
-      is-plain-object: 5.0.0
+      is-plain-object: 5.1.0
       tiny-warning: 1.0.3
 
   slice-ansi@2.1.0:

@@ -28,7 +28,7 @@
     "devDependencies": {
         "@changesets/changelog-github": "^0.6.0",
         "@changesets/cli": "^2.31.0",
-        "@frontify/fondue": "^13.7.5",
+        "@frontify/fondue": "^13.7.8",
         "@types/react": "^18.3.27",
         "@vitejs/plugin-react": "^5.2.0",
         "glob": "^13.0.6",
