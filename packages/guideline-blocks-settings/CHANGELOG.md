@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.5
+
+### Patch Changes
+
+- [#1659](https://github.com/Frontify/brand-sdk/pull/1659) [`af197ce`](https://github.com/Frontify/brand-sdk/commit/af197ce5ca2677c77ca05dbefcaa032377f56dab) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Link): keep root-relative urls untouched
+
+  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved.
+
 ## 3.0.4
 
 ### Patch Changes
