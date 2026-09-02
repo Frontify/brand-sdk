@@ -48,7 +48,19 @@ describe('LinkPlugin URL utils', () => {
                 shouldBeValid: true,
             },
             {
-                input: '/wrongpage/123',
+                input: '/hub/167',
+                shouldBeValid: true,
+            },
+            {
+                input: '/any/relative/path?query=1#hash',
+                shouldBeValid: true,
+            },
+            {
+                input: '/',
+                shouldBeValid: true,
+            },
+            {
+                input: '//example.com',
                 shouldBeValid: false,
             },
             {
