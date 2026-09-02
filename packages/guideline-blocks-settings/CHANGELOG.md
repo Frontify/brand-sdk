@@ -25,6 +25,13 @@
 ### Patch Changes
 
 - [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+## 3.0.5
+
+### Patch Changes
+
+- [#1659](https://github.com/Frontify/brand-sdk/pull/1659) [`af197ce`](https://github.com/Frontify/brand-sdk/commit/af197ce5ca2677c77ca05dbefcaa032377f56dab) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Link): keep root-relative urls untouched
+
+  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved.
 
 ## 3.0.4
 

@@ -35,6 +35,13 @@ describe('String converted to Richtext value', () => {
         expect(result).toBe(url);
     });
 
+    it.each(['/hub/167', '/hub/167?tab=overview#section', '/', '/any/relative/path'])(
+        'should not add https:// for the root-relative url %s',
+        (url) => {
+            expect(addHttps(url)).toBe(url);
+        },
+    );
+
     it('should not add https:// for http://', () => {
         const url = 'http://localhost:3000/document/123';
         const result = addHttps(url);
