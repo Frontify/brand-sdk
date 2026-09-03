@@ -1,11 +1,6 @@
 {
     "name": "root",
     "private": true,
-    "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be",
-    "engines": {
-        "node": "^24",
-        "npm": "<=0"
-    },
     "scripts": {
         "build": "pnpm build:app-bridge && pnpm build:app-bridge-theme && pnpm build:sidebar-settings && pnpm build:guideline-blocks-settings && pnpm build:guideline-themes && pnpm build:platform-app && pnpm build:cli && pnpm build:app-bridge-app",
         "build:app-bridge": "pnpm --stream --filter {packages/app-bridge} build",
@@ -26,21 +21,26 @@
         "update": "taze -r -I major"
     },
     "devDependencies": {
-        "@changesets/changelog-github": "^0.6.0",
-        "@changesets/cli": "^2.31.0",
+        "@changesets/changelog-github": "^1.0.0",
+        "@changesets/cli": "^3.0.1",
         "@frontify/fondue": "^13.7.8",
-        "@types/react": "^18.3.27",
+        "@types/react": "^18.3.31",
         "@vitejs/plugin-react": "^5.2.0",
         "glob": "^13.0.6",
-        "oxlint": "^1.78.0",
+        "oxlint": "^1.81.0",
         "oxlint-tsgolint": "^7.0.2001",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "tailwindcss": "^3.4.18",
-        "taze": "^19.11.0",
+        "tailwindcss": "^3.4.19",
+        "taze": "^19.17.2",
         "ts-node": "^10.9.2",
         "typescript": "^5.9.3",
-        "vite": "^7.3.2",
-        "vitest": "^4.1.10"
-    }
+        "vite": "^7.3.6",
+        "vitest": "^4.1.11"
+    },
+    "engines": {
+        "node": "^24",
+        "npm": "<=0"
+    },
+    "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
 }
