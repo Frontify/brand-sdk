@@ -4,9 +4,9 @@ import { type DispatchHandlerParameter } from '../../AppBridge';
 
 import { type CommandRegistry } from './CommandRegistry';
 
-export const openBrandCheck = (
-    payload?: CommandRegistry['openBrandCheck'],
-): DispatchHandlerParameter<'openBrandCheck', CommandRegistry> => ({
-    name: 'openBrandCheck',
+export const openBrandChecker = (
+    payload?: CommandRegistry['openBrandChecker'],
+): DispatchHandlerParameter<'openBrandChecker', CommandRegistry> => ({
+    name: 'openBrandChecker',
     payload,
 });

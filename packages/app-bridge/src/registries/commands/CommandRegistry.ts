@@ -21,7 +21,7 @@ type DownloadAsset = Asset;
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;
 type OpenPlatformAppDirect = { marketplaceAppId: string };
-export type OpenBrandCheckPayload = { tab?: 'check' | 'configuration' };
+export type OpenBrandCheckerPayload = { tab?: 'check' | 'configuration' };
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
@@ -36,6 +36,6 @@ export type CommandRegistry = CommandNameValidator<{
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
     openPlatformAppDirect: OpenPlatformAppDirect;
-    openBrandCheck?: OpenBrandCheckPayload;
+    openBrandChecker?: OpenBrandCheckerPayload;
     trackEvent: TrackPayload;
 }>;

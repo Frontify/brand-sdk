@@ -2,7 +2,7 @@
 
 export * from './AssetChooser';
 export * from './AssetViewer';
-export * from './BrandCheck';
+export * from './BrandChecker';
 export * from './CommandRegistry';
 export * from './DownloadAsset';
 export * from './LinkChooser';
