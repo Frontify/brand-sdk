@@ -6,6 +6,7 @@ import {
     type Asset,
     type AssetChooserOptions,
     type LinkChooserOptions,
+    type OpenBrandCheckerPayload,
     type OpenNewPublicationPayload,
     type TrackPayload,
 } from '../../types';
@@ -21,7 +22,6 @@ type DownloadAsset = Asset;
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;
 type OpenPlatformAppDirect = { marketplaceAppId: string };
-export type OpenBrandCheckerPayload = { tab?: 'check' | 'configuration' };
 
 export type CommandRegistry = CommandNameValidator<{
     openAssetChooser?: OpenAssetChooserPayload;
