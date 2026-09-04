@@ -46,6 +46,7 @@ export type BlockCommand = CommandNameValidator<
         | 'openTemplateChooser'
         | 'openNewPublication'
         | 'openPlatformAppDirect'
+        | 'openBrandChecker'
         | 'trackEvent'
     >
 >;

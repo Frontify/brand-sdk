@@ -6,6 +6,7 @@ import {
     type Asset,
     type AssetChooserOptions,
     type LinkChooserOptions,
+    type OpenBrandCheckerPayload,
     type OpenNewPublicationPayload,
     type TrackPayload,
 } from '../../types';
@@ -35,5 +36,6 @@ export type CommandRegistry = CommandNameValidator<{
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
     openPlatformAppDirect: OpenPlatformAppDirect;
+    openBrandChecker: OpenBrandCheckerPayload;
     trackEvent: TrackPayload;
 }>;
