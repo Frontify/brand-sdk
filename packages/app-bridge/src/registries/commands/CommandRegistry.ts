@@ -36,6 +36,6 @@ export type CommandRegistry = CommandNameValidator<{
     openSearchDialog: OpenSearchDialog;
     closeSearchDialog: CloseSearchDialog;
     openPlatformAppDirect: OpenPlatformAppDirect;
-    openBrandChecker?: OpenBrandCheckerPayload;
+    openBrandChecker: OpenBrandCheckerPayload;
     trackEvent: TrackPayload;
 }>;

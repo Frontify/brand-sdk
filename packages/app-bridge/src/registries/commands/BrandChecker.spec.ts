@@ -12,11 +12,4 @@ describe('BrandChecker', () => {
         expect(command.name).toBe('openBrandChecker');
         expect(command.payload).toStrictEqual(payload);
     });
-
-    it('should return an undefined payload when called with no argument', () => {
-        const command = openBrandChecker();
-
-        expect(command.name).toBe('openBrandChecker');
-        expect(command.payload).toBeUndefined();
-    });
 });
