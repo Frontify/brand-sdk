@@ -1,5 +1,65 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.3
+
+### Major Changes
+
+- feat(RichTextEditor)!: open the in-sourced link chooser from the app bridge
+  
+  The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
+  
+  BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
+  
+  BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
+
+- refactor(RichTextEditor): remove deprecated `id` prop
+  
+  The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
+
+### Patch Changes
+
+- chore(deps): bump `@frontify/fondue` to `^13.7.8`
+
+- chore: remove unused internal testing dummy
+
+- fix(Link): keep root-relative urls untouched
+  
+  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
+
+## 4.0.0-alpha.2
+
+### Patch Changes
+
+- fix(Link): keep root-relative urls untouched
+
+  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
+
+## 4.0.0-alpha.1
+
+### Patch Changes
+
+- chore(deps): bump `@frontify/fondue` to `^13.7.8`
+
+## 4.0.0-alpha.0
+
+### Major Changes
+
+- [#1644](https://github.com/Frontify/brand-sdk/pull/1644) [`6292c9a`](https://github.com/Frontify/brand-sdk/commit/6292c9adaa3e98353956f069ae7bfe0a979c3e97) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(RichTextEditor)!: open the in-sourced link chooser from the app bridge
+
+  The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
+
+  BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
+
+  BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
+
+- [#1652](https://github.com/Frontify/brand-sdk/pull/1652) [`6cb6cc6`](https://github.com/Frontify/brand-sdk/commit/6cb6cc63857fe965f5af5abaddc63d5d58b4030a) Thanks [@ragi96](https://github.com/ragi96)! - refactor(RichTextEditor): remove deprecated `id` prop
+
+  The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
+
+### Patch Changes
+
+- [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+
 ## 3.0.5
 
 ### Patch Changes
