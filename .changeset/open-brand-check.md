@@ -1,5 +1,5 @@
 ---
-'@frontify/app-bridge': minor
+"@frontify/app-bridge": minor
 ---
 
 feat: add `openBrandChecker` command
