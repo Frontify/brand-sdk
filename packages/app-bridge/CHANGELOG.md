@@ -1,5 +1,267 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.69
+
+### Major Changes
+
+- refactor: remove the `downloadColorKit` method
+  
+  `AppBridgeBlock.downloadColorKit` and the `downloadColorKit` value returned from the `useColorPalettes` hook have been removed.
+
+- feat: modify `DocumentSection` and `DocumentSectionApi` type to allow `title` to be `null`.
+
+- refactor: remove deprecated document methods and types from `AppBridgeBlock`
+  
+  Removed the `getAllDocuments`, `getDocumentPagesByDocumentId`, and `getDocumentSectionsByDocumentPageId` methods, along with the now-unused `Document`, `DocumentPage`, `DocumentSection`, and `Targets` types and their test dummies (`TargetsDummy`, `TargetsApiDummy`, `DocumentSectionDummy`, `DocumentSectionApiDummy`). There is no replacement — Link Chooser is being in-sourced and will be opened via a command instead.
+
+- refactor: remove `DocumentApiDummy` and `DocumentDummy` testing utils, cleanup types in `Document.ts`, remove `getDocumentsByDocumentGroupId` from AppBridgeBlock
+
+- refactor: remove `useDocumentTargets` and `useDocumentCategories`
+
+- feat: first alpha release, removes all deprecated functions on the AppBridgeBlock
+
+- refactor: remove `createColorPalette`, `updateColorPalette`, `deleteColorPalette` and adjust `useColorPalette` react hook
+
+- refactor: remove deprecated `updateColor`, `createColor`, and `deleteColor` methods from the AppBridge, the `useColors` hook, and related tests
+
+### Minor Changes
+
+- refactor: remove react hooks and related events
+  
+  - `useCategorizedDocumentPages`
+  - `useDocumentPageTargets`
+  - `useUncategorizedDocumentPages`
+
+- refactor: remove color related methods: `getColors`, `getColorPalettesWithColors`, `getColorPalettes`, `getColorsByColorPaletteId` and react hooks: `useColors`, `useColorPalettes`
+
+- feat: add `trackEvent` command
+  
+  Use the `trackEvent` command to log custom events within blocks.
+  The event accepts `TrackActions` and an optional payload.
+  
+  If you need more actions, please reach out through the Frontify Friends Slack channel.
+  
+  Example usage:
+  
+  ```typescript
+  appBridge.dispatch({
+      name: "trackEvent",
+      payload: {
+          action: "button:clicked",
+          payload: { buttonId: "path/to/button", label: "Click me" },
+      },
+  });
+  
+  // or without payload
+  appBridge.dispatch({
+      name: "trackEvent",
+      payload: { action: "button:clicked", payload: null },
+  });
+  ```
+
+- refactor(useBlockAssets): source state from `Context.assets`
+  
+  The hook now seeds and updates `blockAssets` from `appBridge.context('assets')` and no longer fetches via `getBlockAssets()` on mount. It also no longer listens to or emits `AppBridge:BlockAssetsUpdated`; mutation helpers (`addAssetIdsToKey`, `deleteAssetIdsFromKey`, `updateAssetIdsFromKey`) just call the AppBridge API, and the host is responsible for refreshing `context('assets')` after each mutation.
+
+- refactor: remove already deprecated method `getDocumentCategoriesByDocumentId`
+
+- refactor: remove already deprecated `getColorsByIds`
+
+- refactor: remove `useDocumentGroups`, `useGroupedDocuments` and `useUngroupedDocuments` hook and also remove the `DocumentGroupApi` type
+
+- feat: add `openLinkChooser`/`closeLinkChooser` block commands to open the in-sourced link chooser
+  
+  Adds a `linkChosen` event and a `useLinkChooser` hook.
+  
+  ```ts
+  import { openLinkChooser, closeLinkChooser } from "@frontify/app-bridge";
+  
+  await appBridge.dispatch(openLinkChooser({ selectedUrl: currentUrl }));
+  // ...
+  await appBridge.dispatch(closeLinkChooser());
+  ```
+
+- feat: add open/close search dialog commands to AppBridgeTheme
+
+- refactor: remove already deprecated method `getDocumentGroups`
+
+- refactor: remove already deprecated method `getDocumentPagesByDocumentCategoryId`
+
+- feat: add `openPlatformAppDirect` block command to open a marketplace platform app directly
+  
+  ```ts
+  import { openPlatformAppDirect } from '@frontify/app-bridge';
+  
+  await appBridge.dispatch(openPlatformAppDirect({ marketplaceAppId: 'your-app-id' }));
+  ```
+
+- feat(Asset): added the property alternativeText
+
+- [#1664](https://github.com/Frontify/brand-sdk/pull/1664) [`2a7a2d4`](https://github.com/Frontify/brand-sdk/commit/2a7a2d410e2bcebb3cf67f329a2827d14a65509c) Thanks [@mpetrone](https://github.com/mpetrone)! - feat: add `openBrandChecker` command
+  
+  A content block can dispatch `openBrandChecker` to open the Brand Check dialog on a guideline page. The payload uses `OpenBrandCheckerPayload` (`{ tab: BrandCheckerTab }`). `tab` is required.
+
+- feat: add back `useColorPalettes` react hook
+
+- feat(AppBridgeBlock): add `isAuthenticated` to `BlockContext` type
+
+- feat(AppBridge): expose block assets via `BlockContext`
+  
+  - Adds `assets` to `BlockContext`, available synchronously via `appBridge.context('assets').get()`.
+  - `useBlockAssets` now seeds its initial state from the context instead of fetching via `getBlockAssets()` on mount, so assets are available on the first render.
+
+- chore(DocumentTargets): remove already deprecated `getDocumentTargets` and `getDocumentPageTargets`
+
+- feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+
+- chore(AppBridge): remove already deprecated `getUncategorizedDocumentPagesByDocumentId`
+
+- feat: add navigateToDocumentSection command to AppBridgeTheme
+
+- refactor remove already deprecated method `getUngroupedDocuments`
+
+### Patch Changes
+
+- refactor: remove TemplatePageApi type
+
+- refactor: remove AppBridgeCreateAsset, please use `@frontify/app-bridge-app`
+
+- feat(Asset): added the focal point properties
+
+- refactor: remove `filterDocumentSectionsWithUnreadableTitles` helper
+
+- refactor(Asset): remove `creatorName` and `projectType` on the `Asset`
+
+- chore: update dependencies
+
+- refactor: remove `GetBulkDownloadTokenApi` and `BulkDownloadApi` types
+
+- chore: remove appBridgePlatformApp
+
+- chore: merge main to dev
+
+- feat(AppBridgePlatformApp): only one app bridge per iframe
+
+- refactor: remove `DocumentBlockTemplate` types
+
+- chore: rename brand sdk name
+
+- fix: document page duplication return type
+
+- refactor: cleanup unused types in DocumentCategory
+
+- feat: merge `main` into `dev`
+
+- feat: (AppBridgeTheme) update appBridgeThemeStub with context and state
+
+- refactor: clean up target api related things
+
+- chore: Merge main into dev
+
+- chore: merge main to dev
+
+- refactor(Emitter): remove unused type `EmitterAction`
+
+- chore: merge branch `main` into dev
+
+- refactor: remove `getDatasetByElement` and `getDatasetByClassName`
+
+- feat: merge `main` into `dev`
+
+- feat: add documentId to GuidelineDocumentCategory events
+
+- chore: update deps
+
+- refactor: remove unused `Topic` type
+
+- feat: add context.template to AppBridgeTheme
+
+- refactor: remove `DocumentPageRequest`, `DocumentPageCreate`, `DocumentPageUpdate` and `DocumentPageDelete` types
+
+- Merge main into dev
+
+- feat: switch to platformAppBridge to v4
+
+- feat: add user state variable
+
+- chore: merge main into dev
+
+- fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+  fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+
+- refactor: remove `useDocumentSection` react hooks, along with types and events
+
+- Merge main into dev
+
+- feat: Adjust PlatformAppContext
+  refactor: rename from type to surface
+
+- Fix: readd method
+
+- fix: AssetChooserResult Type as alternative text is prefixed with computed
+
+- refactor: rename brandsdk name from secretRequest to secureRequest
+
+- refactor: remove UserApi related things
+
+- Merge main into dev
+
+- feat: adds `setAssetIdsByBlockAssetKey` to AppBridgeBlock
+
+- feat(usePageTemplateSettings): returns also templateThemeSettings
+
+- feat: adjust the color type to have a revision
+
+- fix: useGroupedDocuments and useUngroupedDocuments flaky tests
+
+- refactor: remove `documentCategoryApi` type
+
+- fix(useLinkChooser): unsubscribe from the `linkChosen` event on unmount
+  
+  Previously, a component that unmounted while the link chooser was still open kept its `linkChosen` listener subscribed, leaking it. `openLinkChooser` and `closeLinkChooser` are also now stable across re-renders.
+
+- chore: merge main to dev
+
+- refactor: Method to reflect feature
+
+- chore: merge branch `main` into dev
+
+- -   feat(useDocumentSection): Subscribe hook to emitter event listeners. A new emitter type, `AppBridge:GuidelineDocumentSection:Action` has been added. This emitter can be used to add and remove items from the sections saved in the hook state.
+  
+  -   feat(useDocumentSection): `navigationItems` is now returned from this hook. This array filters out sections with an unreadable title and should be used to create section navigation links.
+
+- chore: merge main to dev
+
+- chore(deps): bump
+
+- Merge main into dev
+
+- Feat: adjust secure request response
+
+- Fix: add retry to subscription
+
+- refactor: remove cover page related things
+
+- feat: adds state listener to allow push from parent
+
+- refactor: Removed `appBridgeTheme` from the `@frontify/app-bridge` package. It is now provided via the `@frontify/app-bridge-theme` package.
+
+- refactor: remove TemplateApiLegacy type and test dummy
+
+- chore: merge main to dev
+
+- refactor: remove `pageTemplateAsset` type
+
+- Merge main into dev
+
+- Merge `main` into `dev`
+
+- feat: deprecate react hooks for platform apps
+
+- refactor: remove Color and ColorPallete api related types and test dummies
+
+- refactor: remove `DocumentGroup` type and `DocumentGroupDummy`
+
 ## 4.0.0-alpha.68
 
 ### Major Changes
