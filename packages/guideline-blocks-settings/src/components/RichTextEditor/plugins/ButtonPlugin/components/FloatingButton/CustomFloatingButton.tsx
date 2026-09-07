@@ -42,7 +42,7 @@ export const CustomFloatingButton = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p], zIndex: 'auto' }}
                     >
                         {input}
                     </div>,
@@ -56,7 +56,7 @@ export const CustomFloatingButton = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p], zIndex: 'auto' }}
                     >
                         {editContent}
                     </div>,

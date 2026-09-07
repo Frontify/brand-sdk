@@ -11,7 +11,7 @@ import { LinkInput } from './LinkInput';
 const LINK_INPUT_TEST_ID = 'link-input';
 const TEXT_INPUT_TEST_ID = 'text-input';
 const INPUT_LABEL_CONTAINER_TEST_ID = 'input-label-container';
-const DIALOG_TRIGGER_TEST_ID = 'fondue-dialog-trigger';
+const INTERNAL_LINK_BUTTON_TEST_ID = 'internal-link-chooser-button';
 const CHECKBOX_TEST_ID = 'fondue-checkbox';
 
 const renderLinkInput = (props: Partial<Parameters<typeof LinkInput>[0]> = {}) => {
@@ -96,13 +96,13 @@ describe('Link Input', () => {
     it('should show the internal link button', () => {
         renderLinkInput();
 
-        expect(screen.getByTestId(DIALOG_TRIGGER_TEST_ID)).toBeInTheDocument();
+        expect(screen.getByTestId(INTERNAL_LINK_BUTTON_TEST_ID)).toBeInTheDocument();
     });
 
     it('should not show the internal link button if it is hidden', () => {
         renderLinkInput({ hideInternalLinkButton: true });
 
-        expect(screen.queryByTestId(DIALOG_TRIGGER_TEST_ID)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(INTERNAL_LINK_BUTTON_TEST_ID)).not.toBeInTheDocument();
     });
 
     it('should render an asterisk if the input is required', () => {
