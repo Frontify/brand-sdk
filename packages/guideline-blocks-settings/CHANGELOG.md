@@ -1,5 +1,17 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.4
+
+### Patch Changes
+
+- [#1669](https://github.com/Frontify/brand-sdk/pull/1669) [`2de7282`](https://github.com/Frontify/brand-sdk/commit/2de7282a999c0d453bcf0071c0c0d0f47ffd7bb7) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(RichTextEditor): assert `zIndex: 'auto'` on the floating link and button portals
+  
+  These modals are portaled to `document.body` and rely on DOM order so that a dialog
+  opened from them -- notably the guideline LinkChooser -- renders on top. Guideline
+  portals can carry custom CSS that sets a `z-index` on body children, which lifted the
+  modal above that dialog and left the chooser unreachable behind it. Asserting the value
+  inline wins over those rules.
+
 ## 4.0.0-alpha.3
 
 ### Major Changes
