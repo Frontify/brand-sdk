@@ -33,6 +33,13 @@ export const CustomFloatingButton = () => {
     const input = <InsertButtonModal />;
     const editContent = isEditing ? input : <EditModal />;
 
+    /*
+     * `zIndex: 'auto'` is asserted deliberately: these modals are portaled to `document.body`
+     * and must stay ordered by DOM position, so a dialog opened from them (e.g. the guideline
+     * LinkChooser) renders on top. Guideline portals can carry custom CSS that sets a z-index
+     * on body children, which would otherwise lift this above that dialog. Inline styles win
+     * over those rules, so do not remove it.
+     */
     return (
         <>
             {isOpen &&
@@ -42,7 +49,7 @@ export const CustomFloatingButton = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p], zIndex: 'auto' }}
                     >
                         {input}
                     </div>,
@@ -56,7 +63,7 @@ export const CustomFloatingButton = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p], zIndex: 'auto' }}
                     >
                         {editContent}
                     </div>,
