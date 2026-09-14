@@ -35,7 +35,6 @@
     "dependencies": {
         "@fastify/cors": "^11.2.0",
         "@vitejs/plugin-react": "^6.0.2",
-        "archiver": "^7.0.1",
         "cac": "^7.0.0",
         "conf": "^15.1.0",
         "esbuild": "^0.28.1",
