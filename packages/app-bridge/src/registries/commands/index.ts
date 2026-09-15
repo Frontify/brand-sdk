@@ -2,11 +2,12 @@
 
 export * from './AssetChooser';
 export * from './AssetViewer';
+export * from './BrandChecker';
 export * from './CommandRegistry';
-export * from './Connection';
 export * from './DownloadAsset';
-export * from './NavigationManager';
+export * from './LinkChooser';
 export * from './NewPublication';
+export * from './PlatformApp';
 export * from './SearchDialog';
 export * from './TemplateChooser';
-export * from './NavigateToDocumentSection';
+export * from './TrackEvent';
