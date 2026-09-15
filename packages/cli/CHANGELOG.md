@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 6.2.7
+
+### Patch Changes
+
+- [#1673](https://github.com/Frontify/brand-sdk/pull/1673) [`fd9bb6d`](https://github.com/Frontify/brand-sdk/commit/fd9bb6dad2246170ff2c8c8f2c74cbbaf9e95f8a) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `fastify` to `^5.12.4` and `vite` to `^8.3.0`
+  
+  Also updates `@fastify/cors` to `^11.3.0`, `esbuild` to `^0.28.2`, and `open` to `^11.0.3`.
+
+- [#1674](https://github.com/Frontify/brand-sdk/pull/1674) [`4fcc83a`](https://github.com/Frontify/brand-sdk/commit/4fcc83aa0b0824f675795fe2f7f3bd2764cec28b) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused `archiver` dependency
+
 ## 6.2.6
 
 ### Patch Changes
