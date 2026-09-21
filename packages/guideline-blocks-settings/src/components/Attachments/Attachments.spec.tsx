@@ -144,7 +144,9 @@ describe('Attachments', () => {
 
         await openFlyout();
 
-        expect((await screen.findAllByTestId(ATTACHMENT_ITEM_TEST_ID))[0]).toHaveAccessibleName(
+        const attachmentItems = await screen.findAllByTestId(ATTACHMENT_ITEM_TEST_ID);
+
+        expect(attachmentItems[0]).toHaveAccessibleName(
             'Download attachment Monobrand main logo black small 123.45 MB - png',
         );
     });
