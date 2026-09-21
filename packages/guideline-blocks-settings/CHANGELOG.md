@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.6
+
+### Patch Changes
+
+- [#1678](https://github.com/Frontify/brand-sdk/pull/1678) [`b2c2ec4`](https://github.com/Frontify/brand-sdk/commit/b2c2ec4e234c5454c4257c90516c43ba3e29e1e9) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Attachments): announce the attachment name on the download button
+  
+  The download button carried an `aria-label` that overrode its visible label, so screen readers announced "Download attachment" without saying which attachment. The action is now conveyed by screen-reader-only text in front of the attachment title, making both the action and its target audible.
+
 ## 3.0.5
 
 ### Patch Changes
