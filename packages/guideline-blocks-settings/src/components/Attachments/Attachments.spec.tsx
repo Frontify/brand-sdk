@@ -139,6 +139,18 @@ describe('Attachments', () => {
         expect(await screen.findAllByTestId(ATTACHMENT_ITEM_TEST_ID)).toHaveLength(3);
     });
 
+    it('should announce the download action and the attachment name on the attachment item', async () => {
+        renderAttachments({ items: [{ ...AssetDummy.with(1), title: 'Monobrand main logo black small' }] });
+
+        await openFlyout();
+
+        const attachmentItems = await screen.findAllByTestId(ATTACHMENT_ITEM_TEST_ID);
+
+        expect(attachmentItems[0]).toHaveAccessibleName(
+            'Download attachment Monobrand main logo black small 123.45 MB - png',
+        );
+    });
+
     it('should render a loading circle for an attachment item while it is being replaced', async () => {
         const appBridge = getAppBridgeBlockStub({ editorState: true });
 

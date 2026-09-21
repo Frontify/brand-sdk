@@ -72,7 +72,6 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
         return (
             <button
                 type="button"
-                aria-label="Download attachment"
                 data-test-id="attachments-item"
                 onClick={() => !selectedAsset && onDownload?.()}
                 ref={ref}
@@ -91,6 +90,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
                 </div>
                 <div className="tw-text-small tw-flex-1 tw-min-w-0">
                     <div className="tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis tw-font-bold tw-text-secondary group-hover:tw-text-container-secondary-on-secondary-container">
+                        <span className="tw-sr-only">Download attachment </span>
                         {item.title}
                     </div>
                     <div className="tw-text-secondary">{`${item.fileSizeHumanReadable} - ${item.extension}`}</div>
