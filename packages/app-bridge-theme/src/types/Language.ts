@@ -2,9 +2,15 @@
 
 export type Language = {
     /**
+     * @deprecated Use `locale` instead.
      * The language code in ISO 639-1 format.
      */
     isoCode: string;
+
+    /**
+     * The locale of the language.
+     */
+    locale: string;
 
     /**
      * The name of the language.
