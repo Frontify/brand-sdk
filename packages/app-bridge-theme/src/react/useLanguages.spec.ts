@@ -11,12 +11,14 @@ import { useLanguages } from './useLanguages';
 const INITIAL_LANGUAGES = [
     {
         isoCode: 'en',
+        locale: 'en-US',
         name: 'English',
         isDefault: true,
         isDraft: false,
     },
     {
         isoCode: 'de',
+        locale: 'de-DE',
         name: 'Deutsch',
         isDefault: false,
         isDraft: false,
@@ -25,18 +27,21 @@ const INITIAL_LANGUAGES = [
 const UPDATED_LANGUAGES = [
     {
         isoCode: 'en',
+        locale: 'en-US',
         name: 'English',
         isDefault: false,
         isDraft: false,
     },
     {
         isoCode: 'de',
+        locale: 'de-DE',
         name: 'Deutsch',
         isDefault: true,
         isDraft: false,
     },
     {
         isoCode: 'fr',
+        locale: 'fr-FR',
         name: 'Français',
         isDefault: false,
         isDraft: true,

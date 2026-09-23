@@ -1,5 +1,11 @@
 # @frontify/app-bridge-theme
 
+## 1.3.0
+
+### Minor Changes
+
+- [#1681](https://github.com/Frontify/brand-sdk/pull/1681) [`d38a728`](https://github.com/Frontify/brand-sdk/commit/d38a72859c85de9a27d1348cdacf01a98ed5fb46) Thanks [@anxobotana](https://github.com/anxobotana)! - AppBridgeTheme: Add `locale` field to the `Language` type as the replacement for `isoCode`, deprecated now
+
 ## 1.2.0
 
 ### Minor Changes
