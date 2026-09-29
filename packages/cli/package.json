@@ -39,7 +39,7 @@
         "conf": "^15.1.0",
         "esbuild": "^0.28.2",
         "fast-glob": "^3.3.3",
-        "fastify": "^5.12.4",
+        "fastify": "^5.12.5",
         "glob-to-regexp": "^0.4.1",
         "open": "^11.0.3",
         "picocolors": "^1.1.1",

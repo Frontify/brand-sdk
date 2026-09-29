@@ -300,7 +300,7 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       fastify:
-        specifier: ^5.12.4
+        specifier: ^5.12.5
         version: 5.12.5
       glob-to-regexp:
         specifier: ^0.4.1
