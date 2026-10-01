@@ -1,5 +1,13 @@
 # @frontify/app-bridge-theme
 
+## 1.4.0
+
+### Minor Changes
+
+- [#1688](https://github.com/Frontify/brand-sdk/pull/1688) [`cd819b4`](https://github.com/Frontify/brand-sdk/commit/cd819b4b47c199ce2d69ec7c2b066a538c7c7780) Thanks [@anxobotana](https://github.com/anxobotana)! - feat(appBridgeTheme): add link settings to `DocumentPageLinkNavigationItem`
+  
+  Adds `displayMode()`, `iconPosition()`, `customIconUrl()` and `shouldOpenInNewTab()`, aligned with `DocumentLinkNavigationItem`.
+
 ## 1.3.0
 
 ### Minor Changes
