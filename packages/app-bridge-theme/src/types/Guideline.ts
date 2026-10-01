@@ -112,6 +112,10 @@ export interface DocumentPageLinkNavigationItem {
     id(): number;
     title(language?: string): string;
     url(): string;
+    displayMode(): LinkSettingsDisplay;
+    iconPosition(): LinkSettingsIconPosition;
+    customIconUrl(): Nullable<string>;
+    shouldOpenInNewTab(): boolean;
     type: 'document-page-link';
 }
 
