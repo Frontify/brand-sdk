@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 6.2.8
+
+### Patch Changes
+
+- [#1685](https://github.com/Frontify/brand-sdk/pull/1685) [`80474c6`](https://github.com/Frontify/brand-sdk/commit/80474c6af5693c9f0be398bc487a8e61c5dd2314) Thanks [@renovate](https://github.com/apps/renovate)! - chore(deps): bump `fastify` to `^5.12.5`
+  
+  Picks up upstream security fixes in the local server used by the `login` command.
+
 ## 6.2.7
 
 ### Patch Changes

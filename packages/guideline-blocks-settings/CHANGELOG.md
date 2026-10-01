@@ -79,6 +79,11 @@
 ### Patch Changes
 
 - [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+## 3.0.7
+
+### Patch Changes
+
+- [#1687](https://github.com/Frontify/brand-sdk/pull/1687) [`bbd5eab`](https://github.com/Frontify/brand-sdk/commit/bbd5eabe4bae89b1844563f5bd0b566f9468249b) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.7.10`
 
 ## 3.0.6
 
