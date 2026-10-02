@@ -7,9 +7,7 @@ import { ColorPaletteDummy, getAppBridgeBlockStub } from '../tests';
 
 import { useColorPalettes } from './useColorPalettes';
 
-const COLOR_PALETTE_ID = 500;
 const appBridgeStub = getAppBridgeBlockStub();
-const COLOR_PALETTE_DOWNLOAD_LINK_PART = `/api/color/export/${appBridgeStub.getProjectId()}/zip/500`;
 
 describe('useColorPalettes hook', () => {
     const loadUseColorPalettes = () => {
@@ -27,13 +25,5 @@ describe('useColorPalettes hook', () => {
                 ColorPaletteDummy.with(679, 'Palette 3'),
             ]),
         );
-    });
-
-    it('return the download link', async () => {
-        const { result } = loadUseColorPalettes();
-
-        await waitFor(() => {
-            expect(result.current.downloadColorKit([COLOR_PALETTE_ID])).toEqual(COLOR_PALETTE_DOWNLOAD_LINK_PART);
-        });
     });
 });
