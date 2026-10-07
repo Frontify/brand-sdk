@@ -225,6 +225,11 @@ export const platformAppManifestSchemaV1 = object({
             }).optional(),
             assetCreation: assetCreationShape,
         }).optional(),
+        external: object({
+            assetChooser: object({
+                title: string().min(2).max(28),
+            }).optional(),
+        }).optional(),
     }).optional(),
     metadata: object({
         version: number().int(),
