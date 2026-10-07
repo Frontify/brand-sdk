@@ -1,5 +1,25 @@
 # @frontify/frontify-cli
 
+## 6.3.0
+
+### Minor Changes
+
+- [#1693](https://github.com/Frontify/brand-sdk/pull/1693) [`6833b33`](https://github.com/Frontify/brand-sdk/commit/6833b33a612255f73dd8a7737214e9461401bc81) Thanks [@SedukhinaPolina](https://github.com/SedukhinaPolina)! - feat: add the `external` surfaces category with an `assetChooser` surface to the platform app manifest schema
+  
+  Its `title` is now validated like other surface titles (2 to 28 characters).
+  
+  ```json
+  {
+      "surfaces": {
+          "external": {
+              "assetChooser": {
+                  "title": "My App"
+              }
+          }
+      }
+  }
+  ```
+
 ## 6.2.8
 
 ### Patch Changes
