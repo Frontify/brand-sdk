@@ -189,6 +189,8 @@ export const createDeployment = async (
                 ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
                 : manifestContent;
 
+        // Content block was the first app type that was introduced, thus there might be manifests without an explicit appType.
+        // This is why we treat manifests without an explicit appType as 'content-block'.
         const appType = manifestContent.appType ?? 'content-block';
 
         if (appType === 'content-block' || appType === 'theme') {
