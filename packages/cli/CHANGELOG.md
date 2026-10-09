@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.4.0
+
+### Minor Changes
+
+- [#1695](https://github.com/Frontify/brand-sdk/pull/1695) [`ae99c82`](https://github.com/Frontify/brand-sdk/commit/ae99c829aa15593f1327cd7956a790bfbe237d30) Thanks [@oliverschwendener](https://github.com/oliverschwendener)! - Add support for manifest validation for themes
+
 ## 6.3.0
 
 ### Minor Changes
