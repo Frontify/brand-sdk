@@ -128,15 +128,16 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
     };
 };
 
-export const validateBlockManifestOnServer = async (
+export const validateManifestOnServer = async (
     instanceUrl: string,
     accessToken: string,
+    appType: 'content-block' | 'theme',
     manifestContent: MarketplaceManifest,
 ): Promise<void> => {
     Logger.info('Validating the manifest against the Frontify Marketplace...');
     const httpClient = new HttpClient(instanceUrl);
     try {
-        const result = await verifyManifestOnServer(httpClient, accessToken, 'content-block', manifestContent);
+        const result = await verifyManifestOnServer(httpClient, accessToken, appType, manifestContent);
         if (!result.data.valid) {
             Logger.error('The manifest is invalid:', result.data.error);
             process.exit(-1);
@@ -188,8 +189,12 @@ export const createDeployment = async (
                 ? verifyManifest(manifestContent, platformAppManifestSchemaV1)
                 : manifestContent;
 
-        if ((manifestContent.appType ?? 'content-block') === 'content-block') {
-            await validateBlockManifestOnServer(instanceUrl, accessToken, manifestContent);
+        // Content block was the first app type that was introduced, thus there might be manifests without an explicit appType.
+        // This is why we treat manifests without an explicit appType as 'content-block'.
+        const appType = manifestContent.appType ?? 'content-block';
+
+        if (appType === 'content-block' || appType === 'theme') {
+            await validateManifestOnServer(instanceUrl, accessToken, appType, manifestContent);
         }
 
         await verifyCode(noVerify);
