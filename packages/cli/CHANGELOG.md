@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 6.4.1
+
+### Patch Changes
+
+- [#1702](https://github.com/Frontify/brand-sdk/pull/1702) [`986b091`](https://github.com/Frontify/brand-sdk/commit/986b091200f1e7da3fb707460684e7f8827fff4a) Thanks [@julianiff](https://github.com/julianiff)! - chore(templates): update the platform app templates to current tooling
+  
+  Apps created with `frontify-cli create` from a platform app template now install without the peer dependency conflict and the ESLint and install-script warnings. They ship with Fondue 14 (beta), ESLint 10, TypeScript 6 and `@frontify/app-bridge-app` 0.3. The `typecheck` script, and the type check that `deploy` runs, now check the files in `src`; before this change they checked nothing.
+
 ## 6.4.0
 
 ### Minor Changes
