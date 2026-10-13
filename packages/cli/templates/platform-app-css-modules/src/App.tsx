@@ -8,7 +8,7 @@ export const App = () => {
     return (
         <div className={style.container}>
             A Frontify Platform App in React with CSS Modules
-            <span className={style.text}>Entrypoint: {context.surface}</span>.
+            <span className={style.text}>Entrypoint: {context.surface}</span>
         </div>
     );
 };

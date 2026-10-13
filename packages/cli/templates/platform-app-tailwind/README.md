@@ -12,7 +12,7 @@ For more details on how to customize and extend this app, please refer to the [d
 
 ### Requirements:
 
--   Node 20
+-   Node 22 or newer
 -   Access to a Frontify Instance.
 
 ### Setup
