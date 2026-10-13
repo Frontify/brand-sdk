@@ -1,5 +1,13 @@
 # @frontify/app-bridge-app
 
+## 0.3.1
+
+### Patch Changes
+
+- [#1697](https://github.com/Frontify/brand-sdk/pull/1697) [`94edb51`](https://github.com/Frontify/brand-sdk/commit/94edb51af60582b3c271e572411540cb306f6835) Thanks [@SedukhinaPolina](https://github.com/SedukhinaPolina)! - fix: send the connection handshake to the embedding window instead of the top window
+  
+  Apps now connect when the platform hosting them is itself embedded in an iframe, such as the asset chooser inside another page. The handshake also no longer reaches the top-level page.
+
 ## 0.3.0
 
 ### Minor Changes
