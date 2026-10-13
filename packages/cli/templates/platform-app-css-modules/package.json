@@ -10,28 +10,37 @@
         "lint:fix": "eslint . --fix",
         "typecheck": "tsc --noEmit"
     },
-    "peerDependencies": {
-        "zustand": "4.5.5"
-    },
     "dependencies": {
-        "@frontify/app-bridge-app": "^0.2.5",
-        "@frontify/fondue": "^13.7.0",
+        "@frontify/app-bridge-app": "^0.3.0",
+        "@frontify/fondue": "^14.0.0-beta.0",
         "@frontify/platform-app": "^0.1.26",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
     },
     "devDependencies": {
-        "@eslint/js": "^9.39.1",
-        "@frontify/frontify-cli": "^6.2.0",
-        "@types/react": "^18.3.27",
+        "@eslint/js": "^10.0.1",
+        "@frontify/frontify-cli": "^6.4.0",
+        "@types/react": "^18.3.31",
         "@types/react-dom": "^18.3.7",
-        "eslint": "^9.39.1",
-        "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-        "eslint-plugin-react-refresh": "^0.4.24",
-        "globals": "^16.5.0",
-        "prettier": "^3.8.3",
-        "terser": "^5.46.1",
-        "typescript": "^5.9.3",
-        "typescript-eslint": "^8.48.1"
+        "eslint": "^10.12.0",
+        "eslint-plugin-react-hooks": "^7.1.1",
+        "eslint-plugin-react-refresh": "^0.5.7",
+        "globals": "^17.13.0",
+        "prettier": "^3.9.10",
+        "terser": "^5.51.2",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.71.1",
+        "vite": "^8.3.4"
+    },
+    "overrides": {
+        "@udecode/plate-common": "36.5.9",
+        "zustand": "4.5.7"
+    },
+    "resolutions": {
+        "@udecode/plate-common": "36.5.9",
+        "zustand": "4.5.7"
+    },
+    "allowScripts": {
+        "esbuild": true
     }
 }
