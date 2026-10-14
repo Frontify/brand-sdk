@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 6.4.2
+
+### Patch Changes
+
+- [#1705](https://github.com/Frontify/brand-sdk/pull/1705) [`e17334e`](https://github.com/Frontify/brand-sdk/commit/e17334e08c80bad63494de1c3a5c1ff43f3cbb12) Thanks [@ragi96](https://github.com/ragi96)! - fix(templates): keep the rich text editor working in newly created blocks
+  
+  Blocks created with `frontify-cli create` crashed with `Cannot read properties of undefined (reading 'slice')` as soon as a rich text editor was switched to edit mode. The block templates now pin the Slate packages that Fondue's rich text editor expects, so new blocks render and edit rich text again. They also ship with `@frontify/app-bridge` `^3.12.10` and `@frontify/guideline-blocks-settings` `^3.0.7` (previously `3.12.9` and `2.1.11`) and current tooling. Installing with npm no longer warns about unapproved install scripts, and installing with pnpm no longer fails on them.
+
 ## 6.4.1
 
 ### Patch Changes
