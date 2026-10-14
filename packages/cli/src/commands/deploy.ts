@@ -2,9 +2,9 @@
 
 import { join } from 'node:path';
 
-import fastGlob from 'fast-glob';
 import open from 'open';
 import pc from 'picocolors';
+import { escapePath, glob } from 'tinyglobby';
 
 import { type HttpClientError } from '../errors/HttpClientError';
 import {
@@ -33,12 +33,16 @@ type Options = {
     instance?: string;
 };
 
-const makeFilesDict = async (glob: string, ignoreGlobs?: string[]) => {
-    const folderFiles = await fastGlob(`${fastGlob.convertPathToPattern(glob)}/**`, { ignore: ignoreGlobs, dot: true });
-    const folderFilenames = folderFiles.map((filePath) => filePath.replace(`${glob}/`, ''));
+const makeFilesDict = async (folderPath: string, ignoreGlobs?: string[]) => {
+    const folderFilenames = await glob('**', {
+        cwd: folderPath,
+        ignore: ignoreGlobs,
+        dot: true,
+        expandDirectories: false,
+    });
 
-    return folderFilenames.reduce((stack, filename, index) => {
-        stack[`/${filename}`] = readFileAsBase64(folderFiles[index]);
+    return folderFilenames.reduce((stack, filename) => {
+        stack[`/${filename}`] = readFileAsBase64(join(folderPath, filename));
         return stack;
     }, {});
 };
@@ -81,9 +85,9 @@ export const verifyCode = async (noVerify: boolean) => {
     Logger.info('Performing type checks...');
     await promiseExec('npx tsc --noEmit');
 
-    const eslintConfigFiles = await fastGlob(
+    const eslintConfigFiles = await glob(
         ['.eslintrc', '.eslintrc.{js,cjs,mjs,json,yaml,yml}', 'eslint.config.{js,cjs,mjs,ts,cts,mts}'],
-        { dot: true },
+        { dot: true, expandDirectories: false },
     );
 
     if (eslintConfigFiles.length === 0) {
@@ -96,22 +100,14 @@ export const verifyCode = async (noVerify: boolean) => {
 };
 
 export const collectFiles = async (projectPath: string, distPath: string) => {
-    const buildFilesToIgnore = BUILD_FILE_BLOCK_LIST.map((pattern) => {
-        if (pattern.includes('*')) {
-            return `${fastGlob.convertPathToPattern(projectPath)}/${pattern}`;
-        }
-        return fastGlob.convertPathToPattern(`${projectPath}/${pattern}`);
-    });
-
     const gitignoreEntries = readFileLinesAsArray(join(projectPath, '.gitignore')).filter(
         (entry) => entry !== 'manifest.json',
     );
 
+    // Patterns are relative to the project root, so a leading slash (root-anchored in .gitignore) is dropped.
     const sourceFilesToIgnore = [...gitignoreEntries, ...SOURCE_FILE_BLOCK_LIST].map((path) => {
-        if (path.includes('*')) {
-            return `${projectPath}/${path}`;
-        }
-        return fastGlob.convertPathToPattern(`${projectPath}/${path}`);
+        const relativePath = path.replace(/^\/+/, '');
+        return relativePath.includes('*') ? relativePath : escapePath(relativePath);
     });
 
     const packageJsonContent = reactiveJson<{ dependencies?: Record<string, string> }>(
@@ -119,11 +115,8 @@ export const collectFiles = async (projectPath: string, distPath: string) => {
     );
 
     return {
-        build_files: await makeFilesDict(
-            fastGlob.convertPathToPattern(`${projectPath}/${distPath}`),
-            buildFilesToIgnore,
-        ),
-        source_files: await makeFilesDict(fastGlob.convertPathToPattern(projectPath), sourceFilesToIgnore),
+        build_files: await makeFilesDict(join(projectPath, distPath), BUILD_FILE_BLOCK_LIST),
+        source_files: await makeFilesDict(projectPath, sourceFilesToIgnore),
         dependencies: packageJsonContent?.dependencies || {},
     };
 };

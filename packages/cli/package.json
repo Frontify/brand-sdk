@@ -38,12 +38,12 @@
         "cac": "^7.0.0",
         "conf": "^15.1.0",
         "esbuild": "^0.28.2",
-        "fast-glob": "^3.3.3",
         "fastify": "^5.12.5",
         "glob-to-regexp": "^0.4.1",
         "open": "^11.0.3",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
+        "tinyglobby": "^0.2.17",
         "vite": "^8.3.0",
         "vite-plugin-externals": "^0.6.2",
         "zod": "^3.25.76"

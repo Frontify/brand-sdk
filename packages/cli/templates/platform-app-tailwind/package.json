@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "@frontify/app-bridge-app": "^0.3.1",
-        "@frontify/fondue": "^14.0.0-beta.0",
         "@frontify/platform-app": "^0.1.26",
         "react": "^18.3.1",
         "react-dom": "^18.3.1"
@@ -20,28 +19,19 @@
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@frontify/frontify-cli": "^6.4.0",
+        "@tailwindcss/postcss": "^4.3.3",
         "@types/react": "^18.3.31",
         "@types/react-dom": "^18.3.7",
-        "autoprefixer": "^10.6.1",
         "eslint": "^10.12.0",
         "eslint-plugin-react-hooks": "^7.1.1",
         "eslint-plugin-react-refresh": "^0.5.7",
         "globals": "^17.13.0",
-        "postcss": "^8.5.29",
         "prettier": "^3.9.10",
-        "tailwindcss": "^3.4.19",
+        "tailwindcss": "^4.3.3",
         "terser": "^5.51.2",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.71.1",
         "vite": "^8.3.4"
-    },
-    "overrides": {
-        "@udecode/plate-common": "36.5.9",
-        "zustand": "4.5.7"
-    },
-    "resolutions": {
-        "@udecode/plate-common": "36.5.9",
-        "zustand": "4.5.7"
     },
     "allowScripts": {
         "esbuild": true

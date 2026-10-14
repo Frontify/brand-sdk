@@ -4,7 +4,3 @@ onlyBuiltDependencies:
   - esbuild
 allowBuilds:
   esbuild: true
-# Keeps Fondue's rich text editor dependencies on compatible versions (npm and yarn read these from package.json).
-overrides:
-  '@udecode/plate-common': 36.5.9
-  zustand: 4.5.7

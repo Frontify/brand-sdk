@@ -185,6 +185,35 @@ describe('Deploy command helpers', () => {
             const sourceFilePaths = Object.keys(result.source_files);
             expect(sourceFilePaths.some((p) => p.includes('node_modules'))).toBe(false);
         });
+
+        test('should exclude gitignored folders written with a leading or trailing slash', async () => {
+            writeFileSync(join(tempDir, '.gitignore'), 'coverage/\n/out\n');
+            mkdirSync(join(tempDir, 'coverage'), { recursive: true });
+            mkdirSync(join(tempDir, 'out'), { recursive: true });
+            writeFileSync(join(tempDir, 'coverage', 'lcov.info'), '');
+            writeFileSync(join(tempDir, 'out', 'build.txt'), '');
+
+            const result = await collectFiles(tempDir, 'dist');
+
+            expect(Object.keys(result.source_files).sort()).toEqual(['/.gitignore', '/package.json', '/src/index.ts']);
+        });
+
+        test('should return project relative paths when the project path contains glob characters', async () => {
+            const specialDir = join(tempDir, 'my app (v2) [x]');
+            mkdirSync(join(specialDir, 'dist'), { recursive: true });
+            mkdirSync(join(specialDir, 'src'), { recursive: true });
+            writeFileSync(join(specialDir, 'package.json'), '{}');
+            writeFileSync(join(specialDir, '.gitignore'), '*.log\n');
+            writeFileSync(join(specialDir, 'debug.log'), '');
+            writeFileSync(join(specialDir, 'dist', 'index.js'), '');
+            writeFileSync(join(specialDir, 'dist', 'index.js.map'), '');
+            writeFileSync(join(specialDir, 'src', 'index.ts'), '');
+
+            const result = await collectFiles(specialDir, 'dist');
+
+            expect(Object.keys(result.build_files)).toEqual(['/index.js']);
+            expect(Object.keys(result.source_files).sort()).toEqual(['/.gitignore', '/package.json', '/src/index.ts']);
+        });
     });
 
     describe('handleDeployError', () => {
