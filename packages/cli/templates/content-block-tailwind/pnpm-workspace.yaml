@@ -1,0 +1,16 @@
+# Only used by pnpm. Safe to delete if you install with npm or yarn.
+# Allows the esbuild and unrs-resolver postinstall scripts (pnpm v10: onlyBuiltDependencies, v11: allowBuilds).
+onlyBuiltDependencies:
+    - esbuild
+    - unrs-resolver
+allowBuilds:
+    esbuild: true
+    unrs-resolver: true
+# Keeps Fondue's rich text editor dependencies on compatible versions (npm and yarn read these from package.json).
+overrides:
+    '@udecode/plate-common': 36.5.9
+    zustand: 4.5.7
+    slate: 0.102.0
+    slate-react: 0.102.0
+    slate-history: 0.100.0
+    slate-hyperscript: 0.100.0
