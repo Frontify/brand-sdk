@@ -5,9 +5,22 @@ import { useEffect, useState } from 'react';
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 
 export const useEditorState = (appBridge: AppBridgeBlock): boolean => {
-    const [editorState, setEditorState] = useState(appBridge.getEditorState());
+    const [editorState, setEditorState] = useState(
+        () => appBridge.context('isEditing').get() ?? appBridge.getEditorState(),
+    );
 
     useEffect(() => {
+        const editorStateContext = appBridge.context('isEditing');
+        const hostEditorState = editorStateContext.get();
+
+        // Hosts that publish the editor state notify all blocks once, without a DOM observer per block
+        if (typeof hostEditorState === 'boolean') {
+            setEditorState(hostEditorState);
+            return editorStateContext.subscribe((nextEditorState) => {
+                setEditorState(nextEditorState ?? appBridge.getEditorState());
+            });
+        }
+
         const setFromEvent = () => setEditorState(appBridge.getEditorState());
 
         const mutationObserver = new MutationObserver((mutationsList) => {
@@ -23,8 +36,7 @@ export const useEditorState = (appBridge: AppBridgeBlock): boolean => {
         return () => {
             mutationObserver.disconnect();
         };
-        // oxlint-disable-next-line @eslint-react/exhaustive-deps
-    }, []);
+    }, [appBridge]);
 
     return editorState;
 };
