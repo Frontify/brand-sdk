@@ -64,7 +64,7 @@ export type BlockContext = {
     isAuthenticated: boolean;
     isNewlyInserted: boolean;
     assets?: Record<string, Asset[]>;
-    isEditing?: boolean;
+    isEditing: boolean;
 };
 
 export type BlockEvent = EventNameValidator<

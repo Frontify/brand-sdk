@@ -180,7 +180,7 @@ export const getAppBridgeBlockStub = ({
                         };
                     case 'isEditing':
                         return {
-                            get: () => undefined,
+                            get: () => editorState,
                             subscribe: () => () => {},
                         };
                     case 'assets':

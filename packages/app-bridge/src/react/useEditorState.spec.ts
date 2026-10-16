@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { act, cleanup, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import { getAppBridgeBlockStub } from '../tests';
 
@@ -31,8 +31,6 @@ const createHostEditorState = (initialEditorState: boolean) => {
 
 describe('useEditorState', () => {
     afterEach(() => {
-        vi.restoreAllMocks();
-        document.body.className = '';
         cleanup();
     });
 
@@ -57,16 +55,6 @@ describe('useEditorState', () => {
         expect(result.current).toBe(true);
     });
 
-    it('should not observe the body when the host publishes the editor state', () => {
-        const observeSpy = vi.spyOn(MutationObserver.prototype, 'observe');
-        const appBridge = getAppBridgeBlockStub();
-        appBridge.context.withArgs('isEditing').returns(createHostEditorState(false).context);
-
-        renderHook(() => useEditorState(appBridge));
-
-        expect(observeSpy).not.toHaveBeenCalled();
-    });
-
     it('should unsubscribe from the host context on unmount', () => {
         const appBridge = getAppBridgeBlockStub();
         const host = createHostEditorState(false);
@@ -79,15 +67,11 @@ describe('useEditorState', () => {
         expect(host.subscriberCount()).toBe(0);
     });
 
-    it('should fall back to the body class when the host does not publish the editor state', async () => {
-        const appBridge = getAppBridgeBlockStub({ editorState: false });
+    it('should read the editor state of the block stub', () => {
+        const appBridge = getAppBridgeBlockStub({ editorState: true });
 
         const { result } = renderHook(() => useEditorState(appBridge));
-        expect(result.current).toBe(false);
 
-        appBridge.getEditorState.returns(true);
-        document.body.classList.add('editor-enabled');
-
-        await waitFor(() => expect(result.current).toBe(true));
+        expect(result.current).toBe(true);
     });
 });
