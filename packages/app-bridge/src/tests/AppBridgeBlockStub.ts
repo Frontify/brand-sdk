@@ -178,6 +178,11 @@ export const getAppBridgeBlockStub = ({
                         return {
                             get: () => isNewlyInserted,
                         };
+                    case 'isEditing':
+                        return {
+                            get: () => editorState,
+                            subscribe: () => () => {},
+                        };
                     case 'assets':
                         return {
                             get: () => blockAssets,
