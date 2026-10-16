@@ -1,42 +1,40 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 
+// Fallback for hosts that don't publish `isEditing`: they toggle the `editor-enabled` class on `<body>`
+const observeBodyClass = (onChange: () => void): (() => void) => {
+    const mutationObserver = new MutationObserver((mutationsList) => {
+        if (mutationsList.some((mutation) => mutation.attributeName === 'class')) {
+            onChange();
+        }
+    });
+    mutationObserver.observe(document.body, { attributes: true });
+
+    return () => mutationObserver.disconnect();
+};
+
 export const useEditorState = (appBridge: AppBridgeBlock): boolean => {
-    const [editorState, setEditorState] = useState(
-        () => appBridge.context('isEditing').get() ?? appBridge.getEditorState(),
+    const subscribe = useCallback(
+        (onChange: () => void) => {
+            const editorStateContext = appBridge.context('isEditing');
+
+            // Hosts that publish the editor state notify every block from one source, without a DOM observer per block
+            if (typeof editorStateContext.get() === 'boolean') {
+                return editorStateContext.subscribe(onChange);
+            }
+
+            return observeBodyClass(onChange);
+        },
+        [appBridge],
     );
 
-    useEffect(() => {
-        const editorStateContext = appBridge.context('isEditing');
-        const hostEditorState = editorStateContext.get();
+    const getEditorState = useCallback(
+        () => appBridge.context('isEditing').get() ?? appBridge.getEditorState(),
+        [appBridge],
+    );
 
-        // Hosts that publish the editor state notify all blocks once, without a DOM observer per block
-        if (typeof hostEditorState === 'boolean') {
-            setEditorState(hostEditorState);
-            return editorStateContext.subscribe((nextEditorState) => {
-                setEditorState(nextEditorState ?? appBridge.getEditorState());
-            });
-        }
-
-        const setFromEvent = () => setEditorState(appBridge.getEditorState());
-
-        const mutationObserver = new MutationObserver((mutationsList) => {
-            for (const mutation of mutationsList) {
-                if (mutation.attributeName === 'class') {
-                    setFromEvent();
-                }
-            }
-        });
-
-        mutationObserver.observe(document.body, { attributes: true });
-
-        return () => {
-            mutationObserver.disconnect();
-        };
-    }, [appBridge]);
-
-    return editorState;
+    return useSyncExternalStore(subscribe, getEditorState);
 };

@@ -7,7 +7,7 @@ import { getAppBridgeBlockStub } from '../tests';
 
 import { useEditorState } from './useEditorState';
 
-const publishEditorState = (initialEditorState: boolean) => {
+const createHostEditorState = (initialEditorState: boolean) => {
     let editorState = initialEditorState;
     const subscribers = new Set<(nextEditorState: boolean) => void>();
 
@@ -38,7 +38,7 @@ describe('useEditorState', () => {
 
     it('should read the editor state from the host context', () => {
         const appBridge = getAppBridgeBlockStub({ editorState: false });
-        const host = publishEditorState(true);
+        const host = createHostEditorState(true);
         appBridge.context.withArgs('isEditing').returns(host.context);
 
         const { result } = renderHook(() => useEditorState(appBridge));
@@ -48,7 +48,7 @@ describe('useEditorState', () => {
 
     it('should update when the host publishes a new editor state', () => {
         const appBridge = getAppBridgeBlockStub();
-        const host = publishEditorState(false);
+        const host = createHostEditorState(false);
         appBridge.context.withArgs('isEditing').returns(host.context);
 
         const { result } = renderHook(() => useEditorState(appBridge));
@@ -60,7 +60,7 @@ describe('useEditorState', () => {
     it('should not observe the body when the host publishes the editor state', () => {
         const observeSpy = vi.spyOn(MutationObserver.prototype, 'observe');
         const appBridge = getAppBridgeBlockStub();
-        appBridge.context.withArgs('isEditing').returns(publishEditorState(false).context);
+        appBridge.context.withArgs('isEditing').returns(createHostEditorState(false).context);
 
         renderHook(() => useEditorState(appBridge));
 
@@ -69,7 +69,7 @@ describe('useEditorState', () => {
 
     it('should unsubscribe from the host context on unmount', () => {
         const appBridge = getAppBridgeBlockStub();
-        const host = publishEditorState(false);
+        const host = createHostEditorState(false);
         appBridge.context.withArgs('isEditing').returns(host.context);
 
         const { unmount } = renderHook(() => useEditorState(appBridge));
