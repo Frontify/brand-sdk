@@ -179,7 +179,6 @@ export const getAppBridgeBlockStub = ({
                             get: () => isNewlyInserted,
                         };
                     case 'isEditing':
-                        // Not published, so `useEditorState` keeps reading the stubbed `getEditorState`
                         return {
                             get: () => undefined,
                             subscribe: () => () => {},

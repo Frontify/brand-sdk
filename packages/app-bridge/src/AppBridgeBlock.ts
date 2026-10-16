@@ -64,10 +64,6 @@ export type BlockContext = {
     isAuthenticated: boolean;
     isNewlyInserted: boolean;
     assets?: Record<string, Asset[]>;
-    /**
-     * Whether the block is in edit mode, published by the host. `useEditorState` falls back to observing
-     * `document.body` when it is not provided.
-     */
     isEditing?: boolean;
 };
 
