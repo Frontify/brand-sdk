@@ -1,9 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue/rte';
-import { createPortal } from 'react-dom';
 
 import { BlockStyles } from '../../../../../RichTextEditor/plugins/styles';
+import { ScopedThemePortal } from '../../../ScopedThemePortal';
 import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
 import { EditModal } from './EditButtonModal/EditModal';
@@ -35,33 +35,27 @@ export const CustomFloatingButton = () => {
 
     return (
         <>
-            {isOpen &&
-                mode === 'insert' &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={insertRef}
-                        {...insertProps}
-                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
-                    >
-                        {input}
-                    </div>,
-                    document.body,
-                )}
+            {isOpen && mode === 'insert' && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={insertRef}
+                    {...insertProps}
+                    style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                >
+                    {input}
+                </ScopedThemePortal>
+            )}
 
-            {isOpen &&
-                mode === 'edit' &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={editRef}
-                        {...editProps}
-                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
-                    >
-                        {editContent}
-                    </div>,
-                    document.body,
-                )}
+            {isOpen && mode === 'edit' && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={editRef}
+                    {...editProps}
+                    style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                >
+                    {editContent}
+                </ScopedThemePortal>
+            )}
         </>
     );
 };

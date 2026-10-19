@@ -11,9 +11,9 @@ import {
     useFloatingLinkInsertState,
 } from '@frontify/fondue/rte';
 import { type CSSProperties } from 'react';
-import { createPortal } from 'react-dom';
 
 import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
+import { ScopedThemePortal } from '../../ScopedThemePortal';
 
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
@@ -59,32 +59,27 @@ export const CustomFloatingLink = () => {
 
     return (
         <>
-            {insertState.isOpen &&
-                !editState.isOpen &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={insertRef}
-                        {...insertProps}
-                        style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
-                    >
-                        {input}
-                    </div>,
-                    document.body,
-                )}
+            {insertState.isOpen && !editState.isOpen && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={insertRef}
+                    {...insertProps}
+                    style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                >
+                    {input}
+                </ScopedThemePortal>
+            )}
 
-            {editState.isOpen &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={editRef}
-                        {...editProps}
-                        style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
-                    >
-                        {editContent}
-                    </div>,
-                    document.body,
-                )}
+            {editState.isOpen && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={editRef}
+                    {...editProps}
+                    style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                >
+                    {editContent}
+                </ScopedThemePortal>
+            )}
         </>
     );
 };
