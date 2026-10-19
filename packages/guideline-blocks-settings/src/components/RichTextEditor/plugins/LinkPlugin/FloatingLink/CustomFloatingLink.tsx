@@ -49,7 +49,7 @@ export const CustomFloatingLink = () => {
     const { anchorRef, themeVariables } = useScopedThemeVariables(insertState.isOpen || editState.isOpen);
 
     if (hidden) {
-        return <span ref={anchorRef} hidden />;
+        return <span ref={anchorRef} style={{ display: 'none' }} />;
     }
 
     const input = <InsertLinkModal />;
@@ -61,7 +61,7 @@ export const CustomFloatingLink = () => {
 
     return (
         <>
-            <span ref={anchorRef} hidden />
+            <span ref={anchorRef} style={{ display: 'none' }} />
             {insertState.isOpen &&
                 !editState.isOpen &&
                 createPortal(

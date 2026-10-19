@@ -16,7 +16,7 @@ const FloatingComponent = ({ isOpen }: { isOpen: boolean }): ReactElement => {
 
     return (
         <>
-            <span ref={anchorRef} data-test-id="anchor" hidden />
+            <span ref={anchorRef} data-test-id="anchor" style={{ display: 'none' }} />
             {isOpen ? createPortal(<div data-test-id="portaled" style={themeVariables} />, document.body) : null}
         </>
     );

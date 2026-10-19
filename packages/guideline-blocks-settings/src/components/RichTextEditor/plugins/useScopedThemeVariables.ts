@@ -44,7 +44,7 @@ const readThemeVariables = (element: Element): CSSProperties => {
 
 /**
  * Floating modals are portaled to `document.body`, which detaches them from theme variables
- * scoped to an ancestor of the editor (e.g. a section's color scheme). Render `anchorRef` on an
+ * scoped to an ancestor of the editor (e.g. a section's color scheme). Render `anchorRef` on a non-displayed
  * element inside the editor tree and spread `themeVariables` onto the portaled wrapper so the
  * modal resolves the same theme variables as the editor.
  */

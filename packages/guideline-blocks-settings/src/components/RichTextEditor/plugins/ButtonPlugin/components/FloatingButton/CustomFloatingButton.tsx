@@ -37,7 +37,7 @@ export const CustomFloatingButton = () => {
 
     return (
         <>
-            <span ref={anchorRef} hidden />
+            <span ref={anchorRef} style={{ display: 'none' }} />
             {isOpen &&
                 mode === 'insert' &&
                 createPortal(
