@@ -30,7 +30,9 @@ export const CustomFloatingButton = () => {
     const isOpen = state.isOpen(editor.id);
     const isEditing = state.isEditing();
     const mode = state.mode();
-    const { anchorRef, themeVariables } = useScopedThemeVariables(isOpen);
+    // `reset()` closes the modal by clearing `mode` but keeps `openEditorId`, so `isOpen` alone stays true.
+    const isVisible = isOpen && (mode === 'insert' || mode === 'edit');
+    const { anchorRef, themeVariables } = useScopedThemeVariables(isVisible);
 
     const input = <InsertButtonModal />;
     const editContent = isEditing ? input : <EditModal />;

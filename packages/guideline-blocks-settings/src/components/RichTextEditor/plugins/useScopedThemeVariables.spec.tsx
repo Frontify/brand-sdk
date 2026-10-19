@@ -10,6 +10,9 @@ import { useScopedThemeVariables } from './useScopedThemeVariables';
 const PRIMARY_BACKGROUND = '--f-theme-settings-button-primary-background-color';
 const SECONDARY_COLOR = '--f-theme-settings-button-secondary-color';
 const SCOPED_PRIMARY_BACKGROUND = 'rgb(255, 0, 0)';
+const CHANGED_PRIMARY_BACKGROUND = 'rgb(0, 0, 255)';
+
+let scopedPrimaryBackground = SCOPED_PRIMARY_BACKGROUND;
 
 const FloatingComponent = ({ isOpen }: { isOpen: boolean }): ReactElement => {
     const { anchorRef, themeVariables } = useScopedThemeVariables(isOpen);
@@ -24,6 +27,7 @@ const FloatingComponent = ({ isOpen }: { isOpen: boolean }): ReactElement => {
 
 describe('useScopedThemeVariables', () => {
     beforeEach(() => {
+        scopedPrimaryBackground = SCOPED_PRIMARY_BACKGROUND;
         // jsdom does not inherit custom properties, so resolve what a browser would at the anchor.
         const getComputedStyle = window.getComputedStyle.bind(window);
         vi.spyOn(window, 'getComputedStyle').mockImplementation((element) => {
@@ -33,7 +37,7 @@ describe('useScopedThemeVariables', () => {
             }
             return {
                 ...computedStyle,
-                getPropertyValue: (name: string) => (name === PRIMARY_BACKGROUND ? SCOPED_PRIMARY_BACKGROUND : ''),
+                getPropertyValue: (name: string) => (name === PRIMARY_BACKGROUND ? scopedPrimaryBackground : ''),
             };
         });
     });
@@ -57,6 +61,18 @@ describe('useScopedThemeVariables', () => {
 
         expect(screen.getByTestId('portaled').style.getPropertyValue(PRIMARY_BACKGROUND)).toBe(
             SCOPED_PRIMARY_BACKGROUND,
+        );
+    });
+
+    it('reads the theme variables again when the modal reopens after the scope changed', () => {
+        const { rerender } = render(<FloatingComponent isOpen />);
+        rerender(<FloatingComponent isOpen={false} />);
+
+        scopedPrimaryBackground = CHANGED_PRIMARY_BACKGROUND;
+        rerender(<FloatingComponent isOpen />);
+
+        expect(screen.getByTestId('portaled').style.getPropertyValue(PRIMARY_BACKGROUND)).toBe(
+            CHANGED_PRIMARY_BACKGROUND,
         );
     });
 

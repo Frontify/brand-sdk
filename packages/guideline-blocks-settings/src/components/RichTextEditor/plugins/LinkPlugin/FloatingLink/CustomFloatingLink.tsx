@@ -4,6 +4,7 @@ import {
     type LinkFloatingToolbarState,
     type UseVirtualFloatingOptions,
     flip,
+    floatingLinkSelectors,
     offset,
     useFloatingLinkEdit,
     useFloatingLinkEditState,
@@ -46,7 +47,9 @@ export const CustomFloatingLink = () => {
     });
 
     const { props: editProps, ref: editRef, editButtonProps, unlinkButtonProps } = useFloatingLinkEdit(editState);
-    const { anchorRef, themeVariables } = useScopedThemeVariables(insertState.isOpen || editState.isOpen);
+    // `reset()` closes the insert modal by clearing `mode` but keeps it open for the editor, so check the mode too.
+    const isInsertVisible = insertState.isOpen && floatingLinkSelectors.mode() === 'insert';
+    const { anchorRef, themeVariables } = useScopedThemeVariables(isInsertVisible || editState.isOpen);
 
     if (hidden) {
         return <span ref={anchorRef} style={{ display: 'none' }} />;
