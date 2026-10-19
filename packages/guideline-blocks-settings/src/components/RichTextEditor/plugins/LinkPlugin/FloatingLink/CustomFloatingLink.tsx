@@ -47,9 +47,8 @@ export const CustomFloatingLink = () => {
     });
 
     const { props: editProps, ref: editRef, editButtonProps, unlinkButtonProps } = useFloatingLinkEdit(editState);
-    // `reset()` closes the insert modal by clearing `mode` but keeps it open for the editor, so check the mode too.
-    const isInsertVisible = insertState.isOpen && floatingLinkSelectors.mode() === 'insert';
-    const { anchorRef, themeVariables } = useScopedThemeVariables(isInsertVisible || editState.isOpen);
+    const isModalVisible = (insertState.isOpen && floatingLinkSelectors.mode() === 'insert') || editState.isOpen;
+    const { anchorRef, themeVariables } = useScopedThemeVariables(isModalVisible);
 
     if (hidden) {
         return <span ref={anchorRef} style={{ display: 'none' }} />;
