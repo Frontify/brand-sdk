@@ -14,6 +14,7 @@ import { type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 
 import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
+import { useScopedThemeVariables } from '../../useScopedThemeVariables';
 
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
@@ -45,9 +46,10 @@ export const CustomFloatingLink = () => {
     });
 
     const { props: editProps, ref: editRef, editButtonProps, unlinkButtonProps } = useFloatingLinkEdit(editState);
+    const { anchorRef, themeVariables } = useScopedThemeVariables(insertState.isOpen || editState.isOpen);
 
     if (hidden) {
-        return null;
+        return <span ref={anchorRef} hidden />;
     }
 
     const input = <InsertLinkModal />;
@@ -59,6 +61,7 @@ export const CustomFloatingLink = () => {
 
     return (
         <>
+            <span ref={anchorRef} hidden />
             {insertState.isOpen &&
                 !editState.isOpen &&
                 createPortal(
@@ -66,7 +69,11 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                        style={{
+                            ...themeVariables,
+                            ...(insertProps.style as CSSProperties),
+                            ...BlockStyles[TextStyles.p],
+                        }}
                     >
                         {input}
                     </div>,
@@ -79,7 +86,11 @@ export const CustomFloatingLink = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                        style={{
+                            ...themeVariables,
+                            ...(editProps.style as CSSProperties),
+                            ...BlockStyles[TextStyles.p],
+                        }}
                     >
                         {editContent}
                     </div>,

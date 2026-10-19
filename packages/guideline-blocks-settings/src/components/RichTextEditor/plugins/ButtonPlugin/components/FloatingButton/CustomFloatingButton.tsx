@@ -4,6 +4,7 @@ import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef 
 import { createPortal } from 'react-dom';
 
 import { BlockStyles } from '../../../../../RichTextEditor/plugins/styles';
+import { useScopedThemeVariables } from '../../../useScopedThemeVariables';
 import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
 import { EditModal } from './EditButtonModal/EditModal';
@@ -29,12 +30,14 @@ export const CustomFloatingButton = () => {
     const isOpen = state.isOpen(editor.id);
     const isEditing = state.isEditing();
     const mode = state.mode();
+    const { anchorRef, themeVariables } = useScopedThemeVariables(isOpen);
 
     const input = <InsertButtonModal />;
     const editContent = isEditing ? input : <EditModal />;
 
     return (
         <>
+            <span ref={anchorRef} hidden />
             {isOpen &&
                 mode === 'insert' &&
                 createPortal(
@@ -42,7 +45,7 @@ export const CustomFloatingButton = () => {
                         data-is-underlay
                         ref={insertRef}
                         {...insertProps}
-                        style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...themeVariables, ...insertProps.style, ...BlockStyles[TextStyles.p] }}
                     >
                         {input}
                     </div>,
@@ -56,7 +59,7 @@ export const CustomFloatingButton = () => {
                         data-is-underlay
                         ref={editRef}
                         {...editProps}
-                        style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                        style={{ ...themeVariables, ...editProps.style, ...BlockStyles[TextStyles.p] }}
                     >
                         {editContent}
                     </div>,
