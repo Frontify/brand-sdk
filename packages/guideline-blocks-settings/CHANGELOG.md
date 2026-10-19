@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.7
+
+### Patch Changes
+
+- [#1712](https://github.com/Frontify/brand-sdk/pull/1712) [`b3e13a0`](https://github.com/Frontify/brand-sdk/commit/b3e13a06fd9989a126aa52ee2e177f169b5a8df6) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): show the section's color scheme in the button and link modals
+  
+  The insert/edit modals of the button and link plugins are portaled to `document.body`, so their style previews resolved the default color scheme's theme variables instead of those scoped to the editor's section. The modals now copy the theme variables that the scope around the editor declares onto their portaled wrapper.
+
 ## 4.0.0-alpha.6
 
 ### Patch Changes
