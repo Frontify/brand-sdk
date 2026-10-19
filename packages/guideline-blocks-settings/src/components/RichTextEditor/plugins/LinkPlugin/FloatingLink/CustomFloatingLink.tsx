@@ -4,7 +4,6 @@ import {
     type LinkFloatingToolbarState,
     type UseVirtualFloatingOptions,
     flip,
-    floatingLinkSelectors,
     offset,
     useFloatingLinkEdit,
     useFloatingLinkEditState,
@@ -12,10 +11,9 @@ import {
     useFloatingLinkInsertState,
 } from '@frontify/fondue/rte';
 import { type CSSProperties } from 'react';
-import { createPortal } from 'react-dom';
 
 import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
-import { useScopedThemeVariables } from '../../useScopedThemeVariables';
+import { ScopedThemePortal } from '../../ScopedThemePortal';
 
 import { EditModal } from './EditLinkModal';
 import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
@@ -47,11 +45,9 @@ export const CustomFloatingLink = () => {
     });
 
     const { props: editProps, ref: editRef, editButtonProps, unlinkButtonProps } = useFloatingLinkEdit(editState);
-    const isModalVisible = (insertState.isOpen && floatingLinkSelectors.mode() === 'insert') || editState.isOpen;
-    const { anchorRef, themeVariables } = useScopedThemeVariables(isModalVisible);
 
     if (hidden) {
-        return <span ref={anchorRef} style={{ display: 'none' }} />;
+        return null;
     }
 
     const input = <InsertLinkModal />;
@@ -63,41 +59,27 @@ export const CustomFloatingLink = () => {
 
     return (
         <>
-            <span ref={anchorRef} style={{ display: 'none' }} />
-            {insertState.isOpen &&
-                !editState.isOpen &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={insertRef}
-                        {...insertProps}
-                        style={{
-                            ...themeVariables,
-                            ...(insertProps.style as CSSProperties),
-                            ...BlockStyles[TextStyles.p],
-                        }}
-                    >
-                        {input}
-                    </div>,
-                    document.body,
-                )}
+            {insertState.isOpen && !editState.isOpen && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={insertRef}
+                    {...insertProps}
+                    style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                >
+                    {input}
+                </ScopedThemePortal>
+            )}
 
-            {editState.isOpen &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={editRef}
-                        {...editProps}
-                        style={{
-                            ...themeVariables,
-                            ...(editProps.style as CSSProperties),
-                            ...BlockStyles[TextStyles.p],
-                        }}
-                    >
-                        {editContent}
-                    </div>,
-                    document.body,
-                )}
+            {editState.isOpen && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={editRef}
+                    {...editProps}
+                    style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                >
+                    {editContent}
+                </ScopedThemePortal>
+            )}
         </>
     );
 };

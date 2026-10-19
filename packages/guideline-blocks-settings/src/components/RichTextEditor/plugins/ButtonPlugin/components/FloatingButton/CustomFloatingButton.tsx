@@ -1,10 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue/rte';
-import { createPortal } from 'react-dom';
 
 import { BlockStyles } from '../../../../../RichTextEditor/plugins/styles';
-import { useScopedThemeVariables } from '../../../useScopedThemeVariables';
+import { ScopedThemePortal } from '../../../ScopedThemePortal';
 import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
 import { EditModal } from './EditButtonModal/EditModal';
@@ -30,42 +29,33 @@ export const CustomFloatingButton = () => {
     const isOpen = state.isOpen(editor.id);
     const isEditing = state.isEditing();
     const mode = state.mode();
-    const isModalVisible = isOpen && (mode === 'insert' || mode === 'edit');
-    const { anchorRef, themeVariables } = useScopedThemeVariables(isModalVisible);
 
     const input = <InsertButtonModal />;
     const editContent = isEditing ? input : <EditModal />;
 
     return (
         <>
-            <span ref={anchorRef} style={{ display: 'none' }} />
-            {isOpen &&
-                mode === 'insert' &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={insertRef}
-                        {...insertProps}
-                        style={{ ...themeVariables, ...insertProps.style, ...BlockStyles[TextStyles.p] }}
-                    >
-                        {input}
-                    </div>,
-                    document.body,
-                )}
+            {isOpen && mode === 'insert' && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={insertRef}
+                    {...insertProps}
+                    style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                >
+                    {input}
+                </ScopedThemePortal>
+            )}
 
-            {isOpen &&
-                mode === 'edit' &&
-                createPortal(
-                    <div
-                        data-is-underlay
-                        ref={editRef}
-                        {...editProps}
-                        style={{ ...themeVariables, ...editProps.style, ...BlockStyles[TextStyles.p] }}
-                    >
-                        {editContent}
-                    </div>,
-                    document.body,
-                )}
+            {isOpen && mode === 'edit' && (
+                <ScopedThemePortal
+                    data-is-underlay
+                    ref={editRef}
+                    {...editProps}
+                    style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                >
+                    {editContent}
+                </ScopedThemePortal>
+            )}
         </>
     );
 };
