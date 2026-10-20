@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.70
+
+### Minor Changes
+
+- [#1707](https://github.com/Frontify/brand-sdk/pull/1707) [`8f2d01a`](https://github.com/Frontify/brand-sdk/commit/8f2d01a4dffd8ff7292aade5e53e53cb0fe19f78) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(useEditorState): read the editor state from the host context
+  
+  `useEditorState` now reads `appBridge.context('isEditing')`, like `useIsEditing` in `@frontify/app-bridge-theme`, instead of every hook call observing `document.body` and querying the DOM on each class change. Hosts must provide `isEditing` in the block context.
+
 ## 4.0.0-alpha.69
 
 ### Major Changes
