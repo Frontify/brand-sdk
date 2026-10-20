@@ -5,8 +5,8 @@
 ### Patch Changes
 
 - [#1712](https://github.com/Frontify/brand-sdk/pull/1712) [`b3e13a0`](https://github.com/Frontify/brand-sdk/commit/b3e13a06fd9989a126aa52ee2e177f169b5a8df6) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): show the section's color scheme in the button and link modals
-  
-  The insert/edit modals of the button and link plugins are portaled to `document.body`, so their style previews resolved the default color scheme's theme variables instead of those scoped to the editor's section. The modals now copy the theme variables that the scope around the editor declares onto their portaled wrapper.
+
+    The insert/edit modals of the button and link plugins are portaled to `document.body`, so their style previews resolved the default color scheme's theme variables instead of those scoped to the editor's section. The modals now copy the theme variables that the scope around the editor declares onto their portaled wrapper.
 
 ## 4.0.0-alpha.6
 
@@ -19,36 +19,36 @@
 ### Patch Changes
 
 - [#864](https://github.com/Frontify/brand-sdk/pull/864) [`026a976`](https://github.com/Frontify/brand-sdk/commit/026a976fd8e92f7930db1e66b0467281fe074b55) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix(Attachments): announce the attachment name on the download button
-  
-  The download button carried an `aria-label` that overrode its visible label, so screen readers announced "Download attachment" without saying which attachment. The action is now conveyed by screen-reader-only text in front of the attachment title, making both the action and its target audible. (Originally fixed in 3.0.6.)
+
+    The download button carried an `aria-label` that overrode its visible label, so screen readers announced "Download attachment" without saying which attachment. The action is now conveyed by screen-reader-only text in front of the attachment title, making both the action and its target audible. (Originally fixed in 3.0.6.)
 
 ## 4.0.0-alpha.4
 
 ### Patch Changes
 
 - [#1669](https://github.com/Frontify/brand-sdk/pull/1669) [`2de7282`](https://github.com/Frontify/brand-sdk/commit/2de7282a999c0d453bcf0071c0c0d0f47ffd7bb7) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(RichTextEditor): assert `zIndex: 'auto'` on the floating link and button portals
-  
-  These modals are portaled to `document.body` and rely on DOM order so that a dialog
-  opened from them -- notably the guideline LinkChooser -- renders on top. Guideline
-  portals can carry custom CSS that sets a `z-index` on body children, which lifted the
-  modal above that dialog and left the chooser unreachable behind it. Asserting the value
-  inline wins over those rules.
+
+    These modals are portaled to `document.body` and rely on DOM order so that a dialog
+    opened from them -- notably the guideline LinkChooser -- renders on top. Guideline
+    portals can carry custom CSS that sets a `z-index` on body children, which lifted the
+    modal above that dialog and left the chooser unreachable behind it. Asserting the value
+    inline wins over those rules.
 
 ## 4.0.0-alpha.3
 
 ### Major Changes
 
 - feat(RichTextEditor)!: open the in-sourced link chooser from the app bridge
-  
-  The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
-  
-  BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
-  
-  BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
+
+    The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
+
+    BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
+
+    BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
 
 - refactor(RichTextEditor): remove deprecated `id` prop
-  
-  The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
+
+    The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
 
 ### Patch Changes
 
@@ -57,8 +57,8 @@
 - chore: remove unused internal testing dummy
 
 - fix(Link): keep root-relative urls untouched
-  
-  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
+
+    Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
 
 ## 4.0.0-alpha.2
 
@@ -66,7 +66,7 @@
 
 - fix(Link): keep root-relative urls untouched
 
-  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
+    Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
 
 ## 4.0.0-alpha.1
 
@@ -80,19 +80,36 @@
 
 - [#1644](https://github.com/Frontify/brand-sdk/pull/1644) [`6292c9a`](https://github.com/Frontify/brand-sdk/commit/6292c9adaa3e98353956f069ae7bfe0a979c3e97) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(RichTextEditor)!: open the in-sourced link chooser from the app bridge
 
-  The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
+    The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
 
-  BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
+    BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
 
-  BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
+    BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
 
 - [#1652](https://github.com/Frontify/brand-sdk/pull/1652) [`6cb6cc6`](https://github.com/Frontify/brand-sdk/commit/6cb6cc63857fe965f5af5abaddc63d5d58b4030a) Thanks [@ragi96](https://github.com/ragi96)! - refactor(RichTextEditor): remove deprecated `id` prop
 
-  The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
+    The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
 
 ### Patch Changes
 
 - [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+
+## 3.0.9
+
+### Patch Changes
+
+- [#1714](https://github.com/Frontify/brand-sdk/pull/1714) [`e94ce32`](https://github.com/Frontify/brand-sdk/commit/e94ce32f34e7ad04334e915125c13699e46c1ab5) Thanks [@benfrontify](https://github.com/benfrontify)! - refactor(ButtonPlugin): use the new fondue `Label` for the button style picker in the insert button modal
+
+    Screen readers now announce the style options as a group named "Button Style".
+
+## 3.0.8
+
+### Patch Changes
+
+- [#1710](https://github.com/Frontify/brand-sdk/pull/1710) [`71fbd11`](https://github.com/Frontify/brand-sdk/commit/71fbd117e83e2ea8de2a4a37da732b054481bd04) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): show the section's color scheme in the button and link modals
+
+    The insert/edit modals of the button and link plugins are portaled to `document.body`, so their style previews resolved the default color scheme's theme variables instead of those scoped to the editor's section. The modals now copy the theme variables that the scope around the editor declares onto their portaled wrapper.
+
 ## 3.0.7
 
 ### Patch Changes
@@ -104,8 +121,8 @@
 ### Patch Changes
 
 - [#1678](https://github.com/Frontify/brand-sdk/pull/1678) [`b2c2ec4`](https://github.com/Frontify/brand-sdk/commit/b2c2ec4e234c5454c4257c90516c43ba3e29e1e9) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Attachments): announce the attachment name on the download button
-  
-  The download button carried an `aria-label` that overrode its visible label, so screen readers announced "Download attachment" without saying which attachment. The action is now conveyed by screen-reader-only text in front of the attachment title, making both the action and its target audible.
+
+    The download button carried an `aria-label` that overrode its visible label, so screen readers announced "Download attachment" without saying which attachment. The action is now conveyed by screen-reader-only text in front of the attachment title, making both the action and its target audible.
 
 ## 3.0.5
 
@@ -113,7 +130,7 @@
 
 - [#1659](https://github.com/Frontify/brand-sdk/pull/1659) [`af197ce`](https://github.com/Frontify/brand-sdk/commit/af197ce5ca2677c77ca05dbefcaa032377f56dab) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Link): keep root-relative urls untouched
 
-  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved.
+    Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved.
 
 ## 3.0.4
 
@@ -123,7 +140,7 @@
 
 - [#1656](https://github.com/Frontify/brand-sdk/pull/1656) [`7febfd9`](https://github.com/Frontify/brand-sdk/commit/7febfd99e93a9d2547166b2ee8ab82a6069d3de7) Thanks [@ragi96](https://github.com/ragi96)! - fix: restrict the `@frontify/app-bridge` peer dependency to exclude incompatible `4.0.0` alpha builds from `alpha.68` onward
 
-  The peer range was previously `^3.0.0 || ^4.0.0-alpha.0`, which also matched later alpha builds that are not yet compatible. It is now `^3.0.0 || >=4.0.0-alpha.0 <4.0.0-alpha.68`.
+    The peer range was previously `^3.0.0 || ^4.0.0-alpha.0`, which also matched later alpha builds that are not yet compatible. It is now `^3.0.0 || >=4.0.0-alpha.0 <4.0.0-alpha.68`.
 
 ## 3.0.3
 
@@ -131,7 +148,7 @@
 
 - [#1647](https://github.com/Frontify/brand-sdk/pull/1647) [`c16110d`](https://github.com/Frontify/brand-sdk/commit/c16110d0914dc0196c80d3cdf3b3662a0fdf4d11) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(Attachments): improve the accessibility of the flyout trigger
 
-  The trigger now has an accessible name that describes the action and the number of attachments (e.g. `Open attachments, 1 attachment`) instead of only exposing the bare count, and it announces `aria-haspopup="menu"` instead of `dialog`.
+    The trigger now has an accessible name that describes the action and the number of attachments (e.g. `Open attachments, 1 attachment`) instead of only exposing the bare count, and it announces `aria-haspopup="menu"` instead of `dialog`.
 
 ## 3.0.2
 
@@ -141,7 +158,7 @@
 
 - [#1634](https://github.com/Frontify/brand-sdk/pull/1634) [`f064852`](https://github.com/Frontify/brand-sdk/commit/f0648528aa4d48eed43de8892f76e2591a24ac35) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): drop unused `@react-aria/focus` and `@react-stately/overlays` dependencies
 
-  These packages are no longer installed transitively, reducing the install footprint.
+    These packages are no longer installed transitively, reducing the install footprint.
 
 ## 3.0.1
 
@@ -155,13 +172,13 @@
 
 - [#1624](https://github.com/Frontify/brand-sdk/pull/1624) [`b89012c`](https://github.com/Frontify/brand-sdk/commit/b89012cd33632b0d98334c2099ca54d837076e88) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor!: remove exports that moved
 
-  - remove `DownloadButton` component
-  - remove `useDndSensors` react hook
-  - remove `mapColorPalettes` helper
-  - remove `moveItemToArray` utility
-  - address Color type deprecation from Fondue
-  - use Fondue color tokens for `BlockInjectButton`
-  - prevent getBorderRadiusSettings from accepting negative values
+    - remove `DownloadButton` component
+    - remove `useDndSensors` react hook
+    - remove `mapColorPalettes` helper
+    - remove `moveItemToArray` utility
+    - address Color type deprecation from Fondue
+    - use Fondue color tokens for `BlockInjectButton`
+    - prevent getBorderRadiusSettings from accepting negative values
 
 ## 2.1.17
 
@@ -214,7 +231,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`b21f080`](https://github.com/Frontify/brand-sdk/commit/b21f08060e8a0347c4a7c7e1aa6a0223ff178263)]:
-  - @frontify/sidebar-settings@0.12.0
+    - @frontify/sidebar-settings@0.12.0
 
 ## 2.1.9
 
@@ -223,7 +240,7 @@
 - [#1566](https://github.com/Frontify/brand-sdk/pull/1566) [`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): bumping some devDependencies
 
 - Updated dependencies [[`3889cea`](https://github.com/Frontify/brand-sdk/commit/3889cea0894955a9acdaa7315cd466eb414a119f), [`1aa19a4`](https://github.com/Frontify/brand-sdk/commit/1aa19a4c0fabddae79a1e882206a187ab466714e)]:
-  - @frontify/sidebar-settings@0.11.0
+    - @frontify/sidebar-settings@0.11.0
 
 ## 2.1.8
 
@@ -240,7 +257,7 @@
 - [#1521](https://github.com/Frontify/brand-sdk/pull/1521) [`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update some dependencies
 
 - Updated dependencies [[`bedc235`](https://github.com/Frontify/brand-sdk/commit/bedc2356ea29a58c25f675daeffacbdb17f2955e)]:
-  - @frontify/sidebar-settings@0.10.11
+    - @frontify/sidebar-settings@0.10.11
 
 ## 2.1.6
 
@@ -281,7 +298,7 @@
 - [#1475](https://github.com/Frontify/brand-sdk/pull/1475) [`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168) Thanks [@ragi96](https://github.com/ragi96)! - chore(Deps): update multiple dependencies
 
 - Updated dependencies [[`7c6ad89`](https://github.com/Frontify/brand-sdk/commit/7c6ad8965800917f983688510734997055c44168)]:
-  - @frontify/sidebar-settings@0.10.10
+    - @frontify/sidebar-settings@0.10.10
 
 ## 2.1.0
 
@@ -318,7 +335,7 @@
 - [#1410](https://github.com/Frontify/brand-sdk/pull/1410) [`245e6b0`](https://github.com/Frontify/brand-sdk/commit/245e6b0aca3a654f508d87611b4f617f1e6f1f13) Thanks [@ragi96](https://github.com/ragi96)! - chore: updating dependencies
 
 - Updated dependencies [[`245e6b0`](https://github.com/Frontify/brand-sdk/commit/245e6b0aca3a654f508d87611b4f617f1e6f1f13)]:
-  - @frontify/sidebar-settings@0.10.9
+    - @frontify/sidebar-settings@0.10.9
 
 ## 2.0.0
 
@@ -437,7 +454,7 @@
 - [#1370](https://github.com/Frontify/brand-sdk/pull/1370) [`d5f78a6`](https://github.com/Frontify/brand-sdk/commit/d5f78a6e9632bf245e8390a8dd02295b9978b0fe) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: update dependencies
 
 - Updated dependencies [[`d5f78a6`](https://github.com/Frontify/brand-sdk/commit/d5f78a6e9632bf245e8390a8dd02295b9978b0fe)]:
-  - @frontify/sidebar-settings@0.10.8
+    - @frontify/sidebar-settings@0.10.8
 
 ## 1.0.12
 
@@ -468,14 +485,14 @@
 ### Patch Changes
 
 - Updated dependencies [[`2d086dc`](https://github.com/Frontify/brand-sdk/commit/2d086dc0a457137cff90032e65408871515907a0)]:
-  - @frontify/sidebar-settings@0.10.7
+    - @frontify/sidebar-settings@0.10.7
 
 ## 1.0.7
 
 ### Patch Changes
 
 - Updated dependencies [[`4197764`](https://github.com/Frontify/brand-sdk/commit/419776400bc3f470546841241015f80ddc032fe8)]:
-  - @frontify/sidebar-settings@0.10.6
+    - @frontify/sidebar-settings@0.10.6
 
 ## 1.0.6
 
@@ -490,7 +507,7 @@
 - [#1290](https://github.com/Frontify/brand-sdk/pull/1290) [`0858b44`](https://github.com/Frontify/brand-sdk/commit/0858b444e76cb04d0cb12c999c83eab77de7d71d) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - chore: bump `@frontify/fondue` to `12.12.3`
 
 - Updated dependencies [[`0858b44`](https://github.com/Frontify/brand-sdk/commit/0858b444e76cb04d0cb12c999c83eab77de7d71d)]:
-  - @frontify/sidebar-settings@0.10.5
+    - @frontify/sidebar-settings@0.10.5
 
 ## 1.0.4
 
@@ -501,7 +518,7 @@
 - [#1279](https://github.com/Frontify/brand-sdk/pull/1279) [`ed797bb`](https://github.com/Frontify/brand-sdk/commit/ed797bb8a78248544034a914e451375a873895d1) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(LinkInput): remove TooltipPosition
 
 - Updated dependencies [[`7363adb`](https://github.com/Frontify/brand-sdk/commit/7363adbb2d32b0bca189e439956609a355483382)]:
-  - @frontify/sidebar-settings@0.10.4
+    - @frontify/sidebar-settings@0.10.4
 
 ## 1.0.3
 
@@ -517,35 +534,35 @@
 
 - [#1274](https://github.com/Frontify/brand-sdk/pull/1274) [`ccb6492`](https://github.com/Frontify/brand-sdk/commit/ccb6492fac3479a40cef9721b4b1c109d2725990) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(useAttachments): create new hook without asset call
 
-  ### Migration
+    ### Migration
 
-  No changes required for consumers of `useAttachments`.
+    No changes required for consumers of `useAttachments`.
 
-  - **Keep using `useAttachments(appBridge, key)`** → works exactly as before.
-  - **Optional (advanced use)**: To avoid multiple asset calls, use the new hook directly:
+    - **Keep using `useAttachments(appBridge, key)`** → works exactly as before.
+    - **Optional (advanced use)**: To avoid multiple asset calls, use the new hook directly:
 
-  ```ts
-  import {
-    Attachments,
-    useAttachmentOperations,
-  } from "@frontify/guideline-blocks-settings";
-  import { useBlockAssets } from "@frontify/app-bridge";
+    ```ts
+    import {
+      Attachments,
+      useAttachmentOperations,
+    } from "@frontify/guideline-blocks-settings";
+    import { useBlockAssets } from "@frontify/app-bridge";
 
-  const blockAssetsBundle = useBlockAssets(appBridge);
-  const props = useAttachmentOperations(
-    "MY_ATTACHMENTS_KEY",
-    blockAssetsBundle
-  );
+    const blockAssetsBundle = useBlockAssets(appBridge);
+    const props = useAttachmentOperations(
+      "MY_ATTACHMENTS_KEY",
+      blockAssetsBundle
+    );
 
-  return <Attachments {...props} />;
-  ```
+    return <Attachments {...props} />;
+    ```
 
 ## 1.0.1
 
 ### Patch Changes
 
 - Updated dependencies [[`cb6bd32`](https://github.com/Frontify/brand-sdk/commit/cb6bd32e570e0c6825cd25c2b4f0baab464d5cc7)]:
-  - @frontify/sidebar-settings@0.10.3
+    - @frontify/sidebar-settings@0.10.3
 
 ## 1.0.0
 
@@ -553,61 +570,60 @@
 
 - [#1267](https://github.com/Frontify/brand-sdk/pull/1267) [`3b34bfb`](https://github.com/Frontify/brand-sdk/commit/3b34bfb597cd73e82c4016913f8268d17665745b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor(\*): replace deprecated fondue components
 
-  ### Breaking Changes
+    ### Breaking Changes
+    - **`AttachmentsProps`**
 
-  - **`AttachmentsProps`**
+        - `triggerComponent` type changed from:
+            ```ts
+            triggerComponent?: (props: AttachmentsTriggerProps) => ReactElement;
+            ```
+            to:
+            ```ts
+            triggerComponent?: React.ForwardRefExoticComponent<
+                AttachmentsTriggerProps & React.RefAttributes<HTMLButtonElement>
+            >;
+            ```
 
-    - `triggerComponent` type changed from:
-      ```ts
-      triggerComponent?: (props: AttachmentsTriggerProps) => ReactElement;
-      ```
-      to:
-      ```ts
-      triggerComponent?: React.ForwardRefExoticComponent<
-          AttachmentsTriggerProps & React.RefAttributes<HTMLButtonElement>
-      >;
-      ```
+    - **`AttachmentTriggerProps`**
 
-  - **`AttachmentTriggerProps`**
+        - Removed:
+            ```ts
+            triggerProps: HTMLAttributes<HTMLButtonElement>;
+            triggerRef: MutableRefObject<HTMLButtonElement>;
+            ```
 
-    - Removed:
-      ```ts
-      triggerProps: HTMLAttributes<HTMLButtonElement>;
-      triggerRef: MutableRefObject<HTMLButtonElement>;
-      ```
+    - **`LinkInput`**
 
-  - **`LinkInput`**
+        - Removed props:
+            ```ts
+            openInNewTab?: boolean;
+            clearable?: boolean;
+            ```
+        - Changed:
+            ```ts
+            buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
+            newTab?: boolean; // was: newTab?: CheckboxState;
+            ```
 
-    - Removed props:
-      ```ts
-      openInNewTab?: boolean;
-      clearable?: boolean;
-      ```
-    - Changed:
-      ```ts
-      buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
-      newTab?: boolean; // was: newTab?: CheckboxState;
-      ```
+    - **`LinkSelector`**
 
-  - **`LinkSelector`**
+        - Changed:
+            ```ts
+            buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
+            ```
 
-    - Changed:
-      ```ts
-      buttonSize?: 'small' | 'medium' | 'large'; // was: buttonSize?: ButtonSize;
-      ```
-
-  - **`InsertModalDispatchType` & `InsertModalStateProps`**
-    - Changed:
-      ```ts
-      newTab?: boolean; // was: newTab?: CheckboxState;
-      ```
+    - **`InsertModalDispatchType` & `InsertModalStateProps`**
+        - Changed:
+            ```ts
+            newTab?: boolean; // was: newTab?: CheckboxState;
+            ```
 
 ### Patch Changes
 
 - [#1258](https://github.com/Frontify/brand-sdk/pull/1258) [`a82646f`](https://github.com/Frontify/brand-sdk/commit/a82646f71f9cb23eb7718062c5ab35c117e18f61) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.11.0`
 
 - Updated dependencies [[`a82646f`](https://github.com/Frontify/brand-sdk/commit/a82646f71f9cb23eb7718062c5ab35c117e18f61)]:
-  - @frontify/sidebar-settings@0.10.2
+    - @frontify/sidebar-settings@0.10.2
 
 ## 0.38.1
 
@@ -650,7 +666,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`d204da8`](https://github.com/Frontify/brand-sdk/commit/d204da8770befc87095f4e9de16c58ad0d1c697e)]:
-  - @frontify/sidebar-settings@0.10.1
+    - @frontify/sidebar-settings@0.10.1
 
 ## 0.37.2
 
@@ -695,7 +711,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`6bafe6c`](https://github.com/Frontify/brand-sdk/commit/6bafe6c0aadc0dcba8a8b3c7bb283e219c47b5ef)]:
-  - @frontify/sidebar-settings@0.10.0
+    - @frontify/sidebar-settings@0.10.0
 
 ## 0.36.10
 
@@ -704,7 +720,7 @@
 - [#1130](https://github.com/Frontify/brand-sdk/pull/1130) [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump `@frontify/fondue` to `12.2.13`
 
 - Updated dependencies [[`d90e2fb`](https://github.com/Frontify/brand-sdk/commit/d90e2fb5129fb6c267c0bed3dad54ec45d387574), [`08b7e0a`](https://github.com/Frontify/brand-sdk/commit/08b7e0a13009d59560a65dffa4c60eec6a336686)]:
-  - @frontify/sidebar-settings@0.9.23
+    - @frontify/sidebar-settings@0.9.23
 
 ## 0.36.9
 
@@ -719,7 +735,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`e708d79`](https://github.com/Frontify/brand-sdk/commit/e708d79d0c89ffa59d7ce5cc7314aba2426aa833)]:
-  - @frontify/sidebar-settings@0.9.22
+    - @frontify/sidebar-settings@0.9.22
 
 ## 0.36.7
 
@@ -728,7 +744,7 @@
 - [#1101](https://github.com/Frontify/brand-sdk/pull/1101) [`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.2.6`
 
 - Updated dependencies [[`db195d8`](https://github.com/Frontify/brand-sdk/commit/db195d840df78067d2be008b6686a22546fcbfb4)]:
-  - @frontify/sidebar-settings@0.9.21
+    - @frontify/sidebar-settings@0.9.21
 
 ## 0.36.6
 
@@ -741,7 +757,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`7ec70a5`](https://github.com/Frontify/brand-sdk/commit/7ec70a547155b3bbabdd333113168102565a0cfd)]:
-  - @frontify/sidebar-settings@0.9.20
+    - @frontify/sidebar-settings@0.9.20
 
 ## 0.36.4
 
@@ -750,7 +766,7 @@
 - [#1057](https://github.com/Frontify/brand-sdk/pull/1057) [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.1.14
 
 - Updated dependencies [[`84a979b`](https://github.com/Frontify/brand-sdk/commit/84a979b282f3f37766c77718a752df5567df12df), [`c45a175`](https://github.com/Frontify/brand-sdk/commit/c45a1752384fdd04e529b1729cc274a8a44fc6c8)]:
-  - @frontify/sidebar-settings@0.9.19
+    - @frontify/sidebar-settings@0.9.19
 
 ## 0.36.3
 
@@ -784,7 +800,7 @@
 - [#976](https://github.com/Frontify/brand-sdk/pull/976) [`be18559`](https://github.com/Frontify/brand-sdk/commit/be18559f7e31e2ad738fd4c875d119f8c839fa4d) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue dependency to 12.1.8
 
 - Updated dependencies [[`be18559`](https://github.com/Frontify/brand-sdk/commit/be18559f7e31e2ad738fd4c875d119f8c839fa4d)]:
-  - @frontify/sidebar-settings@0.9.18
+    - @frontify/sidebar-settings@0.9.18
 
 ## 0.35.1
 
@@ -804,7 +820,7 @@
 - [#948](https://github.com/Frontify/brand-sdk/pull/948) [`cc7f942`](https://github.com/Frontify/brand-sdk/commit/cc7f9427df1a3d8d621850adff4c3d59f2f8e308) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): on safari the first click is not recognized
 
 - Updated dependencies [[`7baceff`](https://github.com/Frontify/brand-sdk/commit/7baceffc87773e9f6a1e169aa45151b92c614cbc)]:
-  - @frontify/sidebar-settings@0.9.17
+    - @frontify/sidebar-settings@0.9.17
 
 ## 0.34.15
 
@@ -813,7 +829,7 @@
 - [#907](https://github.com/Frontify/brand-sdk/pull/907) [`f824d37`](https://github.com/Frontify/brand-sdk/commit/f824d371ed6fb8f46a22ca39d2a8e211a9fb4ca8) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump `@frontify/fondue` to `12.0.10`
 
 - Updated dependencies [[`f824d37`](https://github.com/Frontify/brand-sdk/commit/f824d371ed6fb8f46a22ca39d2a8e211a9fb4ca8)]:
-  - @frontify/sidebar-settings@0.9.16
+    - @frontify/sidebar-settings@0.9.16
 
 ## 0.34.14
 
@@ -828,7 +844,7 @@
 - [#892](https://github.com/Frontify/brand-sdk/pull/892) [`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `vite` to `5.2.10`
 
 - Updated dependencies [[`fe3323c`](https://github.com/Frontify/brand-sdk/commit/fe3323ccb4c6b9c18bc5eee9564b3468e645fa4d)]:
-  - @frontify/sidebar-settings@0.9.15
+    - @frontify/sidebar-settings@0.9.15
 
 ## 0.34.12
 
@@ -837,7 +853,7 @@
 - [#890](https://github.com/Frontify/brand-sdk/pull/890) [`c7712e8`](https://github.com/Frontify/brand-sdk/commit/c7712e84ec90b6db1b23a23c56db63ed90d812bc) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump `@frontify/fondue` to `12.0.7`
 
 - Updated dependencies [[`c7712e8`](https://github.com/Frontify/brand-sdk/commit/c7712e84ec90b6db1b23a23c56db63ed90d812bc)]:
-  - @frontify/sidebar-settings@0.9.14
+    - @frontify/sidebar-settings@0.9.14
 
 ## 0.34.11
 
@@ -850,7 +866,7 @@
 - [#855](https://github.com/Frontify/brand-sdk/pull/855) [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - chore: bump dependencies
 
 - Updated dependencies [[`d980eb3`](https://github.com/Frontify/brand-sdk/commit/d980eb367062b4c4cd6416f852408da4f13c74ab), [`7d818d8`](https://github.com/Frontify/brand-sdk/commit/7d818d88eb5b18da2015c3a9f823350e507be3be), [`bcfe9ab`](https://github.com/Frontify/brand-sdk/commit/bcfe9abea8872b8341b053159827a953bdbea16c)]:
-  - @frontify/sidebar-settings@0.9.13
+    - @frontify/sidebar-settings@0.9.13
 
 ## 0.34.10
 
@@ -875,7 +891,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`b116dec`](https://github.com/Frontify/brand-sdk/commit/b116decf09a486d5c25e8f9cf9e4213cd2c65d3c)]:
-  - @frontify/sidebar-settings@0.9.12
+    - @frontify/sidebar-settings@0.9.12
 
 ## 0.34.6
 
@@ -898,7 +914,7 @@
 - [#815](https://github.com/Frontify/brand-sdk/pull/815) [`17491e9`](https://github.com/Frontify/brand-sdk/commit/17491e923d9b66d158ee03003b3ac47899e6423f) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue to 12.0.0-beta.415
 
 - Updated dependencies [[`17491e9`](https://github.com/Frontify/brand-sdk/commit/17491e923d9b66d158ee03003b3ac47899e6423f)]:
-  - @frontify/sidebar-settings@0.9.11
+    - @frontify/sidebar-settings@0.9.11
 
 ## 0.34.3
 
@@ -909,7 +925,7 @@
 - [#803](https://github.com/Frontify/brand-sdk/pull/803) [`b4a72a2`](https://github.com/Frontify/brand-sdk/commit/b4a72a23c7ea5aa65beb1b264fb36930c0493ba1) Thanks [@SamCreasey](https://github.com/SamCreasey)! - chore: bump @frontify/fondue to ^12.0.0-beta.411
 
 - Updated dependencies [[`b4a72a2`](https://github.com/Frontify/brand-sdk/commit/b4a72a23c7ea5aa65beb1b264fb36930c0493ba1)]:
-  - @frontify/sidebar-settings@0.9.10
+    - @frontify/sidebar-settings@0.9.10
 
 ## 0.34.2
 
@@ -920,7 +936,7 @@
 - [#801](https://github.com/Frontify/brand-sdk/pull/801) [`51d5537`](https://github.com/Frontify/brand-sdk/commit/51d55375a86547f1036c4c892da97f6cb64b1e88) Thanks [@SamCreasey](https://github.com/SamCreasey)! - perf(RichTextEditor): Stabilize props to avoid unneccessary rerenders.
 
 - Updated dependencies [[`7e83e75`](https://github.com/Frontify/brand-sdk/commit/7e83e75243fdbfc5379be3bdf15c210039c4459c)]:
-  - @frontify/sidebar-settings@0.9.9
+    - @frontify/sidebar-settings@0.9.9
 
 ## 0.34.1
 
@@ -929,7 +945,7 @@
 - [#796](https://github.com/Frontify/brand-sdk/pull/796) [`d24dcf3`](https://github.com/Frontify/brand-sdk/commit/d24dcf3fd78a871229e64b82690084ccfbd521ce) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
 
 - Updated dependencies [[`d24dcf3`](https://github.com/Frontify/brand-sdk/commit/d24dcf3fd78a871229e64b82690084ccfbd521ce)]:
-  - @frontify/sidebar-settings@0.9.8
+    - @frontify/sidebar-settings@0.9.8
 
 ## 0.34.0
 
@@ -937,12 +953,12 @@
 
 - [#750](https://github.com/Frontify/brand-sdk/pull/750) [`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): update fondue which comes with plate v30
 
-  @udecode/plate libraries are no longer used as a direct dependency, instead all required parts are now imported from @frontify/fondue
+    @udecode/plate libraries are no longer used as a direct dependency, instead all required parts are now imported from @frontify/fondue
 
 ### Patch Changes
 
 - Updated dependencies [[`8b4ded2`](https://github.com/Frontify/brand-sdk/commit/8b4ded214bd781c5aa3c917121bc013f4262da32)]:
-  - @frontify/sidebar-settings@0.9.7
+    - @frontify/sidebar-settings@0.9.7
 
 ## 0.33.5
 
@@ -951,7 +967,7 @@
 - [`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Add the dist folder to published packages
 
 - Updated dependencies [[`babce0e`](https://github.com/Frontify/brand-sdk/commit/babce0eb251fa78ef9c7b4c2c0ce740c7d66718d)]:
-  - @frontify/sidebar-settings@0.9.6
+    - @frontify/sidebar-settings@0.9.6
 
 ## 0.33.4
 
@@ -960,7 +976,7 @@
 - [`de53c69`](https://github.com/Frontify/brand-sdk/commit/de53c69b43e3f0a9b245cc2b193d6edef390dc00) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix broken build produced in `dev` branch
 
 - Updated dependencies [[`de53c69`](https://github.com/Frontify/brand-sdk/commit/de53c69b43e3f0a9b245cc2b193d6edef390dc00)]:
-  - @frontify/sidebar-settings@0.9.5
+    - @frontify/sidebar-settings@0.9.5
 
 ## 0.33.3
 
@@ -971,7 +987,7 @@
 - [#776](https://github.com/Frontify/brand-sdk/pull/776) [`29ef8e1`](https://github.com/Frontify/brand-sdk/commit/29ef8e1e64a6372d580af06a86ef39ca2052662a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Remove CJS to embrace ESM
 
 - Updated dependencies [[`b0424c0`](https://github.com/Frontify/brand-sdk/commit/b0424c0a6dc1beef011c0d32124f53aed2e2a4b7), [`29ef8e1`](https://github.com/Frontify/brand-sdk/commit/29ef8e1e64a6372d580af06a86ef39ca2052662a), [`b0424c0`](https://github.com/Frontify/brand-sdk/commit/b0424c0a6dc1beef011c0d32124f53aed2e2a4b7)]:
-  - @frontify/sidebar-settings@0.9.4
+    - @frontify/sidebar-settings@0.9.4
 
 ## 0.33.2
 
@@ -980,7 +996,7 @@
 - [#766](https://github.com/Frontify/brand-sdk/pull/766) [`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`3775b46`](https://github.com/Frontify/brand-sdk/commit/3775b4651b6d700e7179a360190a92e7f0fe51e6)]:
-  - @frontify/sidebar-settings@0.9.3
+    - @frontify/sidebar-settings@0.9.3
 
 ## 0.33.1
 
@@ -994,106 +1010,106 @@
 
 - [#756](https://github.com/Frontify/brand-sdk/pull/756) [`dc4b57d`](https://github.com/Frontify/brand-sdk/commit/dc4b57d698e037cac4d6eca75e45f2ef65e96b47) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - feat(Toolbar): extend `items` to include `menu` and `flyout` type. Each `item` must now contain a `type` prop (`"dragHandle"`, `"button"`, `"flyout"`, `"menu"`). The `flyoutItems` prop has been removed as any item in the items array can now be a flyout. This change is also reflected in the `BlockItemWrapper`, where `toolbarFlyoutItems` has now been removed.
 
-  Migration Example:
+    Migration Example:
 
-  ```jsx
-  <Toolbar
-    items={[
-      {
-        icon: <IconArrowMove16 />,
-        draggableProps,
-        setActivatorNodeRef,
-      },
-      {
-        icon: <IconTrashBin16 />,
-        tooltip: "Delete Item",
-        onClick: onRemoveSelf,
-      },
-    ]}
-    flyoutItems={[
-      [
-        {
-          title: "Delete",
-          icon: <IconTrashBin20 />,
-          onClick,
-        },
-      ],
-    ]}
-  />
-  ```
-
-  The above component should now be written as:
-
-  ```jsx
-  <Toolbar
-    items={[
-      {
-        type: "dragHandle",
-        icon: <IconArrowMove16 />,
-        draggableProps,
-        setActivatorNodeRef,
-      },
-      {
-        type: "button",
-        icon: <IconTrashBin16 />,
-        tooltip: "Delete Item",
-        onClick: onRemoveSelf,
-      },
-      {
-        type: "menu",
-        items: [
-          {
-            title: "Delete",
-            icon: <IconTrashBin20 />,
-            onClick,
-          },
-        ],
-        flyoutId: "special-menu",
-      },
-    ]}
-  />
-  ```
-
-  Full "Flyout as a toolbar button" example:
-
-  ```jsx
-  const FlyoutFooterWithCloseButton = ({ flyoutId }) => {
-    // The flyout footer can close the flyout by accessing the flyout context
-    const { onOpenChange } = useMultiFlyoutState(flyoutId);
-
-    return <button onClick={() => onOpenChange(false)}>Cancel</button>;
-  };
-
-  const ExampleToolbar = () => {
-    const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
-
-    return (
-      <MultiFlyoutContextProvider
-        openFlyoutIds={openFlyoutIds}
-        setOpenFlyoutIds={setOpenFlyoutIds}
-      >
-        <Toolbar
-          items={[
+    ```jsx
+    <Toolbar
+        items={[
             {
-              type: "flyout",
-              icon: <IconArrowMove16 />,
-              tooltip: "Move To",
-              content: <div>Content</div>,
-              flyoutHeader: <div>Fixed Header</div>,
-              flyoutFooter: <FlyoutFooterWithCloseButton flyoutId="move" />,
-              flyoutId: "move",
+                icon: <IconArrowMove16 />,
+                draggableProps,
+                setActivatorNodeRef,
             },
-          ]}
-        />
-      </MultiFlyoutContextProvider>
-    );
-  };
-  ```
+            {
+                icon: <IconTrashBin16 />,
+                tooltip: "Delete Item",
+                onClick: onRemoveSelf,
+            },
+        ]}
+        flyoutItems={[
+            [
+                {
+                    title: "Delete",
+                    icon: <IconTrashBin20 />,
+                    onClick,
+                },
+            ],
+        ]}
+    />
+    ```
+
+    The above component should now be written as:
+
+    ```jsx
+    <Toolbar
+        items={[
+            {
+                type: "dragHandle",
+                icon: <IconArrowMove16 />,
+                draggableProps,
+                setActivatorNodeRef,
+            },
+            {
+                type: "button",
+                icon: <IconTrashBin16 />,
+                tooltip: "Delete Item",
+                onClick: onRemoveSelf,
+            },
+            {
+                type: "menu",
+                items: [
+                    {
+                        title: "Delete",
+                        icon: <IconTrashBin20 />,
+                        onClick,
+                    },
+                ],
+                flyoutId: "special-menu",
+            },
+        ]}
+    />
+    ```
+
+    Full "Flyout as a toolbar button" example:
+
+    ```jsx
+    const FlyoutFooterWithCloseButton = ({ flyoutId }) => {
+        // The flyout footer can close the flyout by accessing the flyout context
+        const { onOpenChange } = useMultiFlyoutState(flyoutId);
+
+        return <button onClick={() => onOpenChange(false)}>Cancel</button>;
+    };
+
+    const ExampleToolbar = () => {
+        const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
+
+        return (
+            <MultiFlyoutContextProvider
+                openFlyoutIds={openFlyoutIds}
+                setOpenFlyoutIds={setOpenFlyoutIds}
+            >
+                <Toolbar
+                    items={[
+                        {
+                            type: "flyout",
+                            icon: <IconArrowMove16 />,
+                            tooltip: "Move To",
+                            content: <div>Content</div>,
+                            flyoutHeader: <div>Fixed Header</div>,
+                            flyoutFooter: <FlyoutFooterWithCloseButton flyoutId="move" />,
+                            flyoutId: "move",
+                        },
+                    ]}
+                />
+            </MultiFlyoutContextProvider>
+        );
+    };
+    ```
 
 ### Patch Changes
 
 - Updated dependencies [[`7f57867`](https://github.com/Frontify/brand-sdk/commit/7f57867274c7ba21a0a1ab5ecc46852d559d968d)]:
-  - @frontify/sidebar-settings@0.9.2
+    - @frontify/sidebar-settings@0.9.2
 
 ## 0.32.2
 
@@ -1101,35 +1117,35 @@
 
 - [#749](https://github.com/Frontify/brand-sdk/pull/749) [`5393e3a`](https://github.com/Frontify/brand-sdk/commit/5393e3aed9822bb00521a22b1cc75a62fafb4a59) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - refactor (Toolbar): split Toolbar into smaller subcomponents. `ToolbarFlyoutState` type has been removed, as well as `flyoutMenu.isOpen`, `flyoutMenu.onOpenChange`, `attachments.isOpen`, `attachments.onOpenChange` props that could be passed to the `Toolbar` component. To control the state of open `Flyouts` the `Toolbar` must instead be wrapped in a `MultiFlyoutContextProvider`.
 
-  Migration Example:
+    Migration Example:
 
-  ```jsx
-  // Inside your component
-  const [flyoutIsOpen, setFlyoutIsOpen] = useState(false);
-  const [attachmentsIsOpen, setAttachmentsIsOpen] = useState(false);
+    ```jsx
+    // Inside your component
+    const [flyoutIsOpen, setFlyoutIsOpen] = useState(false);
+    const [attachmentsIsOpen, setAttachmentsIsOpen] = useState(false);
 
-  return (
-    <Toolbar
-      flyoutMenu={{ isOpen: flyoutIsOpen, onOpenChange: setFlyoutIsOpen }}
-      attachments={{
-        isOpen: attachmentsIsOpen,
-        onOpenChange: setAttachmentsIsOpen,
-      }}
-    />
-  );
-  ```
+    return (
+        <Toolbar
+            flyoutMenu={{ isOpen: flyoutIsOpen, onOpenChange: setFlyoutIsOpen }}
+            attachments={{
+                isOpen: attachmentsIsOpen,
+                onOpenChange: setAttachmentsIsOpen,
+            }}
+        />
+    );
+    ```
 
-  The above component should now be written as:
+    The above component should now be written as:
 
-  ```jsx
-  // Inside your component
-  const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
+    ```jsx
+    // Inside your component
+    const [openFlyoutIds, setOpenFlyoutIds] = useState([]);
 
-  return(
-      <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
-          <Toolbar />
-      <MultiFlyoutContextProvider>)
-  ```
+    return(
+        <MultiFlyoutContextProvider openFlyoutIds={openFlyoutIds} setOpenFlyoutIds={setOpenFlyoutIds}>
+            <Toolbar />
+        <MultiFlyoutContextProvider>)
+    ```
 
 - [#757](https://github.com/Frontify/brand-sdk/pull/757) [`07f2dd3`](https://github.com/Frontify/brand-sdk/commit/07f2dd356663f678b8912c9bf669834c515f43f7) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): allow sorting
 
@@ -1147,33 +1163,33 @@
 
 - [#736](https://github.com/Frontify/brand-sdk/pull/736) [`2f7f30f`](https://github.com/Frontify/brand-sdk/commit/2f7f30f902f3c8ed3bacf5fa378014e148bb20aa) Thanks [@ragi96](https://github.com/ragi96)! - refactor(LinkSelector): Removed `appBridge` prop in favor of directly passing document handling functions: `getAllDocuments`, `getDocumentPagesByDocumentId`, and `getDocumentSectionsByDocumentPageId` for clearer API and enhanced modularity
 
-  Replace this:
+    Replace this:
 
-  ```jsx
-  <LinkSelector
-    url={url}
-    appBridge={appBridge}
-    onUrlChange={onUrlChange}
-    buttonSize={buttonSize ?? ButtonSize.Medium}
-  />
-  ```
+    ```jsx
+    <LinkSelector
+        url={url}
+        appBridge={appBridge}
+        onUrlChange={onUrlChange}
+        buttonSize={buttonSize ?? ButtonSize.Medium}
+    />
+    ```
 
-  with:
+    with:
 
-  ```jsx
-  <LinkSelector
-    url={url}
-    onUrlChange={onUrlChange}
-    buttonSize={buttonSize ?? ButtonSize.Medium}
-    getAllDocuments={() => appBridge.getAllDocuments()}
-    getDocumentPagesByDocumentId={(documentId) =>
-      appBridge.getDocumentPagesByDocumentId(documentId)
-    }
-    getDocumentSectionsByDocumentPageId={(documentPageId) =>
-      appBridge.getDocumentSectionsByDocumentPageId(documentPageId)
-    }
-  />
-  ```
+    ```jsx
+    <LinkSelector
+        url={url}
+        onUrlChange={onUrlChange}
+        buttonSize={buttonSize ?? ButtonSize.Medium}
+        getAllDocuments={() => appBridge.getAllDocuments()}
+        getDocumentPagesByDocumentId={(documentId) =>
+            appBridge.getDocumentPagesByDocumentId(documentId)
+        }
+        getDocumentSectionsByDocumentPageId={(documentPageId) =>
+            appBridge.getDocumentSectionsByDocumentPageId(documentPageId)
+        }
+    />
+    ```
 
 ## 0.31.5
 
@@ -1198,7 +1214,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`68a9298`](https://github.com/Frontify/brand-sdk/commit/68a9298df9e2177e70333f47dc433a056d76625b)]:
-  - @frontify/app-bridge@3.1.0
+    - @frontify/app-bridge@3.1.0
 
 ## 0.31.1
 
@@ -1207,7 +1223,7 @@
 - [#708](https://github.com/Frontify/brand-sdk/pull/708) [`e2a0023`](https://github.com/Frontify/brand-sdk/commit/e2a0023256001dcc64a597f6dcd9df66a1c9f186) Thanks [@ragi96](https://github.com/ragi96)! - feat: add support for @frontify/app-bridge 4.0.0-alpha.0
 
 - Updated dependencies [[`c98d8c4`](https://github.com/Frontify/brand-sdk/commit/c98d8c414b2cdd00d4945f0c29581370b0a7daa0)]:
-  - @frontify/app-bridge@3.0.4
+    - @frontify/app-bridge@3.0.4
 
 ## 0.31.0
 
@@ -1220,7 +1236,7 @@
 - [#697](https://github.com/Frontify/brand-sdk/pull/697) [`759188b`](https://github.com/Frontify/brand-sdk/commit/759188b28219e23ef7ce19edbc2d5e3248270ea8) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bumps @frontify/fondue to 12.0.0-beta.396
 
 - Updated dependencies [[`759188b`](https://github.com/Frontify/brand-sdk/commit/759188b28219e23ef7ce19edbc2d5e3248270ea8)]:
-  - @frontify/sidebar-settings@0.9.1
+    - @frontify/sidebar-settings@0.9.1
 
 ## 0.30.2
 
@@ -1235,7 +1251,7 @@
 - [#689](https://github.com/Frontify/brand-sdk/pull/689) [`6c34c1c`](https://github.com/Frontify/brand-sdk/commit/6c34c1c8e354f95bb873a70bceef0939198574c4) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(Attachments): temporarily disable sorting
 
 - Updated dependencies [[`d79e69a`](https://github.com/Frontify/brand-sdk/commit/d79e69a1c6d8f901b7f91866a92fd0d99363f07d), [`d7764c1`](https://github.com/Frontify/brand-sdk/commit/d7764c129ee1d61aaed4ce519e70eb5d0984bfec)]:
-  - @frontify/sidebar-settings@0.9.0
+    - @frontify/sidebar-settings@0.9.0
 
 ## 0.30.1
 
@@ -1246,20 +1262,20 @@
 - [#692](https://github.com/Frontify/brand-sdk/pull/692) [`43866c2`](https://github.com/Frontify/brand-sdk/commit/43866c28fa470d5dbf4e61a7d42796904629fead) Thanks [@SamCreasey](https://github.com/SamCreasey)! - BlockItemToolbar: Force line-height to be 1 on toolbar items to prevent wrapping element height from being miscalculated.
 
 - Updated dependencies [[`3fa74ba`](https://github.com/Frontify/brand-sdk/commit/3fa74badfedd8c52661f23e0528dc35d8a10062d)]:
-  - @frontify/app-bridge@3.0.2
-  - @frontify/sidebar-settings@0.8.3
+    - @frontify/app-bridge@3.0.2
+    - @frontify/sidebar-settings@0.8.3
 
 ## 0.30.0
 
 ### Minor Changes
 
 - [#672](https://github.com/Frontify/brand-sdk/pull/672) [`22eb8eb`](https://github.com/Frontify/brand-sdk/commit/22eb8eb8dce8f2d4dccf040376b3368b2962a59b) Thanks [@SamCreasey](https://github.com/SamCreasey)! - - Toolbar design updated
-  - Add Attachments to the Toolbar component. `isFlyoutOpen`, `setIsFlyoutOpen` and `flyoutItems` props have been removed from the Toolbar and replaced
-    with a `flyoutMenu` object (`{ items: FlyoutItem[]; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
-    `isFlyoutDisabled` prop has been removed.
-    `attachments` prop has been added (`{ isEnabled: boolean; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
-    To enable block attachments in the Toolbar from the `BlockWrapper` component, set `showAttachments` to `true` and wrap the block in the `withAttachmentsProvider` HOC or alternatively, wrap the `BlockWrapper` in an `AttachmentsProvider`.
-  - `onAddAttachments` has been replaced with `onAttachmentsAdd` in the object returned from `useAttachments` hook.
+    - Add Attachments to the Toolbar component. `isFlyoutOpen`, `setIsFlyoutOpen` and `flyoutItems` props have been removed from the Toolbar and replaced
+      with a `flyoutMenu` object (`{ items: FlyoutItem[]; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
+      `isFlyoutDisabled` prop has been removed.
+      `attachments` prop has been added (`{ isEnabled: boolean; isOpen: boolean; onOpenChange: (isOpen: boolean)=>void }`).
+      To enable block attachments in the Toolbar from the `BlockWrapper` component, set `showAttachments` to `true` and wrap the block in the `withAttachmentsProvider` HOC or alternatively, wrap the `BlockWrapper` in an `AttachmentsProvider`.
+    - `onAddAttachments` has been replaced with `onAttachmentsAdd` in the object returned from `useAttachments` hook.
 
 ### Patch Changes
 
@@ -1270,8 +1286,8 @@
 ### Patch Changes
 
 - Updated dependencies [[`a2b2ee7`](https://github.com/Frontify/brand-sdk/commit/a2b2ee78b8df136c823a3603c284aba4db08bbf7)]:
-  - @frontify/app-bridge@3.0.1
-  - @frontify/sidebar-settings@0.8.2
+    - @frontify/app-bridge@3.0.1
+    - @frontify/sidebar-settings@0.8.2
 
 ## 0.29.16
 
@@ -1286,22 +1302,22 @@
 - [#636](https://github.com/Frontify/brand-sdk/pull/636) [`1dbc48e`](https://github.com/Frontify/brand-sdk/commit/1dbc48e9b8421a893d0b2da8f17ac201abc2b113) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`728cfd9`](https://github.com/Frontify/brand-sdk/commit/728cfd9e16a5c286fda4b2ae31dd96118c811929), [`1dbc48e`](https://github.com/Frontify/brand-sdk/commit/1dbc48e9b8421a893d0b2da8f17ac201abc2b113)]:
-  - @frontify/app-bridge@3.0.0
-  - @frontify/sidebar-settings@0.8.1
+    - @frontify/app-bridge@3.0.0
+    - @frontify/sidebar-settings@0.8.1
 
 ## 0.29.14
 
 ### Patch Changes
 
 - Updated dependencies [[`13ca57e`](https://github.com/Frontify/brand-sdk/commit/13ca57e7440e5d7175e54109b89eb8dc60eee4fd), [`d55bd9f`](https://github.com/Frontify/brand-sdk/commit/d55bd9f39fdfa6e5c45a80744c058a605d81c893)]:
-  - @frontify/sidebar-settings@0.8.0
+    - @frontify/sidebar-settings@0.8.0
 
 ## 0.29.13
 
 ### Patch Changes
 
 - Updated dependencies [[`dfe83ee`](https://github.com/Frontify/brand-sdk/commit/dfe83ee7417d3916d9bc52b96e600deb130bf147), [`8920ec9`](https://github.com/Frontify/brand-sdk/commit/8920ec993401caf94813974c7fad476c3decc2c6)]:
-  - @frontify/sidebar-settings@0.7.0
+    - @frontify/sidebar-settings@0.7.0
 
 ## 0.29.12
 
@@ -1322,7 +1338,7 @@
 - [#591](https://github.com/Frontify/brand-sdk/pull/591) [`076ee92`](https://github.com/Frontify/brand-sdk/commit/076ee92016edadc2c775072db7c9df40c6968032) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.341
 
 - Updated dependencies [[`076ee92`](https://github.com/Frontify/brand-sdk/commit/076ee92016edadc2c775072db7c9df40c6968032)]:
-  - @frontify/sidebar-settings@0.6.13
+    - @frontify/sidebar-settings@0.6.13
 
 ## 0.29.9
 
@@ -1331,7 +1347,7 @@
 - [#583](https://github.com/Frontify/brand-sdk/pull/583) [`aed99a3`](https://github.com/Frontify/brand-sdk/commit/aed99a3a62e58c7b9436f8f031c64ac024566c2c) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.337
 
 - Updated dependencies [[`aed99a3`](https://github.com/Frontify/brand-sdk/commit/aed99a3a62e58c7b9436f8f031c64ac024566c2c)]:
-  - @frontify/sidebar-settings@0.6.12
+    - @frontify/sidebar-settings@0.6.12
 
 ## 0.29.8
 
@@ -1346,7 +1362,7 @@
 - [#574](https://github.com/Frontify/brand-sdk/pull/574) [`a025aee`](https://github.com/Frontify/brand-sdk/commit/a025aeecfd3647a7bd75d139d9309310092d5b54) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(LinkSelector): initial click triggered twice
 
 - Updated dependencies [[`2c17f39`](https://github.com/Frontify/brand-sdk/commit/2c17f396b7f3670cf8c9c041937a414bcd22ae94)]:
-  - @frontify/sidebar-settings@0.6.11
+    - @frontify/sidebar-settings@0.6.11
 
 ## 0.29.7
 
@@ -1355,7 +1371,7 @@
 - [#566](https://github.com/Frontify/brand-sdk/pull/566) [`ece6876`](https://github.com/Frontify/brand-sdk/commit/ece68765bcd1675cf32f9fd20b77c8dd5e665ee1) Thanks [@ragi96](https://github.com/ragi96)! - chore: bump fondue to v12.0.0-beta.324
 
 - Updated dependencies [[`ece6876`](https://github.com/Frontify/brand-sdk/commit/ece68765bcd1675cf32f9fd20b77c8dd5e665ee1)]:
-  - @frontify/sidebar-settings@0.6.10
+    - @frontify/sidebar-settings@0.6.10
 
 ## 0.29.6
 
@@ -1370,7 +1386,7 @@
 - [#563](https://github.com/Frontify/brand-sdk/pull/563) [`c3b2f6c`](https://github.com/Frontify/brand-sdk/commit/c3b2f6cb86844a10cc7ff2d4ef8802945d5d1e5b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RTE): edit modal styles can be invisible
 
 - Updated dependencies [[`7460f29`](https://github.com/Frontify/brand-sdk/commit/7460f298fa346f89da7de2a0465c12c077e22f05), [`3684397`](https://github.com/Frontify/brand-sdk/commit/368439792d855bbc5117f97931b7d52f75295677)]:
-  - @frontify/sidebar-settings@0.6.9
+    - @frontify/sidebar-settings@0.6.9
 
 ## 0.29.5
 
@@ -1387,7 +1403,7 @@
 - [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Change App Bridge dependency selector
 
 - Updated dependencies [[`69d862e`](https://github.com/Frontify/brand-sdk/commit/69d862e966954d521bdd856280c76f6a40483be8), [`6c5d4f6`](https://github.com/Frontify/brand-sdk/commit/6c5d4f63ef8c5995790aa444dc29469b095d63ba)]:
-  - @frontify/sidebar-settings@0.6.8
+    - @frontify/sidebar-settings@0.6.8
 
 ## 0.29.3
 
@@ -1400,7 +1416,7 @@
 - [#545](https://github.com/Frontify/brand-sdk/pull/545) [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: bump fondue
 
 - Updated dependencies [[`29c8128`](https://github.com/Frontify/brand-sdk/commit/29c8128c113ce2163a22274e5440c8df05025777), [`755bcc0`](https://github.com/Frontify/brand-sdk/commit/755bcc0ec121da805a69ab6c9a48854cb97a71be)]:
-  - @frontify/sidebar-settings@0.6.7
+    - @frontify/sidebar-settings@0.6.7
 
 ## 0.29.2
 
@@ -1423,7 +1439,7 @@
 - [`9199d24`](https://github.com/Frontify/brand-sdk/commit/9199d24dd1221640687d6d157897eedc40ed3d43) Thanks [@ragi96](https://github.com/ragi96)! - fix: BlockItemWrapper typing issue
 
 - Updated dependencies [[`3c1e752`](https://github.com/Frontify/brand-sdk/commit/3c1e7520967c5055c944a0f1afe6b41e046dcdd8)]:
-  - @frontify/sidebar-settings@0.6.6
+    - @frontify/sidebar-settings@0.6.6
 
 ## 0.29.0
 
@@ -1436,7 +1452,7 @@
 - [#504](https://github.com/Frontify/brand-sdk/pull/504) [`b0d2b28`](https://github.com/Frontify/brand-sdk/commit/b0d2b28838e917a4fb3332a1f043ee29d8060752) Thanks [@ragi96](https://github.com/ragi96)! - Update dependencies
 
 - Updated dependencies [[`b0d2b28`](https://github.com/Frontify/brand-sdk/commit/b0d2b28838e917a4fb3332a1f043ee29d8060752)]:
-  - @frontify/sidebar-settings@0.6.5
+    - @frontify/sidebar-settings@0.6.5
 
 ## 0.28.6
 
@@ -1447,7 +1463,7 @@
 - [#524](https://github.com/Frontify/brand-sdk/pull/524) [`c0b8cff`](https://github.com/Frontify/brand-sdk/commit/c0b8cff9b69f4cc5f83ebd150d3640fe50da501d) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(types): extend app bridge type
 
 - Updated dependencies [[`0fdb3c7`](https://github.com/Frontify/brand-sdk/commit/0fdb3c79590964ba0e66f0c95e2a30ea8a34836b)]:
-  - @frontify/sidebar-settings@0.6.4
+    - @frontify/sidebar-settings@0.6.4
 
 ## 0.28.5
 
@@ -1456,7 +1472,7 @@
 - [#502](https://github.com/Frontify/brand-sdk/pull/502) [`d1a60e9`](https://github.com/Frontify/brand-sdk/commit/d1a60e9fabb2920d3fc716e18f58d8de1527ab26) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): add link selector
 
 - Updated dependencies [[`d1a60e9`](https://github.com/Frontify/brand-sdk/commit/d1a60e9fabb2920d3fc716e18f58d8de1527ab26)]:
-  - @frontify/sidebar-settings@0.6.3
+    - @frontify/sidebar-settings@0.6.3
 
 ## 0.28.4
 
@@ -1467,7 +1483,7 @@
 - [`22684e3`](https://github.com/Frontify/brand-sdk/commit/22684e358fd2b073790a0959606c6a5d44e35c4e) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`22684e3`](https://github.com/Frontify/brand-sdk/commit/22684e358fd2b073790a0959606c6a5d44e35c4e)]:
-  - @frontify/sidebar-settings@0.6.2
+    - @frontify/sidebar-settings@0.6.2
 
 ## 0.28.3
 
@@ -1484,7 +1500,7 @@
 - [`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix issues with styles export
 
 - Updated dependencies [[`fa969e9`](https://github.com/Frontify/brand-sdk/commit/fa969e90c980411273ff3c8c6f015b303fd59fe3)]:
-  - @frontify/sidebar-settings@0.6.1
+    - @frontify/sidebar-settings@0.6.1
 
 ## 0.28.1
 
@@ -1505,7 +1521,7 @@
 - [#482](https://github.com/Frontify/brand-sdk/pull/482) [`6b18a74`](https://github.com/Frontify/brand-sdk/commit/6b18a74794612f61bd2e34ea8fdd4572ebb5274e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(\*): update shared folder with latest changes
 
 - Updated dependencies [[`4105251`](https://github.com/Frontify/brand-sdk/commit/4105251969f8ae639014a013a2cbc88df8e4935d), [`af49f65`](https://github.com/Frontify/brand-sdk/commit/af49f6572592522a550f970c98e3d8fd2d377cc3)]:
-  - @frontify/sidebar-settings@0.6.0
+    - @frontify/sidebar-settings@0.6.0
 
 ## 0.27.0
 
@@ -1516,7 +1532,7 @@
 ### Patch Changes
 
 - Updated dependencies [[`3eabb89`](https://github.com/Frontify/brand-sdk/commit/3eabb8959c2b68be50ab1bcef3996100ed877864), [`33e0a8f`](https://github.com/Frontify/brand-sdk/commit/33e0a8f49de433aca8cc06bafed6e5515b755dd2)]:
-  - @frontify/sidebar-settings@0.5.0
+    - @frontify/sidebar-settings@0.5.0
 
 ## 0.26.8
 
@@ -1525,7 +1541,7 @@
 - [#426](https://github.com/Frontify/brand-sdk/pull/426) [`7729287`](https://github.com/Frontify/brand-sdk/commit/77292877e2bce6207196b5a8373711db94ab1716) Thanks [@triggertoo](https://github.com/triggertoo)! - Update @frontify/sidebar-settings to get react 18 support
 
 - Updated dependencies [[`b78b376`](https://github.com/Frontify/brand-sdk/commit/b78b3764d1c01e1c0cc81542fdea2d813bb62e33)]:
-  - @frontify/sidebar-settings@0.4.0
+    - @frontify/sidebar-settings@0.4.0
 
 ## 0.26.7
 
@@ -1542,7 +1558,7 @@
 - [`2179c95`](https://github.com/Frontify/brand-sdk/commit/2179c95e787d89d1e75671d394b4dde61673638d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update App Bridge
 
 - Updated dependencies [[`caecf03`](https://github.com/Frontify/brand-sdk/commit/caecf03ffd52a07cd1c846f4a99f9736fef76b76), [`2179c95`](https://github.com/Frontify/brand-sdk/commit/2179c95e787d89d1e75671d394b4dde61673638d)]:
-  - @frontify/sidebar-settings@0.3.3
+    - @frontify/sidebar-settings@0.3.3
 
 ## 0.26.5
 
@@ -1551,7 +1567,7 @@
 - [`f11eaef`](https://github.com/Frontify/brand-sdk/commit/f11eaef8b3a602562994460059e2c30ea307cda1) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix version of fondue dependency
 
 - Updated dependencies [[`f11eaef`](https://github.com/Frontify/brand-sdk/commit/f11eaef8b3a602562994460059e2c30ea307cda1)]:
-  - @frontify/sidebar-settings@0.3.2
+    - @frontify/sidebar-settings@0.3.2
 
 ## 0.26.4
 
@@ -1560,7 +1576,7 @@
 - [`3835898`](https://github.com/Frontify/brand-sdk/commit/38358988674acc7cad728357b146558ebba3964a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Fix Fondue dependency version issue
 
 - Updated dependencies [[`3835898`](https://github.com/Frontify/brand-sdk/commit/38358988674acc7cad728357b146558ebba3964a)]:
-  - @frontify/sidebar-settings@0.3.1
+    - @frontify/sidebar-settings@0.3.1
 
 ## 0.26.3
 
@@ -1571,14 +1587,14 @@
 - [#396](https://github.com/Frontify/brand-sdk/pull/396) [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Unpin dev dependencies
 
 - Updated dependencies [[`57228f5`](https://github.com/Frontify/brand-sdk/commit/57228f557c20f2a2a291ecabc560a8e7c1bb0e41), [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b), [`a213ee6`](https://github.com/Frontify/brand-sdk/commit/a213ee68b2f11377d94df578a86ec360704d727b)]:
-  - @frontify/sidebar-settings@0.3.0
+    - @frontify/sidebar-settings@0.3.0
 
 ## 0.26.2
 
 ### Patch Changes
 
 - Updated dependencies [[`366ca28`](https://github.com/Frontify/brand-sdk/commit/366ca280e754cf875d91026ee0a3cf8e767b05ab)]:
-  - @frontify/sidebar-settings@0.2.0
+    - @frontify/sidebar-settings@0.2.0
 
 ## 0.26.1
 
@@ -1599,7 +1615,7 @@
 - [`440e463`](https://github.com/Frontify/brand-sdk/commit/440e463326fb55dabc28dba346e1ec2e6ee03450) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`6a31872`](https://github.com/Frontify/brand-sdk/commit/6a31872fbe0cc426f1f2f384fab52e48dbaad557), [`6a31872`](https://github.com/Frontify/brand-sdk/commit/6a31872fbe0cc426f1f2f384fab52e48dbaad557), [`440e463`](https://github.com/Frontify/brand-sdk/commit/440e463326fb55dabc28dba346e1ec2e6ee03450)]:
-  - @frontify/sidebar-settings@0.1.0
+    - @frontify/sidebar-settings@0.1.0
 
 ## 0.25.12
 
@@ -1608,7 +1624,7 @@
 - [`d89d0e0`](https://github.com/Frontify/brand-sdk/commit/d89d0e06be900fd6bba897d05ad8427e5d44f1f0) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Allow beta versions of Fondue
 
 - Updated dependencies [[`d89d0e0`](https://github.com/Frontify/brand-sdk/commit/d89d0e06be900fd6bba897d05ad8427e5d44f1f0)]:
-  - @frontify/sidebar-settings@0.0.16
+    - @frontify/sidebar-settings@0.0.16
 
 ## 0.25.11
 
@@ -1617,7 +1633,7 @@
 - [`0198626`](https://github.com/Frontify/brand-sdk/commit/0198626b9d8e49f31d861a05e15ca6e59d349b59) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`2f58027`](https://github.com/Frontify/brand-sdk/commit/2f580271ca0540729539da3dfe66286ee3f50eda), [`0198626`](https://github.com/Frontify/brand-sdk/commit/0198626b9d8e49f31d861a05e15ca6e59d349b59)]:
-  - @frontify/sidebar-settings@0.0.14
+    - @frontify/sidebar-settings@0.0.14
 
 ## 0.25.10
 
@@ -1630,7 +1646,7 @@
 - [`45653fa`](https://github.com/Frontify/brand-sdk/commit/45653faaf4168517ccbb3a9775bbf88871149692) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`5fb81d6`](https://github.com/Frontify/brand-sdk/commit/5fb81d6a3f8e0bd7083b2a2c1cc95b7a2d98e395), [`d2ecd25`](https://github.com/Frontify/brand-sdk/commit/d2ecd2592d129d40de72d4793c8848f2f291f896), [`45653fa`](https://github.com/Frontify/brand-sdk/commit/45653faaf4168517ccbb3a9775bbf88871149692)]:
-  - @frontify/sidebar-settings@0.0.13
+    - @frontify/sidebar-settings@0.0.13
 
 ## 0.25.9
 
@@ -1641,14 +1657,14 @@
 - [`d955377`](https://github.com/Frontify/brand-sdk/commit/d955377f1a6f115dac3cad8513627973c7bf428f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Update dependencies
 
 - Updated dependencies [[`d955377`](https://github.com/Frontify/brand-sdk/commit/d955377f1a6f115dac3cad8513627973c7bf428f), [`d955377`](https://github.com/Frontify/brand-sdk/commit/d955377f1a6f115dac3cad8513627973c7bf428f)]:
-  - @frontify/sidebar-settings@0.0.12
+    - @frontify/sidebar-settings@0.0.12
 
 ## 0.25.8
 
 ### Patch Changes
 
 - Updated dependencies [[`fa95406`](https://github.com/Frontify/brand-sdk/commit/fa9540631337193ffa0225a58f7b7b46b4f48e2a)]:
-  - @frontify/sidebar-settings@0.0.11
+    - @frontify/sidebar-settings@0.0.11
 
 ## 0.25.7
 
@@ -1663,14 +1679,14 @@
 - [`64a68da`](https://github.com/Frontify/brand-sdk/commit/64a68da0d60cf0e529d534ae120ee1a35c1d587d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export `SimpleSettingBlock` type
 
 - Updated dependencies [[`187466a`](https://github.com/Frontify/brand-sdk/commit/187466ae50c08f4abf5d0b257951ccf083d6344d), [`e47c574`](https://github.com/Frontify/brand-sdk/commit/e47c5747ab1041a62dc880fa92436b8ab464bfef), [`3afb60d`](https://github.com/Frontify/brand-sdk/commit/3afb60d849a8ffb262aed4dc8e53d46b9b9a04ea)]:
-  - @frontify/sidebar-settings@0.0.10
+    - @frontify/sidebar-settings@0.0.10
 
 ## 0.25.6
 
 ### Patch Changes
 
 - Updated dependencies [[`ff4cf93`](https://github.com/Frontify/brand-sdk/commit/ff4cf935fbffa4933b31eeea6cad3a0c89b8bf88)]:
-  - @frontify/sidebar-settings@0.0.9
+    - @frontify/sidebar-settings@0.0.9
 
 ## 0.25.5
 
@@ -1681,7 +1697,7 @@
 - [`13be4e4`](https://github.com/Frontify/brand-sdk/commit/13be4e40dee7cc13c20de53d2c5c44a1ee1c3c8f) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export more types with generic
 
 - Updated dependencies [[`4063217`](https://github.com/Frontify/brand-sdk/commit/4063217a946f0896f7dd3aacbc0b21f4c355b21c)]:
-  - @frontify/sidebar-settings@0.0.8
+    - @frontify/sidebar-settings@0.0.8
 
 ## 0.25.4
 
@@ -1696,14 +1712,14 @@
 - [`f140510`](https://github.com/Frontify/brand-sdk/commit/f14051013520f73a9e60bcbac704eb607a69468a) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Added documentation link to the types.
   Added custom section handling in types.
 - Updated dependencies [[`ac89fc6`](https://github.com/Frontify/brand-sdk/commit/ac89fc60cdf58d1a7cae2aae2a057c744fc7e9b6)]:
-  - @frontify/sidebar-settings@0.0.7
+    - @frontify/sidebar-settings@0.0.7
 
 ## 0.25.2
 
 ### Patch Changes
 
 - Updated dependencies [[`e58c9d5`](https://github.com/Frontify/brand-sdk/commit/e58c9d5ef0b20e33d91c831f4b19c37afae4f9aa), [`b651e3d`](https://github.com/Frontify/brand-sdk/commit/b651e3d06d19cbf9de6e85ed58aae8a9f2ed2615)]:
-  - @frontify/sidebar-settings@0.0.6
+    - @frontify/sidebar-settings@0.0.6
 
 ## 0.25.1
 
@@ -1712,14 +1728,14 @@
 - [`712730e`](https://github.com/Frontify/frontify-cli/commit/712730ec8abda54a1fbc6df5447dcd10fd159ed1) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - export `SettingBlock` with generic
 
 - Updated dependencies [[`d4bd194`](https://github.com/Frontify/frontify-cli/commit/d4bd194133470d2a212be80d14e299e63bc12783)]:
-  - @frontify/sidebar-settings@0.0.5
+    - @frontify/sidebar-settings@0.0.5
 
 ## 0.24.3
 
 ### Patch Changes
 
 - Updated dependencies [[`ab6318e`](https://github.com/Frontify/frontify-cli/commit/ab6318e02b460271fa4ca4d80aa2f95f70a1db2d)]:
-  - @frontify/sidebar-settings@0.0.4
+    - @frontify/sidebar-settings@0.0.4
 
 ## 0.24.2
 
@@ -1728,7 +1744,7 @@
 - [#279](https://github.com/Frontify/frontify-cli/pull/279) [`aa91a2d`](https://github.com/Frontify/frontify-cli/commit/aa91a2d7df7e8f6947b1852d2d2a4d1a12e0d5af) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Export everything from the sidebar types
 
 - Updated dependencies [[`aa91a2d`](https://github.com/Frontify/frontify-cli/commit/aa91a2d7df7e8f6947b1852d2d2a4d1a12e0d5af)]:
-  - @frontify/sidebar-settings@0.0.3
+    - @frontify/sidebar-settings@0.0.3
 
 ## 0.24.1
 
@@ -1737,4 +1753,4 @@
 - [#277](https://github.com/Frontify/frontify-cli/pull/277) [`6e3bb0c`](https://github.com/Frontify/frontify-cli/commit/6e3bb0cf08bc616496dcb413dbde8d95094b3a9d) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - Use `@frontify/sidebar-settings` type package
 
 - Updated dependencies [[`6e3bb0c`](https://github.com/Frontify/frontify-cli/commit/6e3bb0cf08bc616496dcb413dbde8d95094b3a9d)]:
-  - @frontify/sidebar-settings@0.0.2
+    - @frontify/sidebar-settings@0.0.2
