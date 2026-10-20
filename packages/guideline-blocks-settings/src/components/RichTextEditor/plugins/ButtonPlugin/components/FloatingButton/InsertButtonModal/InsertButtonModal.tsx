@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FormControl } from '@frontify/fondue';
+import { Label } from '@frontify/fondue/components';
 import { type CSSProperties, type ReactElement, type ReactNode, useState } from 'react';
 
 import { InsertModal } from '../../../../LinkPlugin/FloatingLink/InsertLinkModal/InsertModal';
@@ -14,13 +14,15 @@ export const InsertButtonModal = () => {
 
     return (
         <InsertModal {...modalProps} testId="floating-button-insert">
-            <div className="tw-pt-5">
-                <FormControl
-                    label={{
-                        children: 'Button Style',
-                        htmlFor: 'buttonStyle',
-                        required: true,
-                    }}
+            <div className="tw-pt-5 tw-flex tw-flex-col tw-gap-2">
+                <Label id="buttonStyle-label" htmlFor="buttonStyle" required>
+                    Button Style
+                </Label>
+                <div
+                    id="buttonStyle"
+                    role="group"
+                    aria-labelledby="buttonStyle-label"
+                    className="tw-flex tw-flex-col tw-gap-2"
                 >
                     <HoverableButton
                         id="primary"
@@ -48,7 +50,7 @@ export const InsertButtonModal = () => {
                     >
                         {state.text || 'Tertiary Button'}
                     </HoverableButton>
-                </FormControl>
+                </div>
             </div>
         </InsertModal>
     );
