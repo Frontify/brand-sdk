@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.9
+
+### Patch Changes
+
+- [#1714](https://github.com/Frontify/brand-sdk/pull/1714) [`e94ce32`](https://github.com/Frontify/brand-sdk/commit/e94ce32f34e7ad04334e915125c13699e46c1ab5) Thanks [@benfrontify](https://github.com/benfrontify)! - refactor(ButtonPlugin): use the new fondue `Label` for the button style picker in the insert button modal
+  
+  Screen readers now announce the style options as a group named "Button Style".
+
 ## 3.0.8
 
 ### Patch Changes
