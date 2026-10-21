@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
+import { appendUnit, numericalOrPixelRule, presetCustomValue } from '@frontify/sidebar-settings';
+
+import { type SettingBlock } from '../types';
 
 import { GutterSpacing, gutterSpacingStyleMap } from './types';
 
