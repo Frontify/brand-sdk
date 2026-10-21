@@ -2,7 +2,7 @@
 
 import { type Color } from '@frontify/sidebar-settings';
 
-import { type SettingBlock } from '../';
+import { type SettingBlock } from '../types';
 
 import { BACKGROUND_COLOR_DEFAULT_VALUE } from './defaultValues';
 type BackgroundSettingsType = {
