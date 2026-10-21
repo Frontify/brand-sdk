@@ -35,39 +35,12 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
 
     const workerRef = useRef<Worker>();
 
+    // The worker is only started by the first upload, so mounted uploaders that never upload don't keep a thread alive.
     useEffect(() => {
-        const worker = new Worker();
-        workerRef.current = worker;
-
-        worker.addEventListener('message', (workerEvent) => {
-            switch (workerEvent.data.event) {
-                case WorkerEvent.OnProgress:
-                    onProgress(workerEvent);
-                    break;
-                case WorkerEvent.OnProgressAll:
-                    onProgressAll(workerEvent);
-                    break;
-                case WorkerEvent.OnDone:
-                    onDone(workerEvent);
-                    break;
-                case WorkerEvent.OnDoneAll:
-                    onDoneAll();
-                    break;
-                case WorkerEvent.OnFail:
-                    onFail();
-                    break;
-                case WorkerEvent.OnFileFail:
-                    onFileFail(workerEvent);
-                    break;
-                default:
-                    throw new Error(`${workerEvent.data.event} is not handled`);
-            }
-        });
-
         return () => {
-            worker.terminate();
+            workerRef.current?.terminate();
+            workerRef.current = undefined;
         };
-        // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, []);
 
     const onProgress = (workerEvent: MessageEvent<FileApi>) => {
@@ -116,6 +89,41 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
         results.current = [];
     };
 
+    const getWorker = () => {
+        if (!workerRef.current) {
+            const worker = new Worker();
+
+            worker.addEventListener('message', (workerEvent) => {
+                switch (workerEvent.data.event) {
+                    case WorkerEvent.OnProgress:
+                        onProgress(workerEvent);
+                        break;
+                    case WorkerEvent.OnProgressAll:
+                        onProgressAll(workerEvent);
+                        break;
+                    case WorkerEvent.OnDone:
+                        onDone(workerEvent);
+                        break;
+                    case WorkerEvent.OnDoneAll:
+                        onDoneAll();
+                        break;
+                    case WorkerEvent.OnFail:
+                        onFail();
+                        break;
+                    case WorkerEvent.OnFileFail:
+                        onFileFail(workerEvent);
+                        break;
+                    default:
+                        throw new Error(`${workerEvent.data.event} is not handled`);
+                }
+            });
+
+            workerRef.current = worker;
+        }
+
+        return workerRef.current;
+    };
+
     const uploadFiles = (files: FileList | File) => {
         resetState();
         const fileArray = getFilesAsArray(files);
@@ -128,9 +136,7 @@ export const useFileUpload = (props?: UseFileUploadParameters): UseFileUploadRet
             files: fileArray,
         };
 
-        if (workerRef?.current) {
-            workerRef.current.postMessage(message);
-        }
+        getWorker().postMessage(message);
     };
 
     return [uploadFiles, { results: results.current, doneAll }];
