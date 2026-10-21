@@ -1,8 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type AppBridgeBlock } from '@frontify/app-bridge';
-import { FormControl } from '@frontify/fondue';
-import { Button, TextInput } from '@frontify/fondue/components';
+import { Button, Label, TextInput } from '@frontify/fondue/components';
 import { IconCheckMark } from '@frontify/fondue/icons';
 import { FloatingModalWrapper } from '@frontify/fondue/rte';
 import { type MouseEvent, type ReactElement, type ReactNode } from 'react';
@@ -39,20 +38,17 @@ export const InsertModal = ({
     children,
 }: Props): ReactElement => (
     <FloatingModalWrapper data-test-id={testId} padding="28px" minWidth="400px">
-        <FormControl
-            label={{
-                children: 'Text',
-                htmlFor: 'linkText',
-                required: true,
-            }}
-        >
+        <div className="tw-flex tw-flex-col tw-gap-2">
+            <Label htmlFor="linkText" required>
+                Text
+            </Label>
             <TextInput
                 id="linkText"
                 value={state.text}
                 placeholder="Link Text"
                 onChange={(event) => onTextChange(event.target.value)}
             />
-        </FormControl>
+        </div>
 
         {children}
 
