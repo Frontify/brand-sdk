@@ -1,5 +1,43 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.71
+
+### Major Changes
+
+- [#1718](https://github.com/Frontify/brand-sdk/pull/1718) [`05c5488`](https://github.com/Frontify/brand-sdk/commit/05c5488dc65404fbe11a32a58d1eb331f0c048c5) Thanks [@ragi96](https://github.com/ragi96)! - refactor: export the testing utilities only from `@frontify/app-bridge/testing`
+  
+  `getAppBridgeBlockStub`, `withAppBridgeBlockStubs` and the `*Dummy` fixtures are no longer exported from `@frontify/app-bridge`. Importing anything from the main entry no longer pulls `sinon` into your production bundle.
+  
+  ```ts
+  // Before
+  import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+  
+  // After
+  import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
+  ```
+
+- [#1721](https://github.com/Frontify/brand-sdk/pull/1721) [`feb9e29`](https://github.com/Frontify/brand-sdk/commit/feb9e29bb028f74f2a76da02394948c0f70c4294) Thanks [@ragi96](https://github.com/ragi96)! - perf: stop enabling Immer's `MapSet` plugin on import
+  
+  `@frontify/app-bridge` no longer depends on `immer` and no longer calls `enableMapSet()` when it's imported. Blocks that don't use Immer themselves no longer ship it, which saves about 11 KB minified.
+  
+  If your code uses Immer with `Map` or `Set`, enable the plugin yourself:
+  
+  ```ts
+  import { enableMapSet } from 'immer';
+  
+  enableMapSet();
+  ```
+
+### Patch Changes
+
+- [#1722](https://github.com/Frontify/brand-sdk/pull/1722) [`e0c0366`](https://github.com/Frontify/brand-sdk/commit/e0c03660d80f08601dfb8d46239a96c36c91062f) Thanks [@ragi96](https://github.com/ragi96)! - perf: stop bundling `lodash-es` and React's JSX runtime into the package
+  
+  Blocks that don't use `convertObjectCase` no longer ship any lodash code, which saves about 12 KB minified per block. `@frontify/app-bridge/testing` now uses your own `react/jsx-runtime` instead of a bundled copy.
+
+- [#1723](https://github.com/Frontify/brand-sdk/pull/1723) [`e063175`](https://github.com/Frontify/brand-sdk/commit/e0631753d71e317ef92118e57421a3add1945705) Thanks [@ragi96](https://github.com/ragi96)! - perf(useFileUpload): start the upload worker on the first upload
+  
+  `useFileUpload` and `useAssetUpload` no longer start a Web Worker when the component mounts. The worker starts with the first upload and is reused for later ones. Blocks that render an uploader per item, such as one per thumbnail, no longer keep an idle worker thread running for every item.
+
 ## 4.0.0-alpha.70
 
 ### Minor Changes
