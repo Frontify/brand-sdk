@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { IconArrowMove, IconMoveTo, IconTrashBin } from '@frontify/fondue/icons';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
