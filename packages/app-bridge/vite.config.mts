@@ -6,8 +6,10 @@ import { defineConfig } from 'vitest/config';
 
 import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
 
-const dependencies = Object.keys(dependenciesMap);
-const peerDependencies = Object.keys(peerDependenciesMap);
+// Externalize every declared dependency and any of its subpaths (e.g. 'react/jsx-runtime').
+const external = [...Object.keys(dependenciesMap), ...Object.keys(peerDependenciesMap)].map(
+    (dependency) => new RegExp(`^${dependency.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/.*)?$`),
+);
 
 export default defineConfig({
     plugins: [
@@ -27,7 +29,7 @@ export default defineConfig({
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies, ...peerDependencies],
+            external,
         },
     },
     test: {
