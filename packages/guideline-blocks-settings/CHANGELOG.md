@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.8
+
+### Patch Changes
+
+- [#1720](https://github.com/Frontify/brand-sdk/pull/1720) [`d004e57`](https://github.com/Frontify/brand-sdk/commit/d004e577be40d4fdb9fcacfc16e588eb3095c812) Thanks [@ragi96](https://github.com/ragi96)! - perf: let bundlers drop the parts of the package a block doesn't use
+  
+  Importing any export, such as `defineBlock` or a settings helper, no longer pulls the whole package into your block bundle. Blocks that don't use the `RichTextEditor` no longer ship it, along with its emoji data.
+
 ## 4.0.0-alpha.7
 
 ### Patch Changes
