@@ -64,9 +64,6 @@ importers:
 
   packages/app-bridge:
     dependencies:
-      immer:
-        specifier: ^11.1.4
-        version: 11.1.18
       lodash-es:
         specifier: ^4.18.1
         version: 4.18.1

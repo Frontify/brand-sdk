@@ -1,9 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { enableMapSet } from 'immer';
-
-enableMapSet();
-
 export * from './AppBridge';
 export * from './AppBridgeBlock';
 export * from './errors';
