@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import mitt, { type Emitter } from 'mitt';
-import { type SinonStubbedInstance, spy, stub } from 'sinon';
+import sinon from 'sinon';
 
 import { type EventCallbackParameter } from '../AppBridge';
 import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
@@ -55,8 +55,8 @@ export const getAppBridgeBlockStub = ({
     },
     blockTemplates = {},
     unsubscribe = () => null,
-}: getAppBridgeBlockStubProps = {}): SinonStubbedInstance<AppBridgeBlock> => {
-    window.emitter = spy(mitt()) as unknown as Emitter<EmitterEvents>;
+}: getAppBridgeBlockStubProps = {}): sinon.SinonStubbedInstance<AppBridgeBlock> => {
+    window.emitter = sinon.spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
     window.blockSettings ??= {};
     window.blockSettings[blockId] = blockSettings;
@@ -87,27 +87,29 @@ export const getAppBridgeBlockStub = ({
     };
 
     return {
-        getProjectId: stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
-        getEditorState: stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
-        getBlockSettings: stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
-        getCurrentLoggedUser: stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
-        getAssetById: stub<Parameters<AppBridgeBlock['getAssetById']>>().callsFake((assetId) =>
-            Promise.resolve(AssetDummy.with(assetId)),
-        ),
-        getBlockAssets: stub<Parameters<AppBridgeBlock['getBlockAssets']>>().callsFake(() => computeBlockAssets()),
-        addAssetIdsToBlockAssetKey: stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>().callsFake(
-            (key, assetsIds) => {
+        getProjectId: sinon.stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
+        getEditorState: sinon.stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
+        getBlockSettings: sinon.stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
+        getCurrentLoggedUser: sinon.stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
+        getAssetById: sinon
+            .stub<Parameters<AppBridgeBlock['getAssetById']>>()
+            .callsFake((assetId) => Promise.resolve(AssetDummy.with(assetId))),
+        getBlockAssets: sinon
+            .stub<Parameters<AppBridgeBlock['getBlockAssets']>>()
+            .callsFake(() => computeBlockAssets()),
+        addAssetIdsToBlockAssetKey: sinon
+            .stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>()
+            .callsFake((key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
                 notifyContextAssetsSubscribers();
-            },
-        ),
-        deleteAssetIdsFromBlockAssetKey: stub<
-            Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>
-        >().callsFake((key, assetIds) => {
-            deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
-            notifyContextAssetsSubscribers();
-        }),
-        getBlockTemplates: stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(() => {
+            }),
+        deleteAssetIdsFromBlockAssetKey: sinon
+            .stub<Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>>()
+            .callsFake((key, assetIds) => {
+                deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
+                notifyContextAssetsSubscribers();
+            }),
+        getBlockTemplates: sinon.stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(() => {
             return Object.entries(blockTemplates).reduce<Record<string, Template[]>>(
                 (templatesDiff, [key, templates]) => {
                     const addedTemplateIdsList = addedTemplateIds[key] ?? [];
@@ -121,25 +123,25 @@ export const getAppBridgeBlockStub = ({
                 {},
             );
         }),
-        addTemplateIdsToBlockTemplateKey: stub<
-            Parameters<AppBridgeBlock['addTemplateIdsToBlockTemplateKey']>
-        >().callsFake((key, templateIds) => {
-            addedTemplateIds[key] = [...(addedTemplateIds[key] ?? []), ...templateIds];
-        }),
-        deleteTemplateIdsFromBlockTemplateKey: stub<
-            Parameters<AppBridgeBlock['deleteTemplateIdsFromBlockTemplateKey']>
-        >().callsFake((key, templateIds) => {
-            deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
-        }),
-        getTranslationLanguage: stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
-        getBulkDownloadBySignature: stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>().resolves(
-            BulkDownloadDummy.default(),
-        ),
-        getBulkDownloadByToken: stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>().resolves(
-            BulkDownloadDummy.default(),
-        ),
-        getPrivacySettings: stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
-        api: stub<Parameters<AppBridgeBlock['api']>>().callsFake((args) => {
+        addTemplateIdsToBlockTemplateKey: sinon
+            .stub<Parameters<AppBridgeBlock['addTemplateIdsToBlockTemplateKey']>>()
+            .callsFake((key, templateIds) => {
+                addedTemplateIds[key] = [...(addedTemplateIds[key] ?? []), ...templateIds];
+            }),
+        deleteTemplateIdsFromBlockTemplateKey: sinon
+            .stub<Parameters<AppBridgeBlock['deleteTemplateIdsFromBlockTemplateKey']>>()
+            .callsFake((key, templateIds) => {
+                deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
+            }),
+        getTranslationLanguage: sinon.stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
+        getBulkDownloadBySignature: sinon
+            .stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>()
+            .resolves(BulkDownloadDummy.default()),
+        getBulkDownloadByToken: sinon
+            .stub<Parameters<AppBridgeBlock['getBulkDownloadByToken']>>()
+            .resolves(BulkDownloadDummy.default()),
+        getPrivacySettings: sinon.stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
+        api: sinon.stub<Parameters<AppBridgeBlock['api']>>().callsFake((args) => {
             switch (args.name) {
                 case 'getAssetBulkDownloadToken': {
                     return { assetBulkDownloadToken: 'token' };
@@ -154,7 +156,7 @@ export const getAppBridgeBlockStub = ({
             throw new Error('Method is not stubbed');
         }),
 
-        context: stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
+        context: sinon.stub<Parameters<AppBridgeBlock['context']>>().callsFake((args) => {
             if (args === undefined) {
                 return {
                     get: () => [blockId, sectionId, isAuthenticated],
@@ -203,7 +205,7 @@ export const getAppBridgeBlockStub = ({
             }
         }),
 
-        subscribe: stub<Parameters<AppBridgeBlock['subscribe']>>().callsFake((eventName, callback) => {
+        subscribe: sinon.stub<Parameters<AppBridgeBlock['subscribe']>>().callsFake((eventName, callback) => {
             if (eventName === 'assetsChosen') {
                 (callback as EventCallbackParameter<'assetsChosen', BlockEvent>)({ assets: [AssetDummy.with(123)] });
             } else if (eventName === 'templateChosen') {
@@ -216,16 +218,18 @@ export const getAppBridgeBlockStub = ({
             return unsubscribe;
         }),
 
-        getColorPalettesWithColors: stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>().resolves([
-            ColorPaletteDummy.with(678, 'Palette 1'),
-            ColorPaletteDummy.with(427, 'Palette 2'),
-            ColorPaletteDummy.with(679, 'Palette 3'),
-        ]),
+        getColorPalettesWithColors: sinon
+            .stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>()
+            .resolves([
+                ColorPaletteDummy.with(678, 'Palette 1'),
+                ColorPaletteDummy.with(427, 'Palette 2'),
+                ColorPaletteDummy.with(679, 'Palette 3'),
+            ]),
 
         // TODO: Stub the following methods
-        getTemplateById: stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
-        updateBlockSettings: stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
-        state: stub<Parameters<AppBridgeBlock['state']>>().resolves(),
-        dispatch: stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
+        getTemplateById: sinon.stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
+        updateBlockSettings: sinon.stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
+        state: sinon.stub<Parameters<AppBridgeBlock['state']>>().resolves(),
+        dispatch: sinon.stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
 };

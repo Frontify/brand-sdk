@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import sinon, { stub } from 'sinon';
+import sinon from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
@@ -43,7 +43,8 @@ describe('useAssetBulkDownload', () => {
 
     it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.api = stub<Parameters<AppBridgeBlock['api']>>()
+        appBridgeStub.api = sinon
+            .stub<Parameters<AppBridgeBlock['api']>>()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
                 payload: { blockAssets: undefined },
