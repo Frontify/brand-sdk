@@ -1,5 +1,45 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.72
+
+### Major Changes
+
+- [#1730](https://github.com/Frontify/brand-sdk/pull/1730) [`190f2dd`](https://github.com/Frontify/brand-sdk/commit/190f2dd93a478b327708814bdf15ae57ebcdbe05) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): make `sinon` an optional peer dependency
+  
+  npm and pnpm no longer install `sinon` alongside `@frontify/app-bridge`, and Yarn no longer warns when it's missing. Only `@frontify/app-bridge/testing` needs it.
+  
+  If you import from `@frontify/app-bridge/testing`, add `sinon` to your own dev dependencies:
+  
+  ```sh
+  npm install --save-dev sinon
+  ```
+
+### Patch Changes
+
+- [#1727](https://github.com/Frontify/brand-sdk/pull/1727) [`094c73b`](https://github.com/Frontify/brand-sdk/commit/094c73bbd4c5edfec80fac6757325e9fd0489edc) Thanks [@ragi96](https://github.com/ragi96)! - fix: stop `useAssetChooser` and `useTemplateChooser` from leaking subscriptions
+  
+  If the chooser was dismissed without a selection and then opened again, choosing an asset or template ran your callback twice. Each open now replaces the previous subscription, and the hooks unsubscribe when the component unmounts. `openAssetChooser`, `closeAssetChooser`, `openTemplateChooser` and `closeTemplateChooser` now also keep the same identity across renders.
+
+- [#1730](https://github.com/Frontify/brand-sdk/pull/1730) [`190f2dd`](https://github.com/Frontify/brand-sdk/commit/190f2dd93a478b327708814bdf15ae57ebcdbe05) Thanks [@ragi96](https://github.com/ragi96)! - fix: support `sinon` 22 in `@frontify/app-bridge/testing`
+  
+  `sinon` 22 now satisfies the peer dependency. With `@types/sinon` 22, the stubs from `getAppBridgeBlockStub` and `withAppBridgeBlockStubs` could lose their types and become `any`; they stay typed now.
+
+- [#1729](https://github.com/Frontify/brand-sdk/pull/1729) [`4be9142`](https://github.com/Frontify/brand-sdk/commit/4be9142da125c30c4aeeb5f4611d945459315882) Thanks [@ragi96](https://github.com/ragi96)! - fix(useAssetBulkDownload): stop polling after unmount or when a new download starts
+  
+  `useAssetBulkDownload` no longer keeps checking whether a bulk download is ready after the component unmounts. Starting a new download now stops the checks for the previous one, which kept running forever before. Each check also waits for the previous one to finish, so slow responses no longer lead to overlapping requests.
+
+- [#1728](https://github.com/Frontify/brand-sdk/pull/1728) [`17d8106`](https://github.com/Frontify/brand-sdk/commit/17d8106602a4d870778daeef093a2a2ba895b4f7) Thanks [@ragi96](https://github.com/ragi96)! - perf(useEditorState): subscribe to the editor state once instead of on every render
+  
+  `useEditorState` no longer unsubscribes from and resubscribes to the host's `isEditing` context each time the component renders. It subscribes when the component mounts and unsubscribes when it unmounts.
+
+- [#1724](https://github.com/Frontify/brand-sdk/pull/1724) [`4a15c23`](https://github.com/Frontify/brand-sdk/commit/4a15c234d111081d66bce429143087df73d5cb1d) Thanks [@ragi96](https://github.com/ragi96)! - perf(useBlockSettings): copy the initial settings only once
+  
+  `useBlockSettings` no longer deep-copies the block's settings on every render, only when the component mounts. Blocks with large settings re-render faster, for example while typing in the editor.
+
+- [#1725](https://github.com/Frontify/brand-sdk/pull/1725) [`0af6f3a`](https://github.com/Frontify/brand-sdk/commit/0af6f3ab35832e2b02f3fa7589bf02b1ece75bb0) Thanks [@ragi96](https://github.com/ragi96)! - perf: drop the upload worker from blocks that never upload
+  
+  Blocks that don't use `useFileUpload` or `useAssetUpload` no longer ship the inline upload worker, which saves about 3 KB minified per block. Blocks that upload are unchanged.
+
 ## 4.0.0-alpha.71
 
 ### Major Changes
