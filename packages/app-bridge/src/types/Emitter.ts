@@ -24,7 +24,5 @@ export type EmitterEvents = {
 
     'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
-    'AppBridge:OpenNavigationManager': void;
-
     'AppBridge:ViewerOpened': AssetViewerOptions;
 };
