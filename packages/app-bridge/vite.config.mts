@@ -24,7 +24,8 @@ export default defineConfig({
                 index: './src/index.ts',
                 testing: './src/tests/index.ts',
             },
-            name: 'app-bridge',
+            // ESM only: a CommonJS build would still have to require lodash-es, which is ESM-only.
+            formats: ['es'],
         },
         sourcemap: true,
         minify: true,
