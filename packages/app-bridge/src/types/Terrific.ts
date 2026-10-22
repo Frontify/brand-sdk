@@ -2,6 +2,7 @@
 
 import { type AssetApi } from './Asset';
 import { type FileExtension } from './FileExtension';
+import { type Nullable } from './Nullable';
 import { type Template } from './Template';
 
 export enum TerrificEvent {
