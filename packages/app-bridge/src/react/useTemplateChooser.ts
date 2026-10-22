@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { useCallback, useEffect, useRef } from 'react';
+
 import { type EventUnsubscribeFunction } from '../AppBridge';
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { closeTemplateChooser, openTemplateChooser } from '../registries/commands/TemplateChooser';
@@ -10,19 +12,35 @@ type UseTemplateChooserType = {
     closeTemplateChooser: () => void;
 };
 
-// oxlint-disable-next-line @eslint-react/no-unnecessary-use-prefix
 export const useTemplateChooser = (appBridge: AppBridgeBlock): UseTemplateChooserType => {
-    let unsubscribe: EventUnsubscribeFunction;
-    return {
-        openTemplateChooser: (callback) => {
+    const unsubscribeRef = useRef<EventUnsubscribeFunction>();
+
+    useEffect(() => {
+        return () => {
+            unsubscribeRef.current?.();
+            unsubscribeRef.current = undefined;
+        };
+    }, []);
+
+    const handleOpenTemplateChooser = useCallback(
+        (callback: (selectedTemplate: TemplateLegacy) => void) => {
+            unsubscribeRef.current?.();
             appBridge.dispatch(openTemplateChooser());
-            unsubscribe = appBridge.subscribe('templateChosen', (selectedTemplate) => {
+            unsubscribeRef.current = appBridge.subscribe('templateChosen', (selectedTemplate) => {
                 callback(selectedTemplate.template);
             });
         },
-        closeTemplateChooser: () => {
-            appBridge.dispatch(closeTemplateChooser());
-            unsubscribe?.();
-        },
+        [appBridge],
+    );
+
+    const handleCloseTemplateChooser = useCallback(() => {
+        appBridge.dispatch(closeTemplateChooser());
+        unsubscribeRef.current?.();
+        unsubscribeRef.current = undefined;
+    }, [appBridge]);
+
+    return {
+        openTemplateChooser: handleOpenTemplateChooser,
+        closeTemplateChooser: handleCloseTemplateChooser,
     };
 };
