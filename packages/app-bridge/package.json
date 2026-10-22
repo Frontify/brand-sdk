@@ -13,13 +13,11 @@
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "require": "./dist/index.js",
-            "import": "./dist/index.js"
+            "default": "./dist/index.js"
         },
         "./testing": {
             "types": "./dist/testing.d.ts",
-            "require": "./dist/testing.js",
-            "import": "./dist/testing.js"
+            "default": "./dist/testing.js"
         },
         "./upload-worker": "./dist/upload.worker.js"
     },
