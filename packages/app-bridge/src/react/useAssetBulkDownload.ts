@@ -15,26 +15,31 @@ export enum AssetBulkDownloadState {
 
 const POLLING_INTERVAL_IN_MS = 2500;
 
+const sleep = (ms: number, signal: AbortSignal) =>
+    new Promise<void>((resolve, reject) => {
+        const timeoutId = window.setTimeout(resolve, ms);
+        signal.addEventListener(
+            'abort',
+            () => {
+                window.clearTimeout(timeoutId);
+                reject(new DOMException('The bulk download was aborted.', 'AbortError'));
+            },
+            { once: true },
+        );
+    });
+
 export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
-    // Identifies the latest download, so responses for an earlier download or after unmount are ignored.
-    const downloadIdRef = useRef(0);
-    const pollingTimeoutIdRef = useRef<number | null>(null);
+    const abortControllerRef = useRef<AbortController | null>(null);
     const [status, setStatus] = useState<AssetBulkDownloadState>(AssetBulkDownloadState.Init);
     const [downloadUrl, setDownloadUrl] = useState<Nullable<string>>(null);
 
-    useEffect(() => {
-        return () => {
-            downloadIdRef.current += 1;
-            window.clearTimeout(pollingTimeoutIdRef.current ?? undefined);
-        };
-    }, []);
-
-    const isCurrentDownload = (id: number) => id === downloadIdRef.current;
+    useEffect(() => () => abortControllerRef.current?.abort(), []);
 
     const generateBulkDownload = async (blockAssets?: Record<string, Asset[]>) => {
-        downloadIdRef.current += 1;
-        const id = downloadIdRef.current;
-        window.clearTimeout(pollingTimeoutIdRef.current ?? undefined);
+        abortControllerRef.current?.abort();
+        const abortController = new AbortController();
+        abortControllerRef.current = abortController;
+        const { signal } = abortController;
 
         try {
             setStatus(AssetBulkDownloadState.Started);
@@ -43,69 +48,30 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
                 name: 'getAssetBulkDownloadToken',
                 payload: { blockAssets },
             });
-
-            if (!isCurrentDownload(id)) {
-                return;
-            }
+            signal.throwIfAborted();
 
             setDownloadUrl(null);
-            startDownload(assetBulkDownloadToken, id);
-        } catch (error) {
-            if (isCurrentDownload(id)) {
-                setStatus(AssetBulkDownloadState.Error);
+
+            let download = await appBridge.getBulkDownloadByToken(assetBulkDownloadToken);
+            signal.throwIfAborted();
+
+            // Wait for the download to be prepared, one check at a time so slow responses don't pile up.
+            while (!download.downloadUrl) {
+                setStatus(AssetBulkDownloadState.Pending);
+                await sleep(POLLING_INTERVAL_IN_MS, signal);
+                download = await appBridge.getBulkDownloadBySignature(download.signature);
+                signal.throwIfAborted();
             }
-            console.error(error);
-        }
-    };
 
-    const startDownload = async (token: string, id: number) => {
-        try {
-            const download = await appBridge.getBulkDownloadByToken(token);
-
-            if (!isCurrentDownload(id)) {
+            setDownloadUrl(download.downloadUrl);
+            setStatus(AssetBulkDownloadState.Ready);
+        } catch (error) {
+            if (signal.aborted) {
                 return;
             }
-
-            if (download.downloadUrl) {
-                setDownloadUrl(download.downloadUrl);
-                setStatus(AssetBulkDownloadState.Ready);
-            } else {
-                setStatus(AssetBulkDownloadState.Pending);
-                pollUntilReady(download.signature, id);
-            }
-        } catch (error) {
-            if (isCurrentDownload(id)) {
-                setStatus(AssetBulkDownloadState.Error);
-            }
+            setStatus(AssetBulkDownloadState.Error);
             console.error(error);
         }
-    };
-
-    // Schedule the next check only after the previous one finished, so slow responses don't pile up.
-    const pollUntilReady = (signature: string, id: number) => {
-        pollingTimeoutIdRef.current = window.setTimeout(() => {
-            (async () => {
-                try {
-                    const download = await appBridge.getBulkDownloadBySignature(signature);
-
-                    if (!isCurrentDownload(id)) {
-                        return;
-                    }
-
-                    if (download.downloadUrl) {
-                        setStatus(AssetBulkDownloadState.Ready);
-                        setDownloadUrl(download.downloadUrl);
-                    } else {
-                        pollUntilReady(signature, id);
-                    }
-                } catch (error) {
-                    if (isCurrentDownload(id)) {
-                        setStatus(AssetBulkDownloadState.Error);
-                    }
-                    console.error(error);
-                }
-            })();
-        }, POLLING_INTERVAL_IN_MS);
     };
 
     return { generateBulkDownload, status, downloadUrl };
