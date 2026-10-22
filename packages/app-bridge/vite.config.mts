@@ -30,6 +30,11 @@ export default defineConfig({
         minify: true,
         rollupOptions: {
             external,
+            output: {
+                // The inline worker builds its Blob when its module loads. In its own chunk, bundlers can drop it
+                // (thanks to `sideEffects: false`) from apps that never upload.
+                manualChunks: (id) => (id.includes('upload.worker.js?worker') ? 'inline-upload-worker' : undefined),
+            },
         },
     },
     test: {
