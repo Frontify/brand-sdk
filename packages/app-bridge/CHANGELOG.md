@@ -1,5 +1,37 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.73
+
+### Major Changes
+
+- [#1734](https://github.com/Frontify/brand-sdk/pull/1734) [`326b8f3`](https://github.com/Frontify/brand-sdk/commit/326b8f39433077180bef802e342e35275e9dea0f) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:OpenNavigationManager` event
+  
+  Nothing emits or listens to this event. Code that still references it can drop the reference, since the event never fires.
+
+- [#1737](https://github.com/Frontify/brand-sdk/pull/1737) [`d669d43`](https://github.com/Frontify/brand-sdk/commit/d669d43463dd0df4071102f6b6f1354c719d6c3d) Thanks [@ragi96](https://github.com/ragi96)! - fix: publish complete type declarations
+  
+  The published types used a `Nullable` type that the package didn't ship. Fields such as `Asset.alternativeText` and `Color.revision.hex` were typed `any` in your project, or failed to compile without `skipLibCheck`. They now have their real types, such as `string | null`, so code that relied on `any` may need a `null` check.
+  
+  Projects with `"moduleResolution": "node16"` or `"nodenext"` can now resolve the types. Before, every named import from `@frontify/app-bridge` failed to compile there.
+
+### Patch Changes
+
+- [#1732](https://github.com/Frontify/brand-sdk/pull/1732) [`6c105ac`](https://github.com/Frontify/brand-sdk/commit/6c105ac6d871a3182f1e041727a471f28ebf3431) Thanks [@ragi96](https://github.com/ragi96)! - build: stop shipping unused CommonJS files
+  
+  The package is ES modules only. `require()` and `import` resolve to the same files as before, and the `.cjs` files that no entry pointed to are gone.
+
+- [#1736](https://github.com/Frontify/brand-sdk/pull/1736) [`7d4c648`](https://github.com/Frontify/brand-sdk/commit/7d4c6485fd2fe75bff0507bb4d74d075980cce36) Thanks [@ragi96](https://github.com/ragi96)! - fix(getAppBridgeBlockStub): return the current assets from `context('assets').get()`
+  
+  After `addAssetIdsToBlockAssetKey` or `deleteAssetIdsFromBlockAssetKey`, `get()` still returned the assets the stub was created with, while subscribers received the updated ones. A component that mounted after such a change started with stale assets.
+
+- [#1736](https://github.com/Frontify/brand-sdk/pull/1736) [`7d4c648`](https://github.com/Frontify/brand-sdk/commit/7d4c6485fd2fe75bff0507bb4d74d075980cce36) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): deprecate `getEditorState`
+  
+  Read the editor state from the block context instead, or use the `useEditorState` hook to re-render when it changes:
+  
+  ```ts
+  const isEditing = appBridge.context('isEditing').get();
+  ```
+
 ## 4.0.0-alpha.72
 
 ### Major Changes
