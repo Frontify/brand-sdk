@@ -129,6 +129,10 @@ export interface AppBridgeBlock<
 
     getProjectId(): number;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use `appBridge.context('isEditing').get()` instead, or the `useEditorState` hook to re-render when it changes.
+     */
     getEditorState(): boolean;
 
     getTranslationLanguage(): string;

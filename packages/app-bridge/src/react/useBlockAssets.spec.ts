@@ -49,6 +49,27 @@ describe('useBlockAssets hook', () => {
         sinon.assert.notCalled(appBridgeStub.getBlockAssets);
     });
 
+    it('should start from the current assets when it mounts after assets were added', async () => {
+        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockAssets: { key: [AssetDummy.with(1)] } });
+        await appBridgeStub.addAssetIdsToBlockAssetKey('key', [2]);
+
+        const { result } = renderHook(() => useBlockAssets(appBridgeStub));
+
+        expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1, 2]);
+    });
+
+    it('should start from the current assets when it mounts after assets were deleted', async () => {
+        const appBridgeStub = getAppBridgeBlockStub({
+            blockId: 123,
+            blockAssets: { key: [AssetDummy.with(1), AssetDummy.with(2)] },
+        });
+        await appBridgeStub.deleteAssetIdsFromBlockAssetKey('key', [1]);
+
+        const { result } = renderHook(() => useBlockAssets(appBridgeStub));
+
+        expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([2]);
+    });
+
     it('should delete an asset', async () => {
         const { result, appBridgeStub } = loadUseBlockAssets();
         await act(async () => {

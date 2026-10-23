@@ -67,6 +67,7 @@ export const getAppBridgeBlockStub = ({
     const addedTemplateIds: Record<string, number[]> = {};
 
     const contextAssetsSubscribers: Set<(nextAssets: Record<string, Asset[]>) => void> = new Set();
+    let contextAssets = blockAssets;
 
     const computeBlockAssets = (): Record<string, Asset[]> =>
         Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
@@ -79,10 +80,10 @@ export const getAppBridgeBlockStub = ({
             return assetsDiff;
         }, {});
 
-    const notifyContextAssetsSubscribers = () => {
-        const next = computeBlockAssets();
+    const updateContextAssets = () => {
+        contextAssets = computeBlockAssets();
         for (const subscriber of contextAssetsSubscribers) {
-            subscriber(next);
+            subscriber(contextAssets);
         }
     };
 
@@ -101,13 +102,13 @@ export const getAppBridgeBlockStub = ({
             .stub<Parameters<AppBridgeBlock['addAssetIdsToBlockAssetKey']>>()
             .callsFake((key, assetsIds) => {
                 addedAssetIds[key] = [...(addedAssetIds[key] ?? []), ...assetsIds];
-                notifyContextAssetsSubscribers();
+                updateContextAssets();
             }),
         deleteAssetIdsFromBlockAssetKey: sinon
             .stub<Parameters<AppBridgeBlock['deleteAssetIdsFromBlockAssetKey']>>()
             .callsFake((key, assetIds) => {
                 deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
-                notifyContextAssetsSubscribers();
+                updateContextAssets();
             }),
         getBlockTemplates: sinon.stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(() => {
             return Object.entries(blockTemplates).reduce<Record<string, Template[]>>(
@@ -148,7 +149,7 @@ export const getAppBridgeBlockStub = ({
                 }
                 case 'setAssetIdsByBlockAssetKey': {
                     blockAssets[args.payload.key] = args.payload.assetIds.map((id) => AssetDummy.with(id));
-                    notifyContextAssetsSubscribers();
+                    updateContextAssets();
                     return Promise.resolve();
                 }
             }
@@ -187,7 +188,7 @@ export const getAppBridgeBlockStub = ({
                         };
                     case 'assets':
                         return {
-                            get: () => blockAssets,
+                            get: () => contextAssets,
                             subscribe: (callback: (nextAssets: Record<string, Asset[]>) => void) => {
                                 contextAssetsSubscribers.add(callback);
                                 return () => {
