@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import sinon, { stub } from 'sinon';
+import sinon from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
@@ -43,7 +43,8 @@ describe('useAssetBulkDownload', () => {
 
     it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.api = stub<Parameters<AppBridgeBlock['api']>>()
+        appBridgeStub.api = sinon
+            .stub<Parameters<AppBridgeBlock['api']>>()
             .withArgs({
                 name: 'getAssetBulkDownloadToken',
                 payload: { blockAssets: undefined },
@@ -192,6 +193,85 @@ describe('useAssetBulkDownload', () => {
         await waitFor(() => {
             expect(result.current.downloadUrl).toBe('change-dummy-url');
             expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
+        });
+    });
+    describe('polling lifecycle', () => {
+        beforeEach(() => {
+            vi.useFakeTimers();
+        });
+
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it('should stop checking after the component unmounts', async () => {
+            const appBridgeStub = getAppBridgeBlockStub();
+            appBridgeStub.getBulkDownloadByToken.resolves({ downloadUrl: '', signature: 'signature' });
+            appBridgeStub.getBulkDownloadBySignature.resolves({ downloadUrl: '', signature: 'signature' });
+
+            const { result, unmount } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+            await act(async () => {
+                result.current.generateBulkDownload();
+                await vi.advanceTimersByTimeAsync(5000);
+            });
+
+            unmount();
+            const callsAtUnmount = appBridgeStub.getBulkDownloadBySignature.callCount;
+
+            await act(async () => {
+                await vi.advanceTimersByTimeAsync(30_000);
+            });
+
+            expect(appBridgeStub.getBulkDownloadBySignature.callCount - callsAtUnmount).toBe(0);
+        });
+
+        it('should stop checking the previous download when a new one starts', async () => {
+            const appBridgeStub = getAppBridgeBlockStub();
+            appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'first' });
+            appBridgeStub.getBulkDownloadByToken.onCall(1).resolves({ downloadUrl: 'second-url', signature: 'second' });
+            appBridgeStub.getBulkDownloadBySignature.resolves({ downloadUrl: '', signature: 'first' });
+
+            const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+            await act(async () => {
+                result.current.generateBulkDownload();
+                await vi.advanceTimersByTimeAsync(5000);
+            });
+
+            await act(async () => {
+                result.current.generateBulkDownload();
+                await vi.advanceTimersByTimeAsync(100);
+            });
+
+            expect(result.current.downloadUrl).toBe('second-url');
+            const callsAfterSecondDownload = appBridgeStub.getBulkDownloadBySignature.callCount;
+
+            await act(async () => {
+                await vi.advanceTimersByTimeAsync(30_000);
+            });
+
+            expect(appBridgeStub.getBulkDownloadBySignature.callCount - callsAfterSecondDownload).toBe(0);
+        });
+
+        it('should never have more than one check in flight when responses are slow', async () => {
+            const appBridgeStub = getAppBridgeBlockStub();
+            let inFlight = 0;
+            let maxInFlight = 0;
+            appBridgeStub.getBulkDownloadByToken.resolves({ downloadUrl: '', signature: 'signature' });
+            appBridgeStub.getBulkDownloadBySignature.callsFake(async () => {
+                inFlight += 1;
+                maxInFlight = Math.max(maxInFlight, inFlight);
+                await new Promise((resolve) => setTimeout(resolve, 6000));
+                inFlight -= 1;
+                return { downloadUrl: '', signature: 'signature' };
+            });
+
+            const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+            await act(async () => {
+                result.current.generateBulkDownload();
+                await vi.advanceTimersByTimeAsync(40_000);
+            });
+
+            expect(maxInFlight).toBe(1);
         });
     });
 });

@@ -1,7 +1,6 @@
 {
     "name": "@frontify/guideline-blocks-settings",
-    "type": "module",
-    "version": "3.0.9",
+    "version": "4.0.0-alpha.9",
     "description": "Provides types and helpers for the guideline block development",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -9,25 +8,25 @@
         "url": "https://github.com/Frontify/brand-sdk",
         "directory": "packages/guideline-blocks-settings"
     },
-    "sideEffects": false,
-    "publishConfig": {
-        "access": "public"
-    },
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "require": "./dist/index.umd.js",
-            "import": "./dist/index.es.js"
-        },
-        "./styles": "./dist/styles.css",
-        "./tailwind": "./tailwind.config.ts"
-    },
-    "main": "./dist/index.es.js",
-    "types": "./dist/index.d.ts",
     "files": [
         "dist",
         "tailwind.config.ts"
     ],
+    "type": "module",
+    "sideEffects": false,
+    "main": "./dist/index.es.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.es.js"
+        },
+        "./styles": "./dist/styles.css",
+        "./tailwind": "./tailwind.config.ts"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "build": "vite build",
         "dev": "vite build --watch",
@@ -40,11 +39,6 @@
         "format": "oxfmt",
         "format:check": "oxfmt --check"
     },
-    "peerDependencies": {
-        "@frontify/app-bridge": "^3.0.0 || >=4.0.0-alpha.0 < 4.0.0-alpha.68",
-        "react": "^18",
-        "react-dom": "^18"
-    },
     "dependencies": {
         "@ctrl/tinycolor": "^4.2.0",
         "@dnd-kit/core": "^6.3.1",
@@ -56,6 +50,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.29.7",
+        "@frontify/app-bridge": "workspace:^",
         "@frontify/oxfmt-config": "^0.0.2",
         "@frontify/oxlint-config-react": "^0.0.2",
         "@microsoft/api-extractor": "^7.59.0",
@@ -88,5 +83,10 @@
         "vite-plugin-dts": "^5.1.0",
         "vite-plugin-externals": "^0.6.2",
         "vitest": "^4.1.11"
+    },
+    "peerDependencies": {
+        "@frontify/app-bridge": "^4.0.0-alpha.0",
+        "react": "^18",
+        "react-dom": "^18"
     }
 }

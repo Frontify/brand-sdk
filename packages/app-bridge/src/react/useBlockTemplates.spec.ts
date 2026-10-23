@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { type SinonStub } from 'sinon';
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { TemplateDummy, getAppBridgeBlockStub } from '../tests';
 
 import { useBlockTemplates } from './useBlockTemplates';
+
+import type sinon from 'sinon';
 
 describe('useBlockTemplates hook', () => {
     beforeEach(() => {
@@ -105,7 +106,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.deleteTemplateIdsFromKey('key', [1]);
         });
 
-        const call = (window.emitter.emit as SinonStub).getCall(0);
+        const call = (window.emitter.emit as sinon.SinonStub).getCall(0);
 
         waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:BlockTemplatesUpdated');
@@ -136,7 +137,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.addTemplateIdsToKey('key', [templateToAdd.id]);
         });
 
-        const call = (window.emitter.emit as SinonStub).getCall(0);
+        const call = (window.emitter.emit as sinon.SinonStub).getCall(0);
         waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:BlockTemplatesUpdated');
             expect(call.lastArg.blockId).toEqual(123);

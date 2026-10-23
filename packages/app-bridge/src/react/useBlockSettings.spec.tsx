@@ -7,6 +7,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
+import { type Nullable } from '../types/Nullable';
 
 import { useBlockSettings } from './useBlockSettings';
 

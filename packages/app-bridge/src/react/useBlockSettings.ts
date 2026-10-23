@@ -15,9 +15,9 @@ export const useBlockSettings = <T = Record<string, unknown>>(
 ): [T, (newSettings: Partial<T>) => Promise<void>] => {
     const blockId = appBridge.context('blockId').get();
 
+    const [blockSettings, setBlockSettings] = useState<T>(() => structuredClone(window.blockSettings[blockId]) as T);
     // Save blockSettings in a ref so updateBlockSettings can safely be used as a react dependency
-    const blockSettingsRef = useRef<T>(structuredClone(window.blockSettings[blockId]) as T);
-    const [blockSettings, setBlockSettings] = useState<T>(blockSettingsRef.current);
+    const blockSettingsRef = useRef<T>(blockSettings);
 
     // Add listener for block settings updates
     useEffect(() => {

@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { MultiInputLayout, type SettingBlock, appendUnit, numericalOrPixelRule, presetCustomValue } from '../';
+import { MultiInputLayout, appendUnit, numericalOrPixelRule, presetCustomValue } from '@frontify/sidebar-settings';
+
+import { type SettingBlock } from '../types';
 
 import { getBorderRadiusSlider } from './borderRadius';
 import { type Radius, radiusStyleMap } from './types';
