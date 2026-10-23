@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.10
+
+### Patch Changes
+
+- [#1739](https://github.com/Frontify/brand-sdk/pull/1739) [`d986170`](https://github.com/Frontify/brand-sdk/commit/d9861704056a17a6b63957e5b14656ce24f33bf9) Thanks [@benfrontify](https://github.com/benfrontify)! - fix(LinkInput): replace deprecated `FormControl` with `Label` and `Tooltip`
+  
+  The `info` text is now shown in a tooltip behind a question-mark icon next to the label.
+
 ## 4.0.0-alpha.9
 
 ### Major Changes
