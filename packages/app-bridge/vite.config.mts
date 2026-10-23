@@ -13,7 +13,9 @@ const external = [...Object.keys(dependenciesMap), ...Object.keys(peerDependenci
 
 export default defineConfig({
     plugins: [
-        dts({ insertTypesEntry: true }),
+        // One declaration file per entry, like the other packages. Per-file declarations used
+        // extensionless relative imports, which `moduleResolution: "nodenext"` can't resolve.
+        dts({ insertTypesEntry: true, rollupTypes: true }),
         viteStaticCopy({
             targets: [{ src: './src/workers/upload.worker.js', dest: '.' }],
         }),

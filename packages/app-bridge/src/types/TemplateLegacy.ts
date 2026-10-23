@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { type Nullable } from './Nullable';
+
 export type TemplateLegacy = {
     id: number;
     title: string;

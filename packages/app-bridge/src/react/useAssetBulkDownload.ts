@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type Asset } from '../types';
+import { type Nullable } from '../types/Nullable';
 
 export enum AssetBulkDownloadState {
     Init = 'init',
