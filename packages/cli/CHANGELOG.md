@@ -1,5 +1,15 @@
 # @frontify/frontify-cli
 
+## 6.4.3
+
+### Patch Changes
+
+- [#1745](https://github.com/Frontify/brand-sdk/pull/1745) [`776d7f6`](https://github.com/Frontify/brand-sdk/commit/776d7f67f32c9eebdc35d333df92b665751c95f1) Thanks [@ragi96](https://github.com/ragi96)! - fix(deps): require patched `vite` (^8.3.5) to resolve GHSA-rq7h-c2jc-7f22, GHSA-vfpm-58rq-9qcg, GHSA-9jrq-w75r-8gcw, GHSA-587h-7wmj-h5pm, GHSA-r825-w8mm-5pxw and GHSA-698v-4r3x-3vcv
+  
+  The previous range still allowed vite 8.3.0–8.3.2, whose dev server, used by `frontify-cli serve`, could expose files outside `server.fs.allow`.
+
+- [#1743](https://github.com/Frontify/brand-sdk/pull/1743) [`1c909ff`](https://github.com/Frontify/brand-sdk/commit/1c909ffb3a000aaf15b7000ac6bdbc4c4fe13f2f) Thanks [@ragi96](https://github.com/ragi96)! - fix(cli): require patched `fastify` (^5.12.7) and move to `zod` v4 (^4.6.7) to resolve GHSA-389g-gv7q-r4x8 and GHSA-mrhx-c7xc-m3w5
+
 ## 6.4.2
 
 ### Patch Changes

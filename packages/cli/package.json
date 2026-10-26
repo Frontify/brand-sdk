@@ -1,7 +1,7 @@
 {
     "name": "@frontify/frontify-cli",
     "type": "module",
-    "version": "6.4.2",
+    "version": "6.4.3",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
         "type": "git",
@@ -39,14 +39,14 @@
         "conf": "^15.1.0",
         "esbuild": "^0.28.2",
         "fast-glob": "^3.3.3",
-        "fastify": "^5.12.5",
+        "fastify": "^5.12.7",
         "glob-to-regexp": "^0.4.1",
         "open": "^11.0.3",
         "picocolors": "^1.1.1",
         "prompts": "^2.4.2",
-        "vite": "^8.3.0",
+        "vite": "^8.3.5",
         "vite-plugin-externals": "^0.6.2",
-        "zod": "^3.25.76"
+        "zod": "^4.6.7"
     },
     "devDependencies": {
         "@frontify/oxfmt-config": "^0.0.2",
@@ -56,14 +56,14 @@
         "@types/mock-fs": "^4.13.4",
         "@types/node": "^22.20.1",
         "@types/prompts": "^2.4.9",
-        "@types/ws": "8.18.1",
-        "@vitest/coverage-v8": "^4.1.11",
-        "@vitest/ui": "^4.1.11",
-        "oxfmt": "^0.63.0",
+        "@types/ws": "8.18.2",
+        "@vitest/coverage-v8": "^4.1.12",
+        "@vitest/ui": "^4.1.12",
+        "oxfmt": "^0.74.0",
         "oxlint": "^1.81.0",
         "oxlint-tsgolint": "^7.0.2001",
         "ts-node": "^10.9.2",
         "typescript": "^6.0.3",
-        "vitest": "^4.1.11"
+        "vitest": "^4.1.12"
     }
 }

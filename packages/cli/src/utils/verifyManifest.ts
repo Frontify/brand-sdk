@@ -49,7 +49,7 @@ const secretsArraySchema = array(secretSchema);
 
 const requestOptionsSchema = object({
     method: z.enum(['GET', 'POST', 'PUT', 'DELETE']),
-    headers: z.record(string()).optional(),
+    headers: z.record(string(), string()).optional(),
     body: z.any().optional(),
 });
 
