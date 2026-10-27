@@ -192,4 +192,43 @@ describe('useBlockTemplates hook', () => {
             expect(result.current.error).toEqual(errorMessage);
         });
     });
+
+    it('should keep the same functions across re-renders', async () => {
+        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result, rerender } = renderHook(() => useBlockTemplates(appBridgeStub));
+        const { addTemplateIdsToKey, deleteTemplateIdsFromKey, updateTemplateIdsFromKey } = result.current;
+
+        await act(async () => {
+            await result.current.addTemplateIdsToKey('key', [2]);
+        });
+        rerender();
+
+        await waitFor(() => {
+            expect(result.current.blockTemplates.key.map(({ id }) => id)).toEqual([1, 2]);
+        });
+        expect(result.current.addTemplateIdsToKey).toBe(addTemplateIdsToKey);
+        expect(result.current.deleteTemplateIdsFromKey).toBe(deleteTemplateIdsFromKey);
+        expect(result.current.updateTemplateIdsFromKey).toBe(updateTemplateIdsFromKey);
+    });
+
+    it('should send the latest templates as previous templates when a function from an earlier render is called', async () => {
+        const template = TemplateDummy.with(1);
+        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockTemplates: { key: [template] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridgeStub));
+        const { addTemplateIdsToKey } = result.current;
+
+        await waitFor(() => {
+            expect(result.current.blockTemplates.key).toHaveLength(1);
+        });
+        await act(async () => {
+            await addTemplateIdsToKey('key', [2]);
+        });
+
+        await waitFor(() => {
+            expect((window.emitter.emit as sinon.SinonSpy).lastCall?.args).toMatchObject([
+                'AppBridge:BlockTemplatesUpdated',
+                { prevBlockTemplates: { key: [template] } },
+            ]);
+        });
+    });
 });
