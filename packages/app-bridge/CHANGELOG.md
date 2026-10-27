@@ -1,5 +1,47 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.74
+
+### Minor Changes
+
+- [#1758](https://github.com/Frontify/brand-sdk/pull/1758) [`6c05f2e`](https://github.com/Frontify/brand-sdk/commit/6c05f2e391e8642ac5214647233990366d91565a) Thanks [@ragi96](https://github.com/ragi96)! - feat(BlockContext): add `privacySettings`
+  
+  The block context now declares the guideline's `privacySettings`, and `getAppBridgeBlockStub` answers `context('privacySettings')` from its `privacySettings` option:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({
+      privacySettings: { assetViewerEnabled: true, assetDownloadEnabled: false },
+  });
+  
+  appBridge.context('privacySettings').get(); // { assetViewerEnabled: true, assetDownloadEnabled: false }
+  ```
+
+- [#1757](https://github.com/Frontify/brand-sdk/pull/1757) [`c438f2c`](https://github.com/Frontify/brand-sdk/commit/c438f2c5960f46e1b41f01a3c79f59d508697ba9) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlockStub): let tests send `assetsChosen`, `templateChosen` and `linkChosen` themselves
+  
+  `getAppBridgeBlockStub` has a new `emitChosenEventsOnSubscribe` option. It defaults to `true`, which keeps today's behaviour: subscribing to one of these events immediately calls the callback with a dummy selection. Set it to `false` to send the events when your test needs them, with the new `emitAppBridgeBlockStubEvent(appBridge, eventName, payload)`.
+  
+  Events only reach callbacks that are still subscribed, because each subscription now gets its own unsubscribe function. The `unsubscribe` option is still called whenever a subscription ends.
+
+### Patch Changes
+
+- [#1752](https://github.com/Frontify/brand-sdk/pull/1752) [`4b78dcb`](https://github.com/Frontify/brand-sdk/commit/4b78dcbc822a8c1c705d0f9a06dccafa6b4f5472) Thanks [@ragi96](https://github.com/ragi96)! - perf(useBlockAssets): keep `addAssetIdsToKey`, `deleteAssetIdsFromKey` and `updateAssetIdsFromKey` stable across renders
+  
+  The three functions returned by `useBlockAssets` used to be recreated every time the component rendered. Effects, `useMemo` and `useCallback` that listed them as dependencies therefore ran again on every render, and memoised children receiving them re-rendered. They now keep the same identity for as long as `appBridge` does, so you can pass them down or list them as dependencies without workarounds.
+
+- [#1754](https://github.com/Frontify/brand-sdk/pull/1754) [`68b0d49`](https://github.com/Frontify/brand-sdk/commit/68b0d4905ca15597427b5d4753f5a63f495c10a9) Thanks [@ragi96](https://github.com/ragi96)! - perf(useBlockTemplates): keep `addTemplateIdsToKey`, `deleteTemplateIdsFromKey` and `updateTemplateIdsFromKey` stable across renders
+  
+  The three functions returned by `useBlockTemplates` used to be recreated every time the component rendered. Effects, `useMemo` and `useCallback` that listed them as dependencies therefore ran again on every render, and memoised children receiving them re-rendered. They now keep the same identity for as long as `appBridge` does, so you can pass them down or list them as dependencies without workarounds.
+
+- [#1755](https://github.com/Frontify/brand-sdk/pull/1755) [`d471720`](https://github.com/Frontify/brand-sdk/commit/d471720776d7e75fdc23e8583486e8f355ce6a2c) Thanks [@ragi96](https://github.com/ragi96)! - perf(useAssetUpload): keep the upload function stable across renders and always call the latest callbacks
+  
+  The upload function returned by `useAssetUpload` and `useFileUpload` used to be recreated every time the component rendered, so an effect that listed it as a dependency ran again on every render and could send the same files to the uploader again. It now keeps the same identity for the lifetime of the component, even when you pass new inline callbacks on every render.
+  
+  Upload events also used to call the callbacks from the render in which the first upload started, so a callback that read component state saw old values. They now always call the callbacks from the latest render.
+
+- [#1756](https://github.com/Frontify/brand-sdk/pull/1756) [`c250673`](https://github.com/Frontify/brand-sdk/commit/c250673a0095bbea59b7cac47076db43ddce630f) Thanks [@ragi96](https://github.com/ragi96)! - perf(usePrivacySettings): read the privacy settings once and subscribe to changes once
+  
+  `usePrivacySettings` used to ask the host for the privacy settings on every render, although only the first value was used, and it unsubscribed from and resubscribed to privacy setting changes each time they changed. It now reads them when the component mounts and keeps a single subscription until it unmounts.
+
 ## 4.0.0-alpha.73
 
 ### Major Changes
