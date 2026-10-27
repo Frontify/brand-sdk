@@ -22,6 +22,13 @@ const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
 
+type ChosenEventName = 'assetsChosen' | 'linkChosen' | 'templateChosen';
+
+type StubSubscription = { callback: (payload: unknown) => void };
+
+// Lets emitAppBridgeBlockStubEvent reach a stub's subscriptions without adding a member to the stub's type.
+const stubSubscriptions = new WeakMap<AppBridgeBlock, Map<string, Set<StubSubscription>>>();
+
 export type getAppBridgeBlockStubProps = {
     blockSettings?: Record<string, unknown>;
     blockAssets?: Record<string, Asset[]>;
@@ -36,6 +43,11 @@ export type getAppBridgeBlockStubProps = {
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
     unsubscribe?: () => void;
+    /**
+     * Whether subscribing to `assetsChosen`, `templateChosen` or `linkChosen` immediately calls the callback with a
+     * dummy selection. Set it to `false` and send these events with `emitAppBridgeBlockStubEvent` instead.
+     */
+    emitChosenEventsOnSubscribe?: boolean;
 };
 
 export const getAppBridgeBlockStub = ({
@@ -55,6 +67,7 @@ export const getAppBridgeBlockStub = ({
     },
     blockTemplates = {},
     unsubscribe = () => null,
+    emitChosenEventsOnSubscribe = true,
 }: getAppBridgeBlockStubProps = {}): sinon.SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = sinon.spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
@@ -87,7 +100,9 @@ export const getAppBridgeBlockStub = ({
         }
     };
 
-    return {
+    const subscriptions = new Map<string, Set<StubSubscription>>();
+
+    const appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock> = {
         getProjectId: sinon.stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: sinon.stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: sinon.stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
@@ -207,16 +222,29 @@ export const getAppBridgeBlockStub = ({
         }),
 
         subscribe: sinon.stub<Parameters<AppBridgeBlock['subscribe']>>().callsFake((eventName, callback) => {
-            if (eventName === 'assetsChosen') {
-                (callback as EventCallbackParameter<'assetsChosen', BlockEvent>)({ assets: [AssetDummy.with(123)] });
-            } else if (eventName === 'templateChosen') {
-                (callback as EventCallbackParameter<'templateChosen', BlockEvent>)({
-                    template: TemplateLegacyDummy.with(234),
-                });
-            } else if (eventName === 'linkChosen') {
-                (callback as EventCallbackParameter<'linkChosen', BlockEvent>)({ url: 'https://example.com' });
+            const subscription: StubSubscription = { callback: callback as StubSubscription['callback'] };
+            const eventSubscriptions = subscriptions.get(eventName) ?? new Set<StubSubscription>();
+            eventSubscriptions.add(subscription);
+            subscriptions.set(eventName, eventSubscriptions);
+
+            if (emitChosenEventsOnSubscribe) {
+                if (eventName === 'assetsChosen') {
+                    (callback as EventCallbackParameter<'assetsChosen', BlockEvent>)({
+                        assets: [AssetDummy.with(123)],
+                    });
+                } else if (eventName === 'templateChosen') {
+                    (callback as EventCallbackParameter<'templateChosen', BlockEvent>)({
+                        template: TemplateLegacyDummy.with(234),
+                    });
+                } else if (eventName === 'linkChosen') {
+                    (callback as EventCallbackParameter<'linkChosen', BlockEvent>)({ url: 'https://example.com' });
+                }
             }
-            return unsubscribe;
+
+            return () => {
+                eventSubscriptions.delete(subscription);
+                unsubscribe();
+            };
         }),
 
         getColorPalettesWithColors: sinon
@@ -233,4 +261,28 @@ export const getAppBridgeBlockStub = ({
         state: sinon.stub<Parameters<AppBridgeBlock['state']>>().resolves(),
         dispatch: sinon.stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
+
+    stubSubscriptions.set(appBridgeStub, subscriptions);
+
+    return appBridgeStub;
+};
+
+/**
+ * Sends `assetsChosen`, `templateChosen` or `linkChosen` to the callbacks that are subscribed to it on a stub from
+ * `getAppBridgeBlockStub`. Use it with `emitChosenEventsOnSubscribe: false`.
+ */
+export const emitAppBridgeBlockStubEvent = <EventName extends ChosenEventName>(
+    appBridge: AppBridgeBlock,
+    eventName: EventName,
+    payload: Parameters<EventCallbackParameter<EventName, BlockEvent>>[0],
+) => {
+    const subscriptions = stubSubscriptions.get(appBridge);
+    if (!subscriptions) {
+        throw new Error('emitAppBridgeBlockStubEvent only works with an app bridge from getAppBridgeBlockStub.');
+    }
+
+    // Copy the subscriptions first, a callback may unsubscribe while the event is sent.
+    for (const { callback } of [...(subscriptions.get(eventName) ?? [])]) {
+        callback(payload);
+    }
 };
