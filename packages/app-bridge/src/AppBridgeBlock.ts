@@ -126,6 +126,10 @@ export interface AppBridgeBlock<
 
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use `appBridge.context('privacySettings').get()` instead, or the `usePrivacySettings` hook to re-render when it changes.
+     */
     getPrivacySettings(): PrivacySettings;
 
     getProjectId(): number;
