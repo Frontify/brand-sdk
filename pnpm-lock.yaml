@@ -23,8 +23,8 @@ importers:
         specifier: ^3.0.1
         version: 3.0.3
       '@frontify/fondue':
-        specifier: ^13.7.10
-        version: 13.7.10(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))
+        specifier: ^13.11.0
+        version: 13.11.0(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))
       '@types/react':
         specifier: ^18.3.31
         version: 18.3.31
@@ -388,8 +388,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@frontify/fondue':
-        specifier: ^13.7.10
-        version: 13.7.10(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))
+        specifier: ^13.11.0
+        version: 13.11.0(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))
       '@frontify/sidebar-settings':
         specifier: workspace:^
         version: link:../sidebar-settings
@@ -789,11 +789,6 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/parser@7.29.9':
-    resolution: {integrity: sha512-CjXrNHTnvqBVqHgdBysY3vk2T8tpJHb5/RMeHJBTyVa9xgugCB0CJTx/3oO8RV2QRQP391RWpB7D6hLjm8V9uA==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.29.7':
     resolution: {integrity: sha512-j8SrR0zLZrRsC09DlszEx8FpMiwukKffYXMK0d5LmOglO7vGG6sz/BR/20yHqWH+Lnn31JTt2PE3hIWNgM2J6w==}
     engines: {node: '>=6.9.0'}
@@ -824,27 +819,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  '@babel/plugin-proposal-class-properties@7.18.6':
-    resolution: {integrity: sha512-cumfXOF0+nzZrrN8Rf0t7M+tF6sZc7vhQwYQck9q1/5w2OExlD+b4v4RpMJFaV1Z7WcDRgO6FqvxqxGlwo+RHQ==}
-    engines: {node: '>=6.9.0'}
-    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-proposal-nullish-coalescing-operator@7.18.6':
-    resolution: {integrity: sha512-wQxQzxYeJqHcfppzBDnm1yAY0jSRkUXR2z8RePZYrKwMKgMlE8+Z6LUno+bd6LvbGh8Gltvy74+9pIYkr+XkKA==}
-    engines: {node: '>=6.9.0'}
-    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-proposal-optional-chaining@7.21.0':
-    resolution: {integrity: sha512-p4zeefM72gpmEe2fkUr/OnOXpWEf8nAgk7ZYVqqfFiyIG7oFfVZcCrU64hWn5xp4tQ9LkV4bTIa5rD0KANpKNA==}
-    engines: {node: '>=6.9.0'}
-    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2':
     resolution: {integrity: sha512-SOSkfJDddaM7mak6cPEpswyTRnuRltl429hMraQEglW+OkovnCzsiszTmsrlY//qLFjCpQDFRvjdm2wA5pPm9w==}
     engines: {node: '>=6.9.0'}
@@ -872,16 +846,6 @@ packages:
   '@babel/plugin-syntax-jsx@7.29.7':
     resolution: {integrity: sha512-TSu8+mHCoEaaCDEZ0I3+6mvTBYR4PCxQwf2z9/r5Tbztv6NaLR3B9thGTTxX2WGuGHJqRiAbKPeGTJ5XWXVg6A==}
     engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3':
-    resolution: {integrity: sha512-aSff4zPII1u2QD7y+F8oDsz19ew4IGEJg9SVW+bqwpwtfFleiQDMdzA/R+UlWDzfnHFCxxleFT0PMIrR36XLNQ==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-syntax-optional-chaining@7.8.3':
-    resolution: {integrity: sha512-KoK9ErH1MBlCPxV0VANkXW2/dw4vlbGDrFgz8bmUsBGYkFRcbRwMh6cIJubdPrkxRwuGdtCk0v/wPTKbQgBjkg==}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -1785,47 +1749,47 @@ packages:
   '@formatjs/intl-localematcher@0.5.4':
     resolution: {integrity: sha512-zTwEpWOzZ2CiKcB93BLngUX59hQkuZjT2+SAQEscSm52peDW/getsawMcWF1rGRpMCX6D7nSJA3CzJ8gn13N/g==}
 
-  '@frontify/fondue-charts@8.0.2':
-    resolution: {integrity: sha512-Q26gOUMZS2Rhqcd/gCqpxA7BXdK2y9OZ8lDs7IpttMm6qkEezi8gz6J1Nndw3Xi6iqnywspCgMuk+27yb0VUmg==}
+  '@frontify/fondue-charts@9.0.0':
+    resolution: {integrity: sha512-oEld+zSYc6m5butZGSHGPuUrvFkHHMvsd5BfU1bD0KeTLgcg8JoAmJ4cqp+AwIZHOJfkozzhcERIqiORyma/7w==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@frontify/fondue-tokens': ^5.1.2
+      '@frontify/fondue-tokens': ^5.2.0
       react: ^18
       react-dom: ^18
 
-  '@frontify/fondue-components@32.1.0':
-    resolution: {integrity: sha512-INuf+FZsrBkhO9bv0Ply5UfrPMR+WQHeFk5BTQ/CDvySm/7HX8hOibG730YCVHjYVSAEemS4eBL/036wAdyIIg==}
+  '@frontify/fondue-components@35.0.0':
+    resolution: {integrity: sha512-ta0yuLlHGcygF+xk0f/4IqL7M2wQyP+GvWwvmZ4aQQMeFAveDV94yPoGUDmjs2a1Egy8sG7jE4vkG6c1dCvXsA==}
     engines: {node: '>=18'}
     peerDependencies:
-      '@frontify/fondue-icons': ^0.28.2
-      '@frontify/fondue-tokens': ^5.1.2
+      '@frontify/fondue-icons': ^0.31.0
+      '@frontify/fondue-tokens': ^5.2.0
       react: ^18
       react-dom: ^18
 
-  '@frontify/fondue-icons@0.28.2':
-    resolution: {integrity: sha512-W8mTBSGrgvIJRHjiTDKXyykOMOGmiTzwlnVCt2XPWZp0Ws9P5Qjls5YETXKkBqcoKbDFV5xVlXJxzQaqS93Pjw==}
+  '@frontify/fondue-icons@0.31.0':
+    resolution: {integrity: sha512-fIDIcVkqfOVRU1mzu7Eppl3r1mQ2VwccPMFgvm1Ed8bm7RDxLAzcci0WgbOUGYYZMkCIeUYbpiVFflBMzJeRBQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
 
-  '@frontify/fondue-rte@0.1.10':
-    resolution: {integrity: sha512-SR2k7lYeBY7n1/z2eld450ls0VcZCdlU2HNQA4xyr1JCEdo+3oOywA3+J1R8bcKyZw2qCpjqkBncK6fI35k4Lw==}
+  '@frontify/fondue-rte@0.1.13':
+    resolution: {integrity: sha512-OeyigOm+leQbJYS5FsBf9+DFQWKIWeVLNE8kxYvYYM0ddnA8974XDCzTNfMVdHOghyaJQ+JvFOqDw2Vo46NkxQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18
       react-dom: ^18
 
-  '@frontify/fondue-sdk@0.2.2':
-    resolution: {integrity: sha512-hR35XLCD8Q0OsVYlwJ+JrDHCb0qhdGpC8J2GUY+tsmVEPHHwnDYnq8+mE29EVjg8g1sQebPAil1jFXSQTQa78g==}
+  '@frontify/fondue-sdk@0.3.0':
+    resolution: {integrity: sha512-YdanObge/dpgp7X2yk7toT5EpO9c2ek+7vE4xnu9xKocpXYs/13WVEnRtIucayhPGvbL4zQF/wmBgPsP5yfidA==}
     engines: {node: '>=20'}
 
-  '@frontify/fondue-tokens@5.1.2':
-    resolution: {integrity: sha512-fKif/+w9f37ZtrHXwIjPkngLrQcN8tHEtylPdwjNcDhiR3XsNNDKDiPqZSqtd4vznJH6+xRcGpNTPAYOteaWCw==}
+  '@frontify/fondue-tokens@5.2.0':
+    resolution: {integrity: sha512-HElBLFjsMPcG1yx1txSsXnF9pRphlcp9Z6wpyZSL8iBy5dzvfOG9432yONLi3m1Gpqb7CzASMcWMza4iB7cJhw==}
     peerDependencies:
       tailwindcss: ^3.4.17
 
-  '@frontify/fondue@13.7.10':
-    resolution: {integrity: sha512-C0v7zBilYm3JlYvTxRBlj0TZPAqDWTRzQROQYNspiaksDnz0EtXjueS68Vi1QwOz3F0Gl8ErwSbj5wE3MfdzPQ==}
+  '@frontify/fondue@13.11.0':
+    resolution: {integrity: sha512-pfQoFG2FqatmaFPghXo9TH6+YPJvU8vwcUKOp7eQXU9BUiuI50hAX68GcGAwvh1m5Op28yQpuL9g1vyBAEbccQ==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -4291,8 +4255,8 @@ packages:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
     engines: {node: '>=12'}
 
-  ast-types@0.15.2:
-    resolution: {integrity: sha512-c27loCv9QkZinsa5ProX751khO9DJl/AcB5c2KNtA6NRvHKS0PgLfcftz72KVq504vB0Gku5s2kUZzDBvQWvHg==}
+  ast-types@0.16.3:
+    resolution: {integrity: sha512-FvWoWYfSCM6kRxCSH+MGLHIKKGRL6A6AW7Zek2O32REPQRdg131428uRTKMBYAeRd3XXAaHDS60Wpri7CdKDrA==}
     engines: {node: '>=4'}
 
   ast-v8-to-istanbul@1.0.5:
@@ -4318,11 +4282,6 @@ packages:
 
   avvio@9.3.1:
     resolution: {integrity: sha512-QyTKW61/qlba+cUQBm/sT9X8lri4UdomqSDwCnrnj1IvLVDRRiXRkz4CgBRWB+/cmfC7SK5WQc8T1vSdGvaUcQ==}
-
-  babel-core@7.0.0-bridge.0:
-    resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
 
   babel-plugin-polyfill-corejs2@0.4.17:
     resolution: {integrity: sha512-aTyf30K/rqAsNwN76zYrdtx8obu0E4KoUME29B1xj+B3WxgvWkp943vYQ+z8Mv3lw9xHXMHpvSPOBxzAkIa94w==}
@@ -5487,11 +5446,14 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  jscodeshift@0.14.0:
-    resolution: {integrity: sha512-7eCC1knD7bLUPuSCwXsMZUH51O8jIcoVyKtI6P0XM0IVzlGjckPy3FIwQlorzbN0Sg79oK+RlohN32Mqf/lrYA==}
+  jscodeshift@0.16.1:
+    resolution: {integrity: sha512-oMQXySazy63awNBzMpXbbVv73u3irdxTeX2L5ueRyFRxi32qb9uzdZdOY5fTBYADBG19l5M/wnGknZSV1dzCdA==}
     hasBin: true
     peerDependencies:
       '@babel/preset-env': ^7.1.6
+    peerDependenciesMeta:
+      '@babel/preset-env':
+        optional: true
 
   jsesc@3.1.0:
     resolution: {integrity: sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==}
@@ -5870,6 +5832,9 @@ packages:
     resolution: {integrity: sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg==}
     engines: {node: '>=16 || 14 >=14.17'}
 
+  minimist@1.2.8:
+    resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+
   minipass@7.1.3:
     resolution: {integrity: sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -5879,6 +5844,10 @@ packages:
 
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
+  mkdirp@0.5.6:
+    resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
+    hasBin: true
 
   mlly@1.8.0:
     resolution: {integrity: sha512-l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==}
@@ -6436,8 +6405,8 @@ packages:
   real-require@1.0.0:
     resolution: {integrity: sha512-P4nbQYQfePJxRSmY+v/KINxVucm4NF3p3s7pJveMTtom52FR4YGltUQLB8idDXwDDWW+eYrWDFbuzUnjoWHF7g==}
 
-  recast@0.21.5:
-    resolution: {integrity: sha512-hjMmLaUXAm1hIuTqOdeYObMslq/q+Xff6QE3Y2P+uoHAg2nmVlLBps2hzh1UJDdMtDTMXOFewK6ky51JQIeECg==}
+  recast@0.23.21:
+    resolution: {integrity: sha512-mFAyJq9vUbSTARLZUvAEf1z3YxlvAwswbmxMx2mPA/MSm4KmpwvwvhsH/NIrZhyOuwD60Lzyw2qh83uCbgTPYw==}
     engines: {node: '>= 4'}
 
   redent@3.0.0:
@@ -6642,9 +6611,6 @@ packages:
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
-  signal-exit@3.0.7:
-    resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
-
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
@@ -6808,8 +6774,8 @@ packages:
     resolution: {integrity: sha512-1WH+LUf5H0R07EF606fuP5TuHPVvtrMIPpn69EkqaOVJYg0foL8xnD+lEs0s19Zfmplul5nRd3TpbbF0twXCkw==}
     hasBin: true
 
-  temp@0.8.4:
-    resolution: {integrity: sha512-s0ZZzd0BzYv5tLSptZooSjK8oj6C+c19p7Vqta9+6NPOf7r+fxq0cJe6/oN4LTC79sy5NY8ucOJNgwsKCSbfqg==}
+  temp@0.9.4:
+    resolution: {integrity: sha512-yYrrsWnrXMcdsnu/7YMYAofM1ktpL5By7vZhf15CrXijWWrEYZks5AXBudalfSWJLlnen/QUJUB5aoB0kqZUGA==}
     engines: {node: '>=6.0.0'}
 
   terser@5.31.1:
@@ -6830,6 +6796,9 @@ packages:
 
   tiny-invariant@1.3.1:
     resolution: {integrity: sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==}
+
+  tiny-invariant@1.3.3:
+    resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
 
   tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
@@ -7370,8 +7339,9 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  write-file-atomic@2.4.3:
-    resolution: {integrity: sha512-GaETH5wwsX+GcnzhPgKcKjJ6M2Cq3/iZp1WyY/X1CSqrW+jVNM9Y7D8EC2sM4ZG/V8wZlSniJnCKWPmBYAucRQ==}
+  write-file-atomic@5.0.1:
+    resolution: {integrity: sha512-+QU2zd6OTD8XWIJCbffaiQeH9U73qIqafo1x6V1snCWYGJf6cVE0cDR4D8xRzcEnfI21IFrUPzPGtcPf8AC+Rw==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
   ws@8.22.0:
     resolution: {integrity: sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg==}
@@ -7507,7 +7477,7 @@ snapshots:
 
   '@babel/helper-annotate-as-pure@7.29.7':
     dependencies:
-      '@babel/types': 7.29.8
+      '@babel/types': 7.29.11
 
   '@babel/helper-compilation-targets@7.29.7':
     dependencies:
@@ -7525,7 +7495,7 @@ snapshots:
       '@babel/helper-optimise-call-expression': 7.29.7
       '@babel/helper-replace-supers': 7.29.7(@babel/core@7.29.7)
       '@babel/helper-skip-transparent-expression-wrappers': 7.29.7
-      '@babel/traverse': 7.29.8
+      '@babel/traverse': 7.29.10
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
@@ -7536,6 +7506,7 @@ snapshots:
       '@babel/helper-annotate-as-pure': 7.29.7
       regexpu-core: 6.5.3
       semver: 6.3.1
+    optional: true
 
   '@babel/helper-define-polyfill-provider@0.6.8(@babel/core@7.29.7)':
     dependencies:
@@ -7547,13 +7518,14 @@ snapshots:
       resolve: 1.22.13
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/helper-globals@7.29.7': {}
 
   '@babel/helper-member-expression-to-functions@7.29.7':
     dependencies:
-      '@babel/traverse': 7.29.8
-      '@babel/types': 7.29.8
+      '@babel/traverse': 7.29.10
+      '@babel/types': 7.29.11
     transitivePeerDependencies:
       - supports-color
 
@@ -7575,7 +7547,7 @@ snapshots:
 
   '@babel/helper-optimise-call-expression@7.29.7':
     dependencies:
-      '@babel/types': 7.29.8
+      '@babel/types': 7.29.11
 
   '@babel/helper-plugin-utils@7.29.7': {}
 
@@ -7587,20 +7559,21 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/helper-replace-supers@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-member-expression-to-functions': 7.29.7
       '@babel/helper-optimise-call-expression': 7.29.7
-      '@babel/traverse': 7.29.8
+      '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
 
   '@babel/helper-skip-transparent-expression-wrappers@7.29.7':
     dependencies:
-      '@babel/traverse': 7.29.8
-      '@babel/types': 7.29.8
+      '@babel/traverse': 7.29.10
+      '@babel/types': 7.29.11
     transitivePeerDependencies:
       - supports-color
 
@@ -7619,6 +7592,7 @@ snapshots:
       '@babel/types': 7.29.11
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/helpers@7.29.7':
     dependencies:
@@ -7633,10 +7607,6 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.8
 
-  '@babel/parser@7.29.9':
-    dependencies:
-      '@babel/types': 7.29.8
-
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
@@ -7644,16 +7614,19 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-bugfix-safari-class-field-initializer-scope@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7663,6 +7636,7 @@ snapshots:
       '@babel/plugin-transform-optional-chaining': 7.29.7(@babel/core@7.29.7)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-bugfix-v8-static-class-fields-redefine-readonly@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7671,33 +7645,12 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/plugin-proposal-class-properties@7.18.6(@babel/core@7.29.7)':
-    dependencies:
-      '@babel/core': 7.29.7
-      '@babel/helper-create-class-features-plugin': 7.29.7(@babel/core@7.29.7)
-      '@babel/helper-plugin-utils': 7.29.7
-    transitivePeerDependencies:
-      - supports-color
-
-  '@babel/plugin-proposal-nullish-coalescing-operator@7.18.6(@babel/core@7.29.7)':
-    dependencies:
-      '@babel/core': 7.29.7
-      '@babel/helper-plugin-utils': 7.29.7
-      '@babel/plugin-syntax-nullish-coalescing-operator': 7.8.3(@babel/core@7.29.7)
-
-  '@babel/plugin-proposal-optional-chaining@7.21.0(@babel/core@7.29.7)':
-    dependencies:
-      '@babel/core': 7.29.7
-      '@babel/helper-plugin-utils': 7.29.7
-      '@babel/helper-skip-transparent-expression-wrappers': 7.29.7
-      '@babel/plugin-syntax-optional-chaining': 7.8.3(@babel/core@7.29.7)
-    transitivePeerDependencies:
-      - supports-color
+    optional: true
 
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
+    optional: true
 
   '@babel/plugin-syntax-flow@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7708,23 +7661,15 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-syntax-import-attributes@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.7)':
-    dependencies:
-      '@babel/core': 7.29.7
-      '@babel/helper-plugin-utils': 7.29.7
-
-  '@babel/plugin-syntax-nullish-coalescing-operator@7.8.3(@babel/core@7.29.7)':
-    dependencies:
-      '@babel/core': 7.29.7
-      '@babel/helper-plugin-utils': 7.29.7
-
-  '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
@@ -7739,11 +7684,13 @@ snapshots:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-arrow-functions@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-async-generator-functions@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7753,6 +7700,7 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-async-to-generator@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7762,16 +7710,19 @@ snapshots:
       '@babel/helper-remap-async-to-generator': 7.29.7(@babel/core@7.29.7)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-block-scoped-functions@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-block-scoping@7.29.11(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-class-properties@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7788,6 +7739,7 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-classes@7.29.11(@babel/core@7.29.7)':
     dependencies:
@@ -7800,12 +7752,14 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-computed-properties@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/template': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-destructuring@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7814,28 +7768,33 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-dotall-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-duplicate-keys@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-duplicate-named-capturing-groups-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-dynamic-import@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-explicit-resource-management@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7844,16 +7803,19 @@ snapshots:
       '@babel/plugin-transform-destructuring': 7.29.7(@babel/core@7.29.7)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-exponentiation-operator@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-export-namespace-from@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-flow-strip-types@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7868,6 +7830,7 @@ snapshots:
       '@babel/helper-skip-transparent-expression-wrappers': 7.29.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-function-name@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7877,26 +7840,31 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-json-strings@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-literals@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-logical-assignment-operators@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-member-expression-literals@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-modules-amd@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7905,6 +7873,7 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-modules-commonjs@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7923,6 +7892,7 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-modules-umd@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7931,17 +7901,20 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-named-capturing-groups-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-new-target@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-nullish-coalescing-operator@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7952,6 +7925,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-object-rest-spread@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7963,6 +7937,7 @@ snapshots:
       '@babel/traverse': 7.29.10
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-object-super@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7971,11 +7946,13 @@ snapshots:
       '@babel/helper-replace-supers': 7.29.7(@babel/core@7.29.7)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-optional-catch-binding@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-optional-chaining@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -7989,6 +7966,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-private-methods@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -8006,11 +7984,13 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-property-literals@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-react-jsx-self@7.29.7(@babel/core@7.29.7)':
     dependencies:
@@ -8026,22 +8006,26 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-regexp-modifiers@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-reserved-words@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-shorthand-properties@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-spread@7.29.11(@babel/core@7.29.7)':
     dependencies:
@@ -8050,21 +8034,25 @@ snapshots:
       '@babel/helper-skip-transparent-expression-wrappers': 7.29.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/plugin-transform-sticky-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-template-literals@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-typeof-symbol@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-typescript@7.29.9(@babel/core@7.29.7)':
     dependencies:
@@ -8081,24 +8069,28 @@ snapshots:
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-unicode-property-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-unicode-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/plugin-transform-unicode-sets-regex@7.29.7(@babel/core@7.29.7)':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/helper-create-regexp-features-plugin': 7.29.10(@babel/core@7.29.7)
       '@babel/helper-plugin-utils': 7.29.7
+    optional: true
 
   '@babel/preset-env@7.28.3(@babel/core@7.29.7)':
     dependencies:
@@ -8175,6 +8167,7 @@ snapshots:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@babel/preset-flow@7.27.1(@babel/core@7.29.7)':
     dependencies:
@@ -8189,6 +8182,7 @@ snapshots:
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/types': 7.29.11
       esutils: 2.0.3
+    optional: true
 
   '@babel/preset-typescript@7.27.1(@babel/core@7.29.7)':
     dependencies:
@@ -8810,9 +8804,9 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@frontify/fondue-charts@8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@frontify/fondue-charts@9.0.0(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
       '@react-spring/web': 10.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@visx/axis': 4.0.0(@types/react@18.3.31)(react@18.3.1)
       '@visx/glyph': 4.0.0(@types/react@18.3.31)(react@18.3.1)
@@ -8832,12 +8826,12 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@frontify/fondue-components@32.1.0(@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@frontify/fondue-components@35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@dnd-kit/abstract': 0.3.2
       '@dnd-kit/react': 0.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
       '@headless-tree/core': 1.7.0
       '@headless-tree/react': 1.7.0(@headless-tree/core@1.7.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-accordion': 1.2.20(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -8867,31 +8861,31 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  '@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))':
+  '@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))':
     dependencies:
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
       react: 18.3.1
     transitivePeerDependencies:
       - tailwindcss
 
-  '@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))':
+  '@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))':
     dependencies:
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
       react: 18.3.1
     transitivePeerDependencies:
       - tailwindcss
 
-  '@frontify/fondue-rte@0.1.10(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))':
+  '@frontify/fondue-rte@0.1.13(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))':
     dependencies:
       '@ctrl/tinycolor': 4.2.1
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@dnd-kit/modifiers': 7.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
-      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 32.1.0(@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 9.0.0(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@radix-ui/react-popover': 1.1.23(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-toolbar': 1.1.19(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -8974,17 +8968,17 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue-rte@0.1.10(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))':
+  '@frontify/fondue-rte@0.1.13(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))':
     dependencies:
       '@ctrl/tinycolor': 4.2.1
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@dnd-kit/modifiers': 7.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
-      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 32.1.0(@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 9.0.0(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@radix-ui/react-popover': 1.1.23(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-toolbar': 1.1.19(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9067,17 +9061,39 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue-sdk@0.2.2': {}
+  '@frontify/fondue-sdk@0.3.0(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))':
+    dependencies:
+      '@frontify/fondue-components': 35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - react
+      - react-dom
+      - tailwindcss
 
-  '@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))':
+  '@frontify/fondue-sdk@0.3.0(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))':
+    dependencies:
+      '@frontify/fondue-components': 35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - react
+      - react-dom
+      - tailwindcss
+
+  '@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))':
     dependencies:
       tailwindcss: 3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3))
 
-  '@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))':
+  '@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))':
     dependencies:
       tailwindcss: 3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))
 
-  '@frontify/fondue@13.7.10(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))':
+  '@frontify/fondue@13.11.0(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))':
     dependencies:
       '@ctrl/tinycolor': 4.2.1
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9085,12 +9101,12 @@ snapshots:
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
       '@floating-ui/dom': 1.8.0
-      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 32.1.0(@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
-      '@frontify/fondue-rte': 0.1.10(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))
-      '@frontify/fondue-sdk': 0.2.2
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 9.0.0(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-rte': 0.1.13(@emotion/is-prop-valid@0.8.8)(@types/node@24.13.3)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@11.1.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@11.1.18)(react@18.3.1))
+      '@frontify/fondue-sdk': 0.3.0(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@24.13.3)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@react-aria/accordion': 3.0.0-alpha.37(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-aria/breadcrumbs': 3.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9121,7 +9137,7 @@ snapshots:
       date-fns: 3.6.0
       execa: 9.6.1
       immer: 10.1.1
-      jscodeshift: 0.14.0(@babel/preset-env@7.28.3(@babel/core@7.29.7))
+      jscodeshift: 0.16.1(@babel/preset-env@7.28.3(@babel/core@7.29.7))
       lodash-es: 4.18.1
       motion: 12.43.0(@emotion/is-prop-valid@0.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -9147,7 +9163,7 @@ snapshots:
       - tailwindcss
       - zustand
 
-  '@frontify/fondue@13.7.10(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))':
+  '@frontify/fondue@13.11.0(@babel/preset-env@7.28.3(@babel/core@7.29.7))(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))':
     dependencies:
       '@ctrl/tinycolor': 4.2.1
       '@dnd-kit/core': 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9155,12 +9171,12 @@ snapshots:
       '@dnd-kit/sortable': 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@dnd-kit/utilities': 3.2.2(react@18.3.1)
       '@floating-ui/dom': 1.8.0
-      '@frontify/fondue-charts': 8.0.2(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-components': 32.1.0(@frontify/fondue-icons@0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@frontify/fondue-icons': 0.28.2(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
-      '@frontify/fondue-rte': 0.1.10(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))
-      '@frontify/fondue-sdk': 0.2.2
-      '@frontify/fondue-tokens': 5.1.2(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-charts': 9.0.0(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-components': 35.0.0(@frontify/fondue-icons@0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@frontify/fondue-tokens@5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3))))(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@frontify/fondue-icons': 0.31.0(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-rte': 0.1.13(@emotion/is-prop-valid@0.8.8)(@types/node@26.6.5)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(@udecode/plate-common@36.5.9(@types/react@18.3.31)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(slate-react@0.102.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(slate@0.102.0))(slate@0.102.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.24.0-canary-efb381bbf-20230505)(slate-history@0.100.0(slate@0.102.0))(slate-hyperscript@0.100.0(slate@0.102.0))(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))(zustand@4.5.3(@types/react@18.3.31)(immer@10.1.1)(react@18.3.1))
+      '@frontify/fondue-sdk': 0.3.0(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
+      '@frontify/fondue-tokens': 5.2.0(tailwindcss@3.4.19(ts-node@10.9.2(@types/node@26.6.5)(typescript@5.9.3)))
       '@popperjs/core': 2.11.8
       '@react-aria/accordion': 3.0.0-alpha.37(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@react-aria/breadcrumbs': 3.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -9191,7 +9207,7 @@ snapshots:
       date-fns: 3.6.0
       execa: 9.6.1
       immer: 10.1.1
-      jscodeshift: 0.14.0(@babel/preset-env@7.28.3(@babel/core@7.29.7))
+      jscodeshift: 0.16.1(@babel/preset-env@7.28.3(@babel/core@7.29.7))
       lodash-es: 4.18.1
       motion: 12.43.0(@emotion/is-prop-valid@0.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -12088,7 +12104,7 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  ast-types@0.15.2:
+  ast-types@0.16.3:
     dependencies:
       tslib: 2.8.1
 
@@ -12123,10 +12139,6 @@ snapshots:
       '@fastify/error': 4.2.1
       fastq: 1.20.3
 
-  babel-core@7.0.0-bridge.0(@babel/core@7.29.7):
-    dependencies:
-      '@babel/core': 7.29.7
-
   babel-plugin-polyfill-corejs2@0.4.17(@babel/core@7.29.7):
     dependencies:
       '@babel/compat-data': 7.29.7
@@ -12135,6 +12147,7 @@ snapshots:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   babel-plugin-polyfill-corejs3@0.13.0(@babel/core@7.29.7):
     dependencies:
@@ -12143,6 +12156,7 @@ snapshots:
       core-js-compat: 3.51.0
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   babel-plugin-polyfill-regenerator@0.6.8(@babel/core@7.29.7):
     dependencies:
@@ -12150,6 +12164,7 @@ snapshots:
       '@babel/helper-define-polyfill-provider': 0.6.8(@babel/core@7.29.7)
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   bail@2.0.2: {}
 
@@ -12161,7 +12176,8 @@ snapshots:
 
   baseline-browser-mapping@2.11.13: {}
 
-  baseline-browser-mapping@2.11.33: {}
+  baseline-browser-mapping@2.11.33:
+    optional: true
 
   binary-extensions@2.3.0: {}
 
@@ -12199,6 +12215,7 @@ snapshots:
       electron-to-chromium: 1.5.464
       node-releases: 2.0.60
       update-browserslist-db: 1.3.4(browserslist@4.29.4)
+    optional: true
 
   buffer-from@1.1.2: {}
 
@@ -12233,7 +12250,8 @@ snapshots:
 
   caniuse-lite@1.0.30001809: {}
 
-  caniuse-lite@1.0.30001819: {}
+  caniuse-lite@1.0.30001819:
+    optional: true
 
   ccount@2.0.1: {}
 
@@ -12326,6 +12344,7 @@ snapshots:
   core-js-compat@3.51.0:
     dependencies:
       browserslist: 4.29.4
+    optional: true
 
   create-require@1.1.1: {}
 
@@ -12501,7 +12520,7 @@ snapshots:
 
   downshift@6.1.12(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.29.7
+      '@babel/runtime': 7.29.10
       compute-scroll-into-view: 1.0.20
       prop-types: 15.8.1
       react: 18.3.1
@@ -12510,7 +12529,7 @@ snapshots:
 
   downshift@9.4.0(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.29.7
+      '@babel/runtime': 7.29.10
       compute-scroll-into-view: 3.1.1
       prop-types: 15.8.1
       react: 18.3.1
@@ -12527,7 +12546,8 @@ snapshots:
 
   electron-to-chromium@1.5.405: {}
 
-  electron-to-chromium@1.5.464: {}
+  electron-to-chromium@1.5.464:
+    optional: true
 
   emoji-regex@8.0.0: {}
 
@@ -13340,28 +13360,29 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  jscodeshift@0.14.0(@babel/preset-env@7.28.3(@babel/core@7.29.7)):
+  jscodeshift@0.16.1(@babel/preset-env@7.28.3(@babel/core@7.29.7)):
     dependencies:
       '@babel/core': 7.29.7
-      '@babel/parser': 7.29.9
-      '@babel/plugin-proposal-class-properties': 7.18.6(@babel/core@7.29.7)
-      '@babel/plugin-proposal-nullish-coalescing-operator': 7.18.6(@babel/core@7.29.7)
-      '@babel/plugin-proposal-optional-chaining': 7.21.0(@babel/core@7.29.7)
+      '@babel/parser': 7.29.11
+      '@babel/plugin-transform-class-properties': 7.29.7(@babel/core@7.29.7)
       '@babel/plugin-transform-modules-commonjs': 7.29.7(@babel/core@7.29.7)
-      '@babel/preset-env': 7.28.3(@babel/core@7.29.7)
+      '@babel/plugin-transform-nullish-coalescing-operator': 7.29.7(@babel/core@7.29.7)
+      '@babel/plugin-transform-optional-chaining': 7.29.7(@babel/core@7.29.7)
+      '@babel/plugin-transform-private-methods': 7.29.7(@babel/core@7.29.7)
       '@babel/preset-flow': 7.27.1(@babel/core@7.29.7)
       '@babel/preset-typescript': 7.27.1(@babel/core@7.29.7)
       '@babel/register': 7.28.3(@babel/core@7.29.7)
-      babel-core: 7.0.0-bridge.0(@babel/core@7.29.7)
       chalk: 4.1.2
       flow-parser: 0.287.0
       graceful-fs: 4.2.11
       micromatch: 4.0.8
       neo-async: 2.6.2
       node-dir: 0.1.17
-      recast: 0.21.5
-      temp: 0.8.4
-      write-file-atomic: 2.4.3
+      recast: 0.23.21
+      temp: 0.9.4
+      write-file-atomic: 5.0.1
+    optionalDependencies:
+      '@babel/preset-env': 7.28.3(@babel/core@7.29.7)
     transitivePeerDependencies:
       - supports-color
 
@@ -13502,7 +13523,8 @@ snapshots:
 
   lodash-es@4.18.1: {}
 
-  lodash.debounce@4.0.8: {}
+  lodash.debounce@4.0.8:
+    optional: true
 
   lodash.mapvalues@4.6.0: {}
 
@@ -13863,11 +13885,17 @@ snapshots:
     dependencies:
       brace-expansion: 2.1.7
 
+  minimist@1.2.8: {}
+
   minipass@7.1.3: {}
 
   mitt@2.1.0: {}
 
   mitt@3.0.1: {}
+
+  mkdirp@0.5.6:
+    dependencies:
+      minimist: 1.2.8
 
   mlly@1.8.0:
     dependencies:
@@ -13999,7 +14027,8 @@ snapshots:
 
   node-releases@2.0.53: {}
 
-  node-releases@2.0.60: {}
+  node-releases@2.0.60:
+    optional: true
 
   normalize-path@3.0.0: {}
 
@@ -14465,7 +14494,7 @@ snapshots:
 
   react-textarea-autosize@8.5.9(@types/react@18.3.31)(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.29.7
+      '@babel/runtime': 7.29.10
       react: 18.3.1
       use-composed-ref: 1.3.0(react@18.3.1)
       use-latest: 1.2.1(@types/react@18.3.31)(react@18.3.1)
@@ -14501,11 +14530,12 @@ snapshots:
 
   real-require@1.0.0: {}
 
-  recast@0.21.5:
+  recast@0.23.21:
     dependencies:
-      ast-types: 0.15.2
+      ast-types: 0.16.3
       esprima: 4.0.1
       source-map: 0.6.1
+      tiny-invariant: 1.3.3
       tslib: 2.8.1
 
   redent@3.0.0:
@@ -14525,13 +14555,15 @@ snapshots:
 
   redux@4.2.1:
     dependencies:
-      '@babel/runtime': 7.29.7
+      '@babel/runtime': 7.29.10
 
   regenerate-unicode-properties@10.3.0:
     dependencies:
       regenerate: 1.5.0
+    optional: true
 
-  regenerate@1.5.0: {}
+  regenerate@1.5.0:
+    optional: true
 
   regexp.prototype.flags@1.5.4:
     dependencies:
@@ -14550,12 +14582,15 @@ snapshots:
       regjsparser: 0.13.4
       unicode-match-property-ecmascript: 2.0.0
       unicode-match-property-value-ecmascript: 2.2.1
+    optional: true
 
-  regjsgen@0.8.0: {}
+  regjsgen@0.8.0:
+    optional: true
 
   regjsparser@0.13.4:
     dependencies:
       jsesc: 3.1.0
+    optional: true
 
   remark-gfm@3.0.1:
     dependencies:
@@ -14771,8 +14806,6 @@ snapshots:
       side-channel-weakmap: 1.0.2
 
   siginfo@2.0.0: {}
-
-  signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
 
@@ -15008,8 +15041,9 @@ snapshots:
       verkit: 0.3.2
       yaml: 2.9.0
 
-  temp@0.8.4:
+  temp@0.9.4:
     dependencies:
+      mkdirp: 0.5.6
       rimraf: 2.6.3
 
   terser@5.31.1:
@@ -15033,6 +15067,8 @@ snapshots:
       real-require: 1.0.0
 
   tiny-invariant@1.3.1: {}
+
+  tiny-invariant@1.3.3: {}
 
   tiny-warning@1.0.3: {}
 
@@ -15183,16 +15219,20 @@ snapshots:
 
   undici-types@8.9.0: {}
 
-  unicode-canonical-property-names-ecmascript@2.0.1: {}
+  unicode-canonical-property-names-ecmascript@2.0.1:
+    optional: true
 
   unicode-match-property-ecmascript@2.0.0:
     dependencies:
       unicode-canonical-property-names-ecmascript: 2.0.1
       unicode-property-aliases-ecmascript: 2.2.0
+    optional: true
 
-  unicode-match-property-value-ecmascript@2.2.1: {}
+  unicode-match-property-value-ecmascript@2.2.1:
+    optional: true
 
-  unicode-property-aliases-ecmascript@2.2.0: {}
+  unicode-property-aliases-ecmascript@2.2.0:
+    optional: true
 
   unicorn-magic@0.3.0: {}
 
@@ -15283,6 +15323,7 @@ snapshots:
       browserslist: 4.29.4
       escalade: 3.2.0
       picocolors: 1.1.1
+    optional: true
 
   uri-js@4.4.1:
     dependencies:
@@ -15695,11 +15736,10 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  write-file-atomic@2.4.3:
+  write-file-atomic@5.0.1:
     dependencies:
-      graceful-fs: 4.2.11
       imurmurhash: 0.1.4
-      signal-exit: 3.0.7
+      signal-exit: 4.1.0
 
   ws@8.22.0: {}
 

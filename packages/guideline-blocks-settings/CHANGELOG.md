@@ -5,8 +5,8 @@
 ### Patch Changes
 
 - [#1739](https://github.com/Frontify/brand-sdk/pull/1739) [`d986170`](https://github.com/Frontify/brand-sdk/commit/d9861704056a17a6b63957e5b14656ce24f33bf9) Thanks [@benfrontify](https://github.com/benfrontify)! - fix(LinkInput): replace deprecated `FormControl` with `Label` and `Tooltip`
-  
-  The `info` text is now shown in a tooltip behind a question-mark icon next to the label.
+
+    The `info` text is now shown in a tooltip behind a question-mark icon next to the label.
 
 - [#1746](https://github.com/Frontify/brand-sdk/pull/1746) [`016180a`](https://github.com/Frontify/brand-sdk/commit/016180af5d86f06765de0a1a31c8b1f8e68cb798) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): open the insert link modal next to the selection instead of the top left corner of the page
 
@@ -17,24 +17,24 @@
 ### Major Changes
 
 - [#1732](https://github.com/Frontify/brand-sdk/pull/1732) [`6c105ac`](https://github.com/Frontify/brand-sdk/commit/6c105ac6d871a3182f1e041727a471f28ebf3431) Thanks [@ragi96](https://github.com/ragi96)! - build: publish ES modules only
-  
-  The package no longer ships its UMD and CommonJS builds. `require()` now resolves to the ES module build, the same file `import` uses, so bundlers resolve the same code as before.
-  
-  Neither old build worked with `require()` in Node: both used a `.js` extension in a `"type": "module"` package, so Node loaded them as ES modules.
-  
-  If Jest loads the package as CommonJS, let it transform the package, the same way it already has to for `@frontify/app-bridge`:
-  
-  ```js
-  transformIgnorePatterns: ['/node_modules/(?!@frontify/)'],
-  ```
+
+    The package no longer ships its UMD and CommonJS builds. `require()` now resolves to the ES module build, the same file `import` uses, so bundlers resolve the same code as before.
+
+    Neither old build worked with `require()` in Node: both used a `.js` extension in a `"type": "module"` package, so Node loaded them as ES modules.
+
+    If Jest loads the package as CommonJS, let it transform the package, the same way it already has to for `@frontify/app-bridge`:
+
+    ```js
+    transformIgnorePatterns: ['/node_modules/(?!@frontify/)'],
+    ```
 
 ## 4.0.0-alpha.8
 
 ### Patch Changes
 
 - [#1720](https://github.com/Frontify/brand-sdk/pull/1720) [`d004e57`](https://github.com/Frontify/brand-sdk/commit/d004e577be40d4fdb9fcacfc16e588eb3095c812) Thanks [@ragi96](https://github.com/ragi96)! - perf: let bundlers drop the parts of the package a block doesn't use
-  
-  Importing any export, such as `defineBlock` or a settings helper, no longer pulls the whole package into your block bundle. Blocks that don't use the `RichTextEditor` no longer ship it, along with its emoji data.
+
+    Importing any export, such as `defineBlock` or a settings helper, no longer pulls the whole package into your block bundle. Blocks that don't use the `RichTextEditor` no longer ship it, along with its emoji data.
 
 ## 4.0.0-alpha.7
 
@@ -129,6 +129,12 @@
 ### Patch Changes
 
 - [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+
+## 3.0.10
+
+### Patch Changes
+
+- [#1746](https://github.com/Frontify/brand-sdk/pull/1746) [`016180a`](https://github.com/Frontify/brand-sdk/commit/016180af5d86f06765de0a1a31c8b1f8e68cb798) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): open the insert link modal next to the selection instead of the top left corner of the page
 
 ## 3.0.9
 
