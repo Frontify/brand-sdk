@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { render, screen } from '@testing-library/react';
-import { type ReactNode } from 'react';
-import { describe, expect, it } from 'vitest';
+import { type ReactNode, useEffect, useRef } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 
 import { ScopedThemePortal } from './ScopedThemePortal';
 
@@ -75,5 +75,24 @@ describe('ScopedThemePortal', () => {
 
         expect(portaledStyle().color).toBe(RED);
         expect(screen.getByTestId('portaled')).toHaveAttribute('data-is-underlay');
+    });
+
+    it('attaches the portaled element before the effects of the component that renders it run', () => {
+        const onMount = vi.fn();
+        const Opener = () => {
+            const ref = useRef<HTMLDivElement>(null);
+            useEffect(() => {
+                onMount(ref.current);
+            }, []);
+            return <ScopedThemePortal ref={ref} data-test-id="portaled" />;
+        };
+
+        render(
+            <Section variables={{ [PRIMARY_BACKGROUND]: RED }}>
+                <Opener />
+            </Section>,
+        );
+
+        expect(onMount).toHaveBeenCalledWith(screen.getByTestId('portaled'));
     });
 });
