@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { createAssetByFileId } from '../repositories/AssetRepository';
 import { type Asset, type FileApi } from '../types';
@@ -61,10 +61,10 @@ export const useAssetUpload = (props?: UseAssetUploadParameters): UseAssetUpload
         onUploadAssetFail?.(workerEvent);
     };
 
-    const resetState = () => {
+    const resetState = useCallback(() => {
         setDoneAll(false);
         results.current = [];
-    };
+    }, []);
 
     const createAssetFromFileIds = async (fileId: string) => {
         return await createAssetByFileId(fileId, projectId);
@@ -79,10 +79,14 @@ export const useAssetUpload = (props?: UseAssetUploadParameters): UseAssetUpload
         onUploadFileFail: onFileFail,
     });
 
-    const uploadFiles = (files: FileList | File) => {
-        resetState();
-        uploadFilesInternal(files);
-    };
+    // useFileUpload reads these callbacks through a ref, so uploadFilesInternal is stable even though they aren't.
+    const uploadFiles = useCallback(
+        (files: FileList | File) => {
+            resetState();
+            uploadFilesInternal(files);
+        },
+        [resetState, uploadFilesInternal],
+    );
 
     return [uploadFiles, { results: results.current, doneAll }];
 };
