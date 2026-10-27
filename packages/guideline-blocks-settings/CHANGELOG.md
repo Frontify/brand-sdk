@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 3.0.10
+
+### Patch Changes
+
+- [#1746](https://github.com/Frontify/brand-sdk/pull/1746) [`016180a`](https://github.com/Frontify/brand-sdk/commit/016180af5d86f06765de0a1a31c8b1f8e68cb798) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): open the insert link modal next to the selection instead of the top left corner of the page
+
 ## 3.0.9
 
 ### Patch Changes
