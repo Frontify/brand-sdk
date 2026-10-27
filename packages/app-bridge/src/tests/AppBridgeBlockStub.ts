@@ -196,6 +196,11 @@ export const getAppBridgeBlockStub = ({
                             get: () => editorState,
                             subscribe: () => () => {},
                         };
+                    case 'privacySettings':
+                        return {
+                            get: () => privacySettings,
+                            subscribe: () => () => {},
+                        };
                     case 'assets':
                         return {
                             get: () => contextAssets,
