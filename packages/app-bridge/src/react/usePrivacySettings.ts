@@ -7,17 +7,18 @@ import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type PrivacySettings } from '../types/PrivacySettings';
 
 export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
-    const [privacySettings, setPrivacySettings] = useState<PrivacySettings>(appBridge.getPrivacySettings());
+    const [privacySettings, setPrivacySettings] = useState<PrivacySettings>(() => appBridge.getPrivacySettings());
 
     useEffect(() => {
-        const updateSettings: Handler<PrivacySettings> = (data) => setPrivacySettings({ ...privacySettings, ...data });
+        const updateSettings: Handler<PrivacySettings> = (data) =>
+            setPrivacySettings((currentSettings) => ({ ...currentSettings, ...data }));
 
         window.emitter.on('AppBridge:PrivacySettingsChanged', updateSettings);
 
         return () => {
             window.emitter.off('AppBridge:PrivacySettingsChanged', updateSettings);
         };
-    }, [privacySettings]);
+    }, []);
 
     return privacySettings;
 };
