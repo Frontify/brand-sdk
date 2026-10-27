@@ -164,4 +164,20 @@ describe('useBlockAssets hook', () => {
         unmount();
         sinon.assert.calledOnce(unsubscribe);
     });
+
+    it('should keep the same functions across re-renders', async () => {
+        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockAssets: { key: [AssetDummy.with(1)] } });
+        const { result, rerender } = renderHook(() => useBlockAssets(appBridgeStub));
+        const { addAssetIdsToKey, deleteAssetIdsFromKey, updateAssetIdsFromKey } = result.current;
+
+        await act(async () => {
+            await result.current.addAssetIdsToKey('key', [2]);
+        });
+        rerender();
+
+        expect(result.current.blockAssets.key.map(({ id }) => id)).toEqual([1, 2]);
+        expect(result.current.addAssetIdsToKey).toBe(addAssetIdsToKey);
+        expect(result.current.deleteAssetIdsFromKey).toBe(deleteAssetIdsFromKey);
+        expect(result.current.updateAssetIdsFromKey).toBe(updateAssetIdsFromKey);
+    });
 });
