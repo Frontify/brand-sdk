@@ -56,6 +56,17 @@ describe('getAppBridgeBlockStub', () => {
         expect(otherEventCallback).not.toHaveBeenCalled();
     });
 
+    it('should still send an event to later subscribers when a callback unsubscribes while it is sent', () => {
+        const appBridge = getAppBridgeBlockStub({ emitChosenEventsOnSubscribe: false });
+        const laterCallback = vi.fn();
+
+        const unsubscribe = appBridge.subscribe('assetsChosen', () => unsubscribe());
+        appBridge.subscribe('assetsChosen', laterCallback);
+        emitAppBridgeBlockStubEvent(appBridge, 'assetsChosen', { assets: [AssetDummy.with(5)] });
+
+        expect(laterCallback).toHaveBeenCalledOnce();
+    });
+
     it('should call the unsubscribe option when a subscription ends', () => {
         const unsubscribeSpy = vi.fn();
         const appBridge = getAppBridgeBlockStub({ unsubscribe: unsubscribeSpy, emitChosenEventsOnSubscribe: false });

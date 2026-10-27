@@ -272,8 +272,7 @@ export const emitAppBridgeBlockStubEvent = <EventName extends ChosenEventName>(
         throw new Error('emitAppBridgeBlockStubEvent only works with an app bridge from getAppBridgeBlockStub.');
     }
 
-    // Copy the subscriptions first, a callback may unsubscribe while the event is sent.
-    for (const { callback } of [...(subscriptions.get(eventName) ?? [])]) {
+    for (const { callback } of subscriptions.get(eventName) ?? []) {
         callback(payload);
     }
 };
