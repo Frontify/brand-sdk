@@ -26,7 +26,6 @@ type ChosenEventName = 'assetsChosen' | 'linkChosen' | 'templateChosen';
 
 type StubSubscription = { callback: (payload: unknown) => void };
 
-// Lets emitAppBridgeBlockStubEvent reach a stub's subscriptions without adding a member to the stub's type.
 const stubSubscriptions = new WeakMap<AppBridgeBlock, Map<string, Set<StubSubscription>>>();
 
 export type getAppBridgeBlockStubProps = {
@@ -43,10 +42,6 @@ export type getAppBridgeBlockStubProps = {
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
     unsubscribe?: () => void;
-    /**
-     * Whether subscribing to `assetsChosen`, `templateChosen` or `linkChosen` immediately calls the callback with a
-     * dummy selection. Set it to `false` and send these events with `emitAppBridgeBlockStubEvent` instead.
-     */
     emitChosenEventsOnSubscribe?: boolean;
 };
 
@@ -267,10 +262,6 @@ export const getAppBridgeBlockStub = ({
     return appBridgeStub;
 };
 
-/**
- * Sends `assetsChosen`, `templateChosen` or `linkChosen` to the callbacks that are subscribed to it on a stub from
- * `getAppBridgeBlockStub`. Use it with `emitChosenEventsOnSubscribe: false`.
- */
 export const emitAppBridgeBlockStubEvent = <EventName extends ChosenEventName>(
     appBridge: AppBridgeBlock,
     eventName: EventName,
