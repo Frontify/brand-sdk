@@ -1,5 +1,17 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.10
+
+### Patch Changes
+
+- [#1739](https://github.com/Frontify/brand-sdk/pull/1739) [`d986170`](https://github.com/Frontify/brand-sdk/commit/d9861704056a17a6b63957e5b14656ce24f33bf9) Thanks [@benfrontify](https://github.com/benfrontify)! - fix(LinkInput): replace deprecated `FormControl` with `Label` and `Tooltip`
+  
+  The `info` text is now shown in a tooltip behind a question-mark icon next to the label.
+
+- [#1746](https://github.com/Frontify/brand-sdk/pull/1746) [`016180a`](https://github.com/Frontify/brand-sdk/commit/016180af5d86f06765de0a1a31c8b1f8e68cb798) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - fix(RichTextEditor): open the insert link modal next to the selection instead of the top left corner of the page
+
+- [#1741](https://github.com/Frontify/brand-sdk/pull/1741) [`d3603ef`](https://github.com/Frontify/brand-sdk/commit/d3603ef7a7f7706548c4f2fa994c86d519f35b05) Thanks [@benfrontify](https://github.com/benfrontify)! - fix(BlockItemWrapper): replace deprecated `FOCUS_VISIBLE_STYLE` with the `tw-ring-focus` token utility in toolbar buttons
+
 ## 4.0.0-alpha.9
 
 ### Major Changes
