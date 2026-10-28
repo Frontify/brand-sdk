@@ -1,5 +1,41 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.75
+
+### Major Changes
+
+- [#1759](https://github.com/Frontify/brand-sdk/pull/1759) [`2f4d280`](https://github.com/Frontify/brand-sdk/commit/2f4d280e08cc5e24860f2ade56fbc5e86ce20211) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:PrivacySettingsChanged` event
+  
+  Read the privacy settings from `appBridge.context('privacySettings')` instead, or use the `usePrivacySettings` hook to re-render when they change.
+
+### Minor Changes
+
+- [#1759](https://github.com/Frontify/brand-sdk/pull/1759) [`2f4d280`](https://github.com/Frontify/brand-sdk/commit/2f4d280e08cc5e24860f2ade56fbc5e86ce20211) Thanks [@ragi96](https://github.com/ragi96)! - feat(usePrivacySettings): read the privacy settings from the host context
+  
+  `usePrivacySettings` now reads `appBridge.context('privacySettings')` and re-renders when the host updates it, instead of listening to the `AppBridge:PrivacySettingsChanged` event on `window.emitter`. Hosts must provide `privacySettings` in the block context.
+
+- [#1760](https://github.com/Frontify/brand-sdk/pull/1760) [`57f7aba`](https://github.com/Frontify/brand-sdk/commit/57f7aba7e31ec317abe0b02d13a9bc2db0bd99f8) Thanks [@ragi96](https://github.com/ragi96)! - feat(BlockContext): add `settings`
+  
+  The block context now declares the block's `settings`. `getAppBridgeBlockStub` answers `context('settings')` from its `blockSettings` option and merges `updateBlockSettings()` calls into it:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({ blockSettings: { color: 'red' } });
+  
+  await appBridge.updateBlockSettings({ layout: 'grid' });
+  
+  appBridge.context('settings').get(); // { color: 'red', layout: 'grid' }
+  ```
+
+### Patch Changes
+
+- [#1759](https://github.com/Frontify/brand-sdk/pull/1759) [`2f4d280`](https://github.com/Frontify/brand-sdk/commit/2f4d280e08cc5e24860f2ade56fbc5e86ce20211) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): deprecate `getPrivacySettings`
+  
+  Read the privacy settings from the block context instead, or use the `usePrivacySettings` hook to re-render when they change:
+  
+  ```ts
+  const { assetViewerEnabled, assetDownloadEnabled } = appBridge.context('privacySettings').get();
+  ```
+
 ## 4.0.0-alpha.74
 
 ### Minor Changes
