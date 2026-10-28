@@ -77,6 +77,37 @@ describe('getAppBridgeBlockStub', () => {
         expect(unsubscribeSpy).toHaveBeenCalledOnce();
     });
 
+    it('should answer the settings context from the blockSettings option', () => {
+        const appBridge = getAppBridgeBlockStub({ blockSettings: { color: 'red' } });
+
+        expect(appBridge.context('settings').get()).toEqual({ color: 'red' });
+    });
+
+    it('should merge updated block settings into the settings context and notify its subscribers', async () => {
+        const blockSettings = { color: 'red', layout: { columns: 2, gap: 8 } };
+        const appBridge = getAppBridgeBlockStub({ blockSettings });
+        const onSettingsChanged = vi.fn();
+        appBridge.context('settings').subscribe(onSettingsChanged);
+
+        await appBridge.updateBlockSettings({ layout: { columns: 3 } });
+
+        const expectedSettings = { color: 'red', layout: { columns: 3, gap: 8 } };
+        expect(appBridge.context('settings').get()).toEqual(expectedSettings);
+        expect(onSettingsChanged).toHaveBeenCalledWith(expectedSettings);
+        expect(blockSettings).toEqual({ color: 'red', layout: { columns: 2, gap: 8 } });
+    });
+
+    it('should not notify a settings subscriber after it unsubscribes', async () => {
+        const appBridge = getAppBridgeBlockStub();
+        const onSettingsChanged = vi.fn();
+        const unsubscribe = appBridge.context('settings').subscribe(onSettingsChanged);
+        unsubscribe();
+
+        await appBridge.updateBlockSettings({ color: 'blue' });
+
+        expect(onSettingsChanged).not.toHaveBeenCalled();
+    });
+
     it('should throw when emitting an event on an app bridge that is not a stub', () => {
         expect(() =>
             emitAppBridgeBlockStubEvent({} as AppBridgeBlock, 'assetsChosen', { assets: [AssetDummy.with(5)] }),
