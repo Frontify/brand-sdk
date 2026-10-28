@@ -66,6 +66,7 @@ export type BlockContext = {
     assets?: Record<string, Asset[]>;
     isEditing: boolean;
     privacySettings: PrivacySettings;
+    settings: Record<string, unknown>;
 };
 
 export type BlockEvent = EventNameValidator<

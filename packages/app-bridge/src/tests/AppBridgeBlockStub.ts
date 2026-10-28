@@ -9,6 +9,7 @@ import { type Template, type TemplateLegacy, type User } from '../types';
 import { type Asset } from '../types/Asset';
 import { type EmitterEvents } from '../types/Emitter';
 import { type PrivacySettings } from '../types/PrivacySettings';
+import { mergeDeep } from '../utilities/object';
 
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
@@ -77,6 +78,16 @@ export const getAppBridgeBlockStub = ({
     const contextAssetsSubscribers: Set<(nextAssets: Record<string, Asset[]>) => void> = new Set();
     let contextAssets = blockAssets;
 
+    const contextSettingsSubscribers: Set<(nextSettings: Record<string, unknown>) => void> = new Set();
+    let contextSettings = blockSettings;
+
+    const updateContextSettings = (newSettings: Record<string, unknown>) => {
+        contextSettings = mergeDeep(structuredClone(contextSettings), newSettings);
+        for (const subscriber of contextSettingsSubscribers) {
+            subscriber(contextSettings);
+        }
+    };
+
     const computeBlockAssets = (): Record<string, Asset[]> =>
         Object.entries(blockAssets).reduce<Record<string, Asset[]>>((assetsDiff, [key, assets]) => {
             const addedAssetIdsList = addedAssetIds[key] ?? [];
@@ -101,6 +112,12 @@ export const getAppBridgeBlockStub = ({
         getProjectId: sinon.stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: sinon.stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: sinon.stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
+        updateBlockSettings: sinon
+            .stub<Parameters<AppBridgeBlock['updateBlockSettings']>>()
+            .callsFake((newSettings) => {
+                updateContextSettings(newSettings as Record<string, unknown>);
+                return Promise.resolve();
+            }),
         getCurrentLoggedUser: sinon.stub<Parameters<AppBridgeBlock['getCurrentLoggedUser']>>().resolves(user),
         getAssetById: sinon
             .stub<Parameters<AppBridgeBlock['getAssetById']>>()
@@ -201,6 +218,16 @@ export const getAppBridgeBlockStub = ({
                             get: () => privacySettings,
                             subscribe: () => () => {},
                         };
+                    case 'settings':
+                        return {
+                            get: () => contextSettings,
+                            subscribe: (callback: (nextSettings: Record<string, unknown>) => void) => {
+                                contextSettingsSubscribers.add(callback);
+                                return () => {
+                                    contextSettingsSubscribers.delete(callback);
+                                };
+                            },
+                        };
                     case 'assets':
                         return {
                             get: () => contextAssets,
@@ -257,7 +284,6 @@ export const getAppBridgeBlockStub = ({
 
         // TODO: Stub the following methods
         getTemplateById: sinon.stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),
-        updateBlockSettings: sinon.stub<Parameters<AppBridgeBlock['updateBlockSettings']>>().resolves(),
         state: sinon.stub<Parameters<AppBridgeBlock['state']>>().resolves(),
         dispatch: sinon.stub<Parameters<AppBridgeBlock['dispatch']>>().resolves(),
     };
