@@ -3,7 +3,6 @@
 import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
 
 import { type Asset } from './Asset';
-import { type PrivacySettings } from './PrivacySettings';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
 
@@ -21,8 +20,6 @@ export type EmitterEvents = {
         blockTemplates: Record<string, Template[]>;
         prevBlockTemplates: Record<string, Template[]>;
     };
-
-    'AppBridge:PrivacySettingsChanged': PrivacySettings;
 
     'AppBridge:ViewerOpened': AssetViewerOptions;
 };
