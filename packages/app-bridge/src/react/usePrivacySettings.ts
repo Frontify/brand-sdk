@@ -1,24 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Handler } from 'mitt';
 import { useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type PrivacySettings } from '../types/PrivacySettings';
 
-export const usePrivacySettings = (appBridge: AppBridgeBlock) => {
-    const [privacySettings, setPrivacySettings] = useState<PrivacySettings>(() => appBridge.getPrivacySettings());
+export const usePrivacySettings = (appBridge: AppBridgeBlock): PrivacySettings => {
+    const [privacySettings, setPrivacySettings] = useState<PrivacySettings>(() =>
+        appBridge.context('privacySettings').get(),
+    );
 
     useEffect(() => {
-        const updateSettings: Handler<PrivacySettings> = (data) =>
-            setPrivacySettings((currentSettings) => ({ ...currentSettings, ...data }));
-
-        window.emitter.on('AppBridge:PrivacySettingsChanged', updateSettings);
-
-        return () => {
-            window.emitter.off('AppBridge:PrivacySettingsChanged', updateSettings);
-        };
-    }, []);
+        setPrivacySettings(appBridge.context('privacySettings').get());
+        return appBridge.context('privacySettings').subscribe(setPrivacySettings);
+    }, [appBridge]);
 
     return privacySettings;
 };
