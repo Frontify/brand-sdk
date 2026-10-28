@@ -1,56 +1,51 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-import { mergeDeep } from '../utilities/object';
 
-export type BlockSettingsUpdateEvent<T = Record<string, unknown>> = {
-    blockId: number;
+type BlockSettingsState<T> = {
+    contextSettings: Readonly<Record<string, unknown>>;
     blockSettings: T;
 };
+
+// Each hook works on its own copy, so a block mutating its settings in place can't change the host's context
+const toBlockSettingsState = <T>(contextSettings: Readonly<Record<string, unknown>>): BlockSettingsState<T> => ({
+    contextSettings,
+    blockSettings: structuredClone(contextSettings) as T,
+});
 
 export const useBlockSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeBlock,
 ): [T, (newSettings: Partial<T>) => Promise<void>] => {
-    const blockId = appBridge.context('blockId').get();
+    const [blockSettingsState, setBlockSettingsState] = useState(() =>
+        toBlockSettingsState<T>(appBridge.context('settings').get()),
+    );
 
-    const [blockSettings, setBlockSettings] = useState<T>(() => structuredClone(window.blockSettings[blockId]) as T);
-    // Save blockSettings in a ref so updateBlockSettings can safely be used as a react dependency
-    const blockSettingsRef = useRef<T>(blockSettings);
-
-    // Add listener for block settings updates
     useEffect(() => {
-        const updateBlockSettingsFromEvent = (event: BlockSettingsUpdateEvent) => {
-            if (event.blockId === blockId) {
-                const blockSettings = { ...event.blockSettings } as T;
-                setBlockSettings(blockSettings);
-                blockSettingsRef.current = blockSettings;
-            }
+        const settingsContext = appBridge.context('settings');
+        const syncBlockSettings = (contextSettings: Readonly<Record<string, unknown>>) => {
+            setBlockSettingsState((currentState) =>
+                currentState.contextSettings === contextSettings
+                    ? currentState
+                    : toBlockSettingsState<T>(contextSettings),
+            );
         };
 
-        window.emitter.on('AppBridge:BlockSettingsUpdated', updateBlockSettingsFromEvent);
-
-        return () => {
-            window.emitter.off('AppBridge:BlockSettingsUpdated', updateBlockSettingsFromEvent);
-        };
-    }, [blockId]);
+        syncBlockSettings(settingsContext.get());
+        return settingsContext.subscribe(syncBlockSettings);
+    }, [appBridge]);
 
     const updateBlockSettings = useCallback(
         async (blockSettingsUpdate: Partial<T>) => {
             try {
                 await appBridge.updateBlockSettings(blockSettingsUpdate);
-                window.emitter.emit('AppBridge:BlockSettingsUpdated', {
-                    blockId,
-                    blockSettings: mergeDeep(blockSettingsRef.current, blockSettingsUpdate),
-                });
             } catch (error) {
                 console.error(error);
             }
         },
-        // Stable reference to appBridge and blockId. These are not expected to change.
-        [appBridge, blockId],
+        [appBridge],
     );
 
-    return [blockSettings, updateBlockSettings];
+    return [blockSettingsState.blockSettings, updateBlockSettings];
 };

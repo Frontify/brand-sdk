@@ -1,11 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { cleanup, render, waitFor } from '@testing-library/react';
+import { act, cleanup, render, renderHook, waitFor } from '@testing-library/react';
 import { type ReactElement } from 'react';
 import sinon from 'sinon';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { getAppBridgeBlockStub } from '../tests/AppBridgeBlockStub';
 import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
 import { type Nullable } from '../types/Nullable';
 
@@ -21,6 +22,28 @@ const NEW_SETTINGS_NULL = { foo: null };
 const NEW_SETTINGS_UNDEFINED = { foo: undefined };
 const BLOCK_1_ID = 345;
 const BLOCK_2_ID = 456;
+
+const createHostSettings = (initialSettings: Record<string, unknown>) => {
+    let settings = initialSettings;
+    const subscribers = new Set<(nextSettings: Record<string, unknown>) => void>();
+
+    return {
+        context: {
+            get: () => settings,
+            subscribe: (callback: (nextSettings: Record<string, unknown>) => void) => {
+                subscribers.add(callback);
+                return () => subscribers.delete(callback);
+            },
+        },
+        set: (nextSettings: Record<string, unknown>) => {
+            settings = nextSettings;
+            for (const subscriber of subscribers) {
+                subscriber(nextSettings);
+            }
+        },
+        subscriberCount: () => subscribers.size,
+    };
+};
 
 const Block = ({ appBridge }: { appBridge: AppBridgeBlock }): ReactElement => {
     const [blockSettings, updateBlockSettings] = useBlockSettings(appBridge);
@@ -64,7 +87,7 @@ describe('useBlockSettings', () => {
         expect(getByTestId(BLOCK_SETTINGS_DIV_ID).textContent).toBe('{}');
     });
 
-    it('should initially set the block settings to the API data', () => {
+    it('should initially set the block settings from the settings context', () => {
         const [BlockWithStubs] = withAppBridgeBlockStubs(Block, {
             blockSettings: NEW_SETTINGS,
         });
@@ -190,7 +213,7 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('gets the correct settings when rendering 2 blocks', () => {
+    it('should get the correct settings when rendering 2 blocks', () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [Block1WithStubs] = withAppBridgeBlockStubs(Block, {
@@ -215,7 +238,7 @@ describe('useBlockSettings', () => {
         expect(block2Settings?.textContent).toBe('{}');
     });
 
-    it('sets correctly the settings when rendering 2 blocks', async () => {
+    it('should set the settings of the right block when rendering 2 blocks', async () => {
         const CURRENT_SETTINGS = { foo: 'https://frontify.com' };
 
         const [Block1WithStubs, appBridge1] = withAppBridgeBlockStubs(Block, {
@@ -260,27 +283,20 @@ describe('useBlockSettings', () => {
         });
     });
 
-    it('set the settings of the 2 blocks when they have the same id', async () => {
-        const SAME_ID = 435;
-        const [Block1WithStubs] = withAppBridgeBlockStubs(Block, { blockId: SAME_ID });
-        const [Block2WithStubs] = withAppBridgeBlockStubs(Block, { blockId: SAME_ID });
+    it('should update every component that uses the same app bridge', async () => {
+        const [Block1WithStubs, appBridge] = withAppBridgeBlockStubs(Block, { blockId: BLOCK_1_ID });
+        const Block2 = () => <Block appBridge={appBridge} />;
 
         const { getAllByTestId } = render(
             <div>
                 <Block1WithStubs />
-                <Block2WithStubs />
+                <Block2 />
             </div>,
         );
 
-        const blocks = getAllByTestId(`block-${SAME_ID}`);
+        const blocks = getAllByTestId(`block-${BLOCK_1_ID}`);
         const block1Settings = blocks[0].querySelector(`[data-test-id="${BLOCK_SETTINGS_DIV_ID}"]`);
         const block2Settings = blocks[1].querySelector(`[data-test-id="${BLOCK_SETTINGS_DIV_ID}"]`);
-
-        await waitFor(() => {
-            expect(block1Settings?.textContent).toBe('{}');
-            expect(block2Settings?.textContent).toBe('{}');
-        });
-
         const block1SetSettingButton = blocks[0].querySelector(
             `[data-test-id="${SET_BLOCK_SETTING_BUTTON}"]`,
         ) as Nullable<HTMLButtonElement>;
@@ -291,5 +307,63 @@ describe('useBlockSettings', () => {
             expect(block1Settings?.textContent).toBe(JSON.stringify(NEW_SETTINGS));
             expect(block2Settings?.textContent).toBe(JSON.stringify(NEW_SETTINGS));
         });
+    });
+
+    it('should re-render when the host updates the settings context', () => {
+        const appBridge = getAppBridgeBlockStub();
+        const host = createHostSettings({ foo: 'bar' });
+        appBridge.context.withArgs('settings').returns(host.context);
+
+        const { result } = renderHook(() => useBlockSettings(appBridge));
+        act(() => host.set({ foo: 'baz' }));
+
+        expect(result.current[0]).toEqual({ foo: 'baz' });
+    });
+
+    it('should not re-render on mount when the settings context did not change', () => {
+        const appBridge = getAppBridgeBlockStub({ blockSettings: { foo: 'bar' } });
+        let renderCount = 0;
+
+        renderHook(() => {
+            renderCount++;
+            return useBlockSettings(appBridge);
+        });
+
+        expect(renderCount).toBe(1);
+    });
+
+    it('should keep the settings context unchanged when a block mutates its settings', () => {
+        const appBridge = getAppBridgeBlockStub({ blockSettings: { items: ['first'] } });
+
+        const { result } = renderHook(() => useBlockSettings<{ items: string[] }>(appBridge));
+        result.current[0].items.push('second');
+
+        expect(appBridge.context('settings').get()).toEqual({ items: ['first'] });
+    });
+
+    it('should log the error and keep the settings when saving them fails', async () => {
+        const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        const error = new Error('Block settings could not be updated');
+        const appBridge = getAppBridgeBlockStub({ blockSettings: { foo: 'bar' } });
+        appBridge.updateBlockSettings.rejects(error);
+
+        const { result } = renderHook(() => useBlockSettings(appBridge));
+        await act(() => result.current[1]({ foo: 'baz' }));
+
+        expect(consoleErrorSpy).toHaveBeenCalledWith(error);
+        expect(result.current[0]).toEqual({ foo: 'bar' });
+        consoleErrorSpy.mockRestore();
+    });
+
+    it('should unsubscribe from the settings context on unmount', () => {
+        const appBridge = getAppBridgeBlockStub();
+        const host = createHostSettings({});
+        appBridge.context.withArgs('settings').returns(host.context);
+
+        const { unmount } = renderHook(() => useBlockSettings(appBridge));
+        expect(host.subscriberCount()).toBe(1);
+        unmount();
+
+        expect(host.subscriberCount()).toBe(0);
     });
 });

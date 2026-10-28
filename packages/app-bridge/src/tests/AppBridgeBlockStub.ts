@@ -67,9 +67,6 @@ export const getAppBridgeBlockStub = ({
 }: getAppBridgeBlockStubProps = {}): sinon.SinonStubbedInstance<AppBridgeBlock> => {
     window.emitter = sinon.spy(mitt()) as unknown as Emitter<EmitterEvents>;
 
-    window.blockSettings ??= {};
-    window.blockSettings[blockId] = blockSettings;
-
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
     const deletedTemplateIds: Record<string, number[]> = {};
@@ -111,7 +108,9 @@ export const getAppBridgeBlockStub = ({
     const appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock> = {
         getProjectId: sinon.stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: sinon.stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
-        getBlockSettings: sinon.stub<Parameters<AppBridgeBlock['getBlockSettings']>>().resolves(window.blockSettings),
+        getBlockSettings: sinon
+            .stub<Parameters<AppBridgeBlock['getBlockSettings']>>()
+            .callsFake(() => Promise.resolve(contextSettings)),
         updateBlockSettings: sinon
             .stub<Parameters<AppBridgeBlock['updateBlockSettings']>>()
             .callsFake((newSettings) => {

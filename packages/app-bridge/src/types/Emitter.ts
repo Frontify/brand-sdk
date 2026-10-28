@@ -1,14 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type BlockSettingsUpdateEvent } from '../react/useBlockSettings';
-
 import { type Asset } from './Asset';
 import { type Template } from './Template';
 import { type AssetViewerOptions } from './Terrific';
 
 export type EmitterEvents = {
-    'AppBridge:BlockSettingsUpdated': BlockSettingsUpdateEvent;
-
     'AppBridge:BlockAssetsUpdated': {
         blockId: number;
         blockAssets: Record<string, Asset[]>;
