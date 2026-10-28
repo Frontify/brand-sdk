@@ -3,6 +3,7 @@
 export * from './AssetChooser';
 export * from './AssetViewer';
 export * from './BrandChecker';
+export * from './ColorChooser';
 export * from './CommandRegistry';
 export * from './DownloadAsset';
 export * from './LinkChooser';

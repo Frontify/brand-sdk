@@ -4,6 +4,7 @@ export * from './Asset';
 export * from './BrandChecker';
 export * from './BulkDownload';
 export * from './Color';
+export * from './ColorChooserOptions';
 export * from './ColorPalette';
 export * from './DispatchHandler';
 export * from './Emitter';
