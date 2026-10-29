@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { useBlockSettings } from '@frontify/app-bridge';
 import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
@@ -89,9 +90,13 @@ describe('useBlockPrivacySettings', () => {
             privacySettings: { assetViewerEnabled: false, assetDownloadEnabled: false },
         });
 
-        const { result } = renderHook(() => useBlockPrivacySettings(appBridge, ALL_OVERRIDES));
-        await act(() => appBridge.updateBlockSettings({ security: Security.Custom }));
+        const { result } = renderHook(() => ({
+            privacySettings: useBlockPrivacySettings(appBridge, ALL_OVERRIDES),
+            blockSettings: useBlockSettings(appBridge),
+        }));
+        const [, setBlockSettings] = result.current.blockSettings;
+        await act(() => setBlockSettings({ security: Security.Custom }));
 
-        expect(result.current).toEqual({ assetViewerEnabled: true, assetDownloadEnabled: true });
+        expect(result.current.privacySettings).toEqual({ assetViewerEnabled: true, assetDownloadEnabled: true });
     });
 });
