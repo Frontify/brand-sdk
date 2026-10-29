@@ -1,5 +1,45 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.76
+
+### Major Changes
+
+- [#1764](https://github.com/Frontify/brand-sdk/pull/1764) [`d679a8c`](https://github.com/Frontify/brand-sdk/commit/d679a8cebdcf3df218517f448014bb91d48f16a4) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:BlockAssetsUpdated` and `AppBridge:ViewerOpened` events
+  
+  Read the block assets from `appBridge.context('assets')` instead, or use the `useBlockAssets` hook to re-render when they change.
+
+- [#1761](https://github.com/Frontify/brand-sdk/pull/1761) [`d6ac9fa`](https://github.com/Frontify/brand-sdk/commit/d6ac9fa1b26a558640f801778396fef77fd8e4fb) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:BlockSettingsUpdated` event
+  
+  The event, its `BlockSettingsUpdateEvent` type and the `blockSettings` declaration on `Window` are removed. Read the block settings from `appBridge.context('settings')` instead, or use the `useBlockSettings` hook to re-render when they change.
+  
+  `getAppBridgeBlockStub` no longer writes `window.blockSettings`, and its `getBlockSettings()` now resolves the stubbed block's settings.
+
+### Minor Changes
+
+- [#1769](https://github.com/Frontify/brand-sdk/pull/1769) [`618618c`](https://github.com/Frontify/brand-sdk/commit/618618c413df9e5b41bbb7dd1884e08d6b5e21da) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat: add `openColorChooser`/`closeColorChooser` block commands to render the host color chooser into an element
+  
+  ```ts
+  import { openColorChooser, closeColorChooser } from "@frontify/app-bridge";
+  
+  await appBridge.dispatch(openColorChooser({ element, color, onColorSelect: (color) => setColor(color) }));
+  // ...
+  await appBridge.dispatch(closeColorChooser({ element }));
+  ```
+
+- [#1761](https://github.com/Frontify/brand-sdk/pull/1761) [`d6ac9fa`](https://github.com/Frontify/brand-sdk/commit/d6ac9fa1b26a558640f801778396fef77fd8e4fb) Thanks [@ragi96](https://github.com/ragi96)! - feat(useBlockSettings): read the block settings from the host context
+  
+  `useBlockSettings` now reads `appBridge.context('settings')` and re-renders when the host updates it, instead of reading `window.blockSettings` and listening to the `AppBridge:BlockSettingsUpdated` event on `window.emitter`. Hosts must provide `settings` in the block context and update it after `updateBlockSettings()` saves.
+
+### Patch Changes
+
+- [#1761](https://github.com/Frontify/brand-sdk/pull/1761) [`d6ac9fa`](https://github.com/Frontify/brand-sdk/commit/d6ac9fa1b26a558640f801778396fef77fd8e4fb) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): deprecate `getBlockSettings`
+  
+  Read the block settings from the block context instead, or use the `useBlockSettings` hook to re-render when they change:
+  
+  ```ts
+  const blockSettings = appBridge.context('settings').get();
+  ```
+
 ## 4.0.0-alpha.75
 
 ### Major Changes
