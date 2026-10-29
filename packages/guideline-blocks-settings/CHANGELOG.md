@@ -5,30 +5,34 @@
 ### Minor Changes
 
 - [#1771](https://github.com/Frontify/brand-sdk/pull/1771) [`dbdccf7`](https://github.com/Frontify/brand-sdk/commit/dbdccf7fa74b9685536ffcbcfb1f3a51d5ad8822) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `useBlockPrivacySettings` and `getSecurityAssetViewerSetting` so blocks can override the global privacy settings without resolving them by hand
-  
-  `useBlockPrivacySettings` returns the global privacy settings, or the block's own overrides when its security is set to custom. A privacy setting the block offers no override switch for stays global.
-  
-  ```ts
-  // settings.ts
-  import {
-      defineSettings,
-      getSecurityAssetViewerSetting,
-      getSecurityDownloadableSetting,
-      getSecurityGlobalControlSetting,
-  } from '@frontify/guideline-blocks-settings';
-  
-  export const settings = defineSettings({
-      security: [...getSecurityGlobalControlSetting(), getSecurityAssetViewerSetting(), getSecurityDownloadableSetting()],
-  });
-  
-  // Block.tsx
-  import { useBlockPrivacySettings } from '@frontify/guideline-blocks-settings';
-  
-  const { assetViewerEnabled, assetDownloadEnabled } = useBlockPrivacySettings(appBridge, {
-      assetViewerId: 'assetViewerEnabled',
-      downloadableId: 'downloadable',
-  });
-  ```
+
+    `useBlockPrivacySettings` returns the global privacy settings, or the block's own overrides when its security is set to custom. A privacy setting the block offers no override switch for stays global.
+
+    ```ts
+    // settings.ts
+    import {
+        defineSettings,
+        getSecurityAssetViewerSetting,
+        getSecurityDownloadableSetting,
+        getSecurityGlobalControlSetting,
+    } from "@frontify/guideline-blocks-settings";
+
+    export const settings = defineSettings({
+        security: [
+            ...getSecurityGlobalControlSetting(),
+            getSecurityAssetViewerSetting(),
+            getSecurityDownloadableSetting(),
+        ],
+    });
+
+    // Block.tsx
+    import { useBlockPrivacySettings } from "@frontify/guideline-blocks-settings";
+
+    const { assetViewerEnabled, assetDownloadEnabled } = useBlockPrivacySettings(appBridge, {
+        assetViewerId: "assetViewerEnabled",
+        downloadableId: "downloadable",
+    });
+    ```
 
 ## 4.0.0-alpha.11
 
