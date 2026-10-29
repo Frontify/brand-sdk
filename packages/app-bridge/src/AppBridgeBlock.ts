@@ -117,6 +117,10 @@ export interface AppBridgeBlock<
 
     getTemplateById(templateId: number): Promise<TemplateLegacy>;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use `appBridge.context('settings').get()` instead, or the `useBlockSettings` hook to re-render when they change.
+     */
     getBlockSettings<T = Record<string, unknown>>(): Promise<T>;
 
     updateBlockSettings<T = Record<string, unknown>>(newSettings: T): Promise<void>;

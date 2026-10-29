@@ -17,7 +17,6 @@ declare global {
                 };
             };
         };
-        blockSettings: Record<number, Record<string, unknown>>;
         emitter: Emitter<EmitterEvents>;
     }
 }
