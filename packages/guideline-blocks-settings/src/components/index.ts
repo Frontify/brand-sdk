@@ -2,7 +2,6 @@
 
 export * from './BlockInjectButton';
 export * from './BlockItemWrapper';
-export * from './ColorChooser';
 export * from './Attachments';
 export * from './RichTextEditor';
 export * from './Link';
