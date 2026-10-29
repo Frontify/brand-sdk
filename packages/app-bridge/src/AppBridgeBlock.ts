@@ -37,11 +37,13 @@ export type BlockCommand = CommandNameValidator<
     Pick<
         CommandRegistry,
         | 'closeAssetChooser'
+        | 'closeColorChooser'
         | 'closeLinkChooser'
         | 'closeTemplateChooser'
         | 'downloadAsset'
         | 'openAssetChooser'
         | 'openAssetViewer'
+        | 'openColorChooser'
         | 'openLinkChooser'
         | 'openTemplateChooser'
         | 'openNewPublication'

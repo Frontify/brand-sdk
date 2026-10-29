@@ -5,6 +5,8 @@ import {
     type AssetViewerOptions,
     type Asset,
     type AssetChooserOptions,
+    type CloseColorChooserOptions,
+    type ColorChooserOptions,
     type LinkChooserOptions,
     type OpenBrandCheckerPayload,
     type OpenNewPublicationPayload,
@@ -18,6 +20,8 @@ type OpenTemplateChooser = void;
 type CloseTemplateChooser = void;
 type OpenLinkChooserPayload = LinkChooserOptions;
 type CloseLinkChooserPayload = void;
+type OpenColorChooserPayload = ColorChooserOptions;
+type CloseColorChooserPayload = CloseColorChooserOptions;
 type DownloadAsset = Asset;
 type OpenSearchDialog = void;
 type CloseSearchDialog = void;
@@ -31,6 +35,8 @@ export type CommandRegistry = CommandNameValidator<{
     closeTemplateChooser: CloseTemplateChooser;
     openLinkChooser?: OpenLinkChooserPayload;
     closeLinkChooser: CloseLinkChooserPayload;
+    openColorChooser: OpenColorChooserPayload;
+    closeColorChooser: CloseColorChooserPayload;
     downloadAsset: DownloadAsset;
     openNewPublication: OpenNewPublicationPayload;
     openSearchDialog: OpenSearchDialog;
