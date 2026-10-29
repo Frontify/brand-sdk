@@ -332,6 +332,16 @@ describe('useBlockSettings', () => {
         expect(renderCount).toBe(1);
     });
 
+    it('should return the same settings object on re-render while the settings context is unchanged', () => {
+        const appBridge = getAppBridgeBlockStub({ blockSettings: { foo: 'bar' } });
+
+        const { result, rerender } = renderHook(() => useBlockSettings(appBridge));
+        const initialBlockSettings = result.current[0];
+        rerender();
+
+        expect(result.current[0]).toBe(initialBlockSettings);
+    });
+
     it('should keep the settings context unchanged when a block mutates its settings', () => {
         const appBridge = getAppBridgeBlockStub({ blockSettings: { items: ['first'] } });
 

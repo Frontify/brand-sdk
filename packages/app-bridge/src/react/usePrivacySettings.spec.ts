@@ -82,6 +82,18 @@ describe('usePrivacySettings', () => {
         expect(subscribeSpy).toHaveBeenCalledTimes(1);
     });
 
+    it('should not re-render on mount when the privacy settings did not change', () => {
+        const appBridge = getAppBridgeBlockStub();
+        let renderCount = 0;
+
+        renderHook(() => {
+            renderCount++;
+            return usePrivacySettings(appBridge);
+        });
+
+        expect(renderCount).toBe(1);
+    });
+
     it('should read the privacy settings of the block stub', () => {
         const appBridge = getAppBridgeBlockStub({
             privacySettings: { assetViewerEnabled: true, assetDownloadEnabled: false },

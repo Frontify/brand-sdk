@@ -1,40 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
-
-type BlockSettingsState<T> = {
-    contextSettings: Readonly<Record<string, unknown>>;
-    blockSettings: T;
-};
-
-// Each hook works on its own copy, so a block mutating its settings in place can't change the host's context
-const toBlockSettingsState = <T>(contextSettings: Readonly<Record<string, unknown>>): BlockSettingsState<T> => ({
-    contextSettings,
-    blockSettings: structuredClone(contextSettings) as T,
-});
 
 export const useBlockSettings = <T = Record<string, unknown>>(
     appBridge: AppBridgeBlock,
 ): [T, (newSettings: Partial<T>) => Promise<void>] => {
-    const [blockSettingsState, setBlockSettingsState] = useState(() =>
-        toBlockSettingsState<T>(appBridge.context('settings').get()),
+    // `context()` returns a new object on every call, so keep `subscribe` stable to avoid resubscribing on every render.
+    const subscribe = useCallback(
+        (onStoreChange: () => void) => appBridge.context('settings').subscribe(onStoreChange),
+        [appBridge],
     );
+    const getSnapshot = useCallback(() => appBridge.context('settings').get(), [appBridge]);
+    const contextSettings = useSyncExternalStore(subscribe, getSnapshot);
 
-    useEffect(() => {
-        const settingsContext = appBridge.context('settings');
-        const syncBlockSettings = (contextSettings: Readonly<Record<string, unknown>>) => {
-            setBlockSettingsState((currentState) =>
-                currentState.contextSettings === contextSettings
-                    ? currentState
-                    : toBlockSettingsState<T>(contextSettings),
-            );
-        };
-
-        syncBlockSettings(settingsContext.get());
-        return settingsContext.subscribe(syncBlockSettings);
-    }, [appBridge]);
+    // Each hook works on its own copy, so a block mutating its settings in place can't change the host's context
+    const blockSettings = useMemo(() => structuredClone(contextSettings) as T, [contextSettings]);
 
     const updateBlockSettings = useCallback(
         async (blockSettingsUpdate: Partial<T>) => {
@@ -47,5 +29,5 @@ export const useBlockSettings = <T = Record<string, unknown>>(
         [appBridge],
     );
 
-    return [blockSettingsState.blockSettings, updateBlockSettings];
+    return [blockSettings, updateBlockSettings];
 };
