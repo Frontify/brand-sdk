@@ -342,15 +342,6 @@ describe('useBlockSettings', () => {
         expect(result.current[0]).toBe(initialBlockSettings);
     });
 
-    it('should keep the settings context unchanged when a block mutates its settings', () => {
-        const appBridge = getAppBridgeBlockStub({ blockSettings: { items: ['first'] } });
-
-        const { result } = renderHook(() => useBlockSettings<{ items: string[] }>(appBridge));
-        result.current[0].items.push('second');
-
-        expect(appBridge.context('settings').get()).toEqual({ items: ['first'] });
-    });
-
     it('should log the error and keep the settings when saving them fails', async () => {
         const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
         const error = new Error('Block settings could not be updated');

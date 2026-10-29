@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useMemo, useSyncExternalStore } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 
@@ -12,11 +12,8 @@ export const useBlockSettings = <T = Record<string, unknown>>(
         (onStoreChange: () => void) => appBridge.context('settings').subscribe(onStoreChange),
         [appBridge],
     );
-    const getSnapshot = useCallback(() => appBridge.context('settings').get(), [appBridge]);
-    const contextSettings = useSyncExternalStore(subscribe, getSnapshot);
-
-    // Each hook works on its own copy, so a block mutating its settings in place can't change the host's context
-    const blockSettings = useMemo(() => structuredClone(contextSettings) as T, [contextSettings]);
+    const getSnapshot = useCallback(() => appBridge.context('settings').get() as T, [appBridge]);
+    const blockSettings = useSyncExternalStore(subscribe, getSnapshot);
 
     const updateBlockSettings = useCallback(
         async (blockSettingsUpdate: Partial<T>) => {
