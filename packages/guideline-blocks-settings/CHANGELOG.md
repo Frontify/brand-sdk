@@ -1,5 +1,19 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.13
+
+### Minor Changes
+
+- [#1770](https://github.com/Frontify/brand-sdk/pull/1770) [`838be06`](https://github.com/Frontify/brand-sdk/commit/838be06aeb4dd385b0d428db0aa7888b53e3042a) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat: add `ColorChooser` component that renders the host color chooser in place, e.g. inside a block's flyout
+  
+  ```tsx
+  <Flyout.Content>
+      <ColorChooser appBridge={appBridge} color={color} onColorSelect={setDraftColor} />
+  </Flyout.Content>
+  ```
+  
+  Requires `@frontify/app-bridge` `4.0.0-alpha.76` or newer, which adds the `openColorChooser`/`closeColorChooser` commands.
+
 ## 4.0.0-alpha.12
 
 ### Minor Changes
