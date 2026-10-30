@@ -3,10 +3,6 @@
 import { type PluginComposer } from '@frontify/fondue/rte';
 
 export type RichTextEditorProps = {
-    /**
-     * @deprecated not needed anymore, handled automatically
-     */
-    id?: string;
     isEditing: boolean;
     value?: string;
     placeholder?: string;

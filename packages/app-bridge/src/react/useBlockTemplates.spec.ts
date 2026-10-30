@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { type SinonStub } from 'sinon';
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { TemplateDummy, getAppBridgeBlockStub } from '../tests';
 
 import { useBlockTemplates } from './useBlockTemplates';
+
+import type sinon from 'sinon';
 
 describe('useBlockTemplates hook', () => {
     beforeEach(() => {
@@ -105,7 +106,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.deleteTemplateIdsFromKey('key', [1]);
         });
 
-        const call = (window.emitter.emit as SinonStub).getCall(0);
+        const call = (window.emitter.emit as sinon.SinonStub).getCall(0);
 
         waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:BlockTemplatesUpdated');
@@ -136,7 +137,7 @@ describe('useBlockTemplates hook', () => {
             await result.current.addTemplateIdsToKey('key', [templateToAdd.id]);
         });
 
-        const call = (window.emitter.emit as SinonStub).getCall(0);
+        const call = (window.emitter.emit as sinon.SinonStub).getCall(0);
         waitFor(() => {
             expect(call.firstArg).toEqual('AppBridge:BlockTemplatesUpdated');
             expect(call.lastArg.blockId).toEqual(123);
@@ -189,6 +190,45 @@ describe('useBlockTemplates hook', () => {
 
         await waitFor(() => {
             expect(result.current.error).toEqual(errorMessage);
+        });
+    });
+
+    it('should keep the same functions across re-renders', async () => {
+        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result, rerender } = renderHook(() => useBlockTemplates(appBridgeStub));
+        const { addTemplateIdsToKey, deleteTemplateIdsFromKey, updateTemplateIdsFromKey } = result.current;
+
+        await act(async () => {
+            await result.current.addTemplateIdsToKey('key', [2]);
+        });
+        rerender();
+
+        await waitFor(() => {
+            expect(result.current.blockTemplates.key.map(({ id }) => id)).toEqual([1, 2]);
+        });
+        expect(result.current.addTemplateIdsToKey).toBe(addTemplateIdsToKey);
+        expect(result.current.deleteTemplateIdsFromKey).toBe(deleteTemplateIdsFromKey);
+        expect(result.current.updateTemplateIdsFromKey).toBe(updateTemplateIdsFromKey);
+    });
+
+    it('should send the latest templates as previous templates when a function from an earlier render is called', async () => {
+        const template = TemplateDummy.with(1);
+        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockTemplates: { key: [template] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridgeStub));
+        const { addTemplateIdsToKey } = result.current;
+
+        await waitFor(() => {
+            expect(result.current.blockTemplates.key).toHaveLength(1);
+        });
+        await act(async () => {
+            await addTemplateIdsToKey('key', [2]);
+        });
+
+        await waitFor(() => {
+            expect((window.emitter.emit as sinon.SinonSpy).lastCall?.args).toMatchObject([
+                'AppBridge:BlockTemplatesUpdated',
+                { prevBlockTemplates: { key: [template] } },
+            ]);
         });
     });
 });

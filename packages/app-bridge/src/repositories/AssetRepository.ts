@@ -16,9 +16,9 @@ export const createAssetByFileId = async (fileId: string, projectId: number, set
 export const mapAssetApiToAsset = (asset: AssetApi): Asset => {
     return {
         id: asset.id,
+        alternativeText: asset.alternative_text,
         objectType: asset.object_type,
         extension: asset.ext,
-        creatorName: asset.creator_name,
         externalUrl: asset.external_url,
         genericUrl: asset.generic_url,
         previewUrl: asset.preview_url,
@@ -33,9 +33,10 @@ export const mapAssetApiToAsset = (asset: AssetApi): Asset => {
         title: asset.title,
         fileId: asset.file_id,
         token: asset.token,
-        projectType: asset.project_type,
         revisionId: asset.revision_id,
         backgroundColor: asset.background_color,
         isDownloadProtected: asset.is_download_protected,
+        focalPointX: asset.focal_point_x,
+        focalPointY: asset.focal_point_y,
     };
 };

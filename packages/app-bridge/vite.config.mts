@@ -6,12 +6,16 @@ import { defineConfig } from 'vitest/config';
 
 import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
 
-const dependencies = Object.keys(dependenciesMap);
-const peerDependencies = Object.keys(peerDependenciesMap);
+// Externalize every declared dependency and any of its subpaths (e.g. 'react/jsx-runtime').
+const external = [...Object.keys(dependenciesMap), ...Object.keys(peerDependenciesMap)].map(
+    (dependency) => new RegExp(`^${dependency.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/.*)?$`),
+);
 
 export default defineConfig({
     plugins: [
-        dts({ insertTypesEntry: true }),
+        // One declaration file per entry, like the other packages. Per-file declarations used
+        // extensionless relative imports, which `moduleResolution: "nodenext"` can't resolve.
+        dts({ insertTypesEntry: true, rollupTypes: true }),
         viteStaticCopy({
             targets: [{ src: './src/workers/upload.worker.js', dest: '.' }],
         }),
@@ -22,12 +26,18 @@ export default defineConfig({
                 index: './src/index.ts',
                 testing: './src/tests/index.ts',
             },
-            name: 'app-bridge',
+            // ESM only: a CommonJS build would still have to require lodash-es, which is ESM-only.
+            formats: ['es'],
         },
         sourcemap: true,
         minify: true,
         rollupOptions: {
-            external: [...dependencies, ...peerDependencies],
+            external,
+            output: {
+                // The inline worker builds its Blob when its module loads. In its own chunk, bundlers can drop it
+                // (thanks to `sideEffects: false`) from apps that never upload.
+                manualChunks: (id) => (id.includes('upload.worker.js?worker') ? 'inline-upload-worker' : undefined),
+            },
         },
     },
     test: {

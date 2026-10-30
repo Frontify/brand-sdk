@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { useCallback, useEffect, useRef } from 'react';
+
 import { type EventUnsubscribeFunction } from '../AppBridge';
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { closeAssetChooser, openAssetChooser } from '../registries/commands/AssetChooser';
@@ -10,20 +12,35 @@ type UseAssetChooserType = {
     closeAssetChooser: () => void;
 };
 
-// oxlint-disable-next-line @eslint-react/no-unnecessary-use-prefix
 export const useAssetChooser = (appBridge: AppBridgeBlock): UseAssetChooserType => {
-    let unsubscribe: EventUnsubscribeFunction;
+    const unsubscribeRef = useRef<EventUnsubscribeFunction>();
 
-    return {
-        openAssetChooser: (callback, options) => {
+    useEffect(() => {
+        return () => {
+            unsubscribeRef.current?.();
+            unsubscribeRef.current = undefined;
+        };
+    }, []);
+
+    const handleOpenAssetChooser = useCallback(
+        (callback: (selectedAsset: Asset[]) => void, options: AssetChooserOptions) => {
+            unsubscribeRef.current?.();
             appBridge.dispatch(openAssetChooser(options));
-            unsubscribe = appBridge.subscribe('assetsChosen', (selectedAssets) => {
+            unsubscribeRef.current = appBridge.subscribe('assetsChosen', (selectedAssets) => {
                 callback(selectedAssets.assets);
             });
         },
-        closeAssetChooser: () => {
-            unsubscribe?.();
-            appBridge.dispatch(closeAssetChooser());
-        },
+        [appBridge],
+    );
+
+    const handleCloseAssetChooser = useCallback(() => {
+        unsubscribeRef.current?.();
+        unsubscribeRef.current = undefined;
+        appBridge.dispatch(closeAssetChooser());
+    }, [appBridge]);
+
+    return {
+        openAssetChooser: handleOpenAssetChooser,
+        closeAssetChooser: handleCloseAssetChooser,
     };
 };

@@ -1,12 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { FOCUS_VISIBLE_STYLE } from '@frontify/fondue';
-
 import { joinClassNames } from '../../../utilities';
 
 export const getToolbarButtonClassNames = (cursor: 'grab' | 'pointer', forceActiveStyle?: boolean) => {
     const classNames = [
-        FOCUS_VISIBLE_STYLE,
+        'focus-visible:tw-ring-focus',
         'tw-relative tw-inline-flex tw-items-center tw-justify-center',
         'tw-h-6 tw-p-1',
         'tw-rounded-medium',

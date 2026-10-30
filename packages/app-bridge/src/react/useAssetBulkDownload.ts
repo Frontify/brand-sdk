@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type Asset } from '../types';
+import { type Nullable } from '../types/Nullable';
 
 export enum AssetBulkDownloadState {
     Init = 'init',
@@ -13,12 +14,34 @@ export enum AssetBulkDownloadState {
     Error = 'error',
 }
 
+const POLLING_INTERVAL_IN_MS = 2500;
+
+const sleep = (ms: number, signal: AbortSignal) =>
+    new Promise<void>((resolve, reject) => {
+        const timeoutId = window.setTimeout(resolve, ms);
+        signal.addEventListener(
+            'abort',
+            () => {
+                window.clearTimeout(timeoutId);
+                reject(new DOMException('The bulk download was aborted.', 'AbortError'));
+            },
+            { once: true },
+        );
+    });
+
 export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
-    const intervalId = useRef<number | null>(null);
+    const abortControllerRef = useRef<AbortController | null>(null);
     const [status, setStatus] = useState<AssetBulkDownloadState>(AssetBulkDownloadState.Init);
     const [downloadUrl, setDownloadUrl] = useState<Nullable<string>>(null);
 
+    useEffect(() => () => abortControllerRef.current?.abort(), []);
+
     const generateBulkDownload = async (blockAssets?: Record<string, Asset[]>) => {
+        abortControllerRef.current?.abort();
+        const abortController = new AbortController();
+        abortControllerRef.current = abortController;
+        const { signal } = abortController;
+
         try {
             setStatus(AssetBulkDownloadState.Started);
 
@@ -26,54 +49,30 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
                 name: 'getAssetBulkDownloadToken',
                 payload: { blockAssets },
             });
+            signal.throwIfAborted();
 
             setDownloadUrl(null);
-            startDownload(assetBulkDownloadToken);
-        } catch (error) {
-            setStatus(AssetBulkDownloadState.Error);
-            console.error(error);
-        }
-    };
 
-    const startDownload = async (token: string) => {
-        try {
-            const download = await appBridge.getBulkDownloadByToken(token);
+            let download = await appBridge.getBulkDownloadByToken(assetBulkDownloadToken);
+            signal.throwIfAborted();
 
-            if (download.downloadUrl) {
-                setDownloadUrl(download.downloadUrl);
-                setStatus(AssetBulkDownloadState.Ready);
-            } else {
+            // Wait for the download to be prepared, one check at a time so slow responses don't pile up.
+            while (!download.downloadUrl) {
                 setStatus(AssetBulkDownloadState.Pending);
-                intervalId.current = listenForBulkDownloadReady(download.signature);
+                await sleep(POLLING_INTERVAL_IN_MS, signal);
+                download = await appBridge.getBulkDownloadBySignature(download.signature);
+                signal.throwIfAborted();
             }
+
+            setDownloadUrl(download.downloadUrl);
+            setStatus(AssetBulkDownloadState.Ready);
         } catch (error) {
+            if (signal.aborted) {
+                return;
+            }
             setStatus(AssetBulkDownloadState.Error);
             console.error(error);
         }
-    };
-
-    const listenForBulkDownloadReady = (signature: string) => {
-        return window.setInterval(() => {
-            (async () => {
-                try {
-                    const download = await appBridge.getBulkDownloadBySignature(signature);
-
-                    if (download.downloadUrl) {
-                        setStatus(AssetBulkDownloadState.Ready);
-                        setDownloadUrl(download.downloadUrl);
-                        if (intervalId.current) {
-                            clearInterval(intervalId.current);
-                        }
-                    }
-                } catch (error) {
-                    setStatus(AssetBulkDownloadState.Error);
-                    console.error(error);
-                    if (intervalId.current) {
-                        clearInterval(intervalId.current);
-                    }
-                }
-            })();
-        }, 2500);
     };
 
     return { generateBulkDownload, status, downloadUrl };
