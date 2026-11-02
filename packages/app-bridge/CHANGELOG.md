@@ -29,6 +29,15 @@
 - [#1761](https://github.com/Frontify/brand-sdk/pull/1761) [`d6ac9fa`](https://github.com/Frontify/brand-sdk/commit/d6ac9fa1b26a558640f801778396fef77fd8e4fb) Thanks [@ragi96](https://github.com/ragi96)! - feat(useBlockSettings): read the block settings from the host context
   
   `useBlockSettings` now reads `appBridge.context('settings')` and re-renders when the host updates it, instead of reading `window.blockSettings` and listening to the `AppBridge:BlockSettingsUpdated` event on `window.emitter`. Hosts must provide `settings` in the block context and update it after `updateBlockSettings()` saves.
+## 3.12.11
+
+### Patch Changes
+
+- [#1776](https://github.com/Frontify/brand-sdk/pull/1776) [`ee3f2d7`](https://github.com/Frontify/brand-sdk/commit/ee3f2d7dbec122c3120ddddcdb069f7a272eabb8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - chore: deprecate the `useReadyForPrint` hook
+  
+  It has no effect: printing a guideline doesn't wait for the readiness it reports. It will be removed in version 4.0.0 without a replacement, so you can drop it from your block.
+
+## 3.12.10
 
 ### Patch Changes
 
