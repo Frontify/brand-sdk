@@ -1,5 +1,13 @@
 # @frontify/app-bridge
 
+## 3.12.11
+
+### Patch Changes
+
+- [#1776](https://github.com/Frontify/brand-sdk/pull/1776) [`ee3f2d7`](https://github.com/Frontify/brand-sdk/commit/ee3f2d7dbec122c3120ddddcdb069f7a272eabb8) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - chore: deprecate the `useReadyForPrint` hook
+  
+  It has no effect: printing a guideline doesn't wait for the readiness it reports. It will be removed in version 4.0.0 without a replacement, so you can drop it from your block.
+
 ## 3.12.10
 
 ### Patch Changes
