@@ -13,6 +13,5 @@ export * from './useFileInput';
 export * from './useFileUpload';
 export * from './useLinkChooser';
 export * from './usePrivacySettings';
-export * from './useReadyForPrint';
 export * from './useTemplateChooser';
 export * from './useColorPalettes';
