@@ -69,6 +69,9 @@ export type BlockContext = {
     isEditing: boolean;
     privacySettings: PrivacySettings;
     settings: Record<string, unknown>;
+    projectId: number;
+    /** The language the page is translated into, or an empty string when it isn't a translation. */
+    translationLanguage: string;
 };
 
 export type BlockEvent = EventNameValidator<
