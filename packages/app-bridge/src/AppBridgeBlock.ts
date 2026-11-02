@@ -66,6 +66,7 @@ export type BlockContext = {
     isAuthenticated: boolean;
     isNewlyInserted: boolean;
     assets?: Record<string, Asset[]>;
+    templates?: Record<string, Template[]>;
     isEditing: boolean;
     privacySettings: PrivacySettings;
     settings: Record<string, unknown>;

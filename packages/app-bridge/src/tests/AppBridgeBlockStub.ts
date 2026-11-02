@@ -75,6 +75,9 @@ export const getAppBridgeBlockStub = ({
     const contextAssetsSubscribers: Set<(nextAssets: Record<string, Asset[]>) => void> = new Set();
     let contextAssets = blockAssets;
 
+    const contextTemplatesSubscribers: Set<(nextTemplates: Record<string, Template[]>) => void> = new Set();
+    let contextTemplates = blockTemplates;
+
     const contextSettingsSubscribers: Set<(nextSettings: Record<string, unknown>) => void> = new Set();
     let contextSettings = blockSettings;
 
@@ -100,6 +103,24 @@ export const getAppBridgeBlockStub = ({
         contextAssets = computeBlockAssets();
         for (const subscriber of contextAssetsSubscribers) {
             subscriber(contextAssets);
+        }
+    };
+
+    const computeBlockTemplates = (): Record<string, Template[]> =>
+        Object.entries(blockTemplates).reduce<Record<string, Template[]>>((templatesDiff, [key, templates]) => {
+            const addedTemplateIdsList = addedTemplateIds[key] ?? [];
+            const deletedTemplateIdsList = deletedTemplateIds[key] ?? [];
+            templatesDiff[key] = [
+                ...templates.filter((template) => !deletedTemplateIdsList.includes(template.id)),
+                ...addedTemplateIdsList.map((id) => TemplateDummy.with(id)),
+            ];
+            return templatesDiff;
+        }, {});
+
+    const updateContextTemplates = () => {
+        contextTemplates = computeBlockTemplates();
+        for (const subscriber of contextTemplatesSubscribers) {
+            subscriber(contextTemplates);
         }
     };
 
@@ -136,29 +157,20 @@ export const getAppBridgeBlockStub = ({
                 deletedAssetIds[key] = [...(deletedAssetIds[key] ?? []), ...assetIds];
                 updateContextAssets();
             }),
-        getBlockTemplates: sinon.stub<Parameters<AppBridgeBlock['getBlockTemplates']>>().callsFake(() => {
-            return Object.entries(blockTemplates).reduce<Record<string, Template[]>>(
-                (templatesDiff, [key, templates]) => {
-                    const addedTemplateIdsList = addedTemplateIds[key] ?? [];
-                    const deletedTemplateIdsList = deletedTemplateIds[key] ?? [];
-                    templatesDiff[key] = [
-                        ...templates.filter((template) => !deletedTemplateIdsList.includes(template.id)),
-                        ...addedTemplateIdsList.map((id) => TemplateDummy.with(id)),
-                    ];
-                    return templatesDiff;
-                },
-                {},
-            );
-        }),
+        getBlockTemplates: sinon
+            .stub<Parameters<AppBridgeBlock['getBlockTemplates']>>()
+            .callsFake(() => computeBlockTemplates()),
         addTemplateIdsToBlockTemplateKey: sinon
             .stub<Parameters<AppBridgeBlock['addTemplateIdsToBlockTemplateKey']>>()
             .callsFake((key, templateIds) => {
                 addedTemplateIds[key] = [...(addedTemplateIds[key] ?? []), ...templateIds];
+                updateContextTemplates();
             }),
         deleteTemplateIdsFromBlockTemplateKey: sinon
             .stub<Parameters<AppBridgeBlock['deleteTemplateIdsFromBlockTemplateKey']>>()
             .callsFake((key, templateIds) => {
                 deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
+                updateContextTemplates();
             }),
         getTranslationLanguage: sinon.stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
         getBulkDownloadBySignature: sinon
@@ -234,6 +246,16 @@ export const getAppBridgeBlockStub = ({
                                 contextAssetsSubscribers.add(callback);
                                 return () => {
                                     contextAssetsSubscribers.delete(callback);
+                                };
+                            },
+                        };
+                    case 'templates':
+                        return {
+                            get: () => contextTemplates,
+                            subscribe: (callback: (nextTemplates: Record<string, Template[]>) => void) => {
+                                contextTemplatesSubscribers.add(callback);
+                                return () => {
+                                    contextTemplatesSubscribers.delete(callback);
                                 };
                             },
                         };
