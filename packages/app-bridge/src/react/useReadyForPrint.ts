@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * It has no effect, printing a guideline doesn't wait for it.
+ * There won't be a replacement for this hook.
+ */
 export const useReadyForPrint = (
     appBridge: AppBridgeBlock,
 ): {
