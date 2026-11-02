@@ -6,6 +6,7 @@ import { type AppBridgeBlock } from '../AppBridgeBlock';
 
 import { emitAppBridgeBlockStubEvent, getAppBridgeBlockStub } from './AppBridgeBlockStub';
 import { AssetDummy } from './AssetDummy';
+import { TemplateDummy } from './TemplateDummy';
 
 describe('getAppBridgeBlockStub', () => {
     it('should call chosen event callbacks with a dummy selection on subscribe by default', () => {
@@ -106,6 +107,39 @@ describe('getAppBridgeBlockStub', () => {
         await appBridge.updateBlockSettings({ color: 'blue' });
 
         expect(onSettingsChanged).not.toHaveBeenCalled();
+    });
+
+    it('should answer the templates context from the blockTemplates option', () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { templates: [TemplateDummy.with(1)] } });
+
+        expect(appBridge.context('templates').get()).toEqual({ templates: [TemplateDummy.with(1)] });
+    });
+
+    it('should update the templates context and notify its subscribers when template ids are added or deleted', async () => {
+        const appBridge = getAppBridgeBlockStub({
+            blockTemplates: { templates: [TemplateDummy.with(1), TemplateDummy.with(2)] },
+        });
+        const onTemplatesChanged = vi.fn();
+        appBridge.context('templates').subscribe(onTemplatesChanged);
+
+        await appBridge.addTemplateIdsToBlockTemplateKey('templates', [3]);
+        await appBridge.deleteTemplateIdsFromBlockTemplateKey('templates', [1]);
+
+        const expectedTemplates = { templates: [TemplateDummy.with(2), TemplateDummy.with(3)] };
+        expect(appBridge.context('templates').get()).toEqual(expectedTemplates);
+        expect(onTemplatesChanged).toHaveBeenCalledTimes(2);
+        expect(onTemplatesChanged).toHaveBeenLastCalledWith(expectedTemplates);
+    });
+
+    it('should not notify a templates subscriber after it unsubscribes', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { templates: [] } });
+        const onTemplatesChanged = vi.fn();
+        const unsubscribe = appBridge.context('templates').subscribe(onTemplatesChanged);
+        unsubscribe();
+
+        await appBridge.addTemplateIdsToBlockTemplateKey('templates', [3]);
+
+        expect(onTemplatesChanged).not.toHaveBeenCalled();
     });
 
     it('should throw when emitting an event on an app bridge that is not a stub', () => {
