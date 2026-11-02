@@ -1,5 +1,38 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.77
+
+### Major Changes
+
+- [#1777](https://github.com/Frontify/brand-sdk/pull/1777) [`b768361`](https://github.com/Frontify/brand-sdk/commit/b7683611ffa4913264c6dda201e82d07cac0999c) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor(useReadyForPrint): remove the `useReadyForPrint` hook
+  
+  It had no effect: printing a guideline didn't wait for the readiness it reported. There is no replacement, remove the hook from your block.
+
+### Minor Changes
+
+- [#1780](https://github.com/Frontify/brand-sdk/pull/1780) [`55d3c46`](https://github.com/Frontify/brand-sdk/commit/55d3c46b5e7d77282d231028b494dffd36e0c295) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(BlockContext): add `projectId` and `translationLanguage`
+  
+  The block context now declares the guideline's `projectId` and the `translationLanguage` the page is translated into (an empty string when it isn't a translation). `getAppBridgeBlockStub` answers both from its `projectId` and `translationLanguage` options:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({ projectId: 42, translationLanguage: 'de' });
+  
+  appBridge.context('projectId').get(); // 42
+  appBridge.context('translationLanguage').get(); // 'de'
+  ```
+
+- [#1779](https://github.com/Frontify/brand-sdk/pull/1779) [`1ad5232`](https://github.com/Frontify/brand-sdk/commit/1ad523287b8ece92d59db7c44cb56a1419cf6f34) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat(BlockContext): add `templates`
+  
+  The block context now declares the block's `templates`. `getAppBridgeBlockStub` answers `context('templates')` from its `blockTemplates` option and updates it when `addTemplateIdsToBlockTemplateKey()` or `deleteTemplateIdsFromBlockTemplateKey()` is called:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({ blockTemplates: { templates: [TemplateDummy.with(1)] } });
+  
+  await appBridge.addTemplateIdsToBlockTemplateKey('templates', [2]);
+  
+  appBridge.context('templates').get(); // { templates: [TemplateDummy.with(1), TemplateDummy.with(2)] }
+  ```
+
 ## 4.0.0-alpha.76
 
 ### Major Changes
