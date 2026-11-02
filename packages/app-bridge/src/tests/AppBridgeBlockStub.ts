@@ -40,6 +40,7 @@ export type getAppBridgeBlockStubProps = {
     isAuthenticated?: boolean;
     user?: User;
     language?: string;
+    translationLanguage?: string;
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
     unsubscribe?: () => void;
@@ -57,6 +58,7 @@ export const getAppBridgeBlockStub = ({
     isAuthenticated = true,
     user = UserDummy.with(USER_ID),
     language = 'en',
+    translationLanguage = '',
     privacySettings = {
         assetViewerEnabled: false,
         assetDownloadEnabled: false,
@@ -228,6 +230,14 @@ export const getAppBridgeBlockStub = ({
                         return {
                             get: () => privacySettings,
                             subscribe: () => () => {},
+                        };
+                    case 'projectId':
+                        return {
+                            get: () => projectId,
+                        };
+                    case 'translationLanguage':
+                        return {
+                            get: () => translationLanguage,
                         };
                     case 'settings':
                         return {

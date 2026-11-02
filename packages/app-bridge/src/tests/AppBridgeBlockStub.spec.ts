@@ -78,6 +78,24 @@ describe('getAppBridgeBlockStub', () => {
         expect(unsubscribeSpy).toHaveBeenCalledOnce();
     });
 
+    it('should answer the projectId context from the projectId option', () => {
+        const appBridge = getAppBridgeBlockStub({ projectId: 42 });
+
+        expect(appBridge.context('projectId').get()).toBe(42);
+    });
+
+    it('should answer the translationLanguage context from the translationLanguage option', () => {
+        const appBridge = getAppBridgeBlockStub({ translationLanguage: 'de' });
+
+        expect(appBridge.context('translationLanguage').get()).toBe('de');
+    });
+
+    it('should answer an empty translationLanguage context by default', () => {
+        const appBridge = getAppBridgeBlockStub();
+
+        expect(appBridge.context('translationLanguage').get()).toBe('');
+    });
+
     it('should answer the settings context from the blockSettings option', () => {
         const appBridge = getAppBridgeBlockStub({ blockSettings: { color: 'red' } });
 
