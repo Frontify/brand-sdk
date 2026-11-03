@@ -5,14 +5,14 @@
 ### Minor Changes
 
 - [#1770](https://github.com/Frontify/brand-sdk/pull/1770) [`838be06`](https://github.com/Frontify/brand-sdk/commit/838be06aeb4dd385b0d428db0aa7888b53e3042a) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat: add `ColorChooser` component that renders the host color chooser in place, e.g. inside a block's flyout
-  
-  ```tsx
-  <Flyout.Content>
-      <ColorChooser appBridge={appBridge} color={color} onColorSelect={setDraftColor} />
-  </Flyout.Content>
-  ```
-  
-  Requires `@frontify/app-bridge` `4.0.0-alpha.76` or newer, which adds the `openColorChooser`/`closeColorChooser` commands.
+
+    ```tsx
+    <Flyout.Content>
+        <ColorChooser appBridge={appBridge} color={color} onColorSelect={setDraftColor} />
+    </Flyout.Content>
+    ```
+
+    Requires `@frontify/app-bridge` `4.0.0-alpha.76` or newer, which adds the `openColorChooser`/`closeColorChooser` commands.
 
 ## 4.0.0-alpha.12
 
@@ -183,6 +183,20 @@
 ### Patch Changes
 
 - [#1650](https://github.com/Frontify/brand-sdk/pull/1650) [`c97fd33`](https://github.com/Frontify/brand-sdk/commit/c97fd33663d579d7ed2b0b4ff81e43c3d31aa2ee) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+
+## 3.0.12
+
+### Patch Changes
+
+- [#1783](https://github.com/Frontify/brand-sdk/pull/1783) [`47928c4`](https://github.com/Frontify/brand-sdk/commit/47928c47a210f4f4744ab5dd83da4ab3747599fd) Thanks [@benfrontify](https://github.com/benfrontify)! - fix(RichTextEditor): keep the link and button popovers in default colors
+
+    The link and button popovers render on a fixed white surface, but inherited the guideline's body and link colors, so a light theme made the URL and icons invisible. Text and icons now use the default dark color and the URL a fixed blue, while the theme typography is kept.
+
+## 3.0.11
+
+### Patch Changes
+
+- [#1749](https://github.com/Frontify/brand-sdk/pull/1749) [`5b22255`](https://github.com/Frontify/brand-sdk/commit/5b22255b07d23307470b322eec1876c399488c63) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.11.0`
 
 ## 3.0.10
 
