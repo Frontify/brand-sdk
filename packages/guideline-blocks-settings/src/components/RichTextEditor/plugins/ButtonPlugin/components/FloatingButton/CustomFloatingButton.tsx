@@ -1,32 +1,22 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import {
-    TextStyles,
-    type UseVirtualFloatingOptions,
-    flip,
-    offset,
-    useEditorRef,
-} from "@frontify/fondue/rte";
+import { type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue/rte';
 
-import { BlockStyles } from "../../../../../RichTextEditor/plugins/styles";
-import { ScopedThemePortal } from "../../../ScopedThemePortal";
-import {
-    useFloatingButtonEdit,
-    useFloatingButtonInsert,
-    useFloatingButtonSelectors,
-} from "../FloatingButton";
+import { FloatingToolbarStyles } from '../../../../../RichTextEditor/plugins/styles';
+import { ScopedThemePortal } from '../../../ScopedThemePortal';
+import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
-import { EditModal } from "./EditButtonModal/EditModal";
-import { InsertButtonModal } from "./InsertButtonModal/InsertButtonModal";
+import { EditModal } from './EditButtonModal/EditModal';
+import { InsertButtonModal } from './InsertButtonModal/InsertButtonModal';
 
 const floatingOptions: UseVirtualFloatingOptions = {
-    placement: "bottom-start",
-    strategy: "absolute",
+    placement: 'bottom-start',
+    strategy: 'absolute',
     middleware: [
         offset(12),
         flip({
             padding: 12,
-            fallbackPlacements: ["bottom-end", "top-start", "top-end"],
+            fallbackPlacements: ['bottom-end', 'top-start', 'top-end'],
         }),
     ],
 };
@@ -45,23 +35,23 @@ export const CustomFloatingButton = () => {
 
     return (
         <>
-            {isOpen && mode === "insert" && (
+            {isOpen && mode === 'insert' && (
                 <ScopedThemePortal
                     data-is-underlay
                     ref={insertRef}
                     {...insertProps}
-                    style={{ ...insertProps.style, ...BlockStyles[TextStyles.p], zIndex: "auto" }}
+                    style={{ ...insertProps.style, ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {input}
                 </ScopedThemePortal>
             )}
 
-            {isOpen && mode === "edit" && (
+            {isOpen && mode === 'edit' && (
                 <ScopedThemePortal
                     data-is-underlay
                     ref={editRef}
                     {...editProps}
-                    style={{ ...editProps.style, ...BlockStyles[TextStyles.p], zIndex: "auto" }}
+                    style={{ ...editProps.style, ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {editContent}
                 </ScopedThemePortal>

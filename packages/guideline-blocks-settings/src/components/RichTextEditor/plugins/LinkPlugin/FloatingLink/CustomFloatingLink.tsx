@@ -9,23 +9,23 @@ import {
     useFloatingLinkEditState,
     useFloatingLinkInsert,
     useFloatingLinkInsertState,
-} from "@frontify/fondue/rte";
-import { type CSSProperties } from "react";
+} from '@frontify/fondue/rte';
+import { type CSSProperties } from 'react';
 
-import { BlockStyles, TextStyles } from "../../../../RichTextEditor/plugins/styles";
-import { ScopedThemePortal } from "../../ScopedThemePortal";
+import { FloatingToolbarStyles } from '../../../../RichTextEditor/plugins/styles';
+import { ScopedThemePortal } from '../../ScopedThemePortal';
 
-import { EditModal } from "./EditLinkModal";
-import { InsertLinkModal } from "./InsertLinkModal/InsertLinkModal";
+import { EditModal } from './EditLinkModal';
+import { InsertLinkModal } from './InsertLinkModal/InsertLinkModal';
 
 const floatingOptions: UseVirtualFloatingOptions = {
-    placement: "bottom-start",
-    strategy: "absolute",
+    placement: 'bottom-start',
+    strategy: 'absolute',
     middleware: [
         offset(12),
         flip({
             padding: 12,
-            fallbackPlacements: ["bottom-end", "top-start", "top-end"],
+            fallbackPlacements: ['bottom-end', 'top-start', 'top-end'],
         }),
     ],
 };
@@ -44,12 +44,7 @@ export const CustomFloatingLink = () => {
         floatingOptions,
     });
 
-    const {
-        props: editProps,
-        ref: editRef,
-        editButtonProps,
-        unlinkButtonProps,
-    } = useFloatingLinkEdit(editState);
+    const { props: editProps, ref: editRef, editButtonProps, unlinkButtonProps } = useFloatingLinkEdit(editState);
 
     if (hidden) {
         return null;
@@ -69,11 +64,7 @@ export const CustomFloatingLink = () => {
                     data-is-underlay
                     ref={insertRef}
                     {...insertProps}
-                    style={{
-                        ...(insertProps.style as CSSProperties),
-                        ...BlockStyles[TextStyles.p],
-                        zIndex: "auto",
-                    }}
+                    style={{ ...(insertProps.style as CSSProperties), ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {input}
                 </ScopedThemePortal>
@@ -84,11 +75,7 @@ export const CustomFloatingLink = () => {
                     data-is-underlay
                     ref={editRef}
                     {...editProps}
-                    style={{
-                        ...(editProps.style as CSSProperties),
-                        ...BlockStyles[TextStyles.p],
-                        zIndex: "auto",
-                    }}
+                    style={{ ...(editProps.style as CSSProperties), ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {editContent}
                 </ScopedThemePortal>
