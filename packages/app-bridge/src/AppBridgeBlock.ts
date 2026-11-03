@@ -143,6 +143,10 @@ export interface AppBridgeBlock<
      */
     getPrivacySettings(): PrivacySettings;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use `appBridge.context('projectId').get()` instead.
+     */
     getProjectId(): number;
 
     /**
@@ -151,6 +155,10 @@ export interface AppBridgeBlock<
      */
     getEditorState(): boolean;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use `appBridge.context('translationLanguage').get()` instead.
+     */
     getTranslationLanguage(): string;
 
     /**
