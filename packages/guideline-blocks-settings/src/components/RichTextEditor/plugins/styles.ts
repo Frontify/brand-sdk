@@ -177,3 +177,9 @@ export const BlockStyles: Record<string, CSSProperties & { hover?: CSSProperties
     },
     ...BlockButtonStyles,
 };
+
+// Floating toolbars render on a fixed white surface, so they keep the theme's typography but not its colors.
+export const FloatingToolbarStyles: Record<'text' | 'link', CSSProperties> = {
+    text: { ...BlockStyles[TextStyles.p], color: 'var(--color-primary-default)' },
+    link: { ...BlockStyles[LINK_PLUGIN], color: '#1a73e8' },
+};

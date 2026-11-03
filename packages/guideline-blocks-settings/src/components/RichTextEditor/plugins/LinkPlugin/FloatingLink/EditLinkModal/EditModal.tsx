@@ -5,8 +5,7 @@ import { FloatingModalWrapper, useLinkOpenButtonState } from '@frontify/fondue/r
 import { type MouseEvent } from 'react';
 
 import { getUrlFromLinkOrLegacyLink } from '../../../../../Link';
-import { BlockStyles } from '../../../styles';
-import { LINK_PLUGIN } from '../../id';
+import { FloatingToolbarStyles } from '../../../styles';
 
 type EditModalProps = {
     editButtonProps: {
@@ -30,7 +29,7 @@ export const EditModal = ({ editButtonProps, unlinkButtonProps }: EditModalProps
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={BlockStyles[LINK_PLUGIN]}
+                    style={FloatingToolbarStyles.link}
                     className="tw-break-all"
                 >
                     {url}

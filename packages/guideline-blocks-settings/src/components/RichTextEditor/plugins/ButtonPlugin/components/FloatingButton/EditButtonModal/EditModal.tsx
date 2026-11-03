@@ -3,8 +3,7 @@
 import { IconPen, IconTrashBin } from '@frontify/fondue/icons';
 import { FloatingModalWrapper, focusEditor, useEditorRef } from '@frontify/fondue/rte';
 
-import { LINK_PLUGIN } from '../../../../LinkPlugin/id';
-import { BlockStyles } from '../../../../styles';
+import { FloatingToolbarStyles } from '../../../../styles';
 import { unwrapButton } from '../../../transforms';
 import { triggerFloatingButtonEdit } from '../../../utils';
 import { floatingButtonSelectors } from '../floatingButtonStore';
@@ -19,7 +18,7 @@ export const EditModal = () => {
                     href={floatingButtonSelectors.url()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={BlockStyles[LINK_PLUGIN]}
+                    style={FloatingToolbarStyles.link}
                     className="tw-break-all"
                 >
                     {floatingButtonSelectors.url()}
