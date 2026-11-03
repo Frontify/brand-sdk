@@ -1,5 +1,5 @@
 ---
-"@frontify/app-bridge": minor
+"@frontify/app-bridge": major
 ---
 
 refactor: remove the color palette API
