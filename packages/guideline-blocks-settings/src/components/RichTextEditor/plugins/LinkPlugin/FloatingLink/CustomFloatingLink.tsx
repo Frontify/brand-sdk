@@ -12,7 +12,7 @@ import {
 } from '@frontify/fondue/rte';
 import { type CSSProperties } from 'react';
 
-import { BlockStyles, TextStyles } from '../../../../RichTextEditor/plugins/styles';
+import { FloatingToolbarStyles } from '../../../../RichTextEditor/plugins/styles';
 import { ScopedThemePortal } from '../../ScopedThemePortal';
 
 import { EditModal } from './EditLinkModal';
@@ -64,7 +64,7 @@ export const CustomFloatingLink = () => {
                     data-is-underlay
                     ref={insertRef}
                     {...insertProps}
-                    style={{ ...(insertProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                    style={{ ...(insertProps.style as CSSProperties), ...FloatingToolbarStyles.text }}
                 >
                     {input}
                 </ScopedThemePortal>
@@ -75,7 +75,7 @@ export const CustomFloatingLink = () => {
                     data-is-underlay
                     ref={editRef}
                     {...editProps}
-                    style={{ ...(editProps.style as CSSProperties), ...BlockStyles[TextStyles.p] }}
+                    style={{ ...(editProps.style as CSSProperties), ...FloatingToolbarStyles.text }}
                 >
                     {editContent}
                 </ScopedThemePortal>

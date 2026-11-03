@@ -1,8 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { TextStyles, type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue/rte';
+import { type UseVirtualFloatingOptions, flip, offset, useEditorRef } from '@frontify/fondue/rte';
 
-import { BlockStyles } from '../../../../../RichTextEditor/plugins/styles';
+import { FloatingToolbarStyles } from '../../../../../RichTextEditor/plugins/styles';
 import { ScopedThemePortal } from '../../../ScopedThemePortal';
 import { useFloatingButtonEdit, useFloatingButtonInsert, useFloatingButtonSelectors } from '../FloatingButton';
 
@@ -40,7 +40,7 @@ export const CustomFloatingButton = () => {
                     data-is-underlay
                     ref={insertRef}
                     {...insertProps}
-                    style={{ ...insertProps.style, ...BlockStyles[TextStyles.p] }}
+                    style={{ ...insertProps.style, ...FloatingToolbarStyles.text }}
                 >
                     {input}
                 </ScopedThemePortal>
@@ -51,7 +51,7 @@ export const CustomFloatingButton = () => {
                     data-is-underlay
                     ref={editRef}
                     {...editProps}
-                    style={{ ...editProps.style, ...BlockStyles[TextStyles.p] }}
+                    style={{ ...editProps.style, ...FloatingToolbarStyles.text }}
                 >
                     {editContent}
                 </ScopedThemePortal>
