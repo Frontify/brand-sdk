@@ -6,8 +6,6 @@ export * from './AssetChooserOptionsDummy';
 export * from './AssetChooserResultDummy';
 export * from './AssetDummy';
 export * from './BulkDownloadDummy';
-export * from './ColorDummy';
-export * from './ColorPaletteDummy';
 export * from './HttpUtilResponseDummy';
 export * from './TemplateLegacyDummy';
 export * from './TemplateDummy';

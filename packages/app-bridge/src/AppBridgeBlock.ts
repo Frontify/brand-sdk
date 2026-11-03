@@ -19,14 +19,7 @@ import {
 import { type ApiMethodRegistry } from './registries/api/ApiMethodRegistry';
 import { type CommandRegistry } from './registries/commands/CommandRegistry';
 import { type EventRegistry } from './registries/events/EventRegistry';
-import {
-    type ColorPalette,
-    type Asset,
-    type BulkDownload,
-    type Template,
-    type TemplateLegacy,
-    type User,
-} from './types';
+import { type Asset, type BulkDownload, type Template, type TemplateLegacy, type User } from './types';
 import { type PrivacySettings } from './types/PrivacySettings';
 
 export type BlockApiMethod = ApiMethodNameValidator<
@@ -151,10 +144,4 @@ export interface AppBridgeBlock<
      * Use `appBridge.context('isEditing').get()` instead, or the `useEditorState` hook to re-render when it changes.
      */
     getEditorState(): boolean;
-
-    /**
-     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There will be a replacement for this method. But there will a new api to grab all colors and palettes.
-     */
-    getColorPalettesWithColors(colorPaletteIds?: number[]): Promise<ColorPalette[]>;
 }
