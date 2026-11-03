@@ -6,6 +6,7 @@ export * from './BulkDownload';
 export * from './Color';
 export * from './ColorChooserOptions';
 export * from './ColorPalette';
+export * from './CreateAssets';
 export * from './DispatchHandler';
 export * from './Emitter';
 export * from './File';
