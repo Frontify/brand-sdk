@@ -39,7 +39,6 @@ export type getAppBridgeBlockStubProps = {
     isNewlyInserted?: boolean;
     isAuthenticated?: boolean;
     user?: User;
-    language?: string;
     translationLanguage?: string;
     privacySettings?: PrivacySettings;
     blockTemplates?: Record<string, Template[]>;
@@ -57,7 +56,6 @@ export const getAppBridgeBlockStub = ({
     isNewlyInserted = false,
     isAuthenticated = true,
     user = UserDummy.with(USER_ID),
-    language = 'en',
     translationLanguage = '',
     privacySettings = {
         assetViewerEnabled: false,
@@ -129,7 +127,6 @@ export const getAppBridgeBlockStub = ({
     const subscriptions = new Map<string, Set<StubSubscription>>();
 
     const appBridgeStub: sinon.SinonStubbedInstance<AppBridgeBlock> = {
-        getProjectId: sinon.stub<Parameters<AppBridgeBlock['getProjectId']>>().returns(projectId),
         getEditorState: sinon.stub<Parameters<AppBridgeBlock['getEditorState']>>().returns(editorState),
         getBlockSettings: sinon
             .stub<Parameters<AppBridgeBlock['getBlockSettings']>>()
@@ -174,7 +171,6 @@ export const getAppBridgeBlockStub = ({
                 deletedTemplateIds[key] = [...(deletedTemplateIds[key] ?? []), ...templateIds];
                 updateContextTemplates();
             }),
-        getTranslationLanguage: sinon.stub<Parameters<AppBridgeBlock['getTranslationLanguage']>>().returns(language),
         getBulkDownloadBySignature: sinon
             .stub<Parameters<AppBridgeBlock['getBulkDownloadBySignature']>>()
             .resolves(BulkDownloadDummy.default()),

@@ -145,21 +145,9 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
-     * Use `appBridge.context('projectId').get()` instead.
-     */
-    getProjectId(): number;
-
-    /**
-     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
      * Use `appBridge.context('isEditing').get()` instead, or the `useEditorState` hook to re-render when it changes.
      */
     getEditorState(): boolean;
-
-    /**
-     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
-     * Use `appBridge.context('translationLanguage').get()` instead.
-     */
-    getTranslationLanguage(): string;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
