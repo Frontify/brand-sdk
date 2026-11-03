@@ -13,7 +13,6 @@ import { mergeDeep } from '../utilities/object';
 
 import { AssetDummy } from './AssetDummy';
 import { BulkDownloadDummy } from './BulkDownloadDummy';
-import { ColorPaletteDummy } from './ColorPaletteDummy';
 import { TemplateDummy } from './TemplateDummy';
 import { TemplateLegacyDummy } from './TemplateLegacyDummy';
 import { UserDummy } from './UserDummy';
@@ -300,14 +299,6 @@ export const getAppBridgeBlockStub = ({
                 unsubscribe();
             };
         }),
-
-        getColorPalettesWithColors: sinon
-            .stub<Parameters<AppBridgeBlock['getColorPalettesWithColors']>>()
-            .resolves([
-                ColorPaletteDummy.with(678, 'Palette 1'),
-                ColorPaletteDummy.with(427, 'Palette 2'),
-                ColorPaletteDummy.with(679, 'Palette 3'),
-            ]),
 
         // TODO: Stub the following methods
         getTemplateById: sinon.stub<Parameters<AppBridgeBlock['getTemplateById']>>().resolves({} as TemplateLegacy),

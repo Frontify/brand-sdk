@@ -14,4 +14,3 @@ export * from './useFileUpload';
 export * from './useLinkChooser';
 export * from './usePrivacySettings';
 export * from './useTemplateChooser';
-export * from './useColorPalettes';
