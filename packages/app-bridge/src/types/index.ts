@@ -7,7 +7,6 @@ export * from './Color';
 export * from './ColorChooserOptions';
 export * from './ColorPalette';
 export * from './DispatchHandler';
-export * from './Emitter';
 export * from './File';
 export * from './FileExtension';
 export * from './FileExtensionSets';

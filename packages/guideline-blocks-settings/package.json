@@ -67,7 +67,6 @@
         "autoprefixer": "^10.5.4",
         "eslint-plugin-tailwindcss": "^3.18.3",
         "happy-dom": "^21.0.4",
-        "mitt": "^3.0.1",
         "msw": "^2.15.0",
         "oxfmt": "^0.74.0",
         "oxlint": "^1.81.0",

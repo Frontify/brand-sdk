@@ -1,13 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import mitt, { type Emitter } from 'mitt';
 import sinon from 'sinon';
 
 import { type EventCallbackParameter } from '../AppBridge';
 import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
 import { type Template, type TemplateLegacy, type User } from '../types';
 import { type Asset } from '../types/Asset';
-import { type EmitterEvents } from '../types/Emitter';
 import { type PrivacySettings } from '../types/PrivacySettings';
 import { mergeDeep } from '../utilities/object';
 
@@ -67,8 +65,6 @@ export const getAppBridgeBlockStub = ({
     unsubscribe = () => null,
     emitChosenEventsOnSubscribe = true,
 }: getAppBridgeBlockStubProps = {}): sinon.SinonStubbedInstance<AppBridgeBlock> => {
-    window.emitter = sinon.spy(mitt()) as unknown as Emitter<EmitterEvents>;
-
     const deletedAssetIds: Record<string, number[]> = {};
     const addedAssetIds: Record<string, number[]> = {};
     const deletedTemplateIds: Record<string, number[]> = {};
