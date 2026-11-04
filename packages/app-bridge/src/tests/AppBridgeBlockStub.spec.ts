@@ -3,6 +3,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { createAssets } from '../registries';
 
 import { emitAppBridgeBlockStubEvent, getAppBridgeBlockStub } from './AppBridgeBlockStub';
 import { AssetDummy } from './AssetDummy';
@@ -158,6 +159,40 @@ describe('getAppBridgeBlockStub', () => {
         await appBridge.addTemplateIdsToBlockTemplateKey('templates', [3]);
 
         expect(onTemplatesChanged).not.toHaveBeenCalled();
+    });
+
+    it('should answer createAssets with one dummy asset per file', async () => {
+        const appBridge = getAppBridgeBlockStub();
+        const files = [new File(['abc'], 'first.png'), new File(['defgh'], 'second.pdf')];
+
+        const { assets, failures } = await appBridge.api(createAssets({ files }));
+
+        expect(assets).toHaveLength(2);
+        expect(assets.map(({ fileName, fileSize }) => ({ fileName, fileSize }))).toEqual([
+            { fileName: 'first.png', fileSize: 3 },
+            { fileName: 'second.pdf', fileSize: 5 },
+        ]);
+        expect(failures).toEqual([]);
+    });
+
+    it('should report the progress and each created asset while answering createAssets', async () => {
+        const appBridge = getAppBridgeBlockStub();
+        const files = [new File(['abc'], 'first.png'), new File(['defgh'], 'second.pdf')];
+        const onProgress = vi.fn();
+        const onFileProgress = vi.fn();
+        const onFileDone = vi.fn();
+
+        const { assets } = await appBridge.api(createAssets({ files, onProgress, onFileProgress, onFileDone }));
+
+        expect(onProgress.mock.calls).toEqual([[{ loaded: 3, total: 8 }], [{ loaded: 8, total: 8 }]]);
+        expect(onFileProgress.mock.calls).toEqual([
+            [{ file: files[0], index: 0, loaded: 3, total: 3 }],
+            [{ file: files[1], index: 1, loaded: 5, total: 5 }],
+        ]);
+        expect(onFileDone.mock.calls).toEqual([
+            [{ file: files[0], index: 0, asset: assets[0] }],
+            [{ file: files[1], index: 1, asset: assets[1] }],
+        ]);
     });
 
     it('should throw when emitting an event on an app bridge that is not a stub', () => {

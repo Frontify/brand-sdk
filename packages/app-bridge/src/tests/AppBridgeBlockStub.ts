@@ -179,6 +179,23 @@ export const getAppBridgeBlockStub = ({
         getPrivacySettings: sinon.stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
         api: sinon.stub<Parameters<AppBridgeBlock['api']>>().callsFake((args) => {
             switch (args.name) {
+                case 'createAssets': {
+                    const { files, onProgress, onFileProgress, onFileDone } = args.payload;
+                    const total = files.reduce((size, file) => size + file.size, 0);
+                    let loaded = 0;
+
+                    const assets = files.map((file, index) => {
+                        loaded += file.size;
+                        onFileProgress?.({ file, index, loaded: file.size, total: file.size });
+                        onProgress?.({ loaded, total });
+
+                        const asset = { ...AssetDummy.with(index + 1), fileName: file.name, fileSize: file.size };
+                        onFileDone?.({ file, index, asset });
+                        return asset;
+                    });
+
+                    return Promise.resolve({ assets, failures: [] });
+                }
                 case 'getAssetBulkDownloadToken': {
                     return { assetBulkDownloadToken: 'token' };
                 }
