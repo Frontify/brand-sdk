@@ -111,6 +111,10 @@ export interface AppBridgeBlock<
 
     addAssetIdsToBlockAssetKey(key: string, assetIds: number[]): Promise<void>;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use `appBridge.context('templates').get()` instead, or the `useBlockTemplates` hook to re-render when they change.
+     */
     getBlockTemplates(): Promise<Record<string, Template[]>>;
 
     addTemplateIdsToBlockTemplateKey(key: string, templateIds: number[]): Promise<Record<string, Template[]>>;

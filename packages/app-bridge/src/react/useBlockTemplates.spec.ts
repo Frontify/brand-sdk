@@ -1,234 +1,222 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { act, cleanup, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { TemplateDummy, getAppBridgeBlockStub } from '../tests';
+import { type Template } from '../types';
 
 import { useBlockTemplates } from './useBlockTemplates';
 
-import type sinon from 'sinon';
+const createHostTemplates = (initialTemplates?: Record<string, Template[]>) => {
+    let templates = initialTemplates;
+    const subscribers = new Set<(nextTemplates?: Record<string, Template[]>) => void>();
+
+    return {
+        context: {
+            get: () => templates,
+            subscribe: (callback: (nextTemplates?: Record<string, Template[]>) => void) => {
+                subscribers.add(callback);
+                return () => subscribers.delete(callback);
+            },
+        },
+        set: (nextTemplates: Record<string, Template[]>) => {
+            templates = nextTemplates;
+            for (const subscriber of subscribers) {
+                subscriber(nextTemplates);
+            }
+        },
+        subscriberCount: () => subscribers.size,
+    };
+};
+
+const templateIdsOf = (blockTemplates: Record<string, Template[]>, key: string) =>
+    blockTemplates[key]?.map(({ id }) => id);
 
 describe('useBlockTemplates hook', () => {
-    beforeEach(() => {
-        vi.spyOn(console, 'error').mockImplementation(() => {});
-    });
-
     afterEach(() => {
-        vi.restoreAllMocks();
         cleanup();
     });
 
-    const loadUseBlockTemplates = (existingTemplates = [TemplateDummy.with(1)]) => {
-        const template = TemplateDummy.with(1);
-        const appBridgeStub = getAppBridgeBlockStub({
-            blockId: 123,
-            blockTemplates: { key: existingTemplates },
-        });
+    it('should provide the block templates from the templates context', () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
 
-        const { result } = renderHook(() => useBlockTemplates(appBridgeStub));
-        return { result, appBridgeStub, template };
-    };
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
 
-    it('should delete a template', async () => {
-        const { result, appBridgeStub } = await loadUseBlockTemplates();
-        await act(async () => {
-            await result.current.deleteTemplateIdsFromKey('key', [1]);
-        });
-
-        const call = appBridgeStub.deleteTemplateIdsFromBlockTemplateKey.getCall(0);
-        waitFor(() => {
-            expect(call.firstArg).toEqual('key');
-            expect(call.lastArg).toEqual([1]);
-            expect(result.current.blockTemplates).toStrictEqual({ key: [] });
-        });
+        expect(result.current.blockTemplates).toEqual({ key: [TemplateDummy.with(1)] });
     });
 
-    it('should sort templates', async () => {
-        const { result, appBridgeStub } = await loadUseBlockTemplates([TemplateDummy.with(1), TemplateDummy.with(2)]);
+    it('should provide the same empty templates on every render when the host has no templates in the context', () => {
+        const appBridge = getAppBridgeBlockStub();
+        appBridge.context.withArgs('templates').returns(createHostTemplates().context);
 
-        await act(async () => {
-            await result.current.updateTemplateIdsFromKey('key', [2, 1]);
-        });
+        const { result, rerender } = renderHook(() => useBlockTemplates(appBridge));
+        const initialBlockTemplates = result.current.blockTemplates;
+        rerender();
 
-        const deleteCall = appBridgeStub.deleteTemplateIdsFromBlockTemplateKey.getCall(0);
-        const addCall = appBridgeStub.addTemplateIdsToBlockTemplateKey.getCall(0);
-
-        await waitFor(() => {
-            expect(deleteCall.firstArg).toEqual('key');
-            expect(deleteCall.lastArg).toEqual([1, 2]);
-            expect(addCall.firstArg).toEqual('key');
-            expect(addCall.lastArg).toEqual([2, 1]);
-            expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([2, 1]);
-        });
+        expect(initialBlockTemplates).toEqual({});
+        expect(result.current.blockTemplates).toBe(initialBlockTemplates);
     });
 
-    it('should not sort templates if api call throws error', async () => {
+    it('should re-render when the host updates the templates context', () => {
+        const appBridge = getAppBridgeBlockStub();
+        const host = createHostTemplates({ key: [TemplateDummy.with(1)] });
+        appBridge.context.withArgs('templates').returns(host.context);
+
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+        act(() => host.set({ key: [TemplateDummy.with(2)] }));
+
+        expect(result.current.blockTemplates).toEqual({ key: [TemplateDummy.with(2)] });
+    });
+
+    it('should unsubscribe from the templates context on unmount', () => {
+        const appBridge = getAppBridgeBlockStub();
+        const host = createHostTemplates({});
+        appBridge.context.withArgs('templates').returns(host.context);
+
+        const { unmount } = renderHook(() => useBlockTemplates(appBridge));
+        expect(host.subscriberCount()).toBe(1);
+        unmount();
+
+        expect(host.subscriberCount()).toBe(0);
+    });
+
+    it('should add template ids to a key', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => result.current.addTemplateIdsToKey('key', [2]));
+
+        expect(appBridge.addTemplateIdsToBlockTemplateKey.calledOnceWithExactly('key', [2])).toBe(true);
+        expect(templateIdsOf(result.current.blockTemplates, 'key')).toEqual([1, 2]);
+    });
+
+    it('should delete template ids from a key', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => result.current.deleteTemplateIdsFromKey('key', [1]));
+
+        expect(appBridge.deleteTemplateIdsFromBlockTemplateKey.calledOnceWithExactly('key', [1])).toBe(true);
+        expect(result.current.blockTemplates).toEqual({ key: [] });
+    });
+
+    it('should replace the templates of a key in the given order', async () => {
+        const appBridge = getAppBridgeBlockStub({
+            blockTemplates: { key: [TemplateDummy.with(1), TemplateDummy.with(2)] },
+        });
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => result.current.updateTemplateIdsFromKey('key', [2, 1]));
+
+        expect(appBridge.deleteTemplateIdsFromBlockTemplateKey.calledOnceWithExactly('key', [1, 2])).toBe(true);
+        expect(appBridge.addTemplateIdsToBlockTemplateKey.calledOnceWithExactly('key', [2, 1])).toBe(true);
+        expect(templateIdsOf(result.current.blockTemplates, 'key')).toEqual([2, 1]);
+    });
+
+    it('should not delete templates when replacing a key that has none', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => result.current.updateTemplateIdsFromKey('key', [2, 1]));
+
+        expect(appBridge.deleteTemplateIdsFromBlockTemplateKey.called).toBe(false);
+        expect(appBridge.addTemplateIdsToBlockTemplateKey.calledOnceWithExactly('key', [2, 1])).toBe(true);
+        expect(templateIdsOf(result.current.blockTemplates, 'key')).toEqual([2, 1]);
+    });
+
+    it('should not load the templates itself', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => result.current.addTemplateIdsToKey('key', [2]));
+        await act(() => result.current.deleteTemplateIdsFromKey('key', [1]));
+        await act(() => result.current.updateTemplateIdsFromKey('key', [3]));
+
+        expect(appBridge.getBlockTemplates.called).toBe(false);
+    });
+
+    it('should re-render every hook on the same app bridge when one of them changes the templates', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result: first } = renderHook(() => useBlockTemplates(appBridge));
+        const { result: second } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => first.current.addTemplateIdsToKey('key', [2]));
+
+        expect(templateIdsOf(second.current.blockTemplates, 'key')).toEqual([1, 2]);
+    });
+
+    it('should keep the templates and set the error when replacing them fails', async () => {
         const errorMessage = 'Unsuccessful API call';
-        const { result, appBridgeStub } = await loadUseBlockTemplates([TemplateDummy.with(1), TemplateDummy.with(2)]);
-        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
-            .fn()
-            .mockRejectedValue(errorMessage);
-
-        await act(async () => {
-            await result.current.updateTemplateIdsFromKey('key', [2, 1]);
+        const appBridge = getAppBridgeBlockStub({
+            blockTemplates: { key: [TemplateDummy.with(1), TemplateDummy.with(2)] },
         });
+        appBridge.deleteTemplateIdsFromBlockTemplateKey.rejects(new Error(errorMessage));
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
 
-        await waitFor(() => {
-            expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([1, 2]);
-        });
+        await act(() => result.current.updateTemplateIdsFromKey('key', [2, 1]));
+
+        expect(appBridge.addTemplateIdsToBlockTemplateKey.called).toBe(false);
+        expect(templateIdsOf(result.current.blockTemplates, 'key')).toEqual([1, 2]);
+        expect(result.current.error).toEqual(errorMessage);
+    });
+
+    it('should set the error when adding templates fails', async () => {
+        const errorMessage = "Couldn't add templates";
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        appBridge.addTemplateIdsToBlockTemplateKey.rejects(new Error(errorMessage));
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+
+        await act(() => result.current.addTemplateIdsToKey('key', [2]));
 
         expect(result.current.error).toEqual(errorMessage);
     });
 
-    it('should not delete templates if no old keys', async () => {
-        const { result, appBridgeStub } = await loadUseBlockTemplates([]);
+    it('should set the error when deleting templates fails', async () => {
+        const errorMessage = "Couldn't delete templates";
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        appBridge.deleteTemplateIdsFromBlockTemplateKey.rejects(new Error(errorMessage));
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
 
-        await act(async () => {
-            await result.current.updateTemplateIdsFromKey('key', [2, 1]);
-        });
+        await act(() => result.current.deleteTemplateIdsFromKey('key', [1]));
 
-        const deleteCall = appBridgeStub.deleteTemplateIdsFromBlockTemplateKey.getCall(0);
-        const addCall = appBridgeStub.addTemplateIdsToBlockTemplateKey.getCall(0);
-
-        await waitFor(() => {
-            expect(deleteCall).toBeNull();
-            expect(addCall.firstArg).toEqual('key');
-            expect(addCall.lastArg).toEqual([2, 1]);
-            expect(result.current.blockTemplates.key.map((template) => template.id)).toEqual([2, 1]);
-        });
+        expect(result.current.error).toEqual(errorMessage);
     });
 
-    it('should notify about updated templates on delete', async () => {
-        const { result, template } = await loadUseBlockTemplates();
+    it('should set the error when the host rejects with a string', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        appBridge.deleteTemplateIdsFromBlockTemplateKey.callsFake(
+            vi.fn().mockRejectedValue("Couldn't delete templates"),
+        );
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
 
-        await act(async () => {
-            await result.current.deleteTemplateIdsFromKey('key', [1]);
-        });
+        await act(() => result.current.deleteTemplateIdsFromKey('key', [1]));
 
-        const call = (window.emitter.emit as sinon.SinonStub).getCall(0);
-
-        waitFor(() => {
-            expect(call.firstArg).toEqual('AppBridge:BlockTemplatesUpdated');
-            expect(call.lastArg.blockId).toEqual(123);
-            expect(call.lastArg.prevBlockTemplates).toMatchObject({ key: [template] });
-            expect(call.lastArg.blockTemplates).toStrictEqual({ key: [] });
-        });
-    });
-
-    it('should add template ids', async () => {
-        const { result, appBridgeStub } = await loadUseBlockTemplates();
-        await act(async () => {
-            await result.current.addTemplateIdsToKey('key', [2]);
-        });
-
-        const call = appBridgeStub.addTemplateIdsToBlockTemplateKey.getCall(0);
-        waitFor(() => {
-            expect(call.firstArg).toEqual('key');
-            expect(call.lastArg).toEqual([2]);
-            expect(result.current.blockTemplates.key.map(({ id }) => id)).toEqual([1, 2]);
-        });
-    });
-
-    it('should notify about updated templates on add template ids to key', async () => {
-        const { result, template } = await loadUseBlockTemplates();
-        const templateToAdd = TemplateDummy.with(2);
-        await act(async () => {
-            await result.current.addTemplateIdsToKey('key', [templateToAdd.id]);
-        });
-
-        const call = (window.emitter.emit as sinon.SinonStub).getCall(0);
-        waitFor(() => {
-            expect(call.firstArg).toEqual('AppBridge:BlockTemplatesUpdated');
-            expect(call.lastArg.blockId).toEqual(123);
-            expect(call.lastArg.blockTemplates).toMatchObject({ key: [template, templateToAdd] });
-            expect(call.lastArg.prevBlockTemplates).toMatchObject({ key: [template] });
-        });
-    });
-
-    it('should handle error message if API call returns an error', async () => {
-        const errorMessage = "Couldn't get the block templates";
-        const { result, appBridgeStub } = await loadUseBlockTemplates([TemplateDummy.with(1)]);
-        (appBridgeStub.addTemplateIdsToBlockTemplateKey as unknown as Mock) = vi.fn().mockRejectedValue(errorMessage);
-
-        await act(async () => {
-            await result.current.addTemplateIdsToKey('key', [1]);
-        });
-
-        await waitFor(() => {
-            expect(result.current.error).toEqual(errorMessage);
-        });
-    });
-
-    it('should handle error if the template deletion is failed', async () => {
-        const errorMessage = "Couldn't delete template";
-        const { result, appBridgeStub } = await loadUseBlockTemplates();
-        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
-            .fn()
-            .mockRejectedValue(errorMessage);
-
-        await act(async () => {
-            await result.current.deleteTemplateIdsFromKey('key', [1]);
-        });
-
-        await waitFor(() => {
-            expect(result.current.error).toEqual(errorMessage);
-        });
-    });
-
-    it('should handle error if it is an instance of an Error object', async () => {
-        const errorMessage = "Couldn't delete template";
-        const errorObject = new Error(errorMessage);
-        const { result, appBridgeStub } = await loadUseBlockTemplates();
-        (appBridgeStub.deleteTemplateIdsFromBlockTemplateKey as unknown as Mock) = vi
-            .fn()
-            .mockRejectedValue(errorObject);
-
-        await act(async () => {
-            await result.current.deleteTemplateIdsFromKey('key', [1]);
-        });
-
-        await waitFor(() => {
-            expect(result.current.error).toEqual(errorMessage);
-        });
+        expect(result.current.error).toEqual("Couldn't delete templates");
     });
 
     it('should keep the same functions across re-renders', async () => {
-        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockTemplates: { key: [TemplateDummy.with(1)] } });
-        const { result, rerender } = renderHook(() => useBlockTemplates(appBridgeStub));
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result, rerender } = renderHook(() => useBlockTemplates(appBridge));
         const { addTemplateIdsToKey, deleteTemplateIdsFromKey, updateTemplateIdsFromKey } = result.current;
 
-        await act(async () => {
-            await result.current.addTemplateIdsToKey('key', [2]);
-        });
+        await act(() => result.current.addTemplateIdsToKey('key', [2]));
         rerender();
 
-        await waitFor(() => {
-            expect(result.current.blockTemplates.key.map(({ id }) => id)).toEqual([1, 2]);
-        });
+        expect(templateIdsOf(result.current.blockTemplates, 'key')).toEqual([1, 2]);
         expect(result.current.addTemplateIdsToKey).toBe(addTemplateIdsToKey);
         expect(result.current.deleteTemplateIdsFromKey).toBe(deleteTemplateIdsFromKey);
         expect(result.current.updateTemplateIdsFromKey).toBe(updateTemplateIdsFromKey);
     });
 
-    it('should send the latest templates as previous templates when a function from an earlier render is called', async () => {
-        const template = TemplateDummy.with(1);
-        const appBridgeStub = getAppBridgeBlockStub({ blockId: 123, blockTemplates: { key: [template] } });
-        const { result } = renderHook(() => useBlockTemplates(appBridgeStub));
-        const { addTemplateIdsToKey } = result.current;
+    it('should replace the latest templates when a function from an earlier render is called', async () => {
+        const appBridge = getAppBridgeBlockStub({ blockTemplates: { key: [TemplateDummy.with(1)] } });
+        const { result } = renderHook(() => useBlockTemplates(appBridge));
+        const { updateTemplateIdsFromKey } = result.current;
 
-        await waitFor(() => {
-            expect(result.current.blockTemplates.key).toHaveLength(1);
-        });
-        await act(async () => {
-            await addTemplateIdsToKey('key', [2]);
-        });
+        await act(() => result.current.addTemplateIdsToKey('key', [2]));
+        await act(() => updateTemplateIdsFromKey('key', [3]));
 
-        await waitFor(() => {
-            expect((window.emitter.emit as sinon.SinonSpy).lastCall?.args).toMatchObject([
-                'AppBridge:BlockTemplatesUpdated',
-                { prevBlockTemplates: { key: [template] } },
-            ]);
-        });
+        expect(appBridge.deleteTemplateIdsFromBlockTemplateKey.calledOnceWithExactly('key', [1, 2])).toBe(true);
     });
 });
