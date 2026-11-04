@@ -25,7 +25,11 @@ import { type PrivacySettings } from './types/PrivacySettings';
 export type BlockApiMethod = ApiMethodNameValidator<
     Pick<
         ApiMethodRegistry,
-        'createAssets' | 'getAssetBulkDownloadToken' | 'getCurrentUser' | 'setAssetIdsByBlockAssetKey'
+        | 'createAssetBulkDownload'
+        | 'createAssets'
+        | 'getAssetBulkDownloadToken'
+        | 'getCurrentUser'
+        | 'setAssetIdsByBlockAssetKey'
     >
 >;
 
