@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import dts from 'vite-plugin-dts';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitest/config';
 
 import { dependencies as dependenciesMap, peerDependencies as peerDependenciesMap } from './package.json';
@@ -16,9 +15,6 @@ export default defineConfig({
         // One declaration file per entry, like the other packages. Per-file declarations used
         // extensionless relative imports, which `moduleResolution: "nodenext"` can't resolve.
         dts({ insertTypesEntry: true, rollupTypes: true }),
-        viteStaticCopy({
-            targets: [{ src: './src/workers/upload.worker.js', dest: '.' }],
-        }),
     ],
     build: {
         lib: {
@@ -33,11 +29,6 @@ export default defineConfig({
         minify: true,
         rollupOptions: {
             external,
-            output: {
-                // The inline worker builds its Blob when its module loads. In its own chunk, bundlers can drop it
-                // (thanks to `sideEffects: false`) from apps that never upload.
-                manualChunks: (id) => (id.includes('upload.worker.js?worker') ? 'inline-upload-worker' : undefined),
-            },
         },
     },
     test: {

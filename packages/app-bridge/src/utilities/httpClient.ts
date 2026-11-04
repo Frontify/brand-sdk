@@ -56,6 +56,9 @@ const request = async <T>(
     };
 };
 
+/**
+ * @deprecated Will be removed in 5.0.0. Blocks shouldn't call Frontify endpoints themselves: use `appBridge.api(...)` instead.
+ */
 export class HttpClient {
     static getCsrfToken() {
         const tokenElement = document.getElementsByName('x-csrf-token');

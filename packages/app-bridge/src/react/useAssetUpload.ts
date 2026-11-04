@@ -1,11 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { createAssetByFileId } from '../repositories/AssetRepository';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type CreateAssetsResponse, createAssets } from '../registries';
 import { type Asset, type FileApi } from '../types';
-
-import { useFileUpload } from './useFileUpload';
 
 export type UseAssetUploadParameters = {
     onUploadProgress?: (event: MessageEvent) => void;
@@ -18,75 +17,98 @@ export type UseAssetUploadParameters = {
 
 export type UseAssetUploadReturnTypes = [(files: FileList | File) => void, { results: Asset[]; doneAll: boolean }];
 
-export const useAssetUpload = (props?: UseAssetUploadParameters): UseAssetUploadReturnTypes => {
-    const results = useRef<Asset[]>([]);
-    const promises = useRef<Promise<unknown>[]>([]);
+const getFilesAsArray = (files: FileList | File): File[] => (files instanceof File ? [files] : Array.from(files));
+
+export const useAssetUpload = (
+    appBridge: AppBridgeBlock,
+    props?: UseAssetUploadParameters,
+): UseAssetUploadReturnTypes => {
+    const resultsRef = useRef<Asset[]>([]);
     const [doneAll, setDoneAll] = useState(false);
 
-    const { onUploadProgress, onUploadProgressAll, onUploadDone, onUploadDoneAll, onUploadFail, onUploadAssetFail } =
-        props ?? {};
-
-    const projectId = window.application?.sandbox?.config?.context?.project?.id;
-
-    const onProgress = (workerEvent: MessageEvent<FileApi>) => {
-        onUploadProgress?.(workerEvent);
-    };
-
-    const onProgressAll = (workerEvent: MessageEvent<FileApi>) => {
-        onUploadProgressAll?.(workerEvent);
-    };
-
-    const onDone = async (workerEvent: MessageEvent<FileApi>) => {
-        const assetPromise = createAssetFromFileIds(workerEvent.data.file_id);
-        promises.current.push(assetPromise);
-
-        onUploadDone?.(workerEvent);
-
-        results.current = [...results.current, await assetPromise];
-    };
-
-    const onDoneAll = async () => {
-        await Promise.all(promises.current);
-
-        onUploadDoneAll?.(results.current);
-
-        setDoneAll(true);
-    };
-
-    const onFail = () => {
-        onUploadFail?.();
-    };
-
-    const onFileFail = (workerEvent: MessageEvent<FileApi>) => {
-        onUploadAssetFail?.(workerEvent);
-    };
-
-    const resetState = useCallback(() => {
-        setDoneAll(false);
-        results.current = [];
-    }, []);
-
-    const createAssetFromFileIds = async (fileId: string) => {
-        return await createAssetByFileId(fileId, projectId);
-    };
-
-    const [uploadFilesInternal] = useFileUpload({
-        onUploadProgress: onProgress,
-        onUploadProgressAll: onProgressAll,
-        onUploadDone: onDone,
-        onUploadDoneAll: onDoneAll,
-        onUploadFail: onFail,
-        onUploadFileFail: onFileFail,
+    const callbacksRef = useRef(props);
+    useEffect(() => {
+        callbacksRef.current = props;
     });
 
-    // useFileUpload reads these callbacks through a ref, so uploadFilesInternal is stable even though they aren't.
-    const uploadFiles = useCallback(
-        (files: FileList | File) => {
-            resetState();
-            uploadFilesInternal(files);
+    const abortControllersRef = useRef(new Set<AbortController>());
+    useEffect(() => {
+        const abortControllers = abortControllersRef.current;
+        return () => {
+            for (const abortController of abortControllers) {
+                abortController.abort();
+            }
+        };
+    }, []);
+
+    const upload = useCallback(
+        (files: File[]) => {
+            const abortController = new AbortController();
+            abortControllersRef.current.add(abortController);
+
+            const onUploaded = ({ assets }: CreateAssetsResponse) => {
+                abortControllersRef.current.delete(abortController);
+                resultsRef.current = assets;
+                callbacksRef.current?.onUploadDoneAll?.(assets);
+                setDoneAll(true);
+            };
+
+            const onUploadFailed = () => {
+                abortControllersRef.current.delete(abortController);
+                if (!abortController.signal.aborted) {
+                    callbacksRef.current?.onUploadFail?.();
+                }
+            };
+
+            appBridge
+                .api(
+                    createAssets({
+                        files,
+                        signal: abortController.signal,
+                        onProgress: (progress) =>
+                            callbacksRef.current?.onUploadProgressAll?.(
+                                new MessageEvent('message', { data: progress }),
+                            ),
+                        onFileProgress: ({ index, loaded, total }) =>
+                            callbacksRef.current?.onUploadProgress?.(
+                                new MessageEvent('message', { data: { index, loaded, total, lengthComputable: true } }),
+                            ),
+                        onFileDone: ({ asset }) =>
+                            callbacksRef.current?.onUploadDone?.(
+                                new MessageEvent<FileApi>('message', {
+                                    data: {
+                                        file_id: asset.fileId,
+                                        file_name: asset.fileName,
+                                        generic_url: asset.genericUrl,
+                                    },
+                                }),
+                            ),
+                        onFileFail: ({ file, index, message }) =>
+                            callbacksRef.current?.onUploadAssetFail?.(
+                                new MessageEvent('message', { data: { file, index, error: message } }),
+                            ),
+                    }),
+                )
+                .then(onUploaded)
+                .catch(onUploadFailed);
         },
-        [resetState, uploadFilesInternal],
+        [appBridge],
     );
 
-    return [uploadFiles, { results: results.current, doneAll }];
+    const uploadFiles = useCallback(
+        (files: FileList | File) => {
+            setDoneAll(false);
+            resultsRef.current = [];
+
+            const fileArray = getFilesAsArray(files);
+            if (fileArray.length === 0) {
+                return;
+            }
+
+            upload(fileArray);
+        },
+        [upload],
+    );
+
+    return [uploadFiles, { results: resultsRef.current, doneAll }];
 };

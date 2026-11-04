@@ -1,5 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+/**
+ * @deprecated Will be removed in 5.0.0, together with `HttpClient`.
+ */
 export class HttpClientError extends Error {
     public code = 0;
     public responseBody: object;

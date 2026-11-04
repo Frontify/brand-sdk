@@ -18,8 +18,7 @@
         "./testing": {
             "types": "./dist/testing.d.ts",
             "default": "./dist/testing.js"
-        },
-        "./upload-worker": "./dist/upload.worker.js"
+        }
     },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -80,7 +79,6 @@
         "typescript": "^5.9.3",
         "vite": "^7.3.7",
         "vite-plugin-dts": "^4.5.4",
-        "vite-plugin-static-copy": "^3.4.0",
         "vitest": "^4.1.12"
     }
 }
