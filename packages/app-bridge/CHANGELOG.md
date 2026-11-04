@@ -1,5 +1,22 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.80
+
+### Minor Changes
+
+- [#1790](https://github.com/Frontify/brand-sdk/pull/1790) [`ac8e00b`](https://github.com/Frontify/brand-sdk/commit/ac8e00ba1218d5072c3f3ccc782aebbed1b0e87e) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - feat: add the `createAssetBulkDownload` API method
+  
+  It prepares an archive with the given assets and resolves with its download URL once the archive is ready. It rejects when preparing the archive fails or when the signal is aborted. `getAppBridgeBlockStub` resolves it with a dummy URL.
+  
+  ```ts
+  const controller = new AbortController();
+  
+  const { downloadUrl } = await appBridge.api({
+      name: 'createAssetBulkDownload',
+      payload: { blockAssets, signal: controller.signal },
+  });
+  ```
+
 ## 4.0.0-alpha.79
 
 ### Patch Changes
