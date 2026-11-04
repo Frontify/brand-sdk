@@ -175,6 +175,9 @@ export const getAppBridgeBlockStub = ({
         getPrivacySettings: sinon.stub<Parameters<AppBridgeBlock['getPrivacySettings']>>().returns(privacySettings),
         api: sinon.stub<Parameters<AppBridgeBlock['api']>>().callsFake((args) => {
             switch (args.name) {
+                case 'createAssetBulkDownload': {
+                    return Promise.resolve({ downloadUrl: 'https://example.com/bulk-download.zip' });
+                }
                 case 'createAssets': {
                     const { files, onProgress, onFileProgress, onFileDone } = args.payload;
                     const total = files.reduce((size, file) => size + file.size, 0);

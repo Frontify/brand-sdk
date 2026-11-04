@@ -2,6 +2,7 @@
 
 import { type ApiMethodNameValidator } from '../../AppBridge';
 
+import { type CreateAssetBulkDownloadPayload, type CreateAssetBulkDownloadResponse } from './CreateAssetBulkDownload';
 import { type CreateAssetsPayload, type CreateAssetsResponse } from './CreateAssets';
 import {
     type GetAssetBulkDownloadTokenPayload,
@@ -14,6 +15,10 @@ import {
 } from './SetAssetIdsByBlockAssetKey';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
+    createAssetBulkDownload: {
+        payload: CreateAssetBulkDownloadPayload;
+        response: CreateAssetBulkDownloadResponse;
+    };
     createAssets: { payload: CreateAssetsPayload; response: CreateAssetsResponse };
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
     getAssetBulkDownloadToken: {

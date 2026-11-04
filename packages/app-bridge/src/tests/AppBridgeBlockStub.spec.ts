@@ -200,4 +200,15 @@ describe('getAppBridgeBlockStub', () => {
             emitAppBridgeBlockStubEvent({} as AppBridgeBlock, 'assetsChosen', { assets: [AssetDummy.with(5)] }),
         ).toThrow();
     });
+
+    it('should resolve createAssetBulkDownload with a dummy download url', async () => {
+        const appBridge = getAppBridgeBlockStub();
+
+        const response = await appBridge.api({
+            name: 'createAssetBulkDownload',
+            payload: { blockAssets: { images: [AssetDummy.with(1)] } },
+        });
+
+        expect(response).toStrictEqual({ downloadUrl: 'https://example.com/bulk-download.zip' });
+    });
 });
