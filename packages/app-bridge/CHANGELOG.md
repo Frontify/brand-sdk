@@ -1,5 +1,54 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.78
+
+### Major Changes
+
+- [#1787](https://github.com/Frontify/brand-sdk/pull/1787) [`ae15721`](https://github.com/Frontify/brand-sdk/commit/ae157213dc8b80ad3a90f35b058cd8f4cb70473b) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor: remove the color palette API
+  
+  `useColorPalettes`, `AppBridgeBlock.getColorPalettesWithColors`, the `Color`, `ColorAsset`, `ColorRevision` and `ColorPalette` types, and the `ColorDummy` and `ColorPaletteDummy` test dummies from `@frontify/app-bridge/testing` are gone. Let users pick colors through the host color chooser instead:
+  
+  ```ts
+  import { openColorChooser, closeColorChooser } from "@frontify/app-bridge";
+  
+  await appBridge.dispatch(openColorChooser({ element, color, onColorSelect: (color) => setColor(color) }));
+  // ...
+  await appBridge.dispatch(closeColorChooser({ element }));
+  ```
+  
+  In a block's settings flyout, the `ColorChooser` component from `@frontify/guideline-blocks-settings` does this for you.
+
+- [#1782](https://github.com/Frontify/brand-sdk/pull/1782) [`2d3f346`](https://github.com/Frontify/brand-sdk/commit/2d3f346060730a77751e88967f9620ac7c710554) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor(AppBridgeBlock): remove `getProjectId` and `getTranslationLanguage`
+  
+  Read the project id and the translation language from the block context instead:
+  
+  ```ts
+  const projectId = appBridge.context('projectId').get();
+  const translationLanguage = appBridge.context('translationLanguage').get(); // '' when the page isn't a translation
+  ```
+  
+  `getAppBridgeBlockStub` no longer takes a `language` option. Pass `translationLanguage` instead.
+
+### Minor Changes
+
+- [#1788](https://github.com/Frontify/brand-sdk/pull/1788) [`e05d464`](https://github.com/Frontify/brand-sdk/commit/e05d464014e048014be9ae46d55873b44eaaeae0) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(AppBridgeBlock): add the `createAssets` API method
+  
+  Blocks can upload files through the host and get the created assets back. Nothing calls it yet: `useAssetUpload` will switch to it in a later release.
+  
+  ```ts
+  import { createAssets } from '@frontify/app-bridge';
+  
+  const { assets, failures } = await appBridge.api(
+      createAssets({
+          files: [file],
+          onProgress: ({ loaded, total }) => setProgress(loaded / total),
+          onFileFail: ({ file, message }) => showError(file.name, message),
+      }),
+  );
+  ```
+  
+  `getAppBridgeBlockStub` answers `createAssets` with one `AssetDummy` per file and calls `onProgress`, `onFileProgress` and `onFileDone` for each file.
+
 ## 4.0.0-alpha.77
 
 ### Major Changes

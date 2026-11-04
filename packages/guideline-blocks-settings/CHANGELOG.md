@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.14
+
+### Patch Changes
+
+- [#864](https://github.com/Frontify/brand-sdk/pull/864) [`b63a74c`](https://github.com/Frontify/brand-sdk/commit/b63a74ca6b6f9cb4bc4210e0e67f76c999d934a5) Thanks [@SamuelAlev](https://github.com/SamuelAlev)! - fix(RichTextEditor): keep the link and button popovers in default colors
+  
+  The link and button popovers render on a fixed white surface, but inherited the guideline's body and link colors, so a light theme made the URL and icons invisible. Text and icons now use the default dark color and the URL a fixed blue, while the theme typography is kept.
+
 ## 4.0.0-alpha.13
 
 ### Minor Changes
