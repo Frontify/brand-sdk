@@ -1,7 +1,7 @@
 ---
-"@frontify/app-bridge": patch
+"@frontify/app-bridge": major
 ---
 
-chore(HttpClient): deprecate `HttpClient` and `HttpClientError`
+refactor(HttpClient): remove `HttpClient` and `HttpClientError`
 
-They will be removed in 5.0.0. Use `appBridge.api(...)` instead of calling Frontify endpoints.
+Blocks shouldn't call Frontify endpoints themselves: use `appBridge.api(...)` instead. The `HttpUtilResponse` type and the `HttpUtilResponseDummy` test helper are removed as well.

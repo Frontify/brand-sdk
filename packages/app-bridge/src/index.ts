@@ -2,7 +2,6 @@
 
 export * from './AppBridge';
 export * from './AppBridgeBlock';
-export * from './errors';
 export * from './registries';
 export * from './react';
 export * from './types';
