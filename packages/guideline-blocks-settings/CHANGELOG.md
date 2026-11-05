@@ -1,5 +1,13 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.15
+
+### Patch Changes
+
+- [#1793](https://github.com/Frontify/brand-sdk/pull/1793) [`12498ba`](https://github.com/Frontify/brand-sdk/commit/12498bad6b4f30dd92e133ff21ca629b48ee2da6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - fix(Attachments): upload attachments through the host
+  
+  `Attachments` passes its app bridge to `useAssetUpload`, which now uploads through the host.
+
 ## 4.0.0-alpha.14
 
 ### Patch Changes
