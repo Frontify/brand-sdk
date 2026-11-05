@@ -1,5 +1,51 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.81
+
+### Major Changes
+
+- [#1793](https://github.com/Frontify/brand-sdk/pull/1793) [`12498ba`](https://github.com/Frontify/brand-sdk/commit/12498bad6b4f30dd92e133ff21ca629b48ee2da6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - feat(useAssetUpload): upload through the host
+  
+  `useAssetUpload` now uploads through `appBridge.api(createAssets(...))`. It no longer calls Frontify's upload endpoints itself, so later backend changes won't break built blocks. It takes the app bridge as its first argument, like the other hooks:
+  
+  ```diff
+  - const [uploadFile, { results, doneAll }] = useAssetUpload({ onUploadProgress });
+  + const [uploadFile, { results, doneAll }] = useAssetUpload(appBridge, { onUploadProgress });
+  ```
+  
+  The callbacks, `results` and `doneAll` keep their shape. An upload still in progress is cancelled when the component unmounts.
+
+- [#1793](https://github.com/Frontify/brand-sdk/pull/1793) [`12498ba`](https://github.com/Frontify/brand-sdk/commit/12498bad6b4f30dd92e133ff21ca629b48ee2da6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor(HttpClient): remove `HttpClient` and `HttpClientError`
+  
+  Blocks shouldn't call Frontify endpoints themselves: use `appBridge.api(...)` instead. The `HttpUtilResponse` type and the `HttpUtilResponseDummy` test helper are removed as well.
+
+- [#1793](https://github.com/Frontify/brand-sdk/pull/1793) [`12498ba`](https://github.com/Frontify/brand-sdk/commit/12498bad6b4f30dd92e133ff21ca629b48ee2da6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor(useFileUpload): remove the hook
+  
+  Use `useAssetUpload` instead. The `@frontify/app-bridge/upload-worker` export is removed as well.
+
+- [#1793](https://github.com/Frontify/brand-sdk/pull/1793) [`12498ba`](https://github.com/Frontify/brand-sdk/commit/12498bad6b4f30dd92e133ff21ca629b48ee2da6) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove the `window.application` type
+  
+  app-bridge no longer reads `window.application`, so it no longer declares it on `Window`.
+
+### Patch Changes
+
+- [#1795](https://github.com/Frontify/brand-sdk/pull/1795) [`1b2ac54`](https://github.com/Frontify/brand-sdk/commit/1b2ac54706e18f77b55d8aa27b18baf6611bd174) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - chore: deprecate the bulk download token and polling methods
+  
+  `appBridge.getBulkDownloadByToken()`, `appBridge.getBulkDownloadBySignature()` and the `getAssetBulkDownloadToken` API method are deprecated and will be removed in version 5.0.0. Use the `useAssetBulkDownload` hook, or the `createAssetBulkDownload` API method, which resolves once the download is ready:
+  
+  ```ts
+  const { downloadUrl } = await appBridge.api({
+      name: 'createAssetBulkDownload',
+      payload: { blockAssets, signal },
+  });
+  ```
+
+- [#1795](https://github.com/Frontify/brand-sdk/pull/1795) [`1b2ac54`](https://github.com/Frontify/brand-sdk/commit/1b2ac54706e18f77b55d8aa27b18baf6611bd174) Thanks [@fulopdaniel](https://github.com/fulopdaniel)! - refactor(useAssetBulkDownload): let the host wait for the download
+  
+  `useAssetBulkDownload` now asks the host for the download with the `createAssetBulkDownload` API method instead of polling for it itself. `status` is `Pending` while the host prepares the download, and `generateBulkDownload`, `status` and `downloadUrl` work as before. Starting a new download or unmounting still aborts the previous one.
+  
+  Blocks built with this version need a Frontify version that supports `createAssetBulkDownload`.
+
 ## 4.0.0-alpha.80
 
 ### Minor Changes
