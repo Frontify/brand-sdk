@@ -14,21 +14,6 @@ export enum AssetBulkDownloadState {
     Error = 'error',
 }
 
-const POLLING_INTERVAL_IN_MS = 2500;
-
-const sleep = (ms: number, signal: AbortSignal) =>
-    new Promise<void>((resolve, reject) => {
-        const timeoutId = window.setTimeout(resolve, ms);
-        signal.addEventListener(
-            'abort',
-            () => {
-                window.clearTimeout(timeoutId);
-                reject(new DOMException('The bulk download was aborted.', 'AbortError'));
-            },
-            { once: true },
-        );
-    });
-
 export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
     const abortControllerRef = useRef<AbortController | null>(null);
     const [status, setStatus] = useState<AssetBulkDownloadState>(AssetBulkDownloadState.Init);
@@ -43,28 +28,16 @@ export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
         const { signal } = abortController;
 
         try {
-            setStatus(AssetBulkDownloadState.Started);
+            setStatus(AssetBulkDownloadState.Pending);
+            setDownloadUrl(null);
 
-            const { assetBulkDownloadToken } = await appBridge.api({
-                name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets },
+            const { downloadUrl } = await appBridge.api({
+                name: 'createAssetBulkDownload',
+                payload: { blockAssets, signal },
             });
             signal.throwIfAborted();
 
-            setDownloadUrl(null);
-
-            let download = await appBridge.getBulkDownloadByToken(assetBulkDownloadToken);
-            signal.throwIfAborted();
-
-            // Wait for the download to be prepared, one check at a time so slow responses don't pile up.
-            while (!download.downloadUrl) {
-                setStatus(AssetBulkDownloadState.Pending);
-                await sleep(POLLING_INTERVAL_IN_MS, signal);
-                download = await appBridge.getBulkDownloadBySignature(download.signature);
-                signal.throwIfAborted();
-            }
-
-            setDownloadUrl(download.downloadUrl);
+            setDownloadUrl(downloadUrl);
             setStatus(AssetBulkDownloadState.Ready);
         } catch (error) {
             if (signal.aborted) {

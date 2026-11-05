@@ -21,6 +21,10 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
     };
     createAssets: { payload: CreateAssetsPayload; response: CreateAssetsResponse };
     getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use the `createAssetBulkDownload` API method instead, or the `useAssetBulkDownload` hook. They wait until the download is ready.
+     */
     getAssetBulkDownloadToken: {
         payload: GetAssetBulkDownloadTokenPayload;
         response: GetAssetBulkDownloadTokenResponse;

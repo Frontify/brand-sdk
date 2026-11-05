@@ -137,8 +137,16 @@ export interface AppBridgeBlock<
 
     getCurrentLoggedUser(): Promise<User>;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use the `createAssetBulkDownload` API method instead, or the `useAssetBulkDownload` hook. They wait until the download is ready.
+     */
     getBulkDownloadByToken(token: string): Promise<BulkDownload>;
 
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use the `createAssetBulkDownload` API method instead, or the `useAssetBulkDownload` hook. They wait until the download is ready.
+     */
     getBulkDownloadBySignature(signature: string): Promise<BulkDownload>;
 
     /**

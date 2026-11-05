@@ -5,11 +5,31 @@ import sinon from 'sinon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type CreateAssetBulkDownloadResponse } from '../registries';
 import { AssetDummy, getAppBridgeBlockStub } from '../tests';
 
 import { AssetBulkDownloadState, useAssetBulkDownload } from './useAssetBulkDownload';
 
 const appBridgeError = new Error('Something went wrong');
+
+const createDeferredDownload = () => {
+    let resolveDownload: (response: CreateAssetBulkDownloadResponse) => void = () => {};
+    const promise = new Promise<CreateAssetBulkDownloadResponse>((resolve) => {
+        resolveDownload = resolve;
+    });
+    return { promise, resolve: resolveDownload };
+};
+
+const startBulkDownload = (generateBulkDownload: () => Promise<void>) => {
+    let download: Promise<void> = Promise.resolve();
+    act(() => {
+        download = generateBulkDownload();
+    });
+    return download;
+};
+
+const getSignalOfCall = (api: AppBridgeBlock['api'], callIndex: number) =>
+    (api as sinon.SinonStub).getCall(callIndex).args[0].payload.signal as AbortSignal;
 
 describe('useAssetBulkDownload', () => {
     beforeEach(() => {
@@ -28,250 +48,126 @@ describe('useAssetBulkDownload', () => {
         expect(result.current.status).toBe(AssetBulkDownloadState.Init);
     });
 
-    it('should call getAssetBulkDownloadToken with the correct arguments', async () => {
+    it('should call createAssetBulkDownload with the block assets and an abort signal', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
         const blockAssets = { setting1: [AssetDummy.with(123)], setting2: [AssetDummy.with(456)] };
-        result.current.generateBulkDownload(blockAssets);
-        await waitFor(() => {
-            sinon.assert.calledWithExactly(appBridgeStub.api, {
-                name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets },
-            });
+
+        await act(() => result.current.generateBulkDownload(blockAssets));
+
+        sinon.assert.calledOnceWithExactly(appBridgeStub.api, {
+            name: 'createAssetBulkDownload',
+            payload: { blockAssets, signal: sinon.match.instanceOf(AbortSignal) },
         });
     });
 
-    it('should set status to error if getAssetBulkDownloadToken throws an error', async () => {
+    it('should set status to pending while the download is being prepared', async () => {
+        const appBridgeStub = getAppBridgeBlockStub();
+        const download = createDeferredDownload();
+        appBridgeStub.api = sinon.stub<Parameters<AppBridgeBlock['api']>>().returns(download.promise);
+        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+
+        startBulkDownload(result.current.generateBulkDownload);
+
+        expect(result.current.status).toBe(AssetBulkDownloadState.Pending);
+        expect(result.current.downloadUrl).toBeNull();
+
+        await act(async () => download.resolve({ downloadUrl: 'ready-url' }));
+    });
+
+    it('should set the download url and status to ready once the download is ready', async () => {
+        const appBridgeStub = getAppBridgeBlockStub();
+        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+
+        await act(() => result.current.generateBulkDownload());
+
+        expect(result.current.downloadUrl).toBe('https://example.com/bulk-download.zip');
+        expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
+    });
+
+    it('should set status to error if createAssetBulkDownload rejects', async () => {
+        const appBridgeStub = getAppBridgeBlockStub();
+        appBridgeStub.api = sinon.stub<Parameters<AppBridgeBlock['api']>>().rejects(appBridgeError);
+        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+
+        await act(() => result.current.generateBulkDownload());
+
+        expect(result.current.status).toBe(AssetBulkDownloadState.Error);
+        expect(console.error).toHaveBeenCalledWith(appBridgeError);
+    });
+
+    it('should replace the download url when a second download is generated', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
         appBridgeStub.api = sinon
             .stub<Parameters<AppBridgeBlock['api']>>()
-            .withArgs({
-                name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets: undefined },
-            })
-            .rejects(appBridgeError);
+            .onFirstCall()
+            .resolves({ downloadUrl: 'first-url' })
+            .onSecondCall()
+            .resolves({ downloadUrl: 'second-url' });
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-        await waitFor(() => {
-            expect(result.current.status).toBe(AssetBulkDownloadState.Error);
-        });
+
+        await act(() => result.current.generateBulkDownload());
+        expect(result.current.downloadUrl).toBe('first-url');
+
+        await act(() => result.current.generateBulkDownload());
+        expect(result.current.downloadUrl).toBe('second-url');
+        expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
     });
 
-    it('should set signature and set status to ready', async () => {
+    it('should abort the download when the component unmounts', () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-        await waitFor(() => {
-            sinon.assert.calledWithExactly(appBridgeStub.getBulkDownloadByToken, 'token');
-            expect(result.current.downloadUrl).toBe('dummy-url');
-            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
-        });
+        appBridgeStub.api = sinon.stub<Parameters<AppBridgeBlock['api']>>().returns(createDeferredDownload().promise);
+        const { result, unmount } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+
+        startBulkDownload(result.current.generateBulkDownload);
+        const signal = getSignalOfCall(appBridgeStub.api, 0);
+        expect(signal.aborted).toBe(false);
+
+        unmount();
+
+        expect(signal.aborted).toBe(true);
     });
 
-    it('should set status to error if getBulkDownloadByToken throws an error', async () => {
+    it('should abort the previous download and ignore its result when a new one starts', async () => {
         const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.getBulkDownloadByToken.rejects(appBridgeError);
+        const firstDownload = createDeferredDownload();
+        appBridgeStub.api = sinon
+            .stub<Parameters<AppBridgeBlock['api']>>()
+            .onFirstCall()
+            .returns(firstDownload.promise)
+            .onSecondCall()
+            .resolves({ downloadUrl: 'second-url' });
         const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-        await waitFor(() => {
-            expect(result.current.status).toBe(AssetBulkDownloadState.Error);
-        });
-    });
 
-    it('should set status to pending if getBulkDownloadByToken doesnt return a signature', async () => {
-        const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: '' });
-        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-        await waitFor(() => {
-            expect(result.current.status).toBe(AssetBulkDownloadState.Pending);
-        });
-    });
+        startBulkDownload(result.current.generateBulkDownload);
+        await act(() => result.current.generateBulkDownload());
 
-    it('should call getBulkDownloadBySignature three times till it resolves with downloadUrl', async () => {
-        const appBridgeStub = getAppBridgeBlockStub();
-        vi.useFakeTimers();
-        appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
-        appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
-        appBridgeStub.getBulkDownloadBySignature.onCall(1).resolves({ downloadUrl: '', signature: 'signature' });
+        expect(getSignalOfCall(appBridgeStub.api, 0).aborted).toBe(true);
+        expect(result.current.downloadUrl).toBe('second-url');
 
-        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-
-        await act(async () => {
-            await vi.advanceTimersByTimeAsync(2500);
-        });
-
-        for (let i = 0; i < 3; i++) {
-            await vi.runOnlyPendingTimersAsync();
-        }
-
-        // use Real Timers again otherwise waitFor will fail, because it would use the fake timer internally
-        vi.useRealTimers();
-        await waitFor(() => {
-            sinon.assert.calledThrice(appBridgeStub.getBulkDownloadBySignature);
-            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
-            expect(result.current.downloadUrl).toBe('dummy-url');
-        });
-    });
-
-    it('should call getBulkDownloadBySignature twice, second call will be rejected, state should be Error', async () => {
-        const appBridgeStub = getAppBridgeBlockStub();
-        vi.useFakeTimers();
-        appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
-        appBridgeStub.getBulkDownloadBySignature.onCall(0).resolves({ downloadUrl: '', signature: 'signature' });
-        appBridgeStub.getBulkDownloadBySignature.onCall(1).rejects(appBridgeError);
-
-        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-
-        await act(async () => {
-            await vi.advanceTimersByTimeAsync(2500);
-        });
-
-        for (let i = 0; i < 2; i++) {
-            await vi.runOnlyPendingTimersAsync();
-        }
-
-        // use Real Timers again otherwise waitFor will fail, because its would use the fake timer internally
-        vi.useRealTimers();
-        await waitFor(() => {
-            sinon.assert.calledTwice(appBridgeStub.getBulkDownloadBySignature);
-            expect(result.current.status).toBe(AssetBulkDownloadState.Error);
-        });
-    });
-
-    it('should download the first asset set and after change the second asset set', async () => {
-        const appBridgeStub = getAppBridgeBlockStub();
-        appBridgeStub.getBulkDownloadByToken
-            .onCall(1)
-            .resolves({ downloadUrl: 'changed-dummy-url', signature: 'signature' });
-        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
+        await act(async () => firstDownload.resolve({ downloadUrl: 'first-url' }));
 
         await waitFor(() => {
-            expect(result.current.downloadUrl).toBe('dummy-url');
-            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
-        });
-
-        result.current.generateBulkDownload();
-
-        await waitFor(() => {
-            expect(result.current.downloadUrl).toBe('changed-dummy-url');
-            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
-        });
-    });
-
-    it('should download the first asset set and after change the second asset set and get by signature', async () => {
-        const appBridgeStub = getAppBridgeBlockStub();
-
-        appBridgeStub.getBulkDownloadByToken.onCall(1).resolves({ downloadUrl: '', signature: 'signature' });
-        appBridgeStub.getBulkDownloadBySignature
-            .onCall(0)
-            .resolves({ downloadUrl: 'change-dummy-url', signature: 'signature' });
-
-        const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-        result.current.generateBulkDownload();
-
-        await waitFor(() => {
-            expect(result.current.downloadUrl).toBe('dummy-url');
-            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
-        });
-
-        vi.useFakeTimers();
-
-        result.current.generateBulkDownload();
-
-        await act(async () => {
-            await vi.advanceTimersByTimeAsync(2500);
-        });
-
-        await vi.runOnlyPendingTimersAsync();
-
-        // use Real Timers again otherwise waitFor will fail, because its would use the fake timer internally
-        vi.useRealTimers();
-        await waitFor(() => {
-            expect(result.current.downloadUrl).toBe('change-dummy-url');
-            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
-        });
-    });
-    describe('polling lifecycle', () => {
-        beforeEach(() => {
-            vi.useFakeTimers();
-        });
-
-        afterEach(() => {
-            vi.useRealTimers();
-        });
-
-        it('should stop checking after the component unmounts', async () => {
-            const appBridgeStub = getAppBridgeBlockStub();
-            appBridgeStub.getBulkDownloadByToken.resolves({ downloadUrl: '', signature: 'signature' });
-            appBridgeStub.getBulkDownloadBySignature.resolves({ downloadUrl: '', signature: 'signature' });
-
-            const { result, unmount } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-            await act(async () => {
-                result.current.generateBulkDownload();
-                await vi.advanceTimersByTimeAsync(5000);
-            });
-
-            unmount();
-            const callsAtUnmount = appBridgeStub.getBulkDownloadBySignature.callCount;
-
-            await act(async () => {
-                await vi.advanceTimersByTimeAsync(30_000);
-            });
-
-            expect(appBridgeStub.getBulkDownloadBySignature.callCount - callsAtUnmount).toBe(0);
-        });
-
-        it('should stop checking the previous download when a new one starts', async () => {
-            const appBridgeStub = getAppBridgeBlockStub();
-            appBridgeStub.getBulkDownloadByToken.onCall(0).resolves({ downloadUrl: '', signature: 'first' });
-            appBridgeStub.getBulkDownloadByToken.onCall(1).resolves({ downloadUrl: 'second-url', signature: 'second' });
-            appBridgeStub.getBulkDownloadBySignature.resolves({ downloadUrl: '', signature: 'first' });
-
-            const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-            await act(async () => {
-                result.current.generateBulkDownload();
-                await vi.advanceTimersByTimeAsync(5000);
-            });
-
-            await act(async () => {
-                result.current.generateBulkDownload();
-                await vi.advanceTimersByTimeAsync(100);
-            });
-
             expect(result.current.downloadUrl).toBe('second-url');
-            const callsAfterSecondDownload = appBridgeStub.getBulkDownloadBySignature.callCount;
-
-            await act(async () => {
-                await vi.advanceTimersByTimeAsync(30_000);
-            });
-
-            expect(appBridgeStub.getBulkDownloadBySignature.callCount - callsAfterSecondDownload).toBe(0);
+            expect(result.current.status).toBe(AssetBulkDownloadState.Ready);
         });
+    });
 
-        it('should never have more than one check in flight when responses are slow', async () => {
-            const appBridgeStub = getAppBridgeBlockStub();
-            let inFlight = 0;
-            let maxInFlight = 0;
-            appBridgeStub.getBulkDownloadByToken.resolves({ downloadUrl: '', signature: 'signature' });
-            appBridgeStub.getBulkDownloadBySignature.callsFake(async () => {
-                inFlight += 1;
-                maxInFlight = Math.max(maxInFlight, inFlight);
-                await new Promise((resolve) => setTimeout(resolve, 6000));
-                inFlight -= 1;
-                return { downloadUrl: '', signature: 'signature' };
+    it('should not set status to error when an aborted download rejects', async () => {
+        const appBridgeStub = getAppBridgeBlockStub();
+        appBridgeStub.api = sinon.stub<Parameters<AppBridgeBlock['api']>>().callsFake((apiHandler) => {
+            const { signal } = (apiHandler as { payload: { signal: AbortSignal } }).payload;
+            return new Promise((_resolve, reject) => {
+                signal.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')));
             });
-
-            const { result } = renderHook(() => useAssetBulkDownload(appBridgeStub));
-            await act(async () => {
-                result.current.generateBulkDownload();
-                await vi.advanceTimersByTimeAsync(40_000);
-            });
-
-            expect(maxInFlight).toBe(1);
         });
+        const { result, unmount } = renderHook(() => useAssetBulkDownload(appBridgeStub));
+
+        const download = startBulkDownload(result.current.generateBulkDownload);
+        unmount();
+        await download;
+
+        expect(result.current.status).toBe(AssetBulkDownloadState.Pending);
+        expect(console.error).not.toHaveBeenCalled();
     });
 });
