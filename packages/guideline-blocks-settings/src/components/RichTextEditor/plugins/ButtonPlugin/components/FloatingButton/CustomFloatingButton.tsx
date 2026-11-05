@@ -40,7 +40,7 @@ export const CustomFloatingButton = () => {
                     data-is-underlay
                     ref={insertRef}
                     {...insertProps}
-                    style={{ ...insertProps.style, ...FloatingToolbarStyles.text }}
+                    style={{ ...insertProps.style, ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {input}
                 </ScopedThemePortal>
@@ -51,7 +51,7 @@ export const CustomFloatingButton = () => {
                     data-is-underlay
                     ref={editRef}
                     {...editProps}
-                    style={{ ...editProps.style, ...FloatingToolbarStyles.text }}
+                    style={{ ...editProps.style, ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {editContent}
                 </ScopedThemePortal>

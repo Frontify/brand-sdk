@@ -1,18 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type CamelCasedPropertiesDeep } from 'type-fest';
-
-export type GetBulkDownloadTokenApi = {
-    asset_ids: number[];
-    set_ids: number[];
+export type GetBulkDownloadToken = {
+    assetIds: number[];
+    setIds: number[];
     language: string;
 };
 
-export type GetBulkDownloadToken = CamelCasedPropertiesDeep<GetBulkDownloadTokenApi>;
-
-export type BulkDownloadApi = {
-    download_url: string;
+export type BulkDownload = {
+    downloadUrl: string;
     signature: string;
 };
-
-export type BulkDownload = CamelCasedPropertiesDeep<BulkDownloadApi>;

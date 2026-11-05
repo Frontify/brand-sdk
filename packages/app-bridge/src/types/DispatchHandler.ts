@@ -8,7 +8,6 @@ export type DispatchPayload = {
     openAssetViewer: { token: string };
     openTemplateChooser: void;
     closeTemplateChooser: void;
-    openNavigationManager: void;
     openNewPublication: OpenNewPublicationPayload;
 };
 

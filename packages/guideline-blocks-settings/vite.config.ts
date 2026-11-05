@@ -14,12 +14,6 @@ const external = [...Object.keys(packageJson.dependencies), ...Object.keys(packa
     (dependency) => new RegExp(`^${dependency.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/.*)?$`),
 );
 
-export const globals = {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'react-dom/client': 'ReactDOM',
-};
-
 const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
     if (chunkInfo.name === 'guideline-blocks-settings.css') {
         return 'styles.css';
@@ -44,6 +38,8 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(import.meta.dirname, 'src/index.ts'),
+            // ESM only: its dependencies, such as @frontify/fondue and @frontify/app-bridge, are ESM too.
+            formats: ['es'],
             fileName: (format: string) => `[name].${format}.js`,
         },
         sourcemap: true,
@@ -53,28 +49,11 @@ export default defineConfig({
         cssMinify: 'esbuild',
         rollupOptions: {
             external,
-            output: [
-                {
-                    name: 'GuidelineBlocksSettings',
-                    format: 'es',
-                    preserveModules: true,
-                    preserveModulesRoot: 'src',
-                    assetFileNames,
-                    globals,
-                },
-                {
-                    name: 'GuidelineBlocksSettings',
-                    format: 'umd',
-                    assetFileNames,
-                    globals,
-                },
-                {
-                    name: 'GuidelineBlocksSettings',
-                    format: 'cjs',
-                    assetFileNames,
-                    globals,
-                },
-            ],
+            output: {
+                preserveModules: true,
+                preserveModulesRoot: 'src',
+                assetFileNames,
+            },
         },
     },
     optimizeDeps: {

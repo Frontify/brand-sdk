@@ -1,8 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import camelCase from 'lodash-es/camelCase';
-import snakeCase from 'lodash-es/snakeCase';
-import transform from 'lodash-es/transform';
+import { camelCase, snakeCase, transform } from 'lodash-es';
 import { type CamelCasedPropertiesDeep, type SnakeCasedPropertiesDeep } from 'type-fest';
 
 export const compareObjects = (obj1: unknown, obj2: unknown) => {

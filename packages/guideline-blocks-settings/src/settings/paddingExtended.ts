@@ -2,12 +2,13 @@
 
 import {
     MultiInputLayout,
-    type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
     numericalOrPixelRule,
     presetCustomValue,
-} from '../';
+} from '@frontify/sidebar-settings';
+
+import { type SettingBlock } from '../types';
 
 import { PADDING_DEFAULT_PLACEHOLDER } from './defaultValues';
 import { getPaddingSlider } from './padding';

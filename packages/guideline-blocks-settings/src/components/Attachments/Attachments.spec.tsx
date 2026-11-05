@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type Asset, AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { type Asset } from '@frontify/app-bridge';
+import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
