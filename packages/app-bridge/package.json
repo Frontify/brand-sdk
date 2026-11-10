@@ -27,7 +27,7 @@
         "package.json.d.ts"
     ],
     "engines": {
-        "node": ">=18"
+        "node": ">=22"
     },
     "scripts": {
         "build": "ts-json-as-const ./package.json && vite build",
