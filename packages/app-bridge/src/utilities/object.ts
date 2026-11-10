@@ -3,31 +3,7 @@
 import { camelCase, snakeCase, transform } from 'lodash-es';
 import { type CamelCasedPropertiesDeep, type SnakeCasedPropertiesDeep } from 'type-fest';
 
-export const compareObjects = (obj1: unknown, obj2: unknown) => {
-    if (!obj1 || !obj2 || typeof obj1 !== 'object' || typeof obj2 !== 'object') {
-        return false;
-    }
-
-    const obj1Keys = Object.keys(obj1) as (keyof typeof obj1)[];
-    const obj2Keys = Object.keys(obj2) as (keyof typeof obj2)[];
-
-    if (obj1Keys.length !== obj2Keys.length) {
-        return false;
-    }
-
-    for (const key of obj1Keys) {
-        if (
-            (typeof obj1[key] === 'object' && !compareObjects(obj1[key], obj2[key])) ||
-            (typeof obj1[key] !== 'object' && obj1[key] !== obj2[key])
-        ) {
-            return false;
-        }
-    }
-
-    return true;
-};
-
-export const isObject = (item: unknown) => {
+const isObject = (item: unknown) => {
     return item && typeof item === 'object' && !Array.isArray(item);
 };
 

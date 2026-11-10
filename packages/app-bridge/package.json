@@ -68,7 +68,6 @@
         "@vitest/coverage-v8": "^4.1.12",
         "@vitest/ui": "^4.1.12",
         "happy-dom": "^21.0.4",
-        "msw": "^2.15.0",
         "oxfmt": "^0.74.0",
         "oxlint": "^1.81.0",
         "oxlint-tsgolint": "^7.0.2001",

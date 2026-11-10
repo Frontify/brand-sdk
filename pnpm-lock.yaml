@@ -107,9 +107,6 @@ importers:
       happy-dom:
         specifier: ^21.0.4
         version: 21.0.4
-      msw:
-        specifier: ^2.15.0
-        version: 2.15.0(@types/node@26.6.5)(typescript@5.9.3)
       oxfmt:
         specifier: ^0.74.0
         version: 0.74.0
@@ -9357,6 +9354,7 @@ snapshots:
       '@inquirer/type': 4.1.0(@types/node@26.6.5)
     optionalDependencies:
       '@types/node': 26.6.5
+    optional: true
 
   '@inquirer/core@12.0.1(@types/node@22.20.5)':
     dependencies:
@@ -9394,6 +9392,7 @@ snapshots:
       signal-exit: 4.1.0
     optionalDependencies:
       '@types/node': 26.6.5
+    optional: true
 
   '@inquirer/figures@2.0.8': {}
 
@@ -9409,6 +9408,7 @@ snapshots:
   '@inquirer/type@4.1.0(@types/node@26.6.5)':
     optionalDependencies:
       '@types/node': 26.6.5
+    optional: true
 
   '@internationalized/date@3.12.1':
     dependencies:
@@ -14047,6 +14047,7 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - '@types/node'
+    optional: true
 
   muggle-string@0.4.1: {}
 

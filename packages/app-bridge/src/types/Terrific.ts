@@ -10,13 +10,6 @@ export enum TerrificEvent {
     CloseModal = 'onCloseModal',
 }
 
-export type TerrificComponent = {
-    component: {
-        onAssetChooserAssetChosen: AssetChooserAssetChosenCallback;
-        onTemplateChooserTemplateChosen: TemplateChooserTemplateChosenCallback;
-    };
-};
-
 export type AssetChooserResult = Omit<AssetApi, 'project_id' | 'file_size' | 'alternative_text'> & {
     project: number;
     filesize: number;
@@ -39,8 +32,6 @@ export type TemplateChooserResult = {
     width: number;
 };
 
-export type AssetChooserAssetChosenCallback = (selectedAsset: { screenData: AssetChooserResult[] }) => void;
-export type TemplateChooserTemplateChosenCallback = (selectedTemplate: { template: TemplateChooserResult }) => void;
 export type OpenNewPublicationPayload = {
     template: Template;
 };

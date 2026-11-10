@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-export * from './useAfterInsertion';
 export * from './useAssetBulkDownload';
 export * from './useAssetChooser';
 export * from './useAssetUpload';
@@ -12,4 +11,3 @@ export * from './useEditorState';
 export * from './useFileInput';
 export * from './useLinkChooser';
 export * from './usePrivacySettings';
-export * from './useTemplateChooser';
