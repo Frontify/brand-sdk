@@ -84,7 +84,7 @@ export const Attachments = ({
                 setIsUploadLoading(false);
             }
         };
-        uploadDone();
+        uploadDone().catch(console.error);
         // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [doneAll, uploadResults]);
 

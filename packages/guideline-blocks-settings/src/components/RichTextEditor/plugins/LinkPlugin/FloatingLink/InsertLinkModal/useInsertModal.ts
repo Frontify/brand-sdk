@@ -13,8 +13,7 @@ import {
 import { type Dispatch, type MouseEvent, type Reducer, useEffect, useReducer } from 'react';
 
 import { addHttps } from '../../../../../../helpers';
-import { isValidUrlOrEmpty } from '../../../../../Link';
-import { getLegacyUrl, getUrl } from '../../utils';
+import { getLegacyUrl, getUrl, isValidUrlOrEmpty } from '../../../../../Link';
 
 import { type InsertModalDispatchType, type InsertModalStateProps } from './types';
 
