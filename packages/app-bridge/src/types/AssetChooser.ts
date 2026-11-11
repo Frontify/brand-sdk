@@ -13,7 +13,7 @@ export enum AssetChooserProjectType {
 }
 
 export enum AssetChooserObjectType {
-    File = 'FILE', // Audio, Zip, ...
+    File = 'FILE',
     Canvas = 'CANVAS',
     ImageVideo = 'IMAGE', 
     TextSnippet = 'TEXT_SNIPPET',
