@@ -7,14 +7,15 @@ import { EditModal } from './EditModal';
 
 const URL_ID = 'floating-link-edit-url';
 
+vi.mock('@frontify/fondue/rte', async () => {
+    const actual: object = await vi.importActual('@frontify/fondue/rte');
+    return {
+        ...actual,
+        useLinkOpenButtonState: () => ({ element: { url: 'https://frontify.com' } }),
+    };
+});
+
 describe('EditModal', () => {
-    vi.mock('@frontify/fondue/rte', async () => {
-        const actual: object = await vi.importActual('@frontify/fondue/rte');
-        return {
-            ...actual,
-            useLinkOpenButtonState: () => ({ element: { url: 'https://frontify.com' } }),
-        };
-    });
     it('should render the url as an anchor tag', () => {
         const { getByTestId } = render(
             <EditModal
