@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 
-export type UseFileInputReturnTypes = [() => void, { selectedFiles: FileList | null }];
-export type UseFileInputInterface = {
+type UseFileInputReturnTypes = [() => void, { selectedFiles: FileList | null }];
+type UseFileInputInterface = {
     accept?: string;
     multiple?: boolean;
 };
