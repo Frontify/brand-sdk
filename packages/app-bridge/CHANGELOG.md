@@ -1,5 +1,36 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.82
+
+### Major Changes
+
+- [#1797](https://github.com/Frontify/brand-sdk/pull/1797) [`f2397fb`](https://github.com/Frontify/brand-sdk/commit/f2397fba1f264cc206ab1b795ac2a20511672e95) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor(useAssetUpload): report the upload payloads instead of `MessageEvent`s
+  
+  The hook used to imitate the upload worker it replaced: it wrapped every callback payload in a `MessageEvent`, and `onUploadDone` reported a snake_case `file_id` / `file_name` / `generic_url` object instead of the asset. The callbacks now receive the payloads of the `createAssets` API method directly.
+  
+  | Callback | Receives |
+  | --- | --- |
+  | `onUploadProgress` | `CreateAssetsFileProgress` — `{ file, index, loaded, total }` |
+  | `onUploadProgressAll` | `CreateAssetsProgress` — `{ loaded, total }` |
+  | `onUploadDone` | `CreateAssetsFileSuccess` — `{ file, index, asset }` |
+  | `onUploadAssetFail` | `CreateAssetsFileFailure` — `{ file, index, message }` |
+  
+  `onUploadDoneAll` and `onUploadFail` are unchanged. Read the payload directly where you used to reach for `event.data`:
+  
+  ```ts
+  const [uploadFiles] = useAssetUpload(appBridge, {
+      onUploadProgress: ({ index, loaded, total }) => setProgress(index, loaded / total),
+      onUploadDone: ({ asset }) => addAsset(asset),
+      onUploadAssetFail: ({ file, message }) => showError(`${file.name}: ${message}`),
+  });
+  ```
+
+- [#1798](https://github.com/Frontify/brand-sdk/pull/1798) [`86ffdb4`](https://github.com/Frontify/brand-sdk/commit/86ffdb486b11bf280104623010870ccbbbe6dc74) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - chore: require Node 22 or newer
+  
+  `engines.node` was still `>=18`. Node 18 and 20 have both reached end of life, so the package now declares `>=22`, matching `@frontify/frontify-cli`.
+  
+  The README also gains a worked block example, a testing example, and a note on what moved between 3.x and 4.
+
 ## 4.0.0-alpha.81
 
 ### Major Changes
