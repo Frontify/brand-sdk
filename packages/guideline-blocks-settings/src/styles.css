@@ -1,6 +1,6 @@
-@import '../node_modules/@frontify/fondue/dist/packages/components/style.css';
-@import '../node_modules/@frontify/fondue/dist/packages/rte/style.css';
-@import '../node_modules/@frontify/fondue/dist/packages/tokens/css/base.css';
+@import '@frontify/fondue/components/styles';
+@import '@frontify/fondue/rte/styles';
+@import '@frontify/fondue/tokens/base';
 
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
