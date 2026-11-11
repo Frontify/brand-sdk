@@ -15,7 +15,7 @@ export enum AssetChooserProjectType {
 export enum AssetChooserObjectType {
     File = 'FILE', // Audio, Zip, ...
     Canvas = 'CANVAS',
-    ImageVideo = 'IMAGE', // No distinction between images and videos in the screen table
+    ImageVideo = 'IMAGE', 
     TextSnippet = 'TEXT_SNIPPET',
     Url = 'URL',
 }
