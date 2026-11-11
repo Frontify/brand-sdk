@@ -70,6 +70,7 @@ const HoverableButton = ({ id, styles, isActive, onClick, children }: Props): Re
 
     return (
         <button
+            type="button"
             data-test-id={`floating-button-insert-${id}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
