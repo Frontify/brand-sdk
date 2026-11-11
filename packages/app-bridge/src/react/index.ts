@@ -11,3 +11,4 @@ export * from './useEditorState';
 export * from './useFileInput';
 export * from './useLinkChooser';
 export * from './usePrivacySettings';
+export * from './useTemplateChooser';
