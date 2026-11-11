@@ -103,7 +103,7 @@ export const BlockInjectButton = ({
                 isDraggingOver && !isLoading ? 'tw-border-dashed' : 'tw-border-solid',
                 menuPosition && 'tw-bg-surface-hover',
                 isDraggingOver && 'tw-bg-surface',
-                errorMsg ? '!tw-border-red-50 !tw-cursor-not-allowed' : ' tw-border-line-mid',
+                errorMsg ? '!tw-border-error !tw-cursor-not-allowed' : ' tw-border-line-mid',
                 isLoading || menuPosition || isDraggingOver || errorMsg
                     ? ''
                     : 'tw-text-secondary hover:tw-text-primary hover:tw-bg-surface hover:tw-border-line-strong active:tw-text-primary active:tw-bg-surface-hover active:tw-border-line-strong',
@@ -154,7 +154,7 @@ export const BlockInjectButton = ({
             {isLoading ? (
                 <LoadingCircle />
             ) : errorMsg ? (
-                <div className=" tw-flex tw-items-center tw-justify-center tw-text-red-60 tw-font-medium">
+                <div className=" tw-flex tw-items-center tw-justify-center tw-text-error tw-font-medium">
                     <IconExclamationMarkTriangle size="16" />
                     {errorMsg}
                 </div>
@@ -164,7 +164,7 @@ export const BlockInjectButton = ({
                     {(label || secondaryLabel) && (
                         <div className="tw-flex tw-flex-col tw-items-start">
                             {label && <div className="tw-font-medium">{label}</div>}
-                            {secondaryLabel && <div className="tw-font-normal">{secondaryLabel}</div>}
+                            {secondaryLabel && <div className="tw-font-regular">{secondaryLabel}</div>}
                         </div>
                     )}
                 </>

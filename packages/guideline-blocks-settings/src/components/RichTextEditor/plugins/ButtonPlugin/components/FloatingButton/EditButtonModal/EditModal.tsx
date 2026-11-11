@@ -30,7 +30,7 @@ export const EditModal = () => {
                         }}
                         tabIndex={0}
                         data-test-id="edit-button-button"
-                        className="tw-transition tw-cursor-pointer tw-rounded-medium hover:tw-bg-black-10 tw-p-1"
+                        className="tw-transition tw-cursor-pointer tw-rounded-medium hover:tw-bg-surface-hover tw-p-1"
                     >
                         <IconPen size={16} />
                     </button>
@@ -42,7 +42,7 @@ export const EditModal = () => {
                         }}
                         tabIndex={0}
                         data-test-id="remove-button-button"
-                        className="tw-transition tw-cursor-pointer tw-rounded-medium hover:tw-bg-black-10 tw-p-1"
+                        className="tw-transition tw-cursor-pointer tw-rounded-medium hover:tw-bg-surface-hover tw-p-1"
                     >
                         <IconTrashBin size={16} />
                     </button>
