@@ -4,15 +4,21 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type CreateAssetsResponse, createAssets } from '../registries';
-import { type Asset, type FileApi } from '../types';
+import {
+    type Asset,
+    type CreateAssetsFileFailure,
+    type CreateAssetsFileProgress,
+    type CreateAssetsFileSuccess,
+    type CreateAssetsProgress,
+} from '../types';
 
 export type UseAssetUploadParameters = {
-    onUploadProgress?: (event: MessageEvent) => void;
-    onUploadProgressAll?: (event: MessageEvent) => void;
-    onUploadDone?: (event: MessageEvent<FileApi>) => void;
-    onUploadDoneAll?: (event: Asset[]) => void;
+    onUploadProgress?: (progress: CreateAssetsFileProgress) => void;
+    onUploadProgressAll?: (progress: CreateAssetsProgress) => void;
+    onUploadDone?: (result: CreateAssetsFileSuccess) => void;
+    onUploadDoneAll?: (assets: Asset[]) => void;
     onUploadFail?: () => void;
-    onUploadAssetFail?: (event: MessageEvent) => void;
+    onUploadAssetFail?: (failure: CreateAssetsFileFailure) => void;
 };
 
 export type UseAssetUploadReturnTypes = [(files: FileList | File) => void, { results: Asset[]; doneAll: boolean }];
@@ -65,28 +71,10 @@ export const useAssetUpload = (
                     createAssets({
                         files,
                         signal: abortController.signal,
-                        onProgress: (progress) =>
-                            callbacksRef.current?.onUploadProgressAll?.(
-                                new MessageEvent('message', { data: progress }),
-                            ),
-                        onFileProgress: ({ index, loaded, total }) =>
-                            callbacksRef.current?.onUploadProgress?.(
-                                new MessageEvent('message', { data: { index, loaded, total, lengthComputable: true } }),
-                            ),
-                        onFileDone: ({ asset }) =>
-                            callbacksRef.current?.onUploadDone?.(
-                                new MessageEvent<FileApi>('message', {
-                                    data: {
-                                        file_id: asset.fileId,
-                                        file_name: asset.fileName,
-                                        generic_url: asset.genericUrl,
-                                    },
-                                }),
-                            ),
-                        onFileFail: ({ file, index, message }) =>
-                            callbacksRef.current?.onUploadAssetFail?.(
-                                new MessageEvent('message', { data: { file, index, error: message } }),
-                            ),
+                        onProgress: (progress) => callbacksRef.current?.onUploadProgressAll?.(progress),
+                        onFileProgress: (progress) => callbacksRef.current?.onUploadProgress?.(progress),
+                        onFileDone: (result) => callbacksRef.current?.onUploadDone?.(result),
+                        onFileFail: (failure) => callbacksRef.current?.onUploadAssetFail?.(failure),
                     }),
                 )
                 .then(onUploaded)

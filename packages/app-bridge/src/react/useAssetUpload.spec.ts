@@ -71,17 +71,17 @@ describe('useAssetUpload hook', () => {
         });
 
         await waitFor(() => expect(result.current[1].doneAll).toBe(true));
-        expect(onUploadProgress.mock.calls.map(([event]) => event.data)).toEqual([
-            { index: 0, loaded: 3, total: 3, lengthComputable: true },
-            { index: 1, loaded: 5, total: 5, lengthComputable: true },
+        expect(onUploadProgress.mock.calls.map(([progress]) => progress)).toEqual([
+            { file: firstFile, index: 0, loaded: 3, total: 3 },
+            { file: secondFile, index: 1, loaded: 5, total: 5 },
         ]);
-        expect(onUploadProgressAll.mock.calls.map(([event]) => event.data)).toEqual([
+        expect(onUploadProgressAll.mock.calls.map(([progress]) => progress)).toEqual([
             { loaded: 3, total: 8 },
             { loaded: 8, total: 8 },
         ]);
     });
 
-    it('should call onUploadDone with the file of each created asset', async () => {
+    it('should call onUploadDone with each created asset', async () => {
         const appBridge = getAppBridgeBlockStub();
         const onUploadDone = vi.fn();
         const { result } = renderHook(() => useAssetUpload(appBridge, { onUploadDone }));
@@ -93,11 +93,7 @@ describe('useAssetUpload hook', () => {
         await waitFor(() => expect(result.current[1].doneAll).toBe(true));
         const asset = result.current[1].results[0];
         expect(onUploadDone).toHaveBeenCalledOnce();
-        expect(onUploadDone.mock.calls[0][0].data).toEqual({
-            file_id: asset.fileId,
-            file_name: asset.fileName,
-            generic_url: asset.genericUrl,
-        });
+        expect(onUploadDone).toHaveBeenCalledWith({ file: firstFile, index: 0, asset });
     });
 
     it('should call the latest callbacks after a re-render', async () => {
@@ -146,10 +142,10 @@ describe('useAssetUpload hook', () => {
         });
 
         await waitFor(() => expect(result.current[1].doneAll).toBe(true));
-        expect(onUploadAssetFail.mock.calls[0][0].data).toEqual({
+        expect(onUploadAssetFail).toHaveBeenCalledWith({
             file: firstFile,
             index: 0,
-            error: 'File type not allowed',
+            message: 'File type not allowed',
         });
         expect(result.current[1].results).toEqual([AssetDummy.with(2)]);
     });

@@ -8,7 +8,7 @@ import {
     type GetAssetBulkDownloadTokenPayload,
     type GetAssetBulkDownloadTokenResponse,
 } from './GetAssetBulkDownloadToken';
-import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser.ts';
+import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,

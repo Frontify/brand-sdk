@@ -84,7 +84,7 @@ export const Attachments = ({
                 setIsUploadLoading(false);
             }
         };
-        uploadDone();
+        uploadDone().catch(console.error);
         // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [doneAll, uploadResults]);
 
@@ -179,7 +179,7 @@ export const Attachments = ({
                                     modifiers={[restrictToParentElement]}
                                 >
                                     <SortableContext items={internalItems} strategy={rectSortingStrategy}>
-                                        <div className="tw-border-b tw-border-b-line tw-relative">
+                                        <div className="tw-border-b tw-border-b-line-mid tw-relative">
                                             {internalItems.map((item) => (
                                                 <SortableAttachmentItem
                                                     appBridge={appBridge}

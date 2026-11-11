@@ -1,5 +1,47 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.16
+
+### Major Changes
+
+- [#1800](https://github.com/Frontify/brand-sdk/pull/1800) [`92716ea`](https://github.com/Frontify/brand-sdk/commit/92716eac1dace904e50688cbdac0c18b2b05a8a0) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `14.0.0-beta.2`
+  
+  The rich text editor props and plugins (`RichTextEditor`, `LinkPlugin`, `ButtonPlugin`, `AllTextStylePlugins`, …) are now typed against fondue 14. If your block builds a `PluginComposer` from its own `@frontify/fondue/rte`, upgrade it to `@frontify/fondue@14.0.0-beta.2` as well; on fondue 13 the plugins no longer type-check against these props.
+
+- [#1802](https://github.com/Frontify/brand-sdk/pull/1802) [`1c55b54`](https://github.com/Frontify/brand-sdk/commit/1c55b540953ec6924dd46b711201013e2b09a5e8) Thanks [@ragi96](https://github.com/ragi96)! - chore: stop shipping fondue's deprecated CSS variables in `@frontify/guideline-blocks-settings/styles`
+  
+  The stylesheet no longer defines fondue's deprecated `:root` variables, such as `--text-color`, `--line-color` and `--box-neutral-color`. The components in this package don't use them. If your own block CSS still reads them, switch to the current fondue tokens:
+  
+  | Deprecated | Current |
+  | --- | --- |
+  | `--text-color` | `--color-primary-default` |
+  | `--text-color-weak` | `--color-secondary-default` |
+  | `--text-color-negative` | `--color-error-default` |
+  | `--base-color` | `--color-surface-default` |
+  | `--box-neutral-color` | `--color-container-secondary-default` |
+  | `--box-selected-color` | `--color-container-highlight-default` |
+  | `--line-color` | `--color-line-mid` |
+  | `--line-color-strong` | `--color-line-strong` |
+  
+  fondue's `deprecatedBaseTokens.css` lists the mapping for every variable. Until you've migrated, you can import that file yourself:
+  
+  ```ts
+  import '@frontify/fondue/dist/packages/tokens/legacy/deprecatedBaseTokens.css';
+  ```
+
+### Patch Changes
+
+- [#1801](https://github.com/Frontify/brand-sdk/pull/1801) [`1e7a1ac`](https://github.com/Frontify/brand-sdk/commit/1e7a1ac17e1b7b03dcad906a1c4229f432fb623c) Thanks [@ragi96](https://github.com/ragi96)! - fix: show missing borders, hover backgrounds and error colors
+  
+  Several components used old palette classes that the package's stylesheet doesn't generate, so those styles didn't render. They now use the current fondue tokens:
+  
+  - `BlockInjectButton`: the red border and text when an invalid file is dropped
+  - Rich text editor link and button popovers: the hover background of the edit and remove icons, and the divider above the Cancel and Save buttons in the link dialog
+  - Rich text editor button dialog: the outline around the selected button style
+  - `Attachments`: the divider below the attachment list
+  
+  The block item toolbar now uses fondue's radius and shadow tokens as well: its corners are slightly tighter (4px instead of 6px) and its shadow matches fondue's flyouts.
+
 ## 4.0.0-alpha.15
 
 ### Patch Changes

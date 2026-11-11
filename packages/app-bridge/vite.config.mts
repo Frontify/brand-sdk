@@ -39,7 +39,7 @@ export default defineConfig({
             provider: 'v8',
             reporter: ['text', 'lcov'],
             include: ['src/**/*.ts', 'src/**/*.tsx'],
-            exclude: ['src/**/test.ts', 'src/**/test.tsx', 'src/**/spec.ts', 'src/**/spec.tsx'],
+            exclude: ['src/**/*.spec.ts', 'src/**/*.spec.tsx', 'src/setupTests.ts'],
         },
         setupFiles: ['./src/setupTests.ts'],
     },

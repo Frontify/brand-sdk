@@ -1,7 +1,7 @@
 {
     "name": "@frontify/app-bridge",
     "type": "module",
-    "version": "4.0.0-alpha.81",
+    "version": "4.0.0-alpha.82",
     "description": "Package to establish communication between Frontify and marketplace apps",
     "author": "Frontify Developers <developers@frontify.com>",
     "repository": {
@@ -27,7 +27,7 @@
         "package.json.d.ts"
     ],
     "engines": {
-        "node": ">=18"
+        "node": ">=22"
     },
     "scripts": {
         "build": "ts-json-as-const ./package.json && vite build",
