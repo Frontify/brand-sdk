@@ -24,14 +24,14 @@ const MENU_FLYOUT_ID = 'menu-item';
 const TOOLBAR_SEGMENT_ID = 'block-item-wrapper-toolbar-segment';
 const MOCK_ASSET_FIELD_ID = 'attachment';
 
-describe('Toolbar', () => {
-    const stubs = vi.hoisted(() => ({
-        setOpenFlyoutIds: vi.fn(),
-        onClick: vi.fn(),
-        onDrag: vi.fn(),
-        onKeyDown: vi.fn(),
-    }));
+const stubs = vi.hoisted(() => ({
+    setOpenFlyoutIds: vi.fn(),
+    onClick: vi.fn(),
+    onDrag: vi.fn(),
+    onKeyDown: vi.fn(),
+}));
 
+describe('Toolbar', () => {
     const STUB_WITH_NO_ASSETS = getAppBridgeBlockStub({
         blockId: 1,
         blockAssets: { [MOCK_ASSET_FIELD_ID]: [] },

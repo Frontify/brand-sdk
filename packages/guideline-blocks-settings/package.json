@@ -51,7 +51,6 @@
         "@tailwindcss/container-queries": "^0.1.1"
     },
     "devDependencies": {
-        "@babel/core": "^7.29.7",
         "@frontify/app-bridge": "workspace:^",
         "@frontify/oxfmt-config": "^0.0.2",
         "@frontify/oxlint-config-react": "^0.0.2",
@@ -69,7 +68,6 @@
         "autoprefixer": "^10.5.4",
         "eslint-plugin-tailwindcss": "^3.18.3",
         "happy-dom": "^21.0.4",
-        "msw": "^2.15.0",
         "oxfmt": "^0.74.0",
         "oxlint": "^1.81.0",
         "oxlint-tsgolint": "^7.0.2001",
@@ -82,7 +80,6 @@
         "typescript": "^5.9.3",
         "vite": "^8.3.5",
         "vite-plugin-dts": "^5.1.0",
-        "vite-plugin-externals": "^0.6.2",
         "vitest": "^4.1.12"
     },
     "peerDependencies": {

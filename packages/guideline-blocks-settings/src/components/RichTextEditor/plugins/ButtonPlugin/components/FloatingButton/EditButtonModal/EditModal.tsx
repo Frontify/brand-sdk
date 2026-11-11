@@ -25,6 +25,7 @@ export const EditModal = () => {
                 </a>
                 <span className="tw-flex tw-gap-2">
                     <button
+                        type="button"
                         onClick={() => {
                             triggerFloatingButtonEdit(editor);
                         }}
@@ -36,6 +37,7 @@ export const EditModal = () => {
                     </button>
 
                     <button
+                        type="button"
                         onClick={() => {
                             unwrapButton(editor);
                             focusEditor(editor, editor.selection ?? undefined);
