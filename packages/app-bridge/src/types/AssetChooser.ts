@@ -1,40 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type AssetApi } from './Asset';
 import { type FileExtension } from './FileExtension';
-import { type Nullable } from './Nullable';
-import { type Template } from './Template';
-
-export enum TerrificEvent {
-    OpenModal = 'onOpenModal',
-    CloseModal = 'onCloseModal',
-}
-
-export type AssetChooserResult = Omit<AssetApi, 'project_id' | 'file_size' | 'alternative_text'> & {
-    project: number;
-    filesize: number;
-    computed_alternative_text: Nullable<string>;
-};
-export type TemplateChooserResult = {
-    asset_created: string;
-    asset_modified: string;
-    categories: unknown[];
-    description: string;
-    height: number;
-    id: number;
-    name: string;
-    preview: string;
-    project: number;
-    project_name: string;
-    project_type: string;
-    published: number;
-    screen_id: number;
-    width: number;
-};
-
-export type OpenNewPublicationPayload = {
-    template: Template;
-};
 
 export enum AssetChooserProjectType {
     MediaLibrary = 'MediaLibrary',
@@ -68,8 +34,3 @@ export type AssetChooserOptions = {
           selectedValueIds?: (number | string)[];
       }
 );
-
-export type AssetViewerOptions = {
-    token: string;
-    isDownloadable?: boolean;
-};
