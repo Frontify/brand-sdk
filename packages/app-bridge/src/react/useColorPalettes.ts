@@ -8,10 +8,25 @@ import { compareObjects } from '../utilities';
 
 export type UseColorPalettesReturnType = {
     colorPalettes: ColorPalette[];
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+     */
     createColorPalette: (colorPaletteCreate: ColorPaletteCreate) => void;
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+     */
     updateColorPalette: (colorPaletteId: number, colorPalettePatch: ColorPalettePatch) => void;
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+     */
     deleteColorPalette: (colorPaletteId: number) => void;
-    /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It returns an empty string now and no longer offers a color kit: Frontify retired project colors.
+     */
     downloadColorKit: (selectedColorPalettes: number[]) => string;
 };
 
@@ -84,12 +99,25 @@ export const useColorPalettes = (appBridge: AppBridgeBlock, colorPaletteIds?: nu
 
     return {
         colorPalettes,
-        /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
+        /**
+         * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+         * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+         */
         createColorPalette,
-        /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
+        /**
+         * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+         * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+         */
         updateColorPalette,
-        /** @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge` */
+        /**
+         * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+         * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+         */
         deleteColorPalette,
+        /**
+         * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+         * It returns an empty string now and no longer offers a color kit: Frontify retired project colors.
+         */
         downloadColorKit,
     };
 };

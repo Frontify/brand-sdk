@@ -8,11 +8,35 @@ import { compareObjects } from '../utilities';
 
 export type UseColorsReturnType = {
     colorsByPaletteId: Color[];
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+     */
     createColor: (colorCreate: ColorCreate) => void;
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+     */
     updateColor: (colorId: number, colorPatch: ColorPatch) => void;
+    /**
+     * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
+     */
     deleteColor: (colorId: number) => void;
 };
 
+const getColorsOfPalette = async (appBridge: AppBridgeBlock, colorPaletteId: number): Promise<Color[]> => {
+    const colorPalettes = await appBridge.getColorPalettesWithColors([colorPaletteId]);
+    const colorPalette = colorPalettes.find((palette) => palette.id === colorPaletteId);
+
+    return colorPalette?.colors ?? [];
+};
+
+/**
+ * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+ * Use `useColorPalettes` instead. The colors come from `getColorPalettesWithColors`, and `createColor`,
+ * `updateColor` and `deleteColor` have no effect anymore: Frontify retired project colors.
+ */
 export const useColors = (appBridge: AppBridgeBlock, colorPaletteId: number): UseColorsReturnType => {
     const blockId = appBridge.context('blockId').get();
 
@@ -30,7 +54,7 @@ export const useColors = (appBridge: AppBridgeBlock, colorPaletteId: number): Us
 
         if (blockId) {
             const mountingFetch = async () => {
-                const allColors = await appBridge.getColorsByColorPaletteId(colorPaletteId);
+                const allColors = await getColorsOfPalette(appBridge, colorPaletteId);
                 if (componentMounted) {
                     const sortedColors = [...allColors].sort((a, b) => a.sort - b.sort);
                     setColorsByPaletteId(sortedColors);
@@ -50,7 +74,7 @@ export const useColors = (appBridge: AppBridgeBlock, colorPaletteId: number): Us
     const emitUpdatedColors = async () => {
         window.emitter.emit('AppBridge:ColorsUpdated', {
             blockId,
-            colors: await appBridge.getColorsByColorPaletteId(colorPaletteId),
+            colors: await getColorsOfPalette(appBridge, colorPaletteId),
             prevColors: { ...colorsByPaletteId },
         });
     };

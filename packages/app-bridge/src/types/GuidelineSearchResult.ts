@@ -6,6 +6,7 @@ export const GuidelineSearchResultTypeMap = {
     block: 'BLOCK',
     section: 'SECTION',
     page: 'PAGE',
+    /** @deprecated Frontify retired color search results, so no result has this type anymore. */
     color: 'COLOR',
 } as const;
 type GuidelineSearchResultType = (typeof GuidelineSearchResultTypeMap)[keyof typeof GuidelineSearchResultTypeMap];
@@ -28,7 +29,9 @@ export type GuidelineSearchResultApi = {
     section_id: string | null;
     section_slug: string | null;
     section_title: string | null;
+    /** @deprecated Frontify retired color search results, so it is never set anymore. */
     color_hex?: string;
+    /** @deprecated Frontify retired color search results, so it is never set anymore. */
     project_color_id?: string;
 };
 
