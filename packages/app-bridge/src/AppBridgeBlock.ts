@@ -169,42 +169,49 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
+     * It has no effect anymore and rejects: Frontify retired project colors, manage colors in Brand Essentials
+     * instead. There won't be a replacement for this method.
      */
     createColorPalette(colorPaletteCreate: ColorPaletteCreate): Promise<ColorPalette>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
+     * It has no effect anymore and rejects: Frontify retired project colors, manage colors in Brand Essentials
+     * instead. There won't be a replacement for this method.
      */
     updateColorPalette(colorPaletteId: number, colorPalettePatch: ColorPalettePatch): Promise<ColorPalette>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
      * There won't be a replacement for this method.
      */
     deleteColorPalette(colorPaletteId: number): Promise<void>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
+     * It has no effect anymore and rejects: Frontify retired project colors, manage colors in Brand Essentials
+     * instead. There won't be a replacement for this method.
      */
     createColor(colorCreate: ColorCreate): Promise<Color>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method.
+     * It has no effect anymore and rejects: Frontify retired project colors, manage colors in Brand Essentials
+     * instead. There won't be a replacement for this method.
      */
     updateColor(colorId: number, colorPatch: ColorPatch): Promise<Color>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It has no effect anymore: Frontify retired project colors, manage colors in Brand Essentials instead.
      * There won't be a replacement for this method.
      */
     deleteColor(colorId: number): Promise<void>;
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
+     * It returns an empty string now and no longer offers a color kit: Frontify retired project colors.
      * There won't be a replacement for this method.
      */
     downloadColorKit(selectedColorPalettes: number[]): string;
@@ -260,7 +267,8 @@ export interface AppBridgeBlock<
 
     /**
      * @deprecated will be removed in version 4.0.0 of `@frontify/app-bridge`
-     * There won't be a replacement for this method. But there will a new api to grab all colors and palettes.
+     * It always resolves to an empty list now: Frontify retired project colors.
+     * Use `getColorPalettesWithColors` to read the colors of a palette.
      */
     getColorsByColorPaletteId(colorPaletteId: number): Promise<Color[]>;
 

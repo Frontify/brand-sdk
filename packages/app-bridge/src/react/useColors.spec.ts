@@ -3,34 +3,40 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { ColorDummy, getAppBridgeBlockStub } from '../tests';
+import { ColorPaletteDummy, getAppBridgeBlockStub } from '../tests';
 
 import { useColors } from './useColors';
 
-const COLOR_PALETTE_ID = 1;
+const COLOR_PALETTE_ID = 427;
+const UNKNOWN_COLOR_PALETTE_ID = 1;
 
 describe('useColors hook', () => {
-    const loadUseColors = () => {
+    const loadUseColors = (colorPaletteId = COLOR_PALETTE_ID) => {
         const appBridgeStub = getAppBridgeBlockStub();
-        const { result } = renderHook(() => useColors(appBridgeStub, COLOR_PALETTE_ID));
+        const { result } = renderHook(() => useColors(appBridgeStub, colorPaletteId));
 
-        return { result };
+        return { result, appBridgeStub };
     };
 
-    it('should get all the colors of a palette', async () => {
-        const { result } = await loadUseColors();
+    it('should get the colors of the palette from the color palettes with colors', async () => {
+        const { result, appBridgeStub } = loadUseColors();
 
-        waitFor(() =>
-            expect(result.current.colorsByPaletteId).toEqual([
-                ColorDummy.red(9834),
-                ColorDummy.yellow(9314),
-                ColorDummy.green(342),
-            ]),
+        await waitFor(() =>
+            expect(result.current.colorsByPaletteId).toEqual(ColorPaletteDummy.with(COLOR_PALETTE_ID).colors),
         );
+        expect(appBridgeStub.getColorPalettesWithColors.calledWith([COLOR_PALETTE_ID])).toBe(true);
+        expect(appBridgeStub.getColorsByColorPaletteId.called).toBe(false);
+    });
+
+    it('should get no colors for a palette that does not exist', async () => {
+        const { result, appBridgeStub } = loadUseColors(UNKNOWN_COLOR_PALETTE_ID);
+
+        await waitFor(() => expect(appBridgeStub.getColorPalettesWithColors.called).toBe(true));
+        expect(result.current.colorsByPaletteId).toEqual([]);
     });
 
     it('should not throw createColor', async () => {
-        const { result } = await loadUseColors();
+        const { result } = loadUseColors();
 
         const createColorMock = vi.fn().mockImplementation(result.current.createColor);
 
@@ -38,7 +44,7 @@ describe('useColors hook', () => {
     });
 
     it('should not throw updateColor', async () => {
-        const { result } = await loadUseColors();
+        const { result } = loadUseColors();
 
         const updateColorMock = vi.fn().mockImplementation(result.current.updateColor);
 
@@ -46,7 +52,7 @@ describe('useColors hook', () => {
     });
 
     it('should not throw deleteColor', async () => {
-        const { result } = await loadUseColors();
+        const { result } = loadUseColors();
 
         const deleteColorMock = vi.fn().mockImplementation(result.current.deleteColor);
 
