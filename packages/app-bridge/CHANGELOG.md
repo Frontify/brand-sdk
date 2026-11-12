@@ -1,5 +1,17 @@
 # @frontify/app-bridge
 
+## 3.12.12
+
+### Patch Changes
+
+- [#1810](https://github.com/Frontify/brand-sdk/pull/1810) [`5e9b06d`](https://github.com/Frontify/brand-sdk/commit/5e9b06d8a863544bd391412f412d0d6be64bf084) Thanks [@ragi96](https://github.com/ragi96)! - chore: retire the project-color methods of `AppBridgeBlock`
+  
+  Frontify retired project colors in favor of Brand Essentials colors, so `createColorPalette`, `updateColorPalette`, `deleteColorPalette`, `createColor`, `updateColor`, `deleteColor`, `getColorsByColorPaletteId` and `downloadColorKit` have no effect anymore. The create and update methods reject, the delete methods resolve, `getColorsByColorPaletteId` resolves to an empty list and `downloadColorKit` returns an empty string. They will be removed in version 4.0.0 without a replacement.
+  
+  Read colors with `getColorPalettesWithColors` or the `useColorPalettes` hook. The `useColors` hook is deprecated: it now reads its colors through `getColorPalettesWithColors`, and its `createColor`, `updateColor` and `deleteColor` have no effect anymore.
+  
+  `colorHex` and `projectColorId` of `GuidelineSearchResult` are deprecated: Frontify retired color search results, so they are never set anymore.
+
 ## 3.12.11
 
 ### Patch Changes
