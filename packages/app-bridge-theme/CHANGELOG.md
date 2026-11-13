@@ -1,5 +1,13 @@
 # @frontify/app-bridge-theme
 
+## 1.4.1
+
+### Patch Changes
+
+- [#1810](https://github.com/Frontify/brand-sdk/pull/1810) [`5e9b06d`](https://github.com/Frontify/brand-sdk/commit/5e9b06d8a863544bd391412f412d0d6be64bf084) Thanks [@ragi96](https://github.com/ragi96)! - chore: deprecate `colorHex` and `projectColorId` of `GuidelineSearchResult`
+  
+  Frontify retired color search results, so these fields are never set anymore and no result has the type `COLOR`. They will be removed in the next major version.
+
 ## 1.4.0
 
 ### Minor Changes

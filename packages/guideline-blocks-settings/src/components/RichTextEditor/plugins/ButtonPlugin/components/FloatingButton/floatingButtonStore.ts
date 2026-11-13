@@ -2,8 +2,6 @@
 
 import { createStore } from '@frontify/fondue/rte';
 
-import { type RichTextButtonStyle } from '../../types';
-
 export type FloatingButtonMode = '' | 'insert' | 'edit';
 
 export const floatingButtonStore: any = createStore('floatingButton')({
@@ -12,9 +10,9 @@ export const floatingButtonStore: any = createStore('floatingButton')({
     updated: false,
     url: '',
     text: '',
-    buttonStyle: 'primary' as RichTextButtonStyle,
+    buttonStyle: 'primary',
     newTab: false,
-    mode: '' as FloatingButtonMode,
+    mode: '',
     isEditing: false,
 })
     .extendActions((set) => ({

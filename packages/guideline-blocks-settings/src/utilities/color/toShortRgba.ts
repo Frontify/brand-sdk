@@ -19,7 +19,7 @@ type ShortNotationColor = {
 export const toShortRgba = (color: unknown): ShortNotationColor => {
     const isRgbaLongFormat = (value: Color) => {
         const requiredKeys = ['red', 'green', 'blue'];
-        return typeof value === 'object' && requiredKeys.every((i) => value.hasOwnProperty(i));
+        return typeof value === 'object' && requiredKeys.every((i) => Object.prototype.hasOwnProperty.call(value, i));
     };
 
     const mapToShortFormat = (value: Color): ShortNotationColor => {
