@@ -1,6 +1,16 @@
 # Block Settings
 
-Provides the block settings types for the guideline-blocks.
+Provides the block settings types, helpers and React components for building guideline blocks.
+
+## Installation
+
+Install the package together with its peer dependencies:
+
+```sh
+pnpm add @frontify/guideline-blocks-settings @frontify/app-bridge @frontify/fondue react react-dom
+```
+
+Your block provides `@frontify/app-bridge`, `@frontify/fondue`, `react` and `react-dom`, and this package uses those same copies. Their versions need to match the package's `peerDependencies`: app-bridge 4, fondue 14 and React 18.
 
 ## Example
 
@@ -14,17 +24,16 @@ export const settings = defineSettings({
         {
             id: 'example',
             type: 'dropdown',
-            size: 'Large',
             defaultValue: 'solid',
             choices: [
                 {
                     value: 'noline',
-                    icon: 'LineSpacer',
+                    icon: 'DividerBlank',
                     label: 'Spacer (no line)',
                 },
                 {
                     value: 'solid',
-                    icon: 'LineSolid',
+                    icon: 'DividerSolid',
                     label: 'Line',
                 },
             ],
@@ -51,24 +60,33 @@ export const settings = defineSettings({
 
 To use React components, you need to add the styles import from the `@frontify/guideline-blocks-settings` package:
 
-```
+```ts
 import '@frontify/guideline-blocks-settings/styles';
 ```
 
 ## Development
 
-Run `pnpm build` to make changes directly available to the linked packages.
+The package uses the workspace versions of `@frontify/sidebar-settings` and `@frontify/app-bridge` from their `dist` folders, so build those first. From the repository root:
 
-To run the tests, linter, or type checker, first update @frontify/app-bridge. For the latest version, execute:
-
-```
-pnpm add @frontify/app-bridge@workspace:^ --filter {packages/guideline-blocks-settings}
-```
-
-For a specific version, such as 3.0.2, execute:
-
-```
-pnpm add @frontify/app-bridge@3.0.2 --filter {packages/guideline-blocks-settings}
+```sh
+pnpm install
+pnpm build:sidebar-settings
+pnpm build:app-bridge
 ```
 
-After updating, you can run the following commands as needed. For testing, use `pnpm test`. For linting, use `pnpm lint`. For type checking, use `pnpm typecheck`.
+Then, in `packages/guideline-blocks-settings`:
+
+| Command          | What it does                                                    |
+| ---------------- | --------------------------------------------------------------- |
+| `pnpm build`     | Builds the package; linked packages pick up the change directly |
+| `pnpm test`      | Runs the tests                                                  |
+| `pnpm lint`      | Runs the linter                                                 |
+| `pnpm typecheck` | Runs the type checker                                           |
+
+CI also checks the package against a published app-bridge version. To do the same locally, install that version temporarily from the repository root:
+
+```sh
+pnpm add @frontify/app-bridge@^4.0.0-alpha.0 --filter {packages/guideline-blocks-settings}
+```
+
+To switch back, restore `packages/guideline-blocks-settings/package.json` and `pnpm-lock.yaml`, then run `pnpm install`.
