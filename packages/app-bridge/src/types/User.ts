@@ -1,9 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type SnakeCasedPropertiesDeep } from 'type-fest';
-
-export type UserApi = SnakeCasedPropertiesDeep<User>;
-
 export type User = {
     id: number;
     name: string;

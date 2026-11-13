@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type Asset } from '../types';
+import { type Nullable } from '../types/Nullable';
 
 export enum AssetBulkDownloadState {
     Init = 'init',
@@ -14,66 +15,37 @@ export enum AssetBulkDownloadState {
 }
 
 export const useAssetBulkDownload = (appBridge: AppBridgeBlock) => {
-    const intervalId = useRef<number | null>(null);
+    const abortControllerRef = useRef<AbortController | null>(null);
     const [status, setStatus] = useState<AssetBulkDownloadState>(AssetBulkDownloadState.Init);
     const [downloadUrl, setDownloadUrl] = useState<Nullable<string>>(null);
 
+    useEffect(() => () => abortControllerRef.current?.abort(), []);
+
     const generateBulkDownload = async (blockAssets?: Record<string, Asset[]>) => {
+        abortControllerRef.current?.abort();
+        const abortController = new AbortController();
+        abortControllerRef.current = abortController;
+        const { signal } = abortController;
+
         try {
-            setStatus(AssetBulkDownloadState.Started);
-
-            const { assetBulkDownloadToken } = await appBridge.api({
-                name: 'getAssetBulkDownloadToken',
-                payload: { blockAssets },
-            });
-
+            setStatus(AssetBulkDownloadState.Pending);
             setDownloadUrl(null);
-            startDownload(assetBulkDownloadToken);
+
+            const { downloadUrl } = await appBridge.api({
+                name: 'createAssetBulkDownload',
+                payload: { blockAssets, signal },
+            });
+            signal.throwIfAborted();
+
+            setDownloadUrl(downloadUrl);
+            setStatus(AssetBulkDownloadState.Ready);
         } catch (error) {
-            setStatus(AssetBulkDownloadState.Error);
-            console.error(error);
-        }
-    };
-
-    const startDownload = async (token: string) => {
-        try {
-            const download = await appBridge.getBulkDownloadByToken(token);
-
-            if (download.downloadUrl) {
-                setDownloadUrl(download.downloadUrl);
-                setStatus(AssetBulkDownloadState.Ready);
-            } else {
-                setStatus(AssetBulkDownloadState.Pending);
-                intervalId.current = listenForBulkDownloadReady(download.signature);
+            if (signal.aborted) {
+                return;
             }
-        } catch (error) {
             setStatus(AssetBulkDownloadState.Error);
             console.error(error);
         }
-    };
-
-    const listenForBulkDownloadReady = (signature: string) => {
-        return window.setInterval(() => {
-            (async () => {
-                try {
-                    const download = await appBridge.getBulkDownloadBySignature(signature);
-
-                    if (download.downloadUrl) {
-                        setStatus(AssetBulkDownloadState.Ready);
-                        setDownloadUrl(download.downloadUrl);
-                        if (intervalId.current) {
-                            clearInterval(intervalId.current);
-                        }
-                    }
-                } catch (error) {
-                    setStatus(AssetBulkDownloadState.Error);
-                    console.error(error);
-                    if (intervalId.current) {
-                        clearInterval(intervalId.current);
-                    }
-                }
-            })();
-        }, 2500);
     };
 
     return { generateBulkDownload, status, downloadUrl };

@@ -55,7 +55,7 @@ export const Attachments = ({
             ? `Open attachments, ${attachmentCount} ${attachmentCount === 1 ? 'attachment' : 'attachments'}`
             : 'Add attachments';
 
-    const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload({
+    const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload(appBridge, {
         onUploadProgress: () => !isUploadLoading && setIsUploadLoading(true),
     });
 
@@ -84,7 +84,7 @@ export const Attachments = ({
                 setIsUploadLoading(false);
             }
         };
-        uploadDone();
+        uploadDone().catch(console.error);
         // oxlint-disable-next-line @eslint-react/exhaustive-deps
     }, [doneAll, uploadResults]);
 
@@ -179,9 +179,10 @@ export const Attachments = ({
                                     modifiers={[restrictToParentElement]}
                                 >
                                     <SortableContext items={internalItems} strategy={rectSortingStrategy}>
-                                        <div className="tw-border-b tw-border-b-line tw-relative">
+                                        <div className="tw-border-b tw-border-b-line-mid tw-relative">
                                             {internalItems.map((item) => (
                                                 <SortableAttachmentItem
+                                                    appBridge={appBridge}
                                                     isEditing={isEditing}
                                                     isLoading={assetIdsLoading.includes(item.id)}
                                                     key={item.id}

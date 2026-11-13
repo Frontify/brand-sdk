@@ -3,12 +3,13 @@
 import {
     type Color,
     MultiInputLayout,
-    type SettingBlock,
     appendUnit,
     maximumNumericalOrPixelOrAutoRule,
     minimumNumericalOrPixelRule,
     numericalOrPixelRule,
-} from '../';
+} from '@frontify/sidebar-settings';
+
+import { type SettingBlock } from '../types';
 
 import { BORDER_COLOR_DEFAULT_VALUE, BORDER_WIDTH_DEFAULT_VALUE } from './defaultValues';
 import { BorderStyle } from './types';

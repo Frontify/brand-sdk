@@ -1,88 +1,102 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { createAssetByFileId } from '../repositories/AssetRepository';
-import { type Asset, type FileApi } from '../types';
-
-import { useFileUpload } from './useFileUpload';
+import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { type CreateAssetsResponse, createAssets } from '../registries';
+import {
+    type Asset,
+    type CreateAssetsFileFailure,
+    type CreateAssetsFileProgress,
+    type CreateAssetsFileSuccess,
+    type CreateAssetsProgress,
+} from '../types';
 
 export type UseAssetUploadParameters = {
-    onUploadProgress?: (event: MessageEvent) => void;
-    onUploadProgressAll?: (event: MessageEvent) => void;
-    onUploadDone?: (event: MessageEvent<FileApi>) => void;
-    onUploadDoneAll?: (event: Asset[]) => void;
+    onUploadProgress?: (progress: CreateAssetsFileProgress) => void;
+    onUploadProgressAll?: (progress: CreateAssetsProgress) => void;
+    onUploadDone?: (result: CreateAssetsFileSuccess) => void;
+    onUploadDoneAll?: (assets: Asset[]) => void;
     onUploadFail?: () => void;
-    onUploadAssetFail?: (event: MessageEvent) => void;
+    onUploadAssetFail?: (failure: CreateAssetsFileFailure) => void;
 };
 
 export type UseAssetUploadReturnTypes = [(files: FileList | File) => void, { results: Asset[]; doneAll: boolean }];
 
-export const useAssetUpload = (props?: UseAssetUploadParameters): UseAssetUploadReturnTypes => {
-    const results = useRef<Asset[]>([]);
-    const promises = useRef<Promise<unknown>[]>([]);
+const getFilesAsArray = (files: FileList | File): File[] => (files instanceof File ? [files] : Array.from(files));
+
+export const useAssetUpload = (
+    appBridge: AppBridgeBlock,
+    props?: UseAssetUploadParameters,
+): UseAssetUploadReturnTypes => {
+    const resultsRef = useRef<Asset[]>([]);
     const [doneAll, setDoneAll] = useState(false);
 
-    const { onUploadProgress, onUploadProgressAll, onUploadDone, onUploadDoneAll, onUploadFail, onUploadAssetFail } =
-        props ?? {};
-
-    const projectId = window.application?.sandbox?.config?.context?.project?.id;
-
-    const onProgress = (workerEvent: MessageEvent<FileApi>) => {
-        onUploadProgress?.(workerEvent);
-    };
-
-    const onProgressAll = (workerEvent: MessageEvent<FileApi>) => {
-        onUploadProgressAll?.(workerEvent);
-    };
-
-    const onDone = async (workerEvent: MessageEvent<FileApi>) => {
-        const assetPromise = createAssetFromFileIds(workerEvent.data.file_id);
-        promises.current.push(assetPromise);
-
-        onUploadDone?.(workerEvent);
-
-        results.current = [...results.current, await assetPromise];
-    };
-
-    const onDoneAll = async () => {
-        await Promise.all(promises.current);
-
-        onUploadDoneAll?.(results.current);
-
-        setDoneAll(true);
-    };
-
-    const onFail = () => {
-        onUploadFail?.();
-    };
-
-    const onFileFail = (workerEvent: MessageEvent<FileApi>) => {
-        onUploadAssetFail?.(workerEvent);
-    };
-
-    const resetState = () => {
-        setDoneAll(false);
-        results.current = [];
-    };
-
-    const createAssetFromFileIds = async (fileId: string) => {
-        return await createAssetByFileId(fileId, projectId);
-    };
-
-    const [uploadFilesInternal] = useFileUpload({
-        onUploadProgress: onProgress,
-        onUploadProgressAll: onProgressAll,
-        onUploadDone: onDone,
-        onUploadDoneAll: onDoneAll,
-        onUploadFail: onFail,
-        onUploadFileFail: onFileFail,
+    const callbacksRef = useRef(props);
+    useEffect(() => {
+        callbacksRef.current = props;
     });
 
-    const uploadFiles = (files: FileList | File) => {
-        resetState();
-        uploadFilesInternal(files);
-    };
+    const abortControllersRef = useRef(new Set<AbortController>());
+    useEffect(() => {
+        const abortControllers = abortControllersRef.current;
+        return () => {
+            for (const abortController of abortControllers) {
+                abortController.abort();
+            }
+        };
+    }, []);
 
-    return [uploadFiles, { results: results.current, doneAll }];
+    const upload = useCallback(
+        (files: File[]) => {
+            const abortController = new AbortController();
+            abortControllersRef.current.add(abortController);
+
+            const onUploaded = ({ assets }: CreateAssetsResponse) => {
+                abortControllersRef.current.delete(abortController);
+                resultsRef.current = assets;
+                callbacksRef.current?.onUploadDoneAll?.(assets);
+                setDoneAll(true);
+            };
+
+            const onUploadFailed = () => {
+                abortControllersRef.current.delete(abortController);
+                if (!abortController.signal.aborted) {
+                    callbacksRef.current?.onUploadFail?.();
+                }
+            };
+
+            appBridge
+                .api(
+                    createAssets({
+                        files,
+                        signal: abortController.signal,
+                        onProgress: (progress) => callbacksRef.current?.onUploadProgressAll?.(progress),
+                        onFileProgress: (progress) => callbacksRef.current?.onUploadProgress?.(progress),
+                        onFileDone: (result) => callbacksRef.current?.onUploadDone?.(result),
+                        onFileFail: (failure) => callbacksRef.current?.onUploadAssetFail?.(failure),
+                    }),
+                )
+                .then(onUploaded)
+                .catch(onUploadFailed);
+        },
+        [appBridge],
+    );
+
+    const uploadFiles = useCallback(
+        (files: FileList | File) => {
+            setDoneAll(false);
+            resultsRef.current = [];
+
+            const fileArray = getFilesAsArray(files);
+            if (fileArray.length === 0) {
+                return;
+            }
+
+            upload(fileArray);
+        },
+        [upload],
+    );
+
+    return [uploadFiles, { results: resultsRef.current, doneAll }];
 };

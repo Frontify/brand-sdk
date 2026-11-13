@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
+import { withAppBridgeBlockStubs } from '@frontify/app-bridge/testing';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
@@ -11,7 +11,9 @@ import { LinkInput } from './LinkInput';
 const LINK_INPUT_TEST_ID = 'link-input';
 const TEXT_INPUT_TEST_ID = 'text-input';
 const INPUT_LABEL_CONTAINER_TEST_ID = 'input-label-container';
-const DIALOG_TRIGGER_TEST_ID = 'fondue-dialog-trigger';
+const INFO_TEST_ID = 'link-input-info';
+const LABEL_TEST_ID = 'fondue-label';
+const INTERNAL_LINK_BUTTON_TEST_ID = 'internal-link-chooser-button';
 const CHECKBOX_TEST_ID = 'fondue-checkbox';
 
 const renderLinkInput = (props: Partial<Parameters<typeof LinkInput>[0]> = {}) => {
@@ -28,13 +30,16 @@ describe('Link Input', () => {
         expect(screen.getByTestId(LINK_INPUT_TEST_ID)).toBeInTheDocument();
     });
 
-    it('should render the label, placeholder and info of the link input', () => {
+    it('should render the label, placeholder and info of the link input', async () => {
         renderLinkInput({ label: 'Custom Label', info: 'Custom Info', placeholder: 'Custom Placeholder' });
 
         expect(screen.getByTestId(LINK_INPUT_TEST_ID)).toBeInTheDocument();
         expect(screen.getByTestId(INPUT_LABEL_CONTAINER_TEST_ID)).toHaveTextContent('Custom Label');
-        expect(screen.getByTestId(INPUT_LABEL_CONTAINER_TEST_ID)).toHaveTextContent('Custom Info');
         expect(getTextInput()).toHaveAttribute('placeholder', 'Custom Placeholder');
+
+        await userEvent.hover(screen.getByTestId(INFO_TEST_ID));
+
+        expect(await screen.findByRole('tooltip')).toHaveTextContent('Custom Info');
     });
 
     it('should render the link input with a valid url', () => {
@@ -96,18 +101,21 @@ describe('Link Input', () => {
     it('should show the internal link button', () => {
         renderLinkInput();
 
-        expect(screen.getByTestId(DIALOG_TRIGGER_TEST_ID)).toBeInTheDocument();
+        expect(screen.getByTestId(INTERNAL_LINK_BUTTON_TEST_ID)).toBeInTheDocument();
     });
 
     it('should not show the internal link button if it is hidden', () => {
         renderLinkInput({ hideInternalLinkButton: true });
 
-        expect(screen.queryByTestId(DIALOG_TRIGGER_TEST_ID)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(INTERNAL_LINK_BUTTON_TEST_ID)).not.toBeInTheDocument();
     });
 
-    it('should render an asterisk if the input is required', () => {
+    it('should mark the label as required if the input is required', () => {
         renderLinkInput({ required: true, label: 'Link' });
 
-        expect(screen.getByTestId(INPUT_LABEL_CONTAINER_TEST_ID)).toHaveTextContent('*');
+        expect(within(screen.getByTestId(INPUT_LABEL_CONTAINER_TEST_ID)).getByTestId(LABEL_TEST_ID)).toHaveAttribute(
+            'data-required',
+            'true',
+        );
     });
 });

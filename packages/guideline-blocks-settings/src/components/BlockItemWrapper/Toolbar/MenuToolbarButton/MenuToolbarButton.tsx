@@ -39,9 +39,9 @@ export const MenuToolbarButton = ({
                     </Dropdown.Trigger>
                 </Tooltip.Trigger>
                 <Dropdown.Content>
-                    {items.map((block, blockIndex) => (
-                        <Dropdown.Group key={blockIndex}>
-                            {block.map((item, itemIndex) => (
+                    {items.map((block) => (
+                        <Dropdown.Group key={block.map((item) => item.title).join('|')}>
+                            {block.map((item) => (
                                 <Dropdown.Item
                                     data-test-id="menu-item"
                                     onSelect={() => {
@@ -49,7 +49,7 @@ export const MenuToolbarButton = ({
                                         item.onClick();
                                     }}
                                     emphasis={item.style || 'default'}
-                                    key={`${blockIndex}-${itemIndex}`}
+                                    key={item.title}
                                 >
                                     <div className="tw-mr-2">{item.icon}</div>
                                     <span>{item.title}</span>

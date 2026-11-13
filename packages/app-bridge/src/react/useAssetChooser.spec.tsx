@@ -1,10 +1,11 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, renderHook } from '@testing-library/react';
 import sinon from 'sinon';
-import { afterEach, describe, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
+import { emitAppBridgeBlockStubEvent, getAppBridgeBlockStub } from '../tests/AppBridgeBlockStub';
 import { AssetDummy } from '../tests/AssetDummy';
 import { withAppBridgeBlockStubs } from '../tests/withAppBridgeBlockStubs';
 import { type Asset } from '../types/Asset';
@@ -74,5 +75,19 @@ describe('useAssetChooser hook', () => {
         const closeTemplateChooserButton = getByTestId(CLOSE_ASSET_CHOOSER_BUTTON_ID) as HTMLButtonElement;
         closeTemplateChooserButton.click();
         sinon.assert.calledOnce(unsubscribeSpy);
+    });
+
+    it('should only call the callback of the latest open when the chooser was dismissed and opened again', () => {
+        const appBridge = getAppBridgeBlockStub({ emitChosenEventsOnSubscribe: false });
+        const { result } = renderHook(() => useAssetChooser(appBridge));
+        const dismissedCallback = vi.fn();
+        const latestCallback = vi.fn();
+
+        result.current.openAssetChooser(dismissedCallback, {});
+        result.current.openAssetChooser(latestCallback, {});
+        emitAppBridgeBlockStubEvent(appBridge, 'assetsChosen', { assets: [AssetDummy.with(5)] });
+
+        expect(dismissedCallback).not.toHaveBeenCalled();
+        expect(latestCallback).toHaveBeenCalledWith([AssetDummy.with(5)]);
     });
 });

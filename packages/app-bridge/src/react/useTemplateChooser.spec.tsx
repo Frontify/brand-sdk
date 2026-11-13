@@ -39,7 +39,7 @@ const TemplateChooserDummy = ({
     );
 };
 
-describe('useReadyForPrint hook', () => {
+describe('useTemplateChooser hook', () => {
     afterEach(() => {
         cleanup();
     });

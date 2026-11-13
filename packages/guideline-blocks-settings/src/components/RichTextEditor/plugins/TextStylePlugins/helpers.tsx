@@ -2,19 +2,17 @@
 
 import { TextStyles } from '../styles';
 
-import {
-    Custom1Plugin,
-    Custom2Plugin,
-    Custom3Plugin,
-    Heading1Plugin,
-    Heading2Plugin,
-    Heading3Plugin,
-    Heading4Plugin,
-    ImageCaptionPlugin,
-    ImageTitlePlugin,
-    ParagraphPlugin,
-    QuotePlugin,
-} from '.';
+import { Custom1Plugin } from './custom1Plugin';
+import { Custom2Plugin } from './custom2Plugin';
+import { Custom3Plugin } from './custom3Plugin';
+import { Heading1Plugin } from './heading1Plugin';
+import { Heading2Plugin } from './heading2Plugin';
+import { Heading3Plugin } from './heading3Plugin';
+import { Heading4Plugin } from './heading4Plugin';
+import { ImageCaptionPlugin } from './imageCaptionPlugin';
+import { ImageTitlePlugin } from './imageTitlePlugin';
+import { ParagraphPlugin } from './paragraphPlugin';
+import { QuotePlugin } from './quotePlugin';
 
 export const TextStylePluginsWithoutImage = [
     new Heading1Plugin(),
