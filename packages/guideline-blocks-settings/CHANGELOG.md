@@ -1,5 +1,38 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.17
+
+### Major Changes
+
+- [#1807](https://github.com/Frontify/brand-sdk/pull/1807) [`41536a9`](https://github.com/Frontify/brand-sdk/commit/41536a987d36ca07a221bbdf0baa36092699ac09) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove the unused `isDark` and `getReadableColor` color utilities and stop exporting `toShortRgba`
+  
+  None of these were used by Frontify's own blocks. If your block still uses them, call `@ctrl/tinycolor` directly with a color string from `toRgbaString`:
+  
+  ```ts
+  import { TinyColor, readability } from '@ctrl/tinycolor';
+  import { toRgbaString } from '@frontify/guideline-blocks-settings';
+  
+  // isDark(color)
+  const dark = new TinyColor(toRgbaString(color)).isDark();
+  
+  // getReadableColor(textColor, backgroundColor) darkened the text color until the contrast was at least 4.5
+  const contrast = readability(toRgbaString(textColor), toRgbaString(backgroundColor));
+  ```
+  
+  `toShortRgba` mapped `{ red, green, blue, alpha }` to `{ r, g, b, a }`. The other color utilities still accept the long format.
+
+### Patch Changes
+
+- [#1812](https://github.com/Frontify/brand-sdk/pull/1812) [`423d0f8`](https://github.com/Frontify/brand-sdk/commit/423d0f8532c4753c4826ace3fe5eb6ed19d7c274) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `14.0.0-rc.0`
+
+- [#1804](https://github.com/Frontify/brand-sdk/pull/1804) [`e7865d9`](https://github.com/Frontify/brand-sdk/commit/e7865d9dad2dbc798c5b60bd5d1653063f0b1028) Thanks [@ragi96](https://github.com/ragi96)! - fix: stop toolbar and rich text editor buttons from submitting a surrounding form
+  
+  The block item toolbar buttons and the edit, remove and style buttons in the rich text editor's link and button popovers had no `type`, so inside a `<form>` they acted as submit buttons. They are now `type="button"`.
+
+- [#1803](https://github.com/Frontify/brand-sdk/pull/1803) [`f2dcfbf`](https://github.com/Frontify/brand-sdk/commit/f2dcfbfd66b92c6350ec660051b8e76197fabdc5) Thanks [@ragi96](https://github.com/ragi96)! - fix: keep `@frontify/guideline-blocks-settings/styles` in webpack production builds
+  
+  The package marked all of its files as free of side effects, including the stylesheet. In production mode, webpack therefore dropped `import '@frontify/guideline-blocks-settings/styles'` and the block shipped without the package's styles. CSS files are now marked as having side effects; tree-shaking of the JavaScript exports is unchanged.
+
 ## 4.0.0-alpha.16
 
 ### Major Changes

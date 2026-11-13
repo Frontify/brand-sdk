@@ -1,5 +1,20 @@
 # @frontify/app-bridge
 
+## 4.0.0-alpha.83
+
+### Major Changes
+
+- [#1796](https://github.com/Frontify/brand-sdk/pull/1796) [`d0cd05b`](https://github.com/Frontify/brand-sdk/commit/d0cd05b8e5c783756f473704373f1fc3ad1f195f) Thanks [@peter-tudosa](https://github.com/peter-tudosa)! - refactor: remove the unused types, hooks and test dummies
+  
+  Nothing in the package, in Frontify, or in the guideline blocks referenced these, and they have no replacement:
+  
+  - The `useAfterInsertion` hook.
+  - The `DispatchPayload` and `DispatchHandler` types, a stale copy of the command registry, and the `Subscription` and `SubscriptionCallback` types, a stale copy of the event registry.
+  - The `TerrificComponent`, `AssetChooserAssetChosenCallback` and `TemplateChooserTemplateChosenCallback` types.
+  - The `UseFileInputInterface` and `UseFileInputReturnTypes` types. `useFileInput` itself is unchanged.
+  - The `compareObjects` helper, and `isObject`, which is now internal.
+  - The `AssetChooserOptionsDummy` and `AssetChooserResultDummy` dummies from `@frontify/app-bridge/testing`.
+
 ## 4.0.0-alpha.82
 
 ### Major Changes
