@@ -51,7 +51,7 @@
     },
     "devDependencies": {
         "@frontify/app-bridge": "workspace:^",
-        "@frontify/fondue": "14.0.0-beta.2",
+        "@frontify/fondue": "14.0.0-rc.0",
         "@frontify/oxfmt-config": "^0.0.2",
         "@frontify/oxlint-config-react": "^0.0.2",
         "@microsoft/api-extractor": "^7.59.4",
