@@ -1,5 +1,19 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0-alpha.18
+
+### Major Changes
+
+- [#1805](https://github.com/Frontify/brand-sdk/pull/1805) [`0c41af6`](https://github.com/Frontify/brand-sdk/commit/0c41af629771693c469587e2e3083cca89b571a8) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): make `@frontify/fondue` a peer dependency
+  
+  The package no longer installs its own copy of fondue; it uses the one your block depends on. Add fondue to your block if it isn't there yet:
+  
+  ```sh
+  pnpm add @frontify/fondue@^14.0.0-beta.2
+  ```
+  
+  The rich text editor props and plugins (`RichTextEditor`, `LinkPlugin`, `ButtonPlugin`, `AllTextStylePlugins`, …) use fondue's editor classes. With a single fondue copy, a `PluginComposer` you build from `@frontify/fondue/rte` type-checks against them; with two copies it didn't. If your block is on another fondue version, npm stops with an `ERESOLVE` error and pnpm reports an unmet peer instead of silently installing a second copy.
+
 ## 4.0.0-alpha.17
 
 ### Major Changes
