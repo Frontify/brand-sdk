@@ -1,6 +1,6 @@
 ---
 name: create-changeset
-description: Use this skill whenever the user asks to create a changeset, changelog entry, or `.changeset/*.md` file in this repo. Produces a `@changesets/cli`-style file (random three-word slug filename) with a Conventional Commits–prefixed body, scoped to the affected workspace package(s), and includes usage examples when the change adds a new feature or public API.
+description: Writes a `.changeset/*.md` file for a pending change. ALWAYS apply when the user asks for a changeset or a changelog entry, when a change alters what consumers of a published `@frontify/*` package can observe (API, types, props, runtime behavior, CLI commands or output, dependency ranges), and before opening a pull request for such a change — even if the user only says "bump", "release this" or "add a release note". Do not write a changeset file or run `pnpm changeset` directly — apply this skill first. Skip for changes to CI, repository tooling and root docs, and never edit `CHANGELOG.md` or package versions.
 ---
 
 # Create a changeset
@@ -25,7 +25,7 @@ Inspect the staged/unstaged diff (`git status`, `git diff`) to determine which w
 - `minor` — new feature or new public API, backwards-compatible.
 - `major` — breaking change to a public API.
 
-Workspaces (use the `name` field from each `packages/*/package.json`, e.g. `@frontify/guideline-blocks-settings`, `@frontify/app-bridge`, `@frontify/sidebar-settings`, `@frontify/cli`, `@frontify/guideline-themes`, `@frontify/app-bridge-theme`, `@frontify/app-bridge-app`, `@frontify/platform-app`).
+Workspaces (use the `name` field from each `packages/*/package.json`, e.g. `@frontify/guideline-blocks-settings`, `@frontify/app-bridge`, `@frontify/sidebar-settings`, `@frontify/frontify-cli`, `@frontify/guideline-themes`, `@frontify/app-bridge-theme`, `@frontify/app-bridge-app`, `@frontify/platform-app`).
 
 **When to skip a changeset entirely** — if the change only touches:
 
