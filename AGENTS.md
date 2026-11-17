@@ -1,6 +1,6 @@
 # AGENTS.md — working in the Brand SDK
 
-The single source of truth for agents and humans working in this repository (`CLAUDE.md` only imports it).
+The single source of truth for agents and humans working in this repository (`CLAUDE.md` is a symlink to it).
 This repository is public: keep internal hostnames, private repository paths and customer data out of code,
 comments, changesets and pull requests.
 
