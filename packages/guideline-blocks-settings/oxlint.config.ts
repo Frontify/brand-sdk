@@ -1,8 +1,14 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { join } from 'node:path';
+
 // @ts-expect-error - No types for @frontify/oxlint-config-react
 import reactConfig from '@frontify/oxlint-config-react';
 import { defineConfig } from 'oxlint';
+
+// eslint-plugin-tailwindcss looks for the Tailwind config in the working directory. The editor's Oxc
+// language server lints from the repo root, where it would pick up the root config without the Fondue preset.
+const tailwindOptions = { config: join(import.meta.dirname, 'tailwind.config.ts') };
 
 export default defineConfig({
     extends: [reactConfig],
@@ -27,14 +33,15 @@ export default defineConfig({
                 'tailwindcss/no-custom-classname': [
                     'warn',
                     {
+                        ...tailwindOptions,
                         whitelist: ['^(?!tw-).*$'],
                         callees: ['className', 'sv', 'class', 'merge', 'joinClassNames'],
                         cssFiles: ['**/*.css', '!**/node_modules', '!**/.*', '!**/dist', '!**/build', '!**/public'],
                     },
                 ],
-                'tailwindcss/no-contradicting-classname': 'error',
-                'tailwindcss/enforces-negative-arbitrary-values': 'error',
-                'tailwindcss/no-unnecessary-arbitrary-value': 'error',
+                'tailwindcss/no-contradicting-classname': ['error', tailwindOptions],
+                'tailwindcss/enforces-negative-arbitrary-values': ['error', tailwindOptions],
+                'tailwindcss/no-unnecessary-arbitrary-value': ['error', tailwindOptions],
                 '@eslint-react/dom-no-missing-button-type': 'warn',
                 '@eslint-react/no-unnecessary-use-prefix': 'warn',
                 '@eslint-react/no-unstable-context-value': 'warn',

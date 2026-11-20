@@ -30,6 +30,7 @@ export type AttachmentItemProps = SortableAttachmentItemProps & {
 };
 
 export type SortableAttachmentItemProps = {
+    appBridge: AppBridgeBlock;
     item: Asset;
     isEditing: boolean;
     onDelete: () => void;

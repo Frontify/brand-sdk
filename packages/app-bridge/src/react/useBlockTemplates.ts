@@ -1,28 +1,25 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useState, useSyncExternalStore } from 'react';
 
 import { type AppBridgeBlock } from '../AppBridgeBlock';
 import { type Template } from '../types';
-import { compareObjects } from '../utilities';
+
+// One shared object, so a host without templates in its context doesn't give `useSyncExternalStore` a new snapshot on every read.
+const NO_BLOCK_TEMPLATES: Record<string, Template[]> = {};
 
 export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
-    const blockId = appBridge.context('blockId').get();
+    // `context()` returns a new object on every call, so keep `subscribe` stable to avoid resubscribing on every render.
+    const subscribe = useCallback(
+        (onStoreChange: () => void) => appBridge.context('templates').subscribe(onStoreChange),
+        [appBridge],
+    );
+    const getSnapshot = useCallback(() => appBridge.context('templates').get() ?? NO_BLOCK_TEMPLATES, [appBridge]);
+    const blockTemplates = useSyncExternalStore(subscribe, getSnapshot);
 
-    const [blockTemplates, setBlockTemplates] = useState<Record<string, Template[]>>({});
     const [error, setError] = useState<string | null>(null);
 
-    const updateBlockTemplatesFromEvent = (event: {
-        blockId: number;
-        blockTemplates: Record<string, Template[]>;
-        prevBlockTemplates: Record<string, Template[]>;
-    }) => {
-        if (event.blockId === blockId && !compareObjects(event.blockTemplates, event.prevBlockTemplates)) {
-            setBlockTemplates(event.blockTemplates);
-        }
-    };
-
-    const handleErrorMessage = (error: unknown) => {
+    const handleErrorMessage = useCallback((error: unknown) => {
         let errorMessage;
 
         if (error instanceof Error) {
@@ -34,89 +31,47 @@ export const useBlockTemplates = (appBridge: AppBridgeBlock) => {
         }
 
         setError(errorMessage);
-    };
+    }, []);
 
-    // Fetch the block templates on mount.
-    // And add listener for block template updates.
-    useEffect(() => {
-        let componentMounted = true;
+    // The host updates `context('templates')` once a change is saved, so the functions below don't refetch the templates.
+    const updateTemplateIdsFromKey = useCallback(
+        async (key: string, newTemplateIds: number[]) => {
+            const oldTemplates = appBridge.context('templates').get()?.[key] ?? [];
+            const oldTemplateIds = oldTemplates.map((template) => template.id);
 
-        if (blockId) {
-            const mountingFetch = async () => {
-                try {
-                    const result = await appBridge.getBlockTemplates();
-                    if (componentMounted) {
-                        setBlockTemplates(result);
-                    }
-                } catch (error) {
-                    handleErrorMessage(error);
+            try {
+                if (oldTemplateIds.length > 0) {
+                    await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, oldTemplateIds);
                 }
-            };
-
-            mountingFetch();
-            window.emitter.on('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent);
-        }
-
-        return () => {
-            componentMounted = false;
-            window.emitter.off('AppBridge:BlockTemplatesUpdated', updateBlockTemplatesFromEvent);
-        };
-        // oxlint-disable-next-line @eslint-react/exhaustive-deps
-    }, [appBridge]);
-
-    const emitUpdatedBlockTemplates = async () => {
-        let fetchedBlockTemplates;
-
-        try {
-            fetchedBlockTemplates = await appBridge.getBlockTemplates();
-        } catch (error) {
-            handleErrorMessage(error);
-        }
-
-        if (fetchedBlockTemplates) {
-            window.emitter.emit('AppBridge:BlockTemplatesUpdated', {
-                blockId,
-                blockTemplates: fetchedBlockTemplates,
-                prevBlockTemplates: { ...blockTemplates },
-            });
-        }
-    };
-
-    const updateTemplateIdsFromKey = async (key: string, newTemplateIds: number[]) => {
-        const currentBlockTemplates = await appBridge.getBlockTemplates();
-        const oldTemplateIds = currentBlockTemplates[key]?.map((template) => template.id) ?? [];
-
-        try {
-            if (oldTemplateIds.length > 0) {
-                await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, oldTemplateIds);
+                await appBridge.addTemplateIdsToBlockTemplateKey(key, newTemplateIds);
+            } catch (error) {
+                handleErrorMessage(error);
             }
-            await appBridge.addTemplateIdsToBlockTemplateKey(key, newTemplateIds);
-        } catch (error) {
-            handleErrorMessage(error);
-        }
+        },
+        [appBridge, handleErrorMessage],
+    );
 
-        emitUpdatedBlockTemplates();
-    };
+    const deleteTemplateIdsFromKey = useCallback(
+        async (key: string, templateIds: number[]) => {
+            try {
+                await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, templateIds);
+            } catch (error) {
+                handleErrorMessage(error);
+            }
+        },
+        [appBridge, handleErrorMessage],
+    );
 
-    const deleteTemplateIdsFromKey = async (key: string, templateIds: number[]) => {
-        try {
-            await appBridge.deleteTemplateIdsFromBlockTemplateKey(key, templateIds);
-        } catch (error) {
-            handleErrorMessage(error);
-        }
-
-        emitUpdatedBlockTemplates();
-    };
-
-    const addTemplateIdsToKey = async (key: string, templateIds: number[]) => {
-        try {
-            await appBridge.addTemplateIdsToBlockTemplateKey(key, templateIds);
-        } catch (error) {
-            handleErrorMessage(error);
-        }
-
-        emitUpdatedBlockTemplates();
-    };
+    const addTemplateIdsToKey = useCallback(
+        async (key: string, templateIds: number[]) => {
+            try {
+                await appBridge.addTemplateIdsToBlockTemplateKey(key, templateIds);
+            } catch (error) {
+                handleErrorMessage(error);
+            }
+        },
+        [appBridge, handleErrorMessage],
+    );
 
     return {
         blockTemplates,

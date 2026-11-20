@@ -7,22 +7,23 @@ import { EditModal } from './EditModal';
 
 const URL_ID = 'floating-button-edit-url';
 
-describe('EditModal', () => {
-    vi.mock('@frontify/fondue/rte', async () => {
-        const actual: object = await vi.importActual('@frontify/fondue/rte');
-        return {
-            ...actual,
-            useEditorRef: () => ({}),
-        };
-    });
-    vi.mock('../floatingButtonStore', async () => {
-        const actual: object = await vi.importActual('../floatingButtonStore');
-        return {
-            ...actual,
-            floatingButtonSelectors: { url: () => 'https://frontify.com' },
-        };
-    });
+vi.mock('@frontify/fondue/rte', async () => {
+    const actual: object = await vi.importActual('@frontify/fondue/rte');
+    return {
+        ...actual,
+        useEditorRef: () => ({}),
+    };
+});
 
+vi.mock('../floatingButtonStore', async () => {
+    const actual: object = await vi.importActual('../floatingButtonStore');
+    return {
+        ...actual,
+        floatingButtonSelectors: { url: () => 'https://frontify.com' },
+    };
+});
+
+describe('EditModal', () => {
     it('should render the url as an anchor tag', () => {
         const { getByTestId } = render(<EditModal />);
         expect(getByTestId(URL_ID).tagName).toBe('A');

@@ -5,13 +5,13 @@ import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { useIsInViewport } from './useIsInViewport';
 
-describe('useIsInViewport', () => {
-    const stubs = vi.hoisted(() => ({
-        IntersectionObserver: vi.fn(),
-        observe: vi.fn(),
-        disconnect: vi.fn(),
-    }));
+const stubs = vi.hoisted(() => ({
+    IntersectionObserver: vi.fn(),
+    observe: vi.fn(),
+    disconnect: vi.fn(),
+}));
 
+describe('useIsInViewport', () => {
     beforeAll(() => {
         vi.stubGlobal(
             'IntersectionObserver',

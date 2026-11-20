@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type SettingBlock, createFooter } from '..';
+import { createFooter } from '@frontify/sidebar-settings';
+
+import { type SettingBlock } from '../types';
 
 import { getSecurityGlobalControlId } from './securityDownloadable';
 import { Security } from './types';

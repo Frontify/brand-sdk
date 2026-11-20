@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 

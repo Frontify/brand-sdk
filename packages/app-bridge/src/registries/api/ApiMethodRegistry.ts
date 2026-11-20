@@ -2,40 +2,35 @@
 
 import { type ApiMethodNameValidator } from '../../AppBridge';
 
-import { type CreateAssetPayload, type CreateAssetResponse } from './CreateAsset';
+import { type CreateAssetBulkDownloadPayload, type CreateAssetBulkDownloadResponse } from './CreateAssetBulkDownload';
+import { type CreateAssetsPayload, type CreateAssetsResponse } from './CreateAssets';
 import {
     type GetAssetBulkDownloadTokenPayload,
     type GetAssetBulkDownloadTokenResponse,
 } from './GetAssetBulkDownloadToken';
-import {
-    type GetAssetResourceInformationPayload,
-    type GetAssetResourceInformationResponse,
-} from './GetAssetResourceInformation';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
-import { type GetDocumentNavigationPayload, type GetDocumentNavigationResponse } from './GetDocumentNavigation';
-import { type GetPortalNavigationResponse } from './GetPortalNavigation';
-import { type GetProxyNetworkCallPayload, type GetProxyNetworkCallResponse } from './GetProxyNetworkCall';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,
 } from './SetAssetIdsByBlockAssetKey';
 
 export type ApiMethodRegistry = ApiMethodNameValidator<{
+    createAssetBulkDownload: {
+        payload: CreateAssetBulkDownloadPayload;
+        response: CreateAssetBulkDownloadResponse;
+    };
+    createAssets: { payload: CreateAssetsPayload; response: CreateAssetsResponse };
+    getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
+    /**
+     * @deprecated This will be removed in version 5.0.0 of `@frontify/app-bridge`.
+     * Use the `createAssetBulkDownload` API method instead, or the `useAssetBulkDownload` hook. They wait until the download is ready.
+     */
     getAssetBulkDownloadToken: {
         payload: GetAssetBulkDownloadTokenPayload;
         response: GetAssetBulkDownloadTokenResponse;
-    };
-    getCurrentUser: { payload: GetCurrentUserPayload; response: GetCurrentUserResponse };
-    createAsset: { payload: CreateAssetPayload; response: CreateAssetResponse };
-    getAssetResourceInformation: {
-        payload: GetAssetResourceInformationPayload;
-        response: GetAssetResourceInformationResponse;
     };
     setAssetIdsByBlockAssetKey: {
         payload: SetAssetIdsByBlockAssetKeyPayload;
         response: SetAssetIdsByBlockAssetKeyResponse;
     };
-    getProxyNetworkCall: { payload: GetProxyNetworkCallPayload; response: GetProxyNetworkCallResponse };
-    getDocumentNavigation: { payload: GetDocumentNavigationPayload; response: GetDocumentNavigationResponse };
-    getPortalNavigation: { payload: void; response: GetPortalNavigationResponse };
 }>;

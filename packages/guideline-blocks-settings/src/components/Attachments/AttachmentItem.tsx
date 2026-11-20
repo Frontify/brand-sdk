@@ -35,6 +35,7 @@ const getDecorator = (type: string) => {
 export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>(
     (
         {
+            appBridge,
             item,
             isEditing,
             draggableProps,
@@ -51,7 +52,7 @@ export const AttachmentItem = forwardRef<HTMLButtonElement, AttachmentItemProps>
     ) => {
         const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>();
         const [openFileDialog, { selectedFiles }] = useFileInput({ multiple: true, accept: 'image/*' });
-        const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload();
+        const [uploadFile, { results: uploadResults, doneAll }] = useAssetUpload(appBridge);
 
         useEffect(() => {
             if (selectedFiles) {

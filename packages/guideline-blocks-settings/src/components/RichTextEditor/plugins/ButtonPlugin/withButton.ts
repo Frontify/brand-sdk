@@ -1,7 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type EText,
     Path,
     type PlateEditor,
     type Point,
@@ -79,7 +78,7 @@ export const withButton: WithOverride = (editor, { type }) => {
 
     editor.normalizeNode = ([node, path]) => {
         if (node.type === getPluginType(editor, ELEMENT_BUTTON)) {
-            const range = editor.selection as Range | null;
+            const range = editor.selection;
 
             if (range && isCollapsed(range) && isEndPoint(editor, range.focus, path)) {
                 const nextPoint = getNextNodeStartPoint(editor, path);
@@ -90,7 +89,7 @@ export const withButton: WithOverride = (editor, { type }) => {
                 } else {
                     // insert text node then select
                     const nextPath = Path.next(path);
-                    insertNodes(editor, { text: '' } as EText<Value>, { at: nextPath });
+                    insertNodes(editor, { text: '' }, { at: nextPath });
                     select(editor, nextPath);
                 }
             }
