@@ -36,6 +36,7 @@ export type LegacyRichTextReviewCode =
     | 'unknown-property';
 export type LegacyRichTextUnsupportedCode = 'limit-exceeded' | 'html-value';
 export type LegacyRichTextInvalidCode = 'invalid-value' | 'invalid-node';
+export type LegacyRichTextNotReversibleCode = 'no-legacy-form';
 
 /** A finding about the input. It holds a code and a path only, never content from the source. */
 export type LegacyRichTextDiagnostic<TCode> = { code: TCode; path: LegacyRichTextPath };
@@ -62,3 +63,19 @@ export type ConvertLegacyRichTextResult =
           diagnostics: LegacyRichTextDiagnostic<LegacyRichTextUnsupportedCode>[];
       }
     | { outcome: 'invalid'; document: null; diagnostics: LegacyRichTextDiagnostic<LegacyRichTextInvalidCode>[] };
+
+export type ToLegacyRichTextOptions = {
+    /**
+     * Column count of the legacy editor; the first `columns - 1` column breaks are active.
+     * @default 1
+     */
+    columns?: number;
+};
+
+export type ToLegacyRichTextResult =
+    | { outcome: 'exact'; value: LegacyRichTextTree; diagnostics: [] }
+    | {
+          outcome: 'not-reversible';
+          value: null;
+          diagnostics: LegacyRichTextDiagnostic<LegacyRichTextNotReversibleCode>[];
+      };

@@ -1,0 +1,702 @@
+/* (c) Copyright Frontify Ltd., all rights reserved. */
+
+import { describe, expect, it } from 'vitest';
+
+import { convertLegacyRichText } from './convertLegacyRichText';
+import { toLegacyRichText } from './toLegacyRichText';
+import { type ToLegacyRichTextOptions } from './types';
+
+type StoredBlock = { type: string; [property: string]: unknown };
+
+const paragraph = (...children: unknown[]): StoredBlock => ({ type: 'paragraph', children });
+
+const toLegacy = (blocks: StoredBlock[], options?: ToLegacyRichTextOptions) => {
+    return toLegacyRichText({ version: 1, blocks }, options);
+};
+
+const expectExact = (blocks: StoredBlock[], expected: unknown, options?: ToLegacyRichTextOptions): void => {
+    expect(toLegacy(blocks, options)).toEqual({ outcome: 'exact', value: expected, diagnostics: [] });
+};
+
+const expectNotReversible = (blocks: StoredBlock[], paths: number[][]): void => {
+    expect(toLegacy(blocks)).toEqual({
+        outcome: 'not-reversible',
+        value: null,
+        diagnostics: paths.map((path) => ({ code: 'no-legacy-form', path })),
+    });
+};
+
+const checkItem = (text: string, ...nested: StoredBlock[]): StoredBlock => ({
+    type: 'checkItem',
+    children: [paragraph({ text }), ...nested],
+});
+
+const checkList = (...items: StoredBlock[]): StoredBlock => ({ type: 'checkList', children: items });
+
+describe('toLegacyRichText blocks', () => {
+    it('should write an empty document as an empty tree (MIG-25)', () => {
+        expectExact([], []);
+    });
+
+    it('should write a paragraph, a text style and a quote with their legacy types (MIG-25)', () => {
+        expectExact(
+            [
+                paragraph({ text: 'Lorem' }),
+                { type: 'textStyle', style: 'heading2', children: [{ text: 'Title' }] },
+                { type: 'quote', children: [{ text: 'Said' }] },
+            ],
+            [
+                { type: 'p', children: [{ text: 'Lorem' }] },
+                { type: 'heading2', children: [{ text: 'Title' }] },
+                { type: 'quote', children: [{ text: 'Said' }] },
+            ],
+        );
+    });
+
+    it.each(['left', 'center', 'right', 'justify'])(
+        'should write the alignment %s through the reverse lookup (MIG-25)',
+        (align) => {
+            expectExact(
+                [{ type: 'paragraph', align, children: [{ text: 'Lorem' }] }],
+                [{ type: 'p', align, children: [{ text: 'Lorem' }] }],
+            );
+        },
+    );
+
+    it('should write an alignment outside the table unchanged (MIG-25)', () => {
+        expectExact(
+            [{ type: 'paragraph', align: 'start', children: [{ text: 'Lorem' }] }],
+            [{ type: 'p', align: 'start', children: [{ text: 'Lorem' }] }],
+        );
+    });
+
+    it('should write bullet and numbered lists with li and lic and nested lists after the paragraph (MIG-25)', () => {
+        expectExact(
+            [
+                {
+                    type: 'bulletList',
+                    children: [
+                        {
+                            type: 'listItem',
+                            children: [
+                                { type: 'paragraph', align: 'center', children: [{ text: 'One' }] },
+                                {
+                                    type: 'numberedList',
+                                    children: [{ type: 'listItem', children: [paragraph({ text: 'Nested' })] }],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            [
+                {
+                    type: 'ul',
+                    children: [
+                        {
+                            type: 'li',
+                            children: [
+                                { type: 'lic', align: 'center', children: [{ text: 'One' }] },
+                                {
+                                    type: 'ol',
+                                    children: [
+                                        { type: 'li', children: [{ type: 'lic', children: [{ text: 'Nested' }] }] },
+                                    ],
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should flatten a check list depth first into checkbox items with indent, checked and align (MIG-25)', () => {
+        const nested = checkList({
+            type: 'checkItem',
+            checked: true,
+            children: [{ type: 'paragraph', align: 'right', children: [{ text: 'Two' }] }],
+        });
+
+        expectExact(
+            [checkList(checkItem('One', nested, ...[]), checkItem('Three'))],
+            [
+                { type: 'checkbox-item', children: [{ text: 'One' }] },
+                { type: 'checkbox-item', align: 'right', indent: 2, checked: true, children: [{ text: 'Two' }] },
+                { type: 'checkbox-item', children: [{ text: 'Three' }] },
+            ],
+        );
+    });
+
+    it('should write a deeper check item indent from its nesting level (MIG-25)', () => {
+        const deepest = checkList(checkItem('Three'));
+        const middle = checkList(checkItem('Two', deepest));
+
+        expectExact(
+            [checkList(checkItem('One', middle))],
+            [
+                { type: 'checkbox-item', children: [{ text: 'One' }] },
+                { type: 'checkbox-item', indent: 2, children: [{ text: 'Two' }] },
+                { type: 'checkbox-item', indent: 3, children: [{ text: 'Three' }] },
+            ],
+        );
+    });
+
+    it('should write two check lists apart when another block sits between them (MIG-25)', () => {
+        expectExact(
+            [checkList(checkItem('One')), paragraph({ text: 'Between' }), checkList(checkItem('Two'))],
+            [
+                { type: 'checkbox-item', children: [{ text: 'One' }] },
+                { type: 'p', children: [{ text: 'Between' }] },
+                { type: 'checkbox-item', children: [{ text: 'Two' }] },
+            ],
+        );
+    });
+});
+
+describe('toLegacyRichText column breaks', () => {
+    const blocks = [
+        paragraph({ text: 'One' }),
+        { type: 'columnBreak' },
+        paragraph({ text: 'Two' }),
+        { type: 'columnBreak' },
+        paragraph({ text: 'Three' }),
+        { type: 'columnBreak' },
+        paragraph({ text: 'Four' }),
+    ];
+
+    it.each([
+        { columns: undefined, values: ['inactive', 'inactive', 'inactive'] },
+        { columns: 1, values: ['inactive', 'inactive', 'inactive'] },
+        { columns: 2, values: ['active', 'inactive', 'inactive'] },
+        { columns: 3, values: ['active', 'active', 'inactive'] },
+    ])('should write the column breaks for columns $columns as $values (MIG-25)', ({ columns, values }) => {
+        expectExact(
+            blocks,
+            [
+                { type: 'p', breakAfterColumn: values[0], children: [{ text: 'One' }] },
+                { type: 'p', breakAfterColumn: values[1], children: [{ text: 'Two' }] },
+                { type: 'p', breakAfterColumn: values[2], children: [{ text: 'Three' }] },
+                { type: 'p', children: [{ text: 'Four' }] },
+            ],
+            { columns },
+        );
+    });
+
+    it('should put the column break on the last checkbox item of a check list (MIG-25)', () => {
+        expectExact(
+            [
+                checkList(checkItem('One', checkList(checkItem('Two')))),
+                { type: 'columnBreak' },
+                paragraph({ text: 'Next' }),
+            ],
+            [
+                { type: 'checkbox-item', children: [{ text: 'One' }] },
+                { type: 'checkbox-item', indent: 2, breakAfterColumn: 'inactive', children: [{ text: 'Two' }] },
+                { type: 'p', children: [{ text: 'Next' }] },
+            ],
+        );
+    });
+
+    it('should allow two check lists next to each other when a column break separates them (MIG-25)', () => {
+        expectExact(
+            [checkList(checkItem('One')), { type: 'columnBreak' }, checkList(checkItem('Two'))],
+            [
+                { type: 'checkbox-item', breakAfterColumn: 'inactive', children: [{ text: 'One' }] },
+                { type: 'checkbox-item', children: [{ text: 'Two' }] },
+            ],
+        );
+    });
+
+    it('should write a column break after a list as a property of the list (MIG-25)', () => {
+        expectExact(
+            [
+                { type: 'bulletList', children: [{ type: 'listItem', children: [paragraph({ text: 'One' })] }] },
+                { type: 'columnBreak' },
+            ],
+            [
+                {
+                    type: 'ul',
+                    breakAfterColumn: 'inactive',
+                    children: [{ type: 'li', children: [{ type: 'lic', children: [{ text: 'One' }] }] }],
+                },
+            ],
+        );
+    });
+});
+
+describe('toLegacyRichText inline content', () => {
+    it('should write marks as true in a fixed order, the colour as rgba and no text style (MIG-25)', () => {
+        const result = toLegacy([
+            paragraph({
+                text: 'Lorem',
+                superscript: true,
+                code: true,
+                bold: true,
+                fontColor: { color: '#ff000080' },
+            }),
+        ]);
+
+        expect(result).toEqual({
+            outcome: 'exact',
+            value: [
+                {
+                    type: 'p',
+                    children: [
+                        { text: 'Lorem', bold: true, code: true, superscript: true, color: 'rgba(255, 0, 0, 0.50)' },
+                    ],
+                },
+            ],
+            diagnostics: [],
+        });
+        expect(Object.keys((result.value as { children: object[] }[])[0].children[0])).toEqual([
+            'text',
+            'bold',
+            'code',
+            'superscript',
+            'color',
+        ]);
+    });
+
+    it('should write marks the new format does not declare back as leaf keys (MIG-25)', () => {
+        expectExact(
+            [paragraph({ text: 'Lorem', highlight: 'yellow', textStyle: 'heading9' })],
+            [{ type: 'p', children: [{ text: 'Lorem', highlight: 'yellow', textStyle: 'heading9' }] }],
+        );
+    });
+
+    it('should wrap consecutive leaves with the same link in one anchor with a target (MIG-25)', () => {
+        const link = { href: 'https://example.com/a', openInNewTab: true };
+
+        expectExact(
+            [
+                paragraph(
+                    { text: 'Plain ' },
+                    { text: 'one ', link },
+                    { text: 'two', link, bold: true },
+                    { text: ' other', link: { href: '/b' } },
+                ),
+            ],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { text: 'Plain ' },
+                        {
+                            type: 'a',
+                            url: 'https://example.com/a',
+                            target: '_blank',
+                            children: [{ text: 'one ' }, { text: 'two', bold: true }],
+                        },
+                        { type: 'a', url: '/b', target: '_self', children: [{ text: ' other' }] },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should write a link with an appearance as a button with its style (MIG-25)', () => {
+        expectExact(
+            [paragraph({ text: 'Go', link: { href: '/go', appearance: 'tertiary', openInNewTab: true } })],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        {
+                            type: 'button',
+                            url: '/go',
+                            target: '_blank',
+                            buttonStyle: 'tertiary',
+                            children: [{ text: 'Go' }],
+                        },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should end a link run at a mention and keep the mention outside the link (MIG-25)', () => {
+        const link = { href: '/page' };
+
+        expectExact(
+            [
+                paragraph(
+                    { text: 'a', link },
+                    { type: 'mention', id: 'user-1', username: '@one', name: 'One' },
+                    { text: 'b', link },
+                ),
+            ],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { type: 'a', url: '/page', target: '_self', children: [{ text: 'a' }] },
+                        { type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { type: 'a', url: '/page', target: '_self', children: [{ text: 'b' }] },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should append a break as a line feed to the preceding leaf and keep its marks and link (MIG-25)', () => {
+        expectExact(
+            [paragraph({ text: 'a', bold: true, link: { href: '/page' } }, { type: 'break' }, { text: 'b' })],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { type: 'a', url: '/page', target: '_self', children: [{ text: 'a\n', bold: true }] },
+                        { text: 'b' },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should write a break at the start of a block or after a mention as a mark-less leaf (MIG-25)', () => {
+        expectExact(
+            [
+                paragraph({ type: 'break' }, { text: 'a', bold: true }),
+                paragraph({ type: 'mention', id: 'user-1', username: '', name: '' }, { type: 'break' }, { text: 'b' }),
+            ],
+            [
+                { type: 'p', children: [{ text: '\n' }, { text: 'a', bold: true }] },
+                {
+                    type: 'p',
+                    children: [
+                        { type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { text: '\nb' },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should join adjacent leaves with the same marks around a break (MIG-25)', () => {
+        expectExact(
+            [paragraph({ text: 'a' }, { type: 'break' }, { type: 'break' }, { text: 'b' })],
+            [{ type: 'p', children: [{ text: 'a\n\nb' }] }],
+        );
+    });
+
+    it('should drop empty leaves and give an element without children an empty leaf (MIG-25)', () => {
+        expectExact(
+            [paragraph({ text: '' }), paragraph(), paragraph({ text: 'a' }, { text: '' })],
+            [
+                { type: 'p', children: [{ text: '' }] },
+                { type: 'p', children: [{ text: '' }] },
+                { type: 'p', children: [{ text: 'a' }] },
+            ],
+        );
+    });
+
+    it.each([
+        { kind: undefined, category: 'user' },
+        { kind: 'user', category: 'user' },
+        { kind: 'group', category: 'group' },
+        { kind: 'all', category: 'all' },
+    ])(
+        'should write a mention of kind $kind with the category $category and no snapshot (MIG-25)',
+        ({ kind, category }) => {
+            expectExact(
+                [paragraph({ type: 'mention', id: 'user-1', username: '@one', name: 'One', kind })],
+                [
+                    {
+                        type: 'p',
+                        children: [{ type: 'mention', category, id: 'user-1', children: [{ text: '' }] }],
+                    },
+                ],
+            );
+        },
+    );
+});
+
+describe('toLegacyRichText content kept as stored', () => {
+    it('should write unknown blocks and unknown inlines back whole in their stored key order (MIG-25)', () => {
+        const unknownBlock = { type: 'emoji', name: 'smile', children: [{ text: '' }] };
+        const unknownInline = { type: 'link', url: '/page', children: [{ text: 'Page' }] };
+        const result = toLegacy([unknownBlock, paragraph(unknownInline)]);
+
+        expect(result).toEqual({
+            outcome: 'exact',
+            value: [unknownBlock, { type: 'p', children: [unknownInline] }],
+            diagnostics: [],
+        });
+        expect(JSON.stringify(result.value)).toBe(
+            JSON.stringify([unknownBlock, { type: 'p', children: [unknownInline] }]),
+        );
+    });
+
+    it('should write a mention in the legacy shape back whole (MIG-25)', () => {
+        const legacyMention = { type: 'mention', category: 'group', id: 7, extra: true, children: [{ text: '' }] };
+
+        expectExact([paragraph(legacyMention)], [{ type: 'p', children: [legacyMention] }]);
+    });
+
+    it('should write undeclared keys of known blocks back after the declared keys and before children (MIG-25)', () => {
+        const result = toLegacy([{ type: 'paragraph', lineHeight: 2, align: 'center', children: [{ text: 'a' }] }]);
+
+        expect(JSON.stringify(result.value)).toBe(
+            '[{"type":"p","align":"center","lineHeight":2,"children":[{"text":"a"}]}]',
+        );
+    });
+
+    it('should keep a __proto__ key of a block as plain data (MIG-25)', () => {
+        const block: StoredBlock = { type: 'paragraph' };
+        Object.defineProperty(block, '__proto__', { value: { polluted: true }, enumerable: true });
+        block.children = [{ text: 'a' }];
+        const result = toLegacy([block]);
+
+        expect(result.outcome).toBe('exact');
+        expect(Object.keys(result.value?.[0] ?? {})).toEqual(['type', '__proto__', 'children']);
+        expect(Reflect.get({}, 'polluted')).toBeUndefined();
+    });
+});
+
+describe('toLegacyRichText content without a legacy form', () => {
+    it.each(['table', 'tableRow', 'tableCell', 'tableHeader'])('should not reverse a %s block (MIG-25)', (type) => {
+        expectNotReversible([{ type, children: [] }], [[0]]);
+    });
+
+    it('should not reverse a numbered list with a start and still collect its other findings (MIG-25)', () => {
+        expectNotReversible(
+            [
+                {
+                    type: 'numberedList',
+                    start: 3,
+                    children: [{ type: 'listItem', children: [{ type: 'table', children: [] }] }],
+                },
+            ],
+            [[0], [0, 0, 0]],
+        );
+    });
+
+    it.each([
+        { name: 'an empty bullet list', block: { type: 'bulletList', children: [] } },
+        { name: 'an empty numbered list', block: { type: 'numberedList', children: [] } },
+        { name: 'an empty list item', block: { type: 'bulletList', children: [{ type: 'listItem', children: [] }] } },
+        { name: 'an empty check list', block: checkList() },
+    ])('should not reverse $name (MIG-25)', ({ block }) => {
+        expect(toLegacy([block]).outcome).toBe('not-reversible');
+    });
+
+    it('should report the path of an empty list item inside a list (MIG-25)', () => {
+        expectNotReversible([{ type: 'bulletList', children: [{ type: 'listItem', children: [] }] }], [[0, 0]]);
+    });
+
+    it('should not reverse a check item without a paragraph first or with extra children (MIG-25)', () => {
+        expectNotReversible(
+            [
+                checkList(
+                    { type: 'checkItem', children: [] },
+                    { type: 'checkItem', children: [{ type: 'quote', children: [] }] },
+                    { type: 'checkItem', children: [paragraph(), paragraph()] },
+                    { type: 'checkItem', children: [paragraph(), paragraph()], checked: true },
+                ),
+            ],
+            [
+                [0, 0],
+                [0, 1],
+                [0, 2],
+                [0, 3],
+            ],
+        );
+    });
+
+    it.each(['inProgress', 'maybe', null])('should not reverse a check item checked as %j (MIG-25)', (checked) => {
+        expectNotReversible([checkList({ type: 'checkItem', checked, children: [paragraph()] })], [[0, 0]]);
+    });
+
+    it('should not reverse a check list inside a list item or a text block (MIG-25)', () => {
+        expectNotReversible(
+            [
+                { type: 'bulletList', children: [{ type: 'listItem', children: [checkList(checkItem('One'))] }] },
+                { type: 'paragraph', children: [checkList(checkItem('One'))] },
+            ],
+            [
+                [0, 0, 0],
+                [1, 0],
+            ],
+        );
+    });
+
+    it('should not reverse a check list that follows another check list directly (MIG-25)', () => {
+        expectNotReversible([checkList(checkItem('One')), checkList(checkItem('Two'))], [[1]]);
+    });
+
+    it('should not reverse a text style or a quote inside a list item (MIG-25)', () => {
+        expectNotReversible(
+            [
+                {
+                    type: 'bulletList',
+                    children: [
+                        {
+                            type: 'listItem',
+                            children: [
+                                { type: 'quote', children: [] },
+                                { type: 'textStyle', style: 'heading1', children: [] },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            [
+                [0, 0, 0],
+                [0, 0, 1],
+            ],
+        );
+    });
+
+    it.each([
+        { name: 'first', blocks: [{ type: 'columnBreak' }, paragraph()], paths: [[0]] },
+        {
+            name: 'after another column break',
+            blocks: [paragraph(), { type: 'columnBreak' }, { type: 'columnBreak' }],
+            paths: [[2]],
+        },
+        {
+            name: 'inside a list item',
+            blocks: [{ type: 'bulletList', children: [{ type: 'listItem', children: [{ type: 'columnBreak' }] }] }],
+            paths: [[0, 0, 0]],
+        },
+        { name: 'with a key of its own', blocks: [paragraph(), { type: 'columnBreak', note: 'x' }], paths: [[1]] },
+    ])('should not reverse a column break that is $name (MIG-25)', ({ blocks, paths }) => {
+        expectNotReversible(blocks, paths);
+    });
+
+    it.each([
+        { name: 'a colour tinycolor cannot read', leaf: { text: 'a', fontColor: { color: 'not a colour' } } },
+        { name: 'a font colour without a colour', leaf: { text: 'a', fontColor: {} } },
+        { name: 'both subscript and superscript', leaf: { text: 'a', subscript: true, superscript: true } },
+        { name: 'a mark with a value other than true', leaf: { text: 'a', bold: false } },
+        { name: 'a link without an href', leaf: { text: 'a', link: {} } },
+        { name: 'a link with a key of its own', leaf: { text: 'a', link: { href: '/a', rel: 'x' } } },
+        { name: 'a link with an unknown appearance', leaf: { text: 'a', link: { href: '/a', appearance: 'ghost' } } },
+        { name: 'text that is not a string', leaf: { text: 5 } },
+        { name: 'a leaf without text', leaf: {} },
+    ])('should not reverse a leaf with $name (MIG-25)', ({ leaf }) => {
+        expectNotReversible([paragraph(leaf)], [[0, 0]]);
+    });
+
+    it.each([
+        { name: 'an unknown kind', node: { type: 'mention', id: 'user-1', username: '', name: '', kind: 'team' } },
+        { name: 'a key of its own', node: { type: 'mention', id: 'user-1', username: '', name: '', extra: 1 } },
+        { name: 'a key on a break', node: { type: 'break', extra: 1 } },
+        { name: 'a known block type in an inline position', node: { type: 'paragraph', children: [] } },
+        { name: 'an unknown inline without children', node: { type: 'emoji' } },
+    ])('should not reverse an inline with $name (MIG-25)', ({ node }) => {
+        expectNotReversible([paragraph(node)], [[0, 0]]);
+    });
+
+    it.each([
+        { name: 'a style the format does not have', block: { type: 'textStyle', style: 'heading9', children: [] } },
+        { name: 'a style that is not text', block: { type: 'textStyle', style: 1, children: [] } },
+        { name: 'children that are not a list', block: { type: 'paragraph', children: 'text' } },
+        { name: 'no children', block: { type: 'paragraph' } },
+        { name: 'an unknown type without children', block: { type: 'emoji' } },
+    ])('should not reverse a block with $name (MIG-25)', ({ block }) => {
+        expectNotReversible([block], [[0]]);
+    });
+
+    it('should report each document key other than version and blocks at the root (MIG-25)', () => {
+        const document = { version: 1 as const, blocks: [paragraph({ text: 'a' })], title: 'Lorem', locale: 'en' };
+
+        expect(toLegacyRichText(document)).toEqual({
+            outcome: 'not-reversible',
+            value: null,
+            diagnostics: [
+                { code: 'no-legacy-form', path: [] },
+                { code: 'no-legacy-form', path: [] },
+            ],
+        });
+    });
+
+    it('should write a list item with an empty paragraph as a list item with an empty paragraph leaf (MIG-25)', () => {
+        expectExact(
+            [{ type: 'bulletList', children: [{ type: 'listItem', children: [paragraph()] }] }],
+            [{ type: 'ul', children: [{ type: 'li', children: [{ type: 'lic', children: [{ text: '' }] }] }] }],
+        );
+    });
+
+    it('should collect every offending path and return no partial tree (MIG-25)', () => {
+        expectNotReversible(
+            [
+                paragraph({ text: 'fine' }),
+                { type: 'table', children: [] },
+                { type: 'columnBreak' },
+                { type: 'columnBreak' },
+            ],
+            [[1], [3]],
+        );
+    });
+});
+
+describe('toLegacyRichText links', () => {
+    it.each([
+        { openInNewTab: true, target: '_blank' },
+        { openInNewTab: undefined, target: '_self' },
+    ])('should write the target $target for openInNewTab $openInNewTab (MIG-25)', ({ openInNewTab, target }) => {
+        expectExact(
+            [paragraph({ text: 'a', link: { href: '/page', openInNewTab } })],
+            [{ type: 'p', children: [{ type: 'a', url: '/page', target, children: [{ text: 'a' }] }] }],
+        );
+    });
+
+    it('should keep a same-tab button same-tab through a round trip (MIG-60)', () => {
+        const legacy = JSON.stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'button',
+                        url: '/page',
+                        target: '_self',
+                        buttonStyle: 'secondary',
+                        children: [{ text: 'Go' }],
+                    },
+                ],
+            },
+        ]);
+        const converted = convertLegacyRichText(legacy);
+
+        expect(converted.outcome).toBe('exact');
+        const written = toLegacyRichText(converted.document ?? { version: 1, blocks: [] });
+
+        const expected: unknown = JSON.parse(legacy);
+        expect(written).toEqual({ outcome: 'exact', value: expected, diagnostics: [] });
+    });
+
+    it('should write a button without a target as a new-tab button (MIG-60)', () => {
+        const converted = convertLegacyRichText(
+            JSON.stringify([{ type: 'p', children: [{ type: 'button', url: '/page', children: [{ text: 'Go' }] }] }]),
+        );
+        const written = toLegacyRichText(converted.document ?? { version: 1, blocks: [] });
+
+        expect(written.value).toEqual([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'button',
+                        url: '/page',
+                        target: '_blank',
+                        buttonStyle: 'primary',
+                        children: [{ text: 'Go' }],
+                    },
+                ],
+            },
+        ]);
+    });
+});
+
+describe('toLegacyRichText determinism', () => {
+    it('should give identical output for the same document on every run (MIG-26)', () => {
+        const document = {
+            version: 1 as const,
+            blocks: [paragraph({ text: 'a', bold: true }, { type: 'break' }, { text: 'b' })],
+        };
+
+        expect(JSON.stringify(toLegacyRichText(document))).toBe(JSON.stringify(toLegacyRichText(document)));
+    });
+});

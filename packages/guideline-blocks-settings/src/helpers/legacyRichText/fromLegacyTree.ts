@@ -2,6 +2,7 @@
 
 import { readAlignment } from './alignment';
 import { parseLegacyColor } from './color';
+import { copyValue, setOwn } from './copyValue';
 import { isLegacyText } from './inspectLegacyTree';
 import { isSafeHref, readButtonAppearance, readsAsNewTab } from './link';
 import {
@@ -18,9 +19,9 @@ import {
     type OpenBlock,
     type OpenInline,
     type ResolveMention,
-    type RteText,
     type TextStyleName,
 } from './types';
+import { TEXT_MARK_KEYS, isTextStyleName } from './vocabulary';
 
 type OpenNode = OpenBlock & { [property: string]: unknown };
 type OpenText = Extract<OpenInline, { text: string }>;
@@ -57,7 +58,6 @@ type UndeclaredPropertiesOptions = {
 };
 
 type MarkEntry = { key: string; value: unknown };
-type CopyFrame = { source: object; target: object };
 type CheckItem = { node: OpenNode; children: OpenBlock[]; level: number; breaksColumn: boolean };
 type CheckListFrame = { items: OpenBlock[]; itemChildren: OpenBlock[] };
 type CheckRunMapping = { blocks: OpenBlock[]; nextIndex: number };
@@ -68,28 +68,6 @@ type LinkReading =
     | { status: 'unsafe' };
 type MentionNames = Pick<MentionInline, 'username' | 'name'>;
 type MentionCategoryReading = { status: 'known'; kind: MentionInline['kind'] } | { status: 'unknown' };
-
-const TEXT_MARK_KEYS = [
-    'bold',
-    'italic',
-    'underline',
-    'strikethrough',
-    'code',
-    'subscript',
-    'superscript',
-] satisfies readonly (keyof RteText)[];
-
-const TEXT_STYLE_NAMES: Record<TextStyleName, true> = {
-    heading1: true,
-    heading2: true,
-    heading3: true,
-    heading4: true,
-    custom1: true,
-    custom2: true,
-    custom3: true,
-    imageTitle: true,
-    imageCaption: true,
-};
 
 const BLOCK_KEYS = ['type', 'children'];
 const LINK_KEYS = ['type', 'children', 'url', 'target', 'chosenLink'];
@@ -108,13 +86,10 @@ const QUOTE_BLOCK_STYLE = 'quote';
 const DEFAULT_BUTTON_APPEARANCE: LinkAppearance = 'primary';
 const LINE_BREAK = '\n';
 const CHECKBOX_ITEM_TYPE = 'checkbox-item';
+const LIST_TYPES = ['ul', 'ol'];
 const LIST_ITEM_TYPE = 'li';
 const LIST_ITEM_PARAGRAPH_TYPE = 'lic';
 const MIN_CHECK_LEVEL = 1;
-
-const isTextStyleName = (type: string): type is TextStyleName => {
-    return Object.keys(TEXT_STYLE_NAMES).includes(type);
-};
 
 const isOpenText = (inline: OpenInline): inline is OpenText => {
     return inline.type === undefined;
@@ -122,49 +97,6 @@ const isOpenText = (inline: OpenInline): inline is OpenText => {
 
 const report = (context: MappingContext, code: LegacyRichTextReviewCode, path: LegacyRichTextPath): void => {
     context.diagnostics.push({ code, path });
-};
-
-// defineProperty keeps a source key such as `__proto__` an own property instead of reaching the prototype.
-const setOwn = (target: object, key: string, value: unknown): void => {
-    Object.defineProperty(target, key, { value, enumerable: true, writable: true, configurable: true });
-};
-
-const createContainer = (source: object): object => {
-    if (Array.isArray(source)) {
-        return [];
-    }
-
-    return {};
-};
-
-/** Deep copy without recursion, so a hostile property value cannot exhaust the stack. */
-const copyValue = (value: unknown): unknown => {
-    if (typeof value !== 'object' || value === null) {
-        return value;
-    }
-
-    const root = createContainer(value);
-    const pending: CopyFrame[] = [{ source: value, target: root }];
-
-    while (pending.length > 0) {
-        const frame = pending.pop();
-        if (frame === undefined) {
-            break;
-        }
-
-        for (const key of Object.keys(frame.source)) {
-            const child: unknown = Reflect.get(frame.source, key);
-            if (typeof child === 'object' && child !== null) {
-                const copy = createContainer(child);
-                setOwn(frame.target, key, copy);
-                pending.push({ source: child, target: copy });
-            } else {
-                setOwn(frame.target, key, child);
-            }
-        }
-    }
-
-    return root;
 };
 
 const copyElementInto = (target: object, element: LegacyElement): void => {
@@ -621,6 +553,10 @@ const readListItemChild = (node: LegacyNode): ListItemChild => {
     return { kind: 'element', element: node };
 };
 
+const isEmptyList = (element: LegacyElement): boolean => {
+    return LIST_TYPES.includes(element.type) && element.children.length === 0;
+};
+
 const mapListItem = (element: LegacyElement, options: BlockOptions): OpenNode => {
     const { path, context } = options;
     const node: OpenNode = { type: 'listItem' };
@@ -665,12 +601,22 @@ const mapListItem = (element: LegacyElement, options: BlockOptions): OpenNode =>
         }
     }
 
+    if (children.length === 0) {
+        children.push({ type: 'paragraph', children: [] });
+    }
+
     node.children = children;
 
     return node;
 };
 
 const mapListItemElement = (element: LegacyElement, options: BlockOptions): OpenBlock => {
+    if (isEmptyList(element)) {
+        report(options.context, 'unknown-element', options.path);
+
+        return keepWholeBlock(element);
+    }
+
     switch (element.type) {
         case LIST_ITEM_PARAGRAPH_TYPE:
             return mapTextBlock(element, { ...options, spec: { type: 'paragraph' } });
@@ -825,6 +771,10 @@ const mapCheckRun = (tree: LegacyRichTextTree, startIndex: number, context: Mapp
 };
 
 const mapKnownBlock = (element: LegacyElement, options: BlockOptions): OpenNode | null => {
+    if (isEmptyList(element)) {
+        return null;
+    }
+
     const { type } = element;
     if (isTextStyleName(type)) {
         return mapTextBlock(element, { ...options, spec: { type: 'textStyle', style: type } });

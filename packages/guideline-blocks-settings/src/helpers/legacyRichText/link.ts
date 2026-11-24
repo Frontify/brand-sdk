@@ -2,7 +2,9 @@
 
 import { type LinkAppearance } from './types';
 
-const NEW_TAB_TARGETS = ['_blank', '_new'];
+const NEW_TAB_TARGET = '_blank';
+const SAME_TAB_TARGET = '_self';
+const NEW_TAB_TARGETS = [NEW_TAB_TARGET, '_new'];
 const MAX_HREF_LENGTH = 2048;
 const ALLOWED_SCHEMES = ['http', 'https', 'mailto', 'tel'];
 const CREDENTIAL_SCHEMES = ['http', 'https'];
@@ -33,6 +35,15 @@ export const readButtonAppearance = (value: unknown): LinkAppearance | undefined
 /** Reads a legacy `target`: `_blank` and `_new` open a new tab, every other value and a missing one the same tab. */
 export const readsAsNewTab = (target: unknown): boolean => {
     return typeof target === 'string' && NEW_TAB_TARGETS.includes(target);
+};
+
+/** Writes the legacy `target`, which the legacy editor always stores. */
+export const writeTarget = (openInNewTab: boolean): string => {
+    if (openInNewTab) {
+        return NEW_TAB_TARGET;
+    }
+
+    return SAME_TAB_TARGET;
 };
 
 const hasControlCharacter = (href: string): boolean => {

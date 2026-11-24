@@ -6,6 +6,8 @@ const HEX_PREFIX = '#';
 const RGB_PREFIX = 'rgb';
 const RGB_SUFFIX = ')';
 const HEX_LENGTHS_WITH_PREFIX = [4, 7, 9];
+const SHORT_ALPHA_DECIMALS = 2;
+const LONG_ALPHA_DECIMALS = 3;
 const MAX_ALPHA_BYTE = 255;
 
 /**
@@ -34,4 +36,27 @@ export const parseLegacyColor = (value: unknown): string | null => {
     }
 
     return color.toHex8String();
+};
+
+// Two decimals when they read back to the same alpha byte, else three, which holds for every byte.
+const writeAlpha = (alpha: number): string => {
+    const byte = Math.round(alpha * MAX_ALPHA_BYTE);
+    const short = alpha.toFixed(SHORT_ALPHA_DECIMALS);
+    if (Math.round(Number(short) * MAX_ALPHA_BYTE) === byte) {
+        return short;
+    }
+
+    return alpha.toFixed(LONG_ALPHA_DECIMALS);
+};
+
+/** Writes a new-format colour as the legacy `rgba(r, g, b, a)`, or null when the colour cannot be read. */
+export const toLegacyColor = (value: string): string | null => {
+    const color = new TinyColor(value);
+    if (!color.isValid) {
+        return null;
+    }
+
+    const { r, g, b, a } = color.toRgb();
+
+    return `rgba(${r}, ${g}, ${b}, ${writeAlpha(a)})`;
 };

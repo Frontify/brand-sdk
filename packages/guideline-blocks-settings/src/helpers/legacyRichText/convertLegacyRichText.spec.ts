@@ -341,6 +341,45 @@ describe('convertLegacyRichText mapping', () => {
         ]);
     });
 
+    it.each(['ul', 'ol'])('should keep an empty %s whole and review it (MIG-13)', (type) => {
+        const result = convertTree([{ type, breakAfterColumn: 'active', children: [] }]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0] }]);
+        expect(result.document?.blocks).toEqual([{ type, breakAfterColumn: 'active', children: [] }]);
+    });
+
+    it('should keep an empty list inside a list item whole and review it (MIG-13)', () => {
+        const result = convertTree([
+            { type: 'ul', children: [{ type: 'li', children: [{ type: 'ol', children: [] }] }] },
+        ]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0, 0, 0] }]);
+        expect(result.document?.blocks).toEqual([
+            {
+                type: 'bulletList',
+                children: [{ type: 'listItem', children: [{ type: 'ol', children: [] }] }],
+            },
+        ]);
+    });
+
+    it('should map a list item without children to a list item with an empty paragraph (MIG-13)', () => {
+        const result = convertTree([{ type: 'ul', children: [{ type: 'li', children: [] }] }]);
+
+        expect(result).toEqual({
+            outcome: 'exact',
+            document: {
+                version: 1,
+                blocks: [
+                    {
+                        type: 'bulletList',
+                        children: [{ type: 'listItem', children: [{ type: 'paragraph', children: [] }] }],
+                    },
+                ],
+            },
+            diagnostics: [],
+        });
+    });
+
     it('should wrap a text leaf outside a text block in a paragraph and review it (MIG-13)', () => {
         const result = convertTree([{ text: 'Stray' }]);
 

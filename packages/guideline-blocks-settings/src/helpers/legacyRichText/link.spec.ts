@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from 'vitest';
 
-import { isSafeHref, readButtonAppearance, readsAsNewTab } from './link';
+import { isSafeHref, readButtonAppearance, readsAsNewTab, writeTarget } from './link';
 
 const LONG_PATH_LENGTH = 2048;
 
@@ -17,6 +17,19 @@ describe('readsAsNewTab', () => {
             expect(readsAsNewTab(target)).toBe(false);
         },
     );
+});
+
+describe('writeTarget', () => {
+    it.each([
+        { openInNewTab: true, target: '_blank' },
+        { openInNewTab: false, target: '_self' },
+    ])('should write $target when openInNewTab is $openInNewTab (MIG-25)', ({ openInNewTab, target }) => {
+        expect(writeTarget(openInNewTab)).toBe(target);
+    });
+
+    it.each([true, false])('should read back the target written for openInNewTab %s (MIG-25)', (openInNewTab) => {
+        expect(readsAsNewTab(writeTarget(openInNewTab))).toBe(openInNewTab);
+    });
 });
 
 describe('readButtonAppearance', () => {
