@@ -64,6 +64,54 @@ To use React components, you need to add the styles import from the `@frontify/g
 import '@frontify/guideline-blocks-settings/styles';
 ```
 
+## Converting legacy rich text
+
+The legacy rich text editor stores its value as Slate JSON. `convertLegacyRichText` turns a stored value into a document of the new rich text editor (`@frontify/fondue/rich-text-editor`). `toLegacyRichText` turns a document back into a legacy Slate tree. Both functions are pure: they never throw, and the same input always gives the same result.
+
+```ts
+import { convertLegacyRichText, toLegacyRichText } from '@frontify/guideline-blocks-settings';
+
+const converted = convertLegacyRichText(storedValue, { resolveMention });
+
+if (converted.outcome === 'exact') {
+    const reverted = toLegacyRichText(converted.document, { columns: 2 });
+}
+```
+
+`resolveMention(kind, id)` returns the names a mention shows: `{ status: 'resolved', username, name }`, or `{ status: 'unknown' }`. `kind` is empty for a person, or `'group'` or `'all'`. Without a resolver, every mention is unresolved.
+
+`columns` is the column count of the legacy editor. The first `columns - 1` column breaks are active, the others inactive. The default is `1`.
+
+### Outcomes
+
+| Outcome           | Returned by             | Document or value | Meaning                                                    |
+| ----------------- | ----------------------- | ----------------- | ---------------------------------------------------------- |
+| `exact`           | both                    | yes               | Nothing was lost or guessed.                               |
+| `requires-review` | `convertLegacyRichText` | yes               | The document keeps everything, but a person must check it. |
+| `unsupported`     | `convertLegacyRichText` | `null`            | The value is not converted here.                           |
+| `invalid`         | `convertLegacyRichText` | `null`            | The value is not a legacy value.                           |
+| `not-reversible`  | `toLegacyRichText`      | `null`            | Part of the document has no legacy form.                   |
+
+Each result has `diagnostics`: a list of `{ code, path }`. The path holds child indexes, from the root array for a legacy value or from `blocks` for a document. A diagnostic never holds text, URLs or ids from the value.
+
+### Diagnostic codes
+
+| Code                   | Outcome           | Cause                                                                               |
+| ---------------------- | ----------------- | ----------------------------------------------------------------------------------- |
+| `unknown-element`      | `requires-review` | An element type the new format does not have, or an element in the wrong place. It is kept as stored. |
+| `unknown-property`     | `requires-review` | A property the new format does not have. It is kept as stored where the format allows it. |
+| `mention-unresolved`   | `requires-review` | The resolver does not know the mention. Its id stays; its names are empty.          |
+| `link-unsafe`          | `requires-review` | A link address that is not http, https, mailto, tel or relative. The text stays without the link. |
+| `button-style-unknown` | `requires-review` | A button style other than primary, secondary or tertiary. It becomes a plain link.  |
+| `color-unparsed`       | `requires-review` | A text colour that is not `rgb()`, `rgba()`, `#rgb`, `#rrggbb` or `#rrggbbaa`. It is removed. |
+| `excluded-marks`       | `requires-review` | Text that is both subscript and superscript. It keeps subscript.                    |
+| `indent-jump`          | `requires-review` | A to-do item indented more than one level below the item before it.                |
+| `html-value`           | `unsupported`     | The value is HTML or plain text, not JSON.                                          |
+| `limit-exceeded`       | `unsupported`     | The value is over 5 MiB, 50,000 nodes, 64 levels deep or 1,000,000 characters in one text. |
+| `invalid-value`        | `invalid`         | The value is JSON, but not an array.                                                |
+| `invalid-node`         | `invalid`         | A node in the array is not a text or an element.                                    |
+| `no-legacy-form`       | `not-reversible`  | The legacy format cannot hold this part of the document.                            |
+
 ## Development
 
 The package uses the workspace versions of `@frontify/sidebar-settings` and `@frontify/app-bridge` from their `dist` folders, so build those first. From the repository root:
