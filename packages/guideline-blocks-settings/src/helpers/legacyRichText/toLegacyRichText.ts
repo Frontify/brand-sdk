@@ -3,7 +3,8 @@
 import { writeAlignment } from './alignment';
 import { toLegacyColor } from './color';
 import { copyValue, setOwn } from './copyValue';
-import { readButtonAppearance, writeTarget } from './link';
+import { MAX_BLOCK_NESTING_DEPTH } from './limits';
+import { type LinkParts, readLinkValue, writeButtonStyle, writeTarget } from './link';
 import {
     type LegacyElement,
     type LegacyNode,
@@ -12,15 +13,43 @@ import {
     type LegacyRichTextPath,
     type LegacyRichTextTree,
     type LegacyText,
-    type LinkAppearance,
     type OpenRichTextDocument,
     type ToLegacyRichTextOptions,
     type ToLegacyRichTextResult,
 } from './types';
-import { TEXT_MARK_KEYS, isTextStyleName } from './vocabulary';
+import {
+    ACTIVE_COLUMN_BREAK,
+    type ColumnBreakValue,
+    INACTIVE_COLUMN_BREAK,
+    LEGACY_ALIGN_KEY,
+    LEGACY_BREAK_AFTER_COLUMN_KEY,
+    LEGACY_BULLET_LIST_TYPE,
+    LEGACY_BUTTON_STYLE_KEY,
+    LEGACY_BUTTON_TYPE,
+    LEGACY_CATEGORY_KEY,
+    LEGACY_CHECKBOX_ITEM_TYPE,
+    LEGACY_CHECKED_KEY,
+    LEGACY_COLOR_KEY,
+    LEGACY_ID_KEY,
+    LEGACY_INDENT_KEY,
+    LEGACY_LINK_TYPE,
+    LEGACY_LIST_ITEM_PARAGRAPH_TYPE,
+    LEGACY_LIST_ITEM_TYPE,
+    LEGACY_MENTION_TYPE,
+    LEGACY_NUMBERED_LIST_TYPE,
+    LEGACY_PARAGRAPH_TYPE,
+    LEGACY_QUOTE_TYPE,
+    LEGACY_TARGET_KEY,
+    LEGACY_URL_KEY,
+    LINE_BREAK,
+    MIN_CHECK_LEVEL,
+    TEXT_MARK_KEYS,
+    isNewFormatBlockType,
+    isTextStyleName,
+    writeMentionCategory,
+} from './vocabulary';
 
 type StoredNode = { [property: string]: unknown };
-type ColumnBreakValue = 'active' | 'inactive';
 type PropertyEntry = { key: string; value: unknown };
 type NotReversibleDiagnostic = LegacyRichTextDiagnostic<LegacyRichTextNotReversibleCode>;
 
@@ -35,8 +64,7 @@ type TextBlockSpec = { legacyType: string; declaredKeys: readonly string[] };
 type ListSpec = TextBlockSpec & { isNumbered: boolean };
 type CheckItemOptions = NestedOptions & { level: number; writes: CheckItemWrite[] };
 
-type LinkReading = { href: string; openInNewTab: boolean; appearance: LinkAppearance | undefined };
-type TextItem = { kind: 'text'; text: string; marks: PropertyEntry[]; link: LinkReading | undefined };
+type TextItem = { kind: 'text'; text: string; marks: PropertyEntry[]; link: LinkParts | undefined };
 type NodeItem = { kind: 'node'; node: LegacyNode };
 type InlineItem = TextItem | NodeItem;
 type CheckItemWrite = {
@@ -49,7 +77,6 @@ type CheckItemWrite = {
 
 const DEFAULT_COLUMNS = 1;
 const DOCUMENT_KEYS = ['version', 'blocks'];
-const MAX_NESTING_DEPTH = 128;
 
 const PARAGRAPH_KEYS = ['type', 'children', 'align'];
 const TEXT_STYLE_KEYS = [...PARAGRAPH_KEYS, 'style'];
@@ -60,40 +87,25 @@ const CHECK_LIST_KEYS = ['type', 'children'];
 const CHECK_ITEM_KEYS = ['type', 'children', 'checked'];
 const COLUMN_BREAK_KEYS = ['type'];
 const BREAK_KEYS = ['type'];
-const MENTION_KEYS = ['type', 'id', 'username', 'name', 'kind'];
-const LINK_VALUE_KEYS = ['href', 'openInNewTab', 'appearance'];
+const MENTION_INLINE_KEYS = ['type', 'id', 'username', 'name', 'kind'];
 const LEAF_KEYS = ['text', 'type', ...TEXT_MARK_KEYS, 'fontColor', 'link'];
 
-const NEW_FORMAT_BLOCK_TYPES = [
-    'paragraph',
-    'textStyle',
-    'quote',
-    'bulletList',
-    'numberedList',
-    'listItem',
-    'checkList',
-    'checkItem',
-    'columnBreak',
-    'table',
-    'tableRow',
-    'tableCell',
-    'tableHeader',
-];
-
-const PARAGRAPH_SPEC: TextBlockSpec = { legacyType: 'p', declaredKeys: PARAGRAPH_KEYS };
-const QUOTE_SPEC: TextBlockSpec = { legacyType: 'quote', declaredKeys: PARAGRAPH_KEYS };
-const LIST_ITEM_PARAGRAPH_SPEC: TextBlockSpec = { legacyType: 'lic', declaredKeys: PARAGRAPH_KEYS };
-const BULLET_LIST_SPEC: ListSpec = { legacyType: 'ul', declaredKeys: BULLET_LIST_KEYS, isNumbered: false };
-const NUMBERED_LIST_SPEC: ListSpec = { legacyType: 'ol', declaredKeys: NUMBERED_LIST_KEYS, isNumbered: true };
-
-const LINE_BREAK = '\n';
-const LINK_TYPE = 'a';
-const BUTTON_TYPE = 'button';
-const MENTION_TYPE = 'mention';
-const CHECKBOX_ITEM_TYPE = 'checkbox-item';
-const MIN_INDENT = 1;
-const ACTIVE_COLUMN_BREAK: ColumnBreakValue = 'active';
-const INACTIVE_COLUMN_BREAK: ColumnBreakValue = 'inactive';
+const PARAGRAPH_SPEC: TextBlockSpec = { legacyType: LEGACY_PARAGRAPH_TYPE, declaredKeys: PARAGRAPH_KEYS };
+const QUOTE_SPEC: TextBlockSpec = { legacyType: LEGACY_QUOTE_TYPE, declaredKeys: PARAGRAPH_KEYS };
+const LIST_ITEM_PARAGRAPH_SPEC: TextBlockSpec = {
+    legacyType: LEGACY_LIST_ITEM_PARAGRAPH_TYPE,
+    declaredKeys: PARAGRAPH_KEYS,
+};
+const BULLET_LIST_SPEC: ListSpec = {
+    legacyType: LEGACY_BULLET_LIST_TYPE,
+    declaredKeys: BULLET_LIST_KEYS,
+    isNumbered: false,
+};
+const NUMBERED_LIST_SPEC: ListSpec = {
+    legacyType: LEGACY_NUMBERED_LIST_TYPE,
+    declaredKeys: NUMBERED_LIST_KEYS,
+    isNumbered: true,
+};
 const CHECK_ITEM_PARAGRAPH_INDEX = 0;
 const CHECK_ITEM_NESTED_LIST_INDEX = 1;
 
@@ -139,7 +151,7 @@ const readAlignEntries = (node: StoredNode): PropertyEntry[] => {
         return [];
     }
 
-    return [{ key: 'align', value: writeAlignment(node.align) }];
+    return [{ key: LEGACY_ALIGN_KEY, value: writeAlignment(node.align) }];
 };
 
 const readBreakEntries = (breakAfterColumn: ColumnBreakValue | undefined): PropertyEntry[] => {
@@ -147,7 +159,7 @@ const readBreakEntries = (breakAfterColumn: ColumnBreakValue | undefined): Prope
         return [];
     }
 
-    return [{ key: 'breakAfterColumn', value: breakAfterColumn }];
+    return [{ key: LEGACY_BREAK_AFTER_COLUMN_KEY, value: breakAfterColumn }];
 };
 
 const createLegacyElement = (
@@ -198,28 +210,6 @@ const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegac
     return element;
 };
 
-const readLinkReading = (value: unknown): LinkReading | null => {
-    if (!isStoredNode(value) || Object.keys(value).some((key) => !LINK_VALUE_KEYS.includes(key))) {
-        return null;
-    }
-
-    const { href, openInNewTab, appearance } = value;
-    if (typeof href !== 'string' || (openInNewTab !== undefined && openInNewTab !== true)) {
-        return null;
-    }
-
-    if (appearance === undefined) {
-        return { href, openInNewTab: openInNewTab === true, appearance: undefined };
-    }
-
-    const buttonAppearance = readButtonAppearance(appearance);
-    if (buttonAppearance === undefined) {
-        return null;
-    }
-
-    return { href, openInNewTab: openInNewTab === true, appearance: buttonAppearance };
-};
-
 const readMarkEntries = (leaf: StoredNode): PropertyEntry[] | null => {
     const entries: PropertyEntry[] = [];
 
@@ -251,7 +241,7 @@ const readMarkEntries = (leaf: StoredNode): PropertyEntry[] | null => {
             return null;
         }
 
-        entries.push({ key: 'color', value: color });
+        entries.push({ key: LEGACY_COLOR_KEY, value: color });
     }
 
     return [...entries, ...readUndeclaredEntries(leaf, LEAF_KEYS)];
@@ -266,9 +256,9 @@ const readTextItem = (leaf: StoredNode, path: LegacyRichTextPath, context: ToLeg
         return null;
     }
 
-    let link: LinkReading | undefined;
+    let link: LinkParts | undefined;
     if (leaf.link !== undefined) {
-        const reading = readLinkReading(leaf.link);
+        const reading = readLinkValue(leaf.link);
         if (reading === null) {
             report(context, path);
 
@@ -279,20 +269,6 @@ const readTextItem = (leaf: StoredNode, path: LegacyRichTextPath, context: ToLeg
     }
 
     return { kind: 'text', text, marks, link };
-};
-
-const writeMentionCategory = (kind: unknown): string | undefined => {
-    switch (kind) {
-        case undefined:
-            return 'user';
-        case 'user':
-        case 'group':
-        case 'all':
-            return kind;
-        default:
-            // The kind is an arbitrary stored value, not a union: anything else has no legacy category.
-            return undefined;
-    }
 };
 
 const hasMentionShape = (mention: StoredNode): boolean => {
@@ -310,17 +286,17 @@ const readMentionItem = (mention: StoredNode, path: LegacyRichTextPath, context:
     }
 
     const category = writeMentionCategory(mention.kind);
-    if (category === undefined || readUndeclaredEntries(mention, MENTION_KEYS).length > 0) {
+    if (category === undefined || readUndeclaredEntries(mention, MENTION_INLINE_KEYS).length > 0) {
         report(context, path);
 
         return null;
     }
 
     const node = createLegacyElement(
-        MENTION_TYPE,
+        LEGACY_MENTION_TYPE,
         [
-            { key: 'category', value: category },
-            { key: 'id', value: mention.id },
+            { key: LEGACY_CATEGORY_KEY, value: category },
+            { key: LEGACY_ID_KEY, value: mention.id },
         ],
         [],
         [{ text: '' }],
@@ -403,7 +379,7 @@ const writeUnknownInline = (
     path: LegacyRichTextPath,
     context: ToLegacyContext,
 ): LegacyElement | null => {
-    if (typeof node.type === 'string' && NEW_FORMAT_BLOCK_TYPES.includes(node.type)) {
+    if (typeof node.type === 'string' && isNewFormatBlockType(node.type)) {
         report(context, path);
 
         return null;
@@ -441,16 +417,16 @@ const isEmptyText = (item: InlineItem): boolean => {
     return item.kind === 'text' && item.text === '';
 };
 
-const createLink = (link: LinkReading, run: TextItem[]): LegacyElement => {
+const createLink = (link: LinkParts, run: TextItem[]): LegacyElement => {
     const declared: PropertyEntry[] = [
-        { key: 'url', value: link.href },
-        { key: 'target', value: writeTarget(link.openInNewTab) },
+        { key: LEGACY_URL_KEY, value: link.href },
+        { key: LEGACY_TARGET_KEY, value: writeTarget(link.openInNewTab) },
     ];
-    let type = LINK_TYPE;
+    let type = LEGACY_LINK_TYPE;
 
     if (link.appearance !== undefined) {
-        type = BUTTON_TYPE;
-        declared.push({ key: 'buttonStyle', value: link.appearance });
+        type = LEGACY_BUTTON_TYPE;
+        declared.push({ key: LEGACY_BUTTON_STYLE_KEY, value: writeButtonStyle(link.appearance) });
     }
 
     return createLegacyElement(
@@ -461,7 +437,7 @@ const createLink = (link: LinkReading, run: TextItem[]): LegacyElement => {
     );
 };
 
-const isInSameLink = (link: LinkReading, item: InlineItem): item is TextItem => {
+const isInSameLink = (link: LinkParts, item: InlineItem): item is TextItem => {
     return item.kind === 'text' && item.link !== undefined && JSON.stringify(item.link) === JSON.stringify(link);
 };
 
@@ -549,7 +525,7 @@ const mapTextStyleBlock = (block: StoredNode, options: BlockOptions): LegacyElem
 };
 
 const isTooDeep = (path: LegacyRichTextPath, context: ToLegacyContext): boolean => {
-    if (path.length <= MAX_NESTING_DEPTH) {
+    if (path.length <= MAX_BLOCK_NESTING_DEPTH) {
         return false;
     }
 
@@ -581,7 +557,7 @@ const mapListItem = (item: StoredNode, options: NestedOptions): LegacyElement[] 
         }
     }
 
-    return [createLegacyElement('li', [], readUndeclaredEntries(item, LIST_ITEM_KEYS), nodes)];
+    return [createLegacyElement(LEGACY_LIST_ITEM_TYPE, [], readUndeclaredEntries(item, LIST_ITEM_KEYS), nodes)];
 };
 
 const mapListItemChild = (child: StoredNode, options: BlockOptions): LegacyElement[] => {
@@ -600,7 +576,7 @@ const mapListItemChild = (child: StoredNode, options: BlockOptions): LegacyEleme
 
 const mapUnknownBlock = (block: StoredNode, options: BlockOptions): LegacyElement[] => {
     const { path, breakAfterColumn, context } = options;
-    if (typeof block.type === 'string' && NEW_FORMAT_BLOCK_TYPES.includes(block.type)) {
+    if (typeof block.type === 'string' && isNewFormatBlockType(block.type)) {
         report(context, path);
 
         return [];
@@ -612,7 +588,7 @@ const mapUnknownBlock = (block: StoredNode, options: BlockOptions): LegacyElemen
     }
 
     if (breakAfterColumn !== undefined) {
-        setOwn(whole, 'breakAfterColumn', breakAfterColumn);
+        setOwn(whole, LEGACY_BREAK_AFTER_COLUMN_KEY, breakAfterColumn);
     }
 
     return [whole];
@@ -747,23 +723,23 @@ const collectCheckItem = (item: StoredNode, options: CheckItemOptions): void => 
 const createCheckboxItem = (write: CheckItemWrite, breakAfterColumn: ColumnBreakValue | undefined): LegacyElement => {
     const declared = [...write.align];
 
-    if (write.level > MIN_INDENT) {
-        declared.push({ key: 'indent', value: write.level });
+    if (write.level > MIN_CHECK_LEVEL) {
+        declared.push({ key: LEGACY_INDENT_KEY, value: write.level });
     }
 
     if (write.checked) {
-        declared.push({ key: 'checked', value: true });
+        declared.push({ key: LEGACY_CHECKED_KEY, value: true });
     }
 
     declared.push(...readBreakEntries(breakAfterColumn));
 
-    return createLegacyElement(CHECKBOX_ITEM_TYPE, declared, write.undeclared, write.children);
+    return createLegacyElement(LEGACY_CHECKBOX_ITEM_TYPE, declared, write.undeclared, write.children);
 };
 
 const mapCheckList = (list: StoredNode, options: BlockOptions): LegacyElement[] => {
     const { path, breakAfterColumn, context } = options;
     const writes: CheckItemWrite[] = [];
-    collectCheckItems(list, { path, level: MIN_INDENT, writes, context });
+    collectCheckItems(list, { path, level: MIN_CHECK_LEVEL, writes, context });
 
     return writes.map((write, index) => {
         if (index === writes.length - 1) {

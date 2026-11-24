@@ -13,6 +13,19 @@ export type LinkValue = NonNullable<RteText['link']>;
 export type LinkAppearance = Extract<LinkValue, { appearance: unknown }>['appearance'];
 export type Alignment = NonNullable<ParagraphBlock['align']>;
 export type TextStyleName = TextStyleBlock['style'];
+type ListBlock = Extract<RteBlock, { type: 'bulletList' }>;
+type CheckListBlock = Extract<RteBlock, { type: 'checkList' }>;
+type TableBlock = Extract<RteBlock, { type: 'table' }>;
+type TableRowBlock = TableBlock['children'][number];
+
+/** Every block type of the new format: the top-level ones and the ones nested in lists and tables. */
+export type NewFormatBlockType =
+    | RteBlock['type']
+    | ListBlock['children'][number]['type']
+    | CheckListBlock['children'][number]['type']
+    | TableRowBlock['type']
+    | TableRowBlock['children'][number]['type'];
+
 export type OpenRichTextDocument = ReturnType<typeof parseHtml>;
 export type OpenBlock = OpenRichTextDocument['blocks'][number];
 export type OpenInline = NonNullable<OpenBlock['children']>[number];

@@ -3,8 +3,8 @@
 import { readAlignment } from './alignment';
 import { parseLegacyColor } from './color';
 import { copyValue, setOwn } from './copyValue';
-import { isLegacyText } from './inspectLegacyTree';
-import { isSafeHref, readButtonAppearance, readsAsNewTab } from './link';
+import { isLegacyText } from './legacyNode';
+import { createLinkValue, isSafeHref, readButtonAppearance, readsAsNewTab } from './link';
 import {
     type LegacyElement,
     type LegacyNode,
@@ -21,12 +21,40 @@ import {
     type ResolveMention,
     type TextStyleName,
 } from './types';
-import { TEXT_MARK_KEYS, isTextStyleName } from './vocabulary';
+import {
+    LEGACY_ALIGN_KEY,
+    LEGACY_BREAK_AFTER_COLUMN_KEY,
+    LEGACY_BULLET_LIST_TYPE,
+    LEGACY_BUTTON_STYLE_KEY,
+    LEGACY_BUTTON_TYPE,
+    LEGACY_CATEGORY_KEY,
+    LEGACY_CHECKBOX_ITEM_TYPE,
+    LEGACY_CHECKED_KEY,
+    LEGACY_CHOSEN_LINK_KEY,
+    LEGACY_COLOR_KEY,
+    LEGACY_ID_KEY,
+    LEGACY_INDENT_KEY,
+    LEGACY_LINK_TYPE,
+    LEGACY_LIST_ITEM_PARAGRAPH_TYPE,
+    LEGACY_LIST_ITEM_TYPE,
+    LEGACY_MENTION_TYPE,
+    LEGACY_NUMBERED_LIST_TYPE,
+    LEGACY_PARAGRAPH_TYPE,
+    LEGACY_QUOTE_TYPE,
+    LEGACY_TARGET_KEY,
+    LEGACY_TEXT_STYLE_KEY,
+    LEGACY_URL_KEY,
+    LINE_BREAK,
+    MIN_CHECK_LEVEL,
+    TEXT_MARK_KEYS,
+    isColumnBreakValue,
+    isTextStyleName,
+    readMentionKind,
+} from './vocabulary';
 
 type OpenNode = OpenBlock & { [property: string]: unknown };
 type OpenText = Extract<OpenInline, { text: string }>;
 type OpenInlineElement = Exclude<OpenInline, OpenText>;
-type ButtonLinkValue = Extract<LinkValue, { appearance: unknown }>;
 
 type FromLegacyTreeOptions = { resolveMention?: ResolveMention };
 type FromLegacyTreeResult = { blocks: OpenBlock[]; diagnostics: LegacyRichTextReviewDiagnostic[] };
@@ -67,29 +95,22 @@ type LinkReading =
     | { status: 'button-style-unknown'; link: LinkValue }
     | { status: 'unsafe' };
 type MentionNames = Pick<MentionInline, 'username' | 'name'>;
-type MentionCategoryReading = { status: 'known'; kind: MentionInline['kind'] } | { status: 'unknown' };
 
 const BLOCK_KEYS = ['type', 'children'];
-const LINK_KEYS = ['type', 'children', 'url', 'target', 'chosenLink'];
-const BUTTON_KEYS = [...LINK_KEYS, 'buttonStyle'];
-const MENTION_KEYS = ['type', 'children', 'id', 'category'];
-const BARE_INLINE_TYPES = ['a', 'button', 'mention'];
+const LINK_KEYS = ['type', 'children', LEGACY_URL_KEY, LEGACY_TARGET_KEY, LEGACY_CHOSEN_LINK_KEY];
+const BUTTON_KEYS = [...LINK_KEYS, LEGACY_BUTTON_STYLE_KEY];
+const LEGACY_MENTION_KEYS = ['type', 'children', LEGACY_ID_KEY, LEGACY_CATEGORY_KEY];
+const BARE_INLINE_TYPES = [LEGACY_LINK_TYPE, LEGACY_BUTTON_TYPE, LEGACY_MENTION_TYPE];
 
 // Keys the new format gives a meaning of its own; a legacy value under them must not read as that meaning.
 const RESERVED_BLOCK_KEYS = ['style', 'start'];
 const RESERVED_CHECK_ITEM_KEYS = [...RESERVED_BLOCK_KEYS, 'checked'];
 const RESERVED_TEXT_KEYS = ['type', 'fontColor', 'link', ...TEXT_MARK_KEYS];
 
-const COLUMN_BREAK_VALUES = ['active', 'inactive'];
-const DEFAULT_BLOCK_STYLE = 'p';
-const QUOTE_BLOCK_STYLE = 'quote';
+const DEFAULT_BLOCK_STYLE = LEGACY_PARAGRAPH_TYPE;
+const QUOTE_BLOCK_STYLE = LEGACY_QUOTE_TYPE;
 const DEFAULT_BUTTON_APPEARANCE: LinkAppearance = 'primary';
-const LINE_BREAK = '\n';
-const CHECKBOX_ITEM_TYPE = 'checkbox-item';
-const LIST_TYPES = ['ul', 'ol'];
-const LIST_ITEM_TYPE = 'li';
-const LIST_ITEM_PARAGRAPH_TYPE = 'lic';
-const MIN_CHECK_LEVEL = 1;
+const LIST_TYPES = [LEGACY_BULLET_LIST_TYPE, LEGACY_NUMBERED_LIST_TYPE];
 
 const isOpenText = (inline: OpenInline): inline is OpenText => {
     return inline.type === undefined;
@@ -145,8 +166,7 @@ const startsNewColumn = (element: LegacyElement, position: BlockPosition): boole
         return false;
     }
 
-    const { breakAfterColumn } = element;
-    return typeof breakAfterColumn === 'string' && COLUMN_BREAK_VALUES.includes(breakAfterColumn);
+    return isColumnBreakValue(element[LEGACY_BREAK_AFTER_COLUMN_KEY]);
 };
 
 const blockStyleOf = (spec: TextBlockSpec): string => {
@@ -226,9 +246,9 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
         entries.push({ key, value: true });
     }
 
-    if (leaf.color !== undefined) {
-        acceptedKeys.push('color');
-        const color = parseLegacyColor(leaf.color);
+    if (leaf[LEGACY_COLOR_KEY] !== undefined) {
+        acceptedKeys.push(LEGACY_COLOR_KEY);
+        const color = parseLegacyColor(leaf[LEGACY_COLOR_KEY]);
         if (color === null) {
             report(context, 'color-unparsed', path);
         } else {
@@ -240,8 +260,8 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
         entries.push({ key: 'link', value: link });
     }
 
-    if (leaf.textStyle === blockStyle) {
-        acceptedKeys.push('textStyle');
+    if (leaf[LEGACY_TEXT_STYLE_KEY] === blockStyle) {
+        acceptedKeys.push(LEGACY_TEXT_STYLE_KEY);
     }
 
     for (const key of Object.keys(leaf)) {
@@ -290,28 +310,10 @@ const readSearchResultLink = (chosenLink: object): unknown => {
     return searchResult.link;
 };
 
-const createLinkValue = (href: string, openInNewTab: boolean, appearance: LinkAppearance | undefined): LinkValue => {
-    if (appearance === undefined) {
-        const link: LinkValue = { href };
-        if (openInNewTab) {
-            link.openInNewTab = true;
-        }
-
-        return link;
-    }
-
-    const link: ButtonLinkValue = { href, appearance };
-    if (openInNewTab) {
-        link.openInNewTab = true;
-    }
-
-    return link;
-};
-
 const readAnchor = (element: LegacyElement): LinkReading => {
-    const { chosenLink } = element;
-    let href: unknown = element.url;
-    let openInNewTab = readsAsNewTab(element.target);
+    const chosenLink = element[LEGACY_CHOSEN_LINK_KEY];
+    let href: unknown = element[LEGACY_URL_KEY];
+    let openInNewTab = readsAsNewTab(element[LEGACY_TARGET_KEY]);
 
     if (typeof chosenLink === 'object' && chosenLink !== null) {
         const searchResultLink = readSearchResultLink(chosenLink);
@@ -326,35 +328,39 @@ const readAnchor = (element: LegacyElement): LinkReading => {
         return { status: 'unsafe' };
     }
 
-    return { status: 'linked', link: createLinkValue(href, openInNewTab, undefined) };
+    return { status: 'linked', link: createLinkValue({ href, openInNewTab, appearance: undefined }) };
 };
 
 const readButton = (element: LegacyElement): LinkReading => {
-    const href = element.url;
+    const href = element[LEGACY_URL_KEY];
     if (!isSafeHref(href)) {
         return { status: 'unsafe' };
     }
 
-    const { target, buttonStyle } = element;
+    const target = element[LEGACY_TARGET_KEY];
+    const buttonStyle = element[LEGACY_BUTTON_STYLE_KEY];
     let openInNewTab = true;
     if (target !== undefined && target !== null) {
         openInNewTab = readsAsNewTab(target);
     }
 
     if (buttonStyle === undefined || buttonStyle === null) {
-        return { status: 'linked', link: createLinkValue(href, openInNewTab, DEFAULT_BUTTON_APPEARANCE) };
+        return {
+            status: 'linked',
+            link: createLinkValue({ href, openInNewTab, appearance: DEFAULT_BUTTON_APPEARANCE }),
+        };
     }
 
     const appearance = readButtonAppearance(buttonStyle);
     if (appearance === undefined) {
-        return { status: 'button-style-unknown', link: createLinkValue(href, openInNewTab, undefined) };
+        return { status: 'button-style-unknown', link: createLinkValue({ href, openInNewTab, appearance: undefined }) };
     }
 
-    return { status: 'linked', link: createLinkValue(href, openInNewTab, appearance) };
+    return { status: 'linked', link: createLinkValue({ href, openInNewTab, appearance }) };
 };
 
 const readLinkKeys = (element: LegacyElement): readonly string[] => {
-    if (element.type === 'button') {
+    if (element.type === LEGACY_BUTTON_TYPE) {
         return BUTTON_KEYS;
     }
 
@@ -362,25 +368,11 @@ const readLinkKeys = (element: LegacyElement): readonly string[] => {
 };
 
 const readLink = (element: LegacyElement): LinkReading => {
-    if (element.type === 'button') {
+    if (element.type === LEGACY_BUTTON_TYPE) {
         return readButton(element);
     }
 
     return readAnchor(element);
-};
-
-const readMentionCategory = (category: unknown): MentionCategoryReading => {
-    switch (category) {
-        case 'user':
-            return { status: 'known', kind: undefined };
-        case 'group':
-            return { status: 'known', kind: 'group' };
-        case 'all':
-            return { status: 'known', kind: 'all' };
-        default:
-            // The category is an arbitrary stored value, not a union: anything else is read as unknown.
-            return { status: 'unknown' };
-    }
 };
 
 const readUnresolvedMentionNames = (options: MentionOptions): MentionNames => {
@@ -406,15 +398,15 @@ const readMentionNames = (kind: MentionInline['kind'], id: string, options: Ment
 
 const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline => {
     const { path, context } = options;
-    const extraKeys = Object.keys(element).filter((key) => !MENTION_KEYS.includes(key));
+    const extraKeys = Object.keys(element).filter((key) => !LEGACY_MENTION_KEYS.includes(key));
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
 
         return keepWholeInline(element);
     }
 
-    const { id } = element;
-    const category = readMentionCategory(element.category);
+    const id = element[LEGACY_ID_KEY];
+    const category = readMentionKind(element[LEGACY_CATEGORY_KEY]);
     if ((typeof id !== 'string' && typeof id !== 'number') || category.status === 'unknown') {
         report(context, 'unknown-element', path);
 
@@ -462,7 +454,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
 
         if (isLegacyText(child)) {
             appendTextLeaf(output, child, { path: childPath, blockStyle, link, context });
-        } else if (child.type === 'mention') {
+        } else if (child.type === LEGACY_MENTION_TYPE) {
             output.push(mapMention(child, { path: childPath, context }));
         } else {
             report(context, 'unknown-element', childPath);
@@ -473,11 +465,11 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
 
 const appendInlineElement = (output: OpenInline[], element: LegacyElement, options: InlineElementOptions): void => {
     switch (element.type) {
-        case 'a':
-        case 'button':
+        case LEGACY_LINK_TYPE:
+        case LEGACY_BUTTON_TYPE:
             appendLink(output, element, options);
             return;
-        case 'mention':
+        case LEGACY_MENTION_TYPE:
             output.push(mapMention(element, { path: options.path, context: options.context }));
             return;
         default:
@@ -514,14 +506,14 @@ const mapTextBlock = (element: LegacyElement, options: TextBlockOptions): OpenNo
         node.style = spec.style;
     }
 
-    const align = readAlignment(element.align);
+    const align = readAlignment(element[LEGACY_ALIGN_KEY]);
     if (align !== undefined) {
         node.align = align;
-        acceptedKeys.push('align');
+        acceptedKeys.push(LEGACY_ALIGN_KEY);
     }
 
     if (startsNewColumn(element, position)) {
-        acceptedKeys.push('breakAfterColumn');
+        acceptedKeys.push(LEGACY_BREAK_AFTER_COLUMN_KEY);
     }
 
     copyUndeclaredProperties({ element, acceptedKeys, reservedKeys: RESERVED_BLOCK_KEYS, target: node, path, context });
@@ -618,11 +610,11 @@ const mapListItemElement = (element: LegacyElement, options: BlockOptions): Open
     }
 
     switch (element.type) {
-        case LIST_ITEM_PARAGRAPH_TYPE:
+        case LEGACY_LIST_ITEM_PARAGRAPH_TYPE:
             return mapTextBlock(element, { ...options, spec: { type: 'paragraph' } });
-        case 'ul':
+        case LEGACY_BULLET_LIST_TYPE:
             return mapList(element, { ...options, listType: 'bulletList' });
-        case 'ol':
+        case LEGACY_NUMBERED_LIST_TYPE:
             return mapList(element, { ...options, listType: 'numberedList' });
         default:
             // The element type is an arbitrary stored string, not a union: any other type is kept whole.
@@ -638,7 +630,7 @@ const mapList = (element: LegacyElement, options: ListOptions): OpenNode => {
     const acceptedKeys = [...BLOCK_KEYS];
 
     if (startsNewColumn(element, position)) {
-        acceptedKeys.push('breakAfterColumn');
+        acceptedKeys.push(LEGACY_BREAK_AFTER_COLUMN_KEY);
     }
 
     copyUndeclaredProperties({ element, acceptedKeys, reservedKeys: RESERVED_BLOCK_KEYS, target: node, path, context });
@@ -655,7 +647,7 @@ const mapList = (element: LegacyElement, options: ListOptions): OpenNode => {
                 context,
             });
             children.push({ type: 'listItem', children: [paragraph] });
-        } else if (child.type === LIST_ITEM_TYPE) {
+        } else if (child.type === LEGACY_LIST_ITEM_TYPE) {
             children.push(mapListItem(child, { path: childPath, position: 'nested', context }));
         } else {
             report(context, 'unknown-element', childPath);
@@ -673,31 +665,32 @@ const buildCheckItem = (element: LegacyElement, path: LegacyRichTextPath, contex
     const acceptedKeys = [...BLOCK_KEYS];
     let level = MIN_CHECK_LEVEL;
 
-    const { indent, checked } = element;
+    const indent = element[LEGACY_INDENT_KEY];
+    const checked = element[LEGACY_CHECKED_KEY];
     if (typeof indent === 'number' && Number.isInteger(indent) && indent >= MIN_CHECK_LEVEL) {
         level = indent;
-        acceptedKeys.push('indent');
+        acceptedKeys.push(LEGACY_INDENT_KEY);
     }
 
     if (checked === true) {
         node.checked = true;
-        acceptedKeys.push('checked');
+        acceptedKeys.push(LEGACY_CHECKED_KEY);
     }
 
     if (checked === false) {
-        acceptedKeys.push('checked');
+        acceptedKeys.push(LEGACY_CHECKED_KEY);
     }
 
     const breaksColumn = startsNewColumn(element, 'topLevel');
     if (breaksColumn) {
-        acceptedKeys.push('breakAfterColumn');
+        acceptedKeys.push(LEGACY_BREAK_AFTER_COLUMN_KEY);
     }
 
     const paragraph: OpenNode = { type: 'paragraph' };
-    const align = readAlignment(element.align);
+    const align = readAlignment(element[LEGACY_ALIGN_KEY]);
     if (align !== undefined) {
         paragraph.align = align;
-        acceptedKeys.push('align');
+        acceptedKeys.push(LEGACY_ALIGN_KEY);
     }
 
     paragraph.children = mapInline(element.children, {
@@ -729,7 +722,7 @@ const mapCheckRun = (tree: LegacyRichTextTree, startIndex: number, context: Mapp
 
     while (index < tree.length) {
         const element = tree[index];
-        if (isLegacyText(element) || element.type !== CHECKBOX_ITEM_TYPE) {
+        if (isLegacyText(element) || element.type !== LEGACY_CHECKBOX_ITEM_TYPE) {
             break;
         }
 
@@ -781,13 +774,13 @@ const mapKnownBlock = (element: LegacyElement, options: BlockOptions): OpenNode 
     }
 
     switch (type) {
-        case 'p':
+        case LEGACY_PARAGRAPH_TYPE:
             return mapTextBlock(element, { ...options, spec: { type: 'paragraph' } });
-        case 'quote':
+        case LEGACY_QUOTE_TYPE:
             return mapTextBlock(element, { ...options, spec: { type: 'quote' } });
-        case 'ul':
+        case LEGACY_BULLET_LIST_TYPE:
             return mapList(element, { ...options, listType: 'bulletList' });
-        case 'ol':
+        case LEGACY_NUMBERED_LIST_TYPE:
             return mapList(element, { ...options, listType: 'numberedList' });
         default:
             // The element type is an arbitrary stored string, not a union: any other type is kept whole.
@@ -826,7 +819,7 @@ const mapTopLevel = (tree: LegacyRichTextTree, context: MappingContext): OpenBlo
             continue;
         }
 
-        if (node.type === CHECKBOX_ITEM_TYPE) {
+        if (node.type === LEGACY_CHECKBOX_ITEM_TYPE) {
             const run = mapCheckRun(tree, index, context);
             blocks.push(...run.blocks);
             index = run.nextIndex;

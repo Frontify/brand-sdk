@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { exceedsDocumentBytes } from './inspectLegacyTree';
+import { exceedsDocumentBytes } from './limits';
 
 const EMPTY_STORED_VALUES = ['', 'null', '<br />'];
 
