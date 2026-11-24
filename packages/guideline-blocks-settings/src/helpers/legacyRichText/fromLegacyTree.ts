@@ -427,12 +427,36 @@ const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline
     return mention;
 };
 
+// The new format's mention carries no link, so a link around one has no form there.
+const readMentionPaths = (element: LegacyElement, path: LegacyRichTextPath): LegacyRichTextPath[] => {
+    const paths: LegacyRichTextPath[] = [];
+
+    for (let index = 0; index < element.children.length; index++) {
+        const child = element.children[index];
+        if (!isLegacyText(child) && child.type === LEGACY_MENTION_TYPE) {
+            paths.push([...path, index]);
+        }
+    }
+
+    return paths;
+};
+
 const appendLink = (output: OpenInline[], element: LegacyElement, options: InlineElementOptions): void => {
     const { path, blockStyle, context } = options;
     const allowedKeys = readLinkKeys(element);
     const extraKeys = Object.keys(element).filter((key) => !allowedKeys.includes(key));
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
+        output.push(keepWholeInline(element));
+        return;
+    }
+
+    const mentionPaths = readMentionPaths(element, path);
+    if (mentionPaths.length > 0) {
+        for (const mentionPath of mentionPaths) {
+            report(context, 'unknown-element', mentionPath);
+        }
+
         output.push(keepWholeInline(element));
         return;
     }
@@ -458,8 +482,6 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
 
         if (isLegacyText(child)) {
             appendTextLeaf(output, child, { path: childPath, blockStyle, link, context });
-        } else if (child.type === LEGACY_MENTION_TYPE) {
-            output.push(mapMention(child, { path: childPath, context }));
         } else {
             report(context, 'unknown-element', childPath);
             output.push(keepWholeInline(child));

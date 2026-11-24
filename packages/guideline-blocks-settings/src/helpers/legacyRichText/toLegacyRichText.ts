@@ -77,6 +77,7 @@ type CheckItemWrite = {
 
 const DEFAULT_COLUMNS = 1;
 const DOCUMENT_KEYS = ['version', 'blocks'];
+const DOCUMENT_VERSION = 1;
 
 const PARAGRAPH_KEYS = ['type', 'children', 'align'];
 const TEXT_STYLE_KEYS = [...PARAGRAPH_KEYS, 'style'];
@@ -843,7 +844,7 @@ export const toLegacyRichText = (
     const { columns = DEFAULT_COLUMNS } = options;
     const context: ToLegacyContext = { diagnostics: [], columns, columnBreaks: 0 };
     const root: unknown = document;
-    if (!isStoredNode(root)) {
+    if (!isStoredNode(root) || root.version !== DOCUMENT_VERSION) {
         return { outcome: 'not-reversible', value: null, diagnostics: [{ code: 'no-legacy-form', path: [] }] };
     }
 

@@ -612,6 +612,19 @@ describe('toLegacyRichText content without a legacy form', () => {
         });
     });
 
+    it.each([{ blocks: [] }, { version: 2, blocks: [] }, { version: '1', blocks: [] }, { version: null, blocks: [] }])(
+        'should not reverse the document %j whose version is not 1 (MIG-25)',
+        (document) => {
+            const result: unknown = Reflect.apply(toLegacyRichText, undefined, [document]);
+
+            expect(result).toEqual({
+                outcome: 'not-reversible',
+                value: null,
+                diagnostics: [{ code: 'no-legacy-form', path: [] }],
+            });
+        },
+    );
+
     it('should write a list item with an empty paragraph as a list item with an empty paragraph leaf (MIG-25)', () => {
         expectExact(
             [{ type: 'bulletList', children: [{ type: 'listItem', children: [paragraph()] }] }],

@@ -287,6 +287,22 @@ describe('convertLegacyRichText mapping', () => {
         expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
     });
 
+    it.each(['a', 'button'])('should keep a %s around a mention whole and review the mention (MIG-13)', (type) => {
+        const element = {
+            type,
+            url: '/page',
+            children: [
+                { text: 'Before ' },
+                { type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                { text: ' after' },
+            ],
+        };
+        const result = convertTree([{ type: 'p', children: [element] }]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0, 0, 1] }]);
+        expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
+    });
+
     it('should keep a link with an extra property whole and report each property (MIG-13)', () => {
         const element = { type: 'a', url: '/page', rel: 'nofollow', title: 'Page', children: [{ text: 'Page' }] };
         const result = convertTree([{ type: 'p', children: [element] }]);
