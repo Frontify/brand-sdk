@@ -1,6 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 type CopyFrame = { source: object; target: object };
+type ComparisonFrame = { first: unknown; second: unknown };
 
 // defineProperty keeps a source key such as `__proto__` an own property instead of reaching the prototype.
 export const setOwn = (target: object, key: string, value: unknown): void => {
@@ -43,4 +44,40 @@ export const copyValue = (value: unknown): unknown => {
     }
 
     return root;
+};
+
+/** Compares two values by own keys without recursion, so a hostile nested value cannot exhaust the stack. */
+export const isDeepEqual = (first: unknown, second: unknown): boolean => {
+    const pending: ComparisonFrame[] = [{ first, second }];
+
+    while (pending.length > 0) {
+        const frame = pending.pop();
+        if (frame === undefined) {
+            break;
+        }
+
+        const { first: left, second: right } = frame;
+        if (left === right) {
+            continue;
+        }
+
+        if (typeof left !== 'object' || left === null || typeof right !== 'object' || right === null) {
+            return false;
+        }
+
+        const keys = Object.keys(left);
+        if (Array.isArray(left) !== Array.isArray(right) || keys.length !== Object.keys(right).length) {
+            return false;
+        }
+
+        for (const key of keys) {
+            if (!Object.prototype.propertyIsEnumerable.call(right, key)) {
+                return false;
+            }
+
+            pending.push({ first: Reflect.get(left, key), second: Reflect.get(right, key) });
+        }
+    }
+
+    return true;
 };

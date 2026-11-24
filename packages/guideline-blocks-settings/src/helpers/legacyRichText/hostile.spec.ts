@@ -1,9 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { convertLegacyRichText } from './convertLegacyRichText';
 import { isSafeHref } from './link';
+import { toLegacyRichText } from './toLegacyRichText';
 import { type ConvertLegacyRichTextResult } from './types';
 
 const BYTES_PER_MEBIBYTE = 1024 * 1024;
@@ -15,9 +16,33 @@ const MAX_MILLISECONDS = 1000;
 const NESTED_OPEN = '{"type":"p","children":[';
 const NESTED_CLOSE = ']}';
 const LEAF = '{"text":"Lorem"}';
+const MARK_NESTING = 200_000;
+const REPEATED_PARTS = 100_000;
+const LARGE_MARK_LENGTH = 2000;
+const MAX_CHECK_LEVEL = 64;
+const CHECK_LEVELS_FAR_OVER_LIMIT = 50_000;
 
 const createNestedValue = (depth: number): string => {
     return `[${NESTED_OPEN.repeat(depth)}${LEAF}${NESTED_CLOSE.repeat(depth)}]`;
+};
+
+const createNestedArray = (depth: number): unknown[] => {
+    let nested: unknown[] = [];
+    for (let level = 0; level < depth; level++) {
+        nested = [nested];
+    }
+
+    return nested;
+};
+
+const createCheckItems = (levels: number): string => {
+    const items = Array.from({ length: levels }, (_, index) => ({
+        type: 'checkbox-item',
+        indent: index + 1,
+        children: [{ text: 'a' }],
+    }));
+
+    return JSON.stringify(items);
 };
 
 const collectLinkHrefs = (document: unknown): unknown[] => {
@@ -219,5 +244,107 @@ describe('convertLegacyRichText with hostile input', () => {
 
         expect(result.outcome).toBe('requires-review');
         expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+    });
+
+    it('should compare deeply nested undeclared marks of adjacent leaves without recursing (MIG-27)', () => {
+        const deep = `${'['.repeat(MARK_NESTING)}${']'.repeat(MARK_NESTING)}`;
+        const value = `[{"type":"p","children":[{"text":"a","x":${deep}},{"text":"b","x":${deep}}]}]`;
+        const { result, milliseconds } = convertTimed(value);
+
+        expect(result.outcome).toBe('requires-review');
+        expect(Reflect.get(result.document?.blocks[0] ?? {}, 'children')).toHaveLength(1);
+        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+    });
+
+    it('should copy the marks of a leaf once however many line parts it has (MIG-27)', () => {
+        const mark = Array.from({ length: LARGE_MARK_LENGTH }, (_, index) => index);
+        const value = JSON.stringify([{ type: 'p', children: [{ text: 'a\n'.repeat(REPEATED_PARTS), x: mark }] }]);
+        const { result, milliseconds } = convertTimed(value);
+
+        expect(result.outcome).toBe('requires-review');
+        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+    });
+
+    it.each([MAX_CHECK_LEVEL + 1, CHECK_LEVELS_FAR_OVER_LIMIT])(
+        'should refuse check items nested %i levels deep (MIG-27)',
+        (levels) => {
+            const { result, milliseconds } = convertTimed(createCheckItems(levels));
+
+            expect(result).toEqual({
+                outcome: 'unsupported',
+                document: null,
+                diagnostics: [{ code: 'limit-exceeded', path: [] }],
+            });
+            expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        },
+    );
+
+    it('should still convert check items nested as deep as the limit (MIG-27)', () => {
+        expect(convertTimed(createCheckItems(MAX_CHECK_LEVEL)).result.outcome).toBe('exact');
+    });
+});
+
+describe('toLegacyRichText with hostile input', () => {
+    it('should compare deeply nested undeclared marks of adjacent leaves without recursing (MIG-27)', () => {
+        const result = toLegacyRichText({
+            version: 1,
+            blocks: [
+                {
+                    type: 'paragraph',
+                    children: [
+                        { text: 'a', x: createNestedArray(MARK_NESTING) },
+                        { text: 'b', x: createNestedArray(MARK_NESTING) },
+                    ],
+                },
+            ],
+        });
+
+        expect(result.outcome).toBe('exact');
+        expect(result.value?.[0].children).toHaveLength(1);
+    });
+
+    it('should not write a link whose href fails the safety check (MIG-27)', () => {
+        const result = toLegacyRichText({
+            version: 1,
+            blocks: [{ type: 'paragraph', children: [{ text: 'Click', link: { href: 'javascript:alert(1)' } }] }],
+        });
+
+        expect(result).toEqual({
+            outcome: 'not-reversible',
+            value: null,
+            diagnostics: [{ code: 'no-legacy-form', path: [0, 0] }],
+        });
+    });
+
+    it.each([
+        null,
+        42,
+        'text',
+        true,
+        {},
+        { version: 1 },
+        { version: 1, blocks: 'text' },
+        { version: 1, blocks: [null] },
+    ])('should refuse the document %j that is not an object with blocks without throwing (MIG-27)', (document) => {
+        const result: unknown = Reflect.apply(toLegacyRichText, undefined, [document]);
+
+        expect(result).toEqual({
+            outcome: 'not-reversible',
+            value: null,
+            diagnostics: [{ code: 'no-legacy-form', path: [] }],
+        });
+    });
+});
+
+describe('isSafeHref with hostile input', () => {
+    it('should read credentials from the authority without URL.canParse (PST-29)', () => {
+        vi.spyOn(URL, 'canParse').mockImplementation(() => {
+            throw new Error('URL.canParse is unavailable');
+        });
+
+        expect(isSafeHref('https://user:secret@example.com/path')).toBe(false);
+        expect(isSafeHref('https:user@example.com')).toBe(false);
+        expect(isSafeHref('https:/\\user@example.com')).toBe(false);
+        expect(isSafeHref('https://example.com/path?next=a@b#c@d')).toBe(true);
     });
 });

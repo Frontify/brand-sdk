@@ -75,12 +75,19 @@ describe('isSafeHref', () => {
         expect(isSafeHref(href)).toBe(false);
     });
 
-    it.each(['https://user:secret@example.com', 'http://user@example.com', 'https://:secret@example.com', 'http://'])(
-        'should refuse the href %j with credentials or no host (PST-29)',
-        (href) => {
-            expect(isSafeHref(href)).toBe(false);
-        },
-    );
+    it('should allow the href http:// that has an empty authority (PST-29)', () => {
+        expect(isSafeHref('http://')).toBe(true);
+    });
+
+    it.each([
+        'https://user:secret@example.com',
+        'http://user@example.com',
+        'https://:secret@example.com',
+        'https:user@example.com',
+        'https:/\\user@example.com',
+    ])('should refuse the href %j with credentials (PST-29)', (href) => {
+        expect(isSafeHref(href)).toBe(false);
+    });
 
     it.each([undefined, null, 1, {}, ['https://example.com']])(
         'should refuse the value %j that is not a string (PST-28)',

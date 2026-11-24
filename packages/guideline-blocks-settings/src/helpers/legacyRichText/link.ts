@@ -10,6 +10,8 @@ const MAX_HREF_LENGTH = 2048;
 const ALLOWED_SCHEMES = ['http', 'https', 'mailto', 'tel'];
 const CREDENTIAL_SCHEMES = ['http', 'https'];
 const SCHEME_PATTERN = /^([^/?#:]*):/;
+const AUTHORITY_PATTERN = /^[^:]*:[/\\]*([^/\\?#]*)/;
+const CREDENTIALS_SEPARATOR = '@';
 const LAST_C0_CONTROL = 0x1f;
 const FIRST_C1_CONTROL = 0x80;
 const LAST_C1_CONTROL = 0x9f;
@@ -70,35 +72,6 @@ export const createLinkValue = (parts: LinkParts): LinkValue => {
     return link;
 };
 
-/** Reads a stored link value back into its parts, or returns null when it holds anything the new format does not declare. */
-export const readLinkValue = (value: unknown): LinkParts | null => {
-    if (typeof value !== 'object' || value === null) {
-        return null;
-    }
-
-    if (Object.keys(value).some((key) => !LINK_VALUE_KEYS.includes(key))) {
-        return null;
-    }
-
-    const href: unknown = Reflect.get(value, 'href');
-    const openInNewTab: unknown = Reflect.get(value, 'openInNewTab');
-    const appearance: unknown = Reflect.get(value, 'appearance');
-    if (typeof href !== 'string' || (openInNewTab !== undefined && openInNewTab !== true)) {
-        return null;
-    }
-
-    if (appearance === undefined) {
-        return { href, openInNewTab: openInNewTab === true, appearance: undefined };
-    }
-
-    const buttonAppearance = readButtonAppearance(appearance);
-    if (buttonAppearance === undefined) {
-        return null;
-    }
-
-    return { href, openInNewTab: openInNewTab === true, appearance: buttonAppearance };
-};
-
 /** Reads a legacy `target`: `_blank` and `_new` open a new tab, every other value and a missing one the same tab. */
 export const readsAsNewTab = (target: unknown): boolean => {
     return typeof target === 'string' && NEW_TAB_TARGETS.includes(target);
@@ -133,13 +106,14 @@ const readScheme = (href: string): string | null => {
     return match[1].toLowerCase();
 };
 
+// URL.canParse is newer than the ES2021 target, so credentials are read from the authority; special schemes ignore the slashes.
 const isCredentialFree = (href: string): boolean => {
-    if (!URL.canParse(href)) {
-        return false;
+    const match = AUTHORITY_PATTERN.exec(href);
+    if (match === null) {
+        return true;
     }
 
-    const { username, password } = new URL(href);
-    return username === '' && password === '';
+    return !match[1].includes(CREDENTIALS_SEPARATOR);
 };
 
 /** Accepts a non-empty relative reference or an http, https, mailto or tel link, without control characters or credentials. */
@@ -162,4 +136,33 @@ export const isSafeHref = (href: unknown): href is string => {
     }
 
     return true;
+};
+
+/** Reads a stored link value back into its parts, or returns null when it holds anything the new format does not declare. */
+export const readLinkValue = (value: unknown): LinkParts | null => {
+    if (typeof value !== 'object' || value === null) {
+        return null;
+    }
+
+    if (Object.keys(value).some((key) => !LINK_VALUE_KEYS.includes(key))) {
+        return null;
+    }
+
+    const href: unknown = Reflect.get(value, 'href');
+    const openInNewTab: unknown = Reflect.get(value, 'openInNewTab');
+    const appearance: unknown = Reflect.get(value, 'appearance');
+    if (!isSafeHref(href) || (openInNewTab !== undefined && openInNewTab !== true)) {
+        return null;
+    }
+
+    if (appearance === undefined) {
+        return { href, openInNewTab: openInNewTab === true, appearance: undefined };
+    }
+
+    const buttonAppearance = readButtonAppearance(appearance);
+    if (buttonAppearance === undefined) {
+        return null;
+    }
+
+    return { href, openInNewTab: openInNewTab === true, appearance: buttonAppearance };
 };

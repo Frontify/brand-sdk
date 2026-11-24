@@ -2,8 +2,9 @@
 
 import { readAlignment } from './alignment';
 import { parseLegacyColor } from './color';
-import { copyValue, setOwn } from './copyValue';
+import { copyValue, isDeepEqual, setOwn } from './copyValue';
 import { isLegacyText } from './legacyNode';
+import { MAX_DEPTH } from './limits';
 import { createLinkValue, isSafeHref, readButtonAppearance, readsAsNewTab } from './link';
 import {
     type LegacyElement,
@@ -57,7 +58,9 @@ type OpenText = Extract<OpenInline, { text: string }>;
 type OpenInlineElement = Exclude<OpenInline, OpenText>;
 
 type FromLegacyTreeOptions = { resolveMention?: ResolveMention };
-type FromLegacyTreeResult = { blocks: OpenBlock[]; diagnostics: LegacyRichTextReviewDiagnostic[] };
+type FromLegacyTreeResult =
+    | { status: 'mapped'; blocks: OpenBlock[]; diagnostics: LegacyRichTextReviewDiagnostic[] }
+    | { status: 'limit-exceeded' };
 
 type MappingContext = { diagnostics: LegacyRichTextReviewDiagnostic[]; resolveMention?: ResolveMention };
 type BlockPosition = 'topLevel' | 'nested';
@@ -88,7 +91,8 @@ type UndeclaredPropertiesOptions = {
 type MarkEntry = { key: string; value: unknown };
 type CheckItem = { node: OpenNode; children: OpenBlock[]; level: number; breaksColumn: boolean };
 type CheckListFrame = { items: OpenBlock[]; itemChildren: OpenBlock[] };
-type CheckRunMapping = { blocks: OpenBlock[]; nextIndex: number };
+type CheckRunMapping = { status: 'mapped'; blocks: OpenBlock[]; nextIndex: number } | { status: 'limit-exceeded' };
+type TopLevelMapping = { status: 'mapped'; blocks: OpenBlock[] } | { status: 'limit-exceeded' };
 type ListItemChild = { kind: 'inline' } | { kind: 'element'; element: LegacyElement };
 type LinkReading =
     | { status: 'linked'; link: LinkValue }
@@ -188,7 +192,7 @@ const haveSameMarks = (first: OpenText, second: OpenText): boolean => {
     }
 
     for (const key of firstKeys) {
-        if (!secondKeys.includes(key) || JSON.stringify(first[key]) !== JSON.stringify(second[key])) {
+        if (!secondKeys.includes(key) || !isDeepEqual(first[key], second[key])) {
             return false;
         }
     }
@@ -215,7 +219,7 @@ const mergeAdjacentText = (inlines: OpenInline[]): OpenInline[] => {
 const createText = (text: string, marks: MarkEntry[]): OpenText => {
     const leaf: OpenText = { text };
     for (const mark of marks) {
-        setOwn(leaf, mark.key, copyValue(mark.value));
+        setOwn(leaf, mark.key, mark.value);
     }
 
     return leaf;
@@ -283,7 +287,7 @@ const appendTextLeaf = (output: OpenInline[], leaf: LegacyText, options: TextLea
         return;
     }
 
-    const marks = readTextMarks(leaf, options);
+    const marks = readTextMarks(leaf, options).map((mark) => ({ key: mark.key, value: copyValue(mark.value) }));
     const parts = leaf.text.split(LINE_BREAK);
 
     for (let index = 0; index < parts.length; index++) {
@@ -729,6 +733,10 @@ const mapCheckRun = (tree: LegacyRichTextTree, startIndex: number, context: Mapp
         const path = [index];
         const item = buildCheckItem(element, path, context);
         const level = Math.min(item.level, frames.length + 1);
+        if (level > MAX_DEPTH) {
+            return { status: 'limit-exceeded' };
+        }
+
         if (item.level > frames.length + 1) {
             report(context, 'indent-jump', path);
         }
@@ -760,7 +768,7 @@ const mapCheckRun = (tree: LegacyRichTextTree, startIndex: number, context: Mapp
         }
     }
 
-    return { blocks, nextIndex: index };
+    return { status: 'mapped', blocks, nextIndex: index };
 };
 
 const mapKnownBlock = (element: LegacyElement, options: BlockOptions): OpenNode | null => {
@@ -804,7 +812,7 @@ const mapTopLevelBlock = (element: LegacyElement, options: BlockOptions): OpenBl
     return blocks;
 };
 
-const mapTopLevel = (tree: LegacyRichTextTree, context: MappingContext): OpenBlock[] => {
+const mapTopLevel = (tree: LegacyRichTextTree, context: MappingContext): TopLevelMapping => {
     const blocks: OpenBlock[] = [];
     let index = 0;
 
@@ -821,6 +829,10 @@ const mapTopLevel = (tree: LegacyRichTextTree, context: MappingContext): OpenBlo
 
         if (node.type === LEGACY_CHECKBOX_ITEM_TYPE) {
             const run = mapCheckRun(tree, index, context);
+            if (run.status === 'limit-exceeded') {
+                return run;
+            }
+
             blocks.push(...run.blocks);
             index = run.nextIndex;
             continue;
@@ -830,13 +842,16 @@ const mapTopLevel = (tree: LegacyRichTextTree, context: MappingContext): OpenBlo
         index += 1;
     }
 
-    return blocks;
+    return { status: 'mapped', blocks };
 };
 
 /** Maps a validated legacy tree to blocks of the open document, listing every place a human should look at. */
 export const fromLegacyTree = (tree: LegacyRichTextTree, options: FromLegacyTreeOptions): FromLegacyTreeResult => {
     const context: MappingContext = { diagnostics: [], resolveMention: options.resolveMention };
-    const blocks = mapTopLevel(tree, context);
+    const mapping = mapTopLevel(tree, context);
+    if (mapping.status === 'limit-exceeded') {
+        return mapping;
+    }
 
-    return { blocks, diagnostics: context.diagnostics };
+    return { status: 'mapped', blocks: mapping.blocks, diagnostics: context.diagnostics };
 };

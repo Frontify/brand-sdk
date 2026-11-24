@@ -2,7 +2,7 @@
 
 import { writeAlignment } from './alignment';
 import { toLegacyColor } from './color';
-import { copyValue, setOwn } from './copyValue';
+import { copyValue, isDeepEqual, setOwn } from './copyValue';
 import { MAX_BLOCK_NESTING_DEPTH } from './limits';
 import { type LinkParts, readLinkValue, writeButtonStyle, writeTarget } from './link';
 import {
@@ -389,7 +389,7 @@ const writeUnknownInline = (
 };
 
 const haveSameFormatting = (first: TextItem, second: TextItem): boolean => {
-    return JSON.stringify([first.marks, first.link]) === JSON.stringify([second.marks, second.link]);
+    return isDeepEqual(first.marks, second.marks) && isDeepEqual(first.link, second.link);
 };
 
 const mergeAdjacentText = (items: InlineItem[]): InlineItem[] => {
@@ -438,7 +438,7 @@ const createLink = (link: LinkParts, run: TextItem[]): LegacyElement => {
 };
 
 const isInSameLink = (link: LinkParts, item: InlineItem): item is TextItem => {
-    return item.kind === 'text' && item.link !== undefined && JSON.stringify(item.link) === JSON.stringify(link);
+    return item.kind === 'text' && item.link !== undefined && isDeepEqual(item.link, link);
 };
 
 const wrapLinks = (items: InlineItem[]): LegacyNode[] => {
@@ -842,12 +842,17 @@ export const toLegacyRichText = (
 ): ToLegacyRichTextResult => {
     const { columns = DEFAULT_COLUMNS } = options;
     const context: ToLegacyContext = { diagnostics: [], columns, columnBreaks: 0 };
-    const blocks = readNodeList(document.blocks);
+    const root: unknown = document;
+    if (!isStoredNode(root)) {
+        return { outcome: 'not-reversible', value: null, diagnostics: [{ code: 'no-legacy-form', path: [] }] };
+    }
+
+    const blocks = readNodeList(root.blocks);
     if (blocks === null) {
         return { outcome: 'not-reversible', value: null, diagnostics: [{ code: 'no-legacy-form', path: [] }] };
     }
 
-    for (const key of Object.keys(document)) {
+    for (const key of Object.keys(root)) {
         if (!DOCUMENT_KEYS.includes(key)) {
             report(context, []);
         }

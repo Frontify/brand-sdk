@@ -68,7 +68,16 @@ export const convertLegacyRichText = (
             break;
     }
 
-    const { blocks, diagnostics } = fromLegacyTree(inspection.tree, { resolveMention: options.resolveMention });
+    const mapping = fromLegacyTree(inspection.tree, { resolveMention: options.resolveMention });
+    if (mapping.status === 'limit-exceeded') {
+        return {
+            outcome: 'unsupported',
+            document: null,
+            diagnostics: [{ code: 'limit-exceeded', path: DOCUMENT_PATH }],
+        };
+    }
+
+    const { blocks, diagnostics } = mapping;
     const [firstDiagnostic, ...otherDiagnostics] = diagnostics;
     if (firstDiagnostic === undefined) {
         // No diagnostic means every block and mark written is one the closed document declares.
