@@ -63,12 +63,35 @@ describe('toLegacyRichText blocks', () => {
         },
     );
 
-    it('should write an alignment outside the table as a copy and not share it (MIG-25)', () => {
-        const align = { value: ['start'] };
-        const result = toLegacy([{ type: 'paragraph', align, children: [{ text: 'Lorem' }] }]);
-
-        expect(result.value?.[0].align).toEqual(align);
-        expect(result.value?.[0].align).not.toBe(align);
+    it.each([
+        {
+            name: 'a paragraph',
+            blocks: [{ type: 'paragraph', align: { url: 'javascript:alert(1)' }, children: [] }],
+            path: [0],
+        },
+        {
+            name: 'a text style',
+            blocks: [{ type: 'textStyle', style: 'heading1', align: 1, children: [] }],
+            path: [0],
+        },
+        { name: 'a quote', blocks: [{ type: 'quote', align: ['left'], children: [] }], path: [0] },
+        {
+            name: 'a list item paragraph',
+            blocks: [
+                {
+                    type: 'bulletList',
+                    children: [{ type: 'listItem', children: [{ type: 'paragraph', align: null, children: [] }] }],
+                },
+            ],
+            path: [0, 0, 0],
+        },
+        {
+            name: 'a check item paragraph',
+            blocks: [checkList({ type: 'checkItem', children: [{ type: 'paragraph', align: true, children: [] }] })],
+            path: [0, 0, 0],
+        },
+    ])('should not write an alignment that is not a string on $name (MIG-25)', ({ blocks, path }) => {
+        expectNotReversible(blocks, [path]);
     });
 
     it('should write an alignment outside the table unchanged (MIG-25)', () => {

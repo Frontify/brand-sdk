@@ -168,12 +168,18 @@ const readUndeclaredEntries = (node: StoredNode, declaredKeys: readonly string[]
     return entries;
 };
 
+// Convert never keeps a value that is not a string under align, so one has no legacy form.
+const hasNonStringAlign = (node: StoredNode): boolean => {
+    return node.align !== undefined && typeof node.align !== 'string';
+};
+
 const readAlignEntries = (node: StoredNode): PropertyEntry[] => {
-    if (node.align === undefined) {
+    const { align } = node;
+    if (typeof align !== 'string') {
         return [];
     }
 
-    return [{ key: LEGACY_ALIGN_KEY, value: writeAlignment(node.align) }];
+    return [{ key: LEGACY_ALIGN_KEY, value: writeAlignment(align) }];
 };
 
 const readBreakEntries = (breakAfterColumn: ColumnBreakValue | undefined): PropertyEntry[] => {
@@ -605,6 +611,12 @@ const mapInline = (block: StoredNode, options: NestedOptions): LegacyNode[] | nu
 
 const mapTextBlock = (block: StoredNode, spec: TextBlockSpec, options: BlockOptions): LegacyElement[] => {
     const { path, breakAfterColumn, context } = options;
+    if (hasNonStringAlign(block)) {
+        report(context, path);
+
+        return [];
+    }
+
     const children = mapInline(block, { path, context });
     if (children === null) {
         return [];
@@ -823,7 +835,7 @@ const collectCheckItem = (item: StoredNode, options: CheckItemOptions): void => 
 
     const paragraphPath = [...path, CHECK_ITEM_PARAGRAPH_INDEX];
     // Convert keeps every undeclared key of a checkbox item on the check item, so none belongs to its paragraph.
-    if (readUndeclaredEntries(paragraph, PARAGRAPH_KEYS).length > 0) {
+    if (hasNonStringAlign(paragraph) || readUndeclaredEntries(paragraph, PARAGRAPH_KEYS).length > 0) {
         report(context, paragraphPath);
 
         return;

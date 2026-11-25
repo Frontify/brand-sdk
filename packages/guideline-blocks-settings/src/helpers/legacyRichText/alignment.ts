@@ -1,6 +1,5 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { copyValueUnbounded } from './copyValue';
 import { type Alignment } from './types';
 
 type LegacyAlign = 'left' | 'center' | 'right' | 'justify';
@@ -18,14 +17,14 @@ const isLegacyAlign = (value: string): value is LegacyAlign => {
 };
 
 /** Returns the legacy alignment of a new-format one, or the value unchanged when the table has no entry for it. */
-export const writeAlignment = (alignment: unknown): unknown => {
+export const writeAlignment = (alignment: string): string => {
     for (const legacy of Object.keys(ALIGNMENT_BY_LEGACY)) {
         if (isLegacyAlign(legacy) && ALIGNMENT_BY_LEGACY[legacy] === alignment) {
             return legacy;
         }
     }
 
-    return copyValueUnbounded(alignment);
+    return alignment;
 };
 
 /** Returns the new format's alignment, or undefined when the value is not one of the four legacy ones. */
