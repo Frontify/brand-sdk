@@ -17,7 +17,7 @@
         "format:check": "pnpm --stream --filter {packages/**} --parallel format:check",
         "test": "pnpm --stream --filter {packages/**} test",
         "typecheck": "pnpm --stream --filter {packages/**} --parallel typecheck",
-        "release": "pnpm build && changeset publish",
+        "release": "pnpm build && changeset publish --tag legacy-v3",
         "update": "taze -r -I major"
     },
     "devDependencies": {
