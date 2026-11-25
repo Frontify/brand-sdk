@@ -339,15 +339,38 @@ describe('toLegacyRichText inline content', () => {
         );
     });
 
-    it('should append a break as a line feed to the preceding leaf and keep its marks and link (MIG-25)', () => {
+    it('should append a break as a line feed to the preceding leaf that has no link and keep its marks (MIG-25)', () => {
         expectExact(
-            [paragraph({ text: 'a', bold: true, link: { href: '/page' } }, { type: 'break' }, { text: 'b' })],
+            [paragraph({ text: 'a', bold: true }, { type: 'break' }, { text: 'b' })],
+            [{ type: 'p', children: [{ text: 'a\n', bold: true }, { text: 'b' }] }],
+        );
+    });
+
+    it('should write a break after a linked leaf as a mark-less leaf outside the link (MIG-25)', () => {
+        expectExact(
+            [
+                paragraph(
+                    { text: 'a', link: { href: '/page' } },
+                    { type: 'break' },
+                    { text: 'Go', link: { href: '/go', appearance: 'primary' } },
+                    { type: 'break' },
+                    { text: 'b' },
+                ),
+            ],
             [
                 {
                     type: 'p',
                     children: [
-                        { type: 'a', url: '/page', target: '_self', children: [{ text: 'a\n', bold: true }] },
-                        { text: 'b' },
+                        { type: 'a', url: '/page', target: '_self', children: [{ text: 'a' }] },
+                        { text: '\n' },
+                        {
+                            type: 'button',
+                            url: '/go',
+                            target: '_self',
+                            buttonStyle: 'primary',
+                            children: [{ text: 'Go' }],
+                        },
+                        { text: '\nb' },
                     ],
                 },
             ],
@@ -630,6 +653,34 @@ describe('toLegacyRichText content without a legacy form', () => {
             [{ type: 'bulletList', children: [{ type: 'listItem', children: [paragraph()] }] }],
             [{ type: 'ul', children: [{ type: 'li', children: [{ type: 'lic', children: [{ text: '' }] }] }] }],
         );
+    });
+
+    it.each([
+        { name: 'an anchor with an unsafe url', node: { type: 'a', url: 'javascript:alert(1)', children: [] } },
+        { name: 'a button without a url', node: { type: 'button', children: [] } },
+        {
+            name: 'an anchor whose chosen link has an unsafe address',
+            node: {
+                type: 'a',
+                url: '/page',
+                chosenLink: { searchResult: { link: 'javascript:alert(1)' } },
+                children: [],
+            },
+        },
+    ])('should not write $name whole as a legacy link (MIG-25)', ({ node }) => {
+        expectNotReversible([paragraph(node), node], [[0, 0], [1]]);
+    });
+
+    it('should write a whole anchor with safe addresses back as stored (MIG-25)', () => {
+        const node = {
+            type: 'a',
+            url: '/page',
+            rel: 'nofollow',
+            chosenLink: { searchResult: { link: 'https://example.com/a' }, other: 1 },
+            children: [{ text: 'Page' }],
+        };
+
+        expectExact([paragraph(node)], [{ type: 'p', children: [node] }]);
     });
 
     it('should not reverse a leaf whose text holds a line feed (MIG-25)', () => {

@@ -4,7 +4,7 @@ import { writeAlignment } from './alignment';
 import { toLegacyColor } from './color';
 import { copyValue, isDeepEqual, setOwn } from './copyValue';
 import { MAX_BLOCK_NESTING_DEPTH } from './limits';
-import { type LinkParts, readLinkValue, writeButtonStyle, writeTarget } from './link';
+import { type LinkParts, isSafeHref, readLinkValue, readSearchResultLink, writeButtonStyle, writeTarget } from './link';
 import {
     type LegacyElement,
     type LegacyNode,
@@ -29,6 +29,7 @@ import {
     LEGACY_CATEGORY_KEY,
     LEGACY_CHECKBOX_ITEM_TYPE,
     LEGACY_CHECKED_KEY,
+    LEGACY_CHOSEN_LINK_KEY,
     LEGACY_COLOR_KEY,
     LEGACY_ID_KEY,
     LEGACY_INDENT_KEY,
@@ -215,10 +216,35 @@ const createLeaf = (item: TextItem): LegacyText => {
     return leaf;
 };
 
+// A node written whole as a legacy link must not become a live link to an unsafe address.
+const hasSafeLinkTargets = (node: StoredNode): boolean => {
+    if (node.type !== LEGACY_LINK_TYPE && node.type !== LEGACY_BUTTON_TYPE) {
+        return true;
+    }
+
+    if (!isSafeHref(node[LEGACY_URL_KEY])) {
+        return false;
+    }
+
+    const chosenLink = node[LEGACY_CHOSEN_LINK_KEY];
+    if (typeof chosenLink !== 'object' || chosenLink === null) {
+        return true;
+    }
+
+    const searchResultLink = readSearchResultLink(chosenLink);
+
+    return typeof searchResultLink !== 'string' || searchResultLink === '' || isSafeHref(searchResultLink);
+};
+
 const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): LegacyElement | null => {
     const { type, children } = node;
     // A text key makes the legacy reader take the node for a leaf and drop its type and children.
-    if (typeof type !== 'string' || !Array.isArray(children) || Object.keys(node).includes('text')) {
+    if (
+        typeof type !== 'string' ||
+        !Array.isArray(children) ||
+        Object.keys(node).includes('text') ||
+        !hasSafeLinkTargets(node)
+    ) {
         report(context, path);
 
         return null;
@@ -342,7 +368,8 @@ const readMentionItem = (mention: StoredNode, path: LegacyRichTextPath, context:
 
 const appendBreak = (items: InlineItem[]): void => {
     const previous: InlineItem | undefined = items[items.length - 1];
-    if (previous !== undefined && previous.kind === 'text') {
+    // A break inside a link would draw inside its box, so a linked leaf is never extended.
+    if (previous !== undefined && previous.kind === 'text' && previous.link === undefined) {
         previous.text += LINE_BREAK;
 
         return;

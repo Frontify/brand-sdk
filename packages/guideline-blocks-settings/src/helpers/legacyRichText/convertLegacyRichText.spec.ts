@@ -315,6 +315,32 @@ describe('convertLegacyRichText mapping', () => {
         expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
     });
 
+    it('should keep a button whose text holds a line break whole and review it (MIG-13)', () => {
+        const element = { type: 'button', url: '/page', children: [{ text: 'One\nTwo' }] };
+        const result = convertTree([{ type: 'p', children: [element] }]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0, 0] }]);
+        expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
+    });
+
+    it('should read a break inside a text link as a break between linked text (MIG-13)', () => {
+        const result = convertTree([
+            { type: 'p', children: [{ type: 'a', url: '/page', children: [{ text: 'One\nTwo' }] }] },
+        ]);
+
+        expect(result.outcome).toBe('exact');
+        expect(result.document?.blocks).toEqual([
+            {
+                type: 'paragraph',
+                children: [
+                    { text: 'One', link: { href: '/page' } },
+                    { type: 'break' },
+                    { text: 'Two', link: { href: '/page' } },
+                ],
+            },
+        ]);
+    });
+
     it('should keep a link with an extra property whole and report each property (MIG-13)', () => {
         const element = { type: 'a', url: '/page', rel: 'nofollow', title: 'Page', children: [{ text: 'Page' }] };
         const result = convertTree([{ type: 'p', children: [element] }]);

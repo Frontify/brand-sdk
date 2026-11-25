@@ -166,3 +166,17 @@ export const readLinkValue = (value: unknown): LinkParts | null => {
 
     return { href, openInNewTab: openInNewTab === true, appearance: buttonAppearance };
 };
+
+/** Reads `chosenLink.searchResult.link` of a legacy link, or undefined when the chosen link has none. */
+export const readSearchResultLink = (chosenLink: object): unknown => {
+    if (!('searchResult' in chosenLink)) {
+        return undefined;
+    }
+
+    const { searchResult } = chosenLink;
+    if (typeof searchResult !== 'object' || searchResult === null || !('link' in searchResult)) {
+        return undefined;
+    }
+
+    return searchResult.link;
+};

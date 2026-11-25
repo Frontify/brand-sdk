@@ -5,7 +5,7 @@ import { parseLegacyColor } from './color';
 import { copyValue, isDeepEqual, setOwn } from './copyValue';
 import { isLegacyText } from './legacyNode';
 import { MAX_DEPTH } from './limits';
-import { createLinkValue, isSafeHref, readButtonAppearance, readsAsNewTab } from './link';
+import { createLinkValue, isSafeHref, readButtonAppearance, readSearchResultLink, readsAsNewTab } from './link';
 import {
     type LegacyElement,
     type LegacyNode,
@@ -302,19 +302,6 @@ const appendTextLeaf = (output: OpenInline[], leaf: LegacyText, options: TextLea
     }
 };
 
-const readSearchResultLink = (chosenLink: object): unknown => {
-    if (!('searchResult' in chosenLink)) {
-        return undefined;
-    }
-
-    const { searchResult } = chosenLink;
-    if (typeof searchResult !== 'object' || searchResult === null || !('link' in searchResult)) {
-        return undefined;
-    }
-
-    return searchResult.link;
-};
-
 const readChosenOpenInNewTab = (chosenLink: object): unknown => {
     if (!('openInNewTab' in chosenLink)) {
         return undefined;
@@ -470,6 +457,14 @@ const hasLinkableText = (element: LegacyElement): boolean => {
     });
 };
 
+// A legacy button draws a break inside its box, and the new format's break carries no link.
+const hasButtonLineBreak = (element: LegacyElement): boolean => {
+    return (
+        element.type === LEGACY_BUTTON_TYPE &&
+        element.children.some((child) => isLegacyText(child) && child.text.includes(LINE_BREAK))
+    );
+};
+
 const appendLink = (output: OpenInline[], element: LegacyElement, options: InlineElementOptions): void => {
     const { path, blockStyle, context } = options;
     const allowedKeys = readLinkKeys(element);
@@ -490,7 +485,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
         return;
     }
 
-    if (!hasLinkableText(element)) {
+    if (!hasLinkableText(element) || hasButtonLineBreak(element)) {
         report(context, 'unknown-element', path);
         output.push(keepWholeInline(element));
         return;
