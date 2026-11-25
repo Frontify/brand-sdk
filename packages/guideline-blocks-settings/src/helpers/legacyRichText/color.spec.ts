@@ -36,6 +36,30 @@ describe('parseLegacyColor', () => {
         expect(parseLegacyColor(input)).toBeNull();
     });
 
+    it.each([
+        'rgba(255,0,0,50%)',
+        'rgba(255,0,0,-1)',
+        'rgba(255,0,0,2)',
+        'rgb(255,0,0) junk)',
+        'rgba(1,2,3,.5,9)',
+        'rgb(256,0,0)',
+        'rgb(1.5,0,0)',
+        'rgba(1,2,3,1.5)',
+        'rgb(1,2,3,4)',
+        'rgba(1,2,3)',
+        'x rgb(1,2,3)',
+    ])('should reject the colour %j that only a lenient reader accepts (MIG-23)', (input) => {
+        expect(parseLegacyColor(input)).toBeNull();
+    });
+
+    it.each([
+        { input: 'rgba(255,0,0,.5)', expected: '#ff000080' },
+        { input: ' RGB( 1 , 2 , 3 ) ', expected: '#010203' },
+        { input: 'rgba(255, 0, 0, 0)', expected: '#ff000000' },
+    ])('should read $input as $expected (MIG-23)', ({ input, expected }) => {
+        expect(parseLegacyColor(input)).toBe(expected);
+    });
+
     it.each([undefined, null, 255, true, { r: 255 }, ['#ff0000']])(
         'should reject the value %j that is not a string (MIG-23)',
         (input) => {
@@ -54,9 +78,12 @@ describe('toLegacyColor', () => {
         expect(toLegacyColor(input)).toBe(expected);
     });
 
-    it.each(['not a colour', '', '#12'])('should not write the unreadable colour %j (MIG-23)', (input) => {
-        expect(toLegacyColor(input)).toBeNull();
-    });
+    it.each(['not a colour', '', '#12', 'fff', 'bad', 'face', 'red', 'rgba(1,2,3,50%)'])(
+        'should not write the unreadable colour %j (MIG-23)',
+        (input) => {
+            expect(toLegacyColor(input)).toBeNull();
+        },
+    );
 
     it('should read back every alpha byte of a hex8 colour unchanged (MIG-23)', () => {
         for (let byte = 0; byte <= MAX_ALPHA_BYTE; byte++) {

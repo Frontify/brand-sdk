@@ -348,6 +348,48 @@ describe('convertLegacyRichText mapping', () => {
         ]);
     });
 
+    it.each([
+        { flag: true, openInNewTab: true, reviewed: false },
+        { flag: false, openInNewTab: false, reviewed: false },
+        { flag: null, openInNewTab: false, reviewed: false },
+        { flag: undefined, openInNewTab: false, reviewed: false },
+        { flag: 1, openInNewTab: true, reviewed: true },
+        { flag: 'yes', openInNewTab: true, reviewed: true },
+        { flag: {}, openInNewTab: true, reviewed: true },
+        { flag: 0, openInNewTab: false, reviewed: true },
+        { flag: '', openInNewTab: false, reviewed: true },
+    ])(
+        'should read the chosen link flag $flag as new tab $openInNewTab and review it $reviewed (MIG-13)',
+        ({ flag, openInNewTab, reviewed }) => {
+            const result = convertTree([
+                {
+                    type: 'p',
+                    children: [
+                        {
+                            type: 'a',
+                            url: '/ignored',
+                            chosenLink: { searchResult: { link: '/page' }, openInNewTab: flag },
+                            children: [{ text: 'Page' }],
+                        },
+                    ],
+                },
+            ]);
+
+            const link: { href: string; openInNewTab?: true } = { href: '/page' };
+            if (openInNewTab) {
+                link.openInNewTab = true;
+            }
+
+            const diagnostics = [];
+            if (reviewed) {
+                diagnostics.push({ code: 'unknown-property', path: [0, 0] });
+            }
+
+            expect(result.diagnostics).toEqual(diagnostics);
+            expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [{ text: 'Page', link }] }]);
+        },
+    );
+
     it('should fall back to the url when a chosen link has no search result link (MIG-13)', () => {
         const result = convertTree([
             {

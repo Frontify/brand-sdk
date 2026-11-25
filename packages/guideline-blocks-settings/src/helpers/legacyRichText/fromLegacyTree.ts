@@ -97,6 +97,7 @@ type ListItemChild = { kind: 'inline' } | { kind: 'element'; element: LegacyElem
 type LinkReading =
     | { status: 'linked'; link: LinkValue }
     | { status: 'button-style-unknown'; link: LinkValue }
+    | { status: 'new-tab-unknown'; link: LinkValue }
     | { status: 'unsafe' };
 type MentionNames = Pick<MentionInline, 'username' | 'name'>;
 
@@ -314,10 +315,19 @@ const readSearchResultLink = (chosenLink: object): unknown => {
     return searchResult.link;
 };
 
+const readChosenOpenInNewTab = (chosenLink: object): unknown => {
+    if (!('openInNewTab' in chosenLink)) {
+        return undefined;
+    }
+
+    return chosenLink.openInNewTab;
+};
+
 const readAnchor = (element: LegacyElement): LinkReading => {
     const chosenLink = element[LEGACY_CHOSEN_LINK_KEY];
     let href: unknown = element[LEGACY_URL_KEY];
     let openInNewTab = readsAsNewTab(element[LEGACY_TARGET_KEY]);
+    let hasKnownNewTabFlag = true;
 
     if (typeof chosenLink === 'object' && chosenLink !== null) {
         const searchResultLink = readSearchResultLink(chosenLink);
@@ -325,14 +335,22 @@ const readAnchor = (element: LegacyElement): LinkReading => {
             href = searchResultLink;
         }
 
-        openInNewTab = 'openInNewTab' in chosenLink && chosenLink.openInNewTab === true;
+        // The legacy display opens a new tab for any truthy value; only the boolean ones are the stored shape.
+        const flag = readChosenOpenInNewTab(chosenLink);
+        openInNewTab = Boolean(flag);
+        hasKnownNewTabFlag = flag === true || flag === false || flag === undefined || flag === null;
     }
 
     if (!isSafeHref(href)) {
         return { status: 'unsafe' };
     }
 
-    return { status: 'linked', link: createLinkValue({ href, openInNewTab, appearance: undefined }) };
+    const link = createLinkValue({ href, openInNewTab, appearance: undefined });
+    if (!hasKnownNewTabFlag) {
+        return { status: 'new-tab-unknown', link };
+    }
+
+    return { status: 'linked', link };
 };
 
 const readButton = (element: LegacyElement): LinkReading => {
@@ -478,6 +496,10 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
     let link: LinkValue | undefined;
     switch (reading.status) {
         case 'linked':
+            link = reading.link;
+            break;
+        case 'new-tab-unknown':
+            report(context, 'unknown-property', path);
             link = reading.link;
             break;
         case 'button-style-unknown':

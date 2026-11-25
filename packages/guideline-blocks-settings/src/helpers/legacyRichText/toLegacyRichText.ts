@@ -283,7 +283,8 @@ const readMarkEntries = (leaf: StoredNode): PropertyEntry[] | null => {
 const readTextItem = (leaf: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): TextItem | null => {
     const { text } = leaf;
     const marks = readMarkEntries(leaf);
-    if (typeof text !== 'string' || marks === null) {
+    // Legacy reads a line feed in a leaf as a break, which the document does not have here.
+    if (typeof text !== 'string' || text.includes(LINE_BREAK) || marks === null) {
         report(context, path);
 
         return null;

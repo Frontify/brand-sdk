@@ -632,6 +632,10 @@ describe('toLegacyRichText content without a legacy form', () => {
         );
     });
 
+    it('should not reverse a leaf whose text holds a line feed (MIG-25)', () => {
+        expectNotReversible([paragraph({ text: 'a\nb' })], [[0, 0]]);
+    });
+
     it('should not reverse a font colour with a key other than color (MIG-25)', () => {
         expectNotReversible([paragraph({ text: 'a', fontColor: { color: '#ff0000', opacity: 0.5 } })], [[0, 0]]);
     });
