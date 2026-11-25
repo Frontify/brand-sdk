@@ -9,7 +9,7 @@
     },
     "commit": false,
     "access": "public",
-    "baseBranch": "main",
+    "baseBranch": "app-bridge-v3",
     "updateInternalDependencies": "patch",
     "ignore": [],
     "linked": [],
