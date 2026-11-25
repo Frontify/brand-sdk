@@ -1,6 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 type CopyFrame = { source: object; target: object };
+/** How many value nodes (objects, arrays and their entries) a conversion may still copy; below zero means it asked for more. */
+export type CopyBudget = { remaining: number };
 type ComparisonFrame = { first: unknown; second: unknown };
 
 // defineProperty keeps a source key such as `__proto__` an own property instead of reaching the prototype.
@@ -16,12 +18,25 @@ const createContainer = (source: object): object => {
     return {};
 };
 
-/** Deep copy without recursion, so a hostile property value cannot exhaust the stack. */
-export const copyValue = (value: unknown): unknown => {
+export const createCopyBudget = (limit: number): CopyBudget => {
+    return { remaining: limit };
+};
+
+/** Copies a value that is already bounded by the size of its input, so the copy needs no limit. */
+export const copyValueUnbounded = (value: unknown): unknown => {
+    return copyValue(value, createCopyBudget(Number.POSITIVE_INFINITY));
+};
+
+/**
+ * Deep copy without recursion, so a hostile property value cannot exhaust the stack.
+ * Every object, array and entry copied is charged to the budget; once it runs out the copy stops and returns undefined.
+ */
+export const copyValue = (value: unknown, budget: CopyBudget): unknown => {
     if (typeof value !== 'object' || value === null) {
         return value;
     }
 
+    budget.remaining -= 1;
     const root = createContainer(value);
     const pending: CopyFrame[] = [{ source: value, target: root }];
 
@@ -32,8 +47,14 @@ export const copyValue = (value: unknown): unknown => {
         }
 
         for (const key of Object.keys(frame.source)) {
+            budget.remaining -= 1;
             const child: unknown = Reflect.get(frame.source, key);
+            if (budget.remaining < 0) {
+                return undefined;
+            }
+
             if (typeof child === 'object' && child !== null) {
+                budget.remaining -= 1;
                 const copy = createContainer(child);
                 setOwn(frame.target, key, copy);
                 pending.push({ source: child, target: copy });

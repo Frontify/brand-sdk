@@ -20,8 +20,11 @@ const NESTED_CLOSE = ']}';
 const LEAF = '{"text":"Lorem"}';
 const MARK_NESTING = 200_000;
 const COLOR_DIGITS = 100_000;
-const REPEATED_PARTS = 100_000;
-const LARGE_MARK_LENGTH = 2000;
+const MANY_MARKS = 5000;
+const KEYS_PER_LEAF = 24_000;
+const MAX_COMPARISON_CPU_MILLISECONDS = 250;
+const REPEATED_PARTS = 500_000;
+const LARGE_MARK_LENGTH = 1000;
 const MAX_CHECK_LEVEL = 64;
 const CHECK_LEVELS_FAR_OVER_LIMIT = 50_000;
 
@@ -265,13 +268,47 @@ describe('convertLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOU
         expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
-    it('should copy the marks of a leaf once however many line parts it has (MIG-27)', () => {
+    it('should refuse a leaf whose many line parts would each copy a large unknown mark (MIG-27)', () => {
         const mark = Array.from({ length: LARGE_MARK_LENGTH }, (_, index) => index);
         const value = JSON.stringify([{ type: 'p', children: [{ text: 'a\n'.repeat(REPEATED_PARTS), x: mark }] }]);
         const { result, cpuMilliseconds } = convertTimed(value);
 
-        expect(result.outcome).toBe('requires-review');
+        expect(result).toEqual({
+            outcome: 'unsupported',
+            document: null,
+            diagnostics: [{ code: 'limit-exceeded', path: [] }],
+        });
         expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
+    });
+
+    it('should refuse a leaf whose many line parts would each copy many small unknown marks (MIG-27)', () => {
+        const leaf: Record<string, unknown> = { text: 'a\n'.repeat(REPEATED_PARTS) };
+        for (let index = 0; index < MANY_MARKS; index++) {
+            leaf[`mark${index}`] = index;
+        }
+
+        const { result, cpuMilliseconds } = convertTimed(JSON.stringify([{ type: 'p', children: [leaf] }]));
+
+        expect(result.outcome).toBe('unsupported');
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
+    });
+
+    it('should compare the key sets of adjacent leaves with many unknown marks in linear time (MIG-27)', () => {
+        const createLeaf = (text: string): Record<string, unknown> => {
+            const leaf: Record<string, unknown> = { text };
+            for (let index = 0; index < KEYS_PER_LEAF; index++) {
+                leaf[`mark${index}`] = 1;
+            }
+
+            return leaf;
+        };
+        const { result, cpuMilliseconds } = convertTimed(
+            JSON.stringify([{ type: 'p', children: [createLeaf('a'), createLeaf('b')] }]),
+        );
+
+        expect(result.outcome).toBe('requires-review');
+        expect(Reflect.get(result.document?.blocks[0] ?? {}, 'children')).toHaveLength(1);
+        expect(cpuMilliseconds).toBeLessThan(MAX_COMPARISON_CPU_MILLISECONDS);
     });
 
     it('should refuse a colour with a hundred thousand digits without backtracking (MIG-27)', () => {

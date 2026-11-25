@@ -9,6 +9,7 @@ import { type LegacyRichTextTree, type MentionLookup, type ResolveMention } from
 const BYTES_PER_MEBIBYTE = 1024 * 1024;
 const MAX_DOCUMENT_MEBIBYTES = 5;
 const INDENTED_CHECK_ITEM_LEVELS = [1, 2, 3, 2, 1];
+const UNKNOWN_INLINE_COUNT = 20_000;
 const SCANNED_STRING_KEYS = ['text', 'url', 'id', 'link'];
 const MIN_SCANNED_LENGTH = 4;
 
@@ -37,6 +38,24 @@ const collectSourceStrings = (value: unknown): string[] => {
 
     return strings;
 };
+
+const readTextLeafMarks = (block: unknown, key: string): unknown[] => {
+    const marks: unknown[] = [];
+    const children: unknown = Reflect.get(Object(block), 'children');
+    if (!Array.isArray(children)) {
+        return marks;
+    }
+
+    for (const child of children) {
+        if (Reflect.get(child, 'text') !== undefined) {
+            marks.push(Reflect.get(child, key));
+        }
+    }
+
+    return marks;
+};
+
+const readNested = (mark: unknown): unknown => Reflect.get(Object(mark), 'nested');
 
 const checkItem = (indent: number, text: string): LegacyRichTextTree[number] => ({
     type: 'checkbox-item',
@@ -562,6 +581,31 @@ describe('convertLegacyRichText mapping', () => {
                 children: [{ text: 'a' }, { type: 'break' }, { type: 'break' }, { text: 'b' }, { type: 'break' }],
             },
         ]);
+    });
+
+    it('should give every line part of a leaf its own copy of an unknown mark (MIG-13)', () => {
+        const result = convertTree([{ type: 'p', children: [{ text: 'a\nb\nc', x: { nested: [1] } }] }]);
+
+        expect(result.outcome).toBe('requires-review');
+        const marks = readTextLeafMarks(result.document?.blocks[0], 'x');
+
+        expect(marks).toEqual([{ nested: [1] }, { nested: [1] }, { nested: [1] }]);
+        expect(marks[0]).not.toBe(marks[1]);
+        expect(readNested(marks[0])).not.toBe(readNested(marks[1]));
+    });
+
+    it('should keep a tree of many unknown inline elements with extra keys under the copy limit (MIG-13)', () => {
+        const children = Array.from({ length: UNKNOWN_INLINE_COUNT }, (_, index) => ({
+            type: 'emoji',
+            first: index,
+            second: 'two',
+            third: [3],
+            children: [{ text: '' }],
+        }));
+        const result = convertTree([{ type: 'p', children }]);
+
+        expect(result.outcome).toBe('requires-review');
+        expect(result.diagnostics).toHaveLength(UNKNOWN_INLINE_COUNT);
     });
 
     it('should never merge text leaves with different marks or across a break (MIG-13)', () => {

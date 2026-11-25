@@ -4,6 +4,8 @@ const MAX_DOCUMENT_BYTES = 5 * 1024 * 1024;
 export const MAX_NODES = 50_000;
 export const MAX_DEPTH = 64;
 export const MAX_TEXT_LENGTH = 1_000_000;
+/** How many value nodes one conversion may copy, which bounds the size of its output however the input is split. */
+export const MAX_COPIED_VALUES = 1_000_000;
 /** The deepest list or check list nesting `toLegacyRichText` follows before it gives up. */
 export const MAX_BLOCK_NESTING_DEPTH = 128;
 

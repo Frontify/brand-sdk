@@ -2,9 +2,9 @@
 
 import { readAlignment } from './alignment';
 import { parseLegacyColor } from './color';
-import { copyValue, isDeepEqual, setOwn } from './copyValue';
+import { type CopyBudget, copyValue, copyValueUnbounded, createCopyBudget, isDeepEqual, setOwn } from './copyValue';
 import { isLegacyText } from './legacyNode';
-import { MAX_DEPTH } from './limits';
+import { MAX_COPIED_VALUES, MAX_DEPTH } from './limits';
 import { createLinkValue, isSafeHref, readButtonAppearance, readSearchResultLink, readsAsNewTab } from './link';
 import {
     type LegacyElement,
@@ -62,7 +62,11 @@ type FromLegacyTreeResult =
     | { status: 'mapped'; blocks: OpenBlock[]; diagnostics: LegacyRichTextReviewDiagnostic[] }
     | { status: 'limit-exceeded' };
 
-type MappingContext = { diagnostics: LegacyRichTextReviewDiagnostic[]; resolveMention?: ResolveMention };
+type MappingContext = {
+    diagnostics: LegacyRichTextReviewDiagnostic[];
+    copyBudget: CopyBudget;
+    resolveMention?: ResolveMention;
+};
 type BlockPosition = 'topLevel' | 'nested';
 type TextBlockSpec = { type: 'paragraph' } | { type: 'quote' } | { type: 'textStyle'; style: TextStyleName };
 type ListType = 'bulletList' | 'numberedList';
@@ -88,7 +92,7 @@ type UndeclaredPropertiesOptions = {
     context: MappingContext;
 };
 
-type MarkEntry = { key: string; value: unknown };
+type MarkEntry = { key: string; value: unknown; isDeclared: boolean };
 type CheckItem = { node: OpenNode; children: OpenBlock[]; level: number; breaksColumn: boolean };
 type CheckListFrame = { items: OpenBlock[]; itemChildren: OpenBlock[] };
 type CheckRunMapping = { status: 'mapped'; blocks: OpenBlock[]; nextIndex: number } | { status: 'limit-exceeded' };
@@ -125,22 +129,22 @@ const report = (context: MappingContext, code: LegacyRichTextReviewCode, path: L
     context.diagnostics.push({ code, path });
 };
 
-const copyElementInto = (target: object, element: LegacyElement): void => {
+const copyElementInto = (target: object, element: LegacyElement, context: MappingContext): void => {
     for (const key of Object.keys(element)) {
-        setOwn(target, key, copyValue(element[key]));
+        setOwn(target, key, copyValue(element[key], context.copyBudget));
     }
 };
 
-const keepWholeBlock = (element: LegacyElement): OpenNode => {
+const keepWholeBlock = (element: LegacyElement, context: MappingContext): OpenNode => {
     const copy: OpenNode = { type: element.type };
-    copyElementInto(copy, element);
+    copyElementInto(copy, element, context);
 
     return copy;
 };
 
-const keepWholeInline = (element: LegacyElement): OpenInlineElement => {
+const keepWholeInline = (element: LegacyElement, context: MappingContext): OpenInlineElement => {
     const copy: OpenInlineElement = { type: element.type };
-    copyElementInto(copy, element);
+    copyElementInto(copy, element, context);
 
     return copy;
 };
@@ -155,7 +159,7 @@ const copyUndeclaredProperties = (options: UndeclaredPropertiesOptions): void =>
 
         report(context, 'unknown-property', path);
         if (!reservedKeys.includes(key)) {
-            setOwn(target, key, copyValue(element[key]));
+            setOwn(target, key, copyValue(element[key], context.copyBudget));
         }
     }
 };
@@ -196,13 +200,13 @@ const blockStyleOf = (spec: TextBlockSpec): string => {
 
 const haveSameMarks = (first: OpenText, second: OpenText): boolean => {
     const firstKeys = Object.keys(first).filter((key) => key !== 'text');
-    const secondKeys = Object.keys(second).filter((key) => key !== 'text');
-    if (firstKeys.length !== secondKeys.length) {
+    const secondKeys = new Set(Object.keys(second).filter((key) => key !== 'text'));
+    if (firstKeys.length !== secondKeys.size) {
         return false;
     }
 
     for (const key of firstKeys) {
-        if (!secondKeys.includes(key) || !isDeepEqual(first[key], second[key])) {
+        if (!secondKeys.has(key) || !isDeepEqual(first[key], second[key])) {
             return false;
         }
     }
@@ -226,10 +230,22 @@ const mergeAdjacentText = (inlines: OpenInline[]): OpenInline[] => {
     return merged;
 };
 
-const createText = (text: string, marks: MarkEntry[]): OpenText => {
+// Every part gets its own copy of the marks, so no value is shared between leaves; copies of unknown marks are charged.
+const createText = (text: string, marks: MarkEntry[], context: MappingContext): OpenText => {
     const leaf: OpenText = { text };
+
     for (const mark of marks) {
-        setOwn(leaf, mark.key, mark.value);
+        if (mark.isDeclared) {
+            setOwn(leaf, mark.key, copyValueUnbounded(mark.value));
+            continue;
+        }
+
+        context.copyBudget.remaining -= 1;
+        if (context.copyBudget.remaining < 0) {
+            break;
+        }
+
+        setOwn(leaf, mark.key, copyValue(mark.value, context.copyBudget));
     }
 
     return leaf;
@@ -257,7 +273,7 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
             continue;
         }
 
-        entries.push({ key, value: true });
+        entries.push({ key, value: true, isDeclared: true });
     }
 
     if (leaf[LEGACY_COLOR_KEY] !== undefined) {
@@ -266,12 +282,12 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
         if (color === null) {
             report(context, 'color-unparsed', path);
         } else {
-            entries.push({ key: 'fontColor', value: { color } });
+            entries.push({ key: 'fontColor', value: { color }, isDeclared: true });
         }
     }
 
     if (link !== undefined) {
-        entries.push({ key: 'link', value: link });
+        entries.push({ key: 'link', value: link, isDeclared: true });
     }
 
     if (leaf[LEGACY_TEXT_STYLE_KEY] === blockStyle) {
@@ -285,7 +301,7 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
 
         report(context, 'unknown-property', path);
         if (!RESERVED_TEXT_KEYS.includes(key)) {
-            entries.push({ key, value: leaf[key] });
+            entries.push({ key, value: leaf[key], isDeclared: false });
         }
     }
 
@@ -297,16 +313,20 @@ const appendTextLeaf = (output: OpenInline[], leaf: LegacyText, options: TextLea
         return;
     }
 
-    const marks = readTextMarks(leaf, options).map((mark) => ({ key: mark.key, value: copyValue(mark.value) }));
+    const marks = readTextMarks(leaf, options);
     const parts = leaf.text.split(LINE_BREAK);
 
     for (let index = 0; index < parts.length; index++) {
+        if (options.context.copyBudget.remaining < 0) {
+            return;
+        }
+
         if (index > 0) {
             output.push({ type: 'break' });
         }
 
         if (parts[index] !== '') {
-            output.push(createText(parts[index], marks));
+            output.push(createText(parts[index], marks, options.context));
         }
     }
 };
@@ -424,7 +444,7 @@ const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
 
-        return keepWholeInline(element);
+        return keepWholeInline(element, context);
     }
 
     const id = element[LEGACY_ID_KEY];
@@ -432,7 +452,7 @@ const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline
     if ((typeof id !== 'string' && typeof id !== 'number') || category.status === 'unknown') {
         report(context, 'unknown-element', path);
 
-        return keepWholeInline(element);
+        return keepWholeInline(element, context);
     }
 
     const mentionId = String(id);
@@ -491,7 +511,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
     const extraKeys = Object.keys(element).filter((key) => !allowedKeys.includes(key));
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
-        output.push(keepWholeInline(element));
+        output.push(keepWholeInline(element, context));
         return;
     }
 
@@ -501,20 +521,20 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
             report(context, 'unknown-element', mentionPath);
         }
 
-        output.push(keepWholeInline(element));
+        output.push(keepWholeInline(element, context));
         return;
     }
 
     if (!hasLinkableText(element) || hasButtonLineBreak(element)) {
         report(context, 'unknown-element', path);
-        output.push(keepWholeInline(element));
+        output.push(keepWholeInline(element, context));
         return;
     }
 
     const reading = readLink(element);
     if (repeatsPreviousButton(output, element, reading)) {
         report(context, 'unknown-element', path);
-        output.push(keepWholeInline(element));
+        output.push(keepWholeInline(element, context));
         return;
     }
 
@@ -544,7 +564,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
             appendTextLeaf(output, child, { path: childPath, blockStyle, link, context });
         } else {
             report(context, 'unknown-element', childPath);
-            output.push(keepWholeInline(child));
+            output.push(keepWholeInline(child, context));
         }
     }
 };
@@ -561,7 +581,7 @@ const appendInlineElement = (output: OpenInline[], element: LegacyElement, optio
         default:
             // The element type is an arbitrary stored string, not a union: any other type is kept whole.
             report(options.context, 'unknown-element', options.path);
-            output.push(keepWholeInline(element));
+            output.push(keepWholeInline(element, options.context));
     }
 };
 
@@ -699,7 +719,7 @@ const mapListItemElement = (element: LegacyElement, options: BlockOptions): Open
     if (isEmptyList(element)) {
         report(options.context, 'unknown-element', options.path);
 
-        return keepWholeBlock(element);
+        return keepWholeBlock(element, options.context);
     }
 
     switch (element.type) {
@@ -712,7 +732,7 @@ const mapListItemElement = (element: LegacyElement, options: BlockOptions): Open
         default:
             // The element type is an arbitrary stored string, not a union: any other type is kept whole.
             report(options.context, 'unknown-element', options.path);
-            return keepWholeBlock(element);
+            return keepWholeBlock(element, options.context);
     }
 };
 
@@ -744,7 +764,7 @@ const mapList = (element: LegacyElement, options: ListOptions): OpenNode => {
             children.push(mapListItem(child, { path: childPath, position: 'nested', context }));
         } else {
             report(context, 'unknown-element', childPath);
-            children.push(keepWholeBlock(child));
+            children.push(keepWholeBlock(child, context));
         }
     }
 
@@ -890,7 +910,7 @@ const mapTopLevelBlock = (element: LegacyElement, options: BlockOptions): OpenBl
     if (node === null) {
         report(options.context, 'unknown-element', options.path);
 
-        return [keepWholeBlock(element)];
+        return [keepWholeBlock(element, options.context)];
     }
 
     const blocks: OpenBlock[] = [node];
@@ -936,10 +956,14 @@ const mapTopLevel = (tree: LegacyRichTextTree, context: MappingContext): TopLeve
 
 /** Maps a validated legacy tree to blocks of the open document, listing every place a human should look at. */
 export const fromLegacyTree = (tree: LegacyRichTextTree, options: FromLegacyTreeOptions): FromLegacyTreeResult => {
-    const context: MappingContext = { diagnostics: [], resolveMention: options.resolveMention };
+    const context: MappingContext = {
+        diagnostics: [],
+        copyBudget: createCopyBudget(MAX_COPIED_VALUES),
+        resolveMention: options.resolveMention,
+    };
     const mapping = mapTopLevel(tree, context);
-    if (mapping.status === 'limit-exceeded') {
-        return mapping;
+    if (mapping.status === 'limit-exceeded' || context.copyBudget.remaining < 0) {
+        return { status: 'limit-exceeded' };
     }
 
     return { status: 'mapped', blocks: mapping.blocks, diagnostics: context.diagnostics };

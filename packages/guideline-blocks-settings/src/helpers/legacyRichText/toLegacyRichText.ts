@@ -2,7 +2,7 @@
 
 import { writeAlignment } from './alignment';
 import { toLegacyColor } from './color';
-import { copyValue, isDeepEqual, setOwn } from './copyValue';
+import { copyValueUnbounded, isDeepEqual, setOwn } from './copyValue';
 import { MAX_BLOCK_NESTING_DEPTH } from './limits';
 import { type LinkParts, isSafeHref, readLinkValue, readSearchResultLink, writeButtonStyle, writeTarget } from './link';
 import {
@@ -160,7 +160,7 @@ const readUndeclaredEntries = (node: StoredNode, declaredKeys: readonly string[]
 
     for (const key of Object.keys(node)) {
         if (!declaredKeys.includes(key)) {
-            entries.push({ key, value: copyValue(node[key]) });
+            entries.push({ key, value: copyValueUnbounded(node[key]) });
         }
     }
 
@@ -210,7 +210,7 @@ const createLeaf = (item: TextItem): LegacyText => {
     const leaf: LegacyText = { text: item.text };
 
     for (const mark of item.marks) {
-        setOwn(leaf, mark.key, copyValue(mark.value));
+        setOwn(leaf, mark.key, copyValueUnbounded(mark.value));
     }
 
     return leaf;
@@ -282,7 +282,7 @@ const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegac
     // children is removed so it takes the position it has in the stored node.
     Reflect.deleteProperty(element, 'children');
     for (const key of Object.keys(node)) {
-        setOwn(element, key, copyValue(node[key]));
+        setOwn(element, key, copyValueUnbounded(node[key]));
     }
 
     return element;
