@@ -1,6 +1,12 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type MentionInline, type NewFormatBlockType, type RteText, type TextStyleName } from './types';
+import {
+    type MentionInline,
+    type NewFormatBlockType,
+    type NewFormatInlineType,
+    type RteText,
+    type TextStyleName,
+} from './types';
 
 export const LEGACY_PARAGRAPH_TYPE = 'p';
 export const LEGACY_QUOTE_TYPE = 'quote';
@@ -69,6 +75,12 @@ const NEW_FORMAT_BLOCK_TYPES: Record<NewFormatBlockType, true> = {
     tableHeader: true,
 };
 
+// Every inline type the new format has; a release that adds or renames one fails typecheck here.
+const NEW_FORMAT_INLINE_TYPES: Record<NewFormatInlineType, true> = {
+    break: true,
+    mention: true,
+};
+
 type LegacyMentionCategory = 'user' | 'group' | 'all';
 type MentionKindReading = { status: 'known'; kind: MentionInline['kind'] } | { status: 'unknown' };
 
@@ -92,6 +104,11 @@ export const isColumnBreakValue = (value: unknown): value is ColumnBreakValue =>
 
 export const isTextStyleName = (type: string): type is TextStyleName => {
     return Object.keys(TEXT_STYLE_NAMES).includes(type);
+};
+
+/** A type the new format declares, so a node of it kept whole would be read as a real node of that type. */
+export const isReservedType = (type: string): boolean => {
+    return isNewFormatBlockType(type) || Object.keys(NEW_FORMAT_INLINE_TYPES).includes(type);
 };
 
 export const isNewFormatBlockType = (type: string): boolean => {

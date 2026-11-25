@@ -771,6 +771,48 @@ describe('toLegacyRichText content without a legacy form', () => {
         expectNotReversible(blocks, [path]);
     });
 
+    it.each([
+        {
+            name: 'a paragraph',
+            build: (entry: object): StoredBlock[] => [{ type: 'paragraph', ...entry, children: [] }],
+            path: [0],
+        },
+        {
+            name: 'a leaf',
+            build: (entry: object): StoredBlock[] => [paragraph({ text: 'a', ...entry })],
+            path: [0, 0],
+        },
+        {
+            name: 'a list',
+            build: (entry: object): StoredBlock[] => [
+                { type: 'bulletList', ...entry, children: [{ type: 'listItem', children: [paragraph()] }] },
+            ],
+            path: [0],
+        },
+        {
+            name: 'a list item',
+            build: (entry: object): StoredBlock[] => [
+                { type: 'bulletList', children: [{ type: 'listItem', ...entry, children: [paragraph()] }] },
+            ],
+            path: [0, 0],
+        },
+        {
+            name: 'a check item',
+            build: (entry: object): StoredBlock[] => [
+                checkList({ type: 'checkItem', ...entry, children: [paragraph()] }),
+            ],
+            path: [0, 0],
+        },
+    ])('should not write $name whose own undeclared address is unsafe (MIG-25)', ({ build, path }) => {
+        for (const entry of [
+            { url: 'javascript:alert(1)' },
+            { href: 'javascript:alert(1)' },
+            { chosenLink: { searchResult: { link: 'javascript:alert(1)' } } },
+        ]) {
+            expectNotReversible(build(entry), [path]);
+        }
+    });
+
     it('should write undeclared values with safe addresses back as stored (MIG-25)', () => {
         const extra = {
             href: 'https://example.com',

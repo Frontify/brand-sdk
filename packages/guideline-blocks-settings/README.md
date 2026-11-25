@@ -107,6 +107,7 @@ Each result has `diagnostics`: a list of `{ code, path }`. The path holds child 
 | `excluded-marks`       | `requires-review` | Text that is both subscript and superscript. It keeps subscript.                    |
 | `indent-jump`          | `requires-review` | A to-do item indented more than one level below the item before it.                |
 | `html-value`           | `unsupported`     | The value is HTML or plain text, not JSON.                                          |
+| `reserved-type`        | `unsupported`     | An element that cannot be converted has the type name of a new-format block or inline, so it cannot be kept as stored. |
 | `limit-exceeded`       | `unsupported`     | The value is over 5 MiB, 50,000 nodes, 64 levels deep or 1,000,000 characters in one text. |
 | `invalid-value`        | `invalid`         | The value is JSON, but not an array.                                                |
 | `invalid-node`         | `invalid`         | A node in the array is not a text or an element.                                    |

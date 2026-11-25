@@ -206,12 +206,59 @@ describe('convertLegacyRichText mapping', () => {
     it.each([
         { name: 'an id that is not text or a number', mention: { id: { value: 1 }, category: 'user' } },
         { name: 'a category outside the three', mention: { id: 'user-1', category: 'team' } },
-    ])('should keep a mention with $name whole (MIG-13)', ({ mention }) => {
-        const element = { type: 'mention', ...mention, children: [{ text: '' }] };
-        const result = convertTree([{ type: 'p', children: [element] }]);
+    ])('should refuse a mention with $name because it would be read as a real mention (MIG-13)', ({ mention }) => {
+        const result = convertTree([
+            { type: 'p', children: [{ type: 'mention', ...mention, children: [{ text: '' }] }] },
+        ]);
 
-        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0, 0] }]);
-        expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
+        expect(result).toEqual({
+            outcome: 'unsupported',
+            document: null,
+            diagnostics: [{ code: 'reserved-type', path: [0, 0] }],
+        });
+    });
+
+    it('should convert a mention with an extra property and report it without copying it (MIG-13)', () => {
+        const result = convertTree([
+            {
+                type: 'p',
+                children: [
+                    { type: 'mention', category: 'group', id: 'group-1', extra: { a: 1 }, children: [{ text: '' }] },
+                ],
+            },
+        ]);
+
+        expect(result.diagnostics).toEqual([
+            { code: 'unknown-property', path: [0, 0] },
+            { code: 'mention-unresolved', path: [0, 0] },
+        ]);
+        expect(result.document?.blocks).toEqual([
+            {
+                type: 'paragraph',
+                children: [{ type: 'mention', id: 'group-1', username: '', name: '', kind: 'group' }],
+            },
+        ]);
+    });
+
+    it.each([
+        {
+            name: 'a quote inside a paragraph',
+            tree: [{ type: 'p', children: [{ type: 'quote', children: [{ text: 'x' }] }] }],
+            path: [0, 0],
+        },
+        { name: 'a table element', tree: [{ type: 'table', children: [] }], path: [0] },
+        { name: 'a break element', tree: [{ type: 'p', children: [{ type: 'break', children: [] }] }], path: [0, 0] },
+        {
+            name: 'a list item type outside a list',
+            tree: [{ type: 'ul', children: [{ type: 'li', children: [{ type: 'listItem', children: [] }] }] }],
+            path: [0, 0, 0],
+        },
+    ])('should refuse $name kept whole under a type the new format declares (MIG-13)', ({ tree, path }) => {
+        expect(convertTree(tree)).toEqual({
+            outcome: 'unsupported',
+            document: null,
+            diagnostics: [{ code: 'reserved-type', path }],
+        });
     });
 
     it('should keep a block with an extra property whole as an undeclared key (MIG-13)', () => {

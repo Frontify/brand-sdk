@@ -77,6 +77,14 @@ export const convertLegacyRichText = (
         };
     }
 
+    if (mapping.status === 'reserved-type') {
+        return {
+            outcome: 'unsupported',
+            document: null,
+            diagnostics: [{ code: 'reserved-type', path: mapping.path }],
+        };
+    }
+
     const { blocks, diagnostics } = mapping;
     const [firstDiagnostic, ...otherDiagnostics] = diagnostics;
     if (firstDiagnostic === undefined) {

@@ -265,8 +265,16 @@ const hasSafeLinkTargets = (root: unknown): boolean => {
     return true;
 };
 
+// The owner of an undeclared value is checked too, since a key such as url or href is an address of the written node itself.
+const isSafeUndeclaredEntry = (entry: PropertyEntry): boolean => {
+    const owner = {};
+    setOwn(owner, entry.key, entry.value);
+
+    return hasSafeLinkTargets(owner);
+};
+
 const hasUnwritableUndeclared = (legacyKeys: readonly string[], undeclared: PropertyEntry[]): boolean => {
-    return hasKeyClash(legacyKeys, undeclared) || !undeclared.every((entry) => hasSafeLinkTargets(entry.value));
+    return hasKeyClash(legacyKeys, undeclared) || !undeclared.every(isSafeUndeclaredEntry);
 };
 
 const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): LegacyElement | null => {

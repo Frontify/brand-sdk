@@ -49,6 +49,7 @@ import {
     MIN_CHECK_LEVEL,
     TEXT_MARK_KEYS,
     isColumnBreakValue,
+    isReservedType,
     isTextStyleName,
     readMentionKind,
 } from './vocabulary';
@@ -60,11 +61,13 @@ type OpenInlineElement = Exclude<OpenInline, OpenText>;
 type FromLegacyTreeOptions = { resolveMention?: ResolveMention };
 type FromLegacyTreeResult =
     | { status: 'mapped'; blocks: OpenBlock[]; diagnostics: LegacyRichTextReviewDiagnostic[] }
-    | { status: 'limit-exceeded' };
+    | { status: 'limit-exceeded' }
+    | { status: 'reserved-type'; path: LegacyRichTextPath };
 
 type MappingContext = {
     diagnostics: LegacyRichTextReviewDiagnostic[];
     copyBudget: CopyBudget;
+    reservedTypePath?: LegacyRichTextPath;
     resolveMention?: ResolveMention;
 };
 type BlockPosition = 'topLevel' | 'nested';
@@ -135,14 +138,27 @@ const copyElementInto = (target: object, element: LegacyElement, context: Mappin
     }
 };
 
-const keepWholeBlock = (element: LegacyElement, context: MappingContext): OpenNode => {
+// A node kept whole keeps its type, so a type the new format declares would be read as a real node of it.
+const noteReservedType = (element: LegacyElement, path: LegacyRichTextPath, context: MappingContext): void => {
+    if (isReservedType(element.type) && context.reservedTypePath === undefined) {
+        context.reservedTypePath = path;
+    }
+};
+
+const keepWholeBlock = (element: LegacyElement, path: LegacyRichTextPath, context: MappingContext): OpenNode => {
+    noteReservedType(element, path, context);
     const copy: OpenNode = { type: element.type };
     copyElementInto(copy, element, context);
 
     return copy;
 };
 
-const keepWholeInline = (element: LegacyElement, context: MappingContext): OpenInlineElement => {
+const keepWholeInline = (
+    element: LegacyElement,
+    path: LegacyRichTextPath,
+    context: MappingContext,
+): OpenInlineElement => {
+    noteReservedType(element, path, context);
     const copy: OpenInlineElement = { type: element.type };
     copyElementInto(copy, element, context);
 
@@ -440,8 +456,6 @@ const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline
     const extraKeys = Object.keys(element).filter((key) => !LEGACY_MENTION_KEYS.includes(key));
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
-
-        return keepWholeInline(element, context);
     }
 
     const id = element[LEGACY_ID_KEY];
@@ -449,7 +463,7 @@ const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline
     if ((typeof id !== 'string' && typeof id !== 'number') || category.status === 'unknown') {
         report(context, 'unknown-element', path);
 
-        return keepWholeInline(element, context);
+        return keepWholeInline(element, path, context);
     }
 
     const mentionId = String(id);
@@ -508,7 +522,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
     const extraKeys = Object.keys(element).filter((key) => !allowedKeys.includes(key));
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
-        output.push(keepWholeInline(element, context));
+        output.push(keepWholeInline(element, path, context));
         return;
     }
 
@@ -518,20 +532,20 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
             report(context, 'unknown-element', mentionPath);
         }
 
-        output.push(keepWholeInline(element, context));
+        output.push(keepWholeInline(element, path, context));
         return;
     }
 
     if (!hasLinkableText(element) || hasButtonLineBreak(element)) {
         report(context, 'unknown-element', path);
-        output.push(keepWholeInline(element, context));
+        output.push(keepWholeInline(element, path, context));
         return;
     }
 
     const reading = readLink(element);
     if (repeatsPreviousButton(output, element, reading)) {
         report(context, 'unknown-element', path);
-        output.push(keepWholeInline(element, context));
+        output.push(keepWholeInline(element, path, context));
         return;
     }
 
@@ -561,7 +575,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
             appendTextLeaf(output, child, { path: childPath, blockStyle, link, context });
         } else {
             report(context, 'unknown-element', childPath);
-            output.push(keepWholeInline(child, context));
+            output.push(keepWholeInline(child, childPath, context));
         }
     }
 };
@@ -578,7 +592,7 @@ const appendInlineElement = (output: OpenInline[], element: LegacyElement, optio
         default:
             // The element type is an arbitrary stored string, not a union: any other type is kept whole.
             report(options.context, 'unknown-element', options.path);
-            output.push(keepWholeInline(element, options.context));
+            output.push(keepWholeInline(element, options.path, options.context));
     }
 };
 
@@ -716,7 +730,7 @@ const mapListItemElement = (element: LegacyElement, options: BlockOptions): Open
     if (isEmptyList(element)) {
         report(options.context, 'unknown-element', options.path);
 
-        return keepWholeBlock(element, options.context);
+        return keepWholeBlock(element, options.path, options.context);
     }
 
     switch (element.type) {
@@ -729,7 +743,7 @@ const mapListItemElement = (element: LegacyElement, options: BlockOptions): Open
         default:
             // The element type is an arbitrary stored string, not a union: any other type is kept whole.
             report(options.context, 'unknown-element', options.path);
-            return keepWholeBlock(element, options.context);
+            return keepWholeBlock(element, options.path, options.context);
     }
 };
 
@@ -761,7 +775,7 @@ const mapList = (element: LegacyElement, options: ListOptions): OpenNode => {
             children.push(mapListItem(child, { path: childPath, position: 'nested', context }));
         } else {
             report(context, 'unknown-element', childPath);
-            children.push(keepWholeBlock(child, context));
+            children.push(keepWholeBlock(child, childPath, context));
         }
     }
 
@@ -907,7 +921,7 @@ const mapTopLevelBlock = (element: LegacyElement, options: BlockOptions): OpenBl
     if (node === null) {
         report(options.context, 'unknown-element', options.path);
 
-        return [keepWholeBlock(element, options.context)];
+        return [keepWholeBlock(element, options.path, options.context)];
     }
 
     const blocks: OpenBlock[] = [node];
@@ -961,6 +975,10 @@ export const fromLegacyTree = (tree: LegacyRichTextTree, options: FromLegacyTree
     const mapping = mapTopLevel(tree, context);
     if (mapping.status === 'limit-exceeded' || context.copyBudget.remaining < 0) {
         return { status: 'limit-exceeded' };
+    }
+
+    if (context.reservedTypePath !== undefined) {
+        return { status: 'reserved-type', path: context.reservedTypePath };
     }
 
     return { status: 'mapped', blocks: mapping.blocks, diagnostics: context.diagnostics };

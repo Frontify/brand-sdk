@@ -19,6 +19,9 @@ type TableBlock = Extract<RteBlock, { type: 'table' }>;
 type TableRowBlock = TableBlock['children'][number];
 
 /** Every block type of the new format: the top-level ones and the ones nested in lists and tables. */
+/** Every inline type of the new format that is not a text run. */
+export type NewFormatInlineType = Extract<OfficialInline, { type: string }>['type'];
+
 export type NewFormatBlockType =
     | RteBlock['type']
     | ListBlock['children'][number]['type']
@@ -47,7 +50,7 @@ export type LegacyRichTextReviewCode =
     | 'color-unparsed'
     | 'unknown-element'
     | 'unknown-property';
-export type LegacyRichTextUnsupportedCode = 'limit-exceeded' | 'html-value';
+export type LegacyRichTextUnsupportedCode = 'limit-exceeded' | 'html-value' | 'reserved-type';
 export type LegacyRichTextInvalidCode = 'invalid-value' | 'invalid-node';
 export type LegacyRichTextNotReversibleCode = 'no-legacy-form';
 
