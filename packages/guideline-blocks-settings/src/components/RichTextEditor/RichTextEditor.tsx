@@ -1,20 +1,38 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { RichTextEditor as FondueRichTextEditor } from '@frontify/fondue/rte';
-import { memo, useCallback, useEffect, useId, useRef, useState } from 'react';
+import {
+    type RtePlugin,
+    type RteDocument,
+    RichTextEditor as FondueRichTextEditor,
+} from '@frontify/fondue/rich-text-editor';
+import { columnBreakPlugin, defaultPlugins } from '@frontify/fondue/rich-text-editor/plugins';
+import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { useIsInViewport } from '../../hooks/useIsInViewport';
 
-import { floatingButtonActions, floatingButtonSelectors } from './plugins/ButtonPlugin/components';
-import { getResponsiveColumnClasses } from './plugins/ColumnBreakPlugin/helpers';
+import { readRichTextValue, writeRichTextValue } from './richTextValue';
 import { SerializedText } from './SerializedText';
 import { type RichTextEditorProps } from './types';
 
-const handleHideExternalFloatingModals = (editorId: string) => {
-    if (floatingButtonSelectors.isOpen(editorId)) {
-        floatingButtonActions.reset();
+const EDITOR_TEST_ID = 'rich-text-editor';
+const PLUGIN_ID_SEPARATOR = ',';
+
+const pluginIdsOf = (plugins: readonly RtePlugin[]): string => plugins.map(({ id }) => id).join(PLUGIN_ID_SEPARATOR);
+
+/**
+ * Blocks rebuild their plugins every render, and Fondue shows any document it was not handed back, so the
+ * plugins (and the stored value read with them) change only with their ids, as Fondue's own rebuild does.
+ */
+const useKeptWhileKeyHolds = <TValue,>(value: TValue, key: string): TValue => {
+    const keptRef = useRef({ key, value });
+    if (keptRef.current.key !== key) {
+        keptRef.current = { key, value };
     }
+
+    return keptRef.current.value;
 };
+
+type InternalRichTextEditorProps = Omit<RichTextEditorProps, 'isEditing'> & { isEnabled: boolean };
 
 const InternalRichTextEditor = memo(
     ({
@@ -23,22 +41,50 @@ const InternalRichTextEditor = memo(
         columns,
         gap,
         placeholder,
-        plugins,
+        plugins = defaultPlugins,
         onTextChange,
         showSerializedText,
-    }: Omit<RichTextEditorProps, 'isEditing'> & { isEnabled: boolean }) => {
-        const customClass = getResponsiveColumnClasses(columns);
+        showToolbar = true,
+    }: InternalRichTextEditorProps) => {
         const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
         const editorId = useId();
 
-        const handleTextChange = useCallback(
-            (newContent: string) => {
-                if (newContent !== value) {
-                    onTextChange?.(newContent);
+        const editorPlugins = useMemo(() => {
+            if (columns === undefined) {
+                return plugins;
+            }
+
+            return [...plugins, columnBreakPlugin({ columns, gap })];
+        }, [plugins, columns, gap]);
+
+        const stablePlugins = useKeptWhileKeyHolds(editorPlugins, pluginIdsOf(editorPlugins));
+        const stored = useMemo(() => readRichTextValue(value, stablePlugins), [value, stablePlugins]);
+
+        const handleBlur = useCallback(
+            (document: RteDocument) => {
+                if (!shouldPreventPageLeave) {
+                    return;
                 }
-                setShouldPreventPageLeave(false);
+
+                const written = writeRichTextValue(document, columns);
+
+                switch (written.outcome) {
+                    case 'written':
+                        if (written.value !== value) {
+                            onTextChange?.(written.value);
+                        }
+
+                        setShouldPreventPageLeave(false);
+                        return;
+                    case 'not-reversible':
+                        console.error(
+                            'Rich text was not saved, it has no legacy form:',
+                            written.diagnostics.map(({ code }) => code),
+                        );
+                        return;
+                }
             },
-            [onTextChange, value],
+            [columns, onTextChange, shouldPreventPageLeave, value],
         );
 
         const handleValueChange = useCallback(() => setShouldPreventPageLeave(true), []);
@@ -56,30 +102,23 @@ const InternalRichTextEditor = memo(
             return () => window.removeEventListener('beforeunload', unloadHandler);
         }, [shouldPreventPageLeave]);
 
-        if (isEnabled) {
+        if (isEnabled && stored.access === 'editable') {
             return (
                 <FondueRichTextEditor
                     id={editorId}
-                    value={value}
-                    border={false}
+                    value={stored.document}
                     placeholder={placeholder}
-                    plugins={plugins}
-                    onValueChanged={handleValueChange}
-                    onTextChange={handleTextChange}
-                    hideExternalFloatingModals={handleHideExternalFloatingModals}
-                    placeholderOpacity="high"
+                    plugins={editorPlugins}
+                    toolbarPlacement="floating"
+                    showEditor={showToolbar}
+                    onChange={handleValueChange}
+                    onBlur={handleBlur}
+                    data-test-id={EDITOR_TEST_ID}
                 />
             );
         }
-        return (
-            <SerializedText
-                value={value}
-                gap={gap}
-                customClass={customClass}
-                show={showSerializedText}
-                plugins={plugins}
-            />
-        );
+
+        return <SerializedText value={value} show={showSerializedText} columns={columns} gap={gap} plugins={plugins} />;
     },
 );
 InternalRichTextEditor.displayName = 'InternalRichTextEditor';

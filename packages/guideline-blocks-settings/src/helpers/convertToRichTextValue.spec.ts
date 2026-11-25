@@ -1,7 +1,8 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { type TextStyles } from '@frontify/fondue/rte';
 import { describe, expect, it } from 'vitest';
+
+import { type TextStyles } from '../components/RichTextEditor/styles';
 
 import { convertToRteValue } from './convertToRichTextValue';
 

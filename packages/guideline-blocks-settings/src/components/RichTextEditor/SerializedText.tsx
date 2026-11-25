@@ -1,30 +1,30 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { serializeRawToHtmlAsync } from '@frontify/fondue/rte';
-import { useEffect, useState } from 'react';
+import { RichTextRenderer, isEmpty } from '@frontify/fondue/rich-text-editor';
+import { columnBreakContent, defaultPlugins } from '@frontify/fondue/rich-text-editor/plugins';
+import { useMemo } from 'react';
 
+import { readRichTextValue } from './richTextValue';
 import { type SerializedTextProps } from './types';
 
-export const SerializedText = ({ value = '', gap, customClass, show = true, plugins }: SerializedTextProps) => {
-    const [html, setHtml] = useState<string | null>(null);
+export const SerializedText = ({ value, show = true, columns, gap, plugins = defaultPlugins }: SerializedTextProps) => {
+    const rendererPlugins = useMemo(() => {
+        if (columns === undefined) {
+            return plugins;
+        }
 
-    useEffect(() => {
-        const updateHtml = async () => {
-            const htmlContent = await serializeRawToHtmlAsync(value, plugins, undefined, gap, customClass);
-            setHtml(htmlContent);
-        };
-        updateHtml().catch(console.error);
-    }, [value, gap, plugins, customClass]);
+        return [...plugins, columnBreakContent({ columns, gap })];
+    }, [plugins, columns, gap]);
 
-    if (!show || html === '<br />' || html === null) {
+    const stored = useMemo(() => readRichTextValue(value, plugins), [value, plugins]);
+
+    if (stored.access === 'unreadable' || !show || isEmpty(stored.document)) {
         return null;
     }
 
     return (
-        <div
-            className="tw-w-full tw-whitespace-pre-wrap"
-            data-test-id="rte-content-html"
-            dangerouslySetInnerHTML={{ __html: html }}
-        />
+        <div className="tw-w-full tw-whitespace-pre-wrap" data-test-id="rte-content-html">
+            <RichTextRenderer plugins={rendererPlugins} value={stored.document} />
+        </div>
     );
 };

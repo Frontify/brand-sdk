@@ -1,19 +1,19 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
-import { PluginComposer } from '@frontify/fondue/rte';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { convertToRteValue } from '../../helpers';
-
-import { BreakAfterPlugin, RichTextEditor, TextStyles, getDefaultPluginsWithLinkChooser } from '.';
+import { RichTextEditor } from './RichTextEditor';
 
 const RTE_HTML_TEST_ID = 'rte-content-html';
 const RICH_TEXT_EDITOR_TEST_ID = 'rich-text-editor';
 const RICH_TEXT_CONTAINER_TEST_ID = 'rich-text-editor-container';
+const EDITABLE_SELECTOR = '[contenteditable="true"]';
+const TOOLBAR_SELECTOR = '[role="toolbar"]';
 
-const appBridge = getAppBridgeBlockStub({ blockId: 1 });
+const PARAGRAPH = JSON.stringify([{ type: 'p', children: [{ text: 'Hello there!' }] }]);
+const HEADING = JSON.stringify([{ type: 'heading1', children: [{ text: 'Test Heading' }] }]);
+const UNKNOWN_MARK = JSON.stringify([{ type: 'p', children: [{ text: 'Lossy text', highlight: 'yellow' }] }]);
 
 /**
  * happy-dom does not lay elements out, so `IntersectionObserver` never reports anything. This stub
@@ -54,24 +54,22 @@ describe('RichTextEditor', () => {
         vi.unstubAllGlobals();
     });
 
-    it('should render a rich text editor in edit mode', async () => {
-        render(<RichTextEditor isEditing plugins={getDefaultPluginsWithLinkChooser(appBridge)} />);
+    it('should render an editable rich text editor in edit mode', async () => {
+        render(<RichTextEditor isEditing value={PARAGRAPH} />);
 
         await enterViewport();
 
-        expect(await screen.findByTestId(RICH_TEXT_EDITOR_TEST_ID)).toBeInTheDocument();
+        const editor = await screen.findByTestId(RICH_TEXT_EDITOR_TEST_ID);
+        await waitFor(() => {
+            expect(editor.querySelector(EDITABLE_SELECTOR)).toBeInTheDocument();
+        });
+        expect(editor).toHaveTextContent('Hello there!');
     });
 
     it('should only render a rich text editor once it has entered the viewport while editing', async () => {
-        render(
-            <RichTextEditor
-                isEditing
-                value={convertToRteValue('p', 'Hello there!')}
-                plugins={getDefaultPluginsWithLinkChooser(appBridge)}
-            />,
-        );
+        render(<RichTextEditor isEditing value={PARAGRAPH} />);
 
-        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toBeInTheDocument();
+        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Hello there!');
         expect(screen.queryByTestId(RICH_TEXT_EDITOR_TEST_ID)).not.toBeInTheDocument();
 
         await enterViewport();
@@ -80,77 +78,85 @@ describe('RichTextEditor', () => {
         expect(screen.queryByTestId(RTE_HTML_TEST_ID)).not.toBeInTheDocument();
     });
 
-    it('should render a rich text html in view mode', async () => {
-        render(<RichTextEditor isEditing={false} value="test" />);
+    it('should render the read only view when not editing', async () => {
+        render(<RichTextEditor isEditing={false} value={HEADING} />);
 
-        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toBeInTheDocument();
+        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Test Heading');
+        expect(screen.queryByTestId(RICH_TEXT_EDITOR_TEST_ID)).not.toBeInTheDocument();
     });
 
-    it('should render a json value in view mode', async () => {
-        render(<RichTextEditor isEditing={false} value={convertToRteValue(TextStyles.heading1, 'Test Heading')} />);
-
-        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toBeInTheDocument();
-        expect(screen.getByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Test Heading');
-    });
-
-    it('should render a html value in view mode', async () => {
+    it('should render a html value in the read only view', async () => {
         render(<RichTextEditor isEditing={false} value="<p>Test Paragraph</p>" />);
 
-        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toBeInTheDocument();
-        expect(screen.getByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Test Paragraph');
+        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Test Paragraph');
     });
 
-    it('should not render html output if the value is empty', async () => {
-        render(<RichTextEditor isEditing={false} value="" />);
+    it('should render a plain text value in the read only view', async () => {
+        render(<RichTextEditor isEditing={false} value="test" />);
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(RTE_HTML_TEST_ID)).not.toBeInTheDocument();
-        });
+        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('test');
     });
 
-    it('should not render html output if the value is undefined', async () => {
-        render(<RichTextEditor isEditing={false} />);
+    it.each([
+        ['empty', ''],
+        ['undefined', undefined],
+    ])('should not render the read only view when the value is %s', (_name, value) => {
+        render(<RichTextEditor isEditing={false} value={value} />);
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(RTE_HTML_TEST_ID)).not.toBeInTheDocument();
-        });
+        expect(screen.queryByTestId(RTE_HTML_TEST_ID)).not.toBeInTheDocument();
     });
 
-    it('should render responsive columns in edit mode', async () => {
-        render(
-            <RichTextEditor
-                isEditing
-                plugins={new PluginComposer().setPlugin([new BreakAfterPlugin({ columns: 4, gap: 30 })])}
-                value={convertToRteValue('p', 'Hello there!')}
-            />,
-        );
+    it('should not render the read only view when show serialized text is off', () => {
+        render(<RichTextEditor isEditing={false} value={PARAGRAPH} showSerializedText={false} />);
+
+        expect(screen.queryByTestId(RTE_HTML_TEST_ID)).not.toBeInTheDocument();
+    });
+
+    it('should draw no toolbar and keep the content editable when the toolbar is off', async () => {
+        render(<RichTextEditor isEditing value={PARAGRAPH} showToolbar={false} />);
 
         await enterViewport();
 
-        const richTextEditor = await screen.findByTestId(RICH_TEXT_EDITOR_TEST_ID);
-        const editable = richTextEditor.querySelector('[contenteditable]');
-
-        expect(screen.getByTestId(RICH_TEXT_CONTAINER_TEST_ID)).toHaveClass('tw-@container');
-        expect(editable).toHaveClass('tw-columns-1', '@md:!tw-columns-4');
-        expect(editable).toHaveStyle({ columnGap: '30px' });
+        const editor = await screen.findByTestId(RICH_TEXT_EDITOR_TEST_ID);
+        await waitFor(() => {
+            expect(editor.querySelector(EDITABLE_SELECTOR)).toBeInTheDocument();
+        });
+        expect(editor.querySelector(TOOLBAR_SELECTOR)).not.toBeInTheDocument();
+        expect(screen.queryByRole('toolbar')).not.toBeInTheDocument();
     });
 
-    it('should render responsive columns in view mode', async () => {
-        render(
-            <RichTextEditor
-                isEditing={false}
-                columns={4}
-                gap="30px"
-                plugins={new PluginComposer().setPlugin([new BreakAfterPlugin({ columns: 2, gap: 30 })])}
-                value={convertToRteValue('p', 'Hello there!')}
-            />,
-        );
+    it('should show a value that the editor would lose something from without making it editable', async () => {
+        render(<RichTextEditor isEditing value={UNKNOWN_MARK} />);
 
-        const rteHtml = await screen.findByTestId(RTE_HTML_TEST_ID);
-        const serialized = rteHtml.firstElementChild;
+        await enterViewport();
+
+        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Lossy text');
+        expect(screen.queryByTestId(RICH_TEXT_EDITOR_TEST_ID)).not.toBeInTheDocument();
+        expect(document.querySelector('[contenteditable]')).not.toBeInTheDocument();
+    });
+
+    it('should render the columns layout in edit mode', async () => {
+        render(<RichTextEditor isEditing columns={4} gap="30px" value={PARAGRAPH} />);
+
+        await enterViewport();
+
+        const editor = await screen.findByTestId(RICH_TEXT_EDITOR_TEST_ID);
+        await waitFor(() => {
+            expect(editor.querySelector(EDITABLE_SELECTOR)).toBeInTheDocument();
+        });
 
         expect(screen.getByTestId(RICH_TEXT_CONTAINER_TEST_ID)).toHaveClass('tw-@container');
-        expect(serialized).toHaveClass('tw-columns-1', '@md:!tw-columns-4');
-        expect(serialized).toHaveStyle({ columnGap: '30px' });
+        expect(editor.querySelector(EDITABLE_SELECTOR)).toHaveStyle({
+            '--rte-columns': '4',
+            '--rte-column-gap': '30px',
+        });
+    });
+
+    it('should render the columns layout in the read only view', async () => {
+        render(<RichTextEditor isEditing={false} columns={4} gap="30px" value={PARAGRAPH} />);
+
+        const content = await screen.findByTestId(RTE_HTML_TEST_ID);
+
+        expect(content.firstElementChild).toHaveStyle({ '--rte-columns': '4', '--rte-column-gap': '30px' });
     });
 });
