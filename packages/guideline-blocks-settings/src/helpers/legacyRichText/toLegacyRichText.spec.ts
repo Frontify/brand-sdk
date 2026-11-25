@@ -647,17 +647,6 @@ describe('toLegacyRichText content without a legacy form', () => {
             path: [0, 0, 1, 0],
         },
         {
-            name: 'an undeclared checked on the paragraph of a checked check item',
-            blocks: [
-                checkList({
-                    type: 'checkItem',
-                    checked: true,
-                    children: [{ type: 'paragraph', checked: 'x', children: [] }],
-                }),
-            ],
-            path: [0, 0],
-        },
-        {
             name: 'an undeclared breakAfterColumn on a block followed by a column break',
             blocks: [{ type: 'paragraph', breakAfterColumn: 'active', children: [] }, { type: 'columnBreak' }],
             path: [0],
@@ -705,11 +694,6 @@ describe('toLegacyRichText content without a legacy form', () => {
             path: [0, 0],
         },
         {
-            name: 'an undeclared checked on the paragraph of a check item that is not checked',
-            blocks: [checkList({ type: 'checkItem', children: [{ type: 'paragraph', checked: true, children: [] }] })],
-            path: [0, 0],
-        },
-        {
             name: 'an undeclared breakAfterColumn on a block with no column break after it',
             blocks: [{ type: 'paragraph', breakAfterColumn: 'active', children: [] }],
             path: [0],
@@ -726,6 +710,30 @@ describe('toLegacyRichText content without a legacy form', () => {
         },
     ])('should not reverse $name because the legacy editor gives that key a meaning (MIG-25)', ({ blocks, path }) => {
         expectNotReversible(blocks, [path]);
+    });
+
+    it.each([
+        { name: 'one that the check item also has', paragraph: { type: 'paragraph', note: 'x', children: [] } },
+        { name: 'one that only the paragraph has', paragraph: { type: 'paragraph', checked: true, children: [] } },
+    ])('should not reverse a check item whose paragraph has an undeclared key, $name (MIG-25)', ({ paragraph }) => {
+        expectNotReversible(
+            [checkList({ type: 'checkItem', note: 'y', checked: true, children: [paragraph] })],
+            [[0, 0, 0]],
+        );
+    });
+
+    it('should still write the undeclared keys of the check item itself (MIG-25)', () => {
+        expectExact(
+            [checkList({ type: 'checkItem', note: 'y', children: [paragraph()] })],
+            [{ type: 'checkbox-item', note: 'y', children: [{ text: '' }] }],
+        );
+    });
+
+    it.each(['emoji', 'mention'])('should not reverse an unknown %s node with a text key (MIG-25)', (type) => {
+        expectNotReversible(
+            [{ type: 'unknownBlock', text: 'x', children: [] }, paragraph({ type, text: 'x', children: [] })],
+            [[0], [1, 0]],
+        );
     });
 
     it('should still write undeclared keys the legacy editor gives no meaning on that node (MIG-25)', () => {

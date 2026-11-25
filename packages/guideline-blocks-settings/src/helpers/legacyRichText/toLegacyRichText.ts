@@ -217,7 +217,8 @@ const createLeaf = (item: TextItem): LegacyText => {
 
 const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): LegacyElement | null => {
     const { type, children } = node;
-    if (typeof type !== 'string' || !Array.isArray(children)) {
+    // A text key makes the legacy reader take the node for a leaf and drop its type and children.
+    if (typeof type !== 'string' || !Array.isArray(children) || Object.keys(node).includes('text')) {
         report(context, path);
 
         return null;
@@ -752,7 +753,15 @@ const collectCheckItem = (item: StoredNode, options: CheckItemOptions): void => 
         return;
     }
 
-    const inline = mapInline(paragraph, { path: [...path, CHECK_ITEM_PARAGRAPH_INDEX], context });
+    const paragraphPath = [...path, CHECK_ITEM_PARAGRAPH_INDEX];
+    // Convert keeps every undeclared key of a checkbox item on the check item, so none belongs to its paragraph.
+    if (readUndeclaredEntries(paragraph, PARAGRAPH_KEYS).length > 0) {
+        report(context, paragraphPath);
+
+        return;
+    }
+
+    const inline = mapInline(paragraph, { path: paragraphPath, context });
     if (inline === null) {
         return;
     }
@@ -762,10 +771,7 @@ const collectCheckItem = (item: StoredNode, options: CheckItemOptions): void => 
         level,
         align: readAlignEntries(paragraph),
         checked,
-        undeclared: [
-            ...readUndeclaredEntries(item, CHECK_ITEM_KEYS),
-            ...readUndeclaredEntries(paragraph, PARAGRAPH_KEYS),
-        ],
+        undeclared: readUndeclaredEntries(item, CHECK_ITEM_KEYS),
         children: inline,
     });
 
