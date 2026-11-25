@@ -12,7 +12,9 @@ const OVER_LIMIT_MEBIBYTES = 6;
 const NESTING_OVER_LIMIT = 70;
 const NESTING_FAR_OVER_LIMIT = 100_000;
 const NODES_OVER_LIMIT = 60_000;
-const MAX_MILLISECONDS = 1000;
+const MAX_CPU_MILLISECONDS = 1000;
+const SLOW_TEST_TIMEOUT_MS = 30_000;
+const MICROSECONDS_PER_MILLISECOND = 1000;
 const NESTED_OPEN = '{"type":"p","children":[';
 const NESTED_CLOSE = ']}';
 const LEAF = '{"text":"Lorem"}';
@@ -68,59 +70,61 @@ const collectLinkHrefs = (document: unknown): unknown[] => {
     return hrefs;
 };
 
-const convertTimed = (value: string): { result: ConvertLegacyRichTextResult; milliseconds: number } => {
-    const start = performance.now();
+// CPU time of this process, so other processes on a loaded machine do not decide the result.
+const convertTimed = (value: string): { result: ConvertLegacyRichTextResult; cpuMilliseconds: number } => {
+    const start = process.cpuUsage();
     const result = convertLegacyRichText(value);
+    const { user, system } = process.cpuUsage(start);
 
-    return { result, milliseconds: performance.now() - start };
+    return { result, cpuMilliseconds: (user + system) / MICROSECONDS_PER_MILLISECOND };
 };
 
-describe('convertLegacyRichText with hostile input', () => {
+describe('convertLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOUT_MS }, () => {
     it.each([NESTING_OVER_LIMIT, NESTING_FAR_OVER_LIMIT])(
         'should refuse a tree nested %i levels deep without recursing (MIG-27)',
         (depth) => {
-            const { result, milliseconds } = convertTimed(createNestedValue(depth));
+            const { result, cpuMilliseconds } = convertTimed(createNestedValue(depth));
 
             expect(result).toEqual({
                 outcome: 'unsupported',
                 document: null,
                 diagnostics: [{ code: 'limit-exceeded', path: [] }],
             });
-            expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+            expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
         },
     );
 
     it('should refuse a tree with more nodes than the limit (MIG-27)', () => {
         const value = `[${Array.from({ length: NODES_OVER_LIMIT }, () => LEAF).join(',')}]`;
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result.outcome).toBe('unsupported');
         expect(result.diagnostics).toEqual([{ code: 'limit-exceeded', path: [] }]);
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it('should refuse a text leaf longer than the limit (MIG-27)', () => {
         const value = JSON.stringify([{ type: 'p', children: [{ text: 'a'.repeat(1_000_001) }] }]);
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result.outcome).toBe('unsupported');
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it('should refuse a string of 6 MiB (MIG-27)', () => {
-        const { result, milliseconds } = convertTimed('x'.repeat(OVER_LIMIT_MEBIBYTES * BYTES_PER_MEBIBYTE));
+        const { result, cpuMilliseconds } = convertTimed('x'.repeat(OVER_LIMIT_MEBIBYTES * BYTES_PER_MEBIBYTE));
 
         expect(result.outcome).toBe('unsupported');
         expect(result.diagnostics).toEqual([{ code: 'limit-exceeded', path: [] }]);
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it('should convert a text leaf with a million line breaks within a second (MIG-27)', () => {
         const value = JSON.stringify([{ type: 'p', children: [{ text: '\n'.repeat(999_999) }] }]);
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result.outcome).toBe('exact');
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it.each([
@@ -220,14 +224,14 @@ describe('convertLegacyRichText with hostile input', () => {
         { name: 'text that is null', value: '[{"type":"p","children":[{"text":null}]}]', path: [0, 0] },
         { name: 'a later bad node', value: '[{"text":"a"},{"text":"b"},{"text":{}}]', path: [2] },
     ])('should report $name as an invalid node at its path (MIG-27)', ({ value, path }) => {
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result).toEqual({
             outcome: 'invalid',
             document: null,
             diagnostics: [{ code: 'invalid-node', path }],
         });
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it.each(['{', '[', '[1,', 'undefined', '\u0000', '\uD800', '<'])(
@@ -240,42 +244,42 @@ describe('convertLegacyRichText with hostile input', () => {
     it('should convert a deeply nested property value without recursing (MIG-27)', () => {
         const deep = `${'['.repeat(NESTING_FAR_OVER_LIMIT)}${']'.repeat(NESTING_FAR_OVER_LIMIT)}`;
         const value = `[{"type":"p","extra":${deep},"children":[{"text":"Lorem"}]}]`;
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result.outcome).toBe('requires-review');
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it('should compare deeply nested undeclared marks of adjacent leaves without recursing (MIG-27)', () => {
         const deep = `${'['.repeat(MARK_NESTING)}${']'.repeat(MARK_NESTING)}`;
         const value = `[{"type":"p","children":[{"text":"a","x":${deep}},{"text":"b","x":${deep}}]}]`;
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result.outcome).toBe('requires-review');
         expect(Reflect.get(result.document?.blocks[0] ?? {}, 'children')).toHaveLength(1);
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it('should copy the marks of a leaf once however many line parts it has (MIG-27)', () => {
         const mark = Array.from({ length: LARGE_MARK_LENGTH }, (_, index) => index);
         const value = JSON.stringify([{ type: 'p', children: [{ text: 'a\n'.repeat(REPEATED_PARTS), x: mark }] }]);
-        const { result, milliseconds } = convertTimed(value);
+        const { result, cpuMilliseconds } = convertTimed(value);
 
         expect(result.outcome).toBe('requires-review');
-        expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it.each([MAX_CHECK_LEVEL + 1, CHECK_LEVELS_FAR_OVER_LIMIT])(
         'should refuse check items nested %i levels deep (MIG-27)',
         (levels) => {
-            const { result, milliseconds } = convertTimed(createCheckItems(levels));
+            const { result, cpuMilliseconds } = convertTimed(createCheckItems(levels));
 
             expect(result).toEqual({
                 outcome: 'unsupported',
                 document: null,
                 diagnostics: [{ code: 'limit-exceeded', path: [] }],
             });
-            expect(milliseconds).toBeLessThan(MAX_MILLISECONDS);
+            expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
         },
     );
 
@@ -284,7 +288,7 @@ describe('convertLegacyRichText with hostile input', () => {
     });
 });
 
-describe('toLegacyRichText with hostile input', () => {
+describe('toLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOUT_MS }, () => {
     it('should compare deeply nested undeclared marks of adjacent leaves without recursing (MIG-27)', () => {
         const result = toLegacyRichText({
             version: 1,

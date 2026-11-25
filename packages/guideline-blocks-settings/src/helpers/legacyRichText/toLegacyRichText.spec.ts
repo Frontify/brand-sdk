@@ -698,6 +698,20 @@ describe('toLegacyRichText content without a legacy form', () => {
         expectNotReversible([paragraph(node), node], [[0, 0], [1]]);
     });
 
+    it.each([['javascript:alert(1)'], 5, {}, null, true])(
+        'should not write an anchor whole whose chosen link address %j is not a string (MIG-25)',
+        (link) => {
+            const node = {
+                type: 'a',
+                url: '/page',
+                chosenLink: { searchResult: { link } },
+                children: [],
+            };
+
+            expectNotReversible([paragraph(node)], [[0, 0]]);
+        },
+    );
+
     it('should write an unknown block holding safe links and other nested objects back as stored (MIG-25)', () => {
         const node = {
             type: 'callout',

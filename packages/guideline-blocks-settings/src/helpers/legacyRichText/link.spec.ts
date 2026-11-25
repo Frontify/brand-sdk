@@ -75,6 +75,20 @@ describe('isSafeHref', () => {
         expect(isSafeHref(href)).toBe(false);
     });
 
+    it.each(['//user:pw@evil.example/', '\\\\user@evil.example', '/\\u@h', '///u@h', '\\/u@h'])(
+        'should refuse the network path %j with credentials (PST-29)',
+        (href) => {
+            expect(isSafeHref(href)).toBe(false);
+        },
+    );
+
+    it.each(['//example.com/path', '//example.com/a@b', '/a', 'a/b', '?q=a@b', '#x@y', '/a@b'])(
+        'should allow the href %j that is a network path without credentials or a plain relative one (PST-29)',
+        (href) => {
+            expect(isSafeHref(href)).toBe(true);
+        },
+    );
+
     it('should allow the href http:// that has an empty authority (PST-29)', () => {
         expect(isSafeHref('http://')).toBe(true);
     });

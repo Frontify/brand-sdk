@@ -234,7 +234,11 @@ const hasSafeLinkAddresses = (node: object): boolean => {
 
     const searchResultLink = readSearchResultLink(chosenLink);
 
-    return typeof searchResultLink !== 'string' || searchResultLink === '' || isSafeHref(searchResultLink);
+    if (searchResultLink === undefined || searchResultLink === '') {
+        return true;
+    }
+
+    return isSafeHref(searchResultLink);
 };
 
 // A node written whole must not carry a legacy link to an unsafe address anywhere inside it, without recursing.

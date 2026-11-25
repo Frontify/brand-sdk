@@ -10,6 +10,7 @@ const MAX_HREF_LENGTH = 2048;
 const ALLOWED_SCHEMES = ['http', 'https', 'mailto', 'tel'];
 const CREDENTIAL_SCHEMES = ['http', 'https'];
 const SCHEME_PATTERN = /^([^/?#:]*):/;
+const NETWORK_PATH_PATTERN = /^[/\\]{2,}([^/\\?#]*)/;
 const AUTHORITY_PATTERN = /^[^:]*:[/\\]*([^/\\?#]*)/;
 const CREDENTIALS_SEPARATOR = '@';
 const LAST_C0_CONTROL = 0x1f;
@@ -107,13 +108,12 @@ const readScheme = (href: string): string | null => {
 };
 
 // URL.canParse is newer than the ES2021 target, so credentials are read from the authority; special schemes ignore the slashes.
-const isCredentialFree = (href: string): boolean => {
-    const match = AUTHORITY_PATTERN.exec(href);
-    if (match === null) {
+const isCredentialFree = (authority: RegExpExecArray | null): boolean => {
+    if (authority === null) {
         return true;
     }
 
-    return !match[1].includes(CREDENTIALS_SEPARATOR);
+    return !authority[1].includes(CREDENTIALS_SEPARATOR);
 };
 
 /** Accepts a non-empty relative reference or an http, https, mailto or tel link, without control characters or credentials. */
@@ -124,7 +124,8 @@ export const isSafeHref = (href: unknown): href is string => {
 
     const scheme = readScheme(href);
     if (scheme === null) {
-        return true;
+        // Browsers read two or more slashes of either kind as a network path, which can carry credentials too.
+        return isCredentialFree(NETWORK_PATH_PATTERN.exec(href));
     }
 
     if (!ALLOWED_SCHEMES.includes(scheme)) {
@@ -132,7 +133,7 @@ export const isSafeHref = (href: unknown): href is string => {
     }
 
     if (CREDENTIAL_SCHEMES.includes(scheme)) {
-        return isCredentialFree(href);
+        return isCredentialFree(AUTHORITY_PATTERN.exec(href));
     }
 
     return true;
