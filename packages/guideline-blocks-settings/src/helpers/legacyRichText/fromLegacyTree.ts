@@ -97,7 +97,7 @@ type ListItemChild = { kind: 'inline' } | { kind: 'element'; element: LegacyElem
 type LinkReading =
     | { status: 'linked'; link: LinkValue }
     | { status: 'button-style-unknown'; link: LinkValue }
-    | { status: 'new-tab-unknown'; link: LinkValue }
+    | { status: 'chosen-link-unknown'; link: LinkValue }
     | { status: 'unsafe' };
 type MentionNames = Pick<MentionInline, 'username' | 'name'>;
 
@@ -327,7 +327,7 @@ const readAnchor = (element: LegacyElement): LinkReading => {
     const chosenLink = element[LEGACY_CHOSEN_LINK_KEY];
     let href: unknown = element[LEGACY_URL_KEY];
     let openInNewTab = readsAsNewTab(element[LEGACY_TARGET_KEY]);
-    let hasKnownNewTabFlag = true;
+    let hasKnownChosenLink = true;
 
     if (typeof chosenLink === 'object' && chosenLink !== null) {
         const searchResultLink = readSearchResultLink(chosenLink);
@@ -338,7 +338,11 @@ const readAnchor = (element: LegacyElement): LinkReading => {
         // The legacy display opens a new tab for any truthy value; only the boolean ones are the stored shape.
         const flag = readChosenOpenInNewTab(chosenLink);
         openInNewTab = Boolean(flag);
-        hasKnownNewTabFlag = flag === true || flag === false || flag === undefined || flag === null;
+        hasKnownChosenLink = flag === true || flag === false || flag === undefined || flag === null;
+    } else if (Boolean(chosenLink)) {
+        // The legacy display takes any truthy chosenLink for a chosen link: no search result and no new tab.
+        openInNewTab = false;
+        hasKnownChosenLink = false;
     }
 
     if (!isSafeHref(href)) {
@@ -346,8 +350,8 @@ const readAnchor = (element: LegacyElement): LinkReading => {
     }
 
     const link = createLinkValue({ href, openInNewTab, appearance: undefined });
-    if (!hasKnownNewTabFlag) {
-        return { status: 'new-tab-unknown', link };
+    if (!hasKnownChosenLink) {
+        return { status: 'chosen-link-unknown', link };
     }
 
     return { status: 'linked', link };
@@ -498,7 +502,7 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
         case 'linked':
             link = reading.link;
             break;
-        case 'new-tab-unknown':
+        case 'chosen-link-unknown':
             report(context, 'unknown-property', path);
             link = reading.link;
             break;

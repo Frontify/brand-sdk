@@ -390,6 +390,40 @@ describe('convertLegacyRichText mapping', () => {
         },
     );
 
+    it.each(['x', 1, true])(
+        'should read the truthy chosen link %j that is not an object as the display does and review it (MIG-13)',
+        (chosenLink) => {
+            const result = convertTree([
+                {
+                    type: 'p',
+                    children: [{ type: 'a', url: '/a', target: '_blank', chosenLink, children: [{ text: 'Page' }] }],
+                },
+            ]);
+
+            expect(result.diagnostics).toEqual([{ code: 'unknown-property', path: [0, 0] }]);
+            expect(result.document?.blocks).toEqual([
+                { type: 'paragraph', children: [{ text: 'Page', link: { href: '/a' } }] },
+            ]);
+        },
+    );
+
+    it.each([null, 0, '', false])(
+        'should ignore the falsy chosen link %j and read url and target (MIG-13)',
+        (chosenLink) => {
+            const result = convertTree([
+                {
+                    type: 'p',
+                    children: [{ type: 'a', url: '/a', target: '_blank', chosenLink, children: [{ text: 'Page' }] }],
+                },
+            ]);
+
+            expect(result.outcome).toBe('exact');
+            expect(result.document?.blocks).toEqual([
+                { type: 'paragraph', children: [{ text: 'Page', link: { href: '/a', openInNewTab: true } }] },
+            ]);
+        },
+    );
+
     it('should fall back to the url when a chosen link has no search result link (MIG-13)', () => {
         const result = convertTree([
             {
