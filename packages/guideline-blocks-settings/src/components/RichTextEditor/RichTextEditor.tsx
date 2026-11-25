@@ -1,8 +1,9 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type RtePlugin,
+    type RichTextEditorProps as FondueRichTextEditorProps,
     type RteDocument,
+    type RtePlugin,
     RichTextEditor as FondueRichTextEditor,
 } from '@frontify/fondue/rich-text-editor';
 import { columnBreakPlugin, defaultPlugins } from '@frontify/fondue/rich-text-editor/plugins';
@@ -10,12 +11,14 @@ import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from '
 
 import { useIsInViewport } from '../../hooks/useIsInViewport';
 
-import { readRichTextValue, writeRichTextValue } from './richTextValue';
+import { type StoredRichText, readRichTextValue, writeRichTextValue } from './richTextValue';
 import { SerializedText } from './SerializedText';
 import { type RichTextEditorProps } from './types';
 
 const EDITOR_TEST_ID = 'rich-text-editor';
 const PLUGIN_ID_SEPARATOR = ',';
+const UNSAVED_MESSAGE =
+    'This text has content that cannot be saved yet, such as an in-progress to-do item. Remove it to save your changes.';
 
 const pluginIdsOf = (plugins: readonly RtePlugin[]): string => plugins.map(({ id }) => id).join(PLUGIN_ID_SEPARATOR);
 
@@ -47,7 +50,11 @@ const InternalRichTextEditor = memo(
         showToolbar = true,
     }: InternalRichTextEditorProps) => {
         const [shouldPreventPageLeave, setShouldPreventPageLeave] = useState(false);
+        const [isUnsaved, setIsUnsaved] = useState(false);
         const editorId = useId();
+        const messageId = useId();
+        const latestDocumentRef = useRef<RteDocument | null>(null);
+        const writtenValueRef = useRef<string | null>(null);
 
         const editorPlugins = useMemo(() => {
             if (columns === undefined) {
@@ -58,7 +65,15 @@ const InternalRichTextEditor = memo(
         }, [plugins, columns, gap]);
 
         const stablePlugins = useKeptWhileKeyHolds(editorPlugins, pluginIdsOf(editorPlugins));
-        const stored = useMemo(() => readRichTextValue(value, stablePlugins), [value, stablePlugins]);
+
+        const stored = useMemo((): StoredRichText => {
+            // The parent echoes what the editor wrote: hand back the editor's own document, not a re-read one.
+            if (value === writtenValueRef.current && latestDocumentRef.current !== null) {
+                return { access: 'editable', document: latestDocumentRef.current };
+            }
+
+            return readRichTextValue(value, stablePlugins);
+        }, [value, stablePlugins]);
 
         const handleBlur = useCallback(
             (document: RteDocument) => {
@@ -70,24 +85,27 @@ const InternalRichTextEditor = memo(
 
                 switch (written.outcome) {
                     case 'written':
+                        writtenValueRef.current = written.value;
                         onTextChange?.(written.value);
                         setShouldPreventPageLeave(false);
+                        setIsUnsaved(false);
                         return;
                     case 'unchanged':
                         setShouldPreventPageLeave(false);
+                        setIsUnsaved(false);
                         return;
                     case 'not-reversible':
-                        console.error(
-                            'Rich text was not saved, it has no legacy form:',
-                            written.diagnostics.map(({ code }) => code),
-                        );
+                        setIsUnsaved(true);
                         return;
                 }
             },
             [columns, onTextChange, shouldPreventPageLeave, value],
         );
 
-        const handleValueChange = useCallback(() => setShouldPreventPageLeave(true), []);
+        const handleValueChange = useCallback((document: RteDocument) => {
+            latestDocumentRef.current = document;
+            setShouldPreventPageLeave(true);
+        }, []);
 
         useEffect(() => {
             const unloadHandler = (event: BeforeUnloadEvent) => {
@@ -103,18 +121,32 @@ const InternalRichTextEditor = memo(
         }, [shouldPreventPageLeave]);
 
         if (isEnabled && stored.access === 'editable') {
+            let status: FondueRichTextEditorProps['status'] = 'neutral';
+            if (isUnsaved) {
+                status = 'error';
+            }
+
             return (
-                <FondueRichTextEditor
-                    id={editorId}
-                    value={stored.document}
-                    placeholder={placeholder}
-                    plugins={editorPlugins}
-                    toolbarPlacement="floating"
-                    showEditor={showToolbar}
-                    onChange={handleValueChange}
-                    onBlur={handleBlur}
-                    data-test-id={EDITOR_TEST_ID}
-                />
+                <>
+                    <FondueRichTextEditor
+                        id={editorId}
+                        value={stored.document}
+                        placeholder={placeholder}
+                        plugins={editorPlugins}
+                        toolbarPlacement="floating"
+                        status={status}
+                        showEditor={showToolbar}
+                        onChange={handleValueChange}
+                        onBlur={handleBlur}
+                        aria-errormessage={messageId}
+                        data-test-id={EDITOR_TEST_ID}
+                    />
+                    {isUnsaved ? (
+                        <p id={messageId} className="tw-text-error tw-mt-1 tw-text-small">
+                            {UNSAVED_MESSAGE}
+                        </p>
+                    ) : null}
+                </>
             );
         }
 

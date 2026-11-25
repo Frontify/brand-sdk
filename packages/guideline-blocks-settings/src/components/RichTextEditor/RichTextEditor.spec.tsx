@@ -4,12 +4,22 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { RichTextEditor } from './RichTextEditor';
+import { writeRichTextValue } from './richTextValue';
+
+vi.mock('./richTextValue', async (importOriginal) => {
+    const original = await importOriginal<Record<string, unknown>>();
+
+    return { ...original, writeRichTextValue: vi.fn(original.writeRichTextValue as () => unknown) };
+});
 
 const RTE_HTML_TEST_ID = 'rte-content-html';
 const RICH_TEXT_EDITOR_TEST_ID = 'rich-text-editor';
 const RICH_TEXT_CONTAINER_TEST_ID = 'rich-text-editor-container';
 const EDITABLE_SELECTOR = '[contenteditable="true"]';
 const TOOLBAR_SELECTOR = '[role="toolbar"]';
+
+const UNSAVED_MESSAGE_PART = 'cannot be saved yet';
+const EDIT_SETTLE_MS = 50;
 
 const PARAGRAPH = JSON.stringify([{ type: 'p', children: [{ text: 'Hello there!' }] }]);
 const HEADING = JSON.stringify([{ type: 'heading1', children: [{ text: 'Test Heading' }] }]);
@@ -41,6 +51,38 @@ const enterViewport = async () => {
             instance.enterViewport();
         }
         await Promise.resolve();
+    });
+};
+
+const findEditable = async (): Promise<HTMLElement> => {
+    const editor = await screen.findByTestId(RICH_TEXT_EDITOR_TEST_ID);
+
+    return waitFor(() => {
+        const editable = editor.querySelector<HTMLElement>(EDITABLE_SELECTOR);
+        if (editable === null) {
+            throw new Error('The editor is not editable yet');
+        }
+
+        return editable;
+    });
+};
+
+const typeInto = async (editable: HTMLElement, text: string) => {
+    await act(async () => {
+        editable.focus();
+        const paragraph = editable.querySelector('p');
+        if (paragraph) {
+            paragraph.textContent = text;
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, EDIT_SETTLE_MS));
+    });
+};
+
+const blur = async (editable: HTMLElement) => {
+    await act(async () => {
+        editable.blur();
+        await new Promise((resolve) => setTimeout(resolve, EDIT_SETTLE_MS));
     });
 };
 
@@ -133,6 +175,60 @@ describe('RichTextEditor', () => {
         expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Lossy text');
         expect(screen.queryByTestId(RICH_TEXT_EDITOR_TEST_ID)).not.toBeInTheDocument();
         expect(document.querySelector('[contenteditable]')).not.toBeInTheDocument();
+    });
+
+    it('should call onTextChange with the legacy value when the editor loses focus after a change', async () => {
+        const onTextChange = vi.fn();
+        render(<RichTextEditor isEditing value={PARAGRAPH} onTextChange={onTextChange} />);
+        await enterViewport();
+        const editable = await findEditable();
+
+        await typeInto(editable, 'Hello world');
+        await blur(editable);
+
+        expect(onTextChange).toHaveBeenCalledWith(JSON.stringify([{ type: 'p', children: [{ text: 'Hello world' }] }]));
+    });
+
+    it('should show an error and not call onTextChange when the text cannot be saved, then clear it once it can', async () => {
+        const onTextChange = vi.fn();
+        vi.mocked(writeRichTextValue).mockReturnValueOnce({
+            outcome: 'not-reversible',
+            diagnostics: [{ code: 'no-legacy-form', path: [0] }],
+        });
+        render(<RichTextEditor isEditing value={PARAGRAPH} onTextChange={onTextChange} />);
+        await enterViewport();
+        const editable = await findEditable();
+
+        await typeInto(editable, 'Hello world');
+        await blur(editable);
+
+        expect(screen.getByText(new RegExp(UNSAVED_MESSAGE_PART))).toBeInTheDocument();
+        expect(editable).toHaveAttribute('aria-invalid', 'true');
+        expect(onTextChange).not.toHaveBeenCalled();
+
+        await typeInto(editable, 'Hello again');
+        await blur(editable);
+
+        expect(screen.queryByText(new RegExp(UNSAVED_MESSAGE_PART))).not.toBeInTheDocument();
+        expect(onTextChange).toHaveBeenCalledOnce();
+    });
+
+    it('should keep what was typed when the parent hands the saved value back late', async () => {
+        const onTextChange = vi.fn();
+        const { rerender } = render(<RichTextEditor isEditing value={PARAGRAPH} onTextChange={onTextChange} />);
+        await enterViewport();
+        const editable = await findEditable();
+        await typeInto(editable, 'Hello world');
+        await blur(editable);
+        const [savedValue] = onTextChange.mock.lastCall as [string];
+
+        await typeInto(editable, 'Hello world!');
+        rerender(<RichTextEditor isEditing value={savedValue} onTextChange={onTextChange} />);
+        await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, EDIT_SETTLE_MS));
+        });
+
+        expect(editable).toHaveTextContent('Hello world!');
     });
 
     it('should render the columns layout in edit mode', async () => {
