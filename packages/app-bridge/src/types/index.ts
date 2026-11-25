@@ -11,6 +11,7 @@ export * from './FileExtension';
 export * from './FileExtensionSets';
 export * from './FileType';
 export * from './LinkChooserOptions';
+export * from './LinkDestination';
 export * from './NewPublication';
 export * from './PrivacySettings';
 export * from './TemplateLegacy';

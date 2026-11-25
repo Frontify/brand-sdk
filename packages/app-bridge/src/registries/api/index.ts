@@ -6,3 +6,4 @@ export * from './CreateAssets';
 export * from './GetAssetBulkDownloadToken';
 export * from './SetAssetIdsByBlockAssetKey';
 export * from './GetCurrentUser';
+export * from './GetLinkDestinations';

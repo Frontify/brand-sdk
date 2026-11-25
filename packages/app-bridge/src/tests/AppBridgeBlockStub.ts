@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import { type EventCallbackParameter } from '../AppBridge';
 import { type AppBridgeBlock, type BlockEvent } from '../AppBridgeBlock';
-import { type Template, type TemplateLegacy, type User } from '../types';
+import { type LinkDestination, type Template, type TemplateLegacy, type User } from '../types';
 import { type Asset } from '../types/Asset';
 import { type PrivacySettings } from '../types/PrivacySettings';
 import { mergeDeep } from '../utilities/object';
@@ -19,6 +19,11 @@ const BLOCK_ID = 3452;
 const SECTION_ID = 2341;
 const USER_ID = 4561;
 const PROJECT_ID = 345214;
+const LINK_DESTINATIONS: LinkDestination[] = [
+    { id: '1', title: 'Brand Guidelines', permanentLink: 'https://example.com/document/1' },
+    { id: '2', title: 'Brand Colors', permanentLink: 'https://example.com/document/1#/colors' },
+    { id: '3', title: 'Logo Usage', permanentLink: 'https://example.com/document/1#/logo-usage' },
+];
 
 type ChosenEventName = 'assetsChosen' | 'linkChosen' | 'templateChosen';
 
@@ -197,6 +202,16 @@ export const getAppBridgeBlockStub = ({
                 }
                 case 'getAssetBulkDownloadToken': {
                     return { assetBulkDownloadToken: 'token' };
+                }
+                case 'getLinkDestinations': {
+                    const query = args.payload.query.toLowerCase();
+                    if (query === '') {
+                        return Promise.resolve([]);
+                    }
+
+                    return Promise.resolve(
+                        LINK_DESTINATIONS.filter(({ title }) => title.toLowerCase().includes(query)),
+                    );
                 }
                 case 'setAssetIdsByBlockAssetKey': {
                     blockAssets[args.payload.key] = args.payload.assetIds.map((id) => AssetDummy.with(id));

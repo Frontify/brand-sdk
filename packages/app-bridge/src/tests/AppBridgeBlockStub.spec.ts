@@ -211,4 +211,20 @@ describe('getAppBridgeBlockStub', () => {
 
         expect(response).toStrictEqual({ downloadUrl: 'https://example.com/bulk-download.zip' });
     });
+
+    it('should resolve getLinkDestinations with the destinations whose title matches the query', async () => {
+        const appBridge = getAppBridgeBlockStub();
+
+        const response = await appBridge.api({ name: 'getLinkDestinations', payload: { query: 'brand' } });
+
+        expect(response.map(({ title }) => title)).toStrictEqual(['Brand Guidelines', 'Brand Colors']);
+    });
+
+    it('should resolve getLinkDestinations with an empty list for an empty query', async () => {
+        const appBridge = getAppBridgeBlockStub();
+
+        const response = await appBridge.api({ name: 'getLinkDestinations', payload: { query: '' } });
+
+        expect(response).toStrictEqual([]);
+    });
 });
