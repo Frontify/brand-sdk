@@ -216,17 +216,18 @@ const createLeaf = (item: TextItem): LegacyText => {
     return leaf;
 };
 
-// A node written whole as a legacy link must not become a live link to an unsafe address.
-const hasSafeLinkTargets = (node: StoredNode): boolean => {
-    if (node.type !== LEGACY_LINK_TYPE && node.type !== LEGACY_BUTTON_TYPE) {
+const hasSafeLinkAddresses = (node: object): boolean => {
+    const type: unknown = Reflect.get(node, 'type');
+    if (type !== LEGACY_LINK_TYPE && type !== LEGACY_BUTTON_TYPE) {
         return true;
     }
 
-    if (!isSafeHref(node[LEGACY_URL_KEY])) {
+    const url: unknown = Reflect.get(node, LEGACY_URL_KEY);
+    if (!isSafeHref(url)) {
         return false;
     }
 
-    const chosenLink = node[LEGACY_CHOSEN_LINK_KEY];
+    const chosenLink: unknown = Reflect.get(node, LEGACY_CHOSEN_LINK_KEY);
     if (typeof chosenLink !== 'object' || chosenLink === null) {
         return true;
     }
@@ -234,6 +235,28 @@ const hasSafeLinkTargets = (node: StoredNode): boolean => {
     const searchResultLink = readSearchResultLink(chosenLink);
 
     return typeof searchResultLink !== 'string' || searchResultLink === '' || isSafeHref(searchResultLink);
+};
+
+// A node written whole must not carry a legacy link to an unsafe address anywhere inside it, without recursing.
+const hasSafeLinkTargets = (root: StoredNode): boolean => {
+    const pending: unknown[] = [root];
+
+    while (pending.length > 0) {
+        const current = pending.pop();
+        if (typeof current !== 'object' || current === null) {
+            continue;
+        }
+
+        if (!hasSafeLinkAddresses(current)) {
+            return false;
+        }
+
+        for (const key of Object.keys(current)) {
+            pending.push(Reflect.get(current, key));
+        }
+    }
+
+    return true;
 };
 
 const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): LegacyElement | null => {

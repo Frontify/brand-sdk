@@ -671,6 +671,43 @@ describe('toLegacyRichText content without a legacy form', () => {
         expectNotReversible([paragraph(node), node], [[0, 0], [1]]);
     });
 
+    it.each([
+        {
+            name: 'an unknown block holding an anchor with an unsafe url',
+            node: { type: 'callout', children: [{ type: 'a', url: 'javascript:alert(1)', children: [] }] },
+        },
+        {
+            name: 'a safe anchor holding a nested button with an unsafe url',
+            node: {
+                type: 'a',
+                url: '/page',
+                children: [{ text: 'x' }, { type: 'button', url: 'data:text/html,x', children: [] }],
+            },
+        },
+        {
+            name: 'an unknown block whose property holds a link with an unsafe chosen link',
+            node: {
+                type: 'callout',
+                children: [],
+                extra: [
+                    { type: 'a', url: '/page', chosenLink: { searchResult: { link: 'vbscript:x' } }, children: [] },
+                ],
+            },
+        },
+    ])('should not write $name whole (MIG-25)', ({ node }) => {
+        expectNotReversible([paragraph(node), node], [[0, 0], [1]]);
+    });
+
+    it('should write an unknown block holding safe links and other nested objects back as stored (MIG-25)', () => {
+        const node = {
+            type: 'callout',
+            children: [{ type: 'a', url: 'https://example.com', children: [{ text: 'x' }] }],
+            meta: { type: 'note', items: [1, { type: 'a', url: '/page' }] },
+        };
+
+        expectExact([node], [node]);
+    });
+
     it('should write a whole anchor with safe addresses back as stored (MIG-25)', () => {
         const node = {
             type: 'a',

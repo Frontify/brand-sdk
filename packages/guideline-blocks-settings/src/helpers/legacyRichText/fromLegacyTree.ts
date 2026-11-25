@@ -465,6 +465,17 @@ const hasButtonLineBreak = (element: LegacyElement): boolean => {
     );
 };
 
+// Two equal links side by side are one run for the new format, which would merge two buttons into one box.
+const repeatsPreviousButton = (output: OpenInline[], element: LegacyElement, reading: LinkReading): boolean => {
+    if (element.type !== LEGACY_BUTTON_TYPE || reading.status === 'unsafe') {
+        return false;
+    }
+
+    const previous: OpenInline | undefined = output[output.length - 1];
+
+    return previous !== undefined && isOpenText(previous) && isDeepEqual(previous.link, reading.link);
+};
+
 const appendLink = (output: OpenInline[], element: LegacyElement, options: InlineElementOptions): void => {
     const { path, blockStyle, context } = options;
     const allowedKeys = readLinkKeys(element);
@@ -492,6 +503,12 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
     }
 
     const reading = readLink(element);
+    if (repeatsPreviousButton(output, element, reading)) {
+        report(context, 'unknown-element', path);
+        output.push(keepWholeInline(element));
+        return;
+    }
+
     let link: LinkValue | undefined;
     switch (reading.status) {
         case 'linked':

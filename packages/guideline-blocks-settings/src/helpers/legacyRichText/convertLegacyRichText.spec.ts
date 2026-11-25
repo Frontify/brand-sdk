@@ -315,6 +315,42 @@ describe('convertLegacyRichText mapping', () => {
         expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
     });
 
+    it('should keep the second of two equal adjacent buttons whole and review it (MIG-13)', () => {
+        const button = { type: 'button', url: '/page', buttonStyle: 'secondary', children: [{ text: 'Go' }] };
+        const result = convertTree([{ type: 'p', children: [button, { text: '' }, button] }]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0, 2] }]);
+        expect(result.document?.blocks).toEqual([
+            {
+                type: 'paragraph',
+                children: [
+                    { text: 'Go', link: { href: '/page', appearance: 'secondary', openInNewTab: true } },
+                    button,
+                ],
+            },
+        ]);
+    });
+
+    it('should keep two adjacent buttons that differ, and merge equal adjacent text links (MIG-13)', () => {
+        const first = { type: 'button', url: '/page', buttonStyle: 'secondary', children: [{ text: 'One' }] };
+        const second = { type: 'button', url: '/page', buttonStyle: 'primary', children: [{ text: 'Two' }] };
+        const anchor = { type: 'a', url: '/other', children: [{ text: 'A' }] };
+        const result = convertTree([{ type: 'p', children: [first, second, { text: ' ' }, anchor, anchor] }]);
+
+        expect(result.outcome).toBe('exact');
+        expect(result.document?.blocks).toEqual([
+            {
+                type: 'paragraph',
+                children: [
+                    { text: 'One', link: { href: '/page', appearance: 'secondary', openInNewTab: true } },
+                    { text: 'Two', link: { href: '/page', appearance: 'primary', openInNewTab: true } },
+                    { text: ' ' },
+                    { text: 'AA', link: { href: '/other' } },
+                ],
+            },
+        ]);
+    });
+
     it('should keep a button whose text holds a line break whole and review it (MIG-13)', () => {
         const element = { type: 'button', url: '/page', children: [{ text: 'One\nTwo' }] };
         const result = convertTree([{ type: 'p', children: [element] }]);
