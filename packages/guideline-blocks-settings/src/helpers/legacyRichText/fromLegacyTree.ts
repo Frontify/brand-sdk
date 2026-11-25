@@ -160,6 +160,15 @@ const copyUndeclaredProperties = (options: UndeclaredPropertiesOptions): void =>
     }
 };
 
+// Fondue's align is a string union, so a value of another type is reported and left out.
+const readNonStringAlignKeys = (element: LegacyElement): string[] => {
+    if (typeof element[LEGACY_ALIGN_KEY] === 'string') {
+        return [];
+    }
+
+    return [LEGACY_ALIGN_KEY];
+};
+
 const reportUnknownProperties = (context: MappingContext, keys: string[], path: LegacyRichTextPath): void => {
     for (const _key of keys) {
         report(context, 'unknown-property', path);
@@ -593,7 +602,14 @@ const mapTextBlock = (element: LegacyElement, options: TextBlockOptions): OpenNo
         acceptedKeys.push(LEGACY_BREAK_AFTER_COLUMN_KEY);
     }
 
-    copyUndeclaredProperties({ element, acceptedKeys, reservedKeys: RESERVED_BLOCK_KEYS, target: node, path, context });
+    copyUndeclaredProperties({
+        element,
+        acceptedKeys,
+        reservedKeys: [...RESERVED_BLOCK_KEYS, ...readNonStringAlignKeys(element)],
+        target: node,
+        path,
+        context,
+    });
     node.children = mapInline(element.children, {
         parentPath: path,
         firstIndex: 0,
@@ -780,7 +796,7 @@ const buildCheckItem = (element: LegacyElement, path: LegacyRichTextPath, contex
     copyUndeclaredProperties({
         element,
         acceptedKeys,
-        reservedKeys: RESERVED_CHECK_ITEM_KEYS,
+        reservedKeys: [...RESERVED_CHECK_ITEM_KEYS, ...readNonStringAlignKeys(element)],
         target: node,
         path,
         context,

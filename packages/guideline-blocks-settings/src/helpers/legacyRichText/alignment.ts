@@ -1,5 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { copyValue } from './copyValue';
 import { type Alignment } from './types';
 
 type LegacyAlign = 'left' | 'center' | 'right' | 'justify';
@@ -24,7 +25,7 @@ export const writeAlignment = (alignment: unknown): unknown => {
         }
     }
 
-    return alignment;
+    return copyValue(alignment);
 };
 
 /** Returns the new format's alignment, or undefined when the value is not one of the four legacy ones. */

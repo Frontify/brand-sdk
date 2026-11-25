@@ -63,6 +63,14 @@ describe('toLegacyRichText blocks', () => {
         },
     );
 
+    it('should write an alignment outside the table as a copy and not share it (MIG-25)', () => {
+        const align = { value: ['start'] };
+        const result = toLegacy([{ type: 'paragraph', align, children: [{ text: 'Lorem' }] }]);
+
+        expect(result.value?.[0].align).toEqual(align);
+        expect(result.value?.[0].align).not.toBe(align);
+    });
+
     it('should write an alignment outside the table unchanged (MIG-25)', () => {
         expectExact(
             [{ type: 'paragraph', align: 'start', children: [{ text: 'Lorem' }] }],

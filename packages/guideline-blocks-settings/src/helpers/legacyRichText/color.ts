@@ -4,7 +4,8 @@ import { TinyColor } from '@ctrl/tinycolor';
 
 const HEX_COLOR_PATTERN = /^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/;
 const RGB_COLOR_PATTERN = /^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/;
-const RGBA_COLOR_PATTERN = /^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d*\.?\d+)\s*\)$/;
+const RGBA_COLOR_PATTERN = /^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d+(?:\.\d+)?|\.\d+)\s*\)$/;
+const MAX_COLOR_LENGTH = 64;
 const MAX_CHANNEL = 255;
 const MAX_ALPHA = 1;
 const FIRST_CHANNEL_GROUP = 1;
@@ -38,7 +39,7 @@ const isRgbaColor = (input: string): boolean => {
 
 // Only these spellings are colours; the library alone also reads names, percentages, clamped values and trailing text.
 const readColor = (value: unknown): TinyColor | null => {
-    if (typeof value !== 'string') {
+    if (typeof value !== 'string' || value.length > MAX_COLOR_LENGTH) {
         return null;
     }
 

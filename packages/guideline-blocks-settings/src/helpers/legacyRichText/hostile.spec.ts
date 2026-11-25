@@ -19,6 +19,7 @@ const NESTED_OPEN = '{"type":"p","children":[';
 const NESTED_CLOSE = ']}';
 const LEAF = '{"text":"Lorem"}';
 const MARK_NESTING = 200_000;
+const COLOR_DIGITS = 100_000;
 const REPEATED_PARTS = 100_000;
 const LARGE_MARK_LENGTH = 2000;
 const MAX_CHECK_LEVEL = 64;
@@ -71,12 +72,16 @@ const collectLinkHrefs = (document: unknown): unknown[] => {
 };
 
 // CPU time of this process, so other processes on a loaded machine do not decide the result.
-const convertTimed = (value: string): { result: ConvertLegacyRichTextResult; cpuMilliseconds: number } => {
+const measureCpu = <TResult>(run: () => TResult): { result: TResult; cpuMilliseconds: number } => {
     const start = process.cpuUsage();
-    const result = convertLegacyRichText(value);
+    const result = run();
     const { user, system } = process.cpuUsage(start);
 
     return { result, cpuMilliseconds: (user + system) / MICROSECONDS_PER_MILLISECOND };
+};
+
+const convertTimed = (value: string): { result: ConvertLegacyRichTextResult; cpuMilliseconds: number } => {
+    return measureCpu(() => convertLegacyRichText(value));
 };
 
 describe('convertLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOUT_MS }, () => {
@@ -269,6 +274,16 @@ describe('convertLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOU
         expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
+    it('should refuse a colour with a hundred thousand digits without backtracking (MIG-27)', () => {
+        const color = `rgba(0,0,0,${'1'.repeat(COLOR_DIGITS)}x`;
+        const { result, cpuMilliseconds } = convertTimed(
+            JSON.stringify([{ type: 'p', children: [{ text: 'Lorem', color }] }]),
+        );
+
+        expect(result.diagnostics).toEqual([{ code: 'color-unparsed', path: [0, 0] }]);
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
+    });
+
     it.each([MAX_CHECK_LEVEL + 1, CHECK_LEVELS_FAR_OVER_LIMIT])(
         'should refuse check items nested %i levels deep (MIG-27)',
         (levels) => {
@@ -305,6 +320,19 @@ describe('toLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOUT_MS 
 
         expect(result.outcome).toBe('exact');
         expect(result.value?.[0].children).toHaveLength(1);
+    });
+
+    it('should not write a font colour with a hundred thousand digits, without backtracking (MIG-27)', () => {
+        const color = `rgba(0,0,0,${'1'.repeat(COLOR_DIGITS)}x`;
+        const { result, cpuMilliseconds } = measureCpu(() => {
+            return toLegacyRichText({
+                version: 1,
+                blocks: [{ type: 'paragraph', children: [{ text: 'a', fontColor: { color } }] }],
+            });
+        });
+
+        expect(result.outcome).toBe('not-reversible');
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
     });
 
     it('should not write a link whose href fails the safety check (MIG-27)', () => {

@@ -75,6 +75,20 @@ describe('isSafeHref', () => {
         expect(isSafeHref(href)).toBe(false);
     });
 
+    it.each([' //user:pw@h', ' \\\\u@h', ' javascript:x', '//user@h/x ', ' \t', '   '])(
+        'should refuse the href %j once the spaces browsers strip are removed (PST-29)',
+        (href) => {
+            expect(isSafeHref(href)).toBe(false);
+        },
+    );
+
+    it.each([' /a ', ' https://example.com/a ', '  //example.com/a'])(
+        'should allow the href %j whose spaces browsers strip (PST-29)',
+        (href) => {
+            expect(isSafeHref(href)).toBe(true);
+        },
+    );
+
     it.each(['//user:pw@evil.example/', '\\\\user@evil.example', '/\\u@h', '///u@h', '\\/u@h'])(
         'should refuse the network path %j with credentials (PST-29)',
         (href) => {

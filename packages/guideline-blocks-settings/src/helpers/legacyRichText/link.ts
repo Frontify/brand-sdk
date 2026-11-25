@@ -87,6 +87,23 @@ export const writeTarget = (openInNewTab: boolean): string => {
     return SAME_TAB_TARGET;
 };
 
+const SPACE = 0x20;
+
+const trimSpaces = (href: string): string => {
+    let start = 0;
+    let end = href.length;
+
+    while (start < end && href.charCodeAt(start) === SPACE) {
+        start += 1;
+    }
+
+    while (end > start && href.charCodeAt(end - 1) === SPACE) {
+        end -= 1;
+    }
+
+    return href.slice(start, end);
+};
+
 const hasControlCharacter = (href: string): boolean => {
     for (let index = 0; index < href.length; index++) {
         const code = href.charCodeAt(index);
@@ -122,10 +139,16 @@ export const isSafeHref = (href: unknown): href is string => {
         return false;
     }
 
-    const scheme = readScheme(href);
+    // Browsers strip the spaces around an href before they read it.
+    const reference = trimSpaces(href);
+    if (reference === '') {
+        return false;
+    }
+
+    const scheme = readScheme(reference);
     if (scheme === null) {
         // Browsers read two or more slashes of either kind as a network path, which can carry credentials too.
-        return isCredentialFree(NETWORK_PATH_PATTERN.exec(href));
+        return isCredentialFree(NETWORK_PATH_PATTERN.exec(reference));
     }
 
     if (!ALLOWED_SCHEMES.includes(scheme)) {
@@ -133,7 +156,7 @@ export const isSafeHref = (href: unknown): href is string => {
     }
 
     if (CREDENTIAL_SCHEMES.includes(scheme)) {
-        return isCredentialFree(AUTHORITY_PATTERN.exec(href));
+        return isCredentialFree(AUTHORITY_PATTERN.exec(reference));
     }
 
     return true;

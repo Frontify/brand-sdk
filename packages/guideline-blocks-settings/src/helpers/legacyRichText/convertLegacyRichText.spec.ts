@@ -711,7 +711,25 @@ describe('convertLegacyRichText alignment', () => {
         });
     });
 
-    it.each(['start', 'end', 'Left', '', 1, null])(
+    it.each([1, null, {}, ['left']])(
+        'should report the alignment %j that is not a string and not copy it (MIG-14)',
+        (align) => {
+            const result = convertTree([
+                { type: 'p', align, children: [{ text: 'Lorem' }] },
+                { type: 'ul', children: [{ type: 'li', children: [{ type: 'lic', align, children: [] }] }] },
+                { type: 'checkbox-item', align, children: [{ text: 'Item' }] },
+            ]);
+
+            expect(result.diagnostics).toEqual([
+                { code: 'unknown-property', path: [0] },
+                { code: 'unknown-property', path: [1, 0, 0] },
+                { code: 'unknown-property', path: [2] },
+            ]);
+            expect(JSON.stringify(result.document)).not.toContain('align');
+        },
+    );
+
+    it.each(['start', 'end', 'Left', ''])(
         'should keep the alignment %j outside the four unchanged and review it (MIG-14)',
         (align) => {
             const result = convertTree([{ type: 'p', align, children: [{ text: 'Lorem' }] }]);
