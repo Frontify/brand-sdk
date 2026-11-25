@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { withAppBridgeBlockStubs } from '@frontify/app-bridge';
+import { withAppBridgeBlockStubs } from '@frontify/app-bridge/testing';
 import { IconAdobeCreativeCloud } from '@frontify/fondue/icons';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

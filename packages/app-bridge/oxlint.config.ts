@@ -6,7 +6,7 @@ import { defineConfig } from 'oxlint';
 
 export default defineConfig({
     extends: [reactConfig],
-    ignorePatterns: ['tailwind.config.*', '**/*.config.{js,mjs,cjs,ts}', '**/*.md', 'src/workers/upload.worker.js'],
+    ignorePatterns: ['**/*.config.{js,mjs,cjs,ts}', '**/*.md'],
     overrides: [
         {
             files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],

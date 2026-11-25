@@ -64,7 +64,7 @@ export const CustomFloatingLink = () => {
                     data-is-underlay
                     ref={insertRef}
                     {...insertProps}
-                    style={{ ...(insertProps.style as CSSProperties), ...FloatingToolbarStyles.text }}
+                    style={{ ...(insertProps.style as CSSProperties), ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {input}
                 </ScopedThemePortal>
@@ -75,7 +75,7 @@ export const CustomFloatingLink = () => {
                     data-is-underlay
                     ref={editRef}
                     {...editProps}
-                    style={{ ...(editProps.style as CSSProperties), ...FloatingToolbarStyles.text }}
+                    style={{ ...(editProps.style as CSSProperties), ...FloatingToolbarStyles.text, zIndex: 'auto' }}
                 >
                     {editContent}
                 </ScopedThemePortal>

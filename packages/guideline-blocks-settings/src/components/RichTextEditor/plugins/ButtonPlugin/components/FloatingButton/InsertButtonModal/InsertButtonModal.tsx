@@ -70,13 +70,16 @@ const HoverableButton = ({ id, styles, isActive, onClick, children }: Props): Re
 
     return (
         <button
+            type="button"
             data-test-id={`floating-button-insert-${id}`}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             onClick={onClick}
             style={{ ...getStyles(), marginTop: 0, marginBottom: 0 }}
             className={
-                isActive ? 'tw-outline tw-outline-1 tw-outline-violet-60 tw-outline-offset-2 tw-w-fit' : 'tw-w-fit'
+                isActive
+                    ? 'tw-outline tw-outline-1 tw-outline-container-highlight-on-highlight-container tw-outline-offset-2 tw-w-fit'
+                    : 'tw-w-fit'
             }
         >
             {children}

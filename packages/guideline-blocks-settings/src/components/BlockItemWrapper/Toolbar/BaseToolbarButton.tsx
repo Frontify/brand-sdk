@@ -24,6 +24,7 @@ export const BaseToolbarButton = forwardRef<HTMLButtonElement, BaseToolbarButton
         ref,
     ) => (
         <button
+            type="button"
             onClick={onClick}
             className={getToolbarButtonClassNames(cursor, forceActiveStyle)}
             data-test-id={dataTestId}

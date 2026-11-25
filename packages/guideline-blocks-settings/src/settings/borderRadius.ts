@@ -1,12 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import {
-    type SettingBlock,
     appendUnit,
     minimumNumericalOrPixelRule,
     numericalOrPixelRule,
     presetCustomValue,
-} from '../';
+} from '@frontify/sidebar-settings';
+
+import { type SettingBlock } from '../types';
 
 import { Radius, radiusStyleMap } from './types';
 
