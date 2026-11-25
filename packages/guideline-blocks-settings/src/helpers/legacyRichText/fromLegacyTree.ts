@@ -2,7 +2,7 @@
 
 import { readAlignment } from './alignment';
 import { parseLegacyColor } from './color';
-import { type CopyBudget, copyValue, copyValueUnbounded, createCopyBudget, isDeepEqual, setOwn } from './copyValue';
+import { type CopyBudget, copyValue, createCopyBudget, isDeepEqual, setOwn } from './copyValue';
 import { isLegacyText } from './legacyNode';
 import { MAX_COPIED_VALUES, MAX_DEPTH } from './limits';
 import { createLinkValue, isSafeHref, readButtonAppearance, readSearchResultLink, readsAsNewTab } from './link';
@@ -92,7 +92,7 @@ type UndeclaredPropertiesOptions = {
     context: MappingContext;
 };
 
-type MarkEntry = { key: string; value: unknown; isDeclared: boolean };
+type MarkEntry = { key: string; value: unknown };
 type CheckItem = { node: OpenNode; children: OpenBlock[]; level: number; breaksColumn: boolean };
 type CheckListFrame = { items: OpenBlock[]; itemChildren: OpenBlock[] };
 type CheckRunMapping = { status: 'mapped'; blocks: OpenBlock[]; nextIndex: number } | { status: 'limit-exceeded' };
@@ -230,16 +230,12 @@ const mergeAdjacentText = (inlines: OpenInline[]): OpenInline[] => {
     return merged;
 };
 
-// Every part gets its own copy of the marks, so no value is shared between leaves; copies of unknown marks are charged.
+// Every part gets its own leaf and copy of the marks, and all of it is charged, so a long text cannot multiply its marks.
 const createText = (text: string, marks: MarkEntry[], context: MappingContext): OpenText => {
     const leaf: OpenText = { text };
+    context.copyBudget.remaining -= 1;
 
     for (const mark of marks) {
-        if (mark.isDeclared) {
-            setOwn(leaf, mark.key, copyValueUnbounded(mark.value));
-            continue;
-        }
-
         context.copyBudget.remaining -= 1;
         if (context.copyBudget.remaining < 0) {
             break;
@@ -273,7 +269,7 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
             continue;
         }
 
-        entries.push({ key, value: true, isDeclared: true });
+        entries.push({ key, value: true });
     }
 
     if (leaf[LEGACY_COLOR_KEY] !== undefined) {
@@ -282,12 +278,12 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
         if (color === null) {
             report(context, 'color-unparsed', path);
         } else {
-            entries.push({ key: 'fontColor', value: { color }, isDeclared: true });
+            entries.push({ key: 'fontColor', value: { color } });
         }
     }
 
     if (link !== undefined) {
-        entries.push({ key: 'link', value: link, isDeclared: true });
+        entries.push({ key: 'link', value: link });
     }
 
     if (leaf[LEGACY_TEXT_STYLE_KEY] === blockStyle) {
@@ -301,7 +297,7 @@ const readTextMarks = (leaf: LegacyText, options: TextLeafOptions): MarkEntry[] 
 
         report(context, 'unknown-property', path);
         if (!RESERVED_TEXT_KEYS.includes(key)) {
-            entries.push({ key, value: leaf[key], isDeclared: false });
+            entries.push({ key, value: leaf[key] });
         }
     }
 
@@ -322,6 +318,7 @@ const appendTextLeaf = (output: OpenInline[], leaf: LegacyText, options: TextLea
         }
 
         if (index > 0) {
+            options.context.copyBudget.remaining -= 1;
             output.push({ type: 'break' });
         }
 

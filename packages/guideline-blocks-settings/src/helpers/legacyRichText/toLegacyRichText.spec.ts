@@ -720,6 +720,71 @@ describe('toLegacyRichText content without a legacy form', () => {
         },
     );
 
+    it.each([
+        {
+            name: 'a text leaf link in an unknown block',
+            blocks: [{ type: 'callout', children: [{ text: 'x', link: { href: 'javascript:alert(1)' } }] }],
+            path: [0],
+        },
+        {
+            name: 'an undeclared value on a paragraph',
+            blocks: [{ type: 'paragraph', extra: { type: 'a', url: 'javascript:alert(1)' }, children: [] }],
+            path: [0],
+        },
+        {
+            name: 'an undeclared value holding an href on a list',
+            blocks: [
+                {
+                    type: 'bulletList',
+                    extra: [{ href: 'vbscript:x' }],
+                    children: [{ type: 'listItem', children: [paragraph()] }],
+                },
+            ],
+            path: [0],
+        },
+        {
+            name: 'an undeclared value on a list item',
+            blocks: [
+                {
+                    type: 'bulletList',
+                    children: [{ type: 'listItem', extra: { url: 'data:text/html,x' }, children: [paragraph()] }],
+                },
+            ],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared value on a check item',
+            blocks: [checkList({ type: 'checkItem', extra: { href: 'javascript:x' }, children: [paragraph()] })],
+            path: [0, 0],
+        },
+        {
+            name: 'an unknown mark value on a leaf',
+            blocks: [paragraph({ text: 'a', extra: { href: 'javascript:x' } })],
+            path: [0, 0],
+        },
+        {
+            name: 'a chosen link that is not a string in an undeclared value',
+            blocks: [{ type: 'paragraph', extra: { chosenLink: { searchResult: { link: ['x'] } } }, children: [] }],
+            path: [0],
+        },
+    ])('should not write $name that holds an unsafe address (MIG-25)', ({ blocks, path }) => {
+        expectNotReversible(blocks, [path]);
+    });
+
+    it('should write undeclared values with safe addresses back as stored (MIG-25)', () => {
+        const extra = {
+            href: 'https://example.com',
+            url: '/page',
+            empty: '',
+            chosenLink: { searchResult: { link: '/a' } },
+        };
+
+        expectExact(
+            [{ type: 'paragraph', extra, children: [{ text: 'a', other: extra }] }],
+            [{ type: 'p', extra, children: [{ text: 'a', other: extra }] }],
+        );
+    });
+
     it('should write an unknown block holding safe links and other nested objects back as stored (MIG-25)', () => {
         const node = {
             type: 'callout',

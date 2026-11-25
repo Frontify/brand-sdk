@@ -109,6 +109,7 @@ const CHECKBOX_ITEM_LEGACY_KEYS = [
 ];
 const LEAF_LEGACY_KEYS = ['type', 'children', 'text', ...TEXT_MARK_KEYS, LEGACY_COLOR_KEY];
 const WHOLE_BLOCK_BREAK_LEGACY_KEYS = [LEGACY_BREAK_AFTER_COLUMN_KEY];
+const ADDRESS_KEYS = ['href', LEGACY_URL_KEY];
 const LEAF_KEYS = ['text', 'type', ...TEXT_MARK_KEYS, 'fontColor', 'link'];
 
 const PARAGRAPH_SPEC: TextBlockSpec = { legacyType: LEGACY_PARAGRAPH_TYPE, declaredKeys: PARAGRAPH_KEYS };
@@ -216,14 +217,16 @@ const createLeaf = (item: TextItem): LegacyText => {
     return leaf;
 };
 
-const hasSafeLinkAddresses = (node: object): boolean => {
-    const type: unknown = Reflect.get(node, 'type');
-    if (type !== LEGACY_LINK_TYPE && type !== LEGACY_BUTTON_TYPE) {
-        return true;
+const hasSafeAddresses = (node: object): boolean => {
+    for (const key of ADDRESS_KEYS) {
+        const value: unknown = Reflect.get(node, key);
+        if (typeof value === 'string' && value !== '' && !isSafeHref(value)) {
+            return false;
+        }
     }
 
-    const url: unknown = Reflect.get(node, LEGACY_URL_KEY);
-    if (!isSafeHref(url)) {
+    const type: unknown = Reflect.get(node, 'type');
+    if ((type === LEGACY_LINK_TYPE || type === LEGACY_BUTTON_TYPE) && !isSafeHref(Reflect.get(node, LEGACY_URL_KEY))) {
         return false;
     }
 
@@ -233,7 +236,6 @@ const hasSafeLinkAddresses = (node: object): boolean => {
     }
 
     const searchResultLink = readSearchResultLink(chosenLink);
-
     if (searchResultLink === undefined || searchResultLink === '') {
         return true;
     }
@@ -241,8 +243,8 @@ const hasSafeLinkAddresses = (node: object): boolean => {
     return isSafeHref(searchResultLink);
 };
 
-// A node written whole must not carry a legacy link to an unsafe address anywhere inside it, without recursing.
-const hasSafeLinkTargets = (root: StoredNode): boolean => {
+// Anything written to legacy must not carry an unsafe address anywhere inside it, whether it is whole or an undeclared value.
+const hasSafeLinkTargets = (root: unknown): boolean => {
     const pending: unknown[] = [root];
 
     while (pending.length > 0) {
@@ -251,7 +253,7 @@ const hasSafeLinkTargets = (root: StoredNode): boolean => {
             continue;
         }
 
-        if (!hasSafeLinkAddresses(current)) {
+        if (!hasSafeAddresses(current)) {
             return false;
         }
 
@@ -261,6 +263,10 @@ const hasSafeLinkTargets = (root: StoredNode): boolean => {
     }
 
     return true;
+};
+
+const hasUnwritableUndeclared = (legacyKeys: readonly string[], undeclared: PropertyEntry[]): boolean => {
+    return hasKeyClash(legacyKeys, undeclared) || !undeclared.every((entry) => hasSafeLinkTargets(entry.value));
 };
 
 const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): LegacyElement | null => {
@@ -327,7 +333,7 @@ const readMarkEntries = (leaf: StoredNode): PropertyEntry[] | null => {
     }
 
     const undeclared = readUndeclaredEntries(leaf, LEAF_KEYS);
-    if (hasKeyClash(LEAF_LEGACY_KEYS, undeclared)) {
+    if (hasUnwritableUndeclared(LEAF_LEGACY_KEYS, undeclared)) {
         return null;
     }
 
@@ -598,7 +604,7 @@ const mapTextBlock = (block: StoredNode, spec: TextBlockSpec, options: BlockOpti
 
     const declared = [...readAlignEntries(block), ...readBreakEntries(breakAfterColumn)];
     const undeclared = readUndeclaredEntries(block, spec.declaredKeys);
-    if (hasKeyClash(TEXT_BLOCK_LEGACY_KEYS, undeclared)) {
+    if (hasUnwritableUndeclared(TEXT_BLOCK_LEGACY_KEYS, undeclared)) {
         report(context, path);
 
         return [];
@@ -652,7 +658,7 @@ const mapListItem = (item: StoredNode, options: NestedOptions): LegacyElement[] 
     }
 
     const undeclared = readUndeclaredEntries(item, LIST_ITEM_KEYS);
-    if (hasKeyClash(LIST_ITEM_LEGACY_KEYS, undeclared)) {
+    if (hasUnwritableUndeclared(LIST_ITEM_LEGACY_KEYS, undeclared)) {
         report(context, path);
 
         return [];
@@ -732,7 +738,7 @@ const mapList = (block: StoredNode, spec: ListSpec, options: BlockOptions): Lega
 
     const declared = readBreakEntries(breakAfterColumn);
     const undeclared = readUndeclaredEntries(block, spec.declaredKeys);
-    if (hasKeyClash(LIST_LEGACY_KEYS, undeclared)) {
+    if (hasUnwritableUndeclared(LIST_LEGACY_KEYS, undeclared)) {
         report(context, path);
 
         return [];
@@ -855,7 +861,7 @@ const createCheckboxItem = (
     }
 
     declared.push(...readBreakEntries(breakAfterColumn));
-    if (hasKeyClash(CHECKBOX_ITEM_LEGACY_KEYS, write.undeclared)) {
+    if (hasUnwritableUndeclared(CHECKBOX_ITEM_LEGACY_KEYS, write.undeclared)) {
         report(context, write.path);
 
         return null;

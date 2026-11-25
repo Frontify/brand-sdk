@@ -20,6 +20,8 @@ const NESTED_CLOSE = ']}';
 const LEAF = '{"text":"Lorem"}';
 const MARK_NESTING = 200_000;
 const COLOR_DIGITS = 100_000;
+const HALF_MILLION_LINES = 500_000;
+const LINE_COUNT = 1000;
 const MANY_MARKS = 5000;
 const KEYS_PER_LEAF = 24_000;
 const MAX_COMPARISON_CPU_MILLISECONDS = 250;
@@ -309,6 +311,51 @@ describe('convertLegacyRichText with hostile input', { timeout: SLOW_TEST_TIMEOU
         expect(result.outcome).toBe('requires-review');
         expect(Reflect.get(result.document?.blocks[0] ?? {}, 'children')).toHaveLength(1);
         expect(cpuMilliseconds).toBeLessThan(MAX_COMPARISON_CPU_MILLISECONDS);
+    });
+
+    it('should refuse long texts whose parts would each carry marks, a colour and a link (MIG-27)', () => {
+        const createLeaf = (): Record<string, unknown> => ({
+            text: 'a\n'.repeat(HALF_MILLION_LINES),
+            bold: true,
+            italic: true,
+            underline: true,
+            strikethrough: true,
+            code: true,
+            subscript: true,
+            color: 'rgb(255, 0, 0)',
+        });
+        const value = JSON.stringify([
+            {
+                type: 'p',
+                children: [{ type: 'a', url: '/page', children: [createLeaf(), createLeaf(), createLeaf()] }],
+            },
+        ]);
+        const { result, cpuMilliseconds } = convertTimed(value);
+
+        expect(result).toEqual({
+            outcome: 'unsupported',
+            document: null,
+            diagnostics: [{ code: 'limit-exceeded', path: [] }],
+        });
+        expect(cpuMilliseconds).toBeLessThan(MAX_CPU_MILLISECONDS);
+    });
+
+    it('should keep a thousand-line text with marks, a colour and a link exact (MIG-27)', () => {
+        const leaf = {
+            text: 'a\n'.repeat(LINE_COUNT),
+            bold: true,
+            italic: true,
+            underline: true,
+            strikethrough: true,
+            code: true,
+            subscript: true,
+            color: 'rgb(255, 0, 0)',
+        };
+        const { result } = convertTimed(
+            JSON.stringify([{ type: 'p', children: [{ type: 'a', url: '/page', children: [leaf] }] }]),
+        );
+
+        expect(result.outcome).toBe('exact');
     });
 
     it('should refuse a colour with a hundred thousand digits without backtracking (MIG-27)', () => {
