@@ -494,6 +494,37 @@ describe('toLegacyRichText content kept as stored', () => {
     });
 
     it.each([
+        {
+            name: 'a mention as a block',
+            blocks: [{ type: 'mention', id: 'x', category: 'all', children: [{ text: '' }] }],
+            path: [0],
+        },
+        { name: 'a break as a block', blocks: [{ type: 'break', children: [] }], path: [0] },
+        {
+            name: 'a mention as a list item',
+            blocks: [
+                {
+                    type: 'bulletList',
+                    children: [{ type: 'mention', id: 'x', category: 'all', children: [{ text: '' }] }],
+                },
+            ],
+            path: [0, 0],
+        },
+        {
+            name: 'a break inside a list item',
+            blocks: [
+                { type: 'bulletList', children: [{ type: 'listItem', children: [{ type: 'break', children: [] }] }] },
+            ],
+            path: [0, 0, 0],
+        },
+    ])(
+        'should not write $name whole because the new format reads that type as its own (MIG-25)',
+        ({ blocks, path }) => {
+            expectNotReversible(blocks, [path]);
+        },
+    );
+
+    it.each([
         { name: 'children that are not nodes', node: { type: 'foo', children: [null, 5] } },
         {
             name: 'a nested child without type and children',

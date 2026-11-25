@@ -46,7 +46,7 @@ import {
     LINE_BREAK,
     MIN_CHECK_LEVEL,
     TEXT_MARK_KEYS,
-    isNewFormatBlockType,
+    isReservedType,
     isTextStyleName,
     writeMentionCategory,
 } from './vocabulary';
@@ -485,7 +485,7 @@ const writeUnknownInline = (
     path: LegacyRichTextPath,
     context: ToLegacyContext,
 ): LegacyElement | null => {
-    if (typeof node.type === 'string' && isNewFormatBlockType(node.type)) {
+    if (typeof node.type === 'string' && isReservedType(node.type)) {
         report(context, path);
 
         return null;
@@ -700,7 +700,7 @@ const mapListItemChild = (child: StoredNode, options: BlockOptions): LegacyEleme
 
 const mapUnknownBlock = (block: StoredNode, options: BlockOptions): LegacyElement[] => {
     const { path, breakAfterColumn, context } = options;
-    if (typeof block.type === 'string' && isNewFormatBlockType(block.type)) {
+    if (typeof block.type === 'string' && isReservedType(block.type)) {
         report(context, path);
 
         return [];

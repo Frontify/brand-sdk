@@ -117,7 +117,7 @@ const BARE_INLINE_TYPES = [LEGACY_LINK_TYPE, LEGACY_BUTTON_TYPE, LEGACY_MENTION_
 // Keys the new format gives a meaning of its own; a legacy value under them must not read as that meaning.
 const RESERVED_BLOCK_KEYS = ['style', 'start'];
 const RESERVED_CHECK_ITEM_KEYS = [...RESERVED_BLOCK_KEYS, 'checked'];
-const RESERVED_TEXT_KEYS = ['type', 'fontColor', 'link', ...TEXT_MARK_KEYS];
+const RESERVED_TEXT_KEYS = ['type', 'children', 'fontColor', 'link', ...TEXT_MARK_KEYS];
 
 const DEFAULT_BLOCK_STYLE = LEGACY_PARAGRAPH_TYPE;
 const QUOTE_BLOCK_STYLE = LEGACY_QUOTE_TYPE;

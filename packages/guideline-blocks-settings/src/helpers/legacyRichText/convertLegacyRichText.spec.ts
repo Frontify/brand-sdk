@@ -279,6 +279,13 @@ describe('convertLegacyRichText mapping', () => {
         ]);
     });
 
+    it('should report a children key on a leaf and not copy it as a mark (MIG-13)', () => {
+        const result = convertTree([{ type: 'p', children: [{ text: 'hi', children: [{ text: 'x' }] }] }]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-property', path: [0, 0] }]);
+        expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [{ text: 'hi' }] }]);
+    });
+
     it('should not let a legacy link key become a link mark (MIG-13)', () => {
         const result = convertTree([
             { type: 'p', children: [{ text: 'Lorem', link: { href: 'javascript:alert(1)' } }] },
