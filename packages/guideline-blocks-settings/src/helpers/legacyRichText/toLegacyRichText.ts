@@ -3,6 +3,7 @@
 import { writeAlignment } from './alignment';
 import { toLegacyColor } from './color';
 import { copyValueUnbounded, isDeepEqual, setOwn } from './copyValue';
+import { inspectLegacyTree } from './inspectLegacyTree';
 import { MAX_BLOCK_NESTING_DEPTH } from './limits';
 import { type LinkParts, isSafeHref, readLinkValue, readSearchResultLink, writeButtonStyle, writeTarget } from './link';
 import {
@@ -290,7 +291,8 @@ const writeWhole = (node: StoredNode, path: LegacyRichTextPath, context: ToLegac
         typeof type !== 'string' ||
         !Array.isArray(children) ||
         Object.keys(node).includes('text') ||
-        !hasSafeLinkTargets(node)
+        !hasSafeLinkTargets(node) ||
+        inspectLegacyTree([node]).status !== 'valid'
     ) {
         report(context, path);
 
@@ -384,17 +386,12 @@ const hasMentionShape = (mention: StoredNode): boolean => {
 };
 
 const readMentionItem = (mention: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): NodeItem | null => {
-    if (!hasMentionShape(mention)) {
-        const whole = writeWhole(mention, path, context);
-        if (whole === null) {
-            return null;
-        }
-
-        return { kind: 'node', node: whole };
-    }
-
     const category = writeMentionCategory(mention.kind);
-    if (category === undefined || readUndeclaredEntries(mention, MENTION_INLINE_KEYS).length > 0) {
+    if (
+        !hasMentionShape(mention) ||
+        category === undefined ||
+        readUndeclaredEntries(mention, MENTION_INLINE_KEYS).length > 0
+    ) {
         report(context, path);
 
         return null;

@@ -482,10 +482,32 @@ describe('toLegacyRichText content kept as stored', () => {
         );
     });
 
-    it('should write a mention in the legacy shape back whole (MIG-25)', () => {
-        const legacyMention = { type: 'mention', category: 'group', id: 7, extra: true, children: [{ text: '' }] };
+    it.each([
+        { name: 'without a username', mention: { type: 'mention', id: 'u1', kind: 'group', children: [{ text: '' }] } },
+        {
+            name: 'in the legacy shape',
+            mention: { type: 'mention', category: 'group', id: 7, children: [{ text: '' }] },
+        },
+        { name: 'with a numeric id', mention: { type: 'mention', id: 7, username: 'a', name: 'b' } },
+    ])('should not write a mention $name because convert never keeps one whole (MIG-25)', ({ mention }) => {
+        expectNotReversible([paragraph(mention)], [[0, 0]]);
+    });
 
-        expectExact([paragraph(legacyMention)], [{ type: 'p', children: [legacyMention] }]);
+    it.each([
+        { name: 'children that are not nodes', node: { type: 'foo', children: [null, 5] } },
+        {
+            name: 'a nested child without type and children',
+            node: { type: 'foo', children: [{ type: 'bar', children: [{}] }] },
+        },
+        { name: 'a nested child whose text is not a string', node: { type: 'foo', children: [{ text: 5 }] } },
+    ])('should not write a node with $name whole (MIG-25)', ({ node }) => {
+        expectNotReversible([node, paragraph(node)], [[0], [1, 0]]);
+    });
+
+    it('should write a nested legacy-shaped node whole back as stored (MIG-25)', () => {
+        const node = { type: 'foo', children: [{ type: 'bar', children: [{ text: 'x' }, { text: '' }] }] };
+
+        expectExact([node, paragraph(node)], [node, { type: 'p', children: [node] }]);
     });
 
     it('should write undeclared keys of known blocks back after the declared keys and before children (MIG-25)', () => {
