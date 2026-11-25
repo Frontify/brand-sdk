@@ -632,6 +632,124 @@ describe('toLegacyRichText content without a legacy form', () => {
         );
     });
 
+    it('should not reverse a font colour with a key other than color (MIG-25)', () => {
+        expectNotReversible([paragraph({ text: 'a', fontColor: { color: '#ff0000', opacity: 0.5 } })], [[0, 0]]);
+    });
+
+    it.each([
+        {
+            name: 'an undeclared indent on a check item nested a level down',
+            blocks: [checkList(checkItem('One', checkList({ type: 'checkItem', indent: 5, children: [paragraph()] })))],
+            path: [0, 0, 1, 0],
+        },
+        {
+            name: 'an undeclared checked on the paragraph of a checked check item',
+            blocks: [
+                checkList({
+                    type: 'checkItem',
+                    checked: true,
+                    children: [{ type: 'paragraph', checked: 'x', children: [] }],
+                }),
+            ],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared breakAfterColumn on a block followed by a column break',
+            blocks: [{ type: 'paragraph', breakAfterColumn: 'active', children: [] }, { type: 'columnBreak' }],
+            path: [0],
+        },
+        {
+            name: 'an undeclared breakAfterColumn on an unknown block followed by a column break',
+            blocks: [{ type: 'emoji', breakAfterColumn: 'active', children: [] }, { type: 'columnBreak' }],
+            path: [0],
+        },
+        {
+            name: 'an undeclared text on a block',
+            blocks: [{ type: 'paragraph', text: 'x', children: [] }],
+            path: [0],
+        },
+        {
+            name: 'an undeclared color beside a font colour',
+            blocks: [paragraph({ text: 'a', fontColor: { color: '#ff0000' }, color: 'blue' })],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared children on a leaf',
+            blocks: [paragraph({ text: 'a', children: [] })],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared breakAfterColumn on a list followed by a column break',
+            blocks: [
+                {
+                    type: 'bulletList',
+                    breakAfterColumn: 'x',
+                    children: [{ type: 'listItem', children: [paragraph()] }],
+                },
+                { type: 'columnBreak' },
+            ],
+            path: [0],
+        },
+    ])('should not reverse $name that clashes with a key the writer sets (MIG-25)', ({ blocks, path }) => {
+        expectNotReversible(blocks, [path]);
+    });
+
+    it.each([
+        {
+            name: 'an undeclared indent on a check item at level one',
+            blocks: [checkList({ type: 'checkItem', indent: 3, children: [paragraph()] })],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared checked on the paragraph of a check item that is not checked',
+            blocks: [checkList({ type: 'checkItem', children: [{ type: 'paragraph', checked: true, children: [] }] })],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared breakAfterColumn on a block with no column break after it',
+            blocks: [{ type: 'paragraph', breakAfterColumn: 'active', children: [] }],
+            path: [0],
+        },
+        {
+            name: 'an undeclared color on a leaf without a font colour',
+            blocks: [paragraph({ text: 'a', color: 'blue' })],
+            path: [0, 0],
+        },
+        {
+            name: 'an undeclared align on a check item',
+            blocks: [checkList({ type: 'checkItem', align: 'start', children: [paragraph()] })],
+            path: [0, 0],
+        },
+    ])('should not reverse $name because the legacy editor gives that key a meaning (MIG-25)', ({ blocks, path }) => {
+        expectNotReversible(blocks, [path]);
+    });
+
+    it('should still write undeclared keys the legacy editor gives no meaning on that node (MIG-25)', () => {
+        expectExact(
+            [
+                {
+                    type: 'bulletList',
+                    align: 'start',
+                    children: [{ type: 'listItem', children: [paragraph({ text: 'a', textStyle: 'heading9' })] }],
+                },
+                { type: 'paragraph', indent: 5, children: [] },
+            ],
+            [
+                {
+                    type: 'ul',
+                    align: 'start',
+                    children: [
+                        {
+                            type: 'li',
+                            children: [{ type: 'lic', children: [{ text: 'a', textStyle: 'heading9' }] }],
+                        },
+                    ],
+                },
+                { type: 'p', indent: 5, children: [{ text: '' }] },
+            ],
+        );
+    });
+
     it('should collect every offending path and return no partial tree (MIG-25)', () => {
         expectNotReversible(
             [

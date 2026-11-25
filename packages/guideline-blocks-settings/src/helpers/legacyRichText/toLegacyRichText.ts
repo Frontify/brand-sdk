@@ -68,6 +68,7 @@ type TextItem = { kind: 'text'; text: string; marks: PropertyEntry[]; link: Link
 type NodeItem = { kind: 'node'; node: LegacyNode };
 type InlineItem = TextItem | NodeItem;
 type CheckItemWrite = {
+    path: LegacyRichTextPath;
     level: number;
     align: PropertyEntry[];
     checked: boolean;
@@ -89,6 +90,24 @@ const CHECK_ITEM_KEYS = ['type', 'children', 'checked'];
 const COLUMN_BREAK_KEYS = ['type'];
 const BREAK_KEYS = ['type'];
 const MENTION_INLINE_KEYS = ['type', 'id', 'username', 'name', 'kind'];
+const ELEMENT_KEYS = ['type', 'children'];
+const FONT_COLOR_KEYS = ['color'];
+
+// The keys the legacy editor gives a meaning on each written node type; text is listed on elements because a text key makes a leaf.
+const TEXT_BLOCK_LEGACY_KEYS = ['type', 'children', 'text', LEGACY_ALIGN_KEY, LEGACY_BREAK_AFTER_COLUMN_KEY];
+const LIST_LEGACY_KEYS = ['type', 'children', 'text', LEGACY_BREAK_AFTER_COLUMN_KEY];
+const LIST_ITEM_LEGACY_KEYS = ['type', 'children', 'text'];
+const CHECKBOX_ITEM_LEGACY_KEYS = [
+    'type',
+    'children',
+    'text',
+    LEGACY_ALIGN_KEY,
+    LEGACY_INDENT_KEY,
+    LEGACY_CHECKED_KEY,
+    LEGACY_BREAK_AFTER_COLUMN_KEY,
+];
+const LEAF_LEGACY_KEYS = ['type', 'children', 'text', ...TEXT_MARK_KEYS, LEGACY_COLOR_KEY];
+const WHOLE_BLOCK_BREAK_LEGACY_KEYS = [LEGACY_BREAK_AFTER_COLUMN_KEY];
 const LEAF_KEYS = ['text', 'type', ...TEXT_MARK_KEYS, 'fontColor', 'link'];
 
 const PARAGRAPH_SPEC: TextBlockSpec = { legacyType: LEGACY_PARAGRAPH_TYPE, declaredKeys: PARAGRAPH_KEYS };
@@ -163,6 +182,10 @@ const readBreakEntries = (breakAfterColumn: ColumnBreakValue | undefined): Prope
     return [{ key: LEGACY_BREAK_AFTER_COLUMN_KEY, value: breakAfterColumn }];
 };
 
+const hasKeyClash = (legacyKeys: readonly string[], undeclared: PropertyEntry[]): boolean => {
+    return undeclared.some((entry) => legacyKeys.includes(entry.key));
+};
+
 const createLegacyElement = (
     type: string,
     declared: PropertyEntry[],
@@ -233,7 +256,11 @@ const readMarkEntries = (leaf: StoredNode): PropertyEntry[] | null => {
 
     const { fontColor } = leaf;
     if (fontColor !== undefined) {
-        if (!isStoredNode(fontColor) || typeof fontColor.color !== 'string') {
+        if (
+            !isStoredNode(fontColor) ||
+            typeof fontColor.color !== 'string' ||
+            Object.keys(fontColor).some((key) => !FONT_COLOR_KEYS.includes(key))
+        ) {
             return null;
         }
 
@@ -245,7 +272,12 @@ const readMarkEntries = (leaf: StoredNode): PropertyEntry[] | null => {
         entries.push({ key: LEGACY_COLOR_KEY, value: color });
     }
 
-    return [...entries, ...readUndeclaredEntries(leaf, LEAF_KEYS)];
+    const undeclared = readUndeclaredEntries(leaf, LEAF_KEYS);
+    if (hasKeyClash(LEAF_LEGACY_KEYS, undeclared)) {
+        return null;
+    }
+
+    return [...entries, ...undeclared];
 };
 
 const readTextItem = (leaf: StoredNode, path: LegacyRichTextPath, context: ToLegacyContext): TextItem | null => {
@@ -510,6 +542,11 @@ const mapTextBlock = (block: StoredNode, spec: TextBlockSpec, options: BlockOpti
 
     const declared = [...readAlignEntries(block), ...readBreakEntries(breakAfterColumn)];
     const undeclared = readUndeclaredEntries(block, spec.declaredKeys);
+    if (hasKeyClash(TEXT_BLOCK_LEGACY_KEYS, undeclared)) {
+        report(context, path);
+
+        return [];
+    }
 
     return [createLegacyElement(spec.legacyType, declared, undeclared, children)];
 };
@@ -558,7 +595,14 @@ const mapListItem = (item: StoredNode, options: NestedOptions): LegacyElement[] 
         }
     }
 
-    return [createLegacyElement(LEGACY_LIST_ITEM_TYPE, [], readUndeclaredEntries(item, LIST_ITEM_KEYS), nodes)];
+    const undeclared = readUndeclaredEntries(item, LIST_ITEM_KEYS);
+    if (hasKeyClash(LIST_ITEM_LEGACY_KEYS, undeclared)) {
+        report(context, path);
+
+        return [];
+    }
+
+    return [createLegacyElement(LEGACY_LIST_ITEM_TYPE, [], undeclared, nodes)];
 };
 
 const mapListItemChild = (child: StoredNode, options: BlockOptions): LegacyElement[] => {
@@ -588,8 +632,15 @@ const mapUnknownBlock = (block: StoredNode, options: BlockOptions): LegacyElemen
         return [];
     }
 
-    if (breakAfterColumn !== undefined) {
-        setOwn(whole, LEGACY_BREAK_AFTER_COLUMN_KEY, breakAfterColumn);
+    const breakEntries = readBreakEntries(breakAfterColumn);
+    if (hasKeyClash(WHOLE_BLOCK_BREAK_LEGACY_KEYS, readUndeclaredEntries(block, ELEMENT_KEYS))) {
+        report(context, path);
+
+        return [];
+    }
+
+    for (const entry of breakEntries) {
+        setOwn(whole, entry.key, entry.value);
     }
 
     return [whole];
@@ -625,6 +676,11 @@ const mapList = (block: StoredNode, spec: ListSpec, options: BlockOptions): Lega
 
     const declared = readBreakEntries(breakAfterColumn);
     const undeclared = readUndeclaredEntries(block, spec.declaredKeys);
+    if (hasKeyClash(LIST_LEGACY_KEYS, undeclared)) {
+        report(context, path);
+
+        return [];
+    }
 
     return [createLegacyElement(spec.legacyType, declared, undeclared, nodes)];
 };
@@ -701,6 +757,7 @@ const collectCheckItem = (item: StoredNode, options: CheckItemOptions): void => 
     }
 
     writes.push({
+        path,
         level,
         align: readAlignEntries(paragraph),
         checked,
@@ -721,7 +778,11 @@ const collectCheckItem = (item: StoredNode, options: CheckItemOptions): void => 
     }
 };
 
-const createCheckboxItem = (write: CheckItemWrite, breakAfterColumn: ColumnBreakValue | undefined): LegacyElement => {
+const createCheckboxItem = (
+    write: CheckItemWrite,
+    breakAfterColumn: ColumnBreakValue | undefined,
+    context: ToLegacyContext,
+): LegacyElement | null => {
     const declared = [...write.align];
 
     if (write.level > MIN_CHECK_LEVEL) {
@@ -733,6 +794,11 @@ const createCheckboxItem = (write: CheckItemWrite, breakAfterColumn: ColumnBreak
     }
 
     declared.push(...readBreakEntries(breakAfterColumn));
+    if (hasKeyClash(CHECKBOX_ITEM_LEGACY_KEYS, write.undeclared)) {
+        report(context, write.path);
+
+        return null;
+    }
 
     return createLegacyElement(LEGACY_CHECKBOX_ITEM_TYPE, declared, write.undeclared, write.children);
 };
@@ -742,13 +808,20 @@ const mapCheckList = (list: StoredNode, options: BlockOptions): LegacyElement[] 
     const writes: CheckItemWrite[] = [];
     collectCheckItems(list, { path, level: MIN_CHECK_LEVEL, writes, context });
 
-    return writes.map((write, index) => {
+    const items: LegacyElement[] = [];
+    for (let index = 0; index < writes.length; index++) {
+        let itemBreak: ColumnBreakValue | undefined;
         if (index === writes.length - 1) {
-            return createCheckboxItem(write, breakAfterColumn);
+            itemBreak = breakAfterColumn;
         }
 
-        return createCheckboxItem(write, undefined);
-    });
+        const item = createCheckboxItem(writes[index], itemBreak, context);
+        if (item !== null) {
+            items.push(item);
+        }
+    }
+
+    return items;
 };
 
 const mapTopLevelBlock = (block: StoredNode, options: BlockOptions): LegacyElement[] => {

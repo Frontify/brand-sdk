@@ -303,6 +303,18 @@ describe('convertLegacyRichText mapping', () => {
         expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
     });
 
+    it.each([
+        { name: 'an empty leaf', type: 'a', children: [{ text: '' }] },
+        { name: 'only line breaks', type: 'button', children: [{ text: '\n' }] },
+        { name: 'no children', type: 'button', children: [] },
+    ])('should keep a link with $name whole and review it (MIG-13)', ({ type, children }) => {
+        const element = { type, url: '/page', children };
+        const result = convertTree([{ type: 'p', children: [element] }]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-element', path: [0, 0] }]);
+        expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [element] }]);
+    });
+
     it('should keep a link with an extra property whole and report each property (MIG-13)', () => {
         const element = { type: 'a', url: '/page', rel: 'nofollow', title: 'Page', children: [{ text: 'Page' }] };
         const result = convertTree([{ type: 'p', children: [element] }]);

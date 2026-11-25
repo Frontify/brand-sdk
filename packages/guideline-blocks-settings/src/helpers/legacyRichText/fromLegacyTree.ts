@@ -441,6 +441,13 @@ const readMentionPaths = (element: LegacyElement, path: LegacyRichTextPath): Leg
     return paths;
 };
 
+// A link lives on text leaves, so one with no text to put it on would lose its url and style.
+const hasLinkableText = (element: LegacyElement): boolean => {
+    return element.children.some((child) => {
+        return isLegacyText(child) && child.text.split(LINE_BREAK).some((part) => part !== '');
+    });
+};
+
 const appendLink = (output: OpenInline[], element: LegacyElement, options: InlineElementOptions): void => {
     const { path, blockStyle, context } = options;
     const allowedKeys = readLinkKeys(element);
@@ -457,6 +464,12 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
             report(context, 'unknown-element', mentionPath);
         }
 
+        output.push(keepWholeInline(element));
+        return;
+    }
+
+    if (!hasLinkableText(element)) {
+        report(context, 'unknown-element', path);
         output.push(keepWholeInline(element));
         return;
     }
