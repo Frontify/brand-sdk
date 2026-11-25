@@ -6,6 +6,8 @@ import {
 } from '@frontify/fondue/rich-text-editor';
 import { type ColumnBreakPluginOptions } from '@frontify/fondue/rich-text-editor/plugins';
 
+import { type StoredRichText } from './richTextValue';
+
 export type RichTextEditorProps = {
     isEditing: boolean;
     /** Legacy Slate JSON, as stored. */
@@ -31,9 +33,7 @@ export type RichTextEditorProps = {
 };
 
 export type SerializedTextProps = {
-    value?: string;
+    stored: StoredRichText;
     show?: boolean;
-    columns?: ColumnBreakPluginOptions['columns'];
-    gap?: ColumnBreakPluginOptions['gap'];
-    plugins?: readonly RtePlugin[];
+    plugins: readonly RtePlugin[];
 };

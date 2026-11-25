@@ -12,22 +12,13 @@ import {
     type TextStyleLook,
 } from '@frontify/fondue/rich-text-editor/plugins';
 
-import { THEME_PREFIX } from './constants';
+import { THEME_KEYS, themeVariable } from './themeVariables';
 
 const UNFILLED_BACKGROUND = 'transparent';
-const UNFILLED_COLOR = 'currentcolor';
-const LIST_COLOR_FALLBACK = 'currentColor';
+const CURRENT_COLOR = 'currentColor';
 const BULLET_MARKER_FALLBACK = "'•'";
 const BULLET_SIZE_FALLBACK = '1em';
 const NUMBERED_MARKER_FALLBACKS = ['decimal', 'lower-alpha', 'lower-roman'] as const;
-
-const themeVariable = (key: string, property: string, fallback?: string): string => {
-    if (fallback === undefined) {
-        return `var(${THEME_PREFIX}${key}-${property})`;
-    }
-
-    return `var(${THEME_PREFIX}${key}-${property}, ${fallback})`;
-};
 
 const textLook = (key: string): TextLook => ({
     fontFamily: themeVariable(key, 'font-family'),
@@ -69,8 +60,8 @@ const buttonLook = (key: string): ButtonLook => ({
     borderWidth: themeVariable(key, 'border-width'),
     borderRadius: themeVariable(key, 'border-radius'),
     backgroundColor: themeVariable(key, 'background-color', UNFILLED_BACKGROUND),
-    borderColor: themeVariable(key, 'border-color', UNFILLED_COLOR),
-    color: themeVariable(key, 'color', UNFILLED_COLOR),
+    borderColor: themeVariable(key, 'border-color', CURRENT_COLOR),
+    color: themeVariable(key, 'color', CURRENT_COLOR),
     hover: {
         backgroundColor: themeVariable(key, 'background-color-hover'),
         borderColor: themeVariable(key, 'border-color-hover'),
@@ -83,7 +74,7 @@ const bulletLevelLook = (level: number): BulletLevelLook => {
 
     return {
         marker: themeVariable(key, 'shape', BULLET_MARKER_FALLBACK),
-        color: themeVariable(key, 'color', LIST_COLOR_FALLBACK),
+        color: themeVariable(key, 'color', CURRENT_COLOR),
         size: themeVariable(key, 'size', BULLET_SIZE_FALLBACK),
     };
 };
@@ -93,30 +84,30 @@ const numberedLevelLook = (level: number, markerFallback: string): NumberedLevel
 
     return {
         marker: themeVariable(key, 'counter-type', markerFallback),
-        color: themeVariable(key, 'color', LIST_COLOR_FALLBACK),
+        color: themeVariable(key, 'color', CURRENT_COLOR),
     };
 };
 
 export const textStyleLook: TextStyleLook = {
-    heading1: textLook('heading1'),
-    heading2: textLook('heading2'),
-    heading3: textLook('heading3'),
-    heading4: textLook('heading4'),
-    custom1: textLook('custom1'),
-    custom2: textLook('custom2'),
-    custom3: textLook('custom3'),
-    imageTitle: textLook('image-title'),
-    imageCaption: textLook('image-caption'),
-    body: textLook('body'),
-    quote: textLook('quote'),
+    heading1: textLook(THEME_KEYS.heading1),
+    heading2: textLook(THEME_KEYS.heading2),
+    heading3: textLook(THEME_KEYS.heading3),
+    heading4: textLook(THEME_KEYS.heading4),
+    custom1: textLook(THEME_KEYS.custom1),
+    custom2: textLook(THEME_KEYS.custom2),
+    custom3: textLook(THEME_KEYS.custom3),
+    imageTitle: textLook(THEME_KEYS.imageTitle),
+    imageCaption: textLook(THEME_KEYS.imageCaption),
+    body: textLook(THEME_KEYS.body),
+    quote: textLook(THEME_KEYS.quote),
 };
 
 export const linkLook: LinkLook = {
-    text: textLinkLook('link'),
+    text: textLinkLook(THEME_KEYS.link),
     button: {
-        primary: buttonLook('button-primary'),
-        secondary: buttonLook('button-secondary'),
-        tertiary: buttonLook('button-tertiary'),
+        primary: buttonLook(THEME_KEYS.buttonPrimary),
+        secondary: buttonLook(THEME_KEYS.buttonSecondary),
+        tertiary: buttonLook(THEME_KEYS.buttonTertiary),
     },
 };
 

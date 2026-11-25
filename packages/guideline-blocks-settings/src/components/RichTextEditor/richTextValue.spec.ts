@@ -155,7 +155,19 @@ describe('readRichTextValue', () => {
 
 describe('writeRichTextValue', () => {
     it('should write a document as legacy JSON', () => {
-        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS);
+        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, undefined);
+
+        expect(written).toEqual({ outcome: 'written', value: PARAGRAPH });
+    });
+
+    it('should report a document that writes the value it was read from as unchanged', () => {
+        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, PARAGRAPH);
+
+        expect(written).toEqual({ outcome: 'unchanged' });
+    });
+
+    it('should write a document that differs from the previous value', () => {
+        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, MARKED_PARAGRAPH);
 
         expect(written).toEqual({ outcome: 'written', value: PARAGRAPH });
     });
@@ -163,7 +175,7 @@ describe('writeRichTextValue', () => {
     it('should report the codes of a document that has no legacy form', () => {
         const table: RteDocument = { version: 1, blocks: [{ type: 'table', children: [] }] };
 
-        const written = writeRichTextValue(table, COLUMNS);
+        const written = writeRichTextValue(table, COLUMNS, undefined);
 
         expect(written).toEqual({ outcome: 'not-reversible', diagnostics: [{ code: 'no-legacy-form', path: [0] }] });
     });
@@ -171,7 +183,7 @@ describe('writeRichTextValue', () => {
     it.each(Object.entries(ROUND_TRIP_VALUES))('should read back what it wrote for %s', (_name, value) => {
         const document = readEditableDocument(value);
 
-        const written = writeRichTextValue(document, COLUMNS);
+        const written = writeRichTextValue(document, COLUMNS, undefined);
 
         expect(written.outcome).toBe('written');
         if (written.outcome === 'written') {

@@ -67,8 +67,8 @@ describe('linkLook', () => {
             expect(button?.backgroundColor).toBe(
                 `var(--f-theme-settings-button-${appearance}-background-color, transparent)`,
             );
-            expect(button?.borderColor).toBe(`var(--f-theme-settings-button-${appearance}-border-color, currentcolor)`);
-            expect(button?.color).toBe(`var(--f-theme-settings-button-${appearance}-color, currentcolor)`);
+            expect(button?.borderColor).toBe(`var(--f-theme-settings-button-${appearance}-border-color, currentColor)`);
+            expect(button?.color).toBe(`var(--f-theme-settings-button-${appearance}-color, currentColor)`);
         },
     );
 

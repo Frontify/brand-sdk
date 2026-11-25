@@ -66,14 +66,14 @@ const InternalRichTextEditor = memo(
                     return;
                 }
 
-                const written = writeRichTextValue(document, columns);
+                const written = writeRichTextValue(document, columns, value);
 
                 switch (written.outcome) {
                     case 'written':
-                        if (written.value !== value) {
-                            onTextChange?.(written.value);
-                        }
-
+                        onTextChange?.(written.value);
+                        setShouldPreventPageLeave(false);
+                        return;
+                    case 'unchanged':
                         setShouldPreventPageLeave(false);
                         return;
                     case 'not-reversible':
@@ -118,7 +118,7 @@ const InternalRichTextEditor = memo(
             );
         }
 
-        return <SerializedText value={value} show={showSerializedText} columns={columns} gap={gap} plugins={plugins} />;
+        return <SerializedText stored={stored} show={showSerializedText} plugins={editorPlugins} />;
     },
 );
 InternalRichTextEditor.displayName = 'InternalRichTextEditor';

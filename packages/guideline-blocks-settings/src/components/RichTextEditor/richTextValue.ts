@@ -31,6 +31,7 @@ export type StoredRichText =
 
 export type WrittenRichText =
     | { outcome: 'written'; value: string }
+    | { outcome: 'unchanged' }
     | { outcome: 'not-reversible'; diagnostics: LegacyRichTextDiagnostic<LegacyRichTextNotReversibleCode>[] };
 
 const HTML_VALUE_CODE = 'html-value';
@@ -197,12 +198,22 @@ export const readRichTextValue = (value: string | undefined, plugins: readonly R
     }
 };
 
-export const writeRichTextValue = (document: RteDocument, columns: number | undefined): WrittenRichText => {
+export const writeRichTextValue = (
+    document: RteDocument,
+    columns: number | undefined,
+    previous: string | undefined,
+): WrittenRichText => {
     const converted = toLegacyRichText(document, { columns });
 
     switch (converted.outcome) {
-        case 'exact':
-            return { outcome: 'written', value: JSON.stringify(converted.value) };
+        case 'exact': {
+            const value = JSON.stringify(converted.value);
+            if (value === previous) {
+                return { outcome: 'unchanged' };
+            }
+
+            return { outcome: 'written', value };
+        }
         case 'not-reversible':
             return { outcome: 'not-reversible', diagnostics: converted.diagnostics };
     }
