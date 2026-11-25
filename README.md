@@ -8,6 +8,8 @@ Brand SDK is a collection of tools and packages for building apps that integrate
 
 [More information](https://developer.frontify.com/d/xJoA5nhTq1AT/brand-sdk#/getting-started/introduction)
 
+> This is the `app-bridge-v3` maintenance branch. It only receives security fixes for the 3.x versions of `@frontify/app-bridge` and `@frontify/guideline-blocks-settings`, published under the `legacy-v3` npm tag. Current development happens on `main`.
+
 ## Frontify CLI
 
 Frontify CLI allows developers to serve apps like Content Blocks in a local development environment. With the CLI, you can easily run and test your app without having to deploy it to Frontify's platform. The CLI also includes commands for building and deploying your app to Frontify's platform.
