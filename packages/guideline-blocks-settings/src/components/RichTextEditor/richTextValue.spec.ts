@@ -92,6 +92,22 @@ const ROUND_TRIP_VALUES = {
 };
 
 describe('readRichTextValue', () => {
+    it('should keep the structure of a value whose column break the plugins do not register', () => {
+        const plugins = getDefaultPluginsWithLinkChooser(getAppBridgeBlockStub());
+        const stored = readRichTextValue(
+            stringify([
+                { type: 'p', breakAfterColumn: 'active', children: [{ text: 'first' }] },
+                { type: 'ul', children: [{ type: 'li', children: [{ type: 'lic', children: [{ text: 'item' }] }] }] },
+            ]),
+            plugins,
+        );
+
+        expect(stored.access).toBe('readonly');
+        if (stored.access === 'readonly') {
+            expect(stored.document.blocks.map(({ type }) => type)).toContain('bulletList');
+        }
+    });
+
     it('should show a top-level text run of a read-only value as its own paragraph', () => {
         const stored = readRichTextValue(
             stringify([{ text: 'loose' }, { type: 'unknown', children: [{ text: 'kept' }] }]),

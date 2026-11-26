@@ -194,8 +194,13 @@ const hasUndeclaredBlock = (block: StructuralNode, declared: DeclaredContent): b
 
     const definition = declared.blocks.get(block.type);
     const children = childrenOf(block);
-    if (definition === undefined || children === null) {
+    if (children === null) {
         return true;
+    }
+
+    // The renderer skips an unregistered block; one without content (a column break) loses no text.
+    if (definition === undefined) {
+        return children.length > 0;
     }
 
     for (const child of children) {
