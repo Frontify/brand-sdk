@@ -9,7 +9,7 @@ Every package here is published to npm and used outside this repository. A remov
 
 1. Confirm the symbol is public. It is public when a package entry reaches it: `src/index.ts` of the package, a subpath in the `exports` of its `package.json` (for example `@frontify/app-bridge/testing`), or a re-export from another package. `@frontify/guideline-blocks-settings` re-exports all of `@frontify/sidebar-settings`, so a change there is also a change to `guideline-blocks-settings`. For `@frontify/frontify-cli`, the public surface is the commands, flags, prompts, output and the files in `templates/`.
 
-2. Check which release line you are on. `main` is stable, `dev` is the next major version. A removal belongs on the line that ships the next major version, and an API may already be gone or renamed on the other line.
+2. Check which release line you are on. `main` is the current line, `app-bridge-v3` only receives security fixes for the 3.x versions. A removal belongs on `main` and ships with the next major version; never remove an export on `app-bridge-v3`. An API may already be gone or renamed on the other line.
 
 3. Search the two in-house consumers on their default branch, not on a local feature branch:
     - [`Frontify/guideline-blocks`](https://github.com/Frontify/guideline-blocks) holds the blocks Frontify ships: `gh search code --repo Frontify/guideline-blocks "<symbol>"`, or `git grep -n "<symbol>" origin/HEAD` in a local checkout after `git fetch`.
