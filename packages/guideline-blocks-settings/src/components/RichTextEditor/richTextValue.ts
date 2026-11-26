@@ -335,10 +335,7 @@ const readUnsupportedValue = (
     }
 };
 
-/**
- * Reads a stored legacy value for the editor: whether it can be edited without losing anything, only shown, or not read at all.
- */
-export const readRichTextValue = (value: string | undefined, plugins: readonly RtePlugin[]): StoredRichText => {
+const readStoredValue = (value: string | undefined, plugins: readonly RtePlugin[]): StoredRichText => {
     const converted = convertLegacyRichText(value);
 
     switch (converted.outcome) {
@@ -358,6 +355,81 @@ export const readRichTextValue = (value: string | undefined, plugins: readonly R
         case 'invalid':
             return { access: 'unreadable' };
     }
+};
+
+const isInlineShape = (node: StructuralNode): node is RtePlugin.InlineNode =>
+    isTextRun(node) || typeof node.type === 'string';
+
+const isBlockShape = (node: StructuralNode): node is RtePlugin.BlockNode => typeof node.type === 'string';
+
+// Recursion is bounded by the converter's nesting limit.
+const withoutUndeclaredInlines = (
+    children: readonly StructuralNode[],
+    declared: DeclaredContent,
+): RtePlugin.InlineNode[] => {
+    const inlines: RtePlugin.InlineNode[] = [];
+
+    for (const child of children) {
+        if (!isInlineShape(child)) {
+            continue;
+        }
+
+        if (isTextRun(child) || (child.type !== undefined && declared.inlines.has(child.type))) {
+            inlines.push(child);
+            continue;
+        }
+
+        inlines.push(...withoutUndeclaredInlines(childrenOf(child) ?? [], declared));
+    }
+
+    return inlines;
+};
+
+const toDisplayBlock = (block: RtePlugin.BlockNode, declared: DeclaredContent): RtePlugin.BlockNode => {
+    const children = childrenOf(block);
+    if (children === null) {
+        return block;
+    }
+
+    const definition = declared.blocks.get(block.type);
+    if (definition === undefined || definition.holdsText) {
+        return { ...block, children: withoutUndeclaredInlines(children, declared) };
+    }
+
+    const blocks: RtePlugin.BlockNode[] = [];
+    for (const child of children) {
+        if (isBlockShape(child)) {
+            blocks.push(toDisplayBlock(child, declared));
+        }
+    }
+
+    return { ...block, children: blocks };
+};
+
+/**
+ * The renderer drops an inline whose plugin is missing, with its text. A display copy keeps that text; never write it back.
+ */
+const toDisplayDocument = (document: OpenRichTextDocument, plugins: readonly RtePlugin[]): OpenRichTextDocument => {
+    const declared = collectDeclaredContent(plugins);
+    const blocks: OpenRichTextDocument['blocks'] = [];
+
+    for (const block of document.blocks) {
+        blocks.push(toDisplayBlock(block, declared));
+    }
+
+    return { ...document, blocks };
+};
+
+/**
+ * Reads a stored legacy value for the editor: whether it can be edited without losing anything, only shown, or not read at all.
+ */
+export const readRichTextValue = (value: string | undefined, plugins: readonly RtePlugin[]): StoredRichText => {
+    const stored = readStoredValue(value, plugins);
+    if (stored.access === 'readonly') {
+        return { access: 'readonly', document: toDisplayDocument(stored.document, plugins) };
+    }
+
+    return stored;
 };
 
 export const writeRichTextValue = (

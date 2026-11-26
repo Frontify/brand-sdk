@@ -1,8 +1,10 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { getDefaultPluginsWithLinkChooser } from './pluginPresets';
 import { RichTextEditor } from './RichTextEditor';
 import { writeRichTextValue } from './richTextValue';
 
@@ -23,6 +25,16 @@ const EDIT_SETTLE_MS = 50;
 
 const PARAGRAPH = JSON.stringify([{ type: 'p', children: [{ text: 'Hello there!' }] }]);
 const HEADING = JSON.stringify([{ type: 'heading1', children: [{ text: 'Test Heading' }] }]);
+const INLINE_BUTTON = JSON.stringify([
+    {
+        type: 'p',
+        children: [
+            { text: 'Press ' },
+            { type: 'button', url: 'https://example.com', buttonStyle: 'primary', children: [{ text: 'Go\nnow' }] },
+            { text: '' },
+        ],
+    },
+]);
 const UNKNOWN_MARK = JSON.stringify([{ type: 'p', children: [{ text: 'Lossy text', highlight: 'yellow' }] }]);
 
 /**
@@ -229,6 +241,57 @@ describe('RichTextEditor', () => {
         });
 
         expect(editable).toHaveTextContent('Hello world!');
+    });
+
+    it('should send the original value when it is typed back before the first save is handed back', async () => {
+        const onTextChange = vi.fn();
+        render(<RichTextEditor isEditing value={PARAGRAPH} onTextChange={onTextChange} />);
+        await enterViewport();
+        const editable = await findEditable();
+
+        await typeInto(editable, 'Hello world');
+        await blur(editable);
+        await typeInto(editable, 'Hello there!');
+        await blur(editable);
+
+        expect(onTextChange).toHaveBeenCalledTimes(2);
+        expect(onTextChange).toHaveBeenLastCalledWith(PARAGRAPH);
+    });
+
+    it('should keep the text of an inline that no plugin declares in the read only view', async () => {
+        const plugins = getDefaultPluginsWithLinkChooser(getAppBridgeBlockStub());
+        render(<RichTextEditor isEditing={false} value={INLINE_BUTTON} plugins={plugins} />);
+
+        const content = await screen.findByTestId(RTE_HTML_TEST_ID);
+
+        expect(content).toHaveTextContent('Press Go');
+        expect(content).toHaveTextContent('now');
+    });
+
+    it('should show a value that cannot be edited while editing even when the serialized text is off', async () => {
+        render(<RichTextEditor isEditing value={UNKNOWN_MARK} showSerializedText={false} />);
+
+        await enterViewport();
+
+        expect(await screen.findByTestId(RTE_HTML_TEST_ID)).toHaveTextContent('Lossy text');
+    });
+
+    it('should stop warning before the page is left once editing ends', async () => {
+        const { rerender } = render(<RichTextEditor isEditing value={PARAGRAPH} />);
+        await enterViewport();
+        const editable = await findEditable();
+        await typeInto(editable, 'Hello world');
+        const whileEditing = new Event('beforeunload', { cancelable: true });
+
+        window.dispatchEvent(whileEditing);
+
+        expect(whileEditing.defaultPrevented).toBe(true);
+
+        rerender(<RichTextEditor isEditing={false} value={PARAGRAPH} />);
+        const afterEditing = new Event('beforeunload', { cancelable: true });
+        window.dispatchEvent(afterEditing);
+
+        expect(afterEditing.defaultPrevented).toBe(false);
     });
 
     it('should render the columns layout in edit mode', async () => {
