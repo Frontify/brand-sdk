@@ -14,9 +14,12 @@ const external = [...Object.keys(packageJson.dependencies), ...Object.keys(packa
     (dependency) => new RegExp(`^${dependency.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(/.*)?$`),
 );
 
+const RICH_TEXT_EDITOR_STYLES_NAME = 'richTextEditor/styles.css';
+const RICH_TEXT_EDITOR_STYLES_FILE = 'rich-text-editor.css';
+
 const assetFileNames = (chunkInfo: PreRenderedAsset): string => {
-    if (chunkInfo.name === 'guideline-blocks-settings.css') {
-        return 'styles.css';
+    if (chunkInfo.name === RICH_TEXT_EDITOR_STYLES_NAME) {
+        return RICH_TEXT_EDITOR_STYLES_FILE;
     }
     return chunkInfo.name ?? 'UnknownFileName';
 };
@@ -37,13 +40,18 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: resolve(import.meta.dirname, 'src/index.ts'),
+            entry: {
+                index: resolve(import.meta.dirname, 'src/index.ts'),
+                'rich-text-editor': resolve(import.meta.dirname, 'src/richTextEditor/index.ts'),
+            },
             // ESM only: its dependencies, such as @frontify/fondue and @frontify/app-bridge, are ESM too.
             formats: ['es'],
             fileName: (format: string) => `[name].${format}.js`,
         },
         sourcemap: true,
         minify: true,
+        // Each entry keeps its own CSS, so the root stylesheet does not carry the rich text editor's.
+        cssCodeSplit: true,
         // Vite 8 defaults CSS minification to Lightning CSS, which re-adds vendor prefixes that are
         // already present in the bundled Fondue styles and grows dist/styles.css by ~20%.
         cssMinify: 'esbuild',
