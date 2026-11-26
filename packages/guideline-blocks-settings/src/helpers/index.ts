@@ -4,3 +4,4 @@ export * from './convertToRichTextValue';
 export * from './hasRichTextValue';
 export * from './isDownloadable';
 export * from './addHttps';
+export * from './legacyRichText';

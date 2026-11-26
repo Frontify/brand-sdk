@@ -44,5 +44,3 @@ packages/app-bridge-theme @Frontify/themes-and-navigation
 # Guideline Themes
 
 packages/guideline-themes @Frontify/themes-and-navigation
-
-CODEOWNERS @Frontify/architecture
