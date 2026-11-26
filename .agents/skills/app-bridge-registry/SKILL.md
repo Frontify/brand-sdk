@@ -12,7 +12,7 @@ A block talks to the host through three typed registries: `ApiMethodRegistry` (r
     - Command: starts with a verb such as `open`, `close` or `download` (`openSearchDialog`).
     - Event: ends with `Chosen` (`assetsChosen`).
 
-    Read `Verbs.ts` on your branch for the full lists, since the command verbs differ between `main` and `dev`. Adding a verb is a design decision: ask before you do it.
+    Read `Verbs.ts` on your branch for the full lists, since the command verbs differ between `main` and `app-bridge-v3`. Adding a verb is a design decision: ask before you do it.
 
 2. Add an API method in four places:
     - `registries/api/<PascalName>.ts` with the payload type, the response type and the factory.
