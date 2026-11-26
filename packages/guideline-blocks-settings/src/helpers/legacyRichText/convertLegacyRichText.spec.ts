@@ -12,9 +12,19 @@ const INDENTED_CHECK_ITEM_LEVELS = [1, 2, 3, 2, 1];
 const UNKNOWN_INLINE_COUNT = 20_000;
 const SCANNED_STRING_KEYS = ['text', 'url', 'id', 'link'];
 const MIN_SCANNED_LENGTH = 4;
+const NEW_TAB_TARGET = '_blank';
+const SAME_TAB_TARGET = '_self';
 
 const convertTree = (tree: LegacyRichTextTree, resolveMention?: ResolveMention) => {
     return convertLegacyRichText(JSON.stringify(tree), { resolveMention });
+};
+
+const targetOf = (openInNewTab: boolean): string => {
+    if (openInNewTab) {
+        return NEW_TAB_TARGET;
+    }
+
+    return SAME_TAB_TARGET;
 };
 
 const collectSourceStrings = (value: unknown): string[] => {
@@ -502,7 +512,8 @@ describe('convertLegacyRichText mapping', () => {
                     children: [
                         {
                             type: 'a',
-                            url: '/ignored',
+                            url: '/page',
+                            target: targetOf(openInNewTab),
                             chosenLink: { searchResult: { link: '/page' }, openInNewTab: flag },
                             children: [{ text: 'Page' }],
                         },
@@ -524,6 +535,65 @@ describe('convertLegacyRichText mapping', () => {
             expect(result.document?.blocks).toEqual([{ type: 'paragraph', children: [{ text: 'Page', link }] }]);
         },
     );
+
+    it('should review an unknown chosen link flag and not a link conflict when both apply (MIG-13)', () => {
+        const result = convertTree([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/page',
+                        target: SAME_TAB_TARGET,
+                        chosenLink: { searchResult: { link: '/page' }, openInNewTab: 1 },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]);
+
+        expect(result.diagnostics).toEqual([{ code: 'unknown-property', path: [0, 0] }]);
+    });
+
+    it('should report an unsafe chosen link address and not a link conflict when both apply (MIG-13)', () => {
+        const result = convertTree([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/a',
+                        chosenLink: { searchResult: { link: 'javascript:x' } },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]);
+
+        expect(result.diagnostics).toEqual([{ code: 'link-unsafe', path: [0, 0] }]);
+    });
+
+    it('should report a link conflict when the chosen link address is not a string and keep the url (MIG-13)', () => {
+        const result = convertTree([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/a',
+                        target: SAME_TAB_TARGET,
+                        chosenLink: { searchResult: { link: 5 } },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]);
+
+        expect(result.diagnostics).toEqual([{ code: 'link-conflict', path: [0, 0] }]);
+        expect(result.document?.blocks).toEqual([
+            { type: 'paragraph', children: [{ text: 'Page', link: { href: '/a' } }] },
+        ]);
+    });
 
     it.each(['x', 1, true])(
         'should read the truthy chosen link %j that is not an object as the display does and review it (MIG-13)',
@@ -567,7 +637,6 @@ describe('convertLegacyRichText mapping', () => {
                     {
                         type: 'a',
                         url: '/fallback',
-                        target: '_blank',
                         chosenLink: { searchResult: { link: '' } },
                         children: [{ text: 'Page' }],
                     },
