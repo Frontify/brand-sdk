@@ -43,6 +43,7 @@ import {
     LEGACY_QUOTE_TYPE,
     LEGACY_TARGET_KEY,
     LEGACY_URL_KEY,
+    LEGACY_VALUE_KEY,
     LINE_BREAK,
     MIN_CHECK_LEVEL,
     TEXT_MARK_KEYS,
@@ -400,6 +401,7 @@ const readMentionItem = (mention: StoredNode, path: LegacyRichTextPath, context:
     const node = createLegacyElement(
         LEGACY_MENTION_TYPE,
         [
+            { key: LEGACY_VALUE_KEY, value: mention.name },
             { key: LEGACY_CATEGORY_KEY, value: category },
             { key: LEGACY_ID_KEY, value: mention.id },
         ],

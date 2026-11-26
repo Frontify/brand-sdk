@@ -45,6 +45,7 @@ import {
     LEGACY_TARGET_KEY,
     LEGACY_TEXT_STYLE_KEY,
     LEGACY_URL_KEY,
+    LEGACY_VALUE_KEY,
     LINE_BREAK,
     MIN_CHECK_LEVEL,
     TEXT_MARK_KEYS,
@@ -113,7 +114,7 @@ type MentionNames = Pick<MentionInline, 'username' | 'name'>;
 const BLOCK_KEYS = ['type', 'children'];
 const LINK_KEYS = ['type', 'children', LEGACY_URL_KEY, LEGACY_TARGET_KEY, LEGACY_CHOSEN_LINK_KEY];
 const BUTTON_KEYS = [...LINK_KEYS, LEGACY_BUTTON_STYLE_KEY];
-const LEGACY_MENTION_KEYS = ['type', 'children', LEGACY_ID_KEY, LEGACY_CATEGORY_KEY];
+const LEGACY_MENTION_KEYS = ['type', 'children', LEGACY_VALUE_KEY, LEGACY_ID_KEY, LEGACY_CATEGORY_KEY];
 const BARE_INLINE_TYPES = [LEGACY_LINK_TYPE, LEGACY_BUTTON_TYPE, LEGACY_MENTION_TYPE];
 
 // Keys the new format gives a meaning of its own; a legacy value under them must not read as that meaning.
@@ -472,9 +473,14 @@ const readMentionNames = (kind: MentionInline['kind'], id: string, options: Ment
 
 const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline => {
     const { path, context } = options;
-    const extraKeys = Object.keys(element).filter((key) => !LEGACY_MENTION_KEYS.includes(key));
+    const keys = Object.keys(element);
+    const extraKeys = keys.filter((key) => !LEGACY_MENTION_KEYS.includes(key));
     if (extraKeys.length > 0) {
         reportUnknownProperties(context, extraKeys, path);
+    }
+
+    if (keys.includes(LEGACY_VALUE_KEY) && typeof element[LEGACY_VALUE_KEY] !== 'string') {
+        report(context, 'unknown-property', path);
     }
 
     const id = element[LEGACY_ID_KEY];
