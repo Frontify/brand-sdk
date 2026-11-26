@@ -1027,8 +1027,6 @@ describe('convertLegacyRichText mapping', () => {
 });
 
 describe('convertLegacyRichText alignment', () => {
-    it.todo('should read left as start and right as end in a left-to-right block (MIG-14)');
-    it.todo('should read left as end and right as start in a right-to-left block (MIG-14)');
     it.todo('should write start and end back by the first strong character of the block (MIG-14)');
     it.todo('should keep center and justify in either direction (MIG-14)');
 

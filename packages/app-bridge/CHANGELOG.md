@@ -1,5 +1,632 @@
 # @frontify/app-bridge
 
+## 4.0.0
+
+### Major Changes
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:BlockAssetsUpdated` and `AppBridge:ViewerOpened` events
+  
+  Read the block assets from `appBridge.context('assets')` instead, or use the `useBlockAssets` hook to re-render when they change.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(useReadyForPrint): remove the `useReadyForPrint` hook
+  
+  It had no effect: printing a guideline didn't wait for the readiness it reported. There is no replacement, remove the hook from your block.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(useAssetUpload): upload through the host
+  
+  `useAssetUpload` now uploads through `appBridge.api(createAssets(...))`. It no longer calls Frontify's upload endpoints itself, so later backend changes won't break built blocks. It takes the app bridge as its first argument, like the other hooks:
+  
+  ```diff
+  - const [uploadFile, { results, doneAll }] = useAssetUpload({ onUploadProgress });
+  + const [uploadFile, { results, doneAll }] = useAssetUpload(appBridge, { onUploadProgress });
+  ```
+  
+  The callbacks, `results` and `doneAll` keep their shape. An upload still in progress is cancelled when the component unmounts.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: export the testing utilities only from `@frontify/app-bridge/testing`
+  
+  `getAppBridgeBlockStub`, `withAppBridgeBlockStubs` and the `*Dummy` fixtures are no longer exported from `@frontify/app-bridge`. Importing anything from the main entry no longer pulls `sinon` into your production bundle.
+  
+  ```ts
+  // Before
+  import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge';
+  
+  // After
+  import { AssetDummy, getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf: stop enabling Immer's `MapSet` plugin on import
+  
+  `@frontify/app-bridge` no longer depends on `immer` and no longer calls `enableMapSet()` when it's imported. Blocks that don't use Immer themselves no longer ship it, which saves about 11 KB minified.
+  
+  If your code uses Immer with `Map` or `Set`, enable the plugin yourself:
+  
+  ```ts
+  import { enableMapSet } from 'immer';
+  
+  enableMapSet();
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove the `downloadColorKit` method
+  
+  `AppBridgeBlock.downloadColorKit` and the `downloadColorKit` value returned from the `useColorPalettes` hook have been removed.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(useAssetUpload): report the upload payloads instead of `MessageEvent`s
+  
+  The hook used to imitate the upload worker it replaced: it wrapped every callback payload in a `MessageEvent`, and `onUploadDone` reported a snake_case `file_id` / `file_name` / `generic_url` object instead of the asset. The callbacks now receive the payloads of the `createAssets` API method directly.
+  
+  | Callback | Receives |
+  | --- | --- |
+  | `onUploadProgress` | `CreateAssetsFileProgress` — `{ file, index, loaded, total }` |
+  | `onUploadProgressAll` | `CreateAssetsProgress` — `{ loaded, total }` |
+  | `onUploadDone` | `CreateAssetsFileSuccess` — `{ file, index, asset }` |
+  | `onUploadAssetFail` | `CreateAssetsFileFailure` — `{ file, index, message }` |
+  
+  `onUploadDoneAll` and `onUploadFail` are unchanged. Read the payload directly where you used to reach for `event.data`:
+  
+  ```ts
+  const [uploadFiles] = useAssetUpload(appBridge, {
+      onUploadProgress: ({ index, loaded, total }) => setProgress(index, loaded / total),
+      onUploadDone: ({ asset }) => addAsset(asset),
+      onUploadAssetFail: ({ file, message }) => showError(`${file.name}: ${message}`),
+  });
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:OpenNavigationManager` event
+  
+  Nothing emits or listens to this event. Code that still references it can drop the reference, since the event never fires.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:BlockSettingsUpdated` event
+  
+  The event, its `BlockSettingsUpdateEvent` type and the `blockSettings` declaration on `Window` are removed. Read the block settings from `appBridge.context('settings')` instead, or use the `useBlockSettings` hook to re-render when they change.
+  
+  `getAppBridgeBlockStub` no longer writes `window.blockSettings`, and its `getBlockSettings()` now resolves the stubbed block's settings.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(HttpClient): remove `HttpClient` and `HttpClientError`
+  
+  Blocks shouldn't call Frontify endpoints themselves: use `appBridge.api(...)` instead. The `HttpUtilResponse` type and the `HttpUtilResponseDummy` test helper are removed as well.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove the color palette API
+  
+  `useColorPalettes`, `AppBridgeBlock.getColorPalettesWithColors`, the `Color`, `ColorAsset`, `ColorRevision` and `ColorPalette` types, and the `ColorDummy` and `ColorPaletteDummy` test dummies from `@frontify/app-bridge/testing` are gone. Let users pick colors through the host color chooser instead:
+  
+  ```ts
+  import { openColorChooser, closeColorChooser } from "@frontify/app-bridge";
+  
+  await appBridge.dispatch(openColorChooser({ element, color, onColorSelect: (color) => setColor(color) }));
+  // ...
+  await appBridge.dispatch(closeColorChooser({ element }));
+  ```
+  
+  In a block's settings flyout, the `ColorChooser` component from `@frontify/guideline-blocks-settings` does this for you.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(EmitterEvents): remove the `AppBridge:PrivacySettingsChanged` event
+  
+  Read the privacy settings from `appBridge.context('privacySettings')` instead, or use the `usePrivacySettings` hook to re-render when they change.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: modify `DocumentSection` and `DocumentSectionApi` type to allow `title` to be `null`.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove deprecated document methods and types from `AppBridgeBlock`
+  
+  Removed the `getAllDocuments`, `getDocumentPagesByDocumentId`, and `getDocumentSectionsByDocumentPageId` methods, along with the now-unused `Document`, `DocumentPage`, `DocumentSection`, and `Targets` types and their test dummies (`TargetsDummy`, `TargetsApiDummy`, `DocumentSectionDummy`, `DocumentSectionApiDummy`). There is no replacement — Link Chooser is being in-sourced and will be opened via a command instead.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentApiDummy` and `DocumentDummy` testing utils, cleanup types in `Document.ts`, remove `getDocumentsByDocumentGroupId` from AppBridgeBlock
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: require Node 22 or newer
+  
+  `engines.node` was still `>=18`. Node 18 and 20 have both reached end of life, so the package now declares `>=22`, matching `@frontify/frontify-cli`.
+  
+  The README also gains a worked block example, a testing example, and a note on what moved between 3.x and 4.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentTargets` and `useDocumentCategories`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(useFileUpload): remove the hook
+  
+  Use `useAssetUpload` instead. The `@frontify/app-bridge/upload-worker` export is removed as well.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): remove `getProjectId` and `getTranslationLanguage`
+  
+  Read the project id and the translation language from the block context instead:
+  
+  ```ts
+  const projectId = appBridge.context('projectId').get();
+  const translationLanguage = appBridge.context('translationLanguage').get(); // '' when the page isn't a translation
+  ```
+  
+  `getAppBridgeBlockStub` no longer takes a `language` option. Pass `translationLanguage` instead.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove the `window.application` type
+  
+  app-bridge no longer reads `window.application`, so it no longer declares it on `Window`.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: first alpha release, removes all deprecated functions on the AppBridgeBlock
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: publish complete type declarations
+  
+  The published types used a `Nullable` type that the package didn't ship. Fields such as `Asset.alternativeText` and `Color.revision.hex` were typed `any` in your project, or failed to compile without `skipLibCheck`. They now have their real types, such as `string | null`, so code that relied on `any` may need a `null` check.
+  
+  Projects with `"moduleResolution": "node16"` or `"nodenext"` can now resolve the types. Before, every named import from `@frontify/app-bridge` failed to compile there.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `createColorPalette`, `updateColorPalette`, `deleteColorPalette` and adjust `useColorPalette` react hook
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): make `sinon` an optional peer dependency
+  
+  npm and pnpm no longer install `sinon` alongside `@frontify/app-bridge`, and Yarn no longer warns when it's missing. Only `@frontify/app-bridge/testing` needs it.
+  
+  If you import from `@frontify/app-bridge/testing`, add `sinon` to your own dev dependencies:
+  
+  ```sh
+  npm install --save-dev sinon
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove the unused types, hooks and test dummies
+  
+  Nothing in the package, in Frontify, or in the guideline blocks referenced these, and they have no replacement:
+  
+  - The `useAfterInsertion` hook.
+  - The `DispatchPayload` and `DispatchHandler` types, a stale copy of the command registry, and the `Subscription` and `SubscriptionCallback` types, a stale copy of the event registry.
+  - The `TerrificComponent`, `AssetChooserAssetChosenCallback` and `TemplateChooserTemplateChosenCallback` types.
+  - The `UseFileInputInterface` and `UseFileInputReturnTypes` types. `useFileInput` itself is unchanged.
+  - The `compareObjects` helper, and `isObject`, which is now internal.
+  - The `AssetChooserOptionsDummy` and `AssetChooserResultDummy` dummies from `@frontify/app-bridge/testing`.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove deprecated `updateColor`, `createColor`, and `deleteColor` methods from the AppBridge, the `useColors` hook, and related tests
+
+### Minor Changes
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove react hooks and related events
+  
+  - `useCategorizedDocumentPages`
+  - `useDocumentPageTargets`
+  - `useUncategorizedDocumentPages`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(BlockContext): add `projectId` and `translationLanguage`
+  
+  The block context now declares the guideline's `projectId` and the `translationLanguage` the page is translated into (an empty string when it isn't a translation). `getAppBridgeBlockStub` answers both from its `projectId` and `translationLanguage` options:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({ projectId: 42, translationLanguage: 'de' });
+  
+  appBridge.context('projectId').get(); // 42
+  appBridge.context('translationLanguage').get(); // 'de'
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlock): add the `createAssets` API method
+  
+  Blocks can upload files through the host and get the created assets back. Nothing calls it yet: `useAssetUpload` will switch to it in a later release.
+  
+  ```ts
+  import { createAssets } from '@frontify/app-bridge';
+  
+  const { assets, failures } = await appBridge.api(
+      createAssets({
+          files: [file],
+          onProgress: ({ loaded, total }) => setProgress(loaded / total),
+          onFileFail: ({ file, message }) => showError(file.name, message),
+      }),
+  );
+  ```
+  
+  `getAppBridgeBlockStub` answers `createAssets` with one `AssetDummy` per file and calls `onProgress`, `onFileProgress` and `onFileDone` for each file.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add the `createAssetBulkDownload` API method
+  
+  It prepares an archive with the given assets and resolves with its download URL once the archive is ready. It rejects when preparing the archive fails or when the signal is aborted. `getAppBridgeBlockStub` resolves it with a dummy URL.
+  
+  ```ts
+  const controller = new AbortController();
+  
+  const { downloadUrl } = await appBridge.api({
+      name: 'createAssetBulkDownload',
+      payload: { blockAssets, signal: controller.signal },
+  });
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove color related methods: `getColors`, `getColorPalettesWithColors`, `getColorPalettes`, `getColorsByColorPaletteId` and react hooks: `useColors`, `useColorPalettes`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `trackEvent` command
+  
+  Use the `trackEvent` command to log custom events within blocks.
+  The event accepts `TrackActions` and an optional payload.
+  
+  If you need more actions, please reach out through the Frontify Friends Slack channel.
+  
+  Example usage:
+  
+  ```typescript
+  appBridge.dispatch({
+      name: "trackEvent",
+      payload: {
+          action: "button:clicked",
+          payload: { buttonId: "path/to/button", label: "Click me" },
+      },
+  });
+  
+  // or without payload
+  appBridge.dispatch({
+      name: "trackEvent",
+      payload: { action: "button:clicked", payload: null },
+  });
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `openColorChooser`/`closeColorChooser` block commands to render the host color chooser into an element
+  
+  ```ts
+  import { openColorChooser, closeColorChooser } from "@frontify/app-bridge";
+  
+  await appBridge.dispatch(openColorChooser({ element, color, onColorSelect: (color) => setColor(color) }));
+  // ...
+  await appBridge.dispatch(closeColorChooser({ element }));
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(BlockContext): add `privacySettings`
+  
+  The block context now declares the guideline's `privacySettings`, and `getAppBridgeBlockStub` answers `context('privacySettings')` from its `privacySettings` option:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({
+      privacySettings: { assetViewerEnabled: true, assetDownloadEnabled: false },
+  });
+  
+  appBridge.context('privacySettings').get(); // { assetViewerEnabled: true, assetDownloadEnabled: false }
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(BlockContext): add `templates`
+  
+  The block context now declares the block's `templates`. `getAppBridgeBlockStub` answers `context('templates')` from its `blockTemplates` option and updates it when `addTemplateIdsToBlockTemplateKey()` or `deleteTemplateIdsFromBlockTemplateKey()` is called:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({ blockTemplates: { templates: [TemplateDummy.with(1)] } });
+  
+  await appBridge.addTemplateIdsToBlockTemplateKey('templates', [2]);
+  
+  appBridge.context('templates').get(); // { templates: [TemplateDummy.with(1), TemplateDummy.with(2)] }
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(useBlockAssets): source state from `Context.assets`
+  
+  The hook now seeds and updates `blockAssets` from `appBridge.context('assets')` and no longer fetches via `getBlockAssets()` on mount. It also no longer listens to or emits `AppBridge:BlockAssetsUpdated`; mutation helpers (`addAssetIdsToKey`, `deleteAssetIdsFromKey`, `updateAssetIdsFromKey`) just call the AppBridge API, and the host is responsible for refreshing `context('assets')` after each mutation.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove already deprecated method `getDocumentCategoriesByDocumentId`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove already deprecated `getColorsByIds`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentGroups`, `useGroupedDocuments` and `useUngroupedDocuments` hook and also remove the `DocumentGroupApi` type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(usePrivacySettings): read the privacy settings from the host context
+  
+  `usePrivacySettings` now reads `appBridge.context('privacySettings')` and re-renders when the host updates it, instead of listening to the `AppBridge:PrivacySettingsChanged` event on `window.emitter`. Hosts must provide `privacySettings` in the block context.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `openLinkChooser`/`closeLinkChooser` block commands to open the in-sourced link chooser
+  
+  Adds a `linkChosen` event and a `useLinkChooser` hook.
+  
+  ```ts
+  import { openLinkChooser, closeLinkChooser } from "@frontify/app-bridge";
+  
+  await appBridge.dispatch(openLinkChooser({ selectedUrl: currentUrl }));
+  // ...
+  await appBridge.dispatch(closeLinkChooser());
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add open/close search dialog commands to AppBridgeTheme
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove already deprecated method `getDocumentGroups`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove already deprecated method `getDocumentPagesByDocumentCategoryId`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `openPlatformAppDirect` block command to open a marketplace platform app directly
+  
+  ```ts
+  import { openPlatformAppDirect } from '@frontify/app-bridge';
+  
+  await appBridge.dispatch(openPlatformAppDirect({ marketplaceAppId: 'your-app-id' }));
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(Asset): added the property alternativeText
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `openBrandChecker` command
+  
+  A content block can dispatch `openBrandChecker` to open the Brand Check dialog on a guideline page. The payload uses `OpenBrandCheckerPayload` (`{ tab: BrandCheckerTab }`). `tab` is required.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(useEditorState): read the editor state from the host context
+  
+  `useEditorState` now reads `appBridge.context('isEditing')`, like `useIsEditing` in `@frontify/app-bridge-theme`, instead of every hook call observing `document.body` and querying the DOM on each class change. Hosts must provide `isEditing` in the block context.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlockStub): let tests send `assetsChosen`, `templateChosen` and `linkChosen` themselves
+  
+  `getAppBridgeBlockStub` has a new `emitChosenEventsOnSubscribe` option. It defaults to `true`, which keeps today's behaviour: subscribing to one of these events immediately calls the callback with a dummy selection. Set it to `false` to send the events when your test needs them, with the new `emitAppBridgeBlockStubEvent(appBridge, eventName, payload)`.
+  
+  Events only reach callbacks that are still subscribed, because each subscription now gets its own unsubscribe function. The `unsubscribe` option is still called whenever a subscription ends.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add back `useColorPalettes` react hook
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlock): add `isAuthenticated` to `BlockContext` type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridge): expose block assets via `BlockContext`
+  
+  - Adds `assets` to `BlockContext`, available synchronously via `appBridge.context('assets').get()`.
+  - `useBlockAssets` now seeds its initial state from the context instead of fetching via `getBlockAssets()` on mount, so assets are available on the first render.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(DocumentTargets): remove already deprecated `getDocumentTargets` and `getDocumentPageTargets`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(BlockContext): add `settings`
+  
+  The block context now declares the block's `settings`. `getAppBridgeBlockStub` answers `context('settings')` from its `blockSettings` option and merges `updateBlockSettings()` calls into it:
+  
+  ```ts
+  const appBridge = getAppBridgeBlockStub({ blockSettings: { color: 'red' } });
+  
+  await appBridge.updateBlockSettings({ layout: 'grid' });
+  
+  appBridge.context('settings').get(); // { color: 'red', layout: 'grid' }
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgeBlock): adds `creationFormUri` to the type `template`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(AppBridge): remove already deprecated `getUncategorizedDocumentPagesByDocumentId`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(useBlockSettings): read the block settings from the host context
+  
+  `useBlockSettings` now reads `appBridge.context('settings')` and re-renders when the host updates it, instead of reading `window.blockSettings` and listening to the `AppBridge:BlockSettingsUpdated` event on `window.emitter`. Hosts must provide `settings` in the block context and update it after `updateBlockSettings()` saves.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add navigateToDocumentSection command to AppBridgeTheme
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor remove already deprecated method `getUngroupedDocuments`
+
+### Patch Changes
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove TemplatePageApi type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(useBlockTemplates): read the block templates from the host context
+  
+  `useBlockTemplates` now reads `appBridge.context('templates')` and re-renders when the host updates it, instead of loading the templates with `getBlockTemplates()` and listening to the `AppBridge:BlockTemplatesUpdated` event on `window.emitter`. Every `useBlockTemplates` on the same app bridge re-renders when the templates change. Hosts must provide `templates` in the block context and update it after `addTemplateIdsToBlockTemplateKey()` and `deleteTemplateIdsFromBlockTemplateKey()` save.
+  
+  `getBlockTemplates()` is deprecated. Read the block templates from the block context instead, or use the hook to re-render when they change:
+  
+  ```ts
+  const blockTemplates = appBridge.context('templates').get();
+  ```
+  
+  With that, nothing in app-bridge uses `window.emitter` anymore. The `AppBridge:BlockTemplatesUpdated` event, the `EmitterEvents` type and the `emitter` declaration on `Window` are removed, `getAppBridgeBlockStub` no longer sets `window.emitter`, and app-bridge no longer depends on `mitt`.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove AppBridgeCreateAsset, please use `@frontify/app-bridge-app`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(Asset): added the focal point properties
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `filterDocumentSectionsWithUnreadableTitles` helper
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Asset): remove `creatorName` and `projectType` on the `Asset`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: update dependencies
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `GetBulkDownloadTokenApi` and `BulkDownloadApi` types
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove appBridgePlatformApp
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main to dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - build: stop shipping unused CommonJS files
+  
+  The package is ES modules only. `require()` and `import` resolve to the same files as before, and the `.cjs` files that no entry pointed to are gone.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(AppBridgePlatformApp): only one app bridge per iframe
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: stop `useAssetChooser` and `useTemplateChooser` from leaking subscriptions
+  
+  If the chooser was dismissed without a selection and then opened again, choosing an asset or template ran your callback twice. Each open now replaces the previous subscription, and the hooks unsubscribe when the component unmounts. `openAssetChooser`, `closeAssetChooser`, `openTemplateChooser` and `closeTemplateChooser` now also keep the same identity across renders.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): deprecate `getPrivacySettings`
+  
+  Read the privacy settings from the block context instead, or use the `usePrivacySettings` hook to re-render when they change:
+  
+  ```ts
+  const { assetViewerEnabled, assetDownloadEnabled } = appBridge.context('privacySettings').get();
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentBlockTemplate` types
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: rename brand sdk name
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: document page duplication return type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: deprecate the bulk download token and polling methods
+  
+  `appBridge.getBulkDownloadByToken()`, `appBridge.getBulkDownloadBySignature()` and the `getAssetBulkDownloadToken` API method are deprecated and will be removed in version 5.0.0. Use the `useAssetBulkDownload` hook, or the `createAssetBulkDownload` API method, which resolves once the download is ready:
+  
+  ```ts
+  const { downloadUrl } = await appBridge.api({
+      name: 'createAssetBulkDownload',
+      payload: { blockAssets, signal },
+  });
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf: stop bundling `lodash-es` and React's JSX runtime into the package
+  
+  Blocks that don't use `convertObjectCase` no longer ship any lodash code, which saves about 12 KB minified per block. `@frontify/app-bridge/testing` now uses your own `react/jsx-runtime` instead of a bundled copy.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: cleanup unused types in DocumentCategory
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: merge `main` into `dev`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: (AppBridgeTheme) update appBridgeThemeStub with context and state
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(getAppBridgeBlockStub): return the current assets from `context('assets').get()`
+  
+  After `addAssetIdsToBlockAssetKey` or `deleteAssetIdsFromBlockAssetKey`, `get()` still returned the assets the stub was created with, while subscribers received the updated ones. A component that mounted after such a change started with stale assets.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: clean up target api related things
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: Merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main to dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(Emitter): remove unused type `EmitterAction`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge branch `main` into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `getDatasetByElement` and `getDatasetByClassName`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: merge `main` into `dev`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add documentId to GuidelineDocumentCategory events
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: update deps
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove unused `Topic` type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add context.template to AppBridgeTheme
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentPageRequest`, `DocumentPageCreate`, `DocumentPageUpdate` and `DocumentPageDelete` types
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: switch to platformAppBridge to v4
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add user state variable
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): deprecate `getEditorState`
+  
+  Read the editor state from the block context instead, or use the `useEditorState` hook to re-render when it changes:
+  
+  ```ts
+  const isEditing = appBridge.context('isEditing').get();
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(useDocumentNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+  fix(usePortalNavigation): Fixed an issue that prevented debounced callbacks not to be executed
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `useDocumentSection` react hooks, along with types and events
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: Adjust PlatformAppContext
+  refactor: rename from type to surface
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: support `sinon` 22 in `@frontify/app-bridge/testing`
+  
+  `sinon` 22 now satisfies the peer dependency. With `@types/sinon` 22, the stubs from `getAppBridgeBlockStub` and `withAppBridgeBlockStubs` could lose their types and become `any`; they stay typed now.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Fix: readd method
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: AssetChooserResult Type as alternative text is prefixed with computed
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: rename brandsdk name from secretRequest to secureRequest
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove UserApi related things
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(useAssetBulkDownload): let the host wait for the download
+  
+  `useAssetBulkDownload` now asks the host for the download with the `createAssetBulkDownload` API method instead of polling for it itself. `status` is `Pending` while the host prepares the download, and `generateBulkDownload`, `status` and `downloadUrl` work as before. Starting a new download or unmounting still aborts the previous one.
+  
+  Blocks built with this version need a Frontify version that supports `createAssetBulkDownload`.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(useAssetBulkDownload): stop polling after unmount or when a new download starts
+  
+  `useAssetBulkDownload` no longer keeps checking whether a bulk download is ready after the component unmounts. Starting a new download now stops the checks for the previous one, which kept running forever before. Each check also waits for the previous one to finish, so slow responses no longer lead to overlapping requests.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds `setAssetIdsByBlockAssetKey` to AppBridgeBlock
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(usePageTemplateSettings): returns also templateThemeSettings
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: adjust the color type to have a revision
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: useGroupedDocuments and useUngroupedDocuments flaky tests
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `documentCategoryApi` type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(useLinkChooser): unsubscribe from the `linkChosen` event on unmount
+  
+  Previously, a component that unmounted while the link chooser was still open kept its `linkChosen` listener subscribed, leaking it. `openLinkChooser` and `closeLinkChooser` are also now stable across re-renders.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(useFileUpload): start the upload worker on the first upload
+  
+  `useFileUpload` and `useAssetUpload` no longer start a Web Worker when the component mounts. The worker starts with the first upload and is reused for later ones. Blocks that render an uploader per item, such as one per thumbnail, no longer keep an idle worker thread running for every item.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main to dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: Method to reflect feature
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge branch `main` into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - -   feat(useDocumentSection): Subscribe hook to emitter event listeners. A new emitter type, `AppBridge:GuidelineDocumentSection:Action` has been added. This emitter can be used to add and remove items from the sections saved in the hook state.
+  
+  -   feat(useDocumentSection): `navigationItems` is now returned from this hook. This array filters out sections with an unreadable title and should be used to create section navigation links.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main to dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Feat: adjust secure request response
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(useBlockAssets): keep `addAssetIdsToKey`, `deleteAssetIdsFromKey` and `updateAssetIdsFromKey` stable across renders
+  
+  The three functions returned by `useBlockAssets` used to be recreated every time the component rendered. Effects, `useMemo` and `useCallback` that listed them as dependencies therefore ran again on every render, and memoised children receiving them re-rendered. They now keep the same identity for as long as `appBridge` does, so you can pass them down or list them as dependencies without workarounds.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(useBlockTemplates): keep `addTemplateIdsToKey`, `deleteTemplateIdsFromKey` and `updateTemplateIdsFromKey` stable across renders
+  
+  The three functions returned by `useBlockTemplates` used to be recreated every time the component rendered. Effects, `useMemo` and `useCallback` that listed them as dependencies therefore ran again on every render, and memoised children receiving them re-rendered. They now keep the same identity for as long as `appBridge` does, so you can pass them down or list them as dependencies without workarounds.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(useAssetUpload): keep the upload function stable across renders and always call the latest callbacks
+  
+  The upload function returned by `useAssetUpload` and `useFileUpload` used to be recreated every time the component rendered, so an effect that listed it as a dependency ran again on every render and could send the same files to the uploader again. It now keeps the same identity for the lifetime of the component, even when you pass new inline callbacks on every render.
+  
+  Upload events also used to call the callbacks from the render in which the first upload started, so a callback that read component state saw old values. They now always call the callbacks from the latest render.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(useEditorState): subscribe to the editor state once instead of on every render
+  
+  `useEditorState` no longer unsubscribes from and resubscribes to the host's `isEditing` context each time the component renders. It subscribes when the component mounts and unsubscribes when it unmounts.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(useBlockSettings): copy the initial settings only once
+  
+  `useBlockSettings` no longer deep-copies the block's settings on every render, only when the component mounts. Blocks with large settings re-render faster, for example while typing in the editor.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf(usePrivacySettings): read the privacy settings once and subscribe to changes once
+  
+  `usePrivacySettings` used to ask the host for the privacy settings on every render, although only the first value was used, and it unsubscribed from and resubscribed to privacy setting changes each time they changed. It now reads them when the component mounts and keeps a single subscription until it unmounts.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Fix: add retry to subscription
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove cover page related things
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: adds state listener to allow push from parent
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: Removed `appBridgeTheme` from the `@frontify/app-bridge` package. It is now provided via the `@frontify/app-bridge-theme` package.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf: drop the upload worker from blocks that never upload
+  
+  Blocks that don't use `useFileUpload` or `useAssetUpload` no longer ship the inline upload worker, which saves about 3 KB minified per block. Blocks that upload are unchanged.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove TemplateApiLegacy type and test dummy
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: merge main to dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `pageTemplateAsset` type
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Merge main into dev
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - Merge `main` into `dev`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: deprecate react hooks for platform apps
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(AppBridgeBlock): deprecate `getBlockSettings`
+  
+  Read the block settings from the block context instead, or use the `useBlockSettings` hook to re-render when they change:
+  
+  ```ts
+  const blockSettings = appBridge.context('settings').get();
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove Color and ColorPallete api related types and test dummies
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove `DocumentGroup` type and `DocumentGroupDummy`
+
 ## 4.0.0-alpha.83
 
 ### Major Changes

@@ -1,5 +1,198 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.0
+
+### Major Changes
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `14.0.0-beta.2`
+  
+  The rich text editor props and plugins (`RichTextEditor`, `LinkPlugin`, `ButtonPlugin`, `AllTextStylePlugins`, …) are now typed against fondue 14. If your block builds a `PluginComposer` from its own `@frontify/fondue/rte`, upgrade it to `@frontify/fondue@14.0.0-beta.2` as well; on fondue 13 the plugins no longer type-check against these props.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): make `@frontify/fondue` a peer dependency
+  
+  The package no longer installs its own copy of fondue; it uses the one your block depends on. Add fondue to your block if it isn't there yet:
+  
+  ```sh
+  pnpm add @frontify/fondue@^14.0.0-beta.2
+  ```
+  
+  The rich text editor props and plugins (`RichTextEditor`, `LinkPlugin`, `ButtonPlugin`, `AllTextStylePlugins`, …) use fondue's editor classes. With a single fondue copy, a `PluginComposer` you build from `@frontify/fondue/rte` type-checks against them; with two copies it didn't. If your block is on another fondue version, npm stops with an `ERESOLVE` error and pnpm reports an unmet peer instead of silently installing a second copy.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor: remove the unused `isDark` and `getReadableColor` color utilities and stop exporting `toShortRgba`
+  
+  None of these were used by Frontify's own blocks. If your block still uses them, call `@ctrl/tinycolor` directly with a color string from `toRgbaString`:
+  
+  ```ts
+  import { TinyColor, readability } from '@ctrl/tinycolor';
+  import { toRgbaString } from '@frontify/guideline-blocks-settings';
+  
+  // isDark(color)
+  const dark = new TinyColor(toRgbaString(color)).isDark();
+  
+  // getReadableColor(textColor, backgroundColor) darkened the text color until the contrast was at least 4.5
+  const contrast = readability(toRgbaString(textColor), toRgbaString(backgroundColor));
+  ```
+  
+  `toShortRgba` mapped `{ red, green, blue, alpha }` to `{ r, g, b, a }`. The other color utilities still accept the long format.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat(RichTextEditor)!: open the in-sourced link chooser from the app bridge
+  
+  The rich text editor's "Internal link" button now dispatches the app bridge `openLinkChooser` command instead of rendering its own document browser, so link selection reuses the in-sourced chooser provided by the host. The hosting app must handle the `openLinkChooser`/`closeLinkChooser` commands and emit the `linkChosen` event. Applies to both the Link and Button plugins; the URL field and "Open in new tab" toggle are unchanged.
+  
+  BREAKING CHANGE: the `@frontify/app-bridge` peer dependency is now `^4.0.0-alpha.0` (previously `^3.0.0 || ^4.0.0-alpha.0`), since `useLinkChooser` is only available in app-bridge v4.
+  
+  BREAKING CHANGE: the `LinkSelector` component and the `InitiallyExpandedItems` and `DocumentSectionWithTitle` types are no longer exported. They powered the old in-package internal-link browser that the app bridge link chooser replaces. Consumers rendering `LinkSelector` directly should switch to the app bridge link chooser (`openLinkChooser`); the `LinkInput` component is unaffected.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - refactor(RichTextEditor): remove deprecated `id` prop
+  
+  The `id` prop on `RichTextEditorProps` has been removed. It was deprecated and unused — the identifier is now handled automatically.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - build: publish ES modules only
+  
+  The package no longer ships its UMD and CommonJS builds. `require()` now resolves to the ES module build, the same file `import` uses, so bundlers resolve the same code as before.
+  
+  Neither old build worked with `require()` in Node: both used a `.js` extension in a `"type": "module"` package, so Node loaded them as ES modules.
+  
+  If Jest loads the package as CommonJS, let it transform the package, the same way it already has to for `@frontify/app-bridge`:
+  
+  ```js
+  transformIgnorePatterns: ['/node_modules/(?!@frontify/)'],
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: stop shipping fondue's deprecated CSS variables in `@frontify/guideline-blocks-settings/styles`
+  
+  The stylesheet no longer defines fondue's deprecated `:root` variables, such as `--text-color`, `--line-color` and `--box-neutral-color`. The components in this package don't use them. If your own block CSS still reads them, switch to the current fondue tokens:
+  
+  | Deprecated | Current |
+  | --- | --- |
+  | `--text-color` | `--color-primary-default` |
+  | `--text-color-weak` | `--color-secondary-default` |
+  | `--text-color-negative` | `--color-error-default` |
+  | `--base-color` | `--color-surface-default` |
+  | `--box-neutral-color` | `--color-container-secondary-default` |
+  | `--box-selected-color` | `--color-container-highlight-default` |
+  | `--line-color` | `--color-line-mid` |
+  | `--line-color-strong` | `--color-line-strong` |
+  
+  fondue's `deprecatedBaseTokens.css` lists the mapping for every variable. Until you've migrated, you can import that file yourself:
+  
+  ```ts
+  import '@frontify/fondue/dist/packages/tokens/legacy/deprecatedBaseTokens.css';
+  ```
+
+### Minor Changes
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `useBlockPrivacySettings` and `getSecurityAssetViewerSetting` so blocks can override the global privacy settings without resolving them by hand
+  
+  `useBlockPrivacySettings` returns the global privacy settings, or the block's own overrides when its security is set to custom. A privacy setting the block offers no override switch for stays global.
+  
+  ```ts
+  // settings.ts
+  import {
+      defineSettings,
+      getSecurityAssetViewerSetting,
+      getSecurityDownloadableSetting,
+      getSecurityGlobalControlSetting,
+  } from '@frontify/guideline-blocks-settings';
+  
+  export const settings = defineSettings({
+      security: [...getSecurityGlobalControlSetting(), getSecurityAssetViewerSetting(), getSecurityDownloadableSetting()],
+  });
+  
+  // Block.tsx
+  import { useBlockPrivacySettings } from '@frontify/guideline-blocks-settings';
+  
+  const { assetViewerEnabled, assetDownloadEnabled } = useBlockPrivacySettings(appBridge, {
+      assetViewerId: 'assetViewerEnabled',
+      downloadableId: 'downloadable',
+  });
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - feat: add `ColorChooser` component that renders the host color chooser in place, e.g. inside a block's flyout
+  
+  ```tsx
+  <Flyout.Content>
+      <ColorChooser appBridge={appBridge} color={color} onColorSelect={setDraftColor} />
+  </Flyout.Content>
+  ```
+  
+  Requires `@frontify/app-bridge` `4.0.0-alpha.76` or newer, which adds the `openColorChooser`/`closeColorChooser` commands.
+
+### Patch Changes
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): require `@frontify/fondue` `^14.0.0-rc.3` as peer dependency
+  
+  Blocks on an earlier fondue 14 prerelease need to update:
+  
+  ```sh
+  pnpm add @frontify/fondue@^14.0.0-rc.3
+  ```
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): require `@frontify/app-bridge` `^4.0.0-alpha.83` as peer dependency
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `14.0.0-rc.0`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(Attachments): upload attachments through the host
+  
+  `Attachments` passes its app bridge to `useAssetUpload`, which now uploads through the host.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(RichTextEditor): open the insert link modal next to the selection instead of the top left corner of the page
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: stop toolbar and rich text editor buttons from submitting a surrounding form
+  
+  The block item toolbar buttons and the edit, remove and style buttons in the rich text editor's link and button popovers had no `type`, so inside a `<form>` they acted as submit buttons. They are now `type="button"`.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.7.8`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): bump `@frontify/fondue` to `^13.7.10`
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(RichTextEditor): keep the link and button popovers in default colors
+  
+  The link and button popovers render on a fixed white surface, but inherited the guideline's body and link colors, so a light theme made the URL and icons invisible. Text and icons now use the default dark color and the URL a fixed blue, while the theme typography is kept.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - perf: let bundlers drop the parts of the package a block doesn't use
+  
+  Importing any export, such as `defineBlock` or a settings helper, no longer pulls the whole package into your block bundle. Blocks that don't use the `RichTextEditor` no longer ship it, along with its emoji data.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(Attachments): announce the attachment name on the download button
+  
+  The download button carried an `aria-label` that overrode its visible label, so screen readers announced "Download attachment" without saying which attachment. The action is now conveyed by screen-reader-only text in front of the attachment title, making both the action and its target audible. (Originally fixed in 3.0.6.)
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(RichTextEditor): assert `zIndex: 'auto'` on the floating link and button portals
+  
+  These modals are portaled to `document.body` and rely on DOM order so that a dialog
+  opened from them -- notably the guideline LinkChooser -- renders on top. Guideline
+  portals can carry custom CSS that sets a `z-index` on body children, which lifted the
+  modal above that dialog and left the chooser unreachable behind it. Asserting the value
+  inline wins over those rules.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(BlockItemWrapper): replace deprecated `FOCUS_VISIBLE_STYLE` with the `tw-ring-focus` token utility in toolbar buttons
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(RichTextEditor): show the section's color scheme in the button and link modals
+  
+  The insert/edit modals of the button and link plugins are portaled to `document.body`, so their style previews resolved the default color scheme's theme variables instead of those scoped to the editor's section. The modals now copy the theme variables that the scope around the editor declares onto their portaled wrapper.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - chore: remove unused internal testing dummy
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix(Link): keep root-relative urls untouched
+  
+  Root-relative urls entered in the link and button flyouts — such as `/hub/167` — were treated as invalid and turned into a broken absolute url like `https:///hub/167`. Any path starting with `/` is now accepted and stored as-is, so links keep working across multiple domains and sites. Previously only `/document/…` and `/r/…` were preserved. (Originally fixed in 3.0.5.)
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: keep `@frontify/guideline-blocks-settings/styles` in webpack production builds
+  
+  The package marked all of its files as free of side effects, including the stylesheet. In production mode, webpack therefore dropped `import '@frontify/guideline-blocks-settings/styles'` and the block shipped without the package's styles. CSS files are now marked as having side effects; tree-shaking of the JavaScript exports is unchanged.
+
+- [#1819](https://github.com/Frontify/brand-sdk/pull/1819) [`e3daa30`](https://github.com/Frontify/brand-sdk/commit/e3daa305e202735c7a93228bd5eb35d04df8a4d3) Thanks [@ragi96](https://github.com/ragi96)! - fix: show missing borders, hover backgrounds and error colors
+  
+  Several components used old palette classes that the package's stylesheet doesn't generate, so those styles didn't render. They now use the current fondue tokens:
+  
+  - `BlockInjectButton`: the red border and text when an invalid file is dropped
+  - Rich text editor link and button popovers: the hover background of the edit and remove icons, and the divider above the Cancel and Save buttons in the link dialog
+  - Rich text editor button dialog: the outline around the selected button style
+  - `Attachments`: the divider below the attachment list
+  
+  The block item toolbar now uses fondue's radius and shadow tokens as well: its corners are slightly tighter (4px instead of 6px) and its shadow matches fondue's flyouts.
+
 ## 4.0.0-alpha.18
 
 ### Major Changes

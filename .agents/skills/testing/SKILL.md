@@ -40,7 +40,7 @@ describe('useColors hook', () => {
 
 7. Build test data with the dummies in `packages/app-bridge/src/tests/` (`AssetDummy.with(1)`, `UserDummy.with(…)`), not with a literal repeated in every spec. Add a missing dummy there and export it from `tests/index.ts`.
 
-8. Stubs and dummies are published as `@frontify/app-bridge/testing` and used by block authors. A change to them is a change to public API: apply the `public-api` skill before you remove or rename one, and add a changeset. Outside `packages/app-bridge`, import them the way the neighbouring specs do: on `dev` only `@frontify/app-bridge/testing` exports them, and a spec there asserts that the main entry does not.
+8. Stubs and dummies are published as `@frontify/app-bridge/testing` and used by block authors. A change to them is a change to public API: apply the `public-api` skill before you remove or rename one, and add a changeset. Outside `packages/app-bridge`, import them the way the neighbouring specs do: only `@frontify/app-bridge/testing` exports them, and a spec asserts that the main entry does not.
 
 9. Test a registry entry by calling its factory and asserting the name and the payload.
 

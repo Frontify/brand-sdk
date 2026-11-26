@@ -156,7 +156,7 @@ Then, in `packages/guideline-blocks-settings`:
 CI also checks the package against a published app-bridge version. To do the same locally, install that version temporarily from the repository root:
 
 ```sh
-pnpm add @frontify/app-bridge@^4.0.0-alpha.0 --filter {packages/guideline-blocks-settings}
+pnpm add @frontify/app-bridge@^4.0.0 --filter {packages/guideline-blocks-settings}
 ```
 
 To switch back, restore `packages/guideline-blocks-settings/package.json` and `pnpm-lock.yaml`, then run `pnpm install`.
