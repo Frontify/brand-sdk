@@ -48,6 +48,7 @@ export type WrittenRichText =
     | { outcome: 'unchanged' }
     | { outcome: 'not-reversible'; diagnostics: LegacyRichTextDiagnostic<LegacyRichTextNotReversibleCode>[] };
 
+const NO_LEGACY_FORM_CODE: LegacyRichTextNotReversibleCode = 'no-legacy-form';
 const TEXT_KEY = 'text';
 const PARAGRAPH_TYPE = 'paragraph';
 const TYPE_KEY = 'type';
@@ -385,39 +386,56 @@ const withoutUndeclaredInlines = (
     return inlines;
 };
 
-const toDisplayBlock = (block: RtePlugin.BlockNode, declared: DeclaredContent): RtePlugin.BlockNode => {
+function toDisplayBlocks(block: RtePlugin.BlockNode, declared: DeclaredContent): RtePlugin.BlockNode[] {
     const children = childrenOf(block);
     if (children === null) {
-        return block;
+        return [];
     }
 
     const definition = declared.blocks.get(block.type);
-    if (definition === undefined || definition.holdsText) {
-        return { ...block, children: withoutUndeclaredInlines(children, declared) };
+    if (definition === undefined) {
+        return toUndeclaredDisplayBlocks(children, declared);
     }
 
+    if (definition.holdsText) {
+        return [{ ...block, children: withoutUndeclaredInlines(children, declared) }];
+    }
+
+    return [{ ...block, children: toDisplayBlockList(children, declared) }];
+}
+
+function toDisplayBlockList(nodes: readonly StructuralNode[], declared: DeclaredContent): RtePlugin.BlockNode[] {
     const blocks: RtePlugin.BlockNode[] = [];
-    for (const child of children) {
-        if (isBlockShape(child)) {
-            blocks.push(toDisplayBlock(child, declared));
+
+    for (const node of nodes) {
+        if (isBlockShape(node)) {
+            blocks.push(...toDisplayBlocks(node, declared));
         }
     }
 
-    return { ...block, children: blocks };
-};
+    return blocks;
+}
+
+// The renderer skips an undeclared block and runs its content together, so a paragraph or its blocks stand in for it.
+// Slate keeps a text leaf beside every inline, so an undeclared block without one holds blocks.
+function toUndeclaredDisplayBlocks(
+    children: readonly StructuralNode[],
+    declared: DeclaredContent,
+): RtePlugin.BlockNode[] {
+    if (children.some(isTextRun)) {
+        return [{ type: PARAGRAPH_TYPE, children: withoutUndeclaredInlines(children, declared) }];
+    }
+
+    return toDisplayBlockList(children, declared);
+}
 
 /**
  * The renderer drops an inline whose plugin is missing, with its text. A display copy keeps that text; never write it back.
  */
 const toDisplayDocument = (document: OpenRichTextDocument, plugins: readonly RtePlugin[]): OpenRichTextDocument => {
     const declared = collectDeclaredContent(plugins);
-    const blocks: OpenRichTextDocument['blocks'] = [];
 
-    for (const block of document.blocks) {
-        blocks.push(toDisplayBlock(block, declared));
-    }
-
-    return { ...document, blocks };
+    return { ...document, blocks: toDisplayBlockList(document.blocks, declared) };
 };
 
 /**
@@ -436,12 +454,18 @@ export const writeRichTextValue = (
     document: RteDocument,
     columns: number | undefined,
     previous: string | undefined,
+    plugins: readonly RtePlugin[],
 ): WrittenRichText => {
     const converted = toLegacyRichText(document, { columns });
 
     switch (converted.outcome) {
         case 'exact': {
             const value = JSON.stringify(converted.value);
+            // A value this editor cannot open for editing again must never be written.
+            if (readRichTextValue(value, plugins).access !== 'editable') {
+                return { outcome: 'not-reversible', diagnostics: [{ code: NO_LEGACY_FORM_CODE, path: [] }] };
+            }
+
             if (value === previous) {
                 return { outcome: 'unchanged' };
             }

@@ -1,7 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { type RteDocument, toPlainText } from '@frontify/fondue/rich-text-editor';
-import { columnBreakPlugin, defaultPlugins } from '@frontify/fondue/rich-text-editor/plugins';
+import { columnBreakPlugin, defaultPlugins, mentionPlugin } from '@frontify/fondue/rich-text-editor/plugins';
 import { describe, expect, it } from 'vitest';
 
 import { readRichTextValue, writeRichTextValue } from './richTextValue';
@@ -237,19 +237,19 @@ describe('readRichTextValue', () => {
 
 describe('writeRichTextValue', () => {
     it('should write a document as legacy JSON', () => {
-        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, undefined);
+        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, undefined, EDITOR_PLUGINS);
 
         expect(written).toEqual({ outcome: 'written', value: PARAGRAPH });
     });
 
     it('should report a document that writes the value it was read from as unchanged', () => {
-        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, PARAGRAPH);
+        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, PARAGRAPH, EDITOR_PLUGINS);
 
         expect(written).toEqual({ outcome: 'unchanged' });
     });
 
     it('should write a document that differs from the previous value', () => {
-        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, MARKED_PARAGRAPH);
+        const written = writeRichTextValue(readEditableDocument(PARAGRAPH), COLUMNS, MARKED_PARAGRAPH, EDITOR_PLUGINS);
 
         expect(written).toEqual({ outcome: 'written', value: PARAGRAPH });
     });
@@ -257,15 +257,38 @@ describe('writeRichTextValue', () => {
     it('should report the codes of a document that has no legacy form', () => {
         const table: RteDocument = { version: 1, blocks: [{ type: 'table', children: [] }] };
 
-        const written = writeRichTextValue(table, COLUMNS, undefined);
+        const written = writeRichTextValue(table, COLUMNS, undefined, EDITOR_PLUGINS);
 
         expect(written).toEqual({ outcome: 'not-reversible', diagnostics: [{ code: 'no-legacy-form', path: [0] }] });
+    });
+
+    it('should not write a value that the plugins cannot open for editing again', () => {
+        const document: RteDocument = {
+            version: 1,
+            blocks: [
+                {
+                    type: 'paragraph',
+                    children: [
+                        { text: 'Hi ' },
+                        { type: 'mention', id: '1', username: 'ana', name: 'Ana' },
+                        { text: '' },
+                    ],
+                },
+            ],
+        };
+
+        const written = writeRichTextValue(document, COLUMNS, undefined, [
+            ...EDITOR_PLUGINS,
+            mentionPlugin({ items: [] }),
+        ]);
+
+        expect(written).toEqual({ outcome: 'not-reversible', diagnostics: [{ code: 'no-legacy-form', path: [] }] });
     });
 
     it.each(Object.entries(ROUND_TRIP_VALUES))('should read back what it wrote for %s', (_name, value) => {
         const document = readEditableDocument(value);
 
-        const written = writeRichTextValue(document, COLUMNS, undefined);
+        const written = writeRichTextValue(document, COLUMNS, undefined, EDITOR_PLUGINS);
 
         expect(written.outcome).toBe('written');
         if (written.outcome === 'written') {

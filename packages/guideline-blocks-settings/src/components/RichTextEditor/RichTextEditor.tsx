@@ -69,7 +69,7 @@ const EditableRichText = ({
 
         let echoIndex = -1;
         if (value !== undefined) {
-            echoIndex = sentValues.indexOf(value);
+            echoIndex = sentValues.lastIndexOf(value);
         }
 
         if (echoIndex === -1) {
@@ -93,7 +93,7 @@ const EditableRichText = ({
             previous = sentValues[sentValues.length - 1];
         }
 
-        const written = writeRichTextValue(document, columns, previous);
+        const written = writeRichTextValue(document, columns, previous, plugins);
 
         switch (written.outcome) {
             case 'written':

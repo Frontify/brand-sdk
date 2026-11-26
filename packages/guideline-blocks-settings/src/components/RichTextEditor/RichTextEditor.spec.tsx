@@ -35,6 +35,15 @@ const INLINE_BUTTON = JSON.stringify([
         ],
     },
 ]);
+const NESTED_BLOCKS = JSON.stringify([
+    {
+        type: 'div',
+        children: [
+            { type: 'p', children: [{ text: 'first block' }] },
+            { type: 'p', children: [{ text: 'second block' }] },
+        ],
+    },
+]);
 const UNKNOWN_MARK = JSON.stringify([{ type: 'p', children: [{ text: 'Lossy text', highlight: 'yellow' }] }]);
 
 /**
@@ -292,6 +301,44 @@ describe('RichTextEditor', () => {
         window.dispatchEvent(afterEditing);
 
         expect(afterEditing.defaultPrevented).toBe(false);
+    });
+
+    it('should keep the blocks of an undeclared block apart in the read only view', async () => {
+        render(<RichTextEditor isEditing={false} value={NESTED_BLOCKS} />);
+
+        const content = await screen.findByTestId(RTE_HTML_TEST_ID);
+        const first = screen.getByText('first block');
+        const second = screen.getByText('second block');
+
+        expect(content).toContainElement(first);
+        expect(first).not.toBe(second);
+        expect(first).not.toContainElement(second);
+        expect(second).not.toContainElement(first);
+        expect(first.tagName).toBe('P');
+        expect(second.tagName).toBe('P');
+    });
+
+    it('should show the latest saved value when the parent hands the saves back in turn', async () => {
+        const onTextChange = vi.fn();
+        const { rerender } = render(<RichTextEditor isEditing value={PARAGRAPH} onTextChange={onTextChange} />);
+        await enterViewport();
+        const editable = await findEditable();
+
+        await typeInto(editable, 'Hello world');
+        await blur(editable);
+        await typeInto(editable, 'Hello again');
+        await blur(editable);
+        await typeInto(editable, 'Hello world');
+        await blur(editable);
+        const [first, second] = onTextChange.mock.calls.map((call) => String(call[0]));
+
+        rerender(<RichTextEditor isEditing value={first} onTextChange={onTextChange} />);
+        rerender(<RichTextEditor isEditing value={second} onTextChange={onTextChange} />);
+        await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, EDIT_SETTLE_MS));
+        });
+
+        expect(editable).toHaveTextContent('Hello again');
     });
 
     it('should render the columns layout in edit mode', async () => {
