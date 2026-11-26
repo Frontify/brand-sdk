@@ -9,6 +9,7 @@ import {
     type GetAssetBulkDownloadTokenResponse,
 } from './GetAssetBulkDownloadToken';
 import { type GetCurrentUserPayload, type GetCurrentUserResponse } from './GetCurrentUser';
+import { type GetLinkDestinationsPayload, type GetLinkDestinationsResponse } from './GetLinkDestinations';
 import {
     type SetAssetIdsByBlockAssetKeyPayload,
     type SetAssetIdsByBlockAssetKeyResponse,
@@ -29,6 +30,7 @@ export type ApiMethodRegistry = ApiMethodNameValidator<{
         payload: GetAssetBulkDownloadTokenPayload;
         response: GetAssetBulkDownloadTokenResponse;
     };
+    getLinkDestinations: { payload: GetLinkDestinationsPayload; response: GetLinkDestinationsResponse };
     setAssetIdsByBlockAssetKey: {
         payload: SetAssetIdsByBlockAssetKeyPayload;
         response: SetAssetIdsByBlockAssetKeyResponse;

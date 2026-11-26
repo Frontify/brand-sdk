@@ -29,6 +29,7 @@ export type BlockApiMethod = ApiMethodNameValidator<
         | 'createAssets'
         | 'getAssetBulkDownloadToken'
         | 'getCurrentUser'
+        | 'getLinkDestinations'
         | 'setAssetIdsByBlockAssetKey'
     >
 >;
