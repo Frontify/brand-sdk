@@ -41,11 +41,15 @@ Changes:
 - Removed, with their replacements: `LinkPlugin` and `ButtonPlugin` (use `getLinkPlugin`), `UnorderedListPlugin` and `OrderedListPlugin` (use Fondue's `bulletListPlugin({ look: bulletListLook })` and `numberedListPlugin({ look: numberedListLook })`), `BreakAfterPlugin` (use `columns`), and `TextStylesWithoutImage` and `AllTextStyles` (Fondue's `alignPlugin()` needs no list).
 - Removed with no replacement, because they only served the legacy editor: the single text style plugins (`Heading1Plugin` and the others), the link and button modal components and their hooks and transforms, `FloatingToolbarStyles`, `KEY_ELEMENT_BREAK_AFTER_COLUMN`, `GAP_DEFAULT`, `getUrl`, `getLegacyUrl`, `getLinkFromEditor` and `getUrlFromLinkOrLegacyLink`.
 - `TextStyles`, `BlockStyles` and `BlockButtonStyles` stay.
+- Links keep their underline. The `--f-theme-settings-link-text-decoration` variable no longer applies, because a link must not be told apart by colour alone (WCAG 1.4.1).
 
 The editor never writes back a value that it cannot carry without loss. These values are shown read-only in edit mode:
 
-- a value whose conversion needs a review (for example a link with an unsafe address, or an element the new editor does not have);
+- a value whose conversion needs a review (for example a link with an unsafe address, a link whose two stored addresses differ, or an element the new editor does not have);
 - a value with content that the mounted plugins cannot hold;
-- an HTML or plain text value.
+- an HTML or plain text value, shown as the editor reads that HTML;
+- a value that uses a type name of the new format for an element it cannot convert, or that is larger than the converter's limits (5 MiB, 50,000 nodes, 64 levels or 1,000,000 characters in one text): only its text is shown, one paragraph for each top-level element.
 
-A value that is not valid legacy JSON, or is too large to convert, shows nothing. A user edit is not saved when the document has no legacy form; the page then keeps its warning about unsaved changes.
+A value that is not a legacy value (JSON that is not an array, or an array with an entry that is not a text or an element) shows nothing, as before.
+
+When an edit has no legacy form (for example a to-do item marked as in progress, a column break at the start or right after another one, or a list inside a to-do item), the editor does not save it. It marks the field as invalid, shows a message under it, and keeps the page's warning about unsaved changes until the author removes that content.
