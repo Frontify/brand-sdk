@@ -4,6 +4,7 @@ import { writeAlignment } from './alignment';
 import { toLegacyColor } from './color';
 import { copyValueUnbounded, isDeepEqual, setOwn } from './copyValue';
 import { inspectLegacyTree } from './inspectLegacyTree';
+import { isLegacyElement } from './legacyNode';
 import { MAX_BLOCK_NESTING_DEPTH } from './limits';
 import { type LinkParts, isSafeHref, readLinkValue, readSearchResultLink, writeButtonStyle, writeTarget } from './link';
 import {
@@ -34,6 +35,7 @@ import {
     LEGACY_COLOR_KEY,
     LEGACY_ID_KEY,
     LEGACY_INDENT_KEY,
+    LEGACY_INLINE_TYPES,
     LEGACY_LINK_TYPE,
     LEGACY_LIST_ITEM_PARAGRAPH_TYPE,
     LEGACY_LIST_ITEM_TYPE,
@@ -587,6 +589,33 @@ const wrapLinks = (items: InlineItem[]): LegacyNode[] => {
     return nodes;
 };
 
+const isLegacyInline = (node: LegacyNode): boolean => {
+    return isLegacyElement(node) && LEGACY_INLINE_TYPES.includes(node.type);
+};
+
+const createEmptyLeaf = (): LegacyText => ({ text: '' });
+
+// Slate keeps a text node before, after and between inline elements, so the legacy editor would add them on load.
+const surroundInlinesWithText = (nodes: LegacyNode[]): LegacyNode[] => {
+    const surrounded: LegacyNode[] = [];
+
+    for (const node of nodes) {
+        const previous: LegacyNode | undefined = surrounded[surrounded.length - 1];
+        if (isLegacyInline(node) && (previous === undefined || isLegacyInline(previous))) {
+            surrounded.push(createEmptyLeaf());
+        }
+
+        surrounded.push(node);
+    }
+
+    const last: LegacyNode | undefined = surrounded[surrounded.length - 1];
+    if (last !== undefined && isLegacyInline(last)) {
+        surrounded.push(createEmptyLeaf());
+    }
+
+    return surrounded;
+};
+
 const mapInline = (block: StoredNode, options: NestedOptions): LegacyNode[] | null => {
     const children = readNodeList(block.children);
     if (children === null) {
@@ -605,7 +634,7 @@ const mapInline = (block: StoredNode, options: NestedOptions): LegacyNode[] | nu
         return [{ text: '' }];
     }
 
-    return nodes;
+    return surroundInlinesWithText(nodes);
 };
 
 const mapTextBlock = (block: StoredNode, spec: TextBlockSpec, options: BlockOptions): LegacyElement[] => {
