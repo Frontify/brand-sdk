@@ -1,13 +1,13 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
 import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
-import { type RtePlugin } from '@frontify/fondue/rich-text-editor';
+import { type RteDocument, type RtePlugin } from '@frontify/fondue/rich-text-editor';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { getDefaultPluginsWithLinkChooser, getTitlePlugins } from './pluginPresets';
 import { RichTextEditor } from './RichTextEditor';
-import { readRichTextValue } from './richTextValue';
+import { readRichTextValue, writeRichTextValue } from './richTextValue';
 import { TextStylePluginsWithoutImage } from './textStylePlugins';
 
 const RICH_TEXT_EDITOR_TEST_ID = 'rich-text-editor';
@@ -73,6 +73,26 @@ const PRESETS: [string, () => readonly RtePlugin[]][] = [
     ['getTitlePlugins', () => getTitlePlugins()],
     ['getTitlePlugins without the image styles', () => getTitlePlugins(TextStylePluginsWithoutImage)],
 ];
+
+const ALIGNMENTS = ['left', 'right'];
+
+const readEditableDocument = (value: string, plugins: readonly RtePlugin[]): RteDocument => {
+    const stored = readRichTextValue(value, plugins);
+    if (stored.access !== 'editable') {
+        throw new Error(`Expected an editable value, got ${stored.access}`);
+    }
+
+    return stored.document;
+};
+
+const writeLegacyValue = (document: RteDocument, plugins: readonly RtePlugin[]): string => {
+    const written = writeRichTextValue(document, undefined, undefined, plugins);
+    if (written.outcome !== 'written') {
+        throw new Error(`Expected a written value, got ${written.outcome}`);
+    }
+
+    return written.value;
+};
 
 class IntersectionObserverStub {
     static instances: IntersectionObserverStub[] = [];
@@ -142,5 +162,16 @@ describe('plugin presets', () => {
         const stored = readRichTextValue(LINKED_PARAGRAPH, getTitlePlugins());
 
         expect(stored.access).toBe('readonly');
+    });
+
+    it.each(ALIGNMENTS)("should keep the legacy alignment value %s through the preset's align plugin", (align) => {
+        const legacyParagraph = stringify([{ type: 'p', align, children: [{ text: 'a' }] }]);
+
+        for (const plugins of [getDefaultPluginsWithLinkChooser(getAppBridgeBlockStub()), getTitlePlugins()]) {
+            const document = readEditableDocument(legacyParagraph, plugins);
+
+            expect(document.blocks[0]).toMatchObject({ align });
+            expect(JSON.parse(writeLegacyValue(document, plugins))).toMatchObject([{ align }]);
+        }
     });
 });

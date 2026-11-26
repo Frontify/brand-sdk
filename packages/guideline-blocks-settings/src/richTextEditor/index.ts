@@ -1,5 +1,7 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import './styles.css';
+
 export { RichTextEditor } from './RichTextEditor';
 export { getDefaultPluginsWithLinkChooser, getTitlePlugins } from './pluginPresets';
 export { getLinkPlugin, type GetLinkPluginOptions } from './linkPlugin';

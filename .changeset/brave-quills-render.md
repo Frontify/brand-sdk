@@ -4,7 +4,7 @@
 
 feat: add the 1.0 rich text editor as `@frontify/guideline-blocks-settings/rich-text-editor`
 
-The new entry point holds a `RichTextEditor` built on `@frontify/fondue/rich-text-editor` (Fondue 14.0.0-rc.3 or later), and presets made of Fondue plugins. The legacy `RichTextEditor`, its presets and its plugins at the package root do not change.
+The new entry point holds a `RichTextEditor` built on `@frontify/fondue/rich-text-editor` (Fondue 14.0.0-rc.3 or later), and presets made of Fondue plugins. The legacy `RichTextEditor`, its presets and its plugins at the package root do not change. Its styles are a separate stylesheet, `@frontify/guideline-blocks-settings/rich-text-editor/styles`, so the root stylesheet does not change.
 
 The stored value stays legacy Slate JSON: `value` and `onTextChange` are the same strings as before. The editor reads them through `convertLegacyRichText` and writes them through `toLegacyRichText`.
 

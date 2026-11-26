@@ -27,6 +27,7 @@
             "types": "./dist/rich-text-editor.d.ts",
             "import": "./dist/rich-text-editor.es.js"
         },
+        "./rich-text-editor/styles": "./dist/rich-text-editor.css",
         "./styles": "./dist/styles.css",
         "./tailwind": "./tailwind.config.ts"
     },
