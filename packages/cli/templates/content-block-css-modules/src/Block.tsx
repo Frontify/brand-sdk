@@ -1,5 +1,5 @@
-import { type Color, useBlockSettings } from '@frontify/app-bridge';
-import { type BlockProps } from '@frontify/guideline-blocks-settings';
+import { useBlockSettings } from '@frontify/app-bridge';
+import { type BlockProps, type Color } from '@frontify/guideline-blocks-settings';
 import { type CSSProperties, type FC } from 'react';
 
 import style from './style.module.css';
