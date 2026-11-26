@@ -1,5 +1,13 @@
 # @frontify/frontify-cli
 
+## 6.5.0
+
+### Minor Changes
+
+- [#1825](https://github.com/Frontify/brand-sdk/pull/1825) [`8f22405`](https://github.com/Frontify/brand-sdk/commit/8f22405ab4e216609e58bca2f08ab792d093233c) Thanks [@ragi96](https://github.com/ragi96)! - feat(create): scaffold content blocks on `@frontify/app-bridge` 4 and `@frontify/guideline-blocks-settings` 4
+  
+  `frontify-cli create` now generates content blocks that depend on the 4.x packages and on `@frontify/fondue` 14, which `@frontify/guideline-blocks-settings` 4 needs as a peer. Existing blocks are not affected.
+
 ## 6.4.4
 
 ### Patch Changes

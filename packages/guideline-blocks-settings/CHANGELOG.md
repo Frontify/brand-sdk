@@ -1,5 +1,11 @@
 # @frontify/guideline-blocks-settings
 
+## 4.0.1
+
+### Patch Changes
+
+- [#1824](https://github.com/Frontify/brand-sdk/pull/1824) [`cfb288e`](https://github.com/Frontify/brand-sdk/commit/cfb288ec97bb922a90d1196eaee8b4d74d24bcdd) Thanks [@ragi96](https://github.com/ragi96)! - chore(deps): require the stable `@frontify/app-bridge` `^4.0.0` as peer dependency
+
 ## 4.0.0
 
 ### Major Changes
