@@ -1,6 +1,6 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
-import { THEME_PREFIX } from './constants';
+import { THEME_PREFIX } from '../components/RichTextEditor/constants';
 
 export const THEME_KEYS = {
     heading1: 'heading1',

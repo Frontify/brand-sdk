@@ -1,4 +1,5 @@
 @import '@frontify/fondue/components/styles';
+@import '@frontify/fondue/rte/styles';
 @import '@frontify/fondue/rich-text-editor/styles';
 @import '@frontify/fondue/tokens/base';
 

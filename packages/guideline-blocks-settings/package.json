@@ -23,6 +23,10 @@
             "types": "./dist/index.d.ts",
             "default": "./dist/index.es.js"
         },
+        "./rich-text-editor": {
+            "types": "./dist/rich-text-editor.d.ts",
+            "import": "./dist/rich-text-editor.es.js"
+        },
         "./styles": "./dist/styles.css",
         "./tailwind": "./tailwind.config.ts"
     },

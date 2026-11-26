@@ -11,7 +11,7 @@ import {
     convertLegacyRichText,
     toLegacyPlainText,
     toLegacyRichText,
-} from '../../helpers/legacyRichText';
+} from '../helpers/legacyRichText';
 
 type StructuralNode = RtePlugin.BlockNode | RtePlugin.InlineNode;
 

@@ -37,7 +37,10 @@ export default defineConfig({
     },
     build: {
         lib: {
-            entry: resolve(import.meta.dirname, 'src/index.ts'),
+            entry: {
+                index: resolve(import.meta.dirname, 'src/index.ts'),
+                'rich-text-editor': resolve(import.meta.dirname, 'src/richTextEditor/index.ts'),
+            },
             // ESM only: its dependencies, such as @frontify/fondue and @frontify/app-bridge, are ESM too.
             formats: ['es'],
             fileName: (format: string) => `[name].${format}.js`,
