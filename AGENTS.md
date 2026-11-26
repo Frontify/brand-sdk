@@ -25,7 +25,7 @@ Stack: React 18, TypeScript, Vite, Vitest (happy-dom), oxlint, oxfmt, Tailwind 3
 
 ## Release lines
 
-- `main` is the stable line. `dev` is the prerelease line: it carries the next major versions and publishes under the `alpha` tag. The two differ substantially, so check which line you are on before you assume an API exists.
+- `main` is the current line and publishes under the `latest` tag. `app-bridge-v3` is the maintenance line for the 3.x versions of `@frontify/app-bridge` and `@frontify/guideline-blocks-settings`: it only receives security fixes and publishes under the `legacy-v3` tag. The two differ substantially, so check which line you are on before you assume an API exists.
 - A push to either line runs the changesets action. It opens the `chore: release packages` pull request and publishes to npm when that is merged.
 
 ## Skills
@@ -41,10 +41,9 @@ Checks are proxies for intent — never make one pass while its intent stays vio
 Rules the tooling already enforces (copyright header, import order, formatting, pull request title format) are omitted — the linter and CI catch those; these are the ones they do not:
 
 - This repository is public. Keep internal hostnames, private repository paths and customer data out of code, comments, changesets and pull requests.
-- Never commit on `main` or `dev`. Work on a branch and open a pull request against the line the change belongs to.
+- Never commit on `main` or `app-bridge-v3`. Work on a branch and open a pull request against the line the change belongs to.
 - Never edit a `CHANGELOG.md` or a package `version` by hand, and never run `changeset version` or `changeset publish`. The release pull request does both.
 - A change that consumers of a published package can observe needs a changeset. Changes to CI, repository tooling or root docs need none.
 - Start every `test(...)` and `it(...)` description with `should`. Fix the names of existing tests in a file when you touch it.
 - Treat every export as public API. Do not remove, rename or narrow one without the consumer check in the `public-api` skill.
 - Mark an API that is going away with a `@deprecated` JSDoc tag that names the replacement, and keep it working until the next major version.
-- `CODEOWNERS` lists `packages/app-bridge` file by file. Add a line when you add a file there.
