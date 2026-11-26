@@ -14,6 +14,8 @@ import {
     resetFormattingPlugin,
     softBreakPlugin,
     strikethroughPlugin,
+    type TypographyPluginOptions,
+    typographyPlugin,
     underlinePlugin,
 } from '@frontify/fondue/rich-text-editor/plugins';
 
@@ -22,6 +24,9 @@ import { bulletListLook, numberedListLook } from './looks';
 import { AllTextStylePlugins, TextStylePluginsWithoutImage } from './textStylePlugins';
 
 const LINK_KINDS_WITH_BUTTONS = ['text', 'button'] as const;
+
+/** The legacy autoformat replaced punctuation, arrows, legal signs and fractions, but never quotes. */
+const LEGACY_AUTOFORMAT_GROUPS: TypographyPluginOptions['groups'] = ['ellipsis', 'dashes', 'symbols', 'numeric'];
 
 /**
  * The full editing set: text styles, marks, links and buttons with the guideline's link search, and lists.
@@ -44,6 +49,7 @@ export const getDefaultPluginsWithLinkChooser = (appBridge: AppBridgeBlock): rea
     checkListPlugin(),
     numberedListPlugin({ look: numberedListLook }),
     resetFormattingPlugin(),
+    typographyPlugin({ groups: LEGACY_AUTOFORMAT_GROUPS }),
 ];
 
 /**
