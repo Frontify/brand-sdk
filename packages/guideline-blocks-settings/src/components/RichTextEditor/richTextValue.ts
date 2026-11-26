@@ -5,10 +5,24 @@ import { type RtePlugin, type RteDocument, parseHtml } from '@frontify/fondue/ri
 import {
     type LegacyRichTextDiagnostic,
     type LegacyRichTextNotReversibleCode,
+    type LegacyRichTextUnsupportedCode,
     type OpenRichTextDocument,
     convertLegacyRichText,
     toLegacyRichText,
 } from '../../helpers/legacyRichText';
+import { type MentionKind } from '../../helpers/legacyRichText/types';
+import {
+    LEGACY_BUTTON_TYPE,
+    LEGACY_CATEGORY_KEY,
+    LEGACY_ID_KEY,
+    LEGACY_LINK_TYPE,
+    LEGACY_MENTION_TYPE,
+    LINE_BREAK,
+    readMentionKind,
+} from '../../helpers/legacyRichText/vocabulary';
+
+// The converter's own list is private to it; this reader goes away when the converter ships its plain-text reader.
+const BARE_INLINE_TYPES: readonly string[] = [LEGACY_LINK_TYPE, LEGACY_BUTTON_TYPE, LEGACY_MENTION_TYPE];
 
 type StructuralNode = RtePlugin.BlockNode | RtePlugin.InlineNode;
 
@@ -34,11 +48,13 @@ export type WrittenRichText =
     | { outcome: 'unchanged' }
     | { outcome: 'not-reversible'; diagnostics: LegacyRichTextDiagnostic<LegacyRichTextNotReversibleCode>[] };
 
-const HTML_VALUE_CODE = 'html-value';
 const TEXT_KEY = 'text';
 const PARAGRAPH_TYPE = 'paragraph';
 const TYPE_KEY = 'type';
 const CHILDREN_KEY = 'children';
+
+// Block presets never offered mentions, and the legacy display showed no text for them.
+const NO_MENTION_TEXT = (): string => '';
 
 const collectDeclaredContent = (plugins: readonly RtePlugin[]): DeclaredContent => {
     const declared: DeclaredContent = {
@@ -172,6 +188,153 @@ const isCoveredBy = (document: OpenRichTextDocument, plugins: readonly RtePlugin
     return true;
 };
 
+type LegacyPlainTextNode = Record<string, unknown>;
+
+type LegacyPlainTextOptions = {
+    mentionText: (kind: MentionKind | undefined, id: string) => string;
+};
+
+type LegacyPlainText = { status: 'text'; text: string } | { status: 'no-legacy-tree' };
+
+const isRecord = (value: unknown): value is LegacyPlainTextNode =>
+    typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const isInlineNode = (node: LegacyPlainTextNode): boolean => {
+    if (typeof node[TEXT_KEY] === 'string') {
+        return true;
+    }
+
+    return typeof node[TYPE_KEY] === 'string' && BARE_INLINE_TYPES.includes(node[TYPE_KEY]);
+};
+
+const readChildNodes = (node: LegacyPlainTextNode): LegacyPlainTextNode[] => {
+    const children = node[CHILDREN_KEY];
+    if (!Array.isArray(children)) {
+        return [];
+    }
+
+    const items: unknown[] = children;
+
+    return items.filter(isRecord);
+};
+
+// Pushed in reverse so the stack pops the nodes in document order.
+const pushInDocumentOrder = (pending: LegacyPlainTextNode[], nodes: LegacyPlainTextNode[]): void => {
+    for (let index = nodes.length - 1; index >= 0; index--) {
+        pending.push(nodes[index]);
+    }
+};
+
+const readMentionText = (node: LegacyPlainTextNode, options: LegacyPlainTextOptions): string | null => {
+    const category = readMentionKind(node[LEGACY_CATEGORY_KEY]);
+    const id = node[LEGACY_ID_KEY];
+    if (category.status === 'unknown' || (typeof id !== 'string' && typeof id !== 'number')) {
+        return null;
+    }
+
+    return options.mentionText(category.kind, String(id));
+};
+
+const readInlineText = (inline: LegacyPlainTextNode, options: LegacyPlainTextOptions): string => {
+    const pieces: string[] = [];
+    const pending = [inline];
+
+    for (let node = pending.pop(); node !== undefined; node = pending.pop()) {
+        const text = node[TEXT_KEY];
+        if (typeof text === 'string') {
+            pieces.push(text);
+            continue;
+        }
+
+        if (node[TYPE_KEY] === LEGACY_MENTION_TYPE) {
+            const mentionText = readMentionText(node, options);
+            if (mentionText !== null) {
+                pieces.push(mentionText);
+                continue;
+            }
+        }
+
+        pushInDocumentOrder(pending, readChildNodes(node));
+    }
+
+    return pieces.join('');
+};
+
+/** The text-only view of a legacy value the converter cannot convert, to be replaced by the converter's plain-text reader. */
+const toLegacyPlainText = (value: string, options: LegacyPlainTextOptions): LegacyPlainText => {
+    let tree: unknown;
+    try {
+        tree = JSON.parse(value);
+    } catch {
+        return { status: 'no-legacy-tree' };
+    }
+
+    if (!Array.isArray(tree)) {
+        return { status: 'no-legacy-tree' };
+    }
+
+    const entries: unknown[] = tree;
+    const lines: string[] = [];
+    const pending: LegacyPlainTextNode[] = [];
+    pushInDocumentOrder(pending, entries.filter(isRecord));
+
+    for (let node = pending.pop(); node !== undefined; node = pending.pop()) {
+        if (isInlineNode(node)) {
+            lines.push(readInlineText(node, options));
+            continue;
+        }
+
+        const children = readChildNodes(node);
+        const inlines = children.filter(isInlineNode);
+        if (inlines.length > 0) {
+            lines.push(inlines.map((inline) => readInlineText(inline, options)).join(''));
+        }
+
+        pushInDocumentOrder(
+            pending,
+            children.filter((child) => !isInlineNode(child)),
+        );
+    }
+
+    return { status: 'text', text: lines.join(LINE_BREAK) };
+};
+
+const readHtmlValue = (value: string, plugins: readonly RtePlugin[]): StoredRichText => {
+    return { access: 'readonly', document: parseHtml(value, { plugins }) };
+};
+
+const readLegacyPlainText = (value: string, plugins: readonly RtePlugin[]): StoredRichText => {
+    const plain = toLegacyPlainText(value, { mentionText: NO_MENTION_TEXT });
+    if (plain.status === 'no-legacy-tree') {
+        return readHtmlValue(value, plugins);
+    }
+
+    const blocks: OpenRichTextDocument['blocks'] = [];
+    for (const line of plain.text.split(LINE_BREAK)) {
+        blocks.push({ type: PARAGRAPH_TYPE, children: [{ text: line }] });
+    }
+
+    return { access: 'readonly', document: { version: 1, blocks } };
+};
+
+const readUnsupportedValue = (
+    value: string | undefined,
+    code: LegacyRichTextUnsupportedCode | undefined,
+    plugins: readonly RtePlugin[],
+): StoredRichText => {
+    if (value === undefined || code === undefined) {
+        return { access: 'unreadable' };
+    }
+
+    switch (code) {
+        case 'html-value':
+            return readHtmlValue(value, plugins);
+        case 'reserved-type':
+        case 'limit-exceeded':
+            return readLegacyPlainText(value, plugins);
+    }
+};
+
 /**
  * Reads a stored legacy value for the editor: whether it can be edited without losing anything, only shown, or not read at all.
  */
@@ -187,12 +350,11 @@ export const readRichTextValue = (value: string | undefined, plugins: readonly R
             return { access: 'readonly', document: converted.document };
         case 'requires-review':
             return { access: 'readonly', document: converted.document };
-        case 'unsupported':
-            if (value !== undefined && converted.diagnostics.some(({ code }) => code === HTML_VALUE_CODE)) {
-                return { access: 'readonly', document: parseHtml(value, { plugins }) };
-            }
+        case 'unsupported': {
+            const first: LegacyRichTextDiagnostic<LegacyRichTextUnsupportedCode> | undefined = converted.diagnostics[0];
 
-            return { access: 'unreadable' };
+            return readUnsupportedValue(value, first?.code, plugins);
+        }
         case 'invalid':
             return { access: 'unreadable' };
     }

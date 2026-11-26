@@ -10,6 +10,7 @@ import { TextStylePluginsWithoutImage } from './textStylePlugins';
 const COLUMNS = 2;
 const EDITOR_PLUGINS = [...defaultPlugins, columnBreakPlugin({ columns: COLUMNS })];
 const OVER_THE_TEXT_LIMIT = 1_000_001;
+const DEEP_NESTING = 66;
 
 const stringify = (tree: unknown[]): string => JSON.stringify(tree);
 
@@ -143,13 +144,94 @@ describe('readRichTextValue', () => {
     it.each([
         ['JSON that is not a list', '42'],
         ['a node that is not a text or an element', JSON.stringify([{ type: 'p', children: [{ text: 5 }] }])],
-        [
-            'a text over the size limit',
-            stringify([{ type: 'p', children: [{ text: 'a'.repeat(OVER_THE_TEXT_LIMIT) }] }]),
-        ],
-        ['an element named like a new format block', stringify([{ type: 'textStyle', children: [{ text: 'Lorem' }] }])],
+        ['a list with a number in it', '[1]'],
+        ['a number', '100'],
     ])('should not read %s', (_name, value) => {
         expect(readRichTextValue(value, EDITOR_PLUGINS)).toEqual({ access: 'unreadable' });
+    });
+
+    it('should show the text of an element named like a new format block read only', () => {
+        const value = stringify([{ type: 'textStyle', children: [{ text: 'Lorem' }] }]);
+
+        expect(readRichTextValue(value, EDITOR_PLUGINS)).toEqual({
+            access: 'readonly',
+            document: { version: 1, blocks: [{ type: 'paragraph', children: [{ text: 'Lorem' }] }] },
+        });
+    });
+
+    it('should show the text around a reserved element read only', () => {
+        const value = stringify([
+            {
+                type: 'p',
+                children: [
+                    { text: 'before ' },
+                    { type: 'mention', id: { value: 1 }, category: 'user', children: [{ text: '' }] },
+                    { text: ' after' },
+                ],
+            },
+        ]);
+
+        expect(readRichTextValue(value, EDITOR_PLUGINS)).toEqual({
+            access: 'readonly',
+            document: { version: 1, blocks: [{ type: 'paragraph', children: [{ text: 'before  after' }] }] },
+        });
+    });
+
+    it('should show one line per item of a list with a nested list item read only', () => {
+        const value = stringify([
+            {
+                type: 'ul',
+                children: [
+                    {
+                        type: 'li',
+                        children: [
+                            { type: 'lic', children: [{ text: 'First' }] },
+                            {
+                                type: 'ul',
+                                children: [{ type: 'li', children: [{ type: 'lic', children: [{ text: 'Nested' }] }] }],
+                            },
+                        ],
+                    },
+                    { type: 'li', children: [{ type: 'lic', children: [{ text: 'Second' }] }] },
+                    { type: 'textStyle', children: [{ text: '' }] },
+                ],
+            },
+        ]);
+
+        expect(readRichTextValue(value, EDITOR_PLUGINS)).toEqual({
+            access: 'readonly',
+            document: {
+                version: 1,
+                blocks: [
+                    { type: 'paragraph', children: [{ text: 'First' }] },
+                    { type: 'paragraph', children: [{ text: 'Nested' }] },
+                    { type: 'paragraph', children: [{ text: 'Second' }] },
+                    { type: 'paragraph', children: [{ text: '' }] },
+                ],
+            },
+        });
+    });
+
+    it('should show the text of a deeply nested value read only', () => {
+        let node: Record<string, unknown> = { text: 'Deep text' };
+        for (let depth = 0; depth < DEEP_NESTING; depth++) {
+            node = { type: 'p', children: [node] };
+        }
+
+        expect(readRichTextValue(stringify([node]), EDITOR_PLUGINS)).toEqual({
+            access: 'readonly',
+            document: { version: 1, blocks: [{ type: 'paragraph', children: [{ text: 'Deep text' }] }] },
+        });
+    });
+
+    it('should show a text over the size limit read only', () => {
+        const text = 'a'.repeat(OVER_THE_TEXT_LIMIT);
+        const value = stringify([{ type: 'p', children: [{ text }] }]);
+
+        expect(readRichTextValue(value, EDITOR_PLUGINS)).toEqual({
+            access: 'readonly',
+            document: { version: 1, blocks: [{ type: 'paragraph', children: [{ text }] }] },
+        });
     });
 });
 
