@@ -102,6 +102,7 @@ Each result has `diagnostics`: a list of `{ code, path }`. The path holds child 
 | `unknown-property`     | `requires-review` | A property the new format does not have. It is kept as stored where the format allows it. |
 | `mention-unresolved`   | `requires-review` | The resolver does not know the mention. Its id stays; its names are empty.          |
 | `link-unsafe`          | `requires-review` | A link address that is not http, https, mailto, tel or relative. The text stays without the link. |
+| `link-conflict`        | `requires-review` | A link that shows another address or tab while it is edited than when it is viewed. It keeps what viewers see; if the chosen address is not text, it keeps the url. |
 | `button-style-unknown` | `requires-review` | A button style other than primary, secondary or tertiary. It becomes a plain link.  |
 | `color-unparsed`       | `requires-review` | A text colour that is not `rgb()`, `rgba()`, `#rgb`, `#rrggbb` or `#rrggbbaa`. It is removed. |
 | `excluded-marks`       | `requires-review` | Text that is both subscript and superscript. It keeps subscript.                    |

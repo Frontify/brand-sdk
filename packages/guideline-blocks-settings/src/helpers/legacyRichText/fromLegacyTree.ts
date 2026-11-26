@@ -105,7 +105,9 @@ type LinkReading =
     | { status: 'linked'; link: LinkValue }
     | { status: 'button-style-unknown'; link: LinkValue }
     | { status: 'chosen-link-unknown'; link: LinkValue }
+    | { status: 'link-conflict'; link: LinkValue }
     | { status: 'unsafe' };
+type EditorView = { url: unknown; target: unknown; searchResultLink: unknown; chosenOpenInNewTab: unknown };
 type MentionNames = Pick<MentionInline, 'username' | 'name'>;
 
 const BLOCK_KEYS = ['type', 'children'];
@@ -352,11 +354,23 @@ const readChosenOpenInNewTab = (chosenLink: object): unknown => {
     return chosenLink.openInNewTab;
 };
 
+// The legacy editor reads the url and target of an anchor; the legacy display reads its chosen link.
+const editorViewDiffers = (view: EditorView): boolean => {
+    const { url, target, searchResultLink, chosenOpenInNewTab } = view;
+    const addressDiffers = Boolean(url) && Boolean(searchResultLink) && url !== searchResultLink;
+    const tabDiffers = readsAsNewTab(target) !== Boolean(chosenOpenInNewTab);
+
+    return addressDiffers || tabDiffers;
+};
+
 const readAnchor = (element: LegacyElement): LinkReading => {
     const chosenLink = element[LEGACY_CHOSEN_LINK_KEY];
-    let href: unknown = element[LEGACY_URL_KEY];
-    let openInNewTab = readsAsNewTab(element[LEGACY_TARGET_KEY]);
+    const url = element[LEGACY_URL_KEY];
+    const target = element[LEGACY_TARGET_KEY];
+    let href: unknown = url;
+    let openInNewTab = readsAsNewTab(target);
     let hasKnownChosenLink = true;
+    let hasEditorConflict = false;
 
     if (typeof chosenLink === 'object' && chosenLink !== null) {
         const searchResultLink = readSearchResultLink(chosenLink);
@@ -368,6 +382,7 @@ const readAnchor = (element: LegacyElement): LinkReading => {
         const flag = readChosenOpenInNewTab(chosenLink);
         openInNewTab = Boolean(flag);
         hasKnownChosenLink = flag === true || flag === false || flag === undefined || flag === null;
+        hasEditorConflict = editorViewDiffers({ url, target, searchResultLink, chosenOpenInNewTab: flag });
     } else if (Boolean(chosenLink)) {
         // The legacy display takes any truthy chosenLink for a chosen link: no search result and no new tab.
         openInNewTab = false;
@@ -381,6 +396,10 @@ const readAnchor = (element: LegacyElement): LinkReading => {
     const link = createLinkValue({ href, openInNewTab, appearance: undefined });
     if (!hasKnownChosenLink) {
         return { status: 'chosen-link-unknown', link };
+    }
+
+    if (hasEditorConflict) {
+        return { status: 'link-conflict', link };
     }
 
     return { status: 'linked', link };
@@ -556,6 +575,10 @@ const appendLink = (output: OpenInline[], element: LegacyElement, options: Inlin
             break;
         case 'chosen-link-unknown':
             report(context, 'unknown-property', path);
+            link = reading.link;
+            break;
+        case 'link-conflict':
+            report(context, 'link-conflict', path);
             link = reading.link;
             break;
         case 'button-style-unknown':
