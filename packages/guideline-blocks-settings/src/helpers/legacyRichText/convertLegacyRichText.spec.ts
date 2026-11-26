@@ -193,6 +193,79 @@ describe('convertLegacyRichText mapping', () => {
         });
     });
 
+    it('should accept the stored value of a mention without reporting it or copying it (MIG-13)', () => {
+        const resolveMention: ResolveMention = (): MentionLookup => {
+            return { status: 'resolved', username: '@ada', name: 'Ada' };
+        };
+
+        const result = convertTree(
+            [
+                {
+                    type: 'p',
+                    children: [
+                        {
+                            type: 'mention',
+                            value: 'Old Label',
+                            category: 'user',
+                            id: 'user-1',
+                            children: [{ text: '' }],
+                        },
+                    ],
+                },
+            ],
+            resolveMention,
+        );
+
+        expect(result).toEqual({
+            outcome: 'exact',
+            document: {
+                version: 1,
+                blocks: [
+                    { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '@ada', name: 'Ada' }] },
+                ],
+            },
+            diagnostics: [],
+        });
+        expect(JSON.stringify(result.document)).not.toContain('Old Label');
+    });
+
+    it.each([{ value: { a: 1 } }, { value: 5 }, { value: null }, { value: ['x'] }])(
+        'should report a mention value of $value that is not text (MIG-13)',
+        ({ value }) => {
+            const resolveMention: ResolveMention = (): MentionLookup => {
+                return { status: 'resolved', username: '@ada', name: 'Ada' };
+            };
+
+            const result = convertTree(
+                [
+                    {
+                        type: 'p',
+                        children: [
+                            { type: 'mention', value, category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        ],
+                    },
+                ],
+                resolveMention,
+            );
+
+            expect(result.diagnostics).toEqual([{ code: 'unknown-property', path: [0, 0] }]);
+        },
+    );
+
+    it('should accept a mention without a value (MIG-13)', () => {
+        const resolveMention: ResolveMention = (): MentionLookup => {
+            return { status: 'resolved', username: '@ada', name: 'Ada' };
+        };
+
+        const result = convertTree(
+            [{ type: 'p', children: [{ type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] }] }],
+            resolveMention,
+        );
+
+        expect(result.outcome).toBe('exact');
+        expect(result.diagnostics).toEqual([]);
+    });
+
     it('should review a mention the resolver does not know (MIG-13)', () => {
         const result = convertTree(
             [
@@ -868,6 +941,11 @@ describe('convertLegacyRichText mapping', () => {
 });
 
 describe('convertLegacyRichText alignment', () => {
+    it.todo('should read left as start and right as end in a left-to-right block (MIG-14)');
+    it.todo('should read left as end and right as start in a right-to-left block (MIG-14)');
+    it.todo('should write start and end back by the first strong character of the block (MIG-14)');
+    it.todo('should keep center and justify in either direction (MIG-14)');
+
     it.each(['left', 'center', 'right', 'justify'])('should map the legacy alignment %s (MIG-14)', (align) => {
         const result = convertTree([{ type: 'p', align, children: [{ text: 'Lorem' }] }]);
 

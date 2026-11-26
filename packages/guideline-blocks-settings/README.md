@@ -78,7 +78,7 @@ if (converted.outcome === 'exact') {
 }
 ```
 
-`resolveMention(kind, id)` returns the names a mention shows: `{ status: 'resolved', username, name }`, or `{ status: 'unknown' }`. `kind` is empty for a person, or `'group'` or `'all'`. Without a resolver, every mention is unresolved.
+`resolveMention(kind, id)` returns the names a mention shows: `{ status: 'resolved', username, name }`, or `{ status: 'unknown' }`. `kind` is empty for a person, or `'group'` or `'all'`. Without a resolver, every mention is unresolved. `toLegacyRichText` writes a mention's `name` as its legacy `value`, the label legacy readers show.
 
 `columns` is the column count of the legacy editor. The first `columns - 1` column breaks are active, the others inactive. The default is `1`.
 
