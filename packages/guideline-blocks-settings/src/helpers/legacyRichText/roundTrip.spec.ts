@@ -372,7 +372,9 @@ describe('legacy rich text round trips over an unresolved mention value', () => 
             {
                 type: 'p',
                 children: [
+                    { text: '' },
                     { type: 'mention', value: 'Old Label', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                    { text: '' },
                 ],
             },
         ]);
@@ -390,7 +392,7 @@ describe('legacy rich text round trips over an unresolved mention value', () => 
         }
 
         expect(JSON.stringify(written.value)).toBe(
-            '[{"type":"p","children":[{"type":"mention","value":"Old Label","category":"user","id":"user-1","children":[{"text":""}]}]}]',
+            '[{"type":"p","children":[{"text":""},{"type":"mention","value":"Old Label","category":"user","id":"user-1","children":[{"text":""}]},{"text":""}]}]',
         );
         expect(convertLegacyRichText(JSON.stringify(written.value))).toEqual(converted);
     });

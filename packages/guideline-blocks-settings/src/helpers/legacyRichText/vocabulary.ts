@@ -21,6 +21,8 @@ export const LEGACY_EMOJI_TYPE = 'emoji';
 export const LEGACY_BUTTON_TYPE = 'button';
 export const LEGACY_MENTION_TYPE = 'mention';
 export const LEGACY_CHECKBOX_ITEM_TYPE = 'checkbox-item';
+/** The element types the legacy editors treat as inline, so Slate keeps a text node before, after and between them. */
+export const LEGACY_INLINE_TYPES = [LEGACY_LINK_TYPE, LEGACY_BUTTON_TYPE, LEGACY_MENTION_TYPE];
 
 export const LEGACY_ALIGN_KEY = 'align';
 export const LEGACY_URL_KEY = 'url';
