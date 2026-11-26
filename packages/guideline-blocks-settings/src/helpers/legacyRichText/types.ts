@@ -96,3 +96,12 @@ export type ToLegacyRichTextResult =
           value: null;
           diagnostics: LegacyRichTextDiagnostic<LegacyRichTextNotReversibleCode>[];
       };
+
+export type MentionText = (...parameters: Parameters<ResolveMention>) => string;
+
+export type ToLegacyPlainTextOptions = {
+    /** Gives the text a mention reads as. It has no default, so the caller decides how a mention shows. */
+    mentionText: MentionText;
+};
+
+export type ToLegacyPlainTextResult = { status: 'text'; text: string } | { status: 'no-legacy-tree' };

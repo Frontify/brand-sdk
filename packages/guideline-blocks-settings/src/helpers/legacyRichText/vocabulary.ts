@@ -15,6 +15,9 @@ export const LEGACY_LIST_ITEM_TYPE = 'li';
 export const LEGACY_BULLET_LIST_TYPE = 'ul';
 export const LEGACY_NUMBERED_LIST_TYPE = 'ol';
 export const LEGACY_LINK_TYPE = 'a';
+/** A link stored under the element type `link` instead of `a`. */
+export const LEGACY_LINK_ELEMENT_TYPE = 'link';
+export const LEGACY_EMOJI_TYPE = 'emoji';
 export const LEGACY_BUTTON_TYPE = 'button';
 export const LEGACY_MENTION_TYPE = 'mention';
 export const LEGACY_CHECKBOX_ITEM_TYPE = 'checkbox-item';
