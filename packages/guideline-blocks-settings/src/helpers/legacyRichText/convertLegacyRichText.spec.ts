@@ -286,6 +286,92 @@ describe('convertLegacyRichText mapping', () => {
         ]);
     });
 
+    it('should use the stored value as the name when the resolver does not know the mention (Q6, MIG-13)', () => {
+        const result = convertTree(
+            [
+                {
+                    type: 'p',
+                    children: [
+                        {
+                            type: 'mention',
+                            value: 'Old Label',
+                            category: 'user',
+                            id: 'user-1',
+                            children: [{ text: '' }],
+                        },
+                    ],
+                },
+            ],
+            () => ({ status: 'unknown' }),
+        );
+
+        expect(result.diagnostics).toEqual([{ code: 'mention-unresolved', path: [0, 0] }]);
+        expect(result.document?.blocks).toEqual([
+            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '', name: 'Old Label' }] },
+        ]);
+    });
+
+    it('should use the stored value as the name when there is no resolver (Q6, MIG-13)', () => {
+        const result = convertTree([
+            {
+                type: 'p',
+                children: [
+                    { type: 'mention', value: 'Old Label', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                ],
+            },
+        ]);
+
+        expect(result.diagnostics).toEqual([{ code: 'mention-unresolved', path: [0, 0] }]);
+        expect(result.document?.blocks).toEqual([
+            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '', name: 'Old Label' }] },
+        ]);
+    });
+
+    it('should keep the resolver names over the stored value for a resolved mention (Q6, MIG-13)', () => {
+        const result = convertTree(
+            [
+                {
+                    type: 'p',
+                    children: [
+                        {
+                            type: 'mention',
+                            value: 'Old Label',
+                            category: 'user',
+                            id: 'user-1',
+                            children: [{ text: '' }],
+                        },
+                    ],
+                },
+            ],
+            () => ({ status: 'resolved', username: '@ada', name: 'Ada' }),
+        );
+
+        expect(result.diagnostics).toEqual([]);
+        expect(result.document?.blocks).toEqual([
+            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '@ada', name: 'Ada' }] },
+        ]);
+    });
+
+    it('should leave the name empty when an unresolved mention has a value that is not text (Q6, MIG-13)', () => {
+        const result = convertTree(
+            [
+                {
+                    type: 'p',
+                    children: [{ type: 'mention', value: 5, category: 'user', id: 'user-1', children: [{ text: '' }] }],
+                },
+            ],
+            () => ({ status: 'unknown' }),
+        );
+
+        expect(result.diagnostics).toEqual([
+            { code: 'unknown-property', path: [0, 0] },
+            { code: 'mention-unresolved', path: [0, 0] },
+        ]);
+        expect(result.document?.blocks).toEqual([
+            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '', name: '' }] },
+        ]);
+    });
+
     it.each([
         { name: 'an id that is not text or a number', mention: { id: { value: 1 }, category: 'user' } },
         { name: 'a category outside the three', mention: { id: 'user-1', category: 'team' } },

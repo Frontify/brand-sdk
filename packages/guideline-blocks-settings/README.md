@@ -78,7 +78,7 @@ if (converted.outcome === 'exact') {
 }
 ```
 
-`resolveMention(kind, id)` returns the names a mention shows: `{ status: 'resolved', username, name }`, or `{ status: 'unknown' }`. `kind` is empty for a person, or `'group'` or `'all'`. Without a resolver, every mention is unresolved. `toLegacyRichText` writes a mention's `name` as its legacy `value`, the label legacy readers show.
+`resolveMention(kind, id)` returns the names a mention shows: `{ status: 'resolved', username, name }`, or `{ status: 'unknown' }`. `kind` is empty for a person, or `'group'` or `'all'`. Without a resolver, every mention is unresolved. An unresolved mention keeps its legacy `value` as its name, with an empty username. `toLegacyRichText` writes a mention's `name` as its legacy `value`, the label legacy readers show.
 
 `columns` is the column count of the legacy editor. The first `columns - 1` column breaks are active, the others inactive. The default is `1`.
 
@@ -100,7 +100,7 @@ Each result has `diagnostics`: a list of `{ code, path }`. The path holds child 
 | ---------------------- | ----------------- | ----------------------------------------------------------------------------------- |
 | `unknown-element`      | `requires-review` | An element type the new format does not have, or an element in the wrong place. It is kept as stored. |
 | `unknown-property`     | `requires-review` | A property the new format does not have. It is kept as stored where the format allows it. |
-| `mention-unresolved`   | `requires-review` | The resolver does not know the mention. Its id stays; its names are empty.          |
+| `mention-unresolved`   | `requires-review` | The resolver does not know the mention. Its id stays; its name is the legacy label, its username is empty.          |
 | `link-unsafe`          | `requires-review` | A link address that is not http, https, mailto, tel or relative. The text stays without the link. |
 | `link-conflict`        | `requires-review` | A link that shows another address or tab while it is edited than when it is viewed. It keeps what viewers see; if the chosen address is not text, it keeps the url. |
 | `button-style-unknown` | `requires-review` | A button style other than primary, secondary or tertiary. It becomes a plain link.  |

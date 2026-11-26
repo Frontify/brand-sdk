@@ -543,7 +543,7 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
         ]),
         expectedOutcome: 'requires-review',
         expectedDocument: documentOf([
-            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '', name: '' }] },
+            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '', name: 'Ada Lovelace' }] },
         ]),
         expectedDiagnostics: [{ code: 'mention-unresolved', path: [0, 0] }],
     },
@@ -567,7 +567,7 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
         expectedDocument: documentOf([
             {
                 type: 'paragraph',
-                children: [{ type: 'mention', id: 'group-1', username: '', name: '', kind: 'group' }],
+                children: [{ type: 'mention', id: 'group-1', username: '', name: 'Ada Lovelace', kind: 'group' }],
             },
         ]),
         expectedDiagnostics: [{ code: 'mention-unresolved', path: [0, 0] }],
@@ -584,7 +584,24 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
         ]),
         expectedOutcome: 'requires-review',
         expectedDocument: documentOf([
-            { type: 'paragraph', children: [{ type: 'mention', id: 'all', username: '', name: '', kind: 'all' }] },
+            {
+                type: 'paragraph',
+                children: [{ type: 'mention', id: 'all', username: '', name: 'Ada Lovelace', kind: 'all' }],
+            },
+        ]),
+        expectedDiagnostics: [{ code: 'mention-unresolved', path: [0, 0] }],
+    },
+    {
+        id: 'mention-empty-value-unresolved',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [{ type: 'mention', value: '', category: 'user', id: 'user-1', children: [{ text: '' }] }],
+            },
+        ]),
+        expectedOutcome: 'requires-review',
+        expectedDocument: documentOf([
+            { type: 'paragraph', children: [{ type: 'mention', id: 'user-1', username: '', name: '' }] },
         ]),
         expectedDiagnostics: [{ code: 'mention-unresolved', path: [0, 0] }],
     },
