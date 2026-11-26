@@ -318,7 +318,7 @@ describe('RichTextEditor', () => {
         expect(second.tagName).toBe('P');
     });
 
-    it('should show the latest saved value when the parent hands the saves back in turn', async () => {
+    it('should keep its own text while the parent hands the saves back in order', async () => {
         const onTextChange = vi.fn();
         const { rerender } = render(<RichTextEditor isEditing value={PARAGRAPH} onTextChange={onTextChange} />);
         await enterViewport();
@@ -330,15 +330,18 @@ describe('RichTextEditor', () => {
         await blur(editable);
         await typeInto(editable, 'Hello world');
         await blur(editable);
-        const [first, second] = onTextChange.mock.calls.map((call) => String(call[0]));
+        const saved = onTextChange.mock.calls.map((call) => String(call[0]));
 
-        rerender(<RichTextEditor isEditing value={first} onTextChange={onTextChange} />);
-        rerender(<RichTextEditor isEditing value={second} onTextChange={onTextChange} />);
-        await act(async () => {
-            await new Promise((resolve) => setTimeout(resolve, EDIT_SETTLE_MS));
-        });
+        for (const echo of saved) {
+            rerender(<RichTextEditor isEditing value={echo} onTextChange={onTextChange} />);
+            await act(async () => {
+                await new Promise((resolve) => setTimeout(resolve, EDIT_SETTLE_MS));
+            });
 
-        expect(editable).toHaveTextContent('Hello again');
+            expect(editable).toHaveTextContent('Hello world');
+        }
+
+        expect(onTextChange).toHaveBeenCalledTimes(3);
     });
 
     it('should render the columns layout in edit mode', async () => {

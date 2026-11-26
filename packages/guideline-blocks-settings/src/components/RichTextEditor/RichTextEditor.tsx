@@ -69,7 +69,7 @@ const EditableRichText = ({
 
         let echoIndex = -1;
         if (value !== undefined) {
-            echoIndex = sentValues.lastIndexOf(value);
+            echoIndex = sentValues.indexOf(value);
         }
 
         if (echoIndex === -1) {
