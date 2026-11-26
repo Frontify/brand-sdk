@@ -1,14 +1,17 @@
 /* (c) Copyright Frontify Ltd., all rights reserved. */
 
+import { getAppBridgeBlockStub } from '@frontify/app-bridge/testing';
 import { type RteDocument, toPlainText } from '@frontify/fondue/rich-text-editor';
 import { columnBreakPlugin, defaultPlugins, mentionPlugin } from '@frontify/fondue/rich-text-editor/plugins';
 import { describe, expect, it } from 'vitest';
 
+import { getDefaultPluginsWithLinkChooser } from './pluginPresets';
 import { readRichTextValue, writeRichTextValue } from './richTextValue';
 import { TextStylePluginsWithoutImage } from './textStylePlugins';
 
 const COLUMNS = 2;
 const EDITOR_PLUGINS = [...defaultPlugins, columnBreakPlugin({ columns: COLUMNS })];
+const NESTED_HTML_DEPTH = 5000;
 const OVER_THE_TEXT_LIMIT = 1_000_001;
 const DEEP_NESTING = 66;
 
@@ -152,6 +155,40 @@ describe('readRichTextValue', () => {
         if (stored.access === 'readonly') {
             expect(toPlainText(stored.document, { plugins: EDITOR_PLUGINS })).toBe('Lorem ipsum');
         }
+    });
+
+    it.each([
+        [
+            'a link with an extra key',
+            { type: 'a', url: 'https://example.com', extra: 1, children: [{ text: 'linked' }] },
+            'linked',
+        ],
+        [
+            'a link around a mention',
+            {
+                type: 'a',
+                url: 'https://example.com',
+                children: [{ type: 'mention', category: 'user', id: '1', children: [{ text: '' }] }, { text: 'after' }],
+            },
+            'after',
+        ],
+        ['an unknown inline type', { type: 'sparkle', children: [{ text: 'shiny' }] }, 'shiny'],
+    ])('should show the text of %s read only', (_name, inline, text) => {
+        const plugins = getDefaultPluginsWithLinkChooser(getAppBridgeBlockStub());
+        const value = stringify([{ type: 'p', children: [{ text: '' }, inline, { text: '' }] }]);
+
+        const stored = readRichTextValue(value, plugins);
+
+        expect(stored.access).toBe('readonly');
+        if (stored.access === 'readonly') {
+            expect(toPlainText(stored.document, { plugins })).toContain(text);
+        }
+    });
+
+    it('should read deeply nested HTML without throwing', () => {
+        const value = `${'<div>'.repeat(NESTED_HTML_DEPTH)}x`;
+
+        expect(() => readRichTextValue(value, EDITOR_PLUGINS)).not.toThrow();
     });
 
     it.each([

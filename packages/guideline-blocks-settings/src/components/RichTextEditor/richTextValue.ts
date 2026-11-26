@@ -179,6 +179,49 @@ const isCoveredBy = (document: OpenRichTextDocument, plugins: readonly RtePlugin
     return true;
 };
 
+const hasUndeclaredInline = (child: StructuralNode, declared: DeclaredContent): boolean => {
+    if (isTextRun(child)) {
+        return false;
+    }
+
+    return typeof child.type !== 'string' || !declared.inlines.has(child.type);
+};
+
+const hasUndeclaredBlock = (block: StructuralNode, declared: DeclaredContent): boolean => {
+    if (typeof block.type !== 'string') {
+        return true;
+    }
+
+    const definition = declared.blocks.get(block.type);
+    const children = childrenOf(block);
+    if (definition === undefined || children === null) {
+        return true;
+    }
+
+    for (const child of children) {
+        if (definition.holdsText) {
+            if (hasUndeclaredInline(child, declared)) {
+                return true;
+            }
+        } else if (isTextRun(child) || hasUndeclaredBlock(child, declared)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+// The renderer draws a node no plugin declares as nothing, so its text would vanish from the view.
+const hasUndeclaredNode = (document: OpenRichTextDocument, declared: DeclaredContent): boolean => {
+    for (const block of document.blocks) {
+        if (hasUndeclaredBlock(block, declared)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
 const readHtmlValue = (value: string, plugins: readonly RtePlugin[]): StoredRichText => {
     return { access: 'readonly', document: parseHtml(value, { plugins }) };
 };
@@ -215,6 +258,18 @@ const readUnsupportedValue = (
     }
 };
 
+const readConvertedDocument = (
+    value: string | undefined,
+    document: OpenRichTextDocument,
+    plugins: readonly RtePlugin[],
+): StoredRichText => {
+    if (value !== undefined && hasUndeclaredNode(document, collectDeclaredContent(plugins))) {
+        return readLegacyPlainText(value, plugins);
+    }
+
+    return { access: 'readonly', document };
+};
+
 const readStoredValue = (value: string | undefined, plugins: readonly RtePlugin[]): StoredRichText => {
     const converted = convertLegacyRichText(value);
 
@@ -224,9 +279,9 @@ const readStoredValue = (value: string | undefined, plugins: readonly RtePlugin[
                 return { access: 'editable', document: converted.document };
             }
 
-            return { access: 'readonly', document: converted.document };
+            return readConvertedDocument(value, converted.document, plugins);
         case 'requires-review':
-            return { access: 'readonly', document: converted.document };
+            return readConvertedDocument(value, converted.document, plugins);
         case 'unsupported': {
             const first: LegacyRichTextDiagnostic<LegacyRichTextUnsupportedCode> | undefined = converted.diagnostics[0];
 
@@ -237,101 +292,20 @@ const readStoredValue = (value: string | undefined, plugins: readonly RtePlugin[
     }
 };
 
-const isInlineShape = (node: StructuralNode): node is RtePlugin.InlineNode =>
-    isTextRun(node) || typeof node.type === 'string';
-
-const isBlockShape = (node: StructuralNode): node is RtePlugin.BlockNode => typeof node.type === 'string';
-
-// Recursion is bounded by the converter's nesting limit.
-const withoutUndeclaredInlines = (
-    children: readonly StructuralNode[],
-    declared: DeclaredContent,
-): RtePlugin.InlineNode[] => {
-    const inlines: RtePlugin.InlineNode[] = [];
-
-    for (const child of children) {
-        if (!isInlineShape(child)) {
-            continue;
-        }
-
-        if (isTextRun(child) || (child.type !== undefined && declared.inlines.has(child.type))) {
-            inlines.push(child);
-            continue;
-        }
-
-        inlines.push(...withoutUndeclaredInlines(childrenOf(child) ?? [], declared));
-    }
-
-    return inlines;
-};
-
-function toDisplayBlocks(block: RtePlugin.BlockNode, declared: DeclaredContent): RtePlugin.BlockNode[] {
-    const children = childrenOf(block);
-    if (children === null) {
-        return [];
-    }
-
-    const definition = declared.blocks.get(block.type);
-    if (definition === undefined) {
-        return toUndeclaredDisplayBlocks(children, declared);
-    }
-
-    if (definition.holdsText) {
-        return [{ ...block, children: withoutUndeclaredInlines(children, declared) }];
-    }
-
-    return [{ ...block, children: toDisplayBlockList(children, declared) }];
-}
-
-function toDisplayBlockList(nodes: readonly StructuralNode[], declared: DeclaredContent): RtePlugin.BlockNode[] {
-    const blocks: RtePlugin.BlockNode[] = [];
-
-    for (const node of nodes) {
-        if (isTextRun(node)) {
-            blocks.push({ type: PARAGRAPH_TYPE, children: [node] });
-        } else if (isBlockShape(node)) {
-            blocks.push(...toDisplayBlocks(node, declared));
-        }
-    }
-
-    return blocks;
-}
-
-// The renderer skips an undeclared block and runs its content together, so a paragraph or its blocks stand in for it.
-// Slate keeps a text leaf beside every inline, so an undeclared block without one holds blocks.
-function toUndeclaredDisplayBlocks(
-    children: readonly StructuralNode[],
-    declared: DeclaredContent,
-): RtePlugin.BlockNode[] {
-    const holdsInlineContent = children.some(
-        (child) => isTextRun(child) || (typeof child.type === 'string' && declared.inlines.has(child.type)),
-    );
-    if (holdsInlineContent) {
-        return [{ type: PARAGRAPH_TYPE, children: withoutUndeclaredInlines(children, declared) }];
-    }
-
-    return toDisplayBlockList(children, declared);
-}
-
-/**
- * The renderer drops an inline whose plugin is missing, with its text. A display copy keeps that text; never write it back.
- */
-const toDisplayDocument = (document: OpenRichTextDocument, plugins: readonly RtePlugin[]): OpenRichTextDocument => {
-    const declared = collectDeclaredContent(plugins);
-
-    return { ...document, blocks: toDisplayBlockList(document.blocks, declared) };
-};
-
 /**
  * Reads a stored legacy value for the editor: whether it can be edited without losing anything, only shown, or not read at all.
  */
 export const readRichTextValue = (value: string | undefined, plugins: readonly RtePlugin[]): StoredRichText => {
-    const stored = readStoredValue(value, plugins);
-    if (stored.access === 'readonly') {
-        return { access: 'readonly', document: toDisplayDocument(stored.document, plugins) };
-    }
+    try {
+        return readStoredValue(value, plugins);
+    } catch (error) {
+        // HTML nested deeper than the call stack allows; the legacy reader failed on it too and showed nothing.
+        if (error instanceof RangeError) {
+            return { access: 'unreadable' };
+        }
 
-    return stored;
+        throw error;
+    }
 };
 
 export const writeRichTextValue = (
