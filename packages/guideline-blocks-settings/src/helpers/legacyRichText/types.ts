@@ -44,6 +44,7 @@ export type LegacyRichTextPath = readonly number[];
 export type LegacyRichTextReviewCode =
     | 'indent-jump'
     | 'link-unsafe'
+    | 'link-conflict'
     | 'button-style-unknown'
     | 'mention-unresolved'
     | 'excluded-marks'

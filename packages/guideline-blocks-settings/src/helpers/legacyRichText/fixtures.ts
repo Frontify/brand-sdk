@@ -345,12 +345,139 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
                 ],
             },
         ]),
-        expectedOutcome: 'exact',
+        expectedOutcome: 'requires-review',
         expectedDocument: documentOf([
             {
                 type: 'paragraph',
                 children: [{ text: 'Guideline', link: { href: '/document/42', openInNewTab: true } }],
             },
+        ]),
+        expectedDiagnostics: [{ code: 'link-conflict', path: [0, 0] }],
+    },
+    {
+        id: 'anchor-chosen-link-href-conflict',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/editor-page',
+                        target: '_blank',
+                        chosenLink: { searchResult: { link: '/display-page' }, openInNewTab: true },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]),
+        expectedOutcome: 'requires-review',
+        expectedDocument: documentOf([
+            { type: 'paragraph', children: [{ text: 'Page', link: { href: '/display-page', openInNewTab: true } }] },
+        ]),
+        expectedDiagnostics: [{ code: 'link-conflict', path: [0, 0] }],
+    },
+    {
+        id: 'anchor-chosen-link-tab-conflict',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/page',
+                        target: '_self',
+                        chosenLink: { searchResult: { link: '/page' }, openInNewTab: true },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]),
+        expectedOutcome: 'requires-review',
+        expectedDocument: documentOf([
+            { type: 'paragraph', children: [{ text: 'Page', link: { href: '/page', openInNewTab: true } }] },
+        ]),
+        expectedDiagnostics: [{ code: 'link-conflict', path: [0, 0] }],
+    },
+    {
+        id: 'anchor-chosen-link-reverse-tab-conflict',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/page',
+                        target: '_blank',
+                        chosenLink: { searchResult: { link: '/page' } },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]),
+        expectedOutcome: 'requires-review',
+        expectedDocument: documentOf([{ type: 'paragraph', children: [{ text: 'Page', link: { href: '/page' } }] }]),
+        expectedDiagnostics: [{ code: 'link-conflict', path: [0, 0] }],
+    },
+    {
+        id: 'anchor-chosen-link-url-only',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/page',
+                        target: '_blank',
+                        chosenLink: { searchResult: { link: '' }, openInNewTab: true },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]),
+        expectedOutcome: 'exact',
+        expectedDocument: documentOf([
+            { type: 'paragraph', children: [{ text: 'Page', link: { href: '/page', openInNewTab: true } }] },
+        ]),
+    },
+    {
+        id: 'anchor-chosen-link-link-only',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        target: '_blank',
+                        chosenLink: { searchResult: { link: '/page' }, openInNewTab: true },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]),
+        expectedOutcome: 'exact',
+        expectedDocument: documentOf([
+            { type: 'paragraph', children: [{ text: 'Page', link: { href: '/page', openInNewTab: true } }] },
+        ]),
+    },
+    {
+        id: 'anchor-chosen-link-agreeing',
+        legacy: stringify([
+            {
+                type: 'p',
+                children: [
+                    {
+                        type: 'a',
+                        url: '/page',
+                        target: '_blank',
+                        chosenLink: { searchResult: { link: '/page' }, openInNewTab: true },
+                        children: [{ text: 'Page' }],
+                    },
+                ],
+            },
+        ]),
+        expectedOutcome: 'exact',
+        expectedDocument: documentOf([
+            { type: 'paragraph', children: [{ text: 'Page', link: { href: '/page', openInNewTab: true } }] },
         ]),
     },
     {
