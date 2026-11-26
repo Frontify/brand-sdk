@@ -366,6 +366,36 @@ describe('legacy rich text round trips over a mention value', () => {
     });
 });
 
+describe('legacy rich text round trips over an unresolved mention value', () => {
+    it('should write the stored value of an unresolved mention back and read it again unchanged (Q6, MIG-13)', () => {
+        const stored = JSON.stringify([
+            {
+                type: 'p',
+                children: [
+                    { type: 'mention', value: 'Old Label', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                ],
+            },
+        ]);
+
+        const converted = convertLegacyRichText(stored);
+        expect(converted.outcome).toBe('requires-review');
+        if (converted.outcome !== 'requires-review') {
+            return;
+        }
+
+        const written = toLegacyRichText(converted.document);
+        expect(written.outcome).toBe('exact');
+        if (written.outcome !== 'exact') {
+            return;
+        }
+
+        expect(JSON.stringify(written.value)).toBe(
+            '[{"type":"p","children":[{"type":"mention","value":"Old Label","category":"user","id":"user-1","children":[{"text":""}]}]}]',
+        );
+        expect(convertLegacyRichText(JSON.stringify(written.value))).toEqual(converted);
+    });
+});
+
 describe('legacy rich text round trips over generated trees', () => {
     const seeds = Array.from({ length: SEED_COUNT }, (_, index) => index + 1);
 

@@ -87,6 +87,7 @@ type InlineOptions = {
 type InlineElementOptions = { path: LegacyRichTextPath; blockStyle: string; context: MappingContext };
 type TextLeafOptions = InlineElementOptions & { link?: LinkValue };
 type MentionOptions = { path: LegacyRichTextPath; context: MappingContext };
+type MentionNamesOptions = MentionOptions & { legacyValue: string };
 type UndeclaredPropertiesOptions = {
     element: LegacyElement;
     acceptedKeys: readonly string[];
@@ -450,13 +451,22 @@ const readLink = (element: LegacyElement): LinkReading => {
     return readAnchor(element);
 };
 
-const readUnresolvedMentionNames = (options: MentionOptions): MentionNames => {
-    report(options.context, 'mention-unresolved', options.path);
+const readLegacyMentionValue = (element: LegacyElement): string => {
+    const value = element[LEGACY_VALUE_KEY];
+    if (typeof value === 'string') {
+        return value;
+    }
 
-    return { username: '', name: '' };
+    return '';
 };
 
-const readMentionNames = (kind: MentionInline['kind'], id: string, options: MentionOptions): MentionNames => {
+const readUnresolvedMentionNames = (options: MentionNamesOptions): MentionNames => {
+    report(options.context, 'mention-unresolved', options.path);
+
+    return { username: '', name: options.legacyValue };
+};
+
+const readMentionNames = (kind: MentionInline['kind'], id: string, options: MentionNamesOptions): MentionNames => {
     const { resolveMention } = options.context;
     if (resolveMention === undefined) {
         return readUnresolvedMentionNames(options);
@@ -492,7 +502,10 @@ const mapMention = (element: LegacyElement, options: MentionOptions): OpenInline
     }
 
     const mentionId = String(id);
-    const names = readMentionNames(category.kind, mentionId, options);
+    const names = readMentionNames(category.kind, mentionId, {
+        ...options,
+        legacyValue: readLegacyMentionValue(element),
+    });
     const mention: MentionInline = { type: 'mention', id: mentionId, username: names.username, name: names.name };
     if (category.kind !== undefined) {
         mention.kind = category.kind;

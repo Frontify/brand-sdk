@@ -11,7 +11,9 @@ export type StoredValue =
     | { kind: 'html' }
     | { kind: 'invalid' };
 
-const readParsedValue = (parsed: unknown): StoredValue => {
+export type ParsedStoredValue = Exclude<StoredValue, { kind: 'oversized' }>;
+
+const readParsedValue = (parsed: unknown): ParsedStoredValue => {
     if (parsed === null) {
         return { kind: 'empty' };
     }
@@ -23,14 +25,10 @@ const readParsedValue = (parsed: unknown): StoredValue => {
     return { kind: 'invalid' };
 };
 
-/** Parses the stored string once, so the rest of the converter only switches on the kind. */
-export const readStoredValue = (value: string | null | undefined): StoredValue => {
+/** Parses the stored string at any size. */
+export const parseStoredValue = (value: string | null | undefined): ParsedStoredValue => {
     if (value === null || value === undefined || EMPTY_STORED_VALUES.includes(value)) {
         return { kind: 'empty' };
-    }
-
-    if (exceedsDocumentBytes(value)) {
-        return { kind: 'oversized' };
     }
 
     let parsed: unknown;
@@ -45,4 +43,13 @@ export const readStoredValue = (value: string | null | undefined): StoredValue =
     }
 
     return readParsedValue(parsed);
+};
+
+/** Parses the stored string once, so the rest of the converter only switches on the kind. */
+export const readStoredValue = (value: string | null | undefined): StoredValue => {
+    if (typeof value === 'string' && exceedsDocumentBytes(value)) {
+        return { kind: 'oversized' };
+    }
+
+    return parseStoredValue(value);
 };
