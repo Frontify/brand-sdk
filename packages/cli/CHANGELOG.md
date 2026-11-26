@@ -1,5 +1,11 @@
 # @frontify/frontify-cli
 
+## 6.4.4
+
+### Patch Changes
+
+- [#1815](https://github.com/Frontify/brand-sdk/pull/1815) [`f35ca18`](https://github.com/Frontify/brand-sdk/commit/f35ca182d15af97ffd6958e95f365329d4d3b9ca) Thanks [@julianiff](https://github.com/julianiff)! - chore: fix imports for platform apps
+
 ## 6.4.3
 
 ### Patch Changes
