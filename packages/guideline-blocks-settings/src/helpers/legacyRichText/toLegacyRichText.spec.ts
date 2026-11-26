@@ -319,7 +319,9 @@ describe('toLegacyRichText inline content', () => {
                             target: '_blank',
                             children: [{ text: 'one ' }, { text: 'two', bold: true }],
                         },
+                        { text: '' },
                         { type: 'a', url: '/b', target: '_self', children: [{ text: ' other' }] },
+                        { text: '' },
                     ],
                 },
             ],
@@ -333,6 +335,7 @@ describe('toLegacyRichText inline content', () => {
                 {
                     type: 'p',
                     children: [
+                        { text: '' },
                         {
                             type: 'button',
                             url: '/go',
@@ -340,6 +343,7 @@ describe('toLegacyRichText inline content', () => {
                             buttonStyle: 'tertiary',
                             children: [{ text: 'Go' }],
                         },
+                        { text: '' },
                     ],
                 },
             ],
@@ -361,9 +365,13 @@ describe('toLegacyRichText inline content', () => {
                 {
                     type: 'p',
                     children: [
+                        { text: '' },
                         { type: 'a', url: '/page', target: '_self', children: [{ text: 'a' }] },
+                        { text: '' },
                         { type: 'mention', value: 'One', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { text: '' },
                         { type: 'a', url: '/page', target: '_self', children: [{ text: 'b' }] },
+                        { text: '' },
                     ],
                 },
             ],
@@ -392,6 +400,7 @@ describe('toLegacyRichText inline content', () => {
                 {
                     type: 'p',
                     children: [
+                        { text: '' },
                         { type: 'a', url: '/page', target: '_self', children: [{ text: 'a' }] },
                         { text: '\n' },
                         {
@@ -419,6 +428,7 @@ describe('toLegacyRichText inline content', () => {
                 {
                     type: 'p',
                     children: [
+                        { text: '' },
                         { type: 'mention', value: '', category: 'user', id: 'user-1', children: [{ text: '' }] },
                         { text: '\nb' },
                     ],
@@ -458,7 +468,11 @@ describe('toLegacyRichText inline content', () => {
                 [
                     {
                         type: 'p',
-                        children: [{ type: 'mention', value: 'One', category, id: 'user-1', children: [{ text: '' }] }],
+                        children: [
+                            { text: '' },
+                            { type: 'mention', value: 'One', category, id: 'user-1', children: [{ text: '' }] },
+                            { text: '' },
+                        ],
                     },
                 ],
             );
@@ -477,10 +491,12 @@ describe('toLegacyRichText inline content', () => {
 
         expect(result).toEqual({
             outcome: 'exact',
-            value: [{ type: 'p', children: [mention] }],
+            value: [{ type: 'p', children: [{ text: '' }, mention, { text: '' }] }],
             diagnostics: [],
         });
-        expect(JSON.stringify(result.value)).toBe(JSON.stringify([{ type: 'p', children: [mention] }]));
+        expect(JSON.stringify(result.value)).toBe(
+            JSON.stringify([{ type: 'p', children: [{ text: '' }, mention, { text: '' }] }]),
+        );
     });
 
     it('should write an empty name as an empty value (MIG-13)', () => {
@@ -490,11 +506,107 @@ describe('toLegacyRichText inline content', () => {
                 {
                     type: 'p',
                     children: [
+                        { text: '' },
                         { type: 'mention', value: '', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { text: '' },
                     ],
                 },
             ],
         );
+    });
+
+    it('should write an empty leaf before an inline element that starts a block (MIG-26)', () => {
+        expectExact(
+            [paragraph({ text: 'a', link: { href: '/page' } }, { text: ' b' })],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { text: '' },
+                        { type: 'a', url: '/page', target: '_self', children: [{ text: 'a' }] },
+                        { text: ' b' },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should write an empty leaf after an inline element that ends a block (MIG-26)', () => {
+        expectExact(
+            [paragraph({ text: 'a ' }, { type: 'mention', id: 'user-1', username: '@one', name: 'One' })],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { text: 'a ' },
+                        { type: 'mention', value: 'One', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { text: '' },
+                    ],
+                },
+            ],
+        );
+    });
+
+    it('should write an empty leaf between two adjacent inline elements (MIG-26)', () => {
+        expectExact(
+            [
+                paragraph(
+                    { text: 'a ' },
+                    { type: 'mention', id: 'user-1', username: '@one', name: 'One' },
+                    { type: 'mention', id: 'user-2', username: '@two', name: 'Two' },
+                    { text: ' b' },
+                ),
+            ],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { text: 'a ' },
+                        { type: 'mention', value: 'One', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { text: '' },
+                        { type: 'mention', value: 'Two', category: 'user', id: 'user-2', children: [{ text: '' }] },
+                        { text: ' b' },
+                    ],
+                },
+            ],
+        );
+    });
+
+    const linkedRun = [{ text: 'a', link: { href: '/a' } }, { text: ' mid ' }, { text: 'b', link: { href: '/b' } }];
+    const paddedLinkedRun = [
+        { text: '' },
+        { type: 'a', url: '/a', target: '_self', children: [{ text: 'a' }] },
+        { text: ' mid ' },
+        { type: 'a', url: '/b', target: '_self', children: [{ text: 'b' }] },
+        { text: '' },
+    ];
+
+    it.each([
+        { name: 'a paragraph', blocks: [paragraph(...linkedRun)], legacy: [{ type: 'p', children: paddedLinkedRun }] },
+        {
+            name: 'a quote',
+            blocks: [{ type: 'quote', children: linkedRun }],
+            legacy: [{ type: 'quote', children: paddedLinkedRun }],
+        },
+        {
+            name: 'a text style',
+            blocks: [{ type: 'textStyle', style: 'heading2', children: linkedRun }],
+            legacy: [{ type: 'heading2', children: paddedLinkedRun }],
+        },
+        {
+            name: 'a list item paragraph',
+            blocks: [{ type: 'bulletList', children: [{ type: 'listItem', children: [paragraph(...linkedRun)] }] }],
+            legacy: [
+                { type: 'ul', children: [{ type: 'li', children: [{ type: 'lic', children: paddedLinkedRun }] }] },
+            ],
+        },
+        {
+            name: 'a check item',
+            blocks: [checkList({ type: 'checkItem', children: [paragraph(...linkedRun)] })],
+            legacy: [{ type: 'checkbox-item', children: paddedLinkedRun }],
+        },
+    ])('should write empty leaves around the links that start and end $name (MIG-26)', ({ blocks, legacy }) => {
+        expectExact(blocks, legacy);
     });
 });
 
@@ -955,7 +1067,7 @@ describe('toLegacyRichText content without a legacy form', () => {
             children: [{ text: 'Page' }],
         };
 
-        expectExact([paragraph(node)], [{ type: 'p', children: [node] }]);
+        expectExact([paragraph(node)], [{ type: 'p', children: [{ text: '' }, node, { text: '' }] }]);
     });
 
     it('should not reverse a leaf whose text holds a line feed (MIG-25)', () => {
@@ -1108,7 +1220,16 @@ describe('toLegacyRichText links', () => {
     ])('should write the target $target for openInNewTab $openInNewTab (MIG-25)', ({ openInNewTab, target }) => {
         expectExact(
             [paragraph({ text: 'a', link: { href: '/page', openInNewTab } })],
-            [{ type: 'p', children: [{ type: 'a', url: '/page', target, children: [{ text: 'a' }] }] }],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { text: '' },
+                        { type: 'a', url: '/page', target, children: [{ text: 'a' }] },
+                        { text: '' },
+                    ],
+                },
+            ],
         );
     });
 
@@ -1117,6 +1238,7 @@ describe('toLegacyRichText links', () => {
             {
                 type: 'p',
                 children: [
+                    { text: '' },
                     {
                         type: 'button',
                         url: '/page',
@@ -1124,6 +1246,7 @@ describe('toLegacyRichText links', () => {
                         buttonStyle: 'secondary',
                         children: [{ text: 'Go' }],
                     },
+                    { text: '' },
                 ],
             },
         ]);
@@ -1146,6 +1269,7 @@ describe('toLegacyRichText links', () => {
             {
                 type: 'p',
                 children: [
+                    { text: '' },
                     {
                         type: 'button',
                         url: '/page',
@@ -1153,6 +1277,7 @@ describe('toLegacyRichText links', () => {
                         buttonStyle: 'primary',
                         children: [{ text: 'Go' }],
                     },
+                    { text: '' },
                 ],
             },
         ]);

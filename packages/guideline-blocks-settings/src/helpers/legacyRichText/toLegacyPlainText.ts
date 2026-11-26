@@ -9,24 +9,18 @@ import {
     type ToLegacyPlainTextResult,
 } from './types';
 import {
-    LEGACY_BUTTON_TYPE,
     LEGACY_CATEGORY_KEY,
     LEGACY_EMOJI_TYPE,
     LEGACY_ID_KEY,
+    LEGACY_INLINE_TYPES,
     LEGACY_LINK_ELEMENT_TYPE,
-    LEGACY_LINK_TYPE,
     LEGACY_MENTION_TYPE,
     LINE_BREAK,
     readMentionKind,
 } from './vocabulary';
 
-const INLINE_ELEMENT_TYPES = [
-    LEGACY_LINK_TYPE,
-    LEGACY_LINK_ELEMENT_TYPE,
-    LEGACY_BUTTON_TYPE,
-    LEGACY_MENTION_TYPE,
-    LEGACY_EMOJI_TYPE,
-];
+// The comment editor keeps no text around a link element or an emoji, but their text still belongs to its line.
+const SAME_LINE_ELEMENT_TYPES = [...LEGACY_INLINE_TYPES, LEGACY_LINK_ELEMENT_TYPE, LEGACY_EMOJI_TYPE];
 
 type ElementReading = { kind: 'block' } | { kind: 'inline' } | { kind: 'mention'; text: string };
 
@@ -49,7 +43,7 @@ const endLine = (writer: LineWriter): void => {
 
 /** Reads an element as a block, an inline or a mention; a mention without a readable id or known category reads as an inline. */
 const readElement = (element: LegacyElement, mentionText: MentionText): ElementReading => {
-    if (!INLINE_ELEMENT_TYPES.includes(element.type)) {
+    if (!SAME_LINE_ELEMENT_TYPES.includes(element.type)) {
         return { kind: 'block' };
     }
 
