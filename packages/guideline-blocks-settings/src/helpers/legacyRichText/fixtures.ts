@@ -530,7 +530,15 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
         legacy: stringify([
             {
                 type: 'p',
-                children: [{ type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] }],
+                children: [
+                    {
+                        type: 'mention',
+                        value: 'Ada Lovelace',
+                        category: 'user',
+                        id: 'user-1',
+                        children: [{ text: '' }],
+                    },
+                ],
             },
         ]),
         expectedOutcome: 'requires-review',
@@ -544,7 +552,15 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
         legacy: stringify([
             {
                 type: 'p',
-                children: [{ type: 'mention', category: 'group', id: 'group-1', children: [{ text: '' }] }],
+                children: [
+                    {
+                        type: 'mention',
+                        value: 'Ada Lovelace',
+                        category: 'group',
+                        id: 'group-1',
+                        children: [{ text: '' }],
+                    },
+                ],
             },
         ]),
         expectedOutcome: 'requires-review',
@@ -561,7 +577,9 @@ export const LEGACY_FIXTURES: LegacyFixture[] = [
         legacy: stringify([
             {
                 type: 'p',
-                children: [{ type: 'mention', category: 'all', id: 'all', children: [{ text: '' }] }],
+                children: [
+                    { type: 'mention', value: 'Ada Lovelace', category: 'all', id: 'all', children: [{ text: '' }] },
+                ],
             },
         ]),
         expectedOutcome: 'requires-review',

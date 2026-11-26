@@ -32,6 +32,7 @@ const SAFE_URLS = ['https://example.com/a', '/relative/path', 'mailto:info@examp
 const UNSAFE_URL = 'javascript:alert(1)';
 const MENTION_CATEGORIES = ['user', 'group', 'all'];
 const MENTION_IDS = ['user-1', 7, 'group-2'];
+const MENTION_LABEL = 'Ada Lovelace';
 const TEXT_STYLES = [
     'heading1',
     'heading2',
@@ -158,6 +159,7 @@ const createButton = (random: Random): LegacyElement => {
 
 const createMention = (random: Random): LegacyElement => ({
     type: 'mention',
+    value: MENTION_LABEL,
     category: pick(random, MENTION_CATEGORIES),
     id: pick(random, MENTION_IDS),
     children: [{ text: '' }],
@@ -332,6 +334,35 @@ describe('legacy rich text round trips over the fixtures', () => {
         }
 
         expect(toLegacyRichText(reconverted.document)).toEqual(written);
+    });
+});
+
+describe('legacy rich text round trips over a mention value', () => {
+    it('should write the resolved name as the value and read it back unchanged (MIG-13)', () => {
+        const resolveMention: ResolveMention = () => ({ status: 'resolved', username: '@ada', name: 'Ada' });
+        const stored = JSON.stringify([
+            {
+                type: 'p',
+                children: [
+                    { type: 'mention', value: 'Old Label', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                ],
+            },
+        ]);
+
+        const converted = convertLegacyRichText(stored, { resolveMention });
+        expect(converted.outcome).toBe('exact');
+        if (converted.outcome !== 'exact') {
+            return;
+        }
+
+        const written = toLegacyRichText(converted.document);
+        expect(written.outcome).toBe('exact');
+        if (written.outcome !== 'exact') {
+            return;
+        }
+
+        expect(JSON.stringify(written.value)).toContain('"value":"Ada"');
+        expect(convertLegacyRichText(JSON.stringify(written.value), { resolveMention })).toEqual(converted);
     });
 });
 

@@ -24,6 +24,7 @@ export const LEGACY_URL_KEY = 'url';
 export const LEGACY_TARGET_KEY = 'target';
 export const LEGACY_CHOSEN_LINK_KEY = 'chosenLink';
 export const LEGACY_BUTTON_STYLE_KEY = 'buttonStyle';
+export const LEGACY_VALUE_KEY = 'value';
 export const LEGACY_CATEGORY_KEY = 'category';
 export const LEGACY_ID_KEY = 'id';
 export const LEGACY_INDENT_KEY = 'indent';

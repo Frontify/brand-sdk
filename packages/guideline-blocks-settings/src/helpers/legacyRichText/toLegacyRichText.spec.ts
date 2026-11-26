@@ -362,7 +362,7 @@ describe('toLegacyRichText inline content', () => {
                     type: 'p',
                     children: [
                         { type: 'a', url: '/page', target: '_self', children: [{ text: 'a' }] },
-                        { type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { type: 'mention', value: 'One', category: 'user', id: 'user-1', children: [{ text: '' }] },
                         { type: 'a', url: '/page', target: '_self', children: [{ text: 'b' }] },
                     ],
                 },
@@ -419,7 +419,7 @@ describe('toLegacyRichText inline content', () => {
                 {
                     type: 'p',
                     children: [
-                        { type: 'mention', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                        { type: 'mention', value: '', category: 'user', id: 'user-1', children: [{ text: '' }] },
                         { text: '\nb' },
                     ],
                 },
@@ -451,19 +451,51 @@ describe('toLegacyRichText inline content', () => {
         { kind: 'group', category: 'group' },
         { kind: 'all', category: 'all' },
     ])(
-        'should write a mention of kind $kind with the category $category and no snapshot (MIG-25)',
+        'should write a mention of kind $kind with the category $category and its name as value (MIG-13)',
         ({ kind, category }) => {
             expectExact(
                 [paragraph({ type: 'mention', id: 'user-1', username: '@one', name: 'One', kind })],
                 [
                     {
                         type: 'p',
-                        children: [{ type: 'mention', category, id: 'user-1', children: [{ text: '' }] }],
+                        children: [{ type: 'mention', value: 'One', category, id: 'user-1', children: [{ text: '' }] }],
                     },
                 ],
             );
         },
     );
+
+    it('should write the name of a mention as its value ahead of category and id (MIG-13)', () => {
+        const mention = {
+            type: 'mention',
+            value: 'Ada Lovelace',
+            category: 'user',
+            id: 'user-1',
+            children: [{ text: '' }],
+        };
+        const result = toLegacy([paragraph({ type: 'mention', id: 'user-1', username: '@ada', name: 'Ada Lovelace' })]);
+
+        expect(result).toEqual({
+            outcome: 'exact',
+            value: [{ type: 'p', children: [mention] }],
+            diagnostics: [],
+        });
+        expect(JSON.stringify(result.value)).toBe(JSON.stringify([{ type: 'p', children: [mention] }]));
+    });
+
+    it('should write an empty name as an empty value (MIG-13)', () => {
+        expectExact(
+            [paragraph({ type: 'mention', id: 'user-1', username: '', name: '' })],
+            [
+                {
+                    type: 'p',
+                    children: [
+                        { type: 'mention', value: '', category: 'user', id: 'user-1', children: [{ text: '' }] },
+                    ],
+                },
+            ],
+        );
+    });
 });
 
 describe('toLegacyRichText content kept as stored', () => {
@@ -689,6 +721,7 @@ describe('toLegacyRichText content without a legacy form', () => {
     it.each([
         { name: 'an unknown kind', node: { type: 'mention', id: 'user-1', username: '', name: '', kind: 'team' } },
         { name: 'a key of its own', node: { type: 'mention', id: 'user-1', username: '', name: '', extra: 1 } },
+        { name: 'a value key', node: { type: 'mention', id: 'user-1', username: '', name: '', value: 'x' } },
         { name: 'a key on a break', node: { type: 'break', extra: 1 } },
         { name: 'a known block type in an inline position', node: { type: 'paragraph', children: [] } },
         { name: 'an unknown inline without children', node: { type: 'emoji' } },
