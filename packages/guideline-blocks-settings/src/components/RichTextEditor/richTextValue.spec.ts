@@ -89,6 +89,19 @@ const ROUND_TRIP_VALUES = {
 };
 
 describe('readRichTextValue', () => {
+    it('should show a top-level text run of a read-only value as its own paragraph', () => {
+        const stored = readRichTextValue(
+            stringify([{ text: 'loose' }, { type: 'unknown', children: [{ text: 'kept' }] }]),
+            EDITOR_PLUGINS,
+        );
+
+        expect(stored.access).toBe('readonly');
+        if (stored.access === 'readonly') {
+            expect(toPlainText(stored.document, { plugins: EDITOR_PLUGINS })).toContain('loose');
+            expect(toPlainText(stored.document, { plugins: EDITOR_PLUGINS })).toContain('kept');
+        }
+    });
+
     it('should make an exact value editable when the plugins cover it', () => {
         const stored = readRichTextValue(PARAGRAPH, EDITOR_PLUGINS);
 

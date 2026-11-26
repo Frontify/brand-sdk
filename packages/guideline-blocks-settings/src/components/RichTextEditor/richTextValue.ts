@@ -287,7 +287,9 @@ function toDisplayBlockList(nodes: readonly StructuralNode[], declared: Declared
     const blocks: RtePlugin.BlockNode[] = [];
 
     for (const node of nodes) {
-        if (isBlockShape(node)) {
+        if (isTextRun(node)) {
+            blocks.push({ type: PARAGRAPH_TYPE, children: [node] });
+        } else if (isBlockShape(node)) {
             blocks.push(...toDisplayBlocks(node, declared));
         }
     }
@@ -301,7 +303,10 @@ function toUndeclaredDisplayBlocks(
     children: readonly StructuralNode[],
     declared: DeclaredContent,
 ): RtePlugin.BlockNode[] {
-    if (children.some(isTextRun)) {
+    const holdsInlineContent = children.some(
+        (child) => isTextRun(child) || (typeof child.type === 'string' && declared.inlines.has(child.type)),
+    );
+    if (holdsInlineContent) {
         return [{ type: PARAGRAPH_TYPE, children: withoutUndeclaredInlines(children, declared) }];
     }
 
