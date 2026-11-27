@@ -1,1 +1,0 @@
-# Frontify Block Boilerplate

@@ -13,9 +13,7 @@ packages/cli/src/servers/themeDevelopmentServer.ts @Frontify/themes-and-navigati
 
 ## Templates
 
-packages/cli/templates/content-block-css @Frontify/content-and-blocks
 packages/cli/templates/content-block-css-modules @Frontify/content-and-blocks
-packages/cli/templates/content-block-tailwind @Frontify/content-and-blocks
 packages/cli/templates/platform-app-css @Frontify/developer-experience
 packages/cli/templates/platform-app-css-modules @Frontify/developer-experience
 packages/cli/templates/platform-app-tailwind @Frontify/developer-experience
