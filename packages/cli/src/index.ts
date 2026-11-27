@@ -210,7 +210,9 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
             ],
         },
         {
-            type: 'select',
+            // Blocks have a single template, so only apps are asked for a styling framework.
+            type: (_previous: unknown, answers: { appType?: string }) =>
+                answers.appType === 'platform-app' ? 'select' : null,
             name: 'stylingFramework',
             message: 'Choose a styling framework',
             choices: [
@@ -219,13 +221,15 @@ cli.command('create [appName]', 'create a new marketplace app').action(async (ap
                 { title: 'None', value: 'css' },
             ],
         },
-    ])) as { promptedAppName: string; stylingFramework: string; appType: string };
+    ])) as { promptedAppName?: string; stylingFramework?: string; appType?: string };
 
-    if (!promptedAppName || !stylingFramework || !appType) {
+    const template = appType === 'content-block' ? 'css-modules' : stylingFramework;
+
+    if (!promptedAppName || !appType || !template) {
         exit(0);
     }
 
-    createNewApp(promptedAppName, stylingFramework, appType);
+    createNewApp(promptedAppName, template, appType);
 });
 
 cli.help();
